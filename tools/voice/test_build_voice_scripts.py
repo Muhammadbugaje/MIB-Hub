@@ -88,3 +88,10 @@ class StoryLines(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_guide_is_one_block_not_letters():
+    """Regression: `out += GUIDE` once spread the guide one character per line."""
+    md = bv.script_md("Test", ["npc.test"], "", [], [])
+    assert "How to use this script" in md
+    assert not any(len(l) == 1 and l.isalpha() for l in md.splitlines())

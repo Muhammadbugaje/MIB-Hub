@@ -170,7 +170,7 @@ def script_md(title: str, actor_ids: list[str], voice: str, story: list[Line], b
            f"**Barks and filler:** {len(barks)} · **Total:** {len(story) + len(barks)}", ""]
     if voice:
         out += [f"**Voice:** {voice}", ""]
-    out += GUIDE
+    out += [GUIDE, ""]
     if story:
         out += ["## 1. Story lines (in story order)", ""]
         mission = None

@@ -6,7 +6,9 @@ Run with the local Python environment (see tools/story/README.md):
     .venv/bin/python tools/story/md2pdf.py MISSION_SCRIPTS  # builds one
 
 Handles the Markdown these files use: headings, paragraphs, bullet and numbered lists, block quotes,
-pipe tables, fenced code blocks, **bold**, *italic* and `code`. Nothing else is needed.
+pipe tables, fenced code blocks, **bold**, *italic* and `code`. Story packs add two blocks of their own:
+    ::: Mission title | a small note          a coloured header band
+    :: 1 | how to say it | The line to read   a line to read aloud, in big type (consecutive lines make one block)
 """
 import re
 import sys
@@ -66,6 +68,11 @@ ST = {
     "code": ParagraphStyle("code", fontName=FM, fontSize=7.8, leading=10, textColor=INK, backColor=TINT, leftIndent=6),
     "title": ParagraphStyle("title", fontName=FB, fontSize=30, leading=36, textColor=INK, alignment=TA_CENTER),
     "sub": ParagraphStyle("sub", fontName=F, fontSize=12, leading=16, textColor=SOFT, alignment=TA_CENTER),
+    # Story packs only: the "::: band" and ":: script line" blocks (see band() and script_lines()).
+    "band": ParagraphStyle("band", fontName=FB, fontSize=12, leading=15, textColor=colors.white),
+    "bandnote": ParagraphStyle("bandnote", fontName=F, fontSize=8.8, leading=11.6, textColor=colors.HexColor("#ffedd5")),
+    "snum": ParagraphStyle("snum", fontName=FB, fontSize=11, leading=15, textColor=AMBER, alignment=TA_CENTER),
+    "sline": ParagraphStyle("sline", fontName=F, fontSize=11, leading=15, textColor=INK),
 }
 
 
@@ -118,6 +125,51 @@ def table(rows, width):
     return t
 
 
+def band(text, width):
+    """A coloured header band: '::: Title | optional small note'. It stays with the block that follows it."""
+    title, _, note = (x.strip() for x in text.partition("|"))
+    cell = [Paragraph(inline(title), ST["band"])] + ([Paragraph(inline(note), ST["bandnote"])] if note else [])
+    t = Table([[cell]], colWidths=[width])
+    t.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), AMBER), ("LEFTPADDING", (0, 0), (-1, -1), 8),
+                           ("RIGHTPADDING", (0, 0), (-1, -1), 8), ("TOPPADDING", (0, 0), (-1, -1), 5),
+                           ("BOTTOMPADDING", (0, 0), (-1, -1), 6)]))
+    t.keepWithNext = True
+    return t
+
+
+LONG_BLOCK = 16  # a block of lines longer than this cannot stay on one page with its band
+
+
+def script_lines(rows, width, head=None):
+    """Lines to read aloud: ':: number | how to say it | the line'. Big type, one row per line.
+
+    A long block may be given its band text as `head`: the band then becomes the block's first row and is
+    printed again at the top of each page the block runs on to.
+    """
+    data = []
+    if head is not None:
+        title, _, note = (x.strip() for x in head.partition("|"))
+        data.append([[Paragraph(inline(title), ST["band"])] +
+                     ([Paragraph(inline(note), ST["bandnote"])] if note else []), ""])
+    for r in rows:
+        r = r + [""] * (3 - len(r))
+        mood = ('<font size="7.6" color="#b45309"><b>%s</b></font><br/>' % inline(r[1].upper())) if r[1] else ""
+        data.append([Paragraph(inline(r[0]), ST["snum"]), Paragraph(mood + inline(r[2]), ST["sline"])])
+    t = Table(data, colWidths=[11 * mm, width - 11 * mm])
+    t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 0.5, LINE),
+                           ("ROWBACKGROUNDS", (0, 0), (-1, -1), [colors.white, TINT]),
+                           ("LEFTPADDING", (0, 0), (-1, -1), 5), ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                           ("TOPPADDING", (0, 0), (-1, -1), 4), ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+                           ("TOPPADDING", (0, 0), (0, -1), 13)]))
+    if head is not None:
+        t.repeatRows = 1
+        t.setStyle(TableStyle([("SPAN", (0, 0), (-1, 0)), ("BACKGROUND", (0, 0), (-1, 0), AMBER),
+                               ("LEFTPADDING", (0, 0), (-1, 0), 8), ("RIGHTPADDING", (0, 0), (-1, 0), 8),
+                               ("TOPPADDING", (0, 0), (-1, 0), 5), ("BOTTOMPADDING", (0, 0), (-1, 0), 6),
+                               ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, TINT])]))
+    return t
+
+
 def flow(md, width):
     out, lines, i = [], md.split("\n"), 0
     para = []
@@ -144,6 +196,30 @@ def flow(md, width):
             out.append(Spacer(1, 4))
             i = j + 1
             continue
+        if s.startswith(":::"):  # story packs: a header band
+            flush()
+            j = i + 1
+            while j < len(lines) and not lines[j].strip():
+                j += 1
+            rows = []
+            while j < len(lines) and lines[j].strip().startswith("::") and not lines[j].strip().startswith(":::"):
+                rows.append([c.strip() for c in lines[j].strip()[2:].split("|", 2)])
+                j += 1
+            if len(rows) > LONG_BLOCK:  # too long for one page: the band travels with the lines instead
+                out += [script_lines(rows, width, head=s[3:]), Spacer(1, 10)]
+                i = j
+                continue
+            out.append(band(s[3:], width))
+            i += 1
+            continue
+        if s.startswith("::"):  # story packs: lines to read aloud
+            flush()
+            rows = []
+            while i < len(lines) and lines[i].strip().startswith("::") and not lines[i].strip().startswith(":::"):
+                rows.append([c.strip() for c in lines[i].strip()[2:].split("|", 2)])
+                i += 1
+            out += [script_lines(rows, width), Spacer(1, 10)]
+            continue
         if s.startswith("|") and s.endswith("|"):
             flush()
             rows = []
@@ -161,7 +237,12 @@ def flow(md, width):
             if lvl == 1 and out:
                 out.append(PageBreak())
             h = Paragraph(inline(m.group(2)), ST["h%d" % lvl])
+            h.keepWithNext = True  # never leave a heading alone at the foot of a page
             out.append(h)
+            i += 1
+            continue
+        if s.startswith("<!--") and s.endswith("-->"):  # a one-line comment: never printed
+            flush()
             i += 1
             continue
         if s in ("---", "***"):
@@ -207,12 +288,90 @@ def flow(md, width):
 OWNER_ONLY = {"STORY_BIBLE_V2", "MISSION_SCRIPTS", "STORY_AUDIT", "ASSET_AND_MOTION_PLAN", "HOW_TO_RUN"}
 
 
+# Opt-in, per document: a first line of "<!-- pack-style: roomy -->" sets bigger, airier reading type for that
+# one PDF (made for reading on a phone). Every other book keeps the standard styles.
+ROOMY = {"body": dict(fontSize=10.8, leading=16, spaceAfter=7),
+         "li": dict(fontSize=10.8, leading=15.6, spaceAfter=4, leftIndent=16, bulletIndent=3),
+         "li2": dict(fontSize=10.4, leading=15, spaceAfter=3),
+         "quote": dict(fontSize=13, leading=18, textColor=AMBER, leftIndent=14, spaceBefore=4, spaceAfter=10),
+         "h1": dict(fontSize=24, leading=29, spaceAfter=12),
+         "h2": dict(fontSize=16.5, leading=21, spaceBefore=18, spaceAfter=8),
+         "h3": dict(fontSize=13, leading=17, spaceBefore=14, spaceAfter=5),
+         "h4": dict(fontSize=11.6, leading=15, spaceBefore=13, spaceAfter=3, textColor=AMBER)}
+
+
+def restyle(changes):
+    """Apply style changes and return what is needed to undo them."""
+    old = {name: {k: getattr(ST[name], k) for k in attrs} for name, attrs in changes.items()}
+    for name, attrs in changes.items():
+        for k, v in attrs.items():
+            setattr(ST[name], k, v)
+    return old
+
+
 def audience(key):
     if key in OWNER_ONLY:
         return "Private to the owner"
     if key.endswith("_STORY_PACK"):
         return "Made for you, with thanks"
     return "For the cast. Please keep it private"
+
+
+def cover_info(text):
+    """A story pack can ask for a designed cover with "<!-- cover: Name | tagline -->" near the top."""
+    m = re.search(r"<!--\s*cover:\s*([^|>]+?)\s*\|\s*([^|>]+?)\s*(?:\|\s*(#\w{6})\s*,\s*(#\w{6})\s*)?-->", text[:2000])
+    return (m.group(1), m.group(2), m.group(3) or "#f59e0b", m.group(4) or "#22d3ee") if m else None
+
+
+def draw_cover(c, name, tagline, note, warm="#f59e0b", cool="#22d3ee"):
+    """Full-bleed dark cover: glowing bands, the person's name huge, the tagline, a small footer."""
+    W, H = A4
+    c.saveState()
+    c.setFillColor(colors.HexColor("#0b1020"))
+    c.rect(0, 0, W, H, stroke=0, fill=1)
+    # soft diagonal light bands (gold and cyan), stacked with low alpha for a glow
+    for col, x0, w in ((warm, -40, 230), (cool, 260, 150), (warm, 430, 90)):
+        for k in range(18):
+            c.setFillColor(colors.HexColor(col), alpha=0.022)
+            p = c.beginPath()
+            off = k * w / 38
+            p.moveTo(x0 + off, H)
+            p.lineTo(x0 + w - off, H)
+            p.lineTo(x0 + w - off - 330, 0)
+            p.lineTo(x0 + off - 330, 0)
+            p.close()
+            c.drawPath(p, stroke=0, fill=1)
+    # a thin gold rule and the eyebrow
+    m = 22 * mm
+    c.setFillColor(colors.HexColor("#f59e0b"))
+    c.rect(m, H - 40 * mm, 18 * mm, 1.6, stroke=0, fill=1)
+    c.setFont(FB, 9.5)
+    c.setFillColor(colors.HexColor("#fbbf24"))
+    c.drawString(m, H - 46 * mm, tx("MIB-HUB  ·  A BROWSER GAME ABOUT FIVE YEARS OF CAMPUS LIFE"))
+    # the name, huge
+    size = 110 if len(name) <= 6 else 84
+    c.setFillColor(colors.white)
+    c.setFont(FB, size)
+    c.drawString(m - 3, H * 0.47, tx(name.upper()))
+    c.setFont(FB, 30)
+    c.setFillColor(colors.HexColor("#fbbf24"))
+    c.drawString(m, H * 0.47 - 40, tx("Your Story Pack"))
+    # tagline, wrapped
+    c.setFont(F, 14)
+    c.setFillColor(colors.HexColor("#cbd5e1"))
+    y = H * 0.47 - 78
+    for ln in textwrap.wrap(tx(tagline), 52):
+        c.drawString(m, y, ln)
+        y -= 20
+    # what's inside
+    c.setFont(F, 10)
+    c.setFillColor(colors.HexColor("#94a3b8"))
+    c.drawString(m, 34 * mm, tx("Inside: a letter  ·  the game  ·  the whole story  ·  your missions  ·  your lines"))
+    c.setFillColor(colors.HexColor("#334155"))
+    c.rect(m, 28 * mm, W - 2 * m, 0.6, stroke=0, fill=1)
+    c.setFillColor(colors.HexColor("#94a3b8"))
+    c.drawString(m, 21 * mm, tx(note))
+    c.restoreState()
 
 
 def build(key):
@@ -223,14 +382,19 @@ def build(key):
         return None
     out = (ROOT / where[0] if where else PLAN) / (key + ".pdf")
     doc = SimpleDocTemplate(str(out), pagesize=A4, leftMargin=18 * mm, rightMargin=18 * mm, topMargin=18 * mm,
-                            bottomMargin=16 * mm, title="{{GAME_NAME}}: " + title, author="Muhammad Iliyasu Bugaje")
+                            bottomMargin=16 * mm, title=("{{GAME_NAME}}: " if key in OWNER_ONLY else "MIB-Hub: ") + title, author="Muhammad Iliyasu Bugaje")
     width = A4[0] - 36 * mm
     el = [Spacer(1, 70 * mm), Paragraph("MIB-HUB · THE OPEN-WORLD GAME", ST["sub"]), Spacer(1, 8), Paragraph(tx(title), ST["title"]),
           Spacer(1, 10), Paragraph(tx(audience(key) + " · " + date.today().strftime("%d %B %Y")), ST["sub"]), PageBreak()]
-    for k, src in enumerate(srcs):
+    texts = [src.read_text(encoding="utf8") for src in srcs]
+    cv = cover_info(texts[0])
+    if cv:
+        el = [Spacer(1, 1), PageBreak()]  # the cover is drawn straight onto page 1
+    undo = restyle(ROOMY) if texts[0].lstrip().startswith("<!-- pack-style: roomy -->") else {}
+    for k, text in enumerate(texts):
         if k:
             el.append(PageBreak())
-        el += flow(src.read_text(encoding="utf8"), width)
+        el += flow(text, width)
 
     def page(c, d):
         c.saveState()
@@ -240,7 +404,12 @@ def build(key):
         c.drawRightString(A4[0] - 18 * mm, 9 * mm, str(d.page))
         c.restoreState()
 
-    doc.build(el, onFirstPage=lambda c, d: None, onLaterPages=page)
+    try:
+        first = (lambda c, d: draw_cover(c, cv[0], cv[1], audience(key) + " · " + date.today().strftime("%d %B %Y"), cv[2], cv[3])) \
+            if cv else (lambda c, d: None)
+        doc.build(el, onFirstPage=first, onLaterPages=page)
+    finally:
+        restyle(undo)
     from reportlab.lib.utils import open_for_read  # noqa: F401  (keeps reportlab's lazy imports happy)
     pages = len(re.findall(rb"/Type\s*/Page[^s]", out.read_bytes()))
     print("%s.pdf  %d pages" % (key, pages))
