@@ -1,0 +1,63 @@
+{% load ee_tags %}{% if course_showcase %}
+{% setting "appearance.section_scene" "none" as band_scene %}<section class="pub-sec pub-courses{% if band_scene and band_scene != 'none' %} fx-band{% endif %}" id="courses" aria-labelledby="sec-courses" data-courses>
+  {% if band_scene and band_scene != "none" %}{% include "content/partials/fx_scene.html" with kind=band_scene %}{% endif %}
+  <div class="pub-courses__grid" aria-hidden="true"></div>
+  <div class="pub-wrap">
+    <div class="pub-sh">
+      <div>
+        <p class="pub-eyebrow pub-eyebrow--light">{% icon "book-open" 14 %} The EE handbook · 100 to 500 level</p>
+        <h2 id="sec-courses">{% if section.title %}{{ section.title }}{% else %}Five years of engineering, <span class="pub-grad">course by course</span>{% endif %}</h2>
+        <p>{% if section.subtitle %}{{ section.subtitle }}{% else %}Every course of the B.Eng Electrical Engineering curriculum (2021 handbook), from first-year mathematics and physics to machines, power systems, control, communications and high voltage. Hover a course for its units and prerequisites, or open its study page and interactive lab.{% endif %}</p>
+        {% with t=course_showcase.totals %}{% if t %}<ul class="pub-courses__totals" aria-label="The programme in numbers">
+          <li><b>{{ t.courses }}</b><span>courses</span></li><li><b>{{ t.units }}</b><span>credit units</span></li>{% if t.tools %}<li><b>{{ t.tools }}</b><span>interactive lab tools</span></li>{% endif %}<li><b>{{ t.levels }}</b><span>levels</span></li>
+        </ul>{% endif %}{% endwith %}
+      </div>
+      <div class="pub-courses__switch" role="tablist" aria-label="Level" data-level-switch>
+        <span class="pub-courses__ind" aria-hidden="true"></span>
+        {% for lv in course_showcase %}
+        <button type="button" role="tab" id="ctab-{{ lv.number }}" aria-controls="cpanel-{{ lv.number }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                tabindex="{% if forloop.first %}0{% else %}-1{% endif %}" data-level-tab="{{ lv.number }}"{% if forloop.first %} class="is-active"{% endif %}>
+          <b>{{ lv.number }}L</b><small>{{ lv.count }} courses<span class="pub-courses__u"> · {{ lv.units }} units</span></small>
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+
+    {% for lv in course_showcase %}
+    <div class="pub-courses__panel{% if forloop.first %} is-active{% endif %}" role="tabpanel" id="cpanel-{{ lv.number }}" aria-labelledby="ctab-{{ lv.number }}"{% if not forloop.first %} hidden{% endif %} data-level-panel="{{ lv.number }}">
+      {% for sem in lv.semesters %}
+      <div class="pub-cmq{% if forloop.counter|divisibleby:2 %} pub-cmq--rev{% endif %}" style="--dur:{{ sem.duration }}s">
+        <p class="pub-cmq__lab">{% icon "calendar-range" 14 %}{{ sem.label }} <span>{{ sem.units }} units</span></p>
+        <div class="pub-cmq__vp">
+          <ul class="pub-cmq__run" data-course-marquee>
+            {% for c in sem.courses %}{% include "content/sections/_course_chip.html" %}{% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if lv.featured %}
+      <div class="pub-cfeat">
+        <p class="pub-cfeat__lab">{% icon "sliders-horizontal" 14 %}Try the interactive labs · {{ lv.number }} level <span>{{ lv.tools }} tool{{ lv.tools|pluralize }}</span></p>
+        <div class="pub-cfeat__row">
+          {% for c in lv.featured %}
+          <a class="pub-cfeat__card pub-ctone--{{ c.tone }}" href="{% url 'handbook:course' c.slug %}#lab" style="--i:{{ forloop.counter0 }}">
+            <span class="pub-cfeat__code">{{ c.code }}</span>
+            <b>{{ c.title }}</b>
+            <span class="pub-cfeat__meta">{% icon "sliders-horizontal" 13 %}{{ c.lab_n }} lab tool{{ c.lab_n|pluralize }} · {{ c.units }} unit{{ c.units|pluralize }}</span>
+            <span class="pub-cfeat__go">{% icon "arrow-up-right" 16 %}</span>
+          </a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    <div class="pub-courses__foot">
+      <span class="pub-courses__legend"><i class="pub-ctone--core"></i>Core <i class="pub-ctone--cognate"></i>Cognate <i class="pub-ctone--restricted"></i>Restricted elective <i class="pub-ctone--elective"></i>Elective</span>
+      <span class="btn-group pub-courses__links"><a class="pub-btn pub-btn--glass" href="{% url 'knowledge:index' %}">{% icon "sparkles" 16 %}<span>Study hub</span></a><a class="pub-btn pub-btn--glass" href="{% url 'handbook:index' %}">{% icon "book-open" 16 %}<span>The full handbook</span></a></span>
+    </div>
+  </div>
+</section>
+{% endif %}

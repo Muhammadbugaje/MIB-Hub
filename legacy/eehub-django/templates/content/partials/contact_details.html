@@ -1,0 +1,6 @@
+{% load ee_tags %}<ul class="pub-cinfo">
+  {% if site_info.address %}<li><span class="pub-cinfo__ic tone-green">{% icon "map-pin" 18 %}</span><div><small>Address</small><b>{{ site_info.address }}</b></div></li>{% endif %}
+  {% if site_info.email %}<li><span class="pub-cinfo__ic tone-gold">{% icon "mail" 18 %}</span><div><small>E-mail</small><a href="mailto:{{ site_info.email }}">{{ site_info.email }}</a></div></li>{% endif %}
+  {% if site_info.phone %}<li><span class="pub-cinfo__ic tone-volt">{% icon "phone" 18 %}</span><div><small>Phone</small><a href="tel:{{ site_info.phone }}">{{ site_info.phone }}</a></div></li>{% endif %}
+  {% if site_info.office_hours %}<li><span class="pub-cinfo__ic tone-plum">{% icon "clock" 18 %}</span><div><small>Office hours</small><b>{{ site_info.office_hours }}</b></div></li>{% endif %}
+</ul>

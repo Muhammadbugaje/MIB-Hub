@@ -1,0 +1,28 @@
+{% load ee_tags %}
+<section class="pub-sec" id="research" aria-labelledby="sec-research">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="Research, labs and" hl="the global profession" sub="Our lecturers work on the problems Nigeria's power and communication networks face. The IEEE connects students to the wider profession." %}
+    <div class="pub-orgs">
+      <article class="pub-org" data-reveal>
+        <div class="pub-org__top"><span class="pub-org__lg tone-green">{% icon "flask-conical" 26 %}</span><div><h3>Research areas</h3><p class="pub-org__s">From the specialisations of our academic staff</p></div></div>
+        <div class="pub-areas">
+          {% for a in research_areas %}<span>{% icon "zap" 14 %}{{ a }}</span>{% empty %}
+          <span>{% icon "plug-zap" 14 %}Power systems</span><span>{% icon "zap" 14 %}High voltage engineering</span><span>{% icon "sun" 14 %}Renewable energy</span><span>{% icon "sliders-horizontal" 14 %}Control and automation</span><span>{% icon "radio-tower" 14 %}Communications</span><span>{% icon "cpu" 14 %}Electronics</span>{% endfor %}
+        </div>
+        <div class="pub-org__acts">
+          <a class="pub-org__act" href="{% url 'content:staff' %}">{% icon "users" 20 %}<b>Meet the lecturers</b><small>Interests and contacts</small></a>
+          <a class="pub-org__act" href="{% url 'content:programmes' %}">{% icon "microscope" 20 %}<b>Postgraduate study</b><small>M.Sc, MPhil, PhD</small></a>
+          <a class="pub-org__act" href="{% url 'research:index' %}">{% icon "lightbulb" 20 %}<b>Research and ideas</b><small>Publications, groups, idea board</small></a>
+        </div>
+      </article>
+      <article class="pub-org pub-org--ieee" data-reveal data-reveal-delay="100">
+        <div class="pub-org__top"><span class="pub-org__lg pub-org__lg--white">{% icon "globe" 26 %}</span><div><h3>IEEE and the profession</h3><p class="pub-org__s">Power and Energy · Communications · Women in Engineering</p></div></div>
+        <div class="pub-org__links">
+          <a href="https://ieeexplore.ieee.org/" target="_blank" rel="noopener">{% icon "book-marked" 18 %}IEEE Xplore digital library<small>{% icon "external-link" 13 %}</small></a>
+          <a href="https://www.ieee.org/membership/join/index.html" target="_blank" rel="noopener">{% icon "badge-check" 18 %}Become a student member<small>{% icon "external-link" 13 %}</small></a>
+          <a href="https://www.coren.gov.ng/" target="_blank" rel="noopener">{% icon "shield-check" 18 %}COREN registration<small>{% icon "external-link" 13 %}</small></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

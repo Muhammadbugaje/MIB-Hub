@@ -1,0 +1,113 @@
+{% load static ee_tags %}{% setting "appearance.hero_scene" "classic" as cfg_scene %}{% firstof fx_hero_scene cfg_scene "classic" as scene %}
+{% if hero_mode == "slides" and not fx_hero_scene %}{% firstof "classic" as scene %}{% endif %}
+<section class="pub-hero pub-hero--{{ hero_mode }}{% if scene != "classic" %} pub-hero--fx pub-hero--fx-{{ scene }}{% endif %}" aria-label="Welcome" data-hero data-hero-theme="{{ scene }}">
+  {% if scene != "classic" %}
+  {# Round 6: an animated visual theme chosen in Settings → Appearance and motion #}
+  <div class="pub-hero__fx">{% include "content/partials/fx_scene.html" with kind=scene %}</div>
+  {% elif hero_mode != "slides" %}
+  {% comment %}The still art paints first (and is all that shows with reduced motion or without JavaScript);
+     public.js then fades in the live layers from static/img/hero/ (scene.json): one still base,
+     gears/arc/waves moved by the compositor and a single canvas for the current pulses.{% endcomment %}
+  <div class="pub-hero__scene" aria-hidden="true" data-hero-scene data-hero-live="{% static 'img/hero/' %}">
+    <picture class="pub-hero__still">
+      <source media="(max-width: 700px)" srcset="{% static 'img/hero-scene-mobile.svg' %}">
+      <img src="{% static 'img/hero-scene.svg' %}" alt="" width="1440" height="900" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
+  {% endif %}
+
+  {% if hero_mode == "slides" or hero_mode == "both" %}
+  <div class="pub-slides" data-slides>
+    {% for s in hero_slides %}
+      <figure class="pub-slide{% if forloop.first %} is-active{% endif %}" data-slide>
+        <picture>
+          {% if s.mobile_image %}<source media="(max-width: 700px)" srcset="{{ s.mobile_image.url }}">{% endif %}
+          <img src="{{ s.image.url }}" alt="" {% if not forloop.first %}loading="lazy"{% else %}fetchpriority="high"{% endif %} decoding="async">
+        </picture>
+      </figure>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="pub-hero__inner pub-wrap">
+    <div class="pub-hero__copy">
+      {% if semester or next_event %}
+      <p class="pub-pill">
+        {% if session %}<span class="pub-pill__tag">{{ session.name }}</span>{% endif %}
+        <span class="pub-pill__live" aria-hidden="true"></span>
+        <span>{% if semester %}{{ semester.name }} is underway{% endif %}{% if semester and next_event %}<span class="pub-hide-sm"> · </span>{% endif %}{% if next_event %}<span class="{% if semester %}pub-hide-sm{% endif %}">{{ next_event.title }} · {{ next_event.starts_at|date:"j M" }}</span>{% endif %}</span>
+      </p>
+      {% endif %}
+
+      {% if hero_mode == "slides" or hero_mode == "both" %}
+        {% for s in hero_slides %}
+        <div class="pub-slide-copy{% if forloop.first %} is-active{% endif %}" data-slide-copy>
+          {% if forloop.first %}<h1 class="pub-hero__title">{% else %}<p class="pub-hero__title" role="heading" aria-level="2">{% endif %}{% if s.headline %}{{ s.headline }}{% else %}{{ tagline_head }} <span class="pub-grad">{{ tagline_tail }}</span>{% endif %}{% if forloop.first %}</h1>{% else %}</p>{% endif %}
+          {% if s.subline %}<p class="pub-hero__lead">{{ s.subline }}</p>{% endif %}
+          {% if s.cta_label and s.cta_url %}<a class="pub-btn pub-btn--gold pub-btn--lg pub-slide-cta" href="{{ s.cta_url }}">{{ s.cta_label }}{% icon "arrow-right" 18 %}</a>{% endif %}
+        </div>
+        {% endfor %}
+      {% else %}
+        <h1 class="pub-hero__title">{{ tagline_head }} <span class="pub-grad">{{ tagline_tail }}</span></h1>
+      {% endif %}
+
+      {% if typewriter %}
+      <p class="pub-type"><span class="sr-only">{{ typewriter|join:' ' }}</span>
+        <span class="pub-type__prompt" aria-hidden="true">&gt;_</span>
+        <span class="pub-type__words" aria-hidden="true" data-typewriter='[{% for w in typewriter %}"{{ w|escapejs }}"{% if not forloop.last %},{% endif %}{% endfor %}]'><span class="w1">{{ typewriter.0 }}</span></span>
+        <span class="pub-type__caret" aria-hidden="true"></span>
+      </p>
+      {% endif %}
+
+      {% if hero_mode == "animated" %}
+      <p class="pub-hero__lead pub-only-wide">Power systems, machines, electronics, telecommunications and control: {{ site_info.organisation_name }} has shaped electrical engineers since {{ established_year }}. {{ site_info.short_name }} brings students, lecturers, staff and alumni into one portal.</p>
+      <p class="pub-hero__lead pub-only-narrow">Shaping electrical engineers since {{ established_year }}, now in one portal for students, staff and alumni.</p>
+      {% endif %}
+
+      <div class="pub-hero__ctas">
+        <a class="pub-btn pub-btn--gold pub-btn--lg" href="{% url 'content:programmes' %}"><span><span class="pub-only-wide">Explore p</span><span class="pub-only-narrow">P</span>rogrammes</span>{% icon "arrow-right" 18 %}</a>
+        {% if request.user.is_authenticated %}
+          <a class="pub-btn pub-btn--glass pub-btn--lg" href="{% url 'dashboards:home' %}"><span class="pub-btn__dot">{% icon "layout-dashboard" 14 %}</span><span class="pub-only-wide">Open my dashboard</span><span class="pub-only-narrow">Dashboard</span></a>
+        {% else %}
+          <a class="pub-btn pub-btn--glass pub-btn--lg" href="{% url 'accounts:login' %}" data-signin-modal><span class="pub-btn__dot">{% icon "log-in" 14 %}</span><span class="pub-only-wide">Sign in to {{ site_info.short_name }}</span><span class="pub-only-narrow">Sign in</span></a>
+        {% endif %}
+        <a class="pub-hero__note" href="{% url 'content:guides' %}">New here? <b>Read the how-to guides</b></a>
+      </div>
+    </div>
+
+    {% if hero_stats %}
+    <ul class="pub-counters" aria-label="At a glance">
+      {% for s in hero_stats %}
+      <li class="pub-counter" style="--c:{% cycle '#e6c867' '#38e1f5' '#a78bfa' '#4ade80' %}">
+        <span class="pub-counter__ic">{% icon s.icon 18 %}</span>
+        <b>{{ s.prefix }}{% if s.number is not None %}<span data-countup="{{ s.number|floatformat:'0' }}">{{ s.display }}</span>{% else %}{{ s.display }}{% endif %}{{ s.suffix }}</b>
+        <span>{{ s.label }}{% if s.as_of %} · {{ s.as_of }}{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+
+  {% with latest=ticker.0|default:next_event %}{% if latest %}
+  <a class="pub-sheet" href="{{ latest.get_absolute_url }}">
+    <span class="pub-sheet__grab" aria-hidden="true"></span>
+    <span class="pub-sheet__hd">{% icon "megaphone" 14 %}Latest<span>All news →</span></span>
+    <span class="pub-sheet__row"><span class="pub-sheet__ic">{% if latest.starts_at %}{% icon "calendar-days" 18 %}{% else %}{% icon "newspaper" 18 %}{% endif %}</span><span><b>{{ latest.title }}</b><small>{% if latest.starts_at %}{{ latest.starts_at|date:"D j M" }}{% if latest.venue %} · {{ latest.venue }}{% endif %}{% else %}{{ latest.get_category_display }} · {{ latest.publish_at|date:"j M" }}{% endif %}</small></span></span>
+  </a>
+  {% endif %}{% endwith %}
+
+  {% if hero_mode == "slides" or hero_mode == "both" %}{% if hero_slides|length > 1 %}
+  <div class="pub-slide-dots" role="tablist" aria-label="Slides">
+    {% for s in hero_slides %}<button type="button" class="{% if forloop.first %}is-active{% endif %}" aria-label="Slide {{ forloop.counter }}" data-slide-dot="{{ forloop.counter0 }}"></button>{% endfor %}
+  </div>
+  {% endif %}{% endif %}
+
+  {% if hero_mode != "slides" %}
+  <div class="pub-arc-tag" aria-hidden="true"><span></span>arc · terminal A → B</div>
+  <div class="pub-scope" aria-hidden="true"><span><i style="color:#e6c867">L1</i> 230 V ∠0°</span><span><i style="color:#38e1f5">L2</i> 230 V ∠−120°</span><span><i style="color:#a78bfa">L3</i> 230 V ∠+120°</span><span data-hz>50.00 Hz</span></div>
+  {% endif %}
+  <button class="pub-calm" type="button" aria-pressed="false" data-calm-toggle title="Pause or play the animation">
+    <span class="pub-calm__pause">{% icon "pause" 14 %}<span>Pause motion</span></span><span class="pub-calm__play">{% icon "play" 14 %}<span>Play motion</span></span>
+  </button>
+  <a class="pub-scroll-cue" href="#home-sections" aria-label="Scroll to content"><span></span></a>
+</section>

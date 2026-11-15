@@ -1,0 +1,19 @@
+{% load ee_tags %}{% if hods %}
+<section class="pub-sec" id="hods" aria-labelledby="sec-hods">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="The people who" hl="led the way" sub="Every Head of Department since the department became autonomous. Names, portraits and tenures are kept by the department office." carousel="hod-track" eyebrow="Roll of Heads of Department" %}
+  </div>
+  <div class="pub-hods" id="hod-track" tabindex="0" aria-label="Heads of Department" data-scroller data-scroll-end>
+    {% for h in hods %}
+    <article class="pub-hod{% if h.is_current %} is-current{% endif %}">
+      {% if h.is_current %}<span class="pub-badge pub-badge--gold pub-hod__now">{% icon "sparkles" 12 %}Current</span>{% else %}<span class="pub-hod__no">#{{ h.number|stringformat:"02d" }}</span>{% endif %}
+      <div class="pub-hod__photo">{% if h.photo %}<img src="{{ h.photo.url }}" alt="" loading="lazy">{% else %}<svg viewBox="0 0 80 80" fill="currentColor" aria-hidden="true"><circle cx="40" cy="30" r="15"/><path d="M10 80c2-18 14-28 30-28s28 10 30 28z"/></svg>{% endif %}</div>
+      <b>{{ h.display_name }}</b>
+      <small>{{ h.tenure }}{% if h.is_acting %} · acting{% endif %}</small>
+      <span class="pub-hod__bar" aria-hidden="true"></span>
+    </article>
+    {% endfor %}
+    <a class="pub-hod pub-hod--more" href="{% url 'content:hods' %}">{% icon "crown" 26 %}<b>The full roll</b><small>Biographies and achievements</small></a>
+  </div>
+</section>
+{% endif %}

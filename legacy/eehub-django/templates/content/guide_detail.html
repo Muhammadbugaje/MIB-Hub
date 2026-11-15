@@ -1,0 +1,45 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}{{ guide.title }}{% endblock %}
+{% block meta_description %}{{ guide.summary }}{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title=guide.title sub=guide.summary eyebrow=guide.audience eyebrow_icon=guide.icon crumb_url="/guides/" crumb_label="Guides" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-layout">
+      <article>
+        <div class="pub-gblocks">
+          {% for b in guide.blocks %}
+            {% with kind=b.0 %}
+            {% if kind == "p" %}<p>{{ b.1 }}</p>
+            {% elif kind == "h" %}<h2 id="s{{ forloop.counter }}">{{ b.1 }}</h2>
+            {% elif kind == "steps" %}<ol class="pub-gsteps">{% for s in b.1 %}<li>{{ s }}</li>{% endfor %}</ol>
+            {% elif kind == "bullets" %}<ul class="pub-gbullets">{% for s in b.1 %}<li>{{ s }}</li>{% endfor %}</ul>
+            {% elif kind == "tip" %}<div class="pub-callout pub-callout--tip">{% icon "lightbulb" 20 %}<div><b>{{ b.1 }}</b><p>{{ b.2 }}</p></div></div>
+            {% elif kind == "important" %}<div class="pub-callout pub-callout--important">{% icon "triangle-alert" 20 %}<div><b>{{ b.1 }}</b><p>{{ b.2 }}</p></div></div>
+            {% elif kind == "note" %}<div class="pub-callout pub-callout--note">{% icon "info" 20 %}<div><b>{{ b.1 }}</b><p>{{ b.2 }}</p></div></div>
+            {% elif kind == "soon" %}<div class="pub-callout pub-callout--soon">{% icon "rocket" 20 %}<div><b>{{ b.1 }}</b><p>{{ b.2 }}</p></div></div>
+            {% endif %}
+            {% endwith %}
+          {% endfor %}
+        </div>
+        <nav class="pub-guide-nav" aria-label="More guides">
+          {% if prev_guide %}<a href="{% url 'content:guide_detail' prev_guide.slug %}"><small>Previous</small><b>{{ prev_guide.title }}</b></a>{% endif %}
+          {% if next_guide %}<a class="next" href="{% url 'content:guide_detail' next_guide.slug %}"><small>Next</small><b>{{ next_guide.title }}</b></a>{% endif %}
+        </nav>
+      </article>
+      <aside class="pub-aside">
+        <div class="pub-panel">
+          <h2>On this page</h2>
+          <nav class="pub-toc">{% for b in guide.blocks %}{% if b.0 == "h" %}<a href="#s{{ forloop.counter }}">{{ b.1 }}</a>{% endif %}{% endfor %}</nav>
+        </div>
+        <div class="pub-panel">
+          <h2>Ready?</h2>
+          {% if request.user.is_authenticated %}<a class="pub-btn pub-btn--primary pub-btn--block" href="{% url 'dashboards:home' %}">{% icon "layout-dashboard" 16 %}Open my dashboard</a>
+          {% else %}<a class="pub-btn pub-btn--gold pub-btn--block" href="{% url 'accounts:login' %}" data-signin-modal>{% icon "log-in" 16 %}Sign in</a>{% endif %}
+          <a class="pub-btn pub-btn--ghost pub-btn--block pub-mt" href="{% url 'content:guides' %}">{% icon "life-buoy" 16 %}All guides</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}

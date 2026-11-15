@@ -1,0 +1,43 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}People{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="People" sub="The academic staff and the support team of the Department of Electrical Engineering." eyebrow="About" eyebrow_icon="users" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <form class="pub-toolbar" method="get" role="search" aria-label="Find people">
+      <nav class="pub-tabs" aria-label="Staff groups">
+        <a class="{% if tab != 'support' %}is-active{% endif %}"{% if tab != 'support' %} aria-current="page"{% endif %} href="?tab=academic{% if q %}&q={{ q|urlencode }}{% endif %}">{% icon "presentation" 15 %}Academic staff <small>{{ lecturers|length }}</small></a>
+        <a class="{% if tab == 'support' %}is-active{% endif %}"{% if tab == 'support' %} aria-current="page"{% endif %} href="?tab=support{% if q %}&q={{ q|urlencode }}{% endif %}">{% icon "wrench" 15 %}Support staff <small>{{ support|length }}</small></a>
+      </nav>
+      <input type="hidden" name="tab" value="{{ tab }}">
+      {% if tab != "support" %}<select class="input pub-select" name="rank" data-autosubmit aria-label="Rank"><option value="">Every rank</option>{% for r in ranks %}<option{% if r == rank %} selected{% endif %}>{{ r }}</option>{% endfor %}</select>{% endif %}
+      <label class="pub-search">{% icon "search" 16 %}<span class="sr-only">Search people</span><input class="input" type="search" name="q" value="{{ q }}" placeholder="Search by name or interest"></label>
+    </form>
+    {% if tab == "support" %}
+      {% if support %}
+      <div class="pub-people">
+        {% for s in support %}
+        <a class="pub-person" href="{% url 'content:staff_detail' s.person.public_id %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 40 %}">
+          {% include "content/partials/person_photo.html" with p=s.person %}
+          <b>{{ s.person.full_name }}</b><span class="r">{{ s.designation|default:"Staff" }}</span>{% if s.unit %}<span class="s">{{ s.unit }}</span>{% endif %}
+          {% if s.status == "on_leave" %}<span class="pub-badge">On leave</span>{% endif %}
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}<div class="pub-empty">{% icon "users" 36 %}<h2>No support staff found</h2><p>{% if q %}Try another search.{% else %}The directory is being completed.{% endif %}</p></div>{% endif %}
+    {% else %}
+      {% if lecturers %}
+      <div class="pub-people">
+        {% for l in lecturers %}
+        <a class="pub-person" href="{% url 'content:staff_detail' l.person.public_id %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 40 %}">
+          {% include "content/partials/person_photo.html" with p=l.person %}
+          <b>{{ l.person.full_name }}</b><span class="r">{{ l.rank }}{% if l.is_visiting %} · visiting{% endif %}</span>{% if l.specialisation %}<span class="s">{{ l.specialisation }}</span>{% endif %}
+          {% if l.status == "on_leave" %}<span class="pub-badge">On leave</span>{% endif %}
+        </a>
+        {% endfor %}
+      </div>
+      {% else %}<div class="pub-empty">{% icon "users" 36 %}<h2>No lecturers found</h2><p>{% if q or rank %}Try another search or rank.{% else %}The directory is being completed.{% endif %}</p></div>{% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

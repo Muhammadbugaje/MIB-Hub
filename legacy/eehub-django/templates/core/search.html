@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static ee_tags %}
+{% block title %}{% if q %}Search: {{ q }}{% else %}Search{% endif %}{% endblock %}
+{% block page_title %}Search{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/system.css' %}">{% endblock %}
+{% block content %}
+<div class="sys-page sys-searchpage">
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "search" 14 %} Search EE Hub</span>
+      <h1 class="ee-page-header__title">{% if q %}Results for “{{ q }}”{% else %}Search{% endif %}</h1>
+      <p class="ee-page-header__description">People{% if not perms.accounts.directory_view %} (with directory access){% endif %}, offices, pages, news and events.</p>
+    </div>
+  </header>
+
+  <form method="get" class="sys-search sys-search--big" role="search" aria-label="Search EE Hub">
+    <span class="sys-search__icon">{% icon "search" 18 %}</span>
+    <input class="input" type="search" name="q" value="{{ q }}" placeholder="Type at least two letters…" aria-label="Search" autofocus minlength="2">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+
+  {% if q and q|length < 2 %}
+    <div class="ee-empty">Type at least two letters to search.</div>
+  {% elif q %}
+    {% if results %}
+      <p class="ee-muted sys-searchpage__count">{{ results|length }} result{{ results|length|pluralize }}</p>
+      {% regroup results by kind as groups %}
+      <div class="sys-searchpage__groups">
+        {% for g in groups %}
+          <section class="ee-card" aria-labelledby="sg-{{ forloop.counter }}">
+            <div class="ee-card__head"><h2 id="sg-{{ forloop.counter }}">{{ g.grouper }}{% if g.list|length > 1 %}s{% endif %}</h2><span class="ee-card__sub">{{ g.list|length }}</span></div>
+            <ul class="ee-list">
+              {% for r in g.list %}
+                <li>
+                  <span class="ee-ic tone-{% if r.kind == 'Person' %}green{% elif r.kind == 'Office' %}gold{% elif r.kind == 'News' %}volt{% elif r.kind == 'Event' %}plum{% else %}slate{% endif %}">{% icon r.icon 16 %}</span>
+                  <div class="ee-row__body">
+                    {% if r.url %}<a class="ee-row__title sys-link" href="{{ r.url }}">{{ r.title }}</a>{% else %}<div class="ee-row__title">{{ r.title }}</div>{% endif %}
+                    {% if r.sub %}<div class="ee-row__meta">{{ r.sub|truncatechars:140 }}</div>{% endif %}
+                  </div>
+                  {% if r.url %}<a class="btn btn-ghost btn-sm" href="{{ r.url }}" aria-label="Open {{ r.title }}">{% icon "arrow-right" 14 %}</a>{% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endfor %}
+      </div>
+    {% else %}
+      {% include "partials/empty_state.html" with title="Nothing found" body="Check the spelling or try a shorter word. Registration numbers and e-mail addresses work too." variant="filtered" only %}
+    {% endif %}
+  {% else %}
+    <div class="ee-empty">Search for a person, an office, a page, news or an event.</div>
+  {% endif %}
+</div>
+{% endblock %}

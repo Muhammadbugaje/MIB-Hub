@@ -1,0 +1,44 @@
+{% load ee_tags %}
+<section class="pub-sec" id="about" aria-labelledby="sec-about">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="Engineering the energy that" hl="moves a nation" sub="One of the founding engineering departments of Ahmadu Bello University, Zaria, training electrical engineers for industry, research and public service across Nigeria and beyond." more_url=about_page.get_absolute_url more_label="Read our full profile" %}
+    <div class="pub-about">
+      <article class="pub-vm pub-vm--feature" data-reveal>
+        <span class="pub-vm__ic">{% icon "zap" 26 %}</span>
+        <h3>From the power station to the microchip</h3>
+        <p>A five-year B.Eng with practical laboratories, industrial training and a final-year project, followed by PGD, M.Sc, MPhil and PhD study.</p>
+        <div class="pub-vm__areas">
+          <span>{% icon "plug-zap" 15 %}Power and machines</span>
+          <span>{% icon "cpu" 15 %}Electronics</span>
+          <span>{% icon "radio-tower" 15 %}Communications</span>
+          <span>{% icon "sliders-horizontal" 15 %}Control and instrumentation</span>
+        </div>
+      </article>
+      {% with v=about|get_item:"vision" m=about|get_item:"mission" %}
+      {% if v %}
+      <article class="pub-vm" data-reveal data-reveal-delay="80">
+        <span class="pub-vm__ic tone-gold">{% icon "telescope" 26 %}</span>
+        <h3>Our vision</h3>
+        <p>{{ v.para|truncatewords:48 }}</p>
+        <svg class="pub-vm__wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+      </article>
+      {% endif %}
+      {% if m %}
+      <article class="pub-vm" data-reveal data-reveal-delay="160">
+        <span class="pub-vm__ic tone-volt">{% icon "target" 26 %}</span>
+        <h3>Our mission</h3>
+        {% if m.bullets %}<ul>{% for b in m.bullets|slice:":3" %}<li>{% icon "circle-check" 17 %}<span>{{ b|truncatewords:22 }}</span></li>{% endfor %}</ul>{% else %}<p>{{ m.para|truncatewords:48 }}</p>{% endif %}
+        <svg class="pub-vm__wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </article>
+      {% endif %}
+      {% if not v and not m %}
+      <article class="pub-vm" data-reveal data-reveal-delay="80">
+        <span class="pub-vm__ic tone-gold">{% icon "landmark" 26 %}</span>
+        <h3>Since {{ established_year }}</h3>
+        <p>Teaching, research and service from the Samaru campus of {{ site_info.organisation_name }}.</p>
+      </article>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+</section>

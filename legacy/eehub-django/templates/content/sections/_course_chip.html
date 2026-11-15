@@ -1,0 +1,16 @@
+{% load ee_tags %}<li class="pub-cchip pub-ctone--{{ c.tone }}{% if c.lab_n %} has-page{% endif %}">
+  <a class="pub-cchip__a" href="{% url 'handbook:course' c.slug %}">
+    <span class="pub-cchip__code">{{ c.code }}</span>
+    <span class="pub-cchip__title">{{ c.title }}</span>
+    <span class="pub-cchip__u" aria-hidden="true">{{ c.units }}<small>CU</small></span>
+    {% if c.lab_n %}<span class="pub-cchip__star" aria-hidden="true" title="Interactive lab: {{ c.lab_n }} tool{{ c.lab_n|pluralize }}">{% icon "sliders-horizontal" 12 %}</span>{% endif %}
+    <span class="sr-only">, {{ c.units }} credit units{% if c.lab_n %}, interactive lab with {{ c.lab_n }} tool{{ c.lab_n|pluralize }}{% endif %}, {{ c.get_course_type_display|lower }}{% if c.prereq_list %}, prerequisites {{ c.prereq_list|join:", " }}{% endif %}</span>
+    <span class="pub-cchip__card" aria-hidden="true">
+      <span class="pub-cchip__row"><b>{{ c.units }}</b> credit units · {% if c.semester_order == 1 %}first{% else %}second{% endif %} semester</span>
+      <span class="pub-cchip__row"><i class="pub-cchip__dot"></i>{{ c.get_course_type_display }}</span>
+      <span class="pub-cchip__row pub-cchip__pre">{% icon "git-branch" 13 %}{% if c.prereq_list %}{{ c.prereq_list|join:" · " }}{% else %}No prerequisite{% endif %}</span>
+      {% if c.lab_n %}<span class="pub-cchip__row pub-cchip__lab">{% icon "sliders-horizontal" 13 %}Interactive lab · {{ c.lab_n }} tool{{ c.lab_n|pluralize }}</span>{% endif %}
+      <span class="pub-cchip__open">Open the study page{% icon "arrow-right" 13 %}</span>
+    </span>
+  </a>
+</li>

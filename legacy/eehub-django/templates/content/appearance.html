@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load static ee_tags %}
+{% block title %}Appearance and motion{% endblock %}
+{% block page_title %}Appearance{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/appearance.css' %}">{% endblock %}
+{% block content %}
+<div class="apx" data-appearance>
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "wand-sparkles" 14 %} Settings · Appearance and motion</span>
+      <h1 class="ee-page-header__title">Visual themes for the public website</h1>
+      <p class="ee-page-header__description">Pick the animated scene behind the homepage headline, an optional scene for the dark bands, the colours and how much moves. Preview any scene on the real homepage before you save. Visitors whose phone or computer asks for reduced motion always see a still page.</p>
+    </div>
+    <div class="ee-page-header__actions">
+      <a class="btn btn-ghost" href="{% url 'config:settings' %}#appearance-and-motion">{% icon "sliders-horizontal" 16 %}All settings</a>
+      <a class="btn btn-ghost" href="{% url 'content:home' %}" target="_blank" rel="noopener">{% icon "external-link" 16 %}Open the homepage</a>
+    </div>
+  </header>
+
+  {% if missing %}
+  <div class="alert alert-warning" role="status">{% icon "triangle-alert" 16 %} Some settings are not in the database yet. Run <code>manage.py seed_config</code>.</div>
+  {% endif %}
+
+  <form method="post" class="apx-form">
+    {% csrf_token %}
+
+    {# ------------------------------------------------ hero scene #}
+    <section class="ee-card apx-sec" aria-labelledby="apx-hero">
+      <div class="ee-card__head"><h2 id="apx-hero">{% icon "monitor-play" 17 %}Homepage hero</h2><span class="ee-card__sub">Behind the headline, full width</span></div>
+      <div class="apx-scenes" role="radiogroup" aria-labelledby="apx-hero">
+        {% for s in scenes %}
+        <label class="apx-scene{% if current|get_item:'appearance.hero_scene' == s.key %} is-on{% endif %}" data-scene="{{ s.key }}">
+          <input type="radio" name="appearance.hero_scene" value="{{ s.key }}"{% if current|get_item:'appearance.hero_scene' == s.key %} checked{% endif %}>
+          <span class="apx-scene__thumb" style="background-image:url('{% static 'img/fx/' %}{{ s.key }}.webp')">
+            <span class="apx-scene__check" aria-hidden="true">{% icon "check" 14 %}</span>
+          </span>
+          <span class="apx-scene__body">
+            <b>{% icon s.icon 15 %}{{ s.label }}</b>
+            <small>{{ s.note }}</small>
+          </span>
+          <button type="button" class="btn btn-sm btn-ghost apx-scene__preview" data-preview="{% url 'content:appearance_preview' s.key %}" data-title="{{ s.label }}">{% icon "eye" 14 %}Preview</button>
+        </label>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="apx-two">
+      {# ------------------------------------------------ band scene #}
+      <section class="ee-card apx-sec" aria-labelledby="apx-band">
+        <div class="ee-card__head"><h2 id="apx-band">{% icon "layers" 17 %}Dark bands</h2><span class="ee-card__sub">“The department in numbers” and the course showcase</span></div>
+        <div class="apx-pills" role="radiogroup" aria-labelledby="apx-band">
+          <label class="apx-pill"><input type="radio" name="appearance.section_scene" value="none"{% if current|get_item:'appearance.section_scene' == 'none' or not current|get_item:'appearance.section_scene' %} checked{% endif %}><span>None</span></label>
+          {% for s in band_scenes %}
+          <label class="apx-pill"><input type="radio" name="appearance.section_scene" value="{{ s.key }}"{% if current|get_item:'appearance.section_scene' == s.key %} checked{% endif %}><span>{% icon s.icon 14 %}{{ s.label }}</span></label>
+          {% endfor %}
+        </div>
+        <p class="apx-hint">Keep this to “None” or a light scene if the hero already uses a heavy one (particles, black hole): phones then run only one scene at a time anyway, because scenes pause off screen.</p>
+      </section>
+
+      {# ------------------------------------------------ colours #}
+      <section class="ee-card apx-sec" aria-labelledby="apx-col">
+        <div class="ee-card__head"><h2 id="apx-col">{% icon "palette" 17 %}Scene colours</h2><span class="ee-card__sub">Applies to every scene except Classic</span></div>
+        <div class="apx-swatches" role="radiogroup" aria-labelledby="apx-col">
+          {% for key, label, cols in palettes %}
+          <label class="apx-swatch">
+            <input type="radio" name="appearance.scene_palette" value="{{ key }}"{% if current|get_item:'appearance.scene_palette' == key %} checked{% endif %}>
+            <span class="apx-swatch__chip"{% if cols %} style="--a:{{ cols.0 }};--b:{{ cols.1 }};--bg:{{ cols.2 }}"{% else %} style="--a:{{ current|get_item:'appearance.scene_colour_a' }};--b:{{ current|get_item:'appearance.scene_colour_b' }};--bg:#0b0f0d"{% endif %} data-swatch="{{ key }}"></span>
+            <span>{{ label }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        <div class="apx-custom">
+          <label>Colour A (warm) <input type="color" name="appearance.scene_colour_a" value="{{ current|get_item:'appearance.scene_colour_a'|default:'#e6c867' }}" data-colour="a"></label>
+          <label>Colour B (cool) <input type="color" name="appearance.scene_colour_b" value="{{ current|get_item:'appearance.scene_colour_b'|default:'#38e1f5' }}" data-colour="b"></label>
+        </div>
+      </section>
+    </div>
+
+    {# ------------------------------------------------ motion #}
+    <section class="ee-card apx-sec" aria-labelledby="apx-motion">
+      <div class="ee-card__head"><h2 id="apx-motion">{% icon "activity" 17 %}Motion</h2><span class="ee-card__sub">The whole public website</span></div>
+      <div class="apx-motion">
+        <div class="apx-seg" role="radiogroup" aria-label="Motion level">
+          <label><input type="radio" name="appearance.motion" value="full"{% if current|get_item:'appearance.motion' == 'full' %} checked{% endif %}><span><b>Full</b><small>Scenes, scroll and text animation</small></span></label>
+          <label><input type="radio" name="appearance.motion" value="reduced"{% if current|get_item:'appearance.motion' == 'reduced' %} checked{% endif %}><span><b>Reduced</b><small>Slower scenes, shorter entrances</small></span></label>
+          <label><input type="radio" name="appearance.motion" value="off"{% if current|get_item:'appearance.motion' == 'off' %} checked{% endif %}><span><b>Off</b><small>Still pictures, nothing moves</small></span></label>
+        </div>
+        <div class="apx-toggles">
+          <label class="apx-toggle"><input type="checkbox" name="appearance.text_animations"{% if current|get_item:'appearance.text_animations' %} checked{% endif %}><span><b>Pop-up headings</b><small>Headlines rise in word by word</small></span></label>
+          <label class="apx-toggle"><input type="checkbox" name="appearance.scroll_animations"{% if current|get_item:'appearance.scroll_animations' %} checked{% endif %}><span><b>Scroll animations</b><small>Sections and cards rise in; parallax, tilt and the progress line</small></span></label>
+          <label class="apx-toggle"><input type="checkbox" name="appearance.marquee"{% if current|get_item:'appearance.marquee' %} checked{% endif %}><span><b>Discipline marquee</b><small>Moving words under the hero (edit them in All settings)</small></span></label>
+        </div>
+      </div>
+    </section>
+
+    <div class="apx-save">
+      <span class="apx-save__note">{% icon "info" 15 %}Changes are logged and appear on the website immediately.</span>
+      <button class="btn btn-primary btn-lg" type="submit">{% icon "check" 18 %}Save appearance</button>
+    </div>
+  </form>
+
+  <dialog class="apx-dialog" data-preview-dialog aria-labelledby="apx-dialog-title">
+    <div class="apx-dialog__bar">
+      <b id="apx-dialog-title" data-preview-title>Preview</b>
+      <div class="apx-dialog__sizes" role="group" aria-label="Preview size">
+        <button type="button" class="btn btn-sm btn-ghost is-on" data-size="desktop">{% icon "monitor" 14 %}Desktop</button>
+        <button type="button" class="btn btn-sm btn-ghost" data-size="phone">{% icon "smartphone" 14 %}Phone</button>
+      </div>
+      <a class="btn btn-sm btn-ghost" href="#" target="_blank" rel="noopener" data-preview-open>{% icon "external-link" 14 %}Full page</a>
+      <button type="button" class="btn btn-sm btn-ghost" data-preview-close aria-label="Close preview">{% icon "x" 16 %}</button>
+    </div>
+    <div class="apx-dialog__stage" data-preview-stage><iframe title="Homepage preview" data-preview-frame src="about:blank"></iframe></div>
+  </dialog>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/fx/appearance.js' %}" defer></script>{% endblock %}

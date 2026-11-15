@@ -1,0 +1,28 @@
+{% load static ee_tags %}{% if milestones_university %}
+<section class="pub-sec" id="abu" aria-labelledby="sec-abu">
+  <div class="pub-wrap">
+    <div class="pub-abu">
+      <div class="pub-abu__crest">
+        <span class="pub-abu__aura" aria-hidden="true"></span>
+        <span class="pub-abu__halo" aria-hidden="true"></span>
+        {% crest 300 "pub-abu__img" "Ahmadu Bello University crest" %}
+      </div>
+      <div class="pub-abu__copy">
+        <p class="pub-eyebrow">{{ section.get_key_display }}</p>
+        <h2 id="sec-abu">{% if section.title %}{{ section.title }}{% else %}Part of <span class="pub-hl">{{ site_info.organisation_name }}</span>{% endif %}</h2>
+        <p class="pub-lead">{{ section.subtitle|default:"One of the largest universities in sub-Saharan Africa, with the Faculty of Engineering on its Samaru campus." }}</p>
+        <ol class="pub-abu__list">
+          {% for m in milestones_university %}
+          <li data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 80 %}"><span class="pub-abu__yr">{{ m.year_label }}</span><div><b>{{ m.title }}</b>{% if m.description %}<p>{{ m.description }}</p>{% endif %}</div></li>
+          {% endfor %}
+        </ol>
+        <div class="pub-abu__facts">
+          <span>{% icon "map-pin" 16 %}Samaru campus, Zaria</span>
+          <span>{% icon "building-2" 16 %}{{ site_info.faculty_name }}</span>
+          <span>{% icon "calendar-heart" 16 %}Since {{ established_year }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,26 @@
+{% extends "base_public.html" %}{% load static ee_tags living_tags %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Gallery" sub="Pictures from lectures, laboratories, EESA events and department occasions." eyebrow="Community" eyebrow_icon="images" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% if page_obj.object_list %}
+    <div class="pub-cards lv-albums">
+      {% for a in page_obj %}{% with imgs=a.images.all %}
+      <a class="pub-card lv-album" href="{% url 'content:album_detail' a.slug %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 40 %}">
+        <div class="pub-card__media pub-card__media--tall lv-media lv-album__mosaic{% if imgs|length >= 3 %} has-3{% endif %}">
+          {% with img=a.cover_image %}{% if img %}<img class="lv-album__main" src="{{ img.url }}" alt="" loading="lazy">{% else %}{% cover_art a %}{% endif %}{% endwith %}
+          {% if imgs|length >= 3 %}<span class="lv-album__side">{% for im in imgs|slice:"1:3" %}<img src="{{ im.image.url }}" alt="" loading="lazy">{% endfor %}</span>{% endif %}
+          <span class="pub-badge pub-badge--glassgold">{% icon "images" 12 %}{{ imgs|length }}</span>
+        </div>
+        <div class="pub-card__body"><h2>{{ a.title }}</h2>{% if a.taken_on %}<div class="pub-card__meta"><span>{% icon "calendar" 13 %}{{ a.taken_on|date:"j F Y" }}</span></div>{% endif %}{% if a.description %}<p>{{ a.description|truncatewords:20 }}</p>{% endif %}<span class="pub-card__go">View album{% icon "arrow-right" 15 %}</span></div>
+      </a>
+      {% endwith %}{% endfor %}
+    </div>
+    {% include "content/partials/pager.html" %}
+    {% else %}
+    <div class="pub-empty">{% icon "images" 36 %}<h2>No albums yet</h2><p>Pictures will appear here after department events.</p></div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

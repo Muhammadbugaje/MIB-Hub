@@ -1,0 +1,13 @@
+{% load ee_tags %}{% if partners %}
+<section class="pub-sec pub-sec--compact" id="partners" aria-labelledby="sec-partners">
+  <div class="pub-wrap">
+    <p class="pub-partners__lab" id="sec-partners">{{ section.title|default:"Working with industry, government and alumni" }}</p>
+    <div class="pub-marquee{% if partners|length > 4 %} is-moving{% endif %}">
+      <div class="pub-marquee__run">
+        {% for p in partners %}{% include "content/partials/partner_chip.html" %}{% endfor %}
+        {% if partners|length > 4 %}{% for p in partners %}{% include "content/partials/partner_chip.html" with dup=True %}{% endfor %}{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,19 @@
+{% load ee_tags %}<form class="pub-cform" method="post" action="{% url 'core:contact_submit' %}" data-contact-form novalidate>
+  {% csrf_token %}
+  <div class="pub-cform__ok" role="status" hidden>{% icon "circle-check" 22 %}<div><b>Message sent</b><p data-contact-ok></p></div></div>
+  <div class="pub-cform__err" role="alert" hidden></div>
+  <div class="pub-cform__grid">
+    <div class="ee-field"><label for="cf-name">Your name</label><input class="input" id="cf-name" name="name" required maxlength="150" autocomplete="name"></div>
+    <div class="ee-field"><label for="cf-email">E-mail</label><input class="input" id="cf-email" name="email" type="email" required autocomplete="email"></div>
+  </div>
+  <div class="pub-cform__grid">
+    <div class="ee-field"><label for="cf-cat">About</label><select class="input" id="cf-cat" name="category">{% for c in contact_categories %}<option>{{ c }}</option>{% endfor %}</select></div>
+    <div class="ee-field"><label for="cf-subject">Subject <span class="pub-opt">(optional)</span></label><input class="input" id="cf-subject" name="subject" maxlength="200"></div>
+  </div>
+  <div class="ee-field"><label for="cf-message">Message</label><textarea class="input" id="cf-message" name="message" rows="5" required minlength="10"></textarea></div>
+  <div class="pub-hp" aria-hidden="true"><label for="cf-website">Leave this empty</label><input id="cf-website" name="website" tabindex="-1" autocomplete="off"></div>
+  <div class="pub-cform__foot">
+    <small>{% icon "lock" 13 %} We only use your details to reply.</small>
+    <button class="pub-btn pub-btn--primary" type="submit">{% icon "send" 16 %}<span>Send message</span></button>
+  </div>
+</form>

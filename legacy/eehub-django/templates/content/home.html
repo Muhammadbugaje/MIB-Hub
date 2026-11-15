@@ -1,0 +1,34 @@
+{% extends "base_public.html" %}{% load static ee_tags content_tags %}
+{% block full_title %}{{ site_info.department_name|cut:"Department of " }} · {{ site_info.organisation_name }}{% endblock %}
+{% block nav_class %}pub-nav--overlay{% endblock %}
+{% block body_class %}pub-home{% if calm_default %} is-calm{% endif %}{% endblock %}
+{% block content %}
+{% include "content/partials/hero.html" %}
+{% include "content/partials/fx_marquee.html" %}
+
+<div id="home-sections">
+{% for section in sections %}
+  {% with tpl="content/sections/"|add:section.key|add:".html" %}{% include tpl %}{% endwith %}
+{% endfor %}
+
+{% for p in extra_pages %}
+  <section class="pub-sec pub-sec--page{% cycle '' ' pub-sec--tint' %}" id="page-{{ p.slug }}">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">{% if p.eyebrow %}{{ p.eyebrow }}{% else %}{% icon p.icon 14 %} {{ p.get_nav_group_display|default:"From the department" }}{% endif %}</p>
+          <h2>{{ p.title }}</h2>
+          {% if p.summary %}<p>{{ p.summary }}</p>{% endif %}
+        </div>
+        <a class="pub-btn pub-btn--ghost pub-sh__more" href="{{ p.get_absolute_url }}">Open the page{% icon "arrow-right" 16 %}</a>
+      </div>
+      <div class="pub-home-page{% if p.hero_image %} has-image{% endif %}">
+        {% if p.hero_image %}<img class="pub-home-page__img" src="{{ p.hero_image.url }}" alt="" loading="lazy">{% endif %}
+        <div class="pub-prose pub-prose--clamp">{{ p.body|markdownify }}</div>
+      </div>
+    </div>
+  </section>
+{% endfor %}
+</div>
+{% endblock %}
+{% block extra_js %}{% endblock %}

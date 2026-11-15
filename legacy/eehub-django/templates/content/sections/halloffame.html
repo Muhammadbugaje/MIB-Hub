@@ -1,0 +1,22 @@
+{% load ee_tags %}{% if awards %}
+<section class="pub-sec" id="halloffame" aria-labelledby="sec-halloffame">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="Celebrating" hl="excellence" sub="Students, lecturers and alumni recognised by the department and beyond." eyebrow="Hall of fame and awards" %}
+    <div class="pub-fame{% if awards|length == 1 %} is-single{% endif %}">
+      {% for a in awards %}
+      <article class="pub-aw{% if forloop.first %} pub-aw--big{% endif %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 70 %}">
+        {% if forloop.first %}<svg class="pub-aw__rays" viewBox="0 0 100 100" aria-hidden="true"><g stroke="#e6d39a" stroke-width="1.5"><path d="M50 0v22M50 78v22M0 50h22M78 50h22M15 15l15 15M70 70l15 15M85 15L70 30M30 70L15 85"/></g></svg>{% endif %}
+        <span class="pub-aw__tr {% cycle 'k-gold' 'k-volt' 'k-green' 'k-plum' %}">{% if a.kind == "best_graduating" %}{% icon "trophy" 24 %}{% elif a.kind == "distinguished_alumni" %}{% icon "medal" 24 %}{% elif a.kind == "staff" %}{% icon "presentation" 24 %}{% elif a.kind == "team" %}{% icon "users" 24 %}{% else %}{% icon "award" 24 %}{% endif %}</span>
+        <p class="pub-aw__cat">{{ a.get_kind_display }} · {{ a.year }}</p>
+        <h3>{{ a.title }}</h3>
+        {% if a.citation %}<p class="pub-aw__cit">{{ a.citation|truncatewords:28 }}</p>{% endif %}
+        <div class="pub-aw__who">
+          {% if a.photo %}<img class="pub-avatar" src="{{ a.photo.url }}" alt="" loading="lazy">{% else %}<span class="pub-avatar">{{ a.recipient|initials }}</span>{% endif %}
+          <div><b>{{ a.recipient }}</b><small>{{ a.year }}</small></div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

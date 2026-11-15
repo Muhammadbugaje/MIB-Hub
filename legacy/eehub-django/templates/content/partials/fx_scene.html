@@ -1,0 +1,5 @@
+{% load static ee_tags %}{% comment %}
+  Round 6 animated scene host. Include with kind="galaxy" (and optional cls="...").
+  fx/scenes.js adds the canvas and runs it only on screen; the poster image paints first
+  and stays when motion is off, WebGL is missing or the visitor asks for reduced motion.
+{% endcomment %}{% setting "appearance.scene_palette" "brand" as cfg_pal %}{% firstof fx_palette cfg_pal "brand" as fx_pal %}<div class="fx-scene {{ cls }}" aria-hidden="true" data-fx-scene="{{ kind }}" data-fx-palette="{{ fx_pal }}"{% if fx_pal == "custom" %} data-fx-a="{% setting 'appearance.scene_colour_a' '#e6c867' %}" data-fx-b="{% setting 'appearance.scene_colour_b' '#38e1f5' %}"{% endif %} style="--fx-poster:url('{% static 'img/fx/' %}{{ kind }}.webp')"></div>

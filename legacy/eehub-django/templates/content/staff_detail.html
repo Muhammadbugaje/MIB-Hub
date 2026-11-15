@@ -1,0 +1,30 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}{{ person.full_name }}{% endblock %}
+{% block content %}
+{% if lecturer %}{% include "content/partials/page_hero.html" with title=person.full_name sub=lecturer.specialisation eyebrow=lecturer.rank eyebrow_icon="presentation" crumb_url="/people/" crumb_label="People" %}
+{% else %}{% include "content/partials/page_hero.html" with title=person.full_name sub=support.unit eyebrow=support.designation|default:"Support staff" eyebrow_icon="wrench" crumb_url="/people/" crumb_label="People" %}{% endif %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-profile">
+      <aside class="pub-profile__card">
+        {% include "content/partials/person_photo.html" with p=person %}
+        <h2>{{ person.full_name }}</h2>
+        <span class="r">{% if lecturer %}{{ lecturer.rank }}{% else %}{{ support.designation|default:"Staff" }}{% endif %}</span>
+        <ul class="pub-factlist pub-mt-lg" style="text-align:left">
+          {% if lecturer.qualifications %}<li>{% icon "graduation-cap" 18 %}<div><small>Qualifications</small>{{ lecturer.qualifications }}</div></li>{% endif %}
+          {% if lecturer.office_room %}<li>{% icon "door-open" 18 %}<div><small>Office</small>{{ lecturer.office_room }}</div></li>{% endif %}
+          {% if support.unit %}<li>{% icon "building-2" 18 %}<div><small>Unit</small>{{ support.unit }}</div></li>{% endif %}
+          <li>{% icon "landmark" 18 %}<div><small>Department</small>{{ site_info.department_name }}</div></li>
+        </ul>
+        <a class="pub-btn pub-btn--ghost pub-btn--block pub-mt" href="{% url 'content:contact' %}">{% icon "mail" 15 %}Contact the department</a>
+      </aside>
+      <div>
+        {% if person.bio %}<section class="pub-panel"><h2>About</h2><div class="pub-prose">{{ person.bio|linebreaks }}</div></section>{% endif %}
+        {% if interests %}<section class="pub-panel pub-mt"><h2>Research interests</h2><div class="pub-tags">{% for i in interests %}<span>{{ i }}</span>{% endfor %}</div></section>{% endif %}
+        {% if not person.bio and not interests %}<div class="pub-empty">{% icon "user-round" 36 %}<h2>Profile coming soon</h2><p>{{ person.first_name }} has not added a public biography yet.</p></div>{% endif %}
+        <p class="pub-mt-lg"><a class="pub-btn pub-btn--ghost" href="{% url 'content:staff' %}">{% icon "arrow-left" 16 %}All people</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

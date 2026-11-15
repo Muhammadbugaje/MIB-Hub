@@ -1,0 +1,22 @@
+{% load ee_tags %}{% if milestones_electricity %}
+<section class="pub-sec pub-story" id="electricity" aria-labelledby="sec-electricity">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="Two and a half thousand years," hl="one spark at a time" sub="The ideas you meet in circuit theory, fields and power systems have a long history. Follow it from static on amber to today's smart grids." carousel="era-track" %}
+  </div>
+  <div class="pub-tl" id="era-track" tabindex="0" aria-label="Timeline of electricity" data-scroller>
+    <div class="pub-tl__track" style="--n:{{ milestones_electricity|length }}">
+      <div class="pub-tl__rail" aria-hidden="true"><span class="pub-tl__spark"></span></div>
+      {% for m in milestones_electricity %}
+      <article class="pub-ev{% if forloop.last %} is-now{% endif %}" style="--c:{% cycle '#c8a951' '#d9a24a' '#e0b54a' '#38b27a' '#14a37a' '#13c4dc' '#0b9db2' '#3b82f6' '#6366f1' '#8b5cf6' '#a855f7' '#13c4dc' %}">
+        <div class="pub-ev__art">{% include "content/partials/era_art.html" %}</div>
+        <span class="pub-ev__node" aria-hidden="true"></span>
+        <span class="pub-ev__yr">{{ m.year_label }}</span>
+        <h3>{{ m.title }}</h3>
+        {% if m.person %}<p class="pub-ev__who">{{ m.person }}</p>{% endif %}
+        <p>{{ m.description }}</p>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,9 @@
+{% load ee_tags %}<div class="pub-sh">
+  <div>
+    <p class="pub-eyebrow">{{ eyebrow|default:section.get_key_display }}</p>
+    <h2 id="sec-{{ section.key }}">{% if section.title %}{{ section.title }}{% else %}{{ pre }} <span class="pub-hl">{{ hl }}</span>{% endif %}</h2>
+    {% if section.subtitle or sub %}<p>{{ section.subtitle|default:sub }}</p>{% endif %}
+  </div>
+  {% if more_url %}<a class="pub-btn {{ more_class|default:'pub-btn--ghost' }} pub-sh__more" href="{{ more_url }}">{% if more_icon %}{% icon more_icon 16 %}{% endif %}{{ more_label }}{% if not more_icon %}{% icon "arrow-right" 16 %}{% endif %}</a>{% endif %}
+  {% if carousel %}<div class="pub-carnav pub-sh__more" aria-hidden="false"><button type="button" aria-label="Previous" data-scroll-prev="{{ carousel }}">{% icon "chevron-left" 18 %}</button><button type="button" class="is-primary" aria-label="Next" data-scroll-next="{{ carousel }}">{% icon "chevron-right" 18 %}</button></div>{% endif %}
+</div>

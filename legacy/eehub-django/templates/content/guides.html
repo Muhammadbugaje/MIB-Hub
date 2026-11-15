@@ -1,0 +1,27 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}How-to guides{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="How-to guides" sub="Short, step-by-step help for using EE Hub: signing in, profiles, notifications and more." eyebrow="Help" eyebrow_icon="life-buoy" crumb_here="Guides" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% for aud in audiences %}
+    <section class="pub-gsec">
+      <h2 class="pub-gsec__h">{% if aud == "Students" %}{% icon "graduation-cap" 20 %}{% elif aud == "Everyone" %}{% icon "users" 20 %}{% else %}{% icon "presentation" 20 %}{% endif %}{% if aud == "Everyone" %}For everyone{% else %}For {{ aud|lower }}{% endif %}</h2>
+      <div class="pub-guides">
+        {% for g in guides %}{% if g.audience == aud %}
+        <a class="pub-guide-card" href="{% url 'content:guide_detail' g.slug %}" data-reveal>
+          <span class="pub-guide-card__ic k-{{ g.tone }}">{% icon g.icon 24 %}</span>
+          <h3>{{ g.title }}</h3>
+          <p>{{ g.summary }}</p>
+          <span class="pub-guide-card__foot"><span>{% icon "clock" 13 %} {{ g.minutes }} min read</span><b>Read{% icon "arrow-right" 14 %}</b></span>
+        </a>
+        {% endif %}{% endfor %}
+      </div>
+    </section>
+    {% empty %}
+    <div class="pub-empty">{% icon "life-buoy" 36 %}<h2>Guides are on the way</h2></div>
+    {% endfor %}
+    <p class="pub-note-box pub-mt-lg">{% icon "mail" 16 %}<span>Still stuck? <a href="{% url 'content:contact' %}">Write to the department</a> and choose 'Portal support'.</span></p>
+  </div>
+</div>
+{% endblock %}

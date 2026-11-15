@@ -48,6 +48,8 @@ BOOKS = {  # key: (sources relative to docs/plan, title). The PDF is written to 
     "STORY_AUDIT": (["STORY_AUDIT.md"], "Story Audit"),
     "ASSET_AND_MOTION_PLAN": (["ASSET_AND_MOTION_PLAN.md"], "Asset, Animation and Physics Plan"),
     "HOW_TO_RUN": (["../HOW_TO_RUN.md"], "How to Run MIB-Hub", "docs"),
+    "JIYA_STORY_PACK": (["people/JIYA_STORY_PACK.md"], "Jiya's Story Pack", "docs/plan/people"),
+    "TATY_STORY_PACK": (["people/TATY_STORY_PACK.md"], "Taty's Story Pack", "docs/plan/people"),
 }
 
 ST = {
@@ -201,6 +203,18 @@ def flow(md, width):
     return out
 
 
+# Owner-only planning documents. Everything else (story packs, voice scripts) is made to be sent to the person.
+OWNER_ONLY = {"STORY_BIBLE_V2", "MISSION_SCRIPTS", "STORY_AUDIT", "ASSET_AND_MOTION_PLAN", "HOW_TO_RUN"}
+
+
+def audience(key):
+    if key in OWNER_ONLY:
+        return "Private to the owner"
+    if key.endswith("_STORY_PACK"):
+        return "Made for you, with thanks"
+    return "For the cast. Please keep it private"
+
+
 def build(key):
     files, title, *where = BOOKS[key]
     srcs = [PLAN / f for f in files if (PLAN / f).exists()]
@@ -212,7 +226,7 @@ def build(key):
                             bottomMargin=16 * mm, title="{{GAME_NAME}}: " + title, author="Muhammad Iliyasu Bugaje")
     width = A4[0] - 36 * mm
     el = [Spacer(1, 70 * mm), Paragraph("MIB-HUB · THE OPEN-WORLD GAME", ST["sub"]), Spacer(1, 8), Paragraph(tx(title), ST["title"]),
-          Spacer(1, 10), Paragraph(tx("Private to the owner · " + date.today().strftime("%d %B %Y")), ST["sub"]), PageBreak()]
+          Spacer(1, 10), Paragraph(tx(audience(key) + " · " + date.today().strftime("%d %B %Y")), ST["sub"]), PageBreak()]
     for k, src in enumerate(srcs):
         if k:
             el.append(PageBreak())
@@ -222,7 +236,7 @@ def build(key):
         c.saveState()
         c.setFont(F, 7.5)
         c.setFillColor(SOFT)
-        c.drawString(18 * mm, 9 * mm, tx("MIB-Hub — " + title + " — private to the owner"))
+        c.drawString(18 * mm, 9 * mm, tx("MIB-Hub — " + title + " — " + audience(key).lower()))
         c.drawRightString(A4[0] - 18 * mm, 9 * mm, str(d.page))
         c.restoreState()
 

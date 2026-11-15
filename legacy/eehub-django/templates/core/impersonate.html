@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static ee_tags %}
+{% block title %}Act as another user{% endblock %}
+{% block page_title %}Act as another user{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/system.css' %}"><link rel="stylesheet" href="{% static 'css/impersonate.css' %}">{% endblock %}
+{% block content %}
+<div class="sys-page imp-page">
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "venetian-mask" 14 %} Support · superusers only</span>
+      <h1 class="ee-page-header__title">Act as another user</h1>
+      <p class="ee-page-header__description">See EE Hub exactly as someone else does, to test or support them. Find them by name, profile, level, programme or office. Everything you do is logged under your own name and a banner stays on screen.</p>
+    </div>
+  </header>
+
+  {% if not allowed %}
+    <div class="sys-alert sys-alert--warn" role="status">{% icon "shield-off" 16 %}<span>Acting as another user is switched off in Settings › Sign-in and security.</span></div>
+  {% endif %}
+
+  {% if acting_as %}
+    <div class="imp-now" role="status">
+      <span class="sys-avatar" aria-hidden="true">{{ acting_as.get_full_name|initials }}</span>
+      <div><b>You are acting as {{ acting_as.get_full_name|default:acting_as.email }}</b><small>Pick someone below to switch straight to them, or return to {{ real_user.get_full_name|default:"your account" }}.</small></div>
+      <form method="post" action="{% url 'core:impersonate_stop' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">{% icon "undo-2" 14 %}Return to my account</button></form>
+    </div>
+  {% endif %}
+
+  {% if recent %}
+  <section class="imp-recent" aria-labelledby="imp-recent-t">
+    <h2 id="imp-recent-t">{% icon "history" 15 %}Recently</h2>
+    <ul>
+      {% for u in recent %}<li>
+        <form method="post" action="{% url 'core:impersonate_start' u.pk %}">{% csrf_token %}
+          <button type="submit" class="imp-recent__btn"{% if acting_as and acting_as.pk == u.pk %} disabled aria-current="true"{% endif %}><span class="sys-avatar" aria-hidden="true">{{ u.get_full_name|initials }}</span><span>{{ u.get_full_name|default:u.email }}</span></button>
+        </form>
+      </li>{% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <form method="get" class="imp-filters ee-card" role="search" aria-label="Find a person" data-imp-filters action="{% url 'core:impersonate_pick' %}">
+    <div class="imp-filters__q">
+      <span class="imp-filters__ic">{% icon "search" 17 %}</span>
+      <input class="input" type="search" name="q" value="{{ f.q }}" placeholder="Name, e-mail, reg. or staff number" aria-label="Name, e-mail, reg. or staff number" autocomplete="off" autofocus data-imp-q>
+    </div>
+    <div class="imp-kinds" role="group" aria-label="Profile">
+      <label class="imp-kind{% if not f.kind %} is-on{% endif %}"><input type="radio" name="kind" value=""{% if not f.kind %} checked{% endif %}>Everyone</label>
+      {% for k, label in kinds %}<label class="imp-kind{% if f.kind == k %} is-on{% endif %}"><input type="radio" name="kind" value="{{ k }}"{% if f.kind == k %} checked{% endif %}>{{ label }}</label>{% endfor %}
+    </div>
+    <div class="imp-filters__row">
+      <label class="imp-field"><span>Level</span>
+        <select class="input" name="level"><option value="">Any level</option>{% for n in levels %}<option value="{{ n }}"{% if f.level == n|stringformat:"d" %} selected{% endif %}>{{ n }} level</option>{% endfor %}</select></label>
+      <label class="imp-field"><span>Programme</span>
+        <select class="input" name="programme"><option value="">Any programme</option>{% for p in programmes %}<option value="{{ p.pk }}"{% if f.programme == p.pk|stringformat:"d" %} selected{% endif %}>{{ p.name }}</option>{% endfor %}</select></label>
+      <label class="imp-field"><span>Office</span>
+        <select class="input" name="office"><option value="">Any office</option>{% for o in offices %}<option value="{{ o.pk }}"{% if f.office == o.pk|stringformat:"d" %} selected{% endif %}>{{ o.name }}</option>{% endfor %}</select></label>
+      <label class="imp-field"><span>Sort by</span>
+        <select class="input" name="sort">{% for k, label in sorts %}<option value="{{ k }}"{% if f.sort == k %} selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+    </div>
+    <div class="imp-filters__actions">
+      <button class="btn btn-primary btn-sm" type="submit" data-imp-submit>{% icon "filter" 14 %}Show</button>
+      <a class="btn btn-ghost btn-sm" href="{% url 'core:impersonate_pick' %}" data-imp-clear{% if not f.any %} hidden{% endif %}>{% icon "x" 14 %}Clear filters</a>
+    </div>
+  </form>
+
+  <div id="imp-results" aria-live="polite">{% include "core/_impersonate_results.html" %}</div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/impersonate.js' %}" defer></script>{% endblock %}

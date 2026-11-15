@@ -1,0 +1,40 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}Heads of Department{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Heads of Department" sub="Every Head of Department since autonomy. Names, portraits and tenures are kept by the department office." eyebrow="Roll of honour" eyebrow_icon="crown" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% if current %}
+    <article class="pub-hodcur" data-reveal>
+      <div class="pub-hod__photo">{% if current.photo %}<img src="{{ current.photo.url }}" alt="Portrait of {{ current.display_name }}">{% else %}<svg viewBox="0 0 80 80" fill="currentColor" aria-hidden="true"><circle cx="40" cy="30" r="15"/><path d="M10 80c2-18 14-28 30-28s28 10 30 28z"/></svg>{% endif %}</div>
+      <div>
+        <span class="pub-badge pub-badge--gold">{% icon "sparkles" 12 %}Current Head of Department{% if current.is_acting %} (acting){% endif %}</span>
+        <h2>{{ current.display_name }}</h2>
+        <span class="t">{{ current.tenure }}</span>
+        {% if current.bio %}<p>{{ current.bio|linebreaksbr }}</p>{% endif %}
+        {% if current.achievement_list %}<ul class="pub-gbullets">{% for a in current.achievement_list %}<li>{{ a }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+    </article>
+    {% endif %}
+    {% if past %}
+    <div class="pub-sh pub-mt-lg"><div><p class="pub-eyebrow">Before them</p><h2>The roll</h2></div></div>
+    <div class="pub-hodlist">
+      {% for h in past %}
+      <article class="pub-hodrow" data-reveal>
+        <div class="pub-hod__photo">{% if h.photo %}<img src="{{ h.photo.url }}" alt="" loading="lazy">{% else %}<svg viewBox="0 0 80 80" fill="currentColor" aria-hidden="true"><circle cx="40" cy="30" r="15"/><path d="M10 80c2-18 14-28 30-28s28 10 30 28z"/></svg>{% endif %}</div>
+        <div>
+          <h3>{{ h.display_name }}{% if h.is_acting %} <small class="pub-opt">(acting)</small>{% endif %}</h3>
+          <span class="t">{{ h.tenure }}</span>
+          {% if h.bio %}<p>{{ h.bio|truncatewords:60 }}</p>{% endif %}
+          {% if h.achievement_list %}<ul>{% for a in h.achievement_list %}<li>{{ a }}</li>{% endfor %}</ul>{% endif %}
+        </div>
+        <span class="pub-hodrow__no">#{{ h.number|stringformat:"02d" }}</span>
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if not hods %}<div class="pub-empty">{% icon "crown" 36 %}<h2>The roll is being compiled</h2><p>The department office is gathering names, portraits and dates.</p></div>{% endif %}
+    <p class="pub-note-box pub-mt-lg">{% icon "info" 16 %}<span>Is a name or date missing? <a href="{% url 'content:contact' %}">Write to the department</a> so the roll can be completed.</span></p>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base_public.html" %}{% load static ee_tags living_tags %}
+{% block title %}Events{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Events" sub="Seminars, EESA activities, lectures and department occasions." eyebrow="Community" eyebrow_icon="calendar-days" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% if featured and show != "past" %}
+    <article class="pub-feat pub-feat--page lv-feat" style="--img:url('{% if featured.image %}{{ featured.image.url }}{% else %}{% cover_uri featured %}{% endif %}')" data-reveal>
+      <span class="pub-badge pub-badge--glassgold">{% icon "sparkles" 13 %}{% if featured.is_featured %}Featured event{% else %}Next event{% endif %} · {{ featured|starts_in }}</span>
+      <h2 class="lv-feat__title"><a href="{{ featured.get_absolute_url }}">{{ featured.title }}</a></h2>
+      <p>{{ featured.starts_at|date:"l j F Y, g:i a" }}{% if featured.venue %} · {{ featured.venue }}{% endif %}{% if featured.organiser %} · {{ featured.organiser }}{% endif %}</p>
+      <div class="pub-cd" data-countdown="{{ featured.starts_at|date:'c' }}" aria-label="Time until the event starts">
+        <div><b data-cd="d">--</b><small>days</small></div><span class="pub-cd__sep" aria-hidden="true">:</span>
+        <div><b data-cd="h">--</b><small>hours</small></div><span class="pub-cd__sep" aria-hidden="true">:</span>
+        <div><b data-cd="m">--</b><small>mins</small></div>
+        <span class="lv-feat__ctas pub-cd__cta">
+          <a class="pub-btn pub-btn--glass" href="{% url 'content:event_ics' featured.slug %}" download>{% icon "calendar-plus" 16 %}Add to calendar</a>
+          <a class="pub-btn pub-btn--gold" href="{{ featured.get_absolute_url }}">{% icon "ticket" 16 %}Details</a>
+        </span>
+      </div>
+    </article>
+    {% endif %}
+    <div class="pub-toolbar pub-mt-lg">
+      <nav class="pub-tabs" aria-label="Show events">
+        <a class="{% if show != 'past' %}is-active{% endif %}" href="?show=upcoming"{% if show != 'past' %} aria-current="page"{% endif %}>{% icon "calendar-clock" 15 %}Upcoming <small>{{ upcoming_count }}</small></a>
+        <a class="{% if show == 'past' %}is-active{% endif %}" href="?show=past"{% if show == 'past' %} aria-current="page"{% endif %}>{% icon "history" 15 %}Past <small>{{ past_count }}</small></a>
+      </nav>
+    </div>
+    {% for e in page_obj %}
+    {% ifchanged e.starts_at.year e.starts_at.month %}<h2 class="lv-month">{{ e.starts_at|date:"F Y" }}</h2>{% endifchanged %}
+    <a class="pub-evrow lv-evrow{% if not e.is_upcoming %} is-past{% endif %}" href="{{ e.get_absolute_url }}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 40 %}">
+      <span class="pub-evrow__date"><small>{{ e.starts_at|date:"M"|upper }}</small><b>{{ e.starts_at|date:"j" }}</b><em>{{ e.starts_at|date:"D" }}</em></span>
+      <span class="lv-evrow__main">
+        <span class="lv-evrow__chips"><span class="lv-when{% if not e.is_upcoming %} is-past{% endif %}">{% if e.is_upcoming %}{% icon "timer" 12 %}{{ e|starts_in|capfirst }}{% else %}{% icon "history" 12 %}Took place{% endif %}</span>{% if e.organiser %}<span class="lv-org">{{ e.organiser }}</span>{% endif %}</span>
+        <h3>{{ e.title }}</h3>
+        {% if e.summary %}<p>{{ e.summary|truncatewords:24 }}</p>{% endif %}
+        <span class="pub-card__meta"><span>{% icon "clock" 13 %}{{ e.starts_at|date:"g:i a" }}{% if e.ends_at %} – {% if e.ends_at|date:"Ymd" != e.starts_at|date:"Ymd" %}{{ e.ends_at|date:"D j M, g:i a" }}{% else %}{{ e.ends_at|date:"g:i a" }}{% endif %}{% endif %}</span>{% if e.venue %}<span>{% icon "map-pin" 13 %}{{ e.venue }}</span>{% endif %}{% if e.online_url %}<span>{% icon "video" 13 %}Online</span>{% endif %}</span>
+      </span>
+      <span class="lv-evrow__art lv-media" aria-hidden="true">{% if e.image %}<img src="{{ e.image.url }}" alt="" loading="lazy">{% else %}{% cover_art e %}{% endif %}</span>
+    </a>
+    {% empty %}
+    <div class="pub-empty">{% icon "calendar-x" 36 %}<h2>{% if show == "past" %}No past events{% else %}No upcoming events{% endif %}</h2><p>New events are announced here and on the homepage.</p></div>
+    {% endfor %}
+    {% include "content/partials/pager.html" %}
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/living.js' %}" defer></script>{% endblock %}

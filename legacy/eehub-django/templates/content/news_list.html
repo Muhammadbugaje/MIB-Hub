@@ -1,0 +1,62 @@
+{% extends "base_public.html" %}{% load static ee_tags living_tags %}
+{% block title %}News{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="News and announcements" sub="Stories, notices and achievements from the Department of Electrical Engineering." eyebrow="Community" eyebrow_icon="newspaper" crumb_here="News" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <form class="pub-toolbar" method="get" role="search">
+      <div class="pub-chips" role="group" aria-label="Category">
+        <a class="pub-chip{% if not category %} is-active{% endif %}" href="{% url 'content:news' %}{% if q %}?q={{ q|urlencode }}{% endif %}"{% if not category %} aria-current="page"{% endif %}>All</a>
+        {% for code, label in categories %}<a class="pub-chip{% if category == code %} is-active{% endif %}" href="?category={{ code }}{% if q %}&q={{ q|urlencode }}{% endif %}"{% if category == code %} aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}
+      </div>
+      {% if category %}<input type="hidden" name="category" value="{{ category }}">{% endif %}
+      <label class="pub-search">{% icon "search" 16 %}<span class="sr-only">Search news</span><input class="input" type="search" name="q" value="{{ q }}" placeholder="Search news"></label>
+    </form>
+
+    {% if lead %}
+    <a class="lv-lead" href="{{ lead.get_absolute_url }}" data-reveal>
+      <div class="lv-lead__media lv-media">
+        {% if lead.image %}<img src="{{ lead.image.url }}" alt="" loading="eager">{% else %}{% cover_art lead %}{% endif %}
+      </div>
+      <div class="lv-lead__body">
+        <span class="pub-badge pub-badge--{{ lead.category }}">{% if lead.is_pinned %}{% icon "pin" 12 %}Pinned · {% endif %}{{ lead.get_category_display }}</span>
+        <h2>{{ lead.title }}</h2>
+        {% if lead.summary %}<p>{{ lead.summary }}</p>{% endif %}
+        <div class="pub-card__meta"><span>{% icon "calendar" 13 %}<time datetime="{{ lead.publish_at|date:'c' }}">{{ lead.publish_at|date:"j F Y" }}</time></span><span>{% icon "clock-3" 13 %}{{ lead.body|reading_time }}</span>{% if lead.author %}<span>{% icon "user-round" 13 %}{{ lead.author.get_full_name|default:"Department office" }}</span>{% endif %}</div>
+        <span class="pub-card__go">Read the story{% icon "arrow-right" 15 %}</span>
+      </div>
+    </a>
+    {% endif %}
+
+    <div class="pub-layout">
+      <div>
+        {% if page_obj.object_list %}
+        <div class="pub-cards">
+          {% for n in page_obj %}{% if not lead or n.pk != lead.pk %}
+          {% widthratio forloop.counter0 1 40 as delay %}{% include "content/news_card.html" with n=n delay=delay %}
+          {% endif %}{% endfor %}
+        </div>
+        {% include "content/partials/pager.html" %}
+        {% else %}
+        <div class="pub-empty">{% icon "newspaper" 36 %}<h2>{% if q or category %}No news matches your search{% else %}No news yet{% endif %}</h2><p>{% if q or category %}Try another word or show all categories.{% else %}Announcements will appear here.{% endif %}</p></div>
+        {% endif %}
+      </div>
+      <aside class="pub-aside">
+        <div class="pub-panel">
+          <h2>Coming up</h2>
+          {% for e in upcoming %}
+          <a class="pub-mini" href="{{ e.get_absolute_url }}"><span class="pub-mini__dt k-volt"><b>{{ e.starts_at|date:"j" }}</b><small>{{ e.starts_at|date:"M"|upper }}</small></span><span><b class="t">{{ e.title }}</b><small class="m">{{ e|starts_in|capfirst }} · {{ e.starts_at|date:"D, g:i a" }}{% if e.venue %} · {{ e.venue }}{% endif %}</small></span></a>
+          {% empty %}<p class="pub-muted-s">No upcoming events.</p>{% endfor %}
+          <a class="pub-btn pub-btn--ghost pub-btn--sm pub-mt" href="{% url 'content:events' %}">{% icon "calendar-days" 15 %}All events</a>
+        </div>
+        <div class="pub-panel lv-panel-gallery">
+          <h2>From the gallery</h2>
+          <p class="pub-muted-s">Laboratories, EESA week, exhibitions and visits.</p>
+          <a class="pub-btn pub-btn--ghost pub-btn--sm pub-mt" href="{% url 'content:gallery' %}">{% icon "images" 15 %}Open the gallery</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/living.js' %}" defer></script>{% endblock %}

@@ -117,3 +117,4 @@ Other open items from the old game, all in `DL/KNOWN_ISSUES.md`:
 | Item | From | To | Note |
 |---|---|---|---|
 | Markdown-to-PDF builder | `eehub-2/tools/story/md2pdf.py` | `tools/story/md2pdf.py` | Pointed at `docs/plan/`; books are now STORY_BIBLE_V2, MISSION_SCRIPTS, STORY_AUDIT and HOW_TO_RUN. Runs with the repo's own `.venv` (reportlab 4.4.4), not the Django venv |
+| EE Hub landing and content templates (hero, home sections) | `eehub-2/templates/content/`, `eehub-2/templates/core/` | `legacy/eehub-django/templates/content/`, `.../core/` | Copied 15 Nov 2026 as the reference for the Site v2 rebuild (owner: "copy the entire front end"). The real university crest and name are never reused |

@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load static ee_tags ux_tags %}
+{% block title %}File manager{% endblock %}
+{% block page_title %}File manager{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/files.css' %}">
+  <link rel="stylesheet" href="{% static 'css/system.css' %}">
+{% endblock %}
+{% block content %}
+<div class="files-page sys-files">
+
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "hard-drive" 14 %} Settings · Storage</span>
+      <h1 class="ee-page-header__title">File manager</h1>
+      <p class="ee-page-header__description">See how much disk EE Hub's uploads use, scan for orphaned files left behind by deletions, and clean up safely. Deletions here are permanent.</p>
+    </div>
+    <div class="ee-page-header__actions">
+      <a class="btn btn-ghost" href="{% url 'config:settings' %}#files-and-storage">{% icon "sliders-horizontal" 16 %}Storage settings</a>
+    </div>
+  </header>
+
+  {# ---------- STATS ---------- #}
+  <section class="ee-kpis sys-files__kpis" aria-label="Storage totals">
+    <article class="ee-kpi">
+      <span class="ee-kpi__ic tone-green">{% icon "files" 18 %}</span>
+      <div class="ee-kpi__lbl">Total files</div>
+      <div class="ee-kpi__num">{{ stats.total_files }}</div>
+      <div class="ee-kpi__foot">{{ stats.total_bytes_h }} on disk</div>
+    </article>
+    <article class="ee-kpi">
+      <span class="ee-kpi__ic tone-volt">{% icon "globe" 18 %}</span>
+      <div class="ee-kpi__lbl">Public media</div>
+      <div class="ee-kpi__num">{{ stats.public_files }}</div>
+      <div class="ee-kpi__foot">{{ stats.public_bytes_h }}</div>
+    </article>
+    <article class="ee-kpi">
+      <span class="ee-kpi__ic tone-gold">{% icon "shield-check" 18 %}</span>
+      <div class="ee-kpi__lbl">Protected media</div>
+      <div class="ee-kpi__num">{{ stats.protected_files }}</div>
+      <div class="ee-kpi__foot">{{ stats.protected_bytes_h }}</div>
+    </article>
+    <article class="ee-kpi">
+      <span class="ee-kpi__ic tone-red">{% icon "file-x" 18 %}</span>
+      <div class="ee-kpi__lbl">Orphans found</div>
+      <div class="ee-kpi__num">{% if scan %}{{ scan.orphans|length }}{% else %}—{% endif %}</div>
+      <div class="ee-kpi__foot">{% if scan %}{{ scan.orphan_bytes_h }} reclaimable{% else %}Run a scan{% endif %}</div>
+    </article>
+  </section>
+
+  <div class="ee-grid">
+    {# ---------- PER FIELD ---------- #}
+    <section class="ee-card w-half" aria-labelledby="fields-title">
+      <div class="ee-card__head"><h2 id="fields-title">{% icon "database" 17 %}Files by record type</h2><span class="ee-card__sub">Registered upload fields</span></div>
+      {% if field_stats %}
+        <ul class="ee-list">
+          {% for f in field_stats %}
+            <li>
+              <span class="ee-ic {% if f.kind == 'protected' %}tone-gold{% else %}tone-volt{% endif %}">{% if f.kind == 'protected' %}{% icon "lock" 16 %}{% else %}{% icon "image" 16 %}{% endif %}</span>
+              <div class="ee-row__body">
+                <div class="ee-row__title">{{ f.model }} · {{ f.field }}</div>
+                <div class="ee-row__meta ee-mono">{{ f.label }}.{{ f.name }}</div>
+              </div>
+              <b class="tabular">{{ f.count }}</b>
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="ee-empty">No upload fields are registered yet.</div>
+      {% endif %}
+    </section>
+
+    {# ---------- FOLDER BREAKDOWN ---------- #}
+    <section class="ee-card w-half" aria-labelledby="folders-title">
+      <div class="ee-card__head"><h2 id="folders-title">{% icon "folder-tree" 17 %}Breakdown by folder</h2><span class="ee-card__sub">Largest first</span></div>
+      {% if folders %}
+        <div class="files-folders">
+          {% for f in folders %}
+            <div class="files-folder">
+              <span class="files-folder-name">{{ f.label }}</span>
+              <span class="files-folder-count">{{ f.count }} file{{ f.count|pluralize }}</span>
+              <span class="files-folder-size">{{ f.size_h }}</span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="ee-empty">No files have been uploaded yet.</div>
+      {% endif %}
+    </section>
+  </div>
+
+  {# ---------- ACTIONS ---------- #}
+  <section class="files-section">
+    <header class="files-section-head">
+      <h2>Scan for orphaned files</h2>
+      <p>Orphaned files have no database record pointing at them, usually leftovers from deletions. The scan reads every file under <code>media/</code> and <code>protected_media/</code> and matches it against every registered upload field.</p>
+      {% if max_files %}<p class="files-note">Scan limit: <strong>{{ max_files }}</strong> files. Clean-up moves files to a quarantine folder (kept {{ retention_days }} days, restorable) and never touches anything younger than <strong>{{ purge_min_age_days }}</strong> day{{ purge_min_age_days|pluralize }}.</p>{% endif %}
+    </header>
+
+    <form method="post" action="{% url 'config:files_scan' %}" data-scan-form
+          data-scan-stream-url="{% url 'config:files_scan_stream' %}" class="files-actions">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary" data-scan-button>
+        {% icon "scan-search" 16 %}<span data-scan-label>{% if scan %}Re-scan{% else %}Run scan{% endif %}</span>
+      </button>
+      {% if scan and scan.orphans %}
+        <button type="submit" form="purge-form" class="btn btn-ghost">{% icon "archive" 16 %}Quarantine orphans ({{ purge_min_age_days }}d+ old)</button>
+      {% endif %}
+    </form>
+
+    <form id="purge-form" method="post" action="{% url 'config:files_purge' %}" hidden>{% csrf_token %}</form>
+
+    {# ---------- LIVE PROGRESS ---------- #}
+    <div class="files-scan-progress" data-scan-progress hidden>
+      <div class="files-scan-phase" data-scan-phase>Starting…</div>
+      <div class="files-scan-bar"><div class="files-scan-bar-fill" data-scan-bar style="width: 0%;"></div></div>
+      <div class="files-scan-meta">
+        <span><strong data-scan-scanned>0</strong> <span data-scan-of></span> files scanned</span>
+        <span><strong data-scan-found>0</strong> orphan<span data-scan-found-suffix>s</span></span>
+        <span class="files-scan-current" data-scan-current></span>
+      </div>
+    </div>
+  </section>
+
+  {# ---------- ORPHAN RESULTS ---------- #}
+  <section class="files-section" data-scan-results-section {% if not scan %}hidden{% endif %}>
+    <header class="files-section-head">
+      <h2>
+        {% if scan %}
+          {% if scan.orphans %}{{ scan.orphans|length }} orphan{{ scan.orphans|length|pluralize }} · {{ scan.orphan_bytes_h }}{% else %}No orphaned files{% endif %}
+        {% else %}
+          <span data-scan-results-heading hidden></span>
+        {% endif %}
+      </h2>
+      {% if scanned_at %}<p class="files-note">Scanned {{ scanned_at|date:"j M Y · H:i" }}.</p>{% endif %}
+      {% if scan and scan.truncated %}<p class="files-note files-note-warn">The scan hit the file limit, so results are partial.</p>{% endif %}
+    </header>
+
+    <div data-scan-results-empty {% if scan and scan.orphans %}hidden{% endif %}>
+      {% if scan and not scan.orphans %}
+        <div class="files-empty">{% icon "circle-check" 40 %}<h3>Everything is accounted for</h3><p>Every file on disk belongs to a record.</p></div>
+      {% elif not scan %}
+        <div class="files-empty">{% icon "search" 40 %}<h3>No scan yet</h3><p>Choose “Run scan” above to check the media folders for orphaned files.</p></div>
+      {% endif %}
+    </div>
+
+    <form method="post" action="{% url 'config:files_delete_selected' %}" data-scan-results-form data-select-scope {% if not scan or not scan.orphans %}hidden{% endif %}>
+      {% csrf_token %}
+      <div class="files-select-head" style="display:flex;justify-content:flex-end;margin:0 0 10px">{% select_toggle "Select files" %}</div>
+      <div class="files-table-wrap">
+        <table class="files-table">
+          <thead>
+            <tr>
+              <th class="files-cell-check" data-select-only><input type="checkbox" data-check-all aria-label="Select all"></th>
+              <th>File</th>
+              <th>Kind</th>
+              <th class="files-cell-num">Size</th>
+              <th>Age</th>
+            </tr>
+          </thead>
+          <tbody data-scan-results-body>
+            {% if scan %}{% for o in scan.orphans %}
+              <tr>
+                <td class="files-cell-check">
+                  <input type="checkbox" name="rel" value="{{ o.rel }}" data-check-row aria-label="Select {{ o.rel }}">
+                  <input type="hidden" name="kind" value="{{ o.kind }}">
+                </td>
+                <td class="files-cell-file"><code>{{ o.rel }}</code>{% if o.is_variant %}<span class="files-tag">variant</span>{% endif %}</td>
+                <td><span class="files-pill files-pill-{{ o.kind }}">{{ o.kind }}</span></td>
+                <td class="files-cell-num">{{ o.size_h }}</td>
+                <td class="files-cell-age">{{ o.age_h }}</td>
+              </tr>
+            {% endfor %}{% endif %}
+          </tbody>
+        </table>
+      </div>
+      <div class="files-bulk-bar" data-select-only>
+        <span><span data-selected-count>0</span> selected</span>
+        <button type="submit" class="btn btn-danger">{% icon "archive" 16 %}Quarantine selected</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="ee-card" aria-labelledby="quarantine-title">
+    <div class="ee-card__head"><h2 id="quarantine-title">{% icon "archive" 17 %}Quarantine</h2><span class="ee-card__sub">Kept {{ retention_days }} days, then removed for good</span></div>
+    <ul class="ee-list">
+      {% for q in quarantine %}
+        <li>
+          <span class="ee-ic tone-gold">{% icon "archive" 16 %}</span>
+          <div class="ee-row__body"><div class="ee-row__title">{{ q.day }}</div><div class="ee-row__meta">{{ q.files }} file{{ q.files|pluralize }} · {{ q.bytes|pretty_bytes }}</div></div>
+          <form method="post" action="{% url 'config:files_restore' %}" data-confirm="Put every file quarantined on {{ q.day }} back where it was? Existing files are never overwritten." data-confirm-title="Restore files" data-confirm-label="Restore" data-confirm-tone="default">{% csrf_token %}<input type="hidden" name="day" value="{{ q.day }}"><button class="btn btn-ghost btn-sm" type="submit">{% icon "undo-2" 15 %}Restore</button></form>
+        </li>
+      {% empty %}<li class="ee-empty" style="width:100%">Nothing in quarantine.</li>{% endfor %}
+    </ul>
+  </section>
+
+  {% if runs %}
+  <section class="ee-card" aria-labelledby="runs-title">
+    <div class="ee-card__head"><h2 id="runs-title">{% icon "history" 17 %}Recent runs</h2></div>
+    <ul class="ee-list">
+      {% for r in runs %}
+        <li>
+          <span class="ee-ic {% if r.deleted %}tone-red{% elif r.orphans_found %}tone-gold{% else %}tone-green{% endif %}">{% if r.deleted %}{% icon "trash-2" 16 %}{% else %}{% icon "scan-search" 16 %}{% endif %}</span>
+          <div class="ee-row__body">
+            <div class="ee-row__title">{% if r.deleted %}{{ r.deleted }} file{{ r.deleted|pluralize }} quarantined{% else %}{{ r.files_seen }} files scanned · {{ r.orphans_found }} orphan{{ r.orphans_found|pluralize }} ({{ r.orphan_bytes|pretty_bytes }}){% endif %}</div>
+            <div class="ee-row__meta">{{ r.started_at|date:"j M Y, H:i" }} · {{ r.note|default:"scan" }}{% if r.triggered_by %} · {{ r.triggered_by.get_full_name }}{% endif %}</div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/system.js' %}" defer></script>{% endblock %}

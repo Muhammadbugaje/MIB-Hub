@@ -1,0 +1,14 @@
+{% load ee_tags %}
+<section class="pub-sec" id="contact" aria-labelledby="sec-contact">
+  <div class="pub-wrap">
+    <div class="pub-contact">
+      <div class="pub-contact__info">
+        <p class="pub-eyebrow">{{ section.get_key_display }}</p>
+        <h2 id="sec-contact">{% if section.title %}{{ section.title }}{% else %}Write to <span class="pub-hl">the department</span>{% endif %}</h2>
+        <p class="pub-lead">{{ section.subtitle|default:"Questions about admission, programmes, the portal or partnerships reach the department office." }}</p>
+        {% include "content/partials/contact_details.html" %}
+      </div>
+      {% include "content/partials/contact_form.html" %}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Contact the department" sub="Questions about admission, programmes, the portal or partnerships reach the department office." eyebrow="We are here to help" eyebrow_icon="mail" crumb_here="Contact" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-contact">
+      <div>
+        {% include "content/partials/contact_details.html" %}
+        {% if quick_links %}
+        <div class="pub-panel pub-mt-lg"><h2>You might be looking for</h2><div class="pub-panel__links">{% for l in quick_links %}<a href="{{ l.url }}">{% icon l.icon 16 %}{{ l.label }}</a>{% endfor %}</div></div>
+        {% endif %}
+        <p class="pub-note-box pub-mt">{% icon "life-buoy" 16 %}<span>Trouble signing in? Read <a href="{% url 'content:guide_detail' 'signing-in' %}">the sign-in guide</a> first.</span></p>
+      </div>
+      {% include "content/partials/contact_form.html" %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% load ee_tags pager_tags %}{# Act as another user: the results (swapped in place by js/impersonate.js) #}
+<section class="ee-card imp-results">
+  <div class="ee-card__head"><h2>{% icon "users" 17 %}{{ page.paginator.count }} {% if f.any %}match{{ page.paginator.count|pluralize:"es" }}{% else %}active user{{ page.paginator.count|pluralize }}{% endif %}</h2></div>
+  {% if page.object_list %}
+    <ul class="imp-list">
+      {% for u in page.object_list %}
+        <li class="imp-row">
+          <span class="sys-avatar imp-row__av" aria-hidden="true">{% if u.person.photo %}<img src="{{ u.person.photo.url }}" alt="">{% else %}{{ u.get_full_name|initials }}{% endif %}</span>
+          <div class="imp-row__body">
+            <div class="imp-row__title">{{ u.get_full_name|default:u.email }}{% if u.is_superuser %} <span class="sys-tag sys-tag--gold">Superuser</span>{% endif %}</div>
+            <div class="imp-row__meta">{{ u.email }}{% if u.login_id %} · <span class="ee-mono">{{ u.login_id }}</span>{% endif %} · {% if u.last_login %}seen {{ u.last_login|timesince }} ago{% else %}never signed in{% endif %}</div>
+            {% if u.imp_profiles or u.imp_offices %}<div class="imp-row__chips">
+              {% for p in u.imp_profiles %}<span class="imp-chip imp-chip--{{ p.kind }}">{{ p.label }}{% if p.sub %}<small>{{ p.sub }}</small>{% endif %}</span>{% endfor %}
+              {% for o in u.imp_offices %}<span class="ee-chip ee-chip--{{ o.color|default:'slate' }}">{% icon o.icon|default:"badge-check" 12 %}{{ o.label }}</span>{% endfor %}
+            </div>{% endif %}
+          </div>
+          <div class="imp-row__act">
+            {% if u.pk == real_user.pk %}
+              <span class="sys-tag sys-tag--slate">You</span>
+            {% elif acting_as and u.pk == acting_as.pk %}
+              <span class="sys-tag sys-tag--ok">Acting as now</span>
+            {% elif allowed %}
+              <form method="post" action="{% url 'core:impersonate_start' u.pk %}" data-confirm="You will see EE Hub as {{ u.get_full_name|default:u.email }} until you choose “Return to my account” in the banner or your profile menu." data-confirm-title="Act as {{ u.get_full_name|default:u.email }}?" data-confirm-label="Act as user" data-confirm-tone="default">
+                {% csrf_token %}
+                <button class="btn btn-ghost btn-sm" type="submit">{% icon "log-in" 14 %}Act as<span class="sr-only"> {{ u.get_full_name }}</span></button>
+              </form>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="ee-empty imp-empty">{% icon "user-search" 22 %}<div><b>Nobody matches</b><span>Try another name, or clear a filter.</span></div></div>
+  {% endif %}
+</section>
+{% show_all_toggle page %}{% if page.has_other_pages %}
+  <nav class="sys-pager" aria-label="User pages">
+    {% if page.has_previous %}<a class="btn btn-ghost btn-sm" href="?{% if qs %}{{ qs }}&amp;{% endif %}page={{ page.previous_page_number }}" data-imp-page>{% icon "chevron-left" 14 %}Previous</a>{% endif %}
+    <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+    {% if page.has_next %}<a class="btn btn-ghost btn-sm" href="?{% if qs %}{{ qs }}&amp;{% endif %}page={{ page.next_page_number }}" data-imp-page>Next{% icon "chevron-right" 14 %}</a>{% endif %}
+  </nav>
+{% endif %}

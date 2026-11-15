@@ -1,0 +1,35 @@
+{% load ee_tags %}
+<section class="pub-sec pub-sec--tint" id="community" aria-labelledby="sec-community">
+  <div class="pub-wrap">
+    {% url 'content:events' as ev_url %}
+    {% include "content/partials/sec_head.html" with pre="EESA and" hl="student life" sub="The Electrical Engineering Students' Association runs events, tutorials and welfare for every level." more_url=ev_url more_label="Upcoming events" %}
+    <div class="pub-community">
+      <article class="pub-org" data-reveal>
+        <div class="pub-org__top"><span class="pub-org__lg pub-org__lg--gold">EESA</span><div><h3>Electrical Engineering Students' Association</h3><p class="pub-org__s">ABU Zaria chapter</p></div></div>
+        <div class="pub-org__acts">
+          <div class="pub-org__act">{% icon "calendar-heart" 20 %}<b>EESA Week</b><small>Exhibition, quiz, dinner</small></div>
+          <div class="pub-org__act">{% icon "users" 20 %}<b>Peer tutorials</b><small>Led by senior students</small></div>
+          <a class="pub-org__act" href="{% url 'eesa:index' %}">{% icon "flag" 20 %}<b>EESA page</b><small>Executives, patrons, notices</small></a>
+        </div>
+        <a class="pub-vote" href="{% url 'elections:index' %}">
+          <span class="pub-vote__ic">{% icon "vote" 20 %}</span>
+          <div><b>Secret e-voting for EESA elections</b><small>One vote per member, a one-time code by e-mail, and a receipt you can check was counted.</small></div>
+        </a>
+      </article>
+      <div class="pub-community__side">
+        {% if next_event %}
+        <a class="pub-next" href="{{ next_event.get_absolute_url }}" data-reveal data-reveal-delay="80">
+          <span class="pub-next__date"><b>{{ next_event.starts_at|date:"j" }}</b><small>{{ next_event.starts_at|date:"M"|upper }}</small></span>
+          <div><span class="pub-badge pub-badge--volt">{% icon "calendar-days" 12 %}Next event</span><h3>{{ next_event.title }}</h3><p>{{ next_event.starts_at|date:"l, j F · g:i a" }}{% if next_event.venue %} · {{ next_event.venue }}{% endif %}</p></div>
+        </a>
+        {% endif %}
+        <div class="pub-life" data-reveal data-reveal-delay="140">
+          <span>{% icon "trophy" 18 %}<b>Competitions</b></span>
+          <span>{% icon "wrench" 18 %}<b>Project clinics</b></span>
+          <span>{% icon "heart-handshake" 18 %}<b>Mentoring</b></span>
+          <span>{% icon "briefcase" 18 %}<b>Careers</b></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

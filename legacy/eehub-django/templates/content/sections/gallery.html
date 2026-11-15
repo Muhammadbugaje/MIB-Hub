@@ -1,0 +1,16 @@
+{% load ee_tags %}{% if albums %}
+<section class="pub-sec" id="gallery" aria-labelledby="sec-gallery">
+  <div class="pub-wrap">
+    {% url 'content:gallery' as gal_url %}
+    {% include "content/partials/sec_head.html" with pre="Moments from" hl="the department" more_url=gal_url more_label="Open the gallery" %}
+    <div class="pub-mosaic">
+      {% for a in albums %}
+      <a class="pub-tile{% if forloop.first %} is-wide{% endif %}" href="{% url 'content:album_detail' a.slug %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 60 %}">
+        {% with img=a.cover_image %}{% if img %}<img src="{{ img.url }}" alt="" loading="lazy">{% else %}<span class="pub-tile__ph">{% icon "images" 32 %}</span>{% endif %}{% endwith %}
+        <span class="pub-tile__cap"><b>{{ a.title }}</b><small>{% if a.taken_on %}{{ a.taken_on|date:"F Y" }} · {% endif %}{{ a.images.all|length }} photo{{ a.images.all|length|pluralize }}</small></span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

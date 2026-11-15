@@ -1,0 +1,48 @@
+{% extends "base_public.html" %}{% load static ee_tags content_tags living_tags %}
+{% block title %}{{ post.title }}{% endblock %}
+{% block meta_description %}{{ post.summary|default:post.title }}{% endblock %}
+{% block content %}
+<section class="pub-phero lv-phero">
+  <div class="lv-phero__art" aria-hidden="true">{% if post.image %}<img src="{{ post.image.url }}" alt="">{% else %}{% cover_art post %}{% endif %}</div>
+  <div class="pub-wrap">
+    <nav class="pub-crumbs" aria-label="Breadcrumb"><a href="{% url 'content:home' %}">Home</a>{% icon "chevron-right" 13 %}<a href="{% url 'content:news' %}">News</a>{% icon "chevron-right" 13 %}<span aria-current="page">{{ post.title|truncatechars:40 }}</span></nav>
+    <p class="pub-eyebrow"><a class="lv-eyebrow-link" href="{% url 'content:news' %}?category={{ post.category }}">{{ post.get_category_display }}</a></p>
+    <h1>{{ post.title }}</h1>
+    {% if post.summary %}<p class="pub-phero__sub">{{ post.summary }}</p>{% endif %}
+    <div class="pub-phero__meta"><span>{% icon "calendar" 14 %}<time datetime="{{ post.publish_at|date:'c' }}">{{ post.publish_at|date:"l, j F Y" }}</time></span><span>{% icon "clock-3" 14 %}{{ post.body|reading_time }}</span>{% if post.author %}<span>{% icon "user-round" 14 %}{{ post.author.get_full_name|default:"Department office" }}</span>{% endif %}{% if post.is_pinned %}<span>{% icon "pin" 14 %}Pinned</span>{% endif %}</div>
+  </div>
+</section>
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-layout">
+      <article class="pub-article">
+        <div class="lv-cover lv-media">{% if post.image %}<img src="{{ post.image.url }}" alt="">{% else %}{% cover_art post %}{% endif %}</div>
+        <div class="pub-prose">{{ post.body|markdownify }}</div>
+        {% include "content/news_share.html" with url=request.build_absolute_uri title=post.title %}
+        {% if newer or older %}
+        <nav class="lv-pn" aria-label="More stories">
+          {% if older %}<a class="lv-pn__a" href="{{ older.get_absolute_url }}"><small>{% icon "arrow-left" 13 %} Older</small><b>{{ older.title }}</b></a>{% else %}<span></span>{% endif %}
+          {% if newer %}<a class="lv-pn__a lv-pn__a--next" href="{{ newer.get_absolute_url }}"><small>Newer {% icon "arrow-right" 13 %}</small><b>{{ newer.title }}</b></a>{% endif %}
+        </nav>
+        {% endif %}
+      </article>
+      <aside class="pub-aside">
+        <div class="pub-panel">
+          <h2>Coming up</h2>
+          {% for e in upcoming %}
+          <a class="pub-mini" href="{{ e.get_absolute_url }}"><span class="pub-mini__dt k-volt"><b>{{ e.starts_at|date:"j" }}</b><small>{{ e.starts_at|date:"M"|upper }}</small></span><span><b class="t">{{ e.title }}</b><small class="m">{{ e|starts_in|capfirst }}{% if e.venue %} · {{ e.venue }}{% endif %}</small></span></a>
+          {% empty %}<p class="pub-muted-s">No upcoming events.</p>{% endfor %}
+          <a class="pub-btn pub-btn--ghost pub-btn--sm pub-mt" href="{% url 'content:news' %}">{% icon "arrow-left" 15 %}All news</a>
+        </div>
+      </aside>
+    </div>
+    {% if related %}
+    <section class="lv-related" aria-labelledby="lv-related-h">
+      <h2 id="lv-related-h">Related stories</h2>
+      <div class="pub-cards">{% for n in related %}{% widthratio forloop.counter0 1 60 as delay %}{% include "content/news_card.html" with n=n delay=delay %}{% endfor %}</div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/living.js' %}" defer></script>{% endblock %}

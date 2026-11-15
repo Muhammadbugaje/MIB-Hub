@@ -1,0 +1,16 @@
+{% load ee_tags %}{% if quick_links %}
+<section class="pub-sec pub-sec--tint" id="quicklinks" aria-labelledby="sec-quicklinks">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="Find it" hl="fast" sub="The pages students, parents and visitors ask for most." %}
+    <div class="pub-ql">
+      {% for l in quick_links %}
+      <a class="pub-ql__item" href="{{ l.url }}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 40 %}">
+        <span class="pub-ql__ic {% cycle 'k-green' 'k-gold' 'k-volt' 'k-plum' %}">{% icon l.icon 20 %}</span>
+        <span class="pub-ql__txt"><b>{{ l.label }}</b>{% if l.description %}<small>{{ l.description }}</small>{% endif %}</span>
+        {% icon "arrow-up-right" 16 "pub-ql__go" %}
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}

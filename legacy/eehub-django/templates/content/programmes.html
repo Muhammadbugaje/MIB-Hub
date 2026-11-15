@@ -1,0 +1,39 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block title %}Programmes{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Programmes" sub="An accredited five-year B.Eng and a full ladder of postgraduate study: PGD, M.Sc, MPhil and PhD." eyebrow="Academics" eyebrow_icon="graduation-cap" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% if ug %}
+    <div class="pub-sh"><div><p class="pub-eyebrow">Undergraduate</p><h2>Bachelor's degree</h2></div></div>
+    <div class="pub-progs pub-progs--page">
+      {% for p in ug %}
+      <a class="pub-prog pub-prog--feature" href="{% url 'content:programme_detail' p.code %}" data-reveal>
+        <span class="pub-prog__deg">{{ p.get_degree_display }}</span><h3>{{ p.name }}</h3><p>{{ p.summary|truncatewords:40 }}</p>
+        <div class="pub-prog__meta"><span>{% icon "clock" 15 %}{{ p.duration_years }} years</span><span>{% icon "layers" 15 %}{{ p.levels.all|length }} levels</span></div>
+        {% if p.specialisation_list %}<div class="pub-prog__tags">{% for s in p.specialisation_list %}<span>{{ s }}</span>{% endfor %}</div>{% endif %}
+        <span class="pub-prog__go">View the programme{% icon "arrow-right" 16 %}</span>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if pg %}
+    <div class="pub-sh pub-mt-xl"><div><p class="pub-eyebrow">Postgraduate</p><h2>Study and research</h2></div></div>
+    <div class="pub-cards">
+      {% for p in pg %}
+      <a class="pub-card pub-card--prog" href="{% url 'content:programme_detail' p.code %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 50 %}">
+        <div class="pub-card__body">
+          <span class="pub-prog__ic">{% icon "microscope" 20 %}</span>
+          <span class="pub-prog__deg">{{ p.get_degree_display }} · {{ p.duration_years }} year{{ p.duration_years|pluralize }}</span>
+          <h2>{{ p.name }}</h2>
+          <p>{{ p.summary|truncatewords:24 }}</p>
+          <span class="pub-card__go">Programme details{% icon "arrow-right" 15 %}</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+    {% if not ug and not pg %}<div class="pub-empty">{% icon "graduation-cap" 36 %}<h2>Programmes will be listed soon</h2></div>{% endif %}
+  </div>
+</div>
+{% endblock %}

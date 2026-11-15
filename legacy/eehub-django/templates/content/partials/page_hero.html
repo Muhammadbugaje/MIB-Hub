@@ -1,0 +1,10 @@
+{% load ee_tags %}{% if hero_tone %}{% firstof hero_tone as tone %}{% else %}{% with eb=eyebrow|default:title %}{% firstof eb|hero_tone as tone %}{% endwith %}{% endif %}<section class="pub-phero pub-phero--{{ tone }}{% if hero_img %} pub-phero--image{% endif %}"{% if hero_img %} style="--img:url('{{ hero_img }}')"{% endif %}>
+  {% if eyebrow_icon and not hero_img %}<span class="pub-phero__glyph" aria-hidden="true">{% icon eyebrow_icon 320 %}</span>{% endif %}
+  <div class="pub-wrap">
+    <nav class="pub-crumbs" aria-label="Breadcrumb"><a href="{% url 'content:home' %}">Home</a>{% if crumb_url %}{% icon "chevron-right" 13 %}<a href="{{ crumb_url }}">{{ crumb_label }}</a>{% endif %}{% icon "chevron-right" 13 %}<span aria-current="page">{{ crumb_here|default:title|truncatechars:48 }}</span></nav>
+    {% if eyebrow %}<p class="pub-eyebrow">{% if eyebrow_icon %}{% icon eyebrow_icon 14 %} {% endif %}{{ eyebrow }}</p>{% endif %}
+    <h1>{{ title }}</h1>
+    {% if sub %}<p class="pub-phero__sub">{{ sub }}</p>{% endif %}
+    {% if meta %}<div class="pub-phero__meta">{{ meta }}</div>{% endif %}
+  </div>
+</section>

@@ -1,0 +1,57 @@
+{% extends "base_public.html" %}{% load static ee_tags content_tags living_tags %}
+{% block title %}{{ event.title }}{% endblock %}
+{% block meta_description %}{{ event.summary|default:event.title }}{% endblock %}
+{% block content %}
+<section class="pub-phero pub-phero--image lv-phero--event" style="--img:url('{% if event.image %}{{ event.image.url }}{% else %}{% cover_uri event %}{% endif %}')">
+  <div class="pub-wrap">
+    <nav class="pub-crumbs" aria-label="Breadcrumb"><a href="{% url 'content:home' %}">Home</a>{% icon "chevron-right" 13 %}<a href="{% url 'content:events' %}">Events</a>{% icon "chevron-right" 13 %}<span aria-current="page">{{ event.title|truncatechars:40 }}</span></nav>
+    <p class="pub-eyebrow">{% if event.is_upcoming %}Upcoming event · {{ event|starts_in }}{% else %}Past event{% endif %}</p>
+    <h1>{{ event.title }}</h1>
+    {% if event.summary %}<p class="pub-phero__sub">{{ event.summary }}</p>{% endif %}
+    <div class="pub-phero__meta"><span>{% icon "calendar" 14 %}{{ event.starts_at|date:"l, j F Y" }}</span><span>{% icon "clock" 14 %}{{ event.starts_at|date:"g:i a" }}{% if event.ends_at %} – {{ event.ends_at|date:"g:i a" }}{% endif %}</span>{% if event.venue %}<span>{% icon "map-pin" 14 %}{{ event.venue }}</span>{% endif %}</div>
+  </div>
+</section>
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-layout">
+      <article class="pub-article">
+        {% if event.is_upcoming %}
+        <div class="pub-cd pub-cd--light" data-countdown="{{ event.starts_at|date:'c' }}" aria-label="Time until the event starts">
+          <div><b data-cd="d">--</b><small>days</small></div><span class="pub-cd__sep" aria-hidden="true">:</span><div><b data-cd="h">--</b><small>hours</small></div><span class="pub-cd__sep" aria-hidden="true">:</span><div><b data-cd="m">--</b><small>mins</small></div><span class="pub-cd__sep" aria-hidden="true">:</span><div><b data-cd="s">--</b><small>secs</small></div>
+        </div>
+        {% else %}
+        <p class="lv-ended">{% icon "history" 16 %} This event took place on {{ event.starts_at|date:"j F Y" }}. Photographs, when available, are in the <a href="{% url 'content:gallery' %}">gallery</a>.</p>
+        {% endif %}
+        <div class="pub-prose">{% if event.body %}{{ event.body|markdownify }}{% else %}<p>{{ event.summary|default:"Details will be shared soon." }}</p>{% endif %}</div>
+        {% include "content/news_share.html" with url=share_url title=event.title %}
+      </article>
+      <aside class="pub-aside">
+        <div class="pub-panel">
+          <h2>Event details</h2>
+          <ul class="pub-factlist">
+            <li>{% icon "calendar" 18 %}<div><small>Date</small>{{ event.starts_at|date:"l j F Y" }}</div></li>
+            <li>{% icon "clock" 18 %}<div><small>Time</small>{{ event.starts_at|date:"g:i a" }}{% if event.ends_at %} – {{ event.ends_at|date:"g:i a" }}{% endif %}</div></li>
+            {% if event.venue %}<li>{% icon "map-pin" 18 %}<div><small>Venue</small>{{ event.venue }}</div></li>{% endif %}
+            {% if event.organiser %}<li>{% icon "users" 18 %}<div><small>Organiser</small>{{ event.organiser }}</div></li>{% endif %}
+          </ul>
+          {% if event.online_url %}<a class="pub-btn pub-btn--primary pub-btn--block pub-mt" href="{{ event.online_url }}" target="_blank" rel="noopener">{% icon "video" 16 %}Join online</a>{% endif %}
+          {% if event.is_upcoming %}
+          <div class="lv-cal pub-mt">
+            <a class="pub-btn pub-btn--primary pub-btn--block" href="{% url 'content:event_ics' event.slug %}" download>{% icon "calendar-plus" 16 %}Add to calendar (.ics)</a>
+            <a class="pub-btn pub-btn--ghost pub-btn--block" href="{{ gcal_url }}" target="_blank" rel="noopener noreferrer">{% icon "calendar-days" 16 %}Google Calendar</a>
+          </div>
+          {% endif %}
+        </div>
+        {% if more %}
+        <div class="pub-panel">
+          <h2>Also coming up</h2>
+          {% for e in more %}<a class="pub-mini" href="{{ e.get_absolute_url }}"><span class="pub-mini__dt k-volt"><b>{{ e.starts_at|date:"j" }}</b><small>{{ e.starts_at|date:"M"|upper }}</small></span><span><b class="t">{{ e.title }}</b><small class="m">{{ e|starts_in|capfirst }}{% if e.venue %} · {{ e.venue }}{% endif %}</small></span></a>{% endfor %}
+          <a class="pub-btn pub-btn--ghost pub-btn--sm pub-mt" href="{% url 'content:events' %}">{% icon "arrow-left" 15 %}All events</a>
+        </div>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/living.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,8 @@
+{% load ee_tags living_tags %}{# Share bar: include with url=... title=... #}{% share_links url title as share %}
+<div class="pub-share lv-share" aria-label="Share">
+  <span>Share</span>
+  <button class="pub-btn pub-btn--ghost pub-btn--sm" type="button" data-copy="{{ url }}" data-copied="Link copied">{% icon "link" 15 %}Copy link</button>
+  <a class="pub-btn pub-btn--ghost pub-btn--sm" href="{{ share.whatsapp }}" target="_blank" rel="noopener noreferrer">{% icon "message-circle" 15 %}WhatsApp</a>
+  <a class="pub-btn pub-btn--ghost pub-btn--sm" href="{{ share.x }}" target="_blank" rel="noopener noreferrer"><svg class="ee-icon" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.77L17.75 3Zm-1.08 16.2h1.7L7.4 4.73H5.58L16.67 19.2Z"/></svg>Post on X</a>
+  <button class="pub-btn pub-btn--ghost pub-btn--sm" type="button" data-native-share data-share-url="{{ url }}" data-share-title="{{ title }}" hidden>{% icon "share-2" 15 %}More</button>
+</div>

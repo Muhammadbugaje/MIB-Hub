@@ -1,0 +1,11 @@
+{% load ee_tags %}{% setting "appearance.marquee" True as show_marquee %}{% setting "appearance.marquee_words" "" as words %}{% if show_marquee and words %}
+{# Round 6: a kinetic band of the department's disciplines between the hero and the first section. #}
+<section class="fx-marquee" aria-label="What we teach">
+  <p class="sr-only">{{ words|join:", " }}</p>
+  {% for row in "ab" %}
+  <div class="fx-marquee__row" aria-hidden="true">
+    {% for copy in "12" %}<div class="fx-marquee__set">{% for w in words %}<span class="fx-marquee__w {% cycle 'fx-marquee__w--o' 'fx-marquee__w--g' %}">{{ w }}</span><span class="fx-marquee__sep"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>{% endfor %}</div>{% endfor %}
+  </div>
+  {% endfor %}
+</section>
+{% endif %}

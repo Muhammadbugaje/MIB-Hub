@@ -1,0 +1,16 @@
+{% load ee_tags %}{% if testimonials %}
+<section class="pub-sec pub-voices" id="voices" aria-labelledby="sec-voices">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="In the words of" hl="our alumni" carousel="voice-track" %}
+  </div>
+  <div class="pub-quotes" id="voice-track" tabindex="0" aria-label="Alumni voices" data-scroller>
+    {% for t in testimonials %}
+    <figure class="pub-quote" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 60 %}">
+      <span class="pub-quote__mark" aria-hidden="true">{% icon "quote" 28 %}</span>
+      <blockquote>{{ t.quote|linebreaksbr }}</blockquote>
+      <figcaption>{% if t.photo %}<img class="pub-avatar" src="{{ t.photo.url }}" alt="" loading="lazy">{% else %}<span class="pub-avatar">{{ t.name|initials }}</span>{% endif %}<div><b>{{ t.name }}</b><small>{{ t.role }}</small></div></figcaption>
+    </figure>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

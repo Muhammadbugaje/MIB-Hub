@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static ee_tags %}
+{% block title %}Import and export{% endblock %}
+{% block page_title %}Import and export{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/wizard.css' %}">
+  <link rel="stylesheet" href="{% static 'css/system.css' %}">
+{% endblock %}
+{% block content %}
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "arrow-left-right" 14 %} Data</span>
+    <h1 class="ee-page-header__title">Import and export</h1>
+    <p class="ee-page-header__description">Move data in and out of EE Hub with Excel: download a template, fill it, preview every row, then commit. Nothing is saved until you confirm.</p>
+  </div>
+</header>
+
+<div class="wizard-layout">
+  <aside class="wizard-modules">
+    <h2 class="section-label">Modules</h2>
+    {% if specs %}
+      <nav class="module-list" aria-label="Import and export modules">
+        {% for name, s in specs.items %}
+          <a class="module-item {% if name == selected_name %}active{% endif %}"
+             href="{% url 'core:import_export_spec' name %}"
+             hx-get="{% url 'core:ie_panel' name %}"
+             hx-target="#wizard-panel"
+             hx-push-url="{% url 'core:import_export_spec' name %}"
+             hx-swap="innerHTML">
+            <div class="module-icon">{% if s.import %}{% icon "file-up" 18 %}{% else %}{% icon "file-down" 18 %}{% endif %}</div>
+            <div class="module-info">
+              <strong>{{ s.label }}</strong>
+              {% if s.description %}<span>{{ s.description|truncatechars:64 }}</span>{% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </nav>
+    {% else %}
+      <div class="ee-empty">No import or export modules are registered yet.</div>
+    {% endif %}
+  </aside>
+
+  <section class="wizard-panel-wrap">
+    <div id="wizard-panel">
+      {% if selected %}
+        {% include "core/_wizard_panel.html" with spec=selected %}
+      {% else %}
+        <div class="wizard-placeholder">
+          <div class="wizard-placeholder-icon">{% icon "sheet" 28 %}</div>
+          <h3>Pick a module to begin</h3>
+          <p>Choose a module on the left. You can download a template, upload a filled copy, preview it and commit.</p>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/wizard.js' %}" defer></script>{% endblock %}

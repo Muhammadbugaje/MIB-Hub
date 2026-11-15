@@ -1,0 +1,41 @@
+{% load ee_tags %}{% if news or next_event %}
+<section class="pub-sec pub-story" id="news" aria-labelledby="sec-news">
+  <div class="pub-wrap">
+    {% url 'content:news' as news_url %}
+    {% include "content/partials/sec_head.html" with pre="What's happening in" hl="the department" more_url=news_url more_label="All news" eyebrow="News and events" %}
+    <div class="pub-news{% if not next_event %} no-feature{% endif %}">
+      {% if next_event %}
+      <article class="pub-feat" {% if next_event.image %}style="--img:url('{{ next_event.image.url }}')"{% endif %} data-reveal>
+        <span class="pub-badge pub-badge--glassgold">{% icon "calendar-days" 13 %}{% if next_event.is_featured %}Featured event{% else %}Next event{% endif %}</span>
+        <h3><a href="{{ next_event.get_absolute_url }}">{{ next_event.title }}</a></h3>
+        <p>{% if next_event.summary %}{{ next_event.summary }}{% else %}{{ next_event.starts_at|date:"l j F Y, g:i a" }}{% endif %}{% if next_event.venue %} · {{ next_event.venue }}{% endif %}</p>
+        <div class="pub-cd" data-countdown="{{ next_event.starts_at|date:'c' }}">
+          <div><b data-cd="d">--</b><small>days</small></div><span class="pub-cd__sep">:</span>
+          <div><b data-cd="h">--</b><small>hours</small></div><span class="pub-cd__sep">:</span>
+          <div><b data-cd="m">--</b><small>mins</small></div><span class="pub-cd__sep pub-hide-sm">:</span>
+          <div class="pub-hide-sm"><b data-cd="s">--</b><small>secs</small></div>
+          <a class="pub-btn pub-btn--gold pub-cd__cta" href="{{ next_event.get_absolute_url }}">{% icon "ticket" 16 %}Details</a>
+        </div>
+      </article>
+      {% endif %}
+      <div class="pub-nlist">
+        {% for n in news|slice:":4" %}
+        <a class="pub-ni" href="{{ n.get_absolute_url }}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 60 %}">
+          <span class="pub-ni__dt {% cycle 'k-green' 'k-volt' 'k-gold' 'k-plum' %}"><b>{{ n.publish_at|date:"d" }}</b><small>{{ n.publish_at|date:"M"|upper }}</small></span>
+          <div class="pub-ni__body"><h3>{{ n.title }}</h3><p>{{ n.summary|default:n.get_category_display|truncatewords:14 }}</p></div>
+          <span class="pub-badge pub-badge--{{ n.category }}">{{ n.get_category_display }}</span>
+        </a>
+        {% empty %}
+        {% for e in events %}
+        <a class="pub-ni" href="{{ e.get_absolute_url }}">
+          <span class="pub-ni__dt k-volt"><b>{{ e.starts_at|date:"d" }}</b><small>{{ e.starts_at|date:"M"|upper }}</small></span>
+          <div class="pub-ni__body"><h3>{{ e.title }}</h3><p>{{ e.venue }}</p></div>
+          <span class="pub-badge pub-badge--event">Event</span>
+        </a>
+        {% endfor %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

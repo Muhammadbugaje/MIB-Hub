@@ -1,0 +1,22 @@
+{% load ee_tags %}{% if stats %}
+{% setting "appearance.section_scene" "none" as band_scene %}<section class="pub-numbers{% if band_scene and band_scene != 'none' %} fx-band{% endif %}" id="numbers" aria-labelledby="sec-numbers">
+  {% if band_scene and band_scene != "none" %}{% include "content/partials/fx_scene.html" with kind=band_scene %}{% endif %}
+  <div class="pub-wrap">
+    <div class="pub-numbers__head">
+      <p class="pub-eyebrow pub-eyebrow--light">{{ section.get_key_display }}</p>
+      <h2 id="sec-numbers">{{ section.title|default:"The department in numbers" }}</h2>
+      {% if section.subtitle %}<p>{{ section.subtitle }}</p>{% endif %}
+    </div>
+    <ul class="pub-numbers__grid">
+      {% for s in stats %}
+      <li class="pub-num" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 70 %}" style="--c:{% cycle '#e6c867' '#38e1f5' '#a78bfa' '#4ade80' '#ff9e7a' %}">
+        <span class="pub-num__ic">{% icon s.icon 20 %}</span>
+        <b>{{ s.prefix }}{% if s.number is not None %}<span data-countup="{{ s.number|floatformat:'0' }}">{{ s.display }}</span>{% else %}{{ s.display }}{% endif %}{{ s.suffix }}</b>
+        <span class="pub-num__lbl">{{ s.label }}</span>
+        {% if s.as_of %}<small>{{ s.as_of }}</small>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}

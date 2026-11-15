@@ -1,0 +1,1 @@
+{% load ee_tags %}<span class="pub-person__ph">{% if p.photo %}<img src="{{ p.photo.url }}" alt="" loading="lazy">{% else %}{{ p.plain_name|default:p|initials }}{% endif %}</span>

@@ -1,0 +1,29 @@
+{% load ee_tags %}{% if programmes %}
+<section class="pub-sec pub-sec--tint" id="programmes" aria-labelledby="sec-programmes">
+  <div class="pub-wrap">
+    {% url 'content:programmes' as prog_url %}
+    {% include "content/partials/sec_head.html" with pre="Study with us, from" hl="B.Eng to PhD" sub="An accredited five-year Bachelor of Engineering and a full ladder of postgraduate study and research." more_url=prog_url more_label="All programmes" %}
+    <div class="pub-progs">
+      {% for p in programmes_ug %}
+      <a class="pub-prog pub-prog--feature" href="{% url 'content:programme_detail' p.code %}" data-reveal>
+        <span class="pub-prog__deg">{{ p.get_degree_display }}</span>
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.summary|default:"Undergraduate degree"|truncatewords:30 }}</p>
+        <div class="pub-prog__meta"><span>{% icon "clock" 15 %}{{ p.duration_years }} years</span><span>{% icon "layers" 15 %}{{ p.levels.all|length }} levels</span><span>{% icon "factory" 15 %}SIWES training</span></div>
+        {% if p.specialisation_list %}<div class="pub-prog__tags">{% for s in p.specialisation_list|slice:":6" %}<span>{{ s }}</span>{% endfor %}</div>{% endif %}
+        <span class="pub-prog__go">View the programme{% icon "arrow-right" 16 %}</span>
+      </a>
+      {% endfor %}
+      <div class="pub-progs__pg">
+        {% for p in programmes_pg %}
+        <a class="pub-prog" href="{% url 'content:programme_detail' p.code %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 60 %}">
+          <span class="pub-prog__ic">{% icon "microscope" 20 %}</span>
+          <div><span class="pub-prog__deg pub-prog__deg--sm">{{ p.get_degree_display }} · {{ p.duration_years }} year{{ p.duration_years|pluralize }}</span><h3>{{ p.name }}</h3></div>
+          {% icon "chevron-right" 18 "pub-prog__chev" %}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}

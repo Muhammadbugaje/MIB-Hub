@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static ee_tags ux_tags pager_tags %}
+{% block title %}Contact inbox{% endblock %}
+{% block page_title %}Contact inbox{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/contact-inbox.css' %}">
+  <link rel="stylesheet" href="{% static 'css/system.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ux.css' %}">
+{% endblock %}
+{% block content %}
+<div class="contact-page sys-contact">
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "inbox" 14 %} Public enquiries</span>
+      <h1 class="ee-page-header__title">Contact inbox</h1>
+      <p class="ee-page-header__description">Messages sent through the contact form on the department website. Notes you add stay inside EE Hub; the sender never sees them.</p>
+    </div>
+    <div class="ee-page-header__actions">
+      <span class="contact-count">{{ unread }} unread</span>
+    </div>
+  </header>
+
+  <nav class="sys-chips" aria-label="Filter messages">
+    {% for v, l in status_choices %}
+      <a class="sys-chip{% if status == v %} is-on{% endif %}" href="?status={{ v }}{% if q %}&amp;q={{ q|urlencode }}{% endif %}" {% if status == v %}aria-current="page"{% endif %}>{{ l }}</a>
+    {% endfor %}
+  </nav>
+
+  <form method="get" class="contact-filter-bar">
+    <input type="hidden" name="status" value="{{ status }}">
+    <label class="contact-search">
+      <span class="sr-only">Search sender, subject or message</span>
+      <input class="input" type="search" name="q" value="{{ q }}" placeholder="Search sender, subject or message">
+    </label>
+    <button class="btn btn-primary" type="submit">Search</button>
+    {% if q %}<a class="btn btn-ghost" href="?status={{ status }}">Clear</a>{% endif %}
+  </form>
+
+  {% if page.object_list %}
+    <div class="bulk-toolbar">
+      {% bulk_all "bulk-contact" %}
+      <span class="bulk-toolbar__hint">Tick messages to mark several as read or handled{% if can_delete %}, or delete them{% endif %}.</span>
+    </div>
+    <div class="contact-message-list">
+      {% for item in page.object_list %}
+        <div class="contact-select" data-uxb-row>
+        {% bulk_check "bulk-contact" item.pk item.subject|default:"this message" %}
+        <a class="contact-message-row {% if not item.is_read %}is-unread{% endif %}" href="{% url 'contact_detail' item.pk %}">
+          <span class="contact-message-status" aria-hidden="true"></span>
+          <span class="contact-message-main">
+            <span class="contact-message-title">{{ item.subject|default:"No subject" }}</span>
+            <span class="contact-message-meta">{{ item.name }} · {{ item.email }}{% if item.category %} · {{ item.category|capfirst }}{% endif %}</span>
+            <span class="contact-message-preview">{{ item.message|truncatechars:150 }}</span>
+          </span>
+          <span class="contact-message-trailing">
+            <time datetime="{{ item.created_at|date:'c' }}">{{ item.created_at|date:"j M Y · H:i" }}</time>
+            {% if item.is_handled %}<span class="contact-badge is-handled">Handled</span>
+            {% elif item.assigned_to %}<span class="contact-badge">With {{ item.assigned_to.get_full_name }}</span>
+            {% else %}<span class="contact-badge is-unassigned">Unassigned</span>{% endif %}
+          </span>
+        </a>
+        </div>
+      {% endfor %}
+    </div>
+    {% url 'contact_bulk' as bulk_url %}
+    {% if can_delete %}
+      {% bulk_bar "bulk-contact" bulk_url actions="read:Mark read,handled:Mark handled,reopen:Reopen,delete:Delete:danger" noun="message" confirm_title="Delete {n} {noun}?" confirm_body="The messages and their notes are removed for good. This can't be undone." %}
+    {% else %}
+      {% bulk_bar "bulk-contact" bulk_url actions="read:Mark read,handled:Mark handled,reopen:Reopen" noun="message" %}
+    {% endif %}
+  {% elif q or status != "all" %}
+    {% include "partials/empty_state.html" with title="No matching messages" body="Try another search or show all messages." variant="filtered" only %}
+  {% else %}
+    {% include "partials/empty_state.html" with title="Your inbox is clear" body="Messages sent from the department website will appear here." only %}
+  {% endif %}
+
+  {% show_all_toggle page %}{% if page.has_other_pages %}
+    <nav class="contact-pagination" aria-label="Contact inbox pages">
+      {% if page.has_previous %}<a class="btn btn-ghost btn-sm" href="?q={{ q|urlencode }}&amp;status={{ status|urlencode }}&amp;page={{ page.previous_page_number }}">Previous</a>{% endif %}
+      <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn btn-ghost btn-sm" href="?q={{ q|urlencode }}&amp;status={{ status|urlencode }}&amp;page={{ page.next_page_number }}">Next</a>{% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

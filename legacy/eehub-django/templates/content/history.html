@@ -1,0 +1,54 @@
+{% extends "base_public.html" %}{% load ee_tags content_tags %}
+{% block title %}Our history{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title="Our history" sub="The department, the university and the science of electricity, one milestone at a time." eyebrow="About" eyebrow_icon="landmark" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    {% if tracks %}
+    <div class="pub-tabs" role="tablist" aria-label="Timelines">
+      {% for t in tracks %}<button type="button" role="tab" class="{% if forloop.first %}is-active{% endif %}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="track-{{ t.code }}" data-tab="track-{{ t.code }}">{% if t.code == "department" %}{% icon "building-2" 15 %}{% elif t.code == "university" %}{% icon "school" 15 %}{% else %}{% icon "zap" 15 %}{% endif %}{{ t.label }}</button>{% endfor %}
+    </div>
+    {% for t in tracks %}
+    <section id="track-{{ t.code }}" role="tabpanel" class="pub-tabpanel"{% if not forloop.first %} hidden{% endif %} aria-label="{{ t.label }}">
+      <h2 class="sr-only">{{ t.label }}</h2>
+      <ol class="pub-vtl">
+        {% for m in t.items %}
+        <li data-reveal><div class="pub-vtl__card">
+          <div class="pub-vtl__y">{{ m.year_label }}</div>
+          <h3>{{ m.title }}</h3>
+          {% if m.description %}<p>{{ m.description }}</p>{% endif %}
+          {% if m.person %}<span class="pub-vtl__who">{% icon "user-round" 13 %}{{ m.person }}</span>{% endif %}
+          {% if m.image %}<img src="{{ m.image.url }}" alt="" loading="lazy">{% endif %}
+        </div></li>
+        {% endfor %}
+      </ol>
+    </section>
+    {% endfor %}
+    {% else %}
+    <div class="pub-empty">{% icon "landmark" 36 %}<h2>The history is being written</h2><p>Milestones will appear here soon.</p></div>
+    {% endif %}
+
+    {% if history_page %}
+    <section class="pub-history-page">
+      <div class="pub-sh"><div><p class="pub-eyebrow">The full story</p><h2>{{ history_page.title }}</h2></div></div>
+      <div class="pub-prose">{{ history_page.body|markdownify }}</div>
+    </section>
+    {% endif %}
+
+    {% if hods %}
+    <section class="pub-history-hods">
+      <div class="pub-sh"><div><p class="pub-eyebrow">Leadership</p><h2>Heads of Department</h2></div><a class="pub-btn pub-btn--ghost pub-sh__more" href="{% url 'content:hods' %}">The full roll{% icon "arrow-right" 16 %}</a></div>
+      <div class="pub-hods pub-hods--static">
+        {% for h in hods %}
+        <article class="pub-hod{% if h.is_current %} is-current{% endif %}">
+          {% if h.is_current %}<span class="pub-badge pub-badge--gold pub-hod__now">{% icon "sparkles" 12 %}Current</span>{% endif %}
+          <div class="pub-hod__photo">{% if h.photo %}<img src="{{ h.photo.url }}" alt="" loading="lazy">{% else %}<svg viewBox="0 0 80 80" fill="currentColor" aria-hidden="true"><circle cx="40" cy="30" r="15"/><path d="M10 80c2-18 14-28 30-28s28 10 30 28z"/></svg>{% endif %}</div>
+          <b>{{ h.display_name }}</b><small>{{ h.tenure }}</small><span class="pub-hod__bar" aria-hidden="true"></span>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

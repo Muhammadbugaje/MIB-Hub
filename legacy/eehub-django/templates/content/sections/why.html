@@ -1,0 +1,16 @@
+{% load ee_tags %}
+<section class="pub-sec pub-sec--tint" id="why" aria-labelledby="sec-why">
+  <div class="pub-wrap">
+    {% include "content/partials/sec_head.html" with pre="One account for" hl="the whole department" sub="EE Hub is the department's own portal. Students, lecturers, staff and alumni sign in once and see what matters to them." %}
+    <div class="pub-why">
+      <article class="pub-why__card" data-reveal><span class="pub-why__ic tone-green">{% icon "key-round" 22 %}</span><h3>One sign-in</h3><p>Use your e-mail, registration number or staff number. Keep one password for everything.</p></article>
+      <article class="pub-why__card" data-reveal data-reveal-delay="60"><span class="pub-why__ic tone-gold">{% icon "repeat" 22 %}</span><h3>Every role you hold</h3><p>A lecturer who is also an M.Sc student switches profiles in one tap. Menus follow the profile you act as.</p></article>
+      <article class="pub-why__card" data-reveal data-reveal-delay="120"><span class="pub-why__ic tone-volt">{% icon "bell-ring" 22 %}</span><h3>Nothing missed</h3><p>Announcements, deadlines and requests reach you as notifications and a daily e-mail digest.</p></article>
+      <article class="pub-why__card" data-reveal data-reveal-delay="180"><span class="pub-why__ic tone-plum">{% icon "shield-check" 22 %}</span><h3>Recorded and fair</h3><p>Every action is logged for audit, and sensitive steps need the right office to approve them.</p></article>
+    </div>
+    <div class="pub-why__soon" data-reveal>
+      {% icon "rocket" 18 %}<span><b>All in one place:</b> course registration, timetables, results, CBT, My class, SIWES, projects, the e-library and EESA e-voting.</span>
+      <a href="{% url 'content:guides' %}">How-to guides{% icon "arrow-right" 15 %}</a>
+    </div>
+  </div>
+</section>

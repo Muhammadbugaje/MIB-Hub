@@ -1,0 +1,45 @@
+{% load ee_tags %}{% if journey %}
+<section class="pub-sec pub-story" id="journey" aria-labelledby="sec-journey">
+  <div class="pub-wrap">
+    {% if handbook_live %}{% url 'content:page' 'student-handbook' as hb_url %}{% endif %}
+    {% include "content/partials/sec_head.html" with pre="Your path from" hl="100L to graduation" sub="Five levels, two semesters each, building from mathematics and physics to power systems, protection and your own project." more_url=hb_url more_label="Student handbook" more_icon="book-open" more_class="pub-btn--primary" %}
+    <div class="pub-jour" style="--n:{{ journey|length|add:1 }}">
+      <div class="pub-jour__path" aria-hidden="true"></div>
+      {% for lv in journey %}
+      <article class="pub-lv{% if lv.is_final_years and lv.course_list %} pub-lv--hot{% endif %}" style="--c:{% cycle '#3f8f63' '#14a37a' '#13c4dc' '#8b5cf6' '#c8a951' '#e6c867' %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 70 %}">
+        <span class="pub-lv__st">{{ lv.number }}{% if lv.number >= 100 %}L{% endif %}</span>
+        <div class="pub-lv__box">
+          <h3>{{ lv.theme|default:lv }}</h3>
+          <p class="pub-lv__sub">{{ lv }}</p>
+          {% if lv.course_list %}
+            {% if lv.is_final_years %}
+            <ul>{% for c in lv.course_list %}<li><a href="{% url 'handbook:course' c.code|slugify|upper %}"><code>{{ c.code }}</code><span>{{ c.title }}</span></a></li>{% endfor %}</ul>
+            {% if lv.course_more > 0 %}<a class="pub-lv__tot" href="{% url 'handbook:index' %}#level-{{ lv.number }}">+{{ lv.course_more }} more · {{ lv.unit_total }} units</a>{% else %}<span class="pub-lv__tot">{{ lv.unit_total }} units</span>{% endif %}
+            {% else %}
+            <ul>{% for c in lv.course_list %}<li><code>{{ c.code }}</code><span>{{ c.title }}</span></li>{% endfor %}</ul>
+            {% endif %}
+          {% else %}
+            <ul>
+              {% if lv.number == 100 %}<li><code>MATH</code><span>Calculus and algebra</span></li><li><code>PHYS</code><span>Mechanics, electricity</span></li><li><code>CHEM</code><span>General chemistry</span></li>
+              {% elif lv.number == 200 %}<li><code>EEEN</code><span>Circuit theory</span></li><li><code>EEEN</code><span>Basic electronics</span></li><li><code>ENGG</code><span>Workshop practice</span></li>
+              {% elif lv.number == 300 %}<li><code>EEEN</code><span>Signals and systems</span></li><li><code>EEEN</code><span>Electromagnetic fields</span></li><li><code>EEEN</code><span>Electrical machines</span></li>
+              {% elif lv.number == 400 %}<li><code>EEEN</code><span>Power systems</span></li><li><code>EEEN</code><span>Control systems</span></li><li><code>SIWES</code><span>Industrial attachment</span></li>
+              {% elif lv.number == 500 %}<li><code>EEEN</code><span>Protection and electives</span></li><li><code>PROJ</code><span>Final-year project</span></li><li><code>B.ENG</code><span>Graduation</span></li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+      <article class="pub-lv pub-lv--alumni" style="--c:#c8a951" data-reveal data-reveal-delay="400">
+        <span class="pub-lv__st">{% icon "graduation-cap" 22 %}</span>
+        <div class="pub-lv__box">
+          <h3>Alumni</h3>
+          <p class="pub-lv__sub">For life</p>
+          <ul><li><code>COREN</code><span>Professional registration</span></li><li><code>PG</code><span>M.Sc and PhD at ABU</span></li><li><code>EE Hub</code><span>Keep your account</span></li></ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endif %}

@@ -1,0 +1,7 @@
+{% load ee_tags pager_tags %}{% show_all_toggle page_obj css="pub-btn pub-btn--ghost" %}{% if page_obj.has_other_pages %}
+<nav class="pub-pager" aria-label="Pages">
+  {% if page_obj.has_previous %}<a class="pub-btn pub-btn--ghost pub-btn--sm" href="?{% if category %}category={{ category }}&{% endif %}{% if q %}q={{ q|urlencode }}&{% endif %}{% if show %}show={{ show }}&{% endif %}page={{ page_obj.previous_page_number }}">{% icon "arrow-left" 15 %}Newer</a>{% endif %}
+  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  {% if page_obj.has_next %}<a class="pub-btn pub-btn--ghost pub-btn--sm" href="?{% if category %}category={{ category }}&{% endif %}{% if q %}q={{ q|urlencode }}&{% endif %}{% if show %}show={{ show }}&{% endif %}page={{ page_obj.next_page_number }}">Older{% icon "arrow-right" 15 %}</a>{% endif %}
+</nav>
+{% endif %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}Privacy and my data{% endblock %}
+{% block page_title %}Privacy and my data{% endblock %}
+{% block content %}
+<div class="ee-stack" style="max-width:860px">
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "lock-keyhole" 14 %} Your personal data</span>
+  <h1 class="ee-page-header__title">Privacy and my data</h1>
+  <p class="ee-page-header__description">What EE Hub keeps about you, who can see it, and how to get a copy.</p></div>
+  {% if export_on %}<div class="ee-page-header__actions btn-group">
+    <form method="post" action="{% url 'core:privacy_export' %}">{% csrf_token %}
+      <button class="btn btn-primary" type="submit">{% icon "download" 16 %} Download my data</button></form>
+    <a class="btn btn-ghost" href="{% url 'content:guide_detail' 'privacy-and-my-data' %}">{% icon "life-buoy" 16 %} How it works</a>
+  </div>{% endif %}
+</header>
+
+{% if staff %}
+<section class="ee-card" id="public-profile">
+  <div class="ee-card__head"><h2>{% icon "globe" 17 %} The public website</h2></div>
+  {% if consent_required %}
+    <p>The department's public People pages show staff only with their agreement. If you agree, visitors see your
+      <b>name, rank or designation, specialisation, university e-mail, office, photo and the biography you wrote</b>.
+      Your phone number and personal e-mail are never shown publicly.</p>
+    <p>Right now you are <b>{% if consent %}shown{% else %}not shown{% endif %}</b> on the public site.
+      You can change this at any time; it takes effect at once.</p>
+    <form method="post" action="{% url 'core:privacy_consent' %}" class="btn-group">{% csrf_token %}
+      {% if consent %}<input type="hidden" name="given" value="0">
+        <button class="btn btn-ghost" type="submit">{% icon "eye-off" 16 %} Stop showing me</button>
+      {% else %}<input type="hidden" name="given" value="1">
+        <button class="btn btn-primary" type="submit">{% icon "check" 16 %} Show me on the public site</button>{% endif %}
+    </form>
+  {% else %}
+    <p>The department shows staff on the public People pages without asking first (Settings: privacy.staff_public_consent is off).
+      Ask the web team if you want to be left out.</p>
+  {% endif %}
+</section>
+{% endif %}
+
+<section class="ee-card" id="download">
+  <div class="ee-card__head"><h2>{% icon "file-archive" 17 %} Download my data</h2></div>
+  {% if export_on %}
+    <p>You get a ZIP file of JSON files with your own records: your account and profiles, offices, course registrations and
+      forms, published results, attendance, CBT attempts, fines and call-ups, requests and complaints you raised, messages you
+      sent, SIWES, projects, careers, EESA dues and candidacies, study tools, and a list of who opened your restricted records.</p>
+    <p class="ee-muted">Not included:</p>
+    <ul>{% for x in excluded %}<li>{{ x }}</li>{% endfor %}</ul>
+  {% else %}
+    <div class="ee-empty">Downloads are switched off. Ask the department for a copy of your data.</div>
+  {% endif %}
+</section>
+
+<section class="ee-card" id="rights">
+  <div class="ee-card__head"><h2>{% icon "scale" 17 %} Your rights</h2></div>
+  <p>Under the Nigeria Data Protection Act 2023 you can ask to see your data, to correct it, to have it deleted when it is no
+    longer needed, and to object to some uses. Correct most details yourself under <a href="{% url 'accounts:profile' %}">My profile</a>.
+    Results and academic records are kept permanently because the university must keep them.</p>
+  <p>Questions or requests: {% if contact %}<b>{{ contact }}</b>{% else %}use the department's <a href="{% url 'content:contact' %}">contact page</a>{% endif %}.</p>
+</section>
+</div>
+{% endblock %}

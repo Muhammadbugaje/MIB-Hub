@@ -1,0 +1,13 @@
+{% load ee_tags living_tags %}{# One news card: include with n=post (and optional delay) #}
+<a class="pub-card lv-card{% if n.is_pinned %} pub-card--pinned{% endif %}" href="{{ n.get_absolute_url }}" data-reveal{% if delay %} data-reveal-delay="{{ delay }}"{% endif %}>
+  <div class="pub-card__media lv-media">
+    {% if n.image %}<img src="{{ n.image.url }}" alt="" loading="lazy">{% else %}{% cover_art n %}{% endif %}
+    <span class="pub-badge pub-badge--{{ n.category }}">{% if n.is_pinned %}{% icon "pin" 12 %}{% endif %}{{ n.get_category_display }}</span>
+  </div>
+  <div class="pub-card__body">
+    <div class="pub-card__meta"><span>{% icon "calendar" 13 %}<time datetime="{{ n.publish_at|date:'c' }}">{{ n.publish_at|date:"j M Y" }}</time></span><span>{% icon "clock-3" 13 %}{{ n.body|reading_time }}</span></div>
+    <h2>{{ n.title }}</h2>
+    {% if n.summary %}<p>{{ n.summary|truncatewords:26 }}</p>{% endif %}
+    <span class="pub-card__go">Read more{% icon "arrow-right" 15 %}</span>
+  </div>
+</a>

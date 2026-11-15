@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% load static ee_tags pager_tags %}
+{% block title %}Audit log{% endblock %}
+{% block page_title %}Audit log{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/system.css' %}">{% endblock %}
+{% block content %}
+<div class="sys-page sys-audit">
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "scroll-text" 14 %} Accountability</span>
+      <h1 class="ee-page-header__title">Audit log</h1>
+      <p class="ee-page-header__description">Every change in EE Hub, who made it and when. Entries can never be edited or deleted.</p>
+    </div>
+    <div class="ee-page-header__actions">
+      <a class="btn btn-ghost" href="{% url 'core:audit_log_export' %}?{{ request.GET.urlencode }}">{% icon "download" 16 %}Export CSV</a>
+    </div>
+  </header>
+
+  <form method="get" class="ee-card sys-filters" role="search" aria-label="Filter the audit log">
+    <div class="sys-filters__grid">
+      <div class="ee-field sys-filters__q">
+        <label for="f-q">Search</label>
+        <div class="sys-inputicon">{% icon "search" 15 %}<input class="input" type="search" id="f-q" name="q" value="{{ f.q }}" placeholder="Record, note or person"></div>
+      </div>
+      <div class="ee-field">
+        <label for="f-action">Action</label>
+        <select class="input" id="f-action" name="action">
+          <option value="">Any action</option>
+          {% for v, l in actions %}<option value="{{ v }}" {% if f.action == v %}selected{% endif %}>{{ l }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="ee-field">
+        <label for="f-model">Record type</label>
+        <select class="input" id="f-model" name="model">
+          <option value="">Any type</option>
+          {% for m in models %}<option value="{{ m }}" {% if f.model == m %}selected{% endif %}>{{ m }}</option>{% endfor %}
+        </select>
+      </div>
+      <div class="ee-field">
+        <label for="f-actor">Person</label>
+        <input class="input" id="f-actor" name="actor" value="{{ f.actor }}" placeholder="Name or e-mail">
+      </div>
+      <div class="ee-field">
+        <label for="f-since">Since</label>
+        <input class="input" type="date" id="f-since" name="since" value="{{ f.since }}">
+      </div>
+      <div class="sys-filters__actions">
+        <button class="btn btn-primary" type="submit">Apply</button>
+        {% if f.q or f.action or f.model or f.actor or f.since %}<a class="btn btn-ghost" href="{% url 'core:audit_log' %}">Clear</a>{% endif %}
+      </div>
+    </div>
+  </form>
+
+  <section class="ee-card sys-audit__results" aria-labelledby="audit-count">
+    <div class="ee-card__head">
+      <h2 id="audit-count">{% icon "list" 17 %}{{ page.paginator.count }} entr{{ page.paginator.count|pluralize:"y,ies" }}</h2>
+      <span class="ee-card__sub">Newest first</span>
+    </div>
+    {% if page.object_list %}
+      <ol class="sys-audit__list">
+        {% for e in page.object_list %}
+          <li class="sys-audit__row">
+            <div class="sys-audit__when"><b>{{ e.timestamp|date:"j M Y" }}</b><small>{{ e.timestamp|date:"H:i:s" }}</small></div>
+            <div class="sys-audit__actor">
+              <span class="sys-avatar" aria-hidden="true">{{ e.actor_repr|default:"System"|initials }}</span>
+              <span>{{ e.actor_repr|default:"System" }}</span>
+            </div>
+            <div><span class="sys-action sys-action--{{ e.action }}">{{ e.get_action_display }}</span></div>
+            <div class="sys-audit__what">
+              <b>{{ e.object_repr|default:"—" }}</b>
+              <span class="ee-mono ee-muted">{{ e.model_label }}{% if e.object_pk %} #{{ e.object_pk }}{% endif %}</span>
+              {% if e.note %}<span class="sys-audit__note">{{ e.note }}</span>{% endif %}
+              {% if e.change_rows %}
+                <details class="sys-audit__changes"><summary>{{ e.change_rows|length }} field{{ e.change_rows|length|pluralize }} changed</summary>
+                  <dl>{% for c in e.change_rows %}<dt>{{ c.field }}</dt><dd>{% if c.pair %}<span class="sys-diff"><s>{{ c.old|default_if_none:"—"|truncatechars:120 }}</s> → <ins>{{ c.new|default_if_none:"—"|truncatechars:120 }}</ins></span>{% else %}{{ c.value|truncatechars:160 }}{% endif %}</dd>{% endfor %}</dl>
+                </details>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      {% include "partials/empty_state.html" with title="No entries match" body="Try fewer filters or a wider date range." variant="filtered" only %}
+    {% endif %}
+  </section>
+
+  {% show_all_toggle page %}{% if page.has_other_pages %}
+    <nav class="sys-pager" aria-label="Audit log pages">
+      {% if page.has_previous %}<a class="btn btn-ghost btn-sm" href="?{% for k, v in f.items %}{% if k != 'page' %}{{ k }}={{ v|urlencode }}&amp;{% endif %}{% endfor %}page={{ page.previous_page_number }}">{% icon "chevron-left" 14 %}Previous</a>{% endif %}
+      <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn btn-ghost btn-sm" href="?{% for k, v in f.items %}{% if k != 'page' %}{{ k }}={{ v|urlencode }}&amp;{% endif %}{% endfor %}page={{ page.next_page_number }}">Next{% icon "chevron-right" 14 %}</a>{% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

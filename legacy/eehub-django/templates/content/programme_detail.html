@@ -1,0 +1,51 @@
+{% extends "base_public.html" %}{% load ee_tags content_tags %}
+{% block title %}{{ programme.name }}{% endblock %}
+{% block content %}
+{% include "content/partials/page_hero.html" with title=programme.name sub=programme.summary eyebrow=programme.get_degree_display eyebrow_icon="graduation-cap" crumb_url="/programmes/" crumb_label="Programmes" %}
+<div class="pub-page">
+  <div class="pub-wrap">
+    <div class="pub-layout">
+      <div>
+        {% if programme.specialisation_list %}
+        <section class="pub-panel"><h2>Specialisations</h2><div class="pub-tags">{% for s in programme.specialisation_list %}<span>{{ s }}</span>{% endfor %}</div></section>
+        {% endif %}
+        {% if levels %}
+        <div class="pub-sh pub-mt-lg"><div><p class="pub-eyebrow">Structure</p><h2>{% if programme.is_postgraduate %}Year by year{% else %}Level by level{% endif %}</h2></div></div>
+        <div class="pub-levels">
+          {% for lv in levels %}
+          <section class="pub-level" style="--c:{% cycle '#3f8f63' '#14a37a' '#13c4dc' '#8b5cf6' '#c8a951' %}" data-reveal>
+            <h3><span>{{ lv.number }}{% if lv.number >= 100 %}L{% endif %}</span>{{ lv.theme|default:lv }}</h3>
+            {% if lv.first or lv.second %}
+            <div class="pub-level__sems">
+              <div><h4>First semester</h4><ul>{% for c in lv.first %}<li><code>{{ c.code }}</code>{{ c.title }} <small class="pub-opt">· {{ c.units }} units</small></li>{% empty %}<li class="pub-opt">To be published</li>{% endfor %}</ul></div>
+              <div><h4>Second semester</h4><ul>{% for c in lv.second %}<li><code>{{ c.code }}</code>{{ c.title }} <small class="pub-opt">· {{ c.units }} units</small></li>{% empty %}<li class="pub-opt">To be published</li>{% endfor %}</ul></div>
+            </div>
+            {% endif %}
+          </section>
+          {% endfor %}
+        </div>
+        {% if not has_courses %}<p class="pub-note-box pub-mt">{% icon "info" 16 %}<span>The course list for each level will be published from the departmental handbook.</span></p>{% endif %}
+        {% endif %}
+        {% if programme.entry_requirements %}
+        <section class="pub-panel pub-mt-lg"><h2>Entry requirements</h2><div class="pub-prose">{{ programme.entry_requirements|markdownify }}</div></section>
+        {% endif %}
+      </div>
+      <aside class="pub-aside">
+        <div class="pub-panel">
+          <h2>At a glance</h2>
+          <ul class="pub-factlist">
+            <li>{% icon "award" 18 %}<div><small>Award</small>{{ programme.get_degree_display }}</div></li>
+            <li>{% icon "clock" 18 %}<div><small>Duration</small>{{ programme.duration_years }} year{{ programme.duration_years|pluralize }}</div></li>
+            <li>{% icon "layers" 18 %}<div><small>{% if programme.is_postgraduate %}Years{% else %}Levels{% endif %}</small>{{ levels|length }}</div></li>
+            <li>{% icon "landmark" 18 %}<div><small>Offered by</small>{{ site_info.department_name }}</div></li>
+          </ul>
+          <a class="pub-btn pub-btn--primary pub-btn--block pub-mt" href="{% url 'content:contact' %}">{% icon "mail" 15 %}Ask about this programme</a>
+        </div>
+        {% if others %}
+        <div class="pub-panel"><h2>Other programmes</h2><div class="pub-panel__links">{% for o in others %}<a href="{% url 'content:programme_detail' o.code %}">{% icon "graduation-cap" 16 %}{{ o.name }}</a>{% endfor %}</div></div>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+</div>
+{% endblock %}

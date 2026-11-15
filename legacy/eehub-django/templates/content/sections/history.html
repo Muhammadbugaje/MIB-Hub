@@ -1,0 +1,29 @@
+{% load ee_tags %}{% if milestones_department %}
+<section class="pub-sec pub-hist" id="history" aria-labelledby="sec-history">
+  <div class="pub-wrap">
+    {% url 'content:history' as hist_url %}
+    {% include "content/partials/sec_head.html" with pre="Six decades of" hl="milestones" sub="From degree courses run under the University of London to a five-year B.Eng and postgraduate research." more_url=hist_url more_label="Full departmental history" more_icon="book-open-text" more_class="pub-btn--glass" %}
+  </div>
+  <div class="pub-mil-scroll" data-scroller>
+    <div class="pub-mil" style="--n:{{ milestones_department|length }}">
+      <svg class="pub-mil__bus" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="hbus" x1="0" x2="1"><stop offset="0" stop-color="#c8a951"/><stop offset=".5" stop-color="#38e1f5"/><stop offset="1" stop-color="#a78bfa"/></linearGradient></defs>
+        <path d="M0 300 H1000" stroke="url(#hbus)" stroke-width="3" fill="none" vector-effect="non-scaling-stroke"/>
+        <path d="M0 292 H1000 M0 308 H1000" stroke="#c8a951" stroke-opacity=".3" stroke-width="1.2" fill="none" vector-effect="non-scaling-stroke"/>
+        <path class="pub-mil__current" d="M0 300 H1000" stroke="#e8fdff" stroke-width="3" fill="none" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+      </svg>
+      {% for m in milestones_department %}
+      <article class="pub-ms {% cycle 'is-up' 'is-down' %}" data-reveal data-reveal-delay="{% widthratio forloop.counter0 1 70 %}">
+        <span class="pub-ms__stub" aria-hidden="true"></span><span class="pub-ms__node" aria-hidden="true"></span>
+        <div class="pub-ms__card">
+          <div class="pub-ms__y">{{ m.year_label }}</div>
+          <h3>{{ m.title }}</h3>
+          {% if m.description %}<p>{{ m.description }}</p>{% endif %}
+          <span class="pub-ms__tag">{% icon m.icon 12 %}{% if forloop.last %}Today{% elif forloop.first %}Foundations{% else %}Milestone{% endif %}</span>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
