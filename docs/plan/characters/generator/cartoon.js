@@ -135,8 +135,10 @@ function eyeTex(scene, look, slit) {
 }
 function norm(a) { const l = Math.hypot(...a); return a.map(x => x / l); }
 function streakTex(scene) {
-  return canvasTex(scene, 'hairStreak', 256, 64, (ctx, w, h) => {
-    for (let x = 0; x < w; x++) { const b = 0.72 + 0.28 * (0.5 + 0.5 * Math.sin(x * 0.9) * Math.sin(x * 0.23 + 2)) * (0.7 + 0.3 * rnd()); const g = Math.round(255 * b); ctx.fillStyle = `rgb(${g},${g},${g})`; ctx.fillRect(x, 0, 1, h); }
+  // fine vertical strands in 2-3 close tones (multiplies the vertex-colour root-to-tip gradient)
+  return canvasTex(scene, 'hairStrand', 512, 16, (ctx, w, h) => {
+    ctx.fillStyle = 'rgb(226,226,226)'; ctx.fillRect(0, 0, w, h);
+    for (let x = 0; x < w;) { const sw = 1 + Math.floor(rnd() * 3), t = rnd(); const g = Math.round(255 * (t < 0.35 ? 0.80 : t < 0.8 ? 0.89 : 0.97)); ctx.fillStyle = `rgb(${g},${g},${g})`; ctx.fillRect(x, 0, sw, h); x += sw; }
   });
 }
 function patternTex(scene, pat) {
@@ -288,10 +290,8 @@ function buildFace(G, H, look, scene) {
   // nose
   const N = F.nose || {}, ny = (N.y || -0.33) * F.chin, ns = N.size || 1;
   const tip = H.face(0, ny, 0.0);
-  ell(G.skin, [tip.p[0], tip.p[1], tip.p[2] - 0.0025 * ns], [0.0065 * ns, 0.006 * ns, 0.0062 * ns]);
-  [-1, 1].forEach(sd => { const w = H.face(sd * 0.0072 * ns, ny - 0.002, 0); ell(G.skin, [w.p[0], w.p[1] + 0.001, w.p[2] + 0.0015], [0.004 * ns, 0.0035 * ns, 0.004 * ns]); });
-  const br = [H.face(0, F.eyeY * F.chin + 0.004, 0.0).p, H.face(0, (F.eyeY * F.chin + ny) / 2, 0.0015 * ns).p, [tip.p[0], tip.p[1] + 0.004, tip.p[2] - 0.004 * ns]];
-  tube(G.skin, curve(br), 12, 10, t => ({ rx: lerp(0.003, 0.006, t) * ns, rz: lerp(0.0008, 0.004, t) * ns }), { ref: () => new V(0, 0, -1) });
+  // one soft, slightly flattened bump, half-embedded in the face so it reads as part of the skin
+  { const k = N.k || 1; ell(G.skin, [tip.p[0], tip.p[1] + 0.001, tip.p[2] + 0.0012], [0.0072 * ns * k, 0.0058 * ns * k, 0.0042 * ns * k], {}, 28, 20); }
   // mouth
   const M = F.mouth, my = M.y * F.chin, mw = M.w, sm = M.smile || 0, op = M.open || 0, lipC = hex(M.lip);
   const yUp = x => my + sm * 0.0045 * Math.pow(Math.abs(x) / mw, 2) + 0.0012 * Math.cos(Math.PI * x / mw * 0.5);
@@ -576,7 +576,7 @@ function build(scene, look, outfitIdx = 0) {
     lip: pbr(scene, 'lip', hex(look.face.mouth.lip), { rough: 0.35, clear: 0.4, clearRough: 0.25 }),
     mouth: pbr(scene, 'mouth', hex('#5a1e22'), { rough: 0.6 }),
     teeth: pbr(scene, 'teeth', hex('#f6f1ea'), { rough: 0.3 }),
-    hair: pbr(scene, 'hair', [1, 1, 1], { rough: look.hair.rough || 0.45, tex: streakTex(scene), sheen: 0.4, sheenCol: hex(look.hair.sheen || '#ffd9b0'), clear: look.hair.gloss == null ? 0.3 : look.hair.gloss, clearRough: 0.2, env: look.hair.env }),
+    hair: pbr(scene, 'hair', [1, 1, 1], { rough: 0.95, tex: streakTex(scene), env: 0.6 }),
     shoe: pbr(scene, 'shoe', [1, 1, 1], { rough: 0.6 }),
     frame: pbr(scene, 'frame', hex('#1a1412'), { rough: 0.3, clear: 0.6 }),
     lens: pbr(scene, 'lens', hex('#2a1d18'), { rough: 0.05, clear: 1, clearRough: 0.02 }),
@@ -589,7 +589,7 @@ function build(scene, look, outfitIdx = 0) {
     bag: pbr(scene, 'bag', hex((O.items.find(i => i.type === 'bag') || {}).col || '#141214'), { rough: 0.4, clear: 0.4 }),
     white: pbr(scene, 'white', hex((O.items.find(i => i.trimCol) || {}).trimCol || '#f4f2ee'), { rough: 0.8 }),
     btn: pbr(scene, 'btn', hex((O.items.find(i => i.buttons) || { buttons: {} }).buttons.col || '#ffffff'), { rough: 0.3, clear: 0.6 }),
-  }; M.scalp = M.hair;
+  }; M.hair.metallicF0Factor = 0; M.hair.specularIntensity = 0; M.scalp = M.hair;
   const root = new BABYLON.TransformNode('char_' + look.name, scene), meshes = [];
   keys.forEach(k => { const m = G[k].mesh(look.name + '_' + k, scene, M[k]); if (m) { m.parent = root; meshes.push(m); } });
   garmentGeos.forEach(([g, mat, ty], i) => { const m = g.mesh(look.name + '_' + ty + i, scene, mat); if (m) { m.parent = root; meshes.push(m); } });
