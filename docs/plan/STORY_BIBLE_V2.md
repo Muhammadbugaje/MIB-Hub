@@ -249,13 +249,13 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 - **Catchphrases:** "Premium." · "For you, specially." · "I know a guy." · "Trust the Plug."
 - **Arc:** **Y1** sells you an oversized matric gown (M4); opens "the Plug" from a locker in the SUG basement (M10). **Y2** a real stall; grows too fast; a bad batch of power banks and a debt; he disappears to the motor park (M45). **Y3** the Sapa Combo kiosk (garri, groundnut, sugar) feeds the strike (M52); discovers his padlocks locked the theatres (M67–M68) and puts it right. **Y4** Plug Store 2.0: two honest branches, real receipts, "Black Friday at the Plug" (M86). **Y5** Chief Megawatt offers to buy him out; he says no and hires three freshers (M102). At convocation his sisters are in the crowd.
 - **Relationships:** {{PLAYER_NAME}} (first customer, first investor); Nusaiba (reads his contracts and sighs); Hajiya Ladi (the market mother who teaches him what a business is); KB (rival shopkeeper, "prices by face"); Chief Megawatt (what he could become).
-- **Romance:** open for a female player (he must stop "selling" to her first). **[OWNER: yes or no?]**
+- **Romance:** open for a female player (he must stop "selling" to her first). *(Owner: yes.)*
 - **Power when playable:** Plug. **Unlock:** earn ₦1m.
 
 #### Nusaiba: the organiser (Lead, about 1,300 lines)
-- **Who:** Law. Debater, class representative, the person holding the folder. **[OWNER: v1 had her in engineering and psychology. Law gives that faculty a lead. Approve?]**
+- **Who:** Law, with a psychology elective she never stopped taking. Debater, class representative, the person holding the folder. She is **very intuitive**: she reads a room before anyone speaks (who is lying, who is frightened, who has not eaten) and is usually right. The story never names it as psychology; it shows it ("You're not tired. You're embarrassed. Sit."). *(Owner-approved, 15 Nov 2026.)*
 - **Looks:** elegant, hijab pinned exactly, a folder under one arm, a pen she clicks when thinking.
-- **Personality:** clear, brave, bossy for your own good, cannot walk past something unfair. Her flaw: she runs other people's lives.
+- **Personality:** clear, brave, intuitive, bossy for your own good, cannot walk past something unfair. Her flaw: she runs other people's lives.
 - **Speech:** complete sentences, numbered points, "Wait. Look again." Courtroom politeness as a weapon.
 - **Sample lines:**
   - "I have three points. The third one will hurt."
@@ -284,7 +284,7 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 - **Catchphrases:** "Did I stutter?" · "Doctor's orders." · "Listen with your ears, not your mouth." · "Hwaiting!" (when she's being encouraging) · "Drink water."
 - **Arc:** **Y1** the exhausted house officer who stitches Jega's eyebrow by torchlight (M9); the anonymous voice of "Ask Dr. Z" on Ring Road FM. **Y2** the night the hospital line fails (M42) is why the heist happens; she finishes housemanship and is posted for national service to the clinic in {{TOWN}}: "Of all the places in Nigeria." (M48). **Y3** runs a free clinic through the strike (M58); gets a fellowship offer in Seoul and tells nobody; the night-nurse mission (M64). **Y4** back at the TH as a junior resident in paediatrics; "Seoul or stay" (M94): the mission where *you* have to listen. **Y5** stays for the longest night (M111), then goes for one year, and comes back for your convocation with a suitcase of snacks. Post-game: she texts photographs of cats in Seoul.
 - **Relationships:** {{PLAYER_NAME}} (patient, then friend); Firdausi (she mentors her toward medicine); Jega (repeat customer); Nurse Hauwa (her ally on nights); Taty (co-founder of the Campus Cat Committee); the Maker (see T11).
-- **Romance:** not romanceable by default: she is older and your doctor. **[OWNER: keep her as a friend-mentor, or allow a slow, modest Year 4–5 route for a male player?]**
+- **Romance:** not romanceable: she is older and your doctor; a friend-mentor. *(Default kept; the owner may revisit.)*
 - **Power when playable:** Doctor's Orders. **Unlock:** finish Year 1, or code.
 
 ### 2.2 Main friends
@@ -295,7 +295,7 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 | **Bolaji, "Big Sly"** (male; one person) | Mechanical Engineering, several extra years. Court boss → barber → mechanic | Huge, strong, performative; a small heart under a big chest; confuses fear with respect | Calls himself "Sly" in the third person; mocks Abbas daily ("John Carter, fix your face"); cracks his knuckles, then apologises to them | Y1 fresher tax and a fair spar (M7, M14) → Y2 the barber's chair (M34) → Y3 carpentry and the cliff tower (M65) → Y4 your gym partner in Jega's rehab → Y5 ends the tax he invented (M99) | Big Baby (girlfriend, taught him to cut hair); Abbas; Hassan. Hands you your first free Zobo Max | Main (500) |
 | **Maryam** | English (Arts); works at the campus bookshop | Thoughtful, teasing; judges people by their shelves; offers yam in every situation, including emergencies | "Have you read…?" | Y1 the girl at the bookshop → Y3 the tape machine (M60) → Y5 her first book, printed in the market | Lyzzy, Firdausi. Romance option (male player) | Main (350) |
 | **Lyzzy** | Mass Communication; {{UNI_SHORT}} TV; one of the twins | Quick, gossipy, delighted; posts first, checks later | "We saw it first." "Don't move, your face is a moment." Reapplies lip gloss in moments of shock | Y1 gossip queen → Y2 the noticeboard stories → Y4 learns to check (the fake clip, M82) → Y5 films convocation | Twin of Lily; Lucky (rival). Romance option (male player); the one who drifts when the fun stops, and can grow out of it | Main (400) |
-| **Lily** | Botany (Life Sciences); the greenhouse; the other twin | Very soft, patient; speaks last and is right; whispers to plants | "…It will rain." (It does.) | Y1 waters the gate flowers → Y3 keeps the hostel plants alive → Y4 a letter from the Maker → Y5 "She came." | Twin of Lyzzy; Emily; Tunde. Romance option (male player) | Main (300) |
+| **Lily** | Botany (Life Sciences); the greenhouse; the other twin | Very soft, patient; speaks last and is right; whispers to plants | "…It will rain." (It does.) | Y1 waters the gate flowers → Y3 keeps the hostel plants alive → Y4 the greenhouse through the Mirror's year → Y5 "She came." | Twin of Lyzzy; Emily; Tunde. Romance option (male player) | Main (300) |
 | **Emily** | Crop Science (Agriculture); her family's strawberry farm beyond New Site | Cheerful, rushed, out of breath; gives stock away to anyone who looks sad | "Strawberry?" in reply to any bad news | Y2 the girl with the basket → Y3 the farm in the strike (M54) → Y4 market day → Y5 the farm is safe | Lily, Maryam. Romance option (male player) | Main (300) |
 | **Aleeya** | Architecture (Environmental Design) | Very supportive; secretly the funniest person on campus; writes stand-up | A compliment first, then the punchline that ends you. Laughs before her own jokes, then stops herself | Y1 holds your bag at registration → Y3 feeds the floor; the open mic (M66) → Y4 saves the degree show (M91) → Y5 hosts dinner night | Nusaiba (best friend); Lyzzy. Loves horses. Romance option (male player) | Main (350) |
 | **Muhammad** | The gentle mystery. No faculty anyone can name; no file in the Registry | Soft, unhurried; says "sorry" before helping; his shoes are never dusty; knows things he should not. Most people do not notice him and look confused when you mention him | "Excuse me. Sorry." "Don't take the shortcut." "You'll be all right. I checked." | No arc you can see. He appears exactly when you need him most: a lift, an answer, a warning, a hand up. See §1.9 and the sightings tracker in §10.6 | The Maker nods to him once (M61) and never explains. Seen by: you, small children, cats, Kaka, Wednesday, Lily, Baba Porter, and anyone standing at a beginning or an ending | Main (160) |
@@ -349,7 +349,7 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 
 ### 2.4 Romance (unchanged rules)
 - Opposite-sex only. Optional: a player who never dates loses nothing; {{ROOMIE}} fills the dinner, the dance and the photo.
-- **Male player:** Maryam, Lyzzy, Lily, Emily, Aleeya, Nusaiba. **Female player:** Bature, AB, Basit, Yakubu, Micheal, and Mubarak if approved.
+- **Male player:** Maryam, Lyzzy, Lily, Emily, Aleeya, Nusaiba. **Female player:** Bature, AB, Basit, Yakubu, Micheal, and Mubarak.
 - Either side can end it, with a reason, never at random. Reunion is possible once, after time and a real change. Some never reunite. **Being broke alone never ends a relationship;** hiding it, borrowing and not repaying, or missing every plan can.
 - Special characters are **never** romance options (they are real people).
 
@@ -359,13 +359,35 @@ Rules from the design: locked at the start, each real person approves their look
 | Character | Who they are in the story | Look | Voice and roast style | Catchphrases (drafts for their approval) | Power | Tier |
 |---|---|---|---|---|---|---|
 | **Jiya** | A visiting fellow who teaches the "Law and Technology" short course and judges the hackathon. Read law, became a software engineer, and is unbeatable in the arcade | Cartoon style: tall and slim, Indian heritage; long wavy dark-brown hair with caramel ends, sunglasses pushed up on her head. Outfits: smart-casual with a gamer hoodie; a red football cap and jersey; a law graduation gown in court. Loves football and chess | Calm British delivery. Never raises her voice; the roast arrives politely and stays for a week | "Right." · "With respect, and I mean none…" · "Objection." · "That's not a bug, mate, that's your personality." · "I've read the terms and conditions. You haven't." | Legal Immunity; "Objection!" | Special (450) |
-| **Taty** | A visiting sports-science student who runs the dawn run club and Friday games night; a stray cat adopted her on day one | Cartoon style: long straight black hair, a black choker, fit and lively. Outfits (modest): gym wear; a floral dress with white sneakers; a black romantic dress for dinners. Rock-concert energy (the horns sign when she wins). A cat on her bag or in her hood | Warm, cheeky, competitive; teases you while lapping you | "Bora!" (let's go) · "One more lap. I lied, two." · "The cat likes you. I'm still deciding." | Never Tired | Special (400). **[OWNER: Portuguese or Italian? It decides her two or three home-language words.]** |
+| **Taty** | A visiting sports-science student from Brazil (a few Brazilian Portuguese words) who runs the dawn run club and Friday games night; a stray cat adopted her on day one | Cartoon style: long straight black hair, a black choker, fit and lively. Outfits (modest): gym wear; a floral dress with white sneakers; a black romantic dress for dinners. Rock-concert energy (the horns sign when she wins). A cat on her bag or in her hood | Warm, cheeky, competitive; teases you while lapping you | "Bora!" (let's go) · "One more lap. I lied, two." · "The cat likes you. I'm still deciding." | Never Tired | Special (400). **[OWNER: Portuguese or Italian? It decides her two or three home-language words.]** |
 | **Madison** | An exchange student at the language centre who turns everything into a dance trend and bargains in three languages | Lean, East Asian heritage, streetwear | Very fast; switches Mandarin and English mid-sentence; narrates her own life like a video | "Aiya!" · "Jiayou!" (go for it) · "Tai gui le!" (too expensive!) · "Wait wait wait, film this." · "Trend first, questions later." | Trend Setter | Special (400). All lines are written for the real Madison to perform and approve; a Mandarin speaker checks every phrase. |
 | **Dr. Zainab** | See §2.1 | | | | Doctor's Orders | Lead |
-| **M.I. BUGAJE (MIB)** | A calm man in white and gold. Three letters at the top of every arcade high-score table. Seen rarely, never explained, never linked to the Maker | Light-skinned, dark coily hair, the white and gold "MIB" kit | The owner; few words | "Play." · "Again." · "Good. Now do it without me." | Undefeatable | Special, rare (40) |
+| **M.I. BUGAJE (MIB)** | A calm man in white and gold. Three letters at the top of every arcade high-score table. Very kind, quiet and faintly suspicious; speaks like a poet, in short lines that can mean two or three things. Seen rarely, never explained, never linked to the Maker | Very fair, round face, curly hair, a mixed Lebanese, white and East Asian look (§2.5a); the white and gold "MIB" kit | The owner; few words | "Play." · "Again." · "Good. Now do it without me." | Undefeatable | Special, rare (40) |
 | **Jega, Shamsu, Nusaiba, Mubarak** | The leads above; playable when unlocked | | | | See §2.1 | Lead |
 
-When you **play as** a special character, the story does not change: other characters use your name token, the special character's NPC self is simply absent from their cameo missions, and their barks replace the fresher's in shared moments. **[OWNER: when playing as a lead such as Jega, should the NPC Jega still appear (as now, simplest), or be swapped for a stand-in? This bible assumes the simplest rule: you play the fresher's role with that character's look, voice and power.]**
+When you **play as** a special character, the story does not change: other characters use your name token, the special character's NPC self is simply absent from their cameo missions, and their barks replace the fresher's in shared moments. *(Owner, 15 Nov 2026: the NPC version of a lead still appears in the story as written; no stand-ins. You play the fresher's role with that character's look, voice and power.)*
+
+### 2.5a Character looks (owner's reference, 15 Nov 2026)
+The owner's description of how the cast should look. Character artists follow this table; cartoon style, modest outfits, not bulky. **Skin direction for the authored cast:** a mix that leans fair and light, with some medium and caramel tones, and nobody very dark (owner's choice). **The character editor** still offers the full range of skin tones, so every player can make a fresher who looks like them.
+
+| Character | Look |
+|---|---|
+| **M.I. BUGAJE** (the owner, secret character) | Very fair; a round face; very good-looking; curly hair. A mixed look: part Lebanese, part white, a little East Asian |
+| **Shamsu** | Fair, but not too fair; slim |
+| **Jega** | Darker than Shamsu, but not too dark |
+| **Mubarak** | A bit dark, but not too dark |
+| **Bature** | A bit dark-skinned; a little short (not very short) |
+| **Firdausi** | Like Bature (cousins; they may look alike) |
+| **DJ Sugar** | Very tall |
+| **Helen ("IDK")** | A bit short |
+| **Lula** | Not too tall; not too fair |
+| **Faty** (Lula's partner) | Darker than Lula, and taller than him |
+| **Muktar** | Caramel skin |
+| **Summy** (Muktar's girlfriend) | Short, lean, caramel skin |
+| **Dr. Zainab** | Very fair ("Snow White" to her friends); never drawn dark (§2.1) |
+| **Jiya, Taty, Madison** | As in §2.5 and FORMAT.md §6.3, approved by each of them |
+
+**Customisation (owner's list):** many outfits, watches, shoes, trousers, scarves, hijabs (several styles), jalabiyas, kaftans, caps, eyeglasses; a phone that looks real, with widgets like the old game's phone.
 
 ### 2.6 Hooks for ten future characters (respectful, specific; each gets a real consultant)
 | # | Working name | Background | Hook on campus | Voice and flavour | Suggested power |
@@ -411,6 +433,16 @@ Spare hooks: **Yetunde** (Yoruba, aso-oke fashion student, owambe planner); **Am
 **[OWNER: when the player is a special character (an adult, such as Jiya), the film's family is shown from behind and the lines stay the same. Approve, or give each special character a 20-second arrival of their own before the shared film?]**
 
 ---
+
+### 3.1 Special characters' first arrival (owner-approved 15 Nov 2026)
+When you play as a special character, the opening film starts with **their own short arrival shot** (one block, 20–30 seconds, `cut_m001_arrive_<name>`), then joins the shared film at the gate. When they are switched on but you play the fresher, each one's arrival shot plays once, the first time you meet them, as a short "entry" cutscene. The story never changes: these are introductions, not plot.
+| Who | The arrival shot |
+|---|---|
+| **Jiya** | A taxi from the airport. She is on a work call in the back seat, closing a pull request with one thumb while the driver argues about the route; she settles it by reading him the map "with respect". She steps out at the gate in sunglasses and a red football cap, looks up at the clock stopped at 6:06, and says, "Right. That's going to bother me." |
+| **Taty** | Dawn. She arrives on foot, jogging, a backpack and a cat carrier, having got off the bus one stop early "for the warm-up". Pixel the cat steps out at the gate and walks in first, as if she owns it. Taty, laughing: "Bora! She's already decided." |
+| **Madison** | A danfo pulls up, music on. She climbs out filming, narrating in two languages, haggles the fare down in three, then turns the phone round to film the gate: "Okay, okay, wait, first day, this is the intro, everybody say jiayou!" Half the queue does. |
+| **Dr. Zainab** (when played) | The night bus. She reads a pharmacology book by phone light, Kimchi asleep in the carrier on her lap. At the teaching hospital gate a nurse is already waving her in: "Doctor, you're early!" "I'm on time. Everybody else is late." |
+| **M.I. BUGAJE** (owner only) | No arrival. He is simply already there, at the gate, holding it open for the family car, and gone in the next shot. |
 
 ## 4. The main story: 120 missions
 
@@ -1375,7 +1407,7 @@ Final results (five years of your play decide the class of degree; nobody fails 
 #### M118 · Convocation
 **When:** Y5 · convocation day (event) · 08:00–16:00. **Where:** the stadium; the boulevard. **Who:** Mum, Dad, your sibling; every friend; Dr. Zainab; the Maker; the twins.
 
-Your family at the gate again; Dad argues with the same guard. Mum has a new list. The procession. Zainab arrives straight from the airport with a suitcase of Korean snacks and a term of stories: she went, and she came back for this. Mubarak's sisters are in the crowd. Bolaji, to the man who has asked for five years: "Congratulations… Abbas." The names are read. Last of all: "And, by special resolution of Senate, a degree forty years overdue, to—" and the microphone cuts out for exactly the length of a name, and comes back on the applause. The Maker, in a gown, bows. The chair beside yours has a programme on it and nobody in it. Lily, to Lyzzy, of an old woman in the back row: "She came." Lyzzy: "Don't." Funniest moment: Dad, photographing the wrong graduate for a full minute. "They all look the same in this thing!"
+Your family at the gate again; Dad argues with the same guard. Mum has a new list. The procession. Zainab arrives straight from the airport with a suitcase of Korean snacks and a term of stories: she went to Seoul after the finale, for a year, and flew back for this one day. She goes back on Monday; in the post-game she comes home for good after the year. Mubarak's sisters are in the crowd. Bolaji, to the man who has asked for five years: "Congratulations… Abbas." The names are read. Last of all: "And, by special resolution of Senate, a degree forty years overdue, to—" and the microphone cuts out for exactly the length of a name, and comes back on the applause. The Maker, in a gown, bows. The chair beside yours has a programme on it and nobody in it. Lily, to Lyzzy, of an old woman in the back row: "She came." Lyzzy: "Don't." Funniest moment: Dad, photographing the wrong graduate for a full minute. "They all look the same in this thing!"
 **Opens:** the car at the gate; the same argument; older faces. **Closes:** caps in the air. Freeze. One cap has no owner.
 **Reward:** your degree; the convocation gown outfit; the game's credits roll over your five photographs. **System:** the convocation event.
 **Connects to:** the opening film (M1), M24 (the seniors' convocation), M94 and M111 (Zainab), M45 (his sisters), "John Carter" (five years), M15 and M84 (the sister).
@@ -1641,9 +1673,21 @@ Each special character lives on campus as an NPC friend with a routine. Their mi
 **Z2 · K-Drama Night** (Y2 onward, a rare night off; the Cinema Hall). She has booked the hall for a Korean film night and nine people came. Fill it: posters, snacks (cook tteokbokki from the Spot's ingredients, approximately), and subtitles read aloud by Bature when the file fails. *Key lines:* "It's not 'the one with the rich man'. They all have a rich man. That's the genre." / "Daebak. You came. Sit. Don't talk during the crying." *Reward:* a recipe, the film night as a monthly event.
 **Z3 · Patients' Requests** (after she is unlocked; the wards). When you play as Zainab, patients give short side quests: a letter read aloud, a phone charged, a grandchild found in the car park. Each ends with her line, "Drink water." *Teases and uses:* Doctor's Orders.
 
-### 8.5 M.I. BUGAJE (rare, calm, never explained)
-**B1 · High Score** (any year; one evening a month, chosen by the calendar; the mall arcade). A man in white and gold is playing the oldest cabinet. He steps aside and gestures: your turn. Whatever you score, the table shows MIB one point above it. He is not there when you look up. *Key lines:* "Play." / "Again." / "Good. Now do it without me." *Reward:* an "MIB was here" tag for your journal; nothing else. *Rule:* he never appears in a scene with the Maker, and nobody ever remarks on any likeness.
-**B2 · The Thirteenth Stall** (post-game only; the night market). A stall that is not there by day sells one item: a white and gold cap. The stallholder is a boy who says his oga will be back soon. He never is. On the cap's lining: "Finish it. Then make another." *Reward:* the cap (cosmetic). **[OWNER: you decide how often you appear, and whether B2's message is the one you want. These are your lines.]**
+### 8.5 M.I. BUGAJE (rare, kind, quiet, a poet; never explained)
+**Owner's direction (15 Nov 2026):** MIB is very kind and very quiet, faintly suspicious, and full of small clues. He speaks like a poet: short lines that can be read two or three ways, so players argue about what he meant. He never explains himself, never hurries, and is gone before the conversation feels finished. He is the owner, played and voiced by the owner (the one voice that may be reused). **Rule kept from §13.4:** nothing ever links him to the Maker, and nobody remarks on any likeness. His clues point only at himself and at the game's own small wonders (the high-score table, the thirteenth stall, the gold thread), never at the ring, the seals, the sister or Muhammad.
+
+**How often:** one cameo mission per year (B1–B5), plus rare free-roam sightings (at most one a month, chosen by the calendar), plus B6 in the post-game. Each leaves one object or line that only makes sense later.
+
+| # | When and where | What happens | His lines (each means more than one thing) | Clue left |
+|---|---|---|---|---|
+| **B1 · High Score** | Y1, an evening; the mall arcade (Y2 when the mall opens; Y1 uses the Spot's old cabinet) | A man in white and gold is playing the oldest cabinet. He steps aside: your turn. Whatever you score, the table shows MIB one point above. He is not there when you look up | "Play." / "Again." / "Good. Now do it without me." | The three letters on every table, from now on |
+| **B2 · The Gate at Dawn** | Y2, the first rain; the main gate | He holds an umbrella over a fresher who has no idea who he is, then hands it over and walks into the rain dry | "Rain finds everyone. Shelter is a choice somebody makes." / "Keep it. It was always yours." | A white and gold umbrella in your Pockets that never wears out |
+| **B3 · The Empty Theatre** | Y3, the strike; Theatre Yamma | One man in the front row of an empty theatre, applauding a lecture nobody is giving. He nods for you to sit | "The best lectures are the ones you give yourself." / "Somebody is always listening. Be worth it." | A seat in Yamma with "MIB" scratched under the desk; it was there in Year 1 |
+| **B4 · The Remix** | Y4, during the fame year; the Spot | Your viral clip plays on a screen. He watches it once, smiles, and turns the sound off | "Loud is not the same as heard." / "They clapped for the copy. I came for the original." | Your follower count stops at a number ending in 3, for a week |
+| **B5 · Last Light** | Y5, the night before results; the boulevard | He walks beside you for one block of lamps and stops where the light ends | "Every light you passed, somebody lit. One day, light one you won't see." / "Go on. I'll know." | A gold thread on your gown in M117's photographs |
+| **B6 · The Thirteenth Stall** | Post-game; the night market | A stall that is not there by day sells one white and gold cap. The stallholder is a boy who says his oga will be back soon | (the boy) "Oga said you'd come. He said you'd be late. He said that's fine." | The cap; inside the lining: "Finish it. Then make another." |
+
+**Free-roam barks:** about 40 short lines in `docs/voice/barks/special_mib.md`. **Kept:** he never shares a scene with the Maker, never sees or is seen with Muhammad, and never helps with a main mission.
 
 ### 8.6 The leads as cameos
 Jega, Shamsu, Nusaiba and Mubarak are in the main story already. Each also has one **power showcase** side mission that unlocks with them and teaches the playable power: *Golden Boot* (a penalty shoot-out against the whole Education team), *Big Brain* (teach a tutorial where the answers float above the board), *Campaign Mode* (recruit twelve strangers to move a stranded bus), *Plug* (a market day where everything is 40% off and you must resist buying a goat).
@@ -1944,6 +1988,11 @@ Moderation queue, ratings and creator credit as in the design. **Rule for the my
 
 ## 12. Decisions for the owner (collected)
 
+**Answered by the owner on 15 Nov 2026** (applied throughout):
+1. The Ten Seals: **yes.** 2. Shamsu is the snitch, revealed kindly in M62: **yes.** 3. Mubarak founds the Plug Store and his padlocks locked the halls: **yes.** 4. Nusaiba studies **Law, with psychology shown as intuition** (§2.1). 5. The player is in **Electrical Engineering**; the sixth coil is the final-year project: **yes.** 6. One roommate by sex: **yes.** 7. Flying is cut for now and can return as an update: **yes.** 8. Dr. Zainab **goes to Seoul for one year** after the finale, flies back for convocation, and comes home for good in the post-game; she stays a friend-mentor, not a romance. 9. The hospital hint: **kept** (including the wrapped sweet in M64). 10. Mubarak is a romance option for a female player: **yes.** 11. Place names (Twin Theatres, Amana Clock, the halls): **approved.** 13. **Taty is Brazilian**: her home-language words are Brazilian Portuguese. 15. Playing as a lead: the NPC version still appears; **no stand-ins.** 16. Special characters get **their own personal arrival shot** in the opening film (§3.1). 17. M.I. BUGAJE: kind, quiet, a poet (§8.5).
+**Also answered (story audit questions):** keep the two Aishas (deliberate); keep tracker #28's hand in the photograph; drop Lily's Year 4 letter; keep the special characters' full load (the owner reports approval from Jiya, Taty and Madison; signed forms are kept offline); approve the truths for Garba's ledger and Kaka's photograph (§13.4); Jiya stays at the seal door in M114 with more lines; Mubarak stays on campus for the whole strike, and the strike is full of events (`missions/Y3.md`, the strike table).
+**Still open:** 12 (session dates), 14 (language reviewers), 18 (which future hooks are real people), 19 (two more faculties), 20 (the truth in §13, beyond the two rows above).
+
 **Already decided by you, and followed here:** one story; a fictional university ({{UNI_NAME}} and {{TOWN}} stay as tokens until you name them); every faculty with missions; the calendar; the cast and its rules; Zainab as a new doctor, a house officer; **Madison** as the Mandarin-speaking special character; all special characters voiced by the real people; a story full of mysteries, connected, with gaps, and Muhammad as its gentle centre.
 
 **Still yours to decide:**
@@ -2019,6 +2068,8 @@ The envelopes for **Room 606** are the Maker's: one each semester for forty year
 | One too many in the census, the dinner photograph, the class vote | Muhammad | No |
 | The account that comments only the symbol; the night reader's lamp | Muhammad | No |
 | The cats | They sit in a ring to keep the coil company; inward when its keeper is away. Cats were never told about the letter | No |
+| Garba's ledger (M2, M22) | The list of every fresher Baba Porter has picked in forty years; your name went in on your first day. Garba covers the heading because it is not his secret to show (owner-approved 15 Nov 2026) | No |
+| Kaka's photograph turned to the wall (M55, M69) | Her own class photograph, with Muhammad in the back row. She is one of the few who still remembers him, and she turned it round because it hurt to be the only one (owner-approved 15 Nov 2026) | No |
 | The sixth floor | It was on the plan and never built. After the ring closes, it is simply there. The campus is finishing itself | Seen, not explained |
 | Who the "lecturer who never ages" is | Three brothers, as the legend investigation finds. Some mysteries should just be funny | Yes |
 | The Maker and M.I. BUGAJE | No link is ever stated, drawn or joked about in the game | Never |

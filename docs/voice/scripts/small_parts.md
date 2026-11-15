@@ -2,6 +2,35 @@
 
 Short roles, grouped by speaker. One actor can voice several of these, but never a special character's lines (those are locked to the real person).
 
+## How to use this script
+
+Thank you for lending your voice to the game. This guide takes ten minutes to read and saves hours later.
+
+**1. Set up (once).**
+- Find the quietest room you have. A wardrobe full of clothes, or a small room with curtains and a bed, is better than a big empty room: soft things stop echo.
+- Switch off fans, air conditioning and the TV. Put your phone on silent (if you record on it, use aeroplane mode).
+- Use a phone voice-recorder app or a microphone. Choose the highest quality it offers (WAV if possible, 48 kHz).
+- Hold the phone or microphone about 20 cm (one hand-span) from your mouth, a little to the side so your breath does not hit it. Keep the same distance for every line.
+
+**2. Read the table.**
+- **Id:** the line's name. Name your file with it, for example `m002_open_01.wav` or `bk_jega_f_greet_01.wav`.
+- **Mood:** how to say it. *warm* friendly, *amused* smiling, *dry* deadpan, *stern* firm, *sharp* quick and pointed, *shy* soft and hesitant, *proud* chest out, *scared* tense, *sad* low, *excited* fast and bright, *bored* flat, *whisper* quiet but clear, *neutral* your normal voice.
+- **Cue:** the line said just before yours, so you know the moment. Do not record the cue.
+- **Words in [square brackets]** are the English translation. Do not say them.
+- `{{PLAYER_NAME}}` means the player's name: leave a short natural pause there instead of a name. `{{ROOMIE}}` is the roommate's name: say "Bature" for one take and "Firdausi" for another, or pause.
+- **Barks** (section 2) are short lines heard in the open world. Say them as if someone just walked past you.
+
+**3. Record.**
+- Say each line **three times**, with a one-second silence before and after each take. We pick the best.
+- If you stumble, just say the line again. Do not stop the recording to delete it.
+- Drink water, take breaks every 20 minutes, and stop if your voice gets tired. Shouting lines last.
+- If a line does not sound like you, or a phrase in another language is wrong, write your version down. Every line is a draft and we change it for you.
+
+**4. Send it back.**
+- Put all your files in one folder named with your name and character (for example `Amina_Jega`).
+- Send the folder, with the signed agreement on the last page, to the person who gave you this script (a Google Drive or WeTransfer link is easiest).
+- Ask anything at any time. There is no deadline pressure: a few lines a day is perfect.
+
 
 ## AB (`npc.ab`)
 
@@ -1257,3 +1286,27 @@ Short roles, grouped by speaker. One actor can voice several of these, but never
 | `bk_pub_worship_y4_idle_02` | Year 4 · idle | stern | Don't believe everything on your phone. Check, then speak. |
 | `bk_pub_worship_y5_idle_01` | Year 5 · idle | warm | Final years asking for prayers. Of course. Come. |
 | `bk_pub_worship_y5_idle_02` | Year 5 · idle | proud | My son graduates this year. I'll be grateful in the front row. |
+
+# Volunteer voice agreement
+
+**Game:** the open-world game on MIB-Hub, created by Muhammad Iliyasu Bugaje ("the creator"). **Character:** small parts and crowd voices (the speakers you were asked to voice).
+
+Please read this, fill in the boxes, sign, and send a photo or scan of this page back with your recordings. If anything is unclear, ask before you sign.
+
+1. **I am volunteering.** I am recording these lines for free, as a favour and as part of a community project. I will not be paid now or later, and I will not receive royalties.
+2. **What I allow.** The creator may use, edit and publish my recordings of the lines in this script (and any lines we agree later) in the game, its updates, trailers, the MIB-Hub website and its promotion, anywhere in the world, for as long as the game is available.
+3. **No AI copies.** My recordings will not be used to train or create an artificial copy of my voice without my separate written permission.
+4. **Credit.** I will be credited in the game and on the website by the name I write below (or not at all, if I choose anonymous).
+5. **Changing my mind.** I can ask in writing to stop at any time. The creator will then stop any new use and remove my lines in the next update. Copies that have already been released (for example a trailer someone downloaded) cannot be called back.
+
+| | |
+|---|---|
+| Full name | |
+| Credit me as (or "anonymous") | |
+| Phone or email | |
+| Age 18 or over? (yes / no) | |
+| Signature | |
+| Date | |
+| If under 18: parent or guardian's name, signature and date | |
+| For the creator: name, signature and date | Muhammad Iliyasu Bugaje |
+

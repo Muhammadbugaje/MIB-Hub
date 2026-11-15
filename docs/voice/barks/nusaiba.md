@@ -9,6 +9,7 @@
 - `bk_nusaiba_f_greet_03` (dry) "You're late. Not to anything. Generally."
 - `bk_nusaiba_f_greet_04` (warm) "Sannu. [Hello.] Have you eaten, or shall I minute that too?"
 - `bk_nusaiba_f_greet_05` (amused) "There you are. Point one: hello."
+- `bk_nusaiba_f_greet_06` (neutral) "Hello. Who upset you? Don't say nobody. Your shoulders said somebody."
 ### bye
 - `bk_nusaiba_f_bye_01` (neutral) "Go. And put it in writing."
 - `bk_nusaiba_f_bye_02` (warm) "Safe journey. Text me when you arrive. Not a voice note."
@@ -26,10 +27,12 @@
 - `bk_nusaiba_f_compliment_01` (warm) "That was clear. I love clear."
 - `bk_nusaiba_f_compliment_02` (proud) "You argued that well. Who taught you? …Me. Good."
 - `bk_nusaiba_f_compliment_03` (amused) "Look at you, holding a folder like a professional."
+- `bk_nusaiba_f_compliment_04` (warm) "You were scared and you came anyway. That's the whole job."
 ### tease
 - `bk_nusaiba_f_tease_01` (dry) "Your shirt has an opinion. Overruled."
 - `bk_nusaiba_f_tease_02` (amused) "You said 'like' four times. I counted. I always count."
 - `bk_nusaiba_f_tease_03` (sharp) "Objection. That excuse is irrelevant. And also bad."
+- `bk_nusaiba_f_tease_04` (dry) "You're not lying. You're telling the truth very, very slowly."
 ### follow
 - `bk_nusaiba_f_follow_01` (stern) "Keep up. Ideas don't wait, and neither do I."
 - `bk_nusaiba_f_follow_02` (neutral) "Walk and talk. Point one, while we cross."
@@ -38,6 +41,7 @@
 - `bk_nusaiba_f_wait_01` (stern) "I'm timing you. Not a threat. Data."
 - `bk_nusaiba_f_wait_02` (sharp) "Every minute you're late, I draft a sentence about you."
 - `bk_nusaiba_f_wait_03` (dry) "The Amana Clock stopped. You don't have that excuse."
+- `bk_nusaiba_f_wait_04` (neutral) "You weren't late. You were outside, deciding. Come in."
 ### lost
 - `bk_nusaiba_f_lost_01` (sharp) "Wrong way. The law library is the other side."
 - `bk_nusaiba_f_lost_02` (neutral) "Wait. Look again. That's Yamma, not Gabas."
@@ -55,6 +59,7 @@
 ### confused
 - `bk_nusaiba_f_confused_01` (neutral) "Wait. Look again. …No, I still don't understand."
 - `bk_nusaiba_f_confused_02` (neutral) "Rephrase that. Slowly. As if to a judge."
+- `bk_nusaiba_f_confused_03` (neutral) "Your mouth said yes. Your feet said no. Which one do I minute?"
 ### agree
 - `bk_nusaiba_f_agree_01` (warm) "Seconded. Carried."
 - `bk_nusaiba_f_agree_02` (proud) "Finally, someone reasonable. Me. And now you."
@@ -68,6 +73,8 @@
 - `bk_nusaiba_f_ask_01` (neutral) "Quick question. Who is taking minutes?"
 - `bk_nusaiba_f_ask_02` (sharp) "Did you read it, or did you 'see it'?"
 - `bk_nusaiba_f_ask_03` (neutral) "Source? 'Somebody said' is not a source."
+- `bk_nusaiba_f_ask_04` (stern) "You're not tired. You're embarrassed. Sit."
+- `bk_nusaiba_f_ask_05` (sharp) "You rehearsed that answer. Give me the real one."
 ### hit
 - `bk_nusaiba_f_hit_01` (sharp) "Excuse me. That was assault on a folder."
 - `bk_nusaiba_f_hit_02` (dry) "I'm fine. The papers are not. Pick them up."
@@ -95,9 +102,11 @@
 ### food
 - `bk_nusaiba_f_food_01` (warm) "Mama Nkechi's jollof. Exhibit A for happiness."
 - `bk_nusaiba_f_food_02` (dry) "Garri again? It's giving 'end of the month'."
+- `bk_nusaiba_f_food_03` (warm) "You've said 'I'm fine' twice and eaten nothing. Eat. Then be fine."
 ### money
 - `bk_nusaiba_f_money_01` (dry) "Sapa has entered the chat. I've asked it to leave."
 - `bk_nusaiba_f_money_02` (dry) "My account balance is 'pending further review'."
+- `bk_nusaiba_f_money_03` (warm) "Water only, and 'not hungry'? Sit. My treat. Minuted, then forgotten."
 ### gift_like
 - `bk_nusaiba_f_gift_like_01` (warm) "Pens! The good ones. You know me."
 - `bk_nusaiba_f_gift_like_02` (warm) "Thank you. I'll keep this somewhere dry."
@@ -112,9 +121,11 @@
 - `bk_nusaiba_f_idle_02` (dry) "Who scheduled two meetings at four? …Me. Of course."
 - `bk_nusaiba_f_idle_03` (neutral) "Click. Click. Click. Fine. That's the argument."
 - `bk_nusaiba_f_idle_04` (amused) "I'm not bossy. I'm early to everyone's decisions."
+- `bk_nusaiba_f_idle_05` (whisper) "He's laughing too loudly. Something's wrong. I'll ask him later."
 ### night
 - `bk_nusaiba_f_night_01` (neutral) "It's late. Walk on the lit side of the ring road."
 - `bk_nusaiba_f_night_02` (dry) "Still drafting. The moon is my only reviewer."
+- `bk_nusaiba_f_night_03` (warm) "You keep checking your phone. Call home. Then sleep."
 
 ## Year 1
 ### greet
@@ -129,6 +140,7 @@
 - `bk_nusaiba_y1_idle_06` (neutral) "The Amana Clock says 6:06. It said that yesterday too."
 - `bk_nusaiba_y1_idle_07` (neutral) "Shamsu says 'Simple.' Nothing that man says is simple."
 - `bk_nusaiba_y1_idle_08` (dry) "Jega asked me the time. I gave him a schedule."
+- `bk_nusaiba_y1_idle_09` (neutral) "That fresher smiles at everyone and calls no one. I'll walk with her."
 ### callback
 - `bk_nusaiba_y1_callback_01` (proud) "With respect, ma: that sign WAS negative. I checked again." · when: m005_done
 - `bk_nusaiba_y1_callback_02` (amused) "Mubarak sold you that gown? Show me the receipt. …Oh dear." · when: m004_done
@@ -147,6 +159,7 @@
 - `bk_nusaiba_y1_ev_results_01` (warm) "Results are up. You passed. I knew. I made a spreadsheet."
 ### sorry
 - `bk_nusaiba_y1_sorry_01` (warm) "First semester is hard. Hard is not the same as wrong."
+- `bk_nusaiba_y1_sorry_02` (warm) "You want to go home. I know that face. Unpack one thing tonight."
 
 ## Year 2
 ### greet
@@ -159,6 +172,8 @@
 - `bk_nusaiba_y2_idle_05` (amused) "Dr. Minus took two marks for confidence. I have more."
 - `bk_nusaiba_y2_idle_06` (neutral) "Dr. Minus: fair, strict, wrong. Two out of three."
 - `bk_nusaiba_y2_idle_07` (proud) "Hajiya Ladi asked for my card. I've never been prouder."
+- `bk_nusaiba_y2_idle_08` (dry) "He said 'last price' and looked left. It's not the last price."
+- `bk_nusaiba_y2_idle_09` (sharp) "Mubarak's smiling. Mubarak smiles when he owes someone. Who?"
 ### callback
 - `bk_nusaiba_y2_callback_01` (dry) "That power bank. Where was the warranty? Exactly." · when: m027_done
 - `bk_nusaiba_y2_callback_02` (warm) "My two favourite words: 'in perpetuity'." · when: m031_done
@@ -189,6 +204,7 @@
 - `bk_nusaiba_y3_idle_06` (dry) "Shamsu explains. I argue. The strike listens to neither."
 - `bk_nusaiba_y3_idle_07` (amused) "Aleeya made me laugh in a meeting. I've filed a complaint."
 - `bk_nusaiba_y3_idle_08` (amused) "Garri economics: one cup, three people, a constitution."
+- `bk_nusaiba_y3_idle_09` (sad) "Everyone says they're 'resting'. Half of them are hungry. Count the plates."
 ### callback
 - `bk_nusaiba_y3_callback_01` (dry) "I had a motion. In writing. The bus left anyway." · when: m050_done
 - `bk_nusaiba_y3_callback_02` (neutral) "Mubarak's Sapa Combo needs a contract. I've drafted one." · when: m052_done
@@ -205,6 +221,8 @@
 ### night
 - `bk_nusaiba_y3_night_01` (neutral) "No lectures. No light. Just me and a petition."
 - `bk_nusaiba_y3_night_02` (dry) "The strike is quiet at night. I hate quiet. It's unminuted."
+### ask
+- `bk_nusaiba_y3_ask_01` (warm) "You're angry about the strike. You're scared of the gap. Say the second one."
 
 ## Year 4
 ### greet
@@ -234,6 +252,8 @@
 ### idle
 - `bk_nusaiba_y4_idle_08` (neutral) "Point one: rest is a policy. I'm drafting it. Not taking it."
 - `bk_nusaiba_y4_idle_09` (sharp) "Wait. Look again. That's not my face on that clip."
+- `bk_nusaiba_y4_idle_10` (neutral) "Muktar touches his collar before a weak point. Don't tell him I know."
+- `bk_nusaiba_y4_idle_11` (dry) "Wednesday. I still can't read her. It's honestly insulting."
 
 ## Year 5
 ### greet
@@ -248,6 +268,7 @@
 - `bk_nusaiba_y5_idle_06` (sad) "Five years. I've minuted all of them. Mostly yours."
 - `bk_nusaiba_y5_idle_07` (neutral) "Who takes minutes after us? …They'll learn."
 - `bk_nusaiba_y5_idle_08` (dry) "Defence next week. I've filed objections to my own project."
+- `bk_nusaiba_y5_idle_09` (warm) "You're not calm. You're numb. Different. Sit with me."
 ### callback
 - `bk_nusaiba_y5_callback_01` (dry) "Eighty-one. I think it's eighty-three. I'm still asking." · when: m100_done
 - `bk_nusaiba_y5_callback_02` (proud) "'Plus two. For conduct.' Written down. With the date." · when: m100_done

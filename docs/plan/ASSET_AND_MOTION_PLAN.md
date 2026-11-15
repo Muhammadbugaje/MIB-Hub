@@ -416,6 +416,9 @@ The build fails if a pack exceeds its budget (V2 §9).
 
 ## 3. Characters
 
+### 3.0 The owner's look reference (15 Nov 2026)
+Follow `STORY_BIBLE_V2.md` §2.5a for every named character's skin tone, height and build. The authored cast leans fair and light, with medium and caramel tones and nobody very dark; the character editor offers the full range of tones. Wardrobe must include many outfits, watches, shoes, trousers, scarves, several hijab styles, jalabiyas, kaftans, caps and eyeglasses. The in-game phone must look real, with widgets like the old game's phone (see `legacy/fslg-classic` for the old phone UI as a reference for features, not code).
+
 ### 3.1 Base mesh path
 
 | Option | For | Against | Verdict |
