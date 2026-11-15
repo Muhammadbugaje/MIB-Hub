@@ -10,6 +10,7 @@ pipe tables, fenced code blocks, **bold**, *italic* and `code`. Nothing else is 
 """
 import re
 import sys
+import textwrap
 from datetime import date
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -130,8 +131,11 @@ def flow(md, width):
             flush()
             j = i + 1
             block = []
+            cols = int((width - 6) / (0.6 * ST["code"].fontSize))  # Courier is 0.6 em wide
             while j < len(lines) and not lines[j].strip().startswith("```"):
-                block.append(tx(lines[j]))
+                raw = tx(lines[j])
+                pad = " " * (len(raw) - len(raw.lstrip()) + 4)
+                block += textwrap.wrap(raw, cols, subsequent_indent=pad, drop_whitespace=False) or [""]
                 j += 1
             out.append(Preformatted("\n".join(block), ST["code"]))
             out.append(Spacer(1, 4))
