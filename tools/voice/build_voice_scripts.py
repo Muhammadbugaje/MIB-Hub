@@ -45,6 +45,10 @@ NAMES = {
     "special.jiya": "Jiya", "special.taty": "Taty", "special.madison": "Madison", "special.mib": "M.I. BUGAJE",
     "npc.mrs_adebayo": "Mrs. Adebayo", "npc.mr_clement": "Mr. Clement", "npc.mrs_shehu": "Mrs. Shehu",
     "npc.ab": "AB", "npc.kb": "KB", "npc.cmd": "The Chief Medical Director", "npc.dj_sugar": "DJ Sugar",
+    "npc.garba": "Malam Garba", "npc.hauwa": "Nurse Hauwa", "npc.megawatt": "Chief Megawatt",
+    "npc.aliyu": "Engr. Aliyu", "npc.kabiru": "DJ Kabiru", "npc.lawal": "Ranger Lawal", "npc.bilkisu": "Sgt. Bilkisu",
+    "npc.danladi": "Coach Danladi", "npc.ngozi": "Coach Ngozi", "npc.pastor_sam": "Pastor Sam",
+    "npc.ustaz_auwal": "Ustaz Auwal", "npc.malam_sule": "Malam Sule", "npc.big_baby": "Big Baby",
 }
 
 
@@ -126,7 +130,9 @@ def parse_barks(path: Path, errors: list[str]) -> tuple[str, str, list[Line]]:
                 errors.append(f"{loc}: line outside a ## stage / ### category")
                 continue
             want = f"_{STAGES.get(stage, '?')}_{cat}_"
-            if want not in bid or not re.fullmatch(r"bk_[a-z0-9_]+_\d{2}", bid):
+            # Events: "bk_x_ev_strike_01" (preferred) and "bk_x_ev_ev_strike_01" are both accepted.
+            ok = want in bid or (stage == "Events" and cat.startswith("ev_") and f"_{cat}_" in bid)
+            if not ok or not re.fullmatch(r"bk_[a-z0-9_]+_\d{2}", bid):
                 errors.append(f"{loc}: id {bid} should look like bk_<who>{want}NN")
             if mood not in cm.format_lists(cm.FORMAT.read_text(encoding="utf-8"))["mood"]:
                 errors.append(f"{loc}: mood '{mood}' not in FORMAT.md")

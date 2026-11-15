@@ -46,6 +46,7 @@ BOOKS = {  # key: (sources relative to docs/plan, title). The PDF is written to 
     "MISSION_SCRIPTS": (["missions/Y1.md", "missions/Y2.md", "missions/Y3.md", "missions/Y4.md", "missions/Y5.md",
                          "missions/INTEGRATION_Y3_5.md", "missions/FORMAT.md"], "The Complete Mission Scripts"),
     "STORY_AUDIT": (["STORY_AUDIT.md"], "Story Audit"),
+    "ASSET_AND_MOTION_PLAN": (["ASSET_AND_MOTION_PLAN.md"], "Asset, Animation and Physics Plan"),
     "HOW_TO_RUN": (["../HOW_TO_RUN.md"], "How to Run MIB-Hub", "docs"),
 }
 

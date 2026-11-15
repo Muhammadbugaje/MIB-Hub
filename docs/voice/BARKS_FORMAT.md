@@ -27,11 +27,11 @@ One file per character in `docs/voice/barks/`, named by the cast id without the 
 
 1. **Headings.** `#` title, then the `**Id:**` and `**Voice:**` lines. `##` is a **stage**: `Filler` (any time), `Year 1` … `Year 5`, `Post-game`, or `Events`. `###` is a **category** from §3.
 2. **Line form, exactly:** `` - `id` (mood) "text" `` with an optional ` · when: <condition>` after the closing quote. One line each.
-3. **Ids:** `bk_<who>_<stage>_<category>_<NN>`, where stage is `f` (Filler), `y1`–`y5`, `post`, or `ev`. Examples: `bk_jega_f_greet_01`, `bk_jega_y3_idle_02`, `bk_pub_traders_ev_strike_01`. Every id is unique across all files. Never reuse an id; never renumber a recorded one.
+3. **Ids:** `bk_<who>_<stage>_<category>_<NN>`, where stage is `f` (Filler), `y1`–`y5`, `post`, or `ev`. Examples: `bk_jega_f_greet_01`, `bk_jega_y3_idle_02`, `bk_pub_traders_ev_strike_01`. Under `## Events` the category already starts with `ev_`, so the short form `…_ev_strike_NN` is preferred; the long form `…_ev_ev_strike_NN` is also accepted (some packs use it). Every id is unique across all files. Never reuse an id; never renumber a recorded one.
 4. **Mood** is one of FORMAT.md's: `neutral, warm, amused, bored, stern, sharp, shy, proud, scared, sad, excited, dry, whisper`.
 5. **Length:** 90 characters at most, translation included. Most barks are 3–12 words. Barks are heard while walking past: short, clear and funny.
 6. **Non-English** (Hausa, Pidgin, Yoruba, Igbo, Mandarin, Korean, Portuguese) is followed by its translation in square brackets: `"Sannu! [Hello!]"`. Every such line is a draft for a native speaker to check.
-7. **Conditions** (`when:`) use flags already in the missions or simple state: `night`, `raining`, `blackout`, `exam_week`, `strike`, `ramadan`, `player_female`, `player_male`, `friendship>=3`, `m063_done`, `maker_away`. Keep them simple; the engine reads them later.
+7. **Conditions** (`when:`) use flags already in the missions or simple state: `night`, `raining`, `blackout`, `exam_week`, `strike`, `ramadan`, `player_female`, `player_male`, `friendship>=3`, `m063_done`, `maker_away`, `blackout_soon` and `hard_night_soon` (a scripted blackout or hard night is due within a day: KB's prices), `lang_pt` (Taty's Portuguese, swappable if she becomes Italian), `results_good` and `results_bad` (the semester's results, for Mum and Dad). Keep them simple; the engine reads them later. A comma means **all** must hold: `when: player_female, friendship>=3`.
 
 ## 3. Categories
 

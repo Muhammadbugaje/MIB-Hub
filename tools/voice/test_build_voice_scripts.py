@@ -51,6 +51,11 @@ class BarkParsing(unittest.TestCase):
     def test_id_must_match_stage_and_category(self):
         self.assertTrue(parse(GOOD.replace("bk_test_y3_idle_01", "bk_test_y2_idle_01"))[3])
 
+    def test_event_ids_short_and_long_forms(self):
+        ev = GOOD + '\n## Events\n### ev_strike\n- `bk_test_ev_strike_01` (sad) "No class."\n' \
+                    '- `bk_test_ev_ev_strike_02` (sad) "Still no class."\n'
+        self.assertEqual(parse(ev)[3], [])
+
     def test_unknown_category_and_stage(self):
         self.assertTrue(parse(GOOD.replace("### idle", "### dance"))[3])
         self.assertTrue(parse(GOOD.replace("## Year 3", "## Year 9"))[3])
