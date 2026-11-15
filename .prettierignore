@@ -1,0 +1,5 @@
+legacy/
+docs/plan/
+docs/legacy/
+packages/db/migrations/
+package-lock.json

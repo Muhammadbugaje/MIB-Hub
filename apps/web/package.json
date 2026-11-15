@@ -1,0 +1,23 @@
+{
+  "name": "@mib/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The MIB-Hub website: public pages, sign-in, play pages and the admin area.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "db:seed": "tsx scripts/seed.ts"
+  },
+  "dependencies": {
+    "@astrojs/node": "9.5.5",
+    "@astrojs/react": "4.4.2",
+    "astro": "5.18.2",
+    "better-auth": "1.7.25",
+    "drizzle-orm": "0.45.4",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

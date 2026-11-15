@@ -34,6 +34,7 @@ db.sqlite3*
 media/
 protected_media/
 backups/
+data/seed/private/
 
 # --- Large media (list by path in docs, host on R2 later) ---
 *.mp4
@@ -47,6 +48,7 @@ backups/
 *.blend1
 
 # --- Environments and build output ---
+apps/web/.data/
 node_modules/
 .venv/
 venv/
