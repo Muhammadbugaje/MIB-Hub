@@ -1,0 +1,7 @@
+/* Self-hosted fonts (no call to Google Fonts). Inter (variable), Poppins and
+   JetBrains Mono, all under the SIL Open Font License (see ../fonts/LICENSES.md). */
+@font-face { font-family: "Inter"; font-style: normal; font-display: swap; font-weight: 100 900; src: url("../fonts/inter-var.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-display: swap; font-weight: 600; src: url("../fonts/poppins-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-display: swap; font-weight: 700; src: url("../fonts/poppins-latin-700-normal.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-display: swap; font-weight: 800; src: url("../fonts/poppins-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "JetBrains Mono"; font-style: normal; font-display: swap; font-weight: 400; src: url("../fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2"); }

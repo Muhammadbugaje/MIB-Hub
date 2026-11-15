@@ -1,0 +1,84 @@
+/* ==========================================================================
+   MIB-Hub animations
+   Every @keyframes lives here, plus the small motion utilities.
+   Rules (carried over from EE Hub):
+     - animate transform and opacity only on hot paths
+     - keep UI moves at or under 320ms; only hero moments go longer
+     - prefers-reduced-motion (or html[data-motion="reduce"]) turns it all off
+   ========================================================================== */
+
+/* Entry and exit */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes fade-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes page-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+@keyframes dialog-in { from { opacity: 0; transform: translateY(12px) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes sheet-up { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes toast-in { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+
+/* Feedback */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+@keyframes check-pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes field-error-in { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: none; } }
+@keyframes theme-spin { from { transform: rotate(-90deg) scale(0.6); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Loading */
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* Hero */
+@keyframes float-soft { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes drift { 0% { transform: translate3d(0, 0, 0) rotate(0); } 100% { transform: translate3d(-3%, 2%, 0) rotate(6deg); } }
+@keyframes glow-pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 0.9; } }
+
+/* ---- Utilities ---------------------------------------------------------- */
+
+/* Page entry. Browsers with cross-document View Transitions cross-fade
+   between pages; everyone else gets a short rise on <main>. */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: fade-out var(--dur) var(--ease-standard) both; }
+::view-transition-new(root) { animation: page-in var(--dur-slow) var(--ease-emphasized) both; }
+.site-header { view-transition-name: site-header; }
+.app-sidebar { view-transition-name: app-sidebar; }
+.page-enter { animation: page-in var(--dur-slow) var(--ease-emphasized) both; }
+
+/* Stagger children in: add .stagger to a parent. */
+.stagger > * { animation: fade-up var(--dur-slow) var(--ease-emphasized) both; }
+.stagger > :nth-child(2) { animation-delay: 50ms; }
+.stagger > :nth-child(3) { animation-delay: 100ms; }
+.stagger > :nth-child(4) { animation-delay: 150ms; }
+.stagger > :nth-child(n + 5) { animation-delay: 200ms; }
+
+/* Gentle hover lift for anything card-like that opts in. */
+.lift { transition: transform var(--dur) var(--ease-standard), box-shadow var(--dur) var(--ease-standard); }
+.lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+.anim-float { animation: float-soft 6s ease-in-out infinite; }
+.anim-spin { animation: spin 0.75s linear infinite; }
+.anim-shake { animation: shake 0.4s var(--ease-standard); }
+
+/* ---- Reduced motion ------------------------------------------------------
+   Honour the device setting, and the site's own switch (data-motion). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+:root[data-motion="reduce"] *, :root[data-motion="reduce"] *::before, :root[data-motion="reduce"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+:root[data-motion="reduce"] ::view-transition-group(*),
+:root[data-motion="reduce"] ::view-transition-old(*),
+:root[data-motion="reduce"] ::view-transition-new(*) { animation: none !important; }

@@ -1,0 +1,9 @@
+/* Import this one file to get the whole design system:
+     import "@mib/ui/styles.css";
+   Order matters: fonts, tokens, base, components, animations (last, so the
+   reduced-motion rules win). */
+@import "./fonts.css";
+@import "./tokens.css";
+@import "./base.css";
+@import "./components.css";
+@import "./animations.css";
