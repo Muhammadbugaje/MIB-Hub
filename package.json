@@ -24,7 +24,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -p packages/db --noEmit && tsc -p packages/ui --noEmit && npm run typecheck -w @mib/web",
     "format": "prettier --write .",
-    "check": "npm run lint && npm run typecheck && npm test"
+    "check": "npm run lint && npm run typecheck && npm test",
+    "db:studio": "npm run db:studio -w @mib/db"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",

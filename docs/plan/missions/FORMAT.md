@@ -118,7 +118,7 @@ endState: { PLAYER: { at: queue_end }, flags: { m002_started: true } }
 4. **Optional roles** end in `?` in `cast` and may only act inside `if: special.<name>` … `then:`. An `else:` list is allowed when the fallback needs its own line.
 5. **Timeline keys** (one per entry, after `at:` seconds):
    - `camera.cut`, `camera.move`, `camera.follow` `{ shot: wide|medium|close|over_shoulder|pov|top, from, look|who, dur }`, `camera.shake { amt, dur }`, `camera.return { blend }`
-   - `actor.walk|run { who, to }`, `actor.anim { who, anim }` with anim one of `sit, stand, hug, wave, phone, eat, look, gesture, laugh, shock, point, nod, shake_head, carry, write, kneel, sleep, cheer, facepalm`
+   - `actor.walk|run { who, to }`, `actor.anim { who, anim }` with anim one of `sit, stand, hug, wave, phone, eat, look, gesture, laugh, shock, point, nod, shake_head, carry, write, kneel, sleep, cheer, facepalm, horns` (`horns`: Taty's rock-concert hand sign when she wins; only for `special.taty`)
    - `actor.look { who, at }`, `actor.enter|exit { who, vehicle }`, `actor.ride { who, vehicle, to }`, `actor.show|hide { who }`
    - `say { who, id, text, mood }` with mood one of `neutral, warm, amused, bored, stern, sharp, shy, proud, scared, sad, excited, dry, whisper`
    - `sfx.play { cue }`, `music.play|stop { cue, duck }`, `light.set { preset }` (`day, dusk, night, blackout, candle, torch, coil_glow`), `prop.show|hide|move { id, at }`, `fx.play { id, at }` (`shade_drift, coil_spark, dust, rain, flicker`), `title.card { text }`, `calendar.show { text }`
@@ -189,7 +189,7 @@ Every one of their lines is a **draft for the real person to change**; their voi
 | M114 The Ten Seals | Jiya | Reads the right of way aloud at the door | Nusaiba reads it |
 | M118 Convocation | all | One line each in the crowd | None needed |
 
-**Balance target for the whole game:** Jiya 14 main missions, Taty 15, Madison 9, plus their cameo missions (bible §8). Never two special helpers leading the same step.
+**Balance for the whole game, as written (counted by `tools/story/check_missions.py`):** Jiya 32 main missions, Taty 34, Madison 21, including one-line appearances, plus their cameo missions (bible §8.9). Never two special helpers leading the same step.
 
 ## 6.3 Changes from the owner (both writers must apply)
 1. **Kaltume is now Helen.** Jega's girlfriend ("IDK") is named **Helen** everywhere: id `npc.helen`, role `HELEN`. "IDK" stays as her nickname (the joke is Jega's "Ban sani ba", not her name). The Year 5 dinner beat (M109) now reveals "Helen": "Sunanta Helen. Her name is Helen."

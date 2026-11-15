@@ -343,7 +343,7 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 | **Prof. Adaeze Nwachukwu** | The professor, on tape; a letter in Y5 | Brisk, funny, impatient with fear | Signs letters "A.N., still not dead" | M60–M61, M105 | 80 |
 | **Mum, Dad, little sibling** | On the phone | Love as instructions; money with a lecture | "Have you eaten?" / "When I was your age…" | The phone, M2, M51, M118 | 150 |
 
-**Minor (under 80 lines each, grouped scripts):** Alhaji Needle the tailor ("Thursday"); Chi-Tech the phone repairer; Hassan; Comrade Sadiya (outgoing SUG president); Muktar ("Point of order", Nusaiba's election rival); Summy; Ahmad (rival quiz captain); Iya Risi (New Site canteen); Baba Shuttle; Clemantine (gifts and flowers); Mallam Dogo and the grey mare; DJ Sugar; Corporal Peter; Aisha (Hajiya Ladi's daughter); Aminu, "Small Sadiq" (the pupil you teach); the Dean of each faculty (ten short roles, one seal scene each); Malam Sule the farmhand (M1); Emeka the okada rider; Musa B. (the fresher on your bed, later a Plug employee); Mr. Ezekiel the lab technologist; Shuaibu at the sports shop; the gym trainer, Coach Ngozi; crowd voices.
+**Minor (under 80 lines each, grouped scripts):** Alhaji Needle the tailor ("Thursday"); Chi-Tech the phone repairer; Hassan; Comrade Sadiya (outgoing SUG president); Muktar ("Point of order", Nusaiba's election rival); Summy; Ahmad (rival quiz captain); Iya Risi (New Site canteen); Baba Shuttle; Clemantine (gifts and flowers); Mallam Dogo and the grey mare; DJ Sugar; Corporal Peter; Aisha (Hajiya Ladi's younger daughter, who keeps the books for three mall shops); Rakiya (her elder sister, the bride in M71; a few lines at her own wedding); Aminu, "Small Sadiq" (the pupil you teach); the Dean of each faculty (ten short roles, one seal scene each); Malam Sule the farmhand (M1); Emeka the okada rider; Musa B. (the fresher on your bed, later a Plug employee); Mr. Ezekiel the lab technologist; Shuaibu at the sports shop; the gym trainer, Coach Ngozi; crowd voices.
 
 **Entropy** never speaks, in any form.
 
@@ -477,7 +477,7 @@ You show the note to the one man who has seen forty first-years. Tea first, gist
 **Connects to:** M2 (your thin wallet). Sets up M14.
 
 #### M8 · Left Boot First
-**When:** Y1 · S1 Wk 4 · Tue (lecture day) · 17:00, football hour. **Where:** Sports Complex: training pitch. **Who:** Jega, Coach Danladi, Helen, Shamsu, Bature.
+**When:** Y1 · S1 Wk 5 · Tue (lecture day) · 17:00, football hour. **Where:** Sports Complex: training pitch. **Who:** Jega, Coach Danladi, Helen, Shamsu, Bature.
 
 Faculty trials. A tall fresher from Education heads everything, including a ball that was not his. Jega picks you for his side because he heard about the goat. You learn passing, shooting and stamina. Shamsu misses an open goal and explains why, with angles; then, asked why he is called "Sheikh Biru", confesses to the goat: "I was not preaching. I was *advising*." On the touchline a tall girl is keeping score. "What's her name?" Jega: "…Ban sani ba." Funniest moment: Coach Danladi: "Pass! Is the ball your inheritance?"
 **Opens:** Jega tying his left boot, then untying the right to start again properly. **Closes:** he throws you a bib. "Kai, {{PLAYER_NAME}}. Mu je. We have a cup to win."
@@ -873,7 +873,7 @@ The light in the forest you saw two years ago is brighter now that the campus is
 
 By day the Twin Theatres are just empty: dust, a forgotten umbrella, your own voice coming back. Come back at night and it is different: in every tenth seat a grey figure sits facing the board. **Idlers.** They do not chase. If you stay near one, you slow down, and you want very much to sit. The Maker is away again, and it is worse. The new idea: the same place, changed by the hour. On the way out you notice the padlocks on the theatre doors are new, and not the school's; and in the dust, fresh footprints, in good shoes. Funniest moment: {{ROOMIE}}, whispering: "Normalise sleeping in class. But not like *this*."
 **Opens:** you write your name in the dust on a desk. **Closes:** at night your name has been wiped out, carefully, with a sleeve. **(CH)**
-**Reward:** Idlers in the journal, a padlock (evidence). **System:** night changes, slow-zone hazards, `maker_away`.
+**Reward:** Idlers in the journal, a photograph of a padlock (evidence; the padlock itself is sawn off in M66). **System:** night changes, slow-zone hazards, `maker_away`.
 **Connects to:** M5 (your first theatre), M32 (the carton of padlocks). Plants T5.
 
 #### M57 · The Sit-Down
@@ -905,14 +905,14 @@ Go through the gap. The patrol walks a pattern; learn it (white stones Lawal "di
 
 The first laboratory. Seven stools, six of them fallen. Plaque three. A tape recorder still turning on the last of a coil's charge, playing three notes and a woman's voice into an old transmitter: the 6:06 broadcast, found. Beside it, five reels. Maryam knows where a tape machine is; Kabiru lends the studio. The professor is brisk, funny, alive in every sentence. Reel four is damaged; Nusaiba rebuilds it word by word. **"We asked nobody. Ten seals, ten deans, and not one of us knocked on a door. I gave the seals out myself, in the end, like wedding invitations to a wedding nobody was planning."** Funniest moment: the professor, on tape, forty years ago: "If you are listening to this, somebody has finally tidied up."
 **Opens:** dust in torchlight, and a voice counting backward from five. **Closes:** reel five is in its box. On the box, in pencil: "Not yet." Shamsu reaches for it. Nusaiba puts her hand on his. **(CH)**
-**Reward:** site 3 found, the tapes, the Ten Seals quest named in the journal (three already held). **System:** audio puzzles, the journal's big reveal.
+**Reward:** site 3 found, the tapes, the Ten Seals quest named in the journal (four already held). **System:** audio puzzles, the journal's big reveal.
 **Connects to:** M3 and M18 (the broadcast), M20 (ten sockets), M24, M36, M46, M54 (the seals you already hold), M31. Lands T6.
 
 #### M61 · The Maker's Secret
 **When:** Y3 · Strike wk 18 · Sun · dusk. **Where:** Engineering Garden. **Who:** the Maker, Nusaiba, Shamsu, {{ROOMIE}}, Muhammad.
 
 Take reel five to the only person who should hear it first. He listens standing up. The professor reads the class list. Five names, each with where they went. "All but one. He said he would keep it warm until we came back. I want it on record that I told him not to." He was the sixth stool. He says his fourth big word (B4), and Nusaiba translates: "You've been stuck." "Forty years. Yes." Then, clearly introduced as a poet's words, the reed-flute lines (Rumi Q1). You ask about the seventh stool. He looks past you, at the gate, where Muhammad is standing. The Maker nods to him, once. Muhammad nods back. Neither speaks. Funniest moment: {{ROOMIE}}, into the silence: "…So nobody is going to mention the seventh chair. Fine. Fine." **(MS)**
-**Opens:** the reel, turning. **Closes:** you look back at the gate. Shamsu: "Who are you all staring at?" Nusaiba, slowly: "…I thought I saw someone." It is the first time anyone else has. **(CH)**
+**Opens:** the reel, turning. **Closes:** you look back at the gate. Shamsu: "Who are you all staring at?" Nusaiba, slowly: "…I thought I saw someone." It is the first time any of your friends has. **(CH)**
 **Reward:** the Maker's trust, his notebook promised "when you are a finalist". **System:** story.
 **Connects to:** M6 ("I listen"), M48 (the photograph: six students), M60 (seven stools), M2.
 
@@ -959,7 +959,7 @@ The Idlers are thickest in the Twin Theatres, and in the back row of Gabas sits 
 #### M67 · Called Off
 **When:** Y3 · first day after the strike · Mon · 07:00–20:00. **Where:** Main Gate; motor park; Student Union. **Who:** everyone returning; DJ Kabiru; Mubarak; Hajiya Ladi.
 
-"The strike has been suspended." Buses. The crowd rules switch back in a single morning and the campus fills while you watch: it is the most joyful hour in the game. Kabiru runs a welcome-back treasure hunt by radio (ten clues, ten places you now know better than anyone). At the end of it you put the padlock on Mubarak's counter. He laughs. He checks his book. He stops laughing. Two hundred padlocks, one cash sale, the week before the strike began, to a man who wanted no receipt. Funniest moment: every returning student asks the same question. "What did I miss?" {{ROOMIE}}: "Honestly? Everything. Sit down."
+"The strike has been suspended." Buses. The crowd rules switch back in a single morning and the campus fills while you watch: it is the most joyful hour in the game. Kabiru runs a welcome-back treasure hunt by radio (ten clues, ten places you now know better than anyone). At the end of it you put the padlock on Mubarak's counter. He laughs. He checks his book. He stops laughing. Two hundred padlocks, one cash sale, the week after the mall opened, to a man who wanted no receipt. Funniest moment: every returning student asks the same question. "What did I miss?" {{ROOMIE}}: "Honestly? Everything. Sit down."
 **Opens:** an empty gate at dawn; then one bus; then twenty. **Closes:** Mubarak, very quietly: "I sold the locks. For the halls. …I didn't ask what for. I never ask what for."
 **Reward:** treasure-hunt prize, the full campus back, compressed-semester timetable. **System:** the calendar switching day types, radio hunts.
 **Connects to:** M50 (the goodbyes, reversed), M66 (the padlock), M32, M27 (his cartons). Lands half of T5.
@@ -983,13 +983,13 @@ The rains come hard, the forest stream floods, and Lawal's patrol bike and two o
 #### M70 · The Third Coil Wakes
 **When:** Y3 · resumed S1 Wk 6 · Sat · dawn. **Where:** the forest path; the Old Site; the Demonstration School. **Who:** Ranger Lawal, Jega, Aminu and Primary 4, the headmistress, the Maker.
 
-Carry your solar panel through the forest to the Old Site, by Lawal's light. Stand the six fallen stools upright. The coil needs three notes to wake, sung, not played: the professor tuned it to voices so it could never be lit by one person. You know thirty-one people who know the song. Jega brings Primary 4 on a "nature walk" with every permission slip signed. They sing. It wakes. The headmistress has brought the school's old hand bell, because "the professor said it should go wherever the song went". The Maker's fifth big word (B5): he is just happy. Funniest moment: a child, as forty years of darkness lifts: "Sir, can we go now? It's break."
+Carry your solar panel through the forest to the Old Site, by Lawal's light. Stand the five fallen stools upright, round the one that never fell. The coil needs three notes to wake, sung, not played: the professor tuned it to voices so it could never be lit by one person. You know thirty-one people who know the song. Jega brings Primary 4 on a "nature walk" with every permission slip signed. They sing. It wakes. The headmistress has brought the school's old hand bell, because "the professor said it should go wherever the song went". The Maker's fifth big word (B5): he is just happy. Funniest moment: a child, as forty years of darkness lifts: "Sir, can we go now? It's break."
 **Opens:** a line of small children in the forest, each holding the shirt of the one in front. **Closes:** the seventh stool is still on its side. A child sets it upright. It falls over again, by itself.
 **Reward:** **Coil 3. The Education Seal.** Prosperity tier 3: lit paths, benches. **System:** the song mechanic, escort.
 **Connects to:** M53 (the song, the pupils), M60–M61 (the stools), M65 (the panel), M69 (the pass).
 
 #### M71 · Wedding at the Quarters
-**When:** Y3 · resumed S1 Wk 8 · Sat (weekend) · 14:00–22:00. **Where:** staff quarters. **Who:** Aisha (Hajiya Ladi's daughter) and her family, your interest or {{ROOMIE}}, Helen, Jega, the Maker.
+**When:** Y3 · resumed S1 Wk 8 · Sat (weekend) · 14:00–22:00. **Where:** staff quarters. **Who:** Aisha (Hajiya Ladi's daughter), the bride Rakiya (her elder sister) and their family, your interest or {{ROOMIE}}, Helen, Jega, the Maker.
 
 A wedding at the staff quarters: outfits, a dance line (the rhythm game), jollof for four hundred (you are on serving duty for the first hour). It is also where relationships are settled: yours, honestly (stay, end it kindly, or begin again; either of you may choose), and Jega's. He tells Helen the truth about the town matches, in front of nobody, in Hausa, with no jokes. She listens. She does not make it easy. She stays. At the edge of the lights, for exactly one minute, stands the Maker, outside his garden. Funniest moment: Alhaji Needle delivers the groom's outfit during the ceremony. It is Saturday. He says "Thursday" anyway.
 **Opens:** a canopy, drums, four hundred plastic chairs. **Closes:** the Maker, a couplet about home (Rumi Q2), and then he is gone before the song ends.
@@ -1051,7 +1051,7 @@ Someone who looks like you is at the court at night, doing your dance, slightly 
 #### M78 · Rehab
 **When:** Y4 · S1 Wk 6–8 · mornings 06:00–08:00. **Where:** the physiotherapy wing; the gym; the indoor pool. **Who:** Jega, Helen (his physio student), Bolaji, Coach Ngozi, Dr. Zainab.
 
-Six months became eight. Train with Jega every morning for three weeks: the gym (your own body changes with his), the pool (swimming laps is his knee's medicine and your Breath's), the track. He is bad at being slow. One morning he does not come; find him on the empty pitch, sitting. He speaks plainly, in Hausa, subtitled, without a joke anywhere in it. You do not fix it. You sit, and then you both get up. Funniest moment: Helen's exercise sheet for him, with a column headed "Excuses (do not fill in)".
+Six months became nine. Train with Jega every morning for three weeks: the gym (your own body changes with his), the pool (swimming laps is his knee's medicine and your Breath's), the track. He is bad at being slow. One morning he does not come; find him on the empty pitch, sitting. He speaks plainly, in Hausa, subtitled, without a joke anywhere in it. You do not fix it. You sit, and then you both get up. Funniest moment: Helen's exercise sheet for him, with a column headed "Excuses (do not fill in)".
 **Opens:** 05:55, Bolaji banging on your door: "Sly does not wait for sleep." **Closes:** Jega jogs ten metres. Stops. Looks at his knee. Jogs back. "Toh. …Mu sake."
 **Reward:** gym programme tier 2, pool access, +Muscle, +Stamina, +Breath. **System:** the gym, the pool, body change over weeks.
 **Connects to:** M63 (the knee), M14 (the gym, Bolaji), M57 (sitting with someone), M71.
@@ -1072,7 +1072,7 @@ Nusaiba declares for Student Union president. You are her campaign: posters on t
 **Reward:** the perfect-day achievement, a full-campus timetable overlay, {{ROOMIE}}'s gift. **System:** the calendar itself as a puzzle, companion switching.
 **Connects to:** M51 (the first déjà vu), M18 ("See you Wednesday"), M20 (Kelechi), M75. Lands T8.
 
-#### M81 · The Old Eye (Heist 3)
+#### M81 · The Old Eye (Heist 2)
 **When:** Y4 · S1 Wk 11 · Sat · 20:00–03:00 (a clear night, harmattan not yet in). **Where:** Faculty of Physical Sciences: observatory dome, chemistry store, the abandoned annex. **Who:** Prof. Bello, AB, Tanko, Shamsu, Abbas, the Dean. **(switch: you on the roof, AB at the dome)**
 
 Site four is the abandoned observatory annex, sealed for decades. Plan with Prof. Bello and, astonishingly, Tanko, who walks straight to the hidden stair: he was in the class below the Maker and carried their tea. Mubarak supplies a Time-Freeze Watch, free. The coil is aligned not by wire but by starlight: three departments, three steps. Mathematics gives you the angle (a real calculation, with Shamsu), Chemistry silvers the old mirror (a careful mixing minigame), Physics turns the dome. Switch between your rooftop and AB at the eyepiece: "Left. Left. Check." At 01:10 one star crosses the slit and the fourth coil wakes. On a shelf in the annex: a sack, empty, stencilled with a T. Funniest moment: Tanko, asked why he never said: "Nobody asked me a question. They asked me riddles."
@@ -1169,7 +1169,7 @@ The king of the Echoes stands in the mall's atrium, and it is you: perfect, conf
 **Connects to:** M77 (the sketch), M76 (the late reflection), M38 and M71 (Aisha), M83.
 
 #### M93 · Double Booking
-**When:** Y4 · S2 Wk 13 · Sat (weekend). **Where:** the Cinema Hall; the Love Garden; the Spot. **Who:** your partner or partners; the twins; {{ROOMIE}}.
+**When:** Y4 · S2 Wk 12 · Sat (weekend). **Where:** the Cinema Hall; the Love Garden; the Spot. **Who:** your partner or partners; the twins; {{ROOMIE}}.
 
 Fame had a cost you have not paid yet. If you neglected someone this year, or promised two people the same Saturday, today is the day it comes due, and they say why, plainly. A partner may leave; you may be forgiven after a cooling-off; some doors close for good. If you did none of that, the mission is helping {{ROOMIE}} clear up exactly this mess, and it is very funny. The rule stands: nobody leaves because you were broke. Funniest moment: the twins have a wall chart.
 **Opens:** two messages arrive at once. Both say "See you at 7". **Closes:** depends on you. One version ends on the pier with someone. One ends there with {{ROOMIE}} and a bag of groundnuts, and is not sad.
@@ -1236,7 +1236,7 @@ Nusaiba's result in Dr. Minus's course is "absent". She sat the paper; you carri
 **Reward:** Nusaiba's result; an examinations charter (missing scripts become a side-mission chain you can solve for others). **System:** complaints done properly, witnesses.
 **Connects to:** M31 ("minus two", written down), M85 (his warning), M46, M11 (the stranger and exams).
 
-#### M101 · Sixth Site (Heist 2)
+#### M101 · Sixth Site (Heist 3)
 **When:** Y5 · S1 Wk 7 · Sat · 23:00–04:00 (night). **Where:** Senate basement; the old tunnel; under the Amana Clock. **Who:** Malam Garba, Muktar, Maryam, Shamsu, Nusaiba, KB. **(switch: you and Maryam)**
 
 That morning KB sells you bread at half price. "Eat now." Tonight: through the Senate basement to Door 7. Malam Garba unlocks it with a key he has oiled every month for thirty-one years and never used. Behind it: a room of filing cabinets (one drawer is warm to the touch; there is no time, and it will not open). Then the old tunnel, and four bearings to take from a survey Maryam reads aloud by torch while you pace them out; switch between you. Under the Clock Tower: a round room, six bolts in the floor where a coil should stand, and a door with ten sockets in a ring. Above you, the clock's mechanism, stopped, with a cobweb on the pendulum and not a speck of dust on the bell. Funniest moment: Muktar's hand-drawn map has a legend, a scale and a "Point of order: you are here."
@@ -1375,7 +1375,7 @@ Final results (five years of your play decide the class of degree; nobody fails 
 #### M118 · Convocation
 **When:** Y5 · convocation day (event) · 08:00–16:00. **Where:** the stadium; the boulevard. **Who:** Mum, Dad, your sibling; every friend; Dr. Zainab; the Maker; the twins.
 
-Your family at the gate again; Dad argues with the same guard. Mum has a new list. The procession. Zainab arrives straight from the airport with a suitcase of Korean snacks and a year of stories: she went, and she came back for this. Mubarak's sisters are in the crowd. Bolaji, to the man who has asked for five years: "Congratulations… Abbas." The names are read. Last of all: "And, by special resolution of Senate, a degree forty years overdue, to—" and the microphone cuts out for exactly the length of a name, and comes back on the applause. The Maker, in a gown, bows. The chair beside yours has a programme on it and nobody in it. Lily, to Lyzzy, of an old woman in the back row: "She came." Lyzzy: "Don't." Funniest moment: Dad, photographing the wrong graduate for a full minute. "They all look the same in this thing!"
+Your family at the gate again; Dad argues with the same guard. Mum has a new list. The procession. Zainab arrives straight from the airport with a suitcase of Korean snacks and a term of stories: she went, and she came back for this. Mubarak's sisters are in the crowd. Bolaji, to the man who has asked for five years: "Congratulations… Abbas." The names are read. Last of all: "And, by special resolution of Senate, a degree forty years overdue, to—" and the microphone cuts out for exactly the length of a name, and comes back on the applause. The Maker, in a gown, bows. The chair beside yours has a programme on it and nobody in it. Lily, to Lyzzy, of an old woman in the back row: "She came." Lyzzy: "Don't." Funniest moment: Dad, photographing the wrong graduate for a full minute. "They all look the same in this thing!"
 **Opens:** the car at the gate; the same argument; older faces. **Closes:** caps in the air. Freeze. One cap has no owner.
 **Reward:** your degree; the convocation gown outfit; the game's credits roll over your five photographs. **System:** the convocation event.
 **Connects to:** the opening film (M1), M24 (the seniors' convocation), M94 and M111 (Zainab), M45 (his sisters), "John Carter" (five years), M15 and M84 (the sister).
@@ -1681,23 +1681,55 @@ The owner's rule: when a special character is approved and switched on, they joi
 | M22 Everybody | Jiya, Taty, Madison | Three of the twenty who say yes; Taty widens others' time windows | Core cast only |
 | M23 Exam Fever | Jiya, Taty | Deals with the patrol; runs messages to the hospital | You hide; texts arrive late |
 | M24 Convocation Night | Jiya, Taty, Madison | Hold the gate; run the far fence; start the chant | Slots filled by those you asked |
+| M25 Stalite | Jiya | Reads the hall allocation rules; transfer signed in one visit (Legal Immunity) | Nusaiba's favour; two visits |
 | M26 Grand Opening | Madison | Starts a dance on the one-way escalator | A trader rides it three times |
 | M27 Plug and Play | Madison | The third bargaining round | You bargain |
 | M28 Okada Diploma | Taty | Order three's customer; races your okada to the gate on foot (Never Tired) | The goalkeeper is an Education player who eats the pie during a corner |
 | M30 Meter Reader | Jiya | Talks a guard out of noticing you | Reset to the last corner |
 | M31 Point of Order | Jiya | **Signature:** the courtroom roast; coaches you in the library | Nusaiba wins the point alone |
+| M32 Iron Mama Hums | Madison | Teaching four guards a dance in the atrium; patrols halved (Trend Setter) | Full patrols |
 | M33 Faculty Week | Jiya, Taty | Quiz question-master; five-a-side ringer | Dr. Okonkwo; Bolaji |
+| M34 Sly Goes Straight | Taty | Volunteers as the first haircut customer; her nod brings three more | You persuade a student yourself |
+| M35 Test Week Twist | Jiya | Reads the warning letter; heat penalty halved (Legal Immunity) | Full heat penalty |
+| M36 On Air | Jiya, Madison | Strikes two words from the riddle's script; caller four turns the riddle into a chant | You guard the dump button; a night watchman calls |
 | M37 Scout in the Stands | Taty | **Signature:** the cat chase across the stadium | The goat alone is the thief |
+| M38 Change-Over | Taty, Jiya | Taty joins the chase (cannot lose him); Jiya explains each choice by phone without choosing | Traders decide the chase; Nusaiba's one text |
 | M39 New Site Goes Dark | Taty | Runs beside the convoy with water | A relay of students |
 | M42 Night Shift | Taty | The diesel relay (Zainab's signature mission) | You carry every can |
 | M43 The Plan | Jiya, Taty | Defines "trespass"; scouts the mall on a jog | Nusaiba; {{ROOMIE}} |
 | M44 Unplug Iron Mama | Madison | The midnight flash sale becomes a dance | Mubarak's sale alone |
+| M45 Mubarak's Crash | Jiya, Madison | Finds the one useful sentence in Oga Sharp's contract; Madison's apology video skips the queue game | Full debt; you calm the queue |
 | M46 The Hearing | Jiya | Sits behind Nusaiba; one "Objection." | Nusaiba alone |
 | M47 Two Papers, One Day | Jiya, Taty | A qualifier judge who gives the robot its one perfect mark; Taty clears the okada's path through the crowd | Three visiting judges; you thread the crowd yourself |
 | M48 Sign-Out, Small | all | Sign a white shirt; one line each | None needed |
-| Years 3–5 | Jiya, Taty, Madison | See `missions/FORMAT.md` §6.2 (M50, M52, M54, M57, M63, M66, M68, M69, M75–M76, M78, M79, M83, M85, M86, M88, M100, M102, M107, M111, M112, M114, M118) | Listed there |
+| M50 Indefinite | Jiya | Quotes congress standing orders; seconders 8 → 4 (Legal Immunity) | Nusaiba waits out three speakers |
+| M52 Garri Economics | Madison | Sells the Sapa Combo with a jingle and a dance (Trend Setter) | Mubarak's own patter |
+| M54 Farm Hands | Taty | Herds the far flank on foot; a farm cat joins Pixel (Never Tired) | Emily on a bicycle |
+| M57 The Sit-Down | Taty | "One lap. I lied, half." Gets {{ROOMIE}} outside | Jega, ball under his arm |
+| M63 Injury Time | Taty | First to Jega with ice; runs beside the keke | Summy brings the ice |
+| M66 The Idle King | Taty | Plays the whole moonlight match without subbing | Emeka plays in his helmet |
+| M68 Padlock Receipts | Jiya | Reads the lease refusal: "Nothing illegal. How irritating." | Nusaiba alone, slower |
+| M69 Ranger Lawal's Debt | Taty | Swims the line across with you; drift halved | You swim alone, longer |
+| M75 Lucky Goes Viral | Madison | Teaches Lucky a real trend; out-dances him | Lyzzy films; DJ Sugar calls the moves |
+| M76 The Collab | Madison | Rides stunt two; peels half the mall crowd away | Lucky rides; Mubarak "manages" the crowd |
+| M78 Rehab | Taty | Pool sessions in the next lane | Coach Ngozi with a stopwatch |
+| M79 Manifesto | Jiya | Finds the poster-size clause | Aleeya reads them and misses it |
+| M83 Proof of Work | Jiya | The ethics judge; fixes one line of code | The Dean of Computing |
+| M85 Election Day | Jiya | Independent observer at the recount | Comrade Sadiya |
+| M86 Payday | Madison | Hosts Black Friday at the Plug as a live sale | Mubarak on a carton |
+| M88 Comeback | Taty | Runs the warm-up | Coach Danladi, with proverbs |
+| M100 The Missing Script | Jiya | Drafts the complaint; does not find the script | The legal aid clinic's duty student |
+| M102 Megawatt's Offer | Jiya | Reads Clause 9 to Mubarak, slowly; no advice | Nusaiba by text |
+| M107 Contract | Jiya | Drafts "left boot first" as a schedule | Nusaiba by text |
+| M111 The Longest Night | Taty | Runs the lantern line's far end all night | Jega's teammates in relay |
+| M112 Three by Road | Taty, Madison | Runner between sites (steps 1, 4, 7); Madison turns the mall crowd (step 6) | Okada riders; Mubarak's speakers |
+| M114 The Ten Seals | Jiya | Reads the right of way aloud; carries no seal | Nusaiba reads it |
+| M115 Chancellor Null | all | One more name each on the naming wheel; never one of the twelve required | Three fewer names; the count needed is unchanged |
+| M117 Gown | all | A possible photograph partner; one line each | Core cast only in the five photographs |
+| M118 Convocation | all | One line each in the crowd | Crowd barks |
+| M119 Sign-Out | all | Sign the white shirt; one line each | Core cast signatures only |
 
-**Totals:** Jiya about 18 main missions, Taty about 22, Madison about 13, across five years, plus their cameo missions. Dr. Zainab is core cast in every mission she appears in (no fallback per mission; a global recast if ever needed).
+**Totals (counted from the mission files by `tools/story/check_missions.py`, 15 Nov 2026):** Jiya 32 main missions, Taty 34, Madison 21, including the one-line appearances (M22, M24, M48, M115, M117–M119). Plus their cameo missions. Full detail for Years 3–5 is in `missions/INTEGRATION_Y3_5.md`. Dr. Zainab is core cast in every mission she appears in (no fallback per mission; a global recast if ever needed).
 
 ---
 
@@ -1981,6 +2013,7 @@ The envelopes for **Room 606** are the Maker's: one each semester for forty year
 | The weathervane cape | Mai Shayi ties it up again every year, so that each new set of freshers has something to stand against together. He takes it down on nights the Maker is away, because on those nights it is not a game | No |
 | The sack marked T | T for Tanko. It held the five lab coats the other students left behind. He could not burn them, so he sank them; later he took them, one by one, back to five families. That is where he goes at Christmas | No |
 | "For when I could not pay. Thank you. A." in Mama Nkechi's book | The professor, Adaeze, as a young lecturer. (Players will assume the sister. Let them.) | No |
+| Two Aishas | Hajiya Ladi's daughter Aisha (M26, M38, M71, M92) is a different person who happens to share the sister's name. Nobody in the game remarks on it. Players who learn "Ai—" may suspect her; she is too young and has a living mother. A deliberate, unexplained echo **[OWNER: confirm]** | No |
 | The time capsule drawing, signed "A" | The sister, aged nine | No |
 | The pressed flower "for A., who fed the fish" | His, in the first year after | No |
 | One too many in the census, the dinner photograph, the class vote | Muhammad | No |

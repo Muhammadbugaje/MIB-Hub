@@ -111,3 +111,9 @@ Other open items from the old game, all in `DL/KNOWN_ISSUES.md`:
 - KI-029: the loadError message;
 - KI-031: "Last played" per user;
 - KI-032: thumbnails on the device.
+
+## Copied later (15 Nov 2026, story audit)
+
+| Item | From | To | Note |
+|---|---|---|---|
+| Markdown-to-PDF builder | `eehub-2/tools/story/md2pdf.py` | `tools/story/md2pdf.py` | Pointed at `docs/plan/`; books are now STORY_BIBLE_V2, MISSION_SCRIPTS, STORY_AUDIT and HOW_TO_RUN. Runs with the repo's own `.venv` (reportlab 4.4.4), not the Django venv |

@@ -38,10 +38,12 @@ The owner is new to TypeScript. Explain things simply, and give the owner PDFs r
 - `/admin`: only owner and admin roles can open it; players get a 403. It shows the overview; each section is marked "soon".
 - The database seeds the 16 games, the owner account (from `.env`), cheats and heroes.
 - Checks: `npm run typecheck`, `npm run lint`, `npm test` (53 tests) and `npm run build` all pass as of commit `8b1f12d`.
+- `npm run db:studio` opens the local database in the browser (Drizzle Studio). `docs/HOW_TO_RUN.pdf` is the owner's one-page guide to running everything.
+- **Story audit done (15 Nov 2026).** `tools/story/check_missions.py` checks all 120 missions (0 errors, 0 warnings; 17 tests in `tools/story/test_check_missions.py`). `docs/plan/STORY_AUDIT.md` (and `.pdf`) lists every fix, what is still open (§5), the clue ledger and 10 owner questions. `docs/plan/MISSION_SCRIPTS.pdf` is the full readable script. Rebuild PDFs with `.venv/bin/python tools/story/md2pdf.py`.
 
 ## 4. What to do next, in order
 
-1. **Story audit, before any game code.** The whole story is written, but the writers left a list of known inconsistencies:
+1. **(DONE 15 Nov 2026; see `docs/plan/STORY_AUDIT.md`. Open items are in its §5 and §7.)** **Story audit, before any game code.** The whole story is written, but the writers left a list of known inconsistencies:
    - the seal count at M60;
    - where the seals go: the garden coil (M024) or the door under the clock (M114);
    - the two Aishas: keep it as a deliberate, unexplained hint, and confirm with the owner;
@@ -66,6 +68,12 @@ The owner is new to TypeScript. Explain things simply, and give the owner PDFs r
 5. **Asset plan** for the new 3D game. Use free assets (Kenney and Quaternius are CC0; Poly Haven and ambientCG for textures; Sketchfab and Poly Pizza per-model licence; Mixamo animations), refined to look original. Keep a credits file with the source and licence of every asset. Set size budgets per model, use LODs, compressed textures and instancing, and stream by area. Aim for lots of variety: vehicles (cars, okada, keke, danfo), shops, props.
 6. **Characters (Stage 3, art direction).** The procedural characters in `docs/plan/characters/` are only a likeness sketch. The owner dislikes the noses and the glassy hair. Real game characters need proper modelled meshes, not code-built ones; see section 6.
 7. Then the master-guide stages: engine bake-off (Babylon.js vs PlayCanvas), then the vertical slice.
+
+**Owner requests added 15 Nov 2026 (after the audit), in this order:**
+- **Voice scripts:** one dedicated script per voiced character (at least 15–20 named characters), plus general public scripts. Include unscripted filler lines and multiple-choice replies, and give every NPC varied things to say for each year and stage, so the world feels alive. Generate the per-character scripts from the mission files with `tools/voice/`. Hand-write the barks and filler.
+- **Game feel:** assets, animation, motion and physics for running, driving and (cartoon, non-lethal) scuffles. It must be smooth. Repeat none of the old game's mistakes; the list is in `docs/legacy/KNOWN_ISSUES.md`, `FSLG_REVIEW.md` and `AUDIT.md`. This belongs with step 5 and step 7.
+- **Site:** a play tracker and analytics (plays, hardest and most-liked levels, trends); a full management panel (characters, sounds, settings, cheats, switches); player feedback, complaints, help and support; news and publications, update promos, deals, ads, events and payments.
+- **Community:** founders, top supporters and credits, added dynamically with photos; history. Premium design with gaming vibes. This extends steps 3 and 4.
 
 ## 5. Rules (from the owner and the master guides)
 

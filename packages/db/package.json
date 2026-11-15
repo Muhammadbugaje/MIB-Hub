@@ -13,7 +13,8 @@
   "scripts": {
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/scripts/migrate.ts",
-    "db:reset": "tsx src/scripts/reset.ts"
+    "db:reset": "tsx src/scripts/reset.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "better-sqlite3": "13.2.0",
