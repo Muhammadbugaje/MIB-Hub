@@ -37,6 +37,10 @@ export const PERMISSIONS = {
   "users.manage": "Change users' roles, ban and unban",
   "site.settings": "Change site settings and branding",
   "roles.manage": "Grant or revoke single permissions for a user",
+  "analytics.view": "See play statistics: plays, hardest levels, likes, trends",
+  "support.manage": "Answer feedback, complaints and help tickets",
+  "content.manage": "Publish news, events, deals, ads, credits, history and FAQs",
+  "store.manage": "Edit store products and see orders",
 } as const;
 
 export type Permission = keyof typeof PERMISSIONS;
@@ -63,6 +67,8 @@ const MODERATOR: Permission[] = [
   "audit.view",
   "games.preview",
   "cheats.staff",
+  "analytics.view",
+  "support.manage",
 ];
 const ADMIN: Permission[] = [
   ...MODERATOR,
@@ -72,6 +78,8 @@ const ADMIN: Permission[] = [
   "games.manage_sounds",
   "users.manage",
   "site.settings",
+  "content.manage",
+  "store.manage",
 ];
 
 /** The role -> permission map. Edit here to change what a role can do. */
