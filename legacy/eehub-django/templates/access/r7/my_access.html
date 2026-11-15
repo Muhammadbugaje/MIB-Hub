@@ -1,0 +1,66 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}My access{% endblock %}
+{% block page_title %}My access{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "shield-check" 14 %} Acting as {{ ref.label|default:"yourself" }}</span>
+    <h1 class="ee-page-header__title">My access</h1>
+    <p class="ee-page-header__description">The offices you hold, extra access you have been given for a while, and what you may appoint or grant inside your own area.</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    <a class="btn btn-ghost" href="{% url 'access:how' %}">{% icon "life-buoy" 16 %} How it works</a>
+    {% if can_grant %}<a class="btn btn-primary" href="{% url 'access:grant_create' %}">{% icon "circle-plus" 16 %} Give access</a>{% endif %}
+  </div>
+</header>
+
+<div class="ee-grid">
+  <section class="w-half ee-card">
+    <div class="ee-card__head"><h2>{% icon "badge-check" 17 %} My offices</h2></div>
+    <ul class="ee-list">{% for a in appts %}
+      <li><span class="ee-ic tone-{{ a.office.color|default:'green' }}">{% icon a.office.icon 16 %}</span>
+        <div class="ee-row__body"><div class="ee-row__title">{% if a.is_acting %}Acting {% endif %}{{ a.office.name }}</div>
+          <div class="ee-row__meta">As {{ a.get_profile_kind_display|lower }} · {{ a.scope_text }} · since {{ a.start_date|date:"j M Y" }}{% if a.end_date %} · until {{ a.end_date|date:"j M Y" }}{% endif %}</div></div></li>
+    {% empty %}<li class="ee-empty r7a-wide">You hold no office. Your access comes from your profile.</li>{% endfor %}</ul>
+  </section>
+
+  <section class="w-half ee-card">
+    <div class="ee-card__head"><h2>{% icon "timer" 17 %} Extra access I have</h2></div>
+    <ul class="ee-list">{% for g in my_grants %}
+      <li><span class="ee-ic {% if g.status == 'active' %}tone-green{% else %}tone-volt{% endif %}">{% icon "key-round" 16 %}</span>
+        <div class="ee-row__body"><div class="ee-row__title">{{ g.what|truncatechars:90 }}</div>
+          <div class="ee-row__meta">“{{ g.reason|truncatechars:70 }}” · until {{ g.ends_at|date:"j M Y" }} ({{ g.ends_at|timeuntil }}) · from {{ g.granted_by.get_full_name|default:"system" }}</div></div>
+        <span class="badge {% if g.status == 'active' %}badge-success{% else %}badge-info{% endif %}">{% if g.status == 'active' %}Running{% else %}Starts {{ g.starts_at|date:"j M" }}{% endif %}</span></li>
+    {% empty %}<li class="ee-empty r7a-wide">No time-boxed access. When someone gives you some, it shows here with its end date.</li>{% endfor %}</ul>
+  </section>
+
+  {% if is_super %}
+  <section class="w-full ee-card"><div class="ee-card__head"><h2>{% icon "crown" 17 %} Super admin</h2></div>
+    <p class="ee-card__sub">You may appoint to every office and grant any permission. Use <a href="{% url 'access:offices' %}">Offices</a> and <a href="{% url 'access:grants' %}">Grants</a>.</p></section>
+  {% elif appointable or rules %}
+  <section class="w-full ee-card">
+    <div class="ee-card__head"><h2>{% icon "git-fork" 17 %} I can appoint to</h2></div>
+    {% if appointable %}<div class="r7a-ogrid">{% for o, levels in appointable %}
+      <a class="r7a-otile" href="{% url 'access:office_appoint' o.code %}"><span class="ee-ic tone-{{ o.color|default:'green' }}">{% icon o.icon 16 %}</span>
+        <span><b>{{ o.name }}</b><small>{% if levels is None %}Anywhere in the department{% else %}Your own level only{% endif %}</small></span>{% icon "chevron-right" 15 %}</a>
+    {% endfor %}</div>{% else %}<p class="ee-card__sub">Your delegation rules cover no active office right now.</p>{% endif %}
+    <ul class="r7a-rules">{% for rule, appt in rules %}<li>{% icon "info" 14 %} As {{ rule.grantor_office.name }}{% if appt.scope_level %} ({{ appt.scope_level }}){% endif %}: {{ rule.note|default:"see the delegation rules" }}</li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+
+  {% if given %}
+  <section class="w-full ee-card">
+    <div class="ee-card__head"><h2>{% icon "send" 17 %} Access I gave</h2><a class="ee-card__link" href="{% url 'access:grants' %}">All grants →</a></div>
+    <ul class="ee-list">{% for r in given %}{% with g=r.g %}
+      <li><span class="ee-ic tone-slate">{% icon "user" 16 %}</span>
+        <div class="ee-row__body"><div class="ee-row__title">{{ g.user.get_full_name }} · {{ g.what|truncatechars:80 }}</div>
+          <div class="ee-row__meta">until {{ g.ends_at|date:"j M Y" }} · “{{ g.reason|truncatechars:60 }}”</div></div>
+        {% if r.can_revoke %}<form method="post" action="{% url 'access:grant_revoke' g.pk %}" class="inline" data-confirm="{{ g.user.get_full_name }} loses this access straight away." data-confirm-title="Revoke this grant?" data-confirm-label="Revoke">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="btn btn-ghost btn-sm" type="submit">{% icon "undo-2" 14 %} Revoke</button></form>{% endif %}</li>
+    {% endwith %}{% endfor %}</ul>
+  </section>
+  {% endif %}
+</div>
+</div>
+{% endblock %}

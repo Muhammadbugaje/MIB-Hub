@@ -1,0 +1,14 @@
+{# gd: one game's secret-character guide #}
+{% if not gd.on %}<p>{{ gd.name }} is <b>switched off</b> for this game. Turn him on in the game's General tab.</p>{% else %}
+<dl class="gs-dl">
+  <dt>1. Reveal him (keyboard or controller)</dt><dd>{% if gd.combo %}<span class="gs-code" style="white-space:normal">{{ gd.combo }}</span>{% else %}Not defined yet for this game.{% endif %}</dd>
+  <dt>1. Reveal him (phone)</dt><dd>{{ gd.swipe|default:"Not defined yet for this game." }}</dd>
+  <dt>2. Enter the code</dt><dd>{{ gd.where }}</dd>
+  <dt>Which code</dt><dd>{% if gd.starter %}Development stand-in code: <span class="gs-code">{{ gd.starter }}</span> (accepted only on this local test copy, because DEBUG is on and no real code is set; never on the live site). {% endif %}{% if gd.own_code %}This game's own code.{% else %}The site-wide secret code.{% endif %} Codes are stored scrambled: they cannot be shown, only replaced.</dd>
+  <dt>Who may use him</dt><dd>{{ gd.who }}{% if gd.people %}: {{ gd.people|join:", " }}{% endif %}</dd>
+  <dt>Powers</dt><dd>{{ gd.powers }}</dd>
+  {% if gd.shortcuts %}<dt>Test-run shortcuts</dt><dd>{{ gd.shortcuts }}</dd>{% endif %}
+  <dt>Leaderboards</dt><dd>Results played as him {% if gd.boards %}count, with a “cheat” tag{% else %}are saved but kept off the boards and earn nothing{% endif %}.</dd>
+  <dt>Changing the code</dt><dd>Arcade Management → Games page → “Secret character code”: type a new one or press “Generate a random code”. For this game only: its Secret character tab.</dd>
+  <dt>If the code is refused</dt><dd>Capitals and spaces don't matter; symbols and dashes do. After 8 wrong tries the code box locks for 10 minutes; wait, or set a new code.</dd>
+</dl>{% endif %}

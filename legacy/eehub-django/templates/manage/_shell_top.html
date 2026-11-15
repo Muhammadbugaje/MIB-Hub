@@ -1,0 +1,5 @@
+{% load ee_tags %}<nav class="mg-tabs" aria-label="Website management">
+  {% for label, url, icon, name in manage_nav %}<a href="{{ url }}" class="mg-tab{% if name == manage_current %} is-active{% endif %}"{% if name == manage_current %} aria-current="page"{% endif %}>{% icon icon 16 %}<span>{{ label }}</span></a>{% endfor %}
+  <a class="mg-tab mg-tab--site" href="{% url 'content:home' %}" target="_blank" rel="noopener">{% icon "external-link" 15 %}<span>View website</span></a>
+</nav>
+{% if sub_nav %}<nav class="mg-subtabs" aria-label="Section">{% for label, url, name in sub_nav %}<a href="{{ url }}" class="{% if name == sub_current %}is-active{% endif %}">{{ label }}</a>{% endfor %}</nav>{% endif %}

@@ -1,0 +1,7 @@
+{% load ee_tags %}<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    {% if eyebrow %}<span class="ee-page-header__eyebrow">{% if icon_name %}{% icon icon_name 14 %} {% endif %}{{ eyebrow }}</span>{% endif %}
+    <h1 class="ee-page-header__title">{{ title }}</h1>
+    {% if description %}<p class="ee-page-header__description">{{ description }}</p>{% endif %}
+  </div>
+</header>

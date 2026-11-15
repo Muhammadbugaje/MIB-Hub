@@ -1,0 +1,21 @@
+{% load ee_tags %}{% comment %}
+  Profile switch: EE's version of NBTE Phase 8's Main/QA segmented control.
+  One segment per profile (icon + short label). Every segment is a submit
+  button, so it works without JavaScript; shell.js slides the thumb first so
+  the change feels instant. The view returns to this page when the new
+  profile may see it, otherwise to the dashboard. Four or more profiles:
+  the track scrolls sideways.
+{% endcomment %}<form class="ee-pswitch" method="post" action="{% url 'accounts:switch_profile' %}" data-profile-switch aria-label="Profile">
+  {% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+  <div class="ee-pswitch__track is-n{{ profile_segments|length }}{% if profile_segments|length > 3 %} is-scroll{% endif %}" role="group" aria-label="Switch profile"
+       style="--n: {{ profile_segments|length }}; --i: {% for s in profile_segments %}{% if s.active %}{{ forloop.counter0 }}{% endif %}{% endfor %}">
+    {% for s in profile_segments %}
+    <button type="submit" name="key" value="{{ s.key }}" data-tone="{{ s.tone }}" data-index="{{ forloop.counter0 }}"
+            class="ee-pswitch__seg{% if s.active %} is-active{% endif %}" aria-pressed="{% if s.active %}true{% else %}false{% endif %}"
+            title="{% if s.active %}Acting as {{ s.label }}{% else %}Switch to {{ s.label }}{% endif %}">
+      <span class="ee-pswitch__ic" aria-hidden="true">{% icon s.icon 14 %}</span><span class="ee-pswitch__lbl">{{ s.short }}</span><span class="sr-only">{% if s.short != s.label %}: {{ s.label }}{% endif %} profile</span>
+    </button>
+    {% endfor %}
+    <span class="ee-pswitch__thumb" aria-hidden="true"></span>
+  </div>
+</form>

@@ -1,0 +1,16 @@
+---
+import PublicLayout from "../layouts/PublicLayout.astro";
+
+Astro.response.status = 404;
+---
+
+<PublicLayout title="Not found">
+  <section class="container error-page">
+    <div>
+      <div class="error-page__code">404</div>
+      <h1>We could not find that page</h1>
+      <p class="muted">It may have moved while we rebuild the site.</p>
+      <a class="btn btn--primary" href="/">Back home</a>
+    </div>
+  </section>
+</PublicLayout>

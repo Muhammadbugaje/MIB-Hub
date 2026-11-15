@@ -1,0 +1,1 @@
+{% load forms_tags %}{% for h in hidden %}{{ h }}{% endfor %}<div class="ee-form-grid{% if cls %} {{ cls }}{% endif %}">{% for r in rows %}{% include "partials/field.html" with f=r.f kind=r.kind wide=r.wide label=r.label help=r.help prefix=r.prefix suffix=r.suffix cls=r.cls required=r.required errors=r.errors auto_id=r.auto_id %}{% endfor %}</div>

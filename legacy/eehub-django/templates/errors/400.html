@@ -1,0 +1,19 @@
+{% extends "errors/_base.html" %}
+{% block title %}Bad request{% endblock %}
+{% block code %}Error 400{% endblock %}
+{% block heading %}That request didn't make sense to us{% endblock %}
+{% block lead %}Something in the address or the form was not what EE Hub expected. Go back and try again; if you followed a link, it may be broken.{% endblock %}
+{% block art %}
+<svg viewBox="0 0 240 160" width="240" height="160" role="presentation" focusable="false">
+  <circle class="ea-orbit" cx="120" cy="80" r="62" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 8"/>
+  <g class="ea-float">
+    <rect x="76" y="46" width="88" height="68" rx="10" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/>
+    <path d="M92 80h14l6-14 10 28 8-20 6 6h12" fill="none" stroke="var(--warning, #b7791f)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <circle cx="58" cy="40" r="5" fill="var(--primary)"/>
+</svg>
+{% endblock %}
+{% block actions %}
+  <a class="btn btn-primary" href="javascript:history.back()">Go back</a>
+  <a class="btn btn-ghost" href="/">Go to the home page</a>
+{% endblock %}

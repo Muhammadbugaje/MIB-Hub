@@ -1,0 +1,90 @@
+---
+/**
+ * /admin: the admin shell's overview. Needs "admin.access" (moderator and up).
+ * TODO(admin-panel): build each section listed in src/lib/admin-sections.ts.
+ */
+import Icon from "../../components/Icon.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { ADMIN_SECTIONS } from "../../lib/admin-sections.ts";
+
+const denied = guard(Astro, { permission: "admin.access" });
+if (denied) return denied;
+
+const { viewer } = Astro.locals;
+const [games, userCount, audit] = await Promise.all([
+  repos.games.listAll(),
+  repos.users.count(),
+  viewer.permissions.has("audit.view") ? repos.audit.list({ limit: 6 }) : Promise.resolve([]),
+]);
+const live = games.filter((g) => g.status === "live" && g.enabled).length;
+const off = games.filter((g) => !g.enabled).length;
+const sections = ADMIN_SECTIONS.filter((s) => viewer.permissions.has(s.permission));
+const fmt = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short" });
+---
+
+<AppLayout title="Admin">
+  <div class="page-head">
+    <span class="eyebrow">Admin</span>
+    <h1>Overview</h1>
+    <p>Everything that runs the hub. Sections marked “soon” are being built.</p>
+  </div>
+
+  <div class="stat-grid stagger">
+    <div class="card stat"><div class="stat__value">{games.length}</div><div class="stat__label">Games in the catalogue</div></div>
+    <div class="card stat"><div class="stat__value">{live}</div><div class="stat__label">Live and switched on</div></div>
+    <div class="card stat"><div class="stat__value">{off}</div><div class="stat__label">Switched off</div></div>
+    <div class="card stat"><div class="stat__value">{userCount}</div><div class="stat__label">Accounts</div></div>
+  </div>
+
+  <h2 style="font-size: var(--fs-xl);">Sections</h2>
+  <div class="todo-grid" style="margin-bottom: var(--space-7);">
+    {
+      sections.map((s) => (
+        <a class="card todo-card lift" href={`/admin/${s.key}`}>
+          <h3>
+            {s.title} <span class="badge badge--muted">soon</span>
+          </h3>
+          <p>{s.summary}</p>
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    viewer.permissions.has("audit.view") && (
+      <section class="card">
+        <h2 class="card__title" style="display:flex; align-items:center; gap: var(--space-2);">
+          <Icon name="list" size={18} /> Recent activity
+        </h2>
+        {audit.length === 0 ? (
+          <p class="card__meta">Nothing yet. Admin changes will be listed here.</p>
+        ) : (
+          <table class="table">
+            <thead>
+              <tr>
+                <th>When</th>
+                <th>Action</th>
+                <th>Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              {audit.map((a) => (
+                <tr>
+                  <td>{fmt.format(a.createdAt)}</td>
+                  <td>
+                    <code>{a.action}</code>
+                  </td>
+                  <td>
+                    {a.targetType} {a.targetId}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </section>
+    )
+  }
+</AppLayout>

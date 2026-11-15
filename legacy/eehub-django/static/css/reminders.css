@@ -1,0 +1,49 @@
+/* Reminders (Phase 5) and the shared "Remind me" menu. */
+.rm-page { display: flex; flex-direction: column; gap: 14px; }
+.rm-cols { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 16px; align-items: start; }
+@media (max-width: 960px) { .rm-cols { grid-template-columns: minmax(0, 1fr); } .rm-new { order: -1; } }
+.rm-main { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.rm-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); overflow-x: auto; }
+.rm-tab { padding: 10px 14px; font-size: 13.5px; font-weight: 600; color: var(--text-muted); text-decoration: none; border-bottom: 2px solid transparent; white-space: nowrap; }
+.rm-tab span { font-size: 11px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 0 7px; margin-left: 4px; }
+.rm-tab.is-on { color: var(--text); border-bottom-color: var(--primary); }
+.rm-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.rm-row { display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; }
+.rm-row .bulk-check { align-self: center; }
+.rm-row.is-due { border-color: color-mix(in srgb, var(--warning) 45%, transparent); background: var(--warning-subtle); }
+.rm-row.is-done .rm-row__title { text-decoration: line-through; color: var(--text-muted); }
+.rm-ic { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--orange-500, #ff7a45) 15%, transparent);
+  color: var(--orange-600, #d9481c); flex: none; }
+.rm-row__body { flex: 1; min-width: 0; }
+.rm-row__title { font-weight: 700; font-size: 14px; overflow-wrap: anywhere; }
+.rm-row__title a { color: inherit; }
+.rm-row__meta { font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+.rm-due { color: var(--warning); }
+.rm-row__note { margin: 6px 0 0; font-size: 13px; color: var(--text); overflow-wrap: anywhere; }
+.rm-row__act { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+.rm-row__act form { margin: 0; }
+@media (max-width: 560px) { .rm-row { flex-wrap: wrap; } .rm-row__act { width: 100%; justify-content: flex-start; padding-left: 48px; } }
+.rm-form { display: flex; flex-direction: column; gap: 10px; }
+.rm-form .ee-field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; font-weight: 700; color: var(--text-muted); }
+.rm-form input, .rm-form select, .rm-form textarea { width: 100%; font-weight: 400; }
+.rm-check { display: flex; align-items: center; gap: 8px; font-size: 13.5px; }
+.rm-tick { font-size: 12px; margin: 12px 0 6px; }
+
+/* the "Remind me" menu (memos, requests, complaints) */
+.rm-menu { position: relative; display: inline-block; }
+.rm-menu > summary { list-style: none; cursor: pointer; }
+.rm-menu > summary::-webkit-details-marker { display: none; }
+.rm-menu__panel { position: absolute; right: 0; top: calc(100% + 6px); z-index: 40; width: 260px; max-width: calc(100vw - 32px);
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px; box-shadow: var(--shadow-lg); padding: 8px; }
+.rm-menu__panel form { display: flex; flex-direction: column; gap: 2px; margin: 0; }
+.rm-menu__h { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); padding: 6px 8px; }
+.rm-menu__opt { display: flex; align-items: center; gap: 8px; text-align: left; background: none; border: 0; padding: 8px; border-radius: 9px;
+  font: inherit; font-size: 13.5px; color: var(--text); cursor: pointer; }
+.rm-menu__opt:hover, .rm-menu__opt:focus-visible { background: var(--surface-2); }
+.rm-menu__custom { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--text-muted); padding: 8px 8px 4px; border-top: 1px solid var(--border); margin-top: 4px; }
+.rm-menu__custom input, .rm-menu__note { width: 100%; font-size: 13px; }
+.rm-menu__note { margin: 4px 8px; width: calc(100% - 16px); }
+.rm-menu__go { margin: 4px 8px 4px; }
+@media (max-width: 560px) { .rm-menu__panel { right: auto; left: 0; } }
+.rm-form input[type=checkbox] { width: auto; flex: none; }
+.rm-check { font-weight: 400; color: var(--text); }

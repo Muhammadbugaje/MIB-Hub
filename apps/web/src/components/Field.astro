@@ -1,0 +1,45 @@
+---
+/**
+ * A labelled form input with an optional hint and error.
+ * <Field name="email" label="Email" type="email" autocomplete="email" required />
+ */
+import type { HTMLAttributes } from "astro/types";
+
+interface Props {
+  name: string;
+  label: string;
+  type?: HTMLAttributes<"input">["type"];
+  value?: string;
+  hint?: string;
+  error?: string | undefined;
+  autocomplete?: string;
+  required?: boolean;
+  minlength?: number;
+  placeholder?: string;
+  autofocus?: boolean;
+}
+const { name, label, type = "text", value, hint, error, autocomplete, required, minlength, placeholder, autofocus } =
+  Astro.props;
+const id = `f-${name}`;
+const describedBy = [hint && `${id}-hint`, error && `${id}-error`].filter(Boolean).join(" ") || undefined;
+---
+
+<div class="field">
+  <label class="field__label" for={id}>{label}</label>
+  <input
+    class="input"
+    id={id}
+    name={name}
+    type={type}
+    value={value}
+    autocomplete={autocomplete}
+    required={required}
+    minlength={minlength}
+    placeholder={placeholder}
+    autofocus={autofocus}
+    aria-invalid={error ? "true" : undefined}
+    aria-describedby={describedBy}
+  />
+  {hint && <p class="field__hint" id={`${id}-hint`}>{hint}</p>}
+  {error && <p class="field__error" id={`${id}-error`}>{error}</p>}
+</div>

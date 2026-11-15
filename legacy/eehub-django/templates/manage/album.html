@@ -1,0 +1,61 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}{{ obj.title }} · Gallery{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/manage.css' %}">{% endblock %}
+{% block content %}
+<div class="mg-page">
+  {% include "manage/_shell_top.html" %}
+  <a class="mg-back" href="{% url 'manage:gallery' %}">{% icon "arrow-left" 15 %} All albums</a>
+  <header class="mg-head">
+    <span class="mg-head__ic">{% icon "images" 22 %}</span>
+    <div class="mg-head__text"><p class="ee-page-header__eyebrow">Gallery</p><h1>{{ obj.title }}</h1><p>{{ images|length }} photo{{ images|length|pluralize }} · last changed {{ obj.updated_at|date:"j M Y, H:i" }}</p></div>
+    {% if public %}<a class="btn btn-ghost" href="{{ public }}" target="_blank" rel="noopener">{% icon "external-link" 15 %} View on the website</a>{% endif %}
+  </header>
+
+  <section class="ee-card mg-upload">
+    <h2 class="mg-card-h">{% icon "upload" 16 %} Add photos</h2>
+    <form method="post" enctype="multipart/form-data" data-multi-upload>
+      {% csrf_token %}<input type="hidden" name="action" value="upload">
+      <label class="mg-drop mg-drop--big" data-drop data-multi>
+        <span class="mg-drop__ic">{% icon "image-plus" 26 %}</span>
+        <span class="mg-drop__t">Drop photos here, or <b>browse</b></span>
+        <span class="mg-drop__h">Choose many at once. JPG, PNG or WebP; each is resized and compressed.</span>
+        <input type="file" name="images" accept="image/jpeg,image/png,image/webp" multiple>
+      </label>
+      <div class="mg-previews" data-previews hidden></div>
+      {% if upload.errors %}<ul class="errorlist">{% for e in upload.images.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      <div class="mg-upload__foot" data-upload-foot hidden><span data-upload-count></span><button class="btn btn-primary" type="submit">{% icon "upload" 16 %} Upload photos</button></div>
+    </form>
+  </section>
+
+  {% if images %}
+  <form method="post" class="ee-card mg-photos-card">
+    {% csrf_token %}<input type="hidden" name="action" value="photos">
+    <div class="mg-card-row"><h2 class="mg-card-h">{% icon "images" 16 %} Photos in this album</h2><button class="btn btn-primary btn-sm" type="submit">{% icon "save" 15 %} Save photos</button></div>
+    <div class="mg-photos">
+      {% for im in images %}
+      <div class="mg-photo">
+        <img src="{{ im.image.url }}" alt="" loading="lazy">
+        <label class="mg-photo__rm" title="Remove this photo"><input type="checkbox" name="remove" value="{{ im.pk }}">{% icon "trash-2" 14 %}<span>Remove</span></label>
+        <input class="input" name="caption_{{ im.pk }}" value="{{ im.caption }}" placeholder="Caption" aria-label="Caption for photo {{ forloop.counter }}">
+        <input class="input mg-photo__order" name="order_{{ im.pk }}" value="{{ im.order }}" inputmode="numeric" aria-label="Order of photo {{ forloop.counter }}" title="Order">
+      </div>
+      {% endfor %}
+    </div>
+  </form>
+  {% endif %}
+
+  <form method="post" enctype="multipart/form-data" class="mg-form" novalidate>
+    {% csrf_token %}<input type="hidden" name="action" value="details">
+    <div class="mg-form__grid">
+      <section class="ee-card mg-form__main"><h2 class="mg-card-h">{% icon "file-text" 16 %} Album details</h2>{% for f in main_fields %}{% include "manage/_field.html" %}{% endfor %}</section>
+      <aside class="mg-form__side">
+        <section class="ee-card"><h2 class="mg-card-h">{% icon "settings-2" 16 %} Publishing</h2>{% for f in side_fields %}{% include "manage/_field.html" %}{% endfor %}</section>
+        <div class="mg-savebar"><button class="btn btn-primary" type="submit">{% icon "save" 16 %} Save album</button></div>
+        <p class="mg-delete-note">{% icon "trash-2" 14 %} <button type="submit" form="mg-delete" class="link-btn mg-danger">Delete this album</button></p>
+      </aside>
+    </div>
+  </form>
+  <form id="mg-delete" method="post" action="{% url 'manage:delete' 'album' obj.pk %}" data-confirm="Delete the album “{{ obj }}”? It disappears from the website; an administrator can restore it." data-confirm-title="Delete album" data-confirm-label="Delete" hidden>{% csrf_token %}</form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/manage.js' %}" defer></script>{% endblock %}

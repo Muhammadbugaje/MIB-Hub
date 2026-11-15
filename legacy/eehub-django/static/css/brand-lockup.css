@@ -1,0 +1,10 @@
+/* Round 6 (R6A): portal sidebar brand lockup: a big EE mark with
+   "Electrical Engineering" over "Ahmadu Bello University". */
+.ee-lockup { gap: 9px; align-items: center; min-width: 0; }
+.ee-lockup .ee-lockup__mark { width: 48px; height: 48px; }
+.ee-lockup .ee-lockup__mark .ee-logo { width: 46px; height: 46px; filter: drop-shadow(0 4px 10px rgba(200, 169, 81, .3)); transition: transform .5s cubic-bezier(.19, 1, .22, 1); }
+.ee-lockup:hover .ee-lockup__mark .ee-logo { transform: rotate(-10deg) scale(1.05); }
+.ee-lockup .ee-lockup__text { line-height: 1.08; min-width: 0; }
+.ee-lockup .ee-lockup__title { font-family: var(--font-display, inherit); font-size: 14.5px; font-weight: 750; letter-spacing: -.025em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ee-lockup .ee-lockup__sub { margin-top: 3px; font-size: 11.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-shell.sidebar-collapsed .ee-lockup .ee-lockup__mark .ee-logo { width: 36px; height: 36px; }

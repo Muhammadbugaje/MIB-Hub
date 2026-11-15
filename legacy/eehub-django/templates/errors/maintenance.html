@@ -1,0 +1,9 @@
+{% extends "errors/_base.html" %}
+{% block title %}Back soon{% endblock %}
+{% block code %}Maintenance{% endblock %}
+{% block heading %}EE Hub is being upgraded{% endblock %}
+{% block lead %}{{ message|default:"Please check back shortly." }}{% endblock %}
+{% block actions %}
+  <a class="btn btn-primary" href="/">Visit the public website</a>
+  <a class="btn btn-ghost" href="/accounts/login/?next=/dashboard/">Administrator sign-in</a>
+{% endblock %}

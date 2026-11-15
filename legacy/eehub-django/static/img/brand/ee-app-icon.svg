@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0DC9C"/><stop offset=".45" stop-color="#C8A951"/><stop offset="1" stop-color="#13C4DC"/></linearGradient>
+<linearGradient id="seh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<clipPath id="sek"><rect width="240" height="240" rx="56"/></clipPath></defs>
+<g clip-path="url(#sek)"><rect width="240" height="240" fill="url(#sea)"/>
+<path d="M0 60 H40 L60 40 H110" fill="none" stroke="#0F3D2E" stroke-opacity=".18" stroke-width="5"/>
+<circle cx="110" cy="40" r="7" fill="none" stroke="#0F3D2E" stroke-opacity=".22" stroke-width="4"/>
+<path d="M240 190 H200 L184 206 H150" fill="none" stroke="#0F3D2E" stroke-opacity=".18" stroke-width="5"/>
+<circle cx="150" cy="206" r="7" fill="none" stroke="#0F3D2E" stroke-opacity=".22" stroke-width="4"/>
+<path d="M0 150 L4 146.26 L8 142.68 L12 139.42 L16 136.62 L20 134.41 L24 132.88 L28 132.1 L32 132.1 L36 132.88 L40 134.41 L44 136.62 L48 139.42 L52 142.68 L56 146.26 L60 150 L64 153.74 L68 157.32 L72 160.58 L76 163.38 L80 165.59 L84 167.12 L88 167.9 L92 167.9 L96 167.12 L100 165.59 L104 163.38 L108 160.58 L112 157.32 L116 153.74 L120 150 L124 146.26 L128 142.68 L132 139.42 L136 136.62 L140 134.41 L144 132.88 L148 132.1 L152 132.1 L156 132.88 L160 134.41 L164 136.62 L168 139.42 L172 142.68 L176 146.26 L180 150 L184 153.74 L188 157.32 L192 160.58 L196 163.38 L200 165.59 L204 167.12 L208 167.9 L212 167.9 L216 167.12 L220 165.59 L224 163.38 L228 160.58 L232 157.32 L236 153.74 L240 150" fill="none" stroke="#fff" stroke-opacity=".38" stroke-width="5"/>
+<path d="M134 52 L82 132 H114 L100 190 L160 102 H128 L146 52 Z" fill="#0F3D2E" transform="translate(120 122) scale(.92) translate(-120 -121)"/>
+<path d="M134 52 L82 132 H114 L100 190 L160 102 H128 L146 52 Z" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-linejoin="round" transform="translate(120 122) scale(.92) translate(-120 -121)"/>
+<rect width="240" height="110" fill="url(#seh)"/>
+</g>
+<rect x="1" y="1" width="238" height="238" rx="55" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2"/>
+</svg>

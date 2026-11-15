@@ -1,0 +1,239 @@
+{
+ "name": "Taty",
+ "height": 1.64,
+ "seed": 5,
+ "body": {
+  "slim": 0.3,
+  "curvy": 0.9,
+  "fat": 0.08,
+  "muscle": 0.25
+ },
+ "skin": "#dcb090",
+ "blush": 0.3,
+ "blushCol": "#e88c86",
+ "face": {
+  "w": 0.08,
+  "top": 0.095,
+  "chin": 0.096,
+  "d": 0.085,
+  "jaw": 0.84,
+  "chinFwd": 0.9,
+  "cheek": 0.45,
+  "skull": 0.5,
+  "flat": 0.25,
+  "eyeX": 0.42,
+  "eyeY": -0.07,
+  "eyeR": 0.02,
+  "eyeH": 1.0,
+  "eyeSink": 0.62,
+  "iris": "#1e120c",
+  "irisIn": "#4a2c1a",
+  "irisA": 0.76,
+  "pupilA": 0.32,
+  "lidUp": 0.45,
+  "lidLo": 0.62,
+  "tilt": 0.1,
+  "lash": 0.0028,
+  "wing": 0.9,
+  "lowerLash": 0.0011,
+  "shadow": "#b48a80",
+  "lashCol": "#070505",
+  "brow": {
+   "col": "#0f0a09",
+   "y": 1.25,
+   "w": 0.0058,
+   "arch": 0.45,
+   "peak": 0.68,
+   "len": 1.05,
+   "tail": -0.25,
+   "tilt": -0.12
+  },
+  "nose": {
+   "y": -0.3,
+   "size": 0.95
+  },
+  "mouth": {
+   "y": -0.58,
+   "w": 0.024,
+   "smile": 0.55,
+   "open": 0.0,
+   "lip": "#9a4450",
+   "full": 1.25
+  }
+ },
+ "hair": {
+  "root": "#0b0909",
+  "tip": "#1a1414",
+  "grad": 0.6,
+  "gradAmt": 1.0,
+  "part": 22,
+  "hairline": 34,
+  "temple": 50,
+  "cap": 0.005,
+  "volume": 0.25,
+  "locks": 16,
+  "layers": [
+   {
+    "off": 0.002,
+    "w": 1.1
+   },
+   {
+    "off": 0.007,
+    "w": 1.15
+   }
+  ],
+  "endY": 0.58,
+  "endJitter": 0.025,
+  "lockW": 0.03,
+  "thick": 0.0035,
+  "wave": 0.08,
+  "spread": 0.05,
+  "gravity": 0.5,
+  "taperStart": 0.82,
+  "tipPow": 0.5,
+  "rough": 0.38,
+  "gloss": 0.2,
+  "sheen": "#4a4a55"
+ },
+ "outfits": [
+  {
+   "id": "romantic",
+   "label": "Black romantic dress + choker",
+   "items": [
+    {
+     "type": "dress",
+     "col": "#141015",
+     "neck": "square",
+     "neckDepth": 0.018,
+     "off": 0.004,
+     "bottom": 0.2,
+     "flare": 0.08,
+     "flareTop": 0.585,
+     "tiers": [
+      0.4,
+      0.3
+     ],
+     "ruffle": 0.03,
+     "sleeve": {
+      "len": 0.9,
+      "puff": 0.012,
+      "flare": 0.008
+     },
+     "buttons": {
+      "col": "#2a2228",
+      "n": 4,
+      "top": 0.69,
+      "gap": 0.025
+     },
+     "sheen": 0.6,
+     "sheenCol": "#3a3238",
+     "rough": 0.6
+    },
+    {
+     "type": "choker",
+     "charm": false
+    },
+    {
+     "type": "bag",
+     "col": "#141214",
+     "side": 1,
+     "charm": {
+      "fur": "#1a1718",
+      "white": "#f4f1ec"
+     }
+    },
+    {
+     "type": "shoes",
+     "style": "boots",
+     "col": "#121012",
+     "sole": "#0a0a0a"
+    }
+   ]
+  },
+  {
+   "id": "floral",
+   "label": "Floral midi + white sneakers",
+   "items": [
+    {
+     "type": "dress",
+     "pattern": {
+      "type": "floral",
+      "bg": "#f6f6f8",
+      "cols": [
+       "#4a6fb5",
+       "#7d98d0",
+       "#3b5694"
+      ],
+      "leaf": "#9fb69a",
+      "centre": "#f2d27a"
+     },
+     "neck": "square",
+     "neckDepth": 0.016,
+     "off": 0.004,
+     "bottom": 0.24,
+     "flare": 0.05,
+     "flareTop": 0.585,
+     "sleeve": {
+      "len": 0.2,
+      "puff": 0.013
+     },
+     "us": 4,
+     "vs": 4
+    },
+    {
+     "type": "choker"
+    },
+    {
+     "type": "shoes",
+     "style": "sneakers",
+     "col": "#f7f6f2",
+     "sole": "#ffffff",
+     "laces": "#ffffff"
+    }
+   ]
+  },
+  {
+   "id": "gym",
+   "label": "Gym: oversized tee + teal leggings",
+   "cat": {
+    "fur": "#1d1a1b",
+    "white": "#f4f1ec",
+    "x": 0.2,
+    "z": -0.06
+   },
+   "items": [
+    {
+     "type": "top",
+     "col": "#2b2b31",
+     "neck": "crew",
+     "neckDepth": 0.01,
+     "off": 0.016,
+     "loose": 0.006,
+     "bottom": 0.47,
+     "sleeve": {
+      "len": 0.36,
+      "flare": 0.012
+     },
+     "rough": 0.9
+    },
+    {
+     "type": "pants",
+     "col": "#4f8f92",
+     "off": 0.0015,
+     "hem": 0.06,
+     "top": 0.49,
+     "sheen": 0.6,
+     "sheenCol": "#bfe8e6",
+     "rough": 0.55
+    },
+    {
+     "type": "shoes",
+     "style": "sneakers",
+     "col": "#f7f6f2",
+     "sole": "#ffffff",
+     "laces": "#ffffff"
+    }
+   ]
+  }
+ ]
+}

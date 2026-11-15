@@ -1,0 +1,60 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Solve and finish this circuit",
+      "typed": "cfwin9",
+      "dial": "*629#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "solve",
+      "label": "Fit the right parts",
+      "typed": "cfsol1",
+      "dial": "*621#",
+      "note": "Fills every slot with a working answer."
+    },
+    {
+      "id": "tries",
+      "label": "Reset the switch-on counter",
+      "typed": "cftry7",
+      "dial": "*627#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this circuit",
+      "typed": "cfstr4",
+      "dial": "*624#",
+      "note": ""
+    },
+    {
+      "id": "last",
+      "label": "Jump to the last circuit",
+      "typed": "cfend8",
+      "dial": "*628#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "cfslow3",
+      "dial": "*623#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "cfyay5",
+      "dial": "*625#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "No characters here: maker mode fits the right parts, skips any circuit and jumps anywhere."
+  }
+}

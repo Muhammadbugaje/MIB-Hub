@@ -1,0 +1,120 @@
+{% load ee_tags %}
+<section class="ee-card sig-card" id="signature" data-sig-root aria-labelledby="sig-title">
+  <div class="ee-card__head">
+    <h2 id="sig-title">{% icon "signature" 17 %}My signature</h2>
+    <span class="ee-card__sub">Printed on course forms, exam cards, result sheets and letters you sign or approve</span>
+  </div>
+
+  {% if sig.pending %}
+    {# ---- a photo was uploaded: check, adjust, accept ---- #}
+    <div class="sig-check">
+      <p class="sig-check__lead">{% icon "scan-line" 16 %}<span><b>Check your signature.</b> This is what EE Hub lifted from your photo. Adjust it until the strokes are clean and complete, then use it.</span></p>
+      <div class="sig-compare">
+        <figure class="sig-paper">
+          <img src="{% url 'results:signature_image' sig.pending.pk %}?v={{ sig.pending.updated_at|date:'U' }}" alt="Your signature, cleaned up">
+          <figcaption>On paper, as it will print</figcaption>
+        </figure>
+        <figure class="sig-paper sig-paper--dark" aria-hidden="true">
+          <img src="{% url 'results:signature_image' sig.pending.pk %}?v={{ sig.pending.updated_at|date:'U' }}" alt="">
+          <figcaption>Transparent background check</figcaption>
+        </figure>
+      </div>
+      <form method="post" class="sig-adjust">
+        {% csrf_token %}<input type="hidden" name="section" value="sig_adjust">
+        <label class="sig-field">
+          <span>Sensitivity <output data-sig-range-value="sensitivity">{{ sig.pending.sensitivity }}</output></span>
+          <input type="range" name="sensitivity" min="0" max="100" step="5" value="{{ sig.pending.sensitivity }}" data-sig-range aria-describedby="sig-sens-help">
+          <small id="sig-sens-help" class="ee-muted">Lower for a heavy marker; higher for a faint ballpoint.</small>
+        </label>
+        <fieldset class="sig-inks">
+          <legend>Ink</legend>
+          {% for k in sig.inks %}<label class="sig-ink sig-ink--{{ k }}"><input type="radio" name="ink" value="{{ k }}" {% if sig.pending.ink == k %}checked{% endif %}><span>{{ k|capfirst }}</span></label>{% endfor %}
+        </fieldset>
+        <button class="btn btn-ghost btn-sm" type="submit">{% icon "refresh-cw" 14 %}Apply</button>
+      </form>
+      <div class="sig-actions">
+        <form method="post">{% csrf_token %}<input type="hidden" name="section" value="sig_accept">
+          <button class="btn btn-primary btn-sm" type="submit">{% icon "check" 14 %}Use this signature</button></form>
+        <form method="post">{% csrf_token %}<input type="hidden" name="section" value="sig_discard">
+          <button class="btn btn-subtle btn-sm" type="submit">{% icon "x" 14 %}Discard and start again</button></form>
+      </div>
+    </div>
+  {% else %}
+    {% if sig.active %}
+      <div class="sig-current">
+        <figure class="sig-paper sig-paper--line">
+          <img src="{% url 'results:signature_image' sig.active.pk %}?v={{ sig.active.updated_at|date:'U' }}" alt="Your current signature">
+        </figure>
+        <div class="sig-current__meta">
+          <span class="sys-tag sys-tag--ok">{% icon "badge-check" 12 %}In use</span>
+          <p class="ee-muted">{% if sig.demo %}Demo signature (generated){% elif sig.drawn %}Drawn on screen{% else %}From a photo{% endif %} · added {{ sig.active.accepted_at|date:"j M Y" }}. Documents you already signed keep the signature they were signed with.</p>
+          <div class="sig-actions">
+            <a class="btn btn-ghost btn-sm" href="#sig-capture" data-sig-replace>{% icon "replace" 14 %}Replace</a>
+            <form method="post" data-confirm="Your signature will no longer be added to documents you approve. Documents you already signed keep it." data-confirm-title="Remove signature" data-confirm-label="Remove">
+              {% csrf_token %}<input type="hidden" name="section" value="sig_remove">
+              <button class="btn btn-subtle btn-sm" type="submit">{% icon "trash-2" 14 %}Remove</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="sig-empty">{% icon "pen-line" 18 %}<span>You have not added a signature yet. Upload a photo of it or draw it below. Until you do, documents you approve show your name with an empty signature line.</span></div>
+    {% endif %}
+
+    {# ---- capture: upload a photo or draw ---- #}
+    <details class="sig-capture" id="sig-capture" {% if not sig.active %}open{% endif %}>
+      <summary>{% icon "plus" 14 %}{% if sig.active %}Add a new signature{% else %}Add my signature{% endif %}</summary>
+      <div class="sig-tabs" role="tablist" aria-label="How to add your signature">
+        <button type="button" role="tab" id="sig-tab-upload" aria-controls="sig-panel-upload" aria-selected="true" data-sig-tab="upload">{% icon "camera" 15 %}Upload a photo</button>
+        <button type="button" role="tab" id="sig-tab-draw" aria-controls="sig-panel-draw" aria-selected="false" data-sig-tab="draw">{% icon "pen-tool" 15 %}Draw it</button>
+      </div>
+
+      <form method="post" enctype="multipart/form-data" class="sig-panel" id="sig-panel-upload" role="tabpanel" aria-labelledby="sig-tab-upload">
+        {% csrf_token %}<input type="hidden" name="section" value="sig_upload">
+        <ol class="sig-tips">
+          <li>Sign with a dark pen on plain white paper.</li>
+          <li>Take the photo in good light, straight on, signature filling most of the frame.</li>
+          <li>EE Hub removes the paper, shadows and ruled lines and keeps only the ink.</li>
+        </ol>
+        <div class="sig-file">
+          <label class="btn btn-ghost btn-sm" for="sig-photo">{% icon "upload" 14 %}Choose photo or scan</label>
+          <input class="sr-only" type="file" id="sig-photo" name="sig_photo" accept="image/png,image/jpeg,image/webp,image/heic" capture="environment" data-sig-file>
+          <span class="ee-muted" data-sig-file-name>No file chosen</span>
+        </div>
+        <div class="sig-row">
+          <label class="sig-field">
+            <span>Sensitivity <output data-sig-range-value="sensitivity">50</output></span>
+            <input type="range" name="sensitivity" min="0" max="100" step="5" value="50" data-sig-range>
+          </label>
+          <fieldset class="sig-inks">
+            <legend>Ink</legend>
+            {% for k in sig.inks %}<label class="sig-ink sig-ink--{{ k }}"><input type="radio" name="ink" value="{{ k }}" {% if forloop.first %}checked{% endif %}><span>{{ k|capfirst }}</span></label>{% endfor %}
+          </fieldset>
+        </div>
+        <button class="btn btn-primary btn-sm" type="submit" data-sig-upload-go disabled>{% icon "wand-sparkles" 14 %}Clean up my signature</button>
+      </form>
+
+      <form method="post" class="sig-panel" id="sig-panel-draw" role="tabpanel" aria-labelledby="sig-tab-draw" hidden>
+        {% csrf_token %}<input type="hidden" name="section" value="sig_draw">
+        <div class="sig-pad" data-sig-pad data-ink="navy">
+          <canvas data-sig-canvas aria-label="Signature pad: sign here with a finger, pen or mouse" role="img"></canvas>
+          <span class="sig-pad__line" aria-hidden="true"></span>
+          <span class="sig-pad__x" aria-hidden="true">×</span>
+          <span class="sig-pad__hint" data-sig-hint>Sign here</span>
+          <input type="hidden" name="sig_data" data-sig-output>
+          <div class="sig-row">
+            <fieldset class="sig-inks">
+              <legend>Ink</legend>
+              {% for k in sig.inks %}<label class="sig-ink sig-ink--{{ k }}"><input type="radio" name="ink" value="{{ k }}" data-sig-ink {% if forloop.first %}checked{% endif %}><span>{{ k|capfirst }}</span></label>{% endfor %}
+            </fieldset>
+            <div class="sig-actions">
+              <button type="button" class="btn btn-subtle btn-sm" data-sig-undo>{% icon "undo-2" 14 %}Undo</button>
+              <button type="button" class="btn btn-subtle btn-sm" data-sig-clear>{% icon "eraser" 14 %}Clear</button>
+              <button type="submit" class="btn btn-primary btn-sm" data-sig-save disabled>{% icon "check" 14 %}Save signature</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </details>
+  {% endif %}
+</section>

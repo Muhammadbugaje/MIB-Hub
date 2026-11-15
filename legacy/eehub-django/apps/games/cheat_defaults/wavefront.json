@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Clear this stage",
+      "typed": "wfwin9",
+      "dial": "*739#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "god",
+      "label": "Cannot be hurt",
+      "typed": "wfgod1",
+      "dial": "*731#",
+      "note": ""
+    },
+    {
+      "id": "guns",
+      "label": "Every weapon at level 3",
+      "typed": "wfgun7",
+      "dial": "*737#",
+      "note": ""
+    },
+    {
+      "id": "lives",
+      "label": "9 lives",
+      "typed": "wfliv4",
+      "dial": "*734#",
+      "note": ""
+    },
+    {
+      "id": "cont",
+      "label": "9 continues",
+      "typed": "wfcon8",
+      "dial": "*738#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every stage open",
+      "typed": "wfall6",
+      "dial": "*736#",
+      "note": "All 12 stages."
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "wfslow3",
+      "dial": "*733#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "wfyay5",
+      "dial": "*735#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Cannot be hurt, carries every weapon at level 3, every stage open."
+  }
+}

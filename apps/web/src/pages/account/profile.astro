@@ -1,0 +1,109 @@
+---
+/**
+ * The signed-in user's profile: name, password, role and game stats.
+ * Two small forms post back here with a hidden "action" field.
+ */
+import Alert from "../../components/Alert.astro";
+import Field from "../../components/Field.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { MIN_PASSWORD_LENGTH, auth, authErrorMessage } from "../../lib/auth.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { PERMISSIONS, ROLE_INFO, isRole } from "../../lib/permissions.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const { viewer } = Astro.locals;
+const user = viewer.user!;
+let notice = "";
+let error = "";
+const errors: Record<string, string> = {};
+let name = user.name;
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = String(form.get("action") ?? "");
+  if (action === "name") {
+    name = String(form.get("name") ?? "").trim();
+    if (name.length < 2) errors.name = "Use 2 letters or more.";
+    else {
+      await auth.api.updateUser({ body: { name }, headers: Astro.request.headers });
+      notice = "Your name was saved.";
+    }
+  } else if (action === "password") {
+    const current = String(form.get("current") ?? "");
+    const next = String(form.get("new") ?? "");
+    if (next.length < MIN_PASSWORD_LENGTH) errors.new = `Use at least ${MIN_PASSWORD_LENGTH} characters.`;
+    else {
+      const res = await auth.api.changePassword({
+        body: { currentPassword: current, newPassword: next, revokeOtherSessions: true },
+        headers: Astro.request.headers,
+        asResponse: true,
+      });
+      if (res.ok) notice = "Password changed. Your other devices were signed out.";
+      else error = await authErrorMessage(res);
+    }
+  }
+}
+
+const profile = await repos.profiles.getOrCreateForUser(user.id, name);
+const role = isRole(viewer.role) ? ROLE_INFO[viewer.role] : { label: viewer.role, description: "" };
+const initials = name
+  .split(/\s+/)
+  .map((p) => p[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+---
+
+<AppLayout title="Profile">
+  <div class="page-head" style="display:flex; gap: var(--space-4); align-items:center;">
+    <span class="avatar avatar--lg">{initials}</span>
+    <div>
+      <h1>{name}</h1>
+      <p>{user.email} · <span class="badge">{role.label}</span></p>
+    </div>
+  </div>
+
+  {notice && <Alert tone="success">{notice}</Alert>}
+  {error && <Alert tone="danger">{error}</Alert>}
+
+  <div class="stat-grid" style="margin-top: var(--space-5);">
+    <div class="card stat"><div class="stat__value">{profile.xp}</div><div class="stat__label">XP</div></div>
+    <div class="card stat"><div class="stat__value">{profile.coins}</div><div class="stat__label">Coins</div></div>
+    <div class="card stat"><div class="stat__value">{profile.badges.length}</div><div class="stat__label">Badges</div></div>
+  </div>
+
+  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+    <section class="card">
+      <h2 class="card__title">Your name</h2>
+      <p class="card__meta" style="margin-bottom: var(--space-4);">Shown on leaderboards as first name and initial.</p>
+      <form class="form" method="post">
+        <input type="hidden" name="action" value="name" />
+        <Field name="name" label="Name" value={name} autocomplete="name" error={errors.name} required />
+        <button class="btn btn--primary" type="submit">Save name</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2 class="card__title">Password</h2>
+      <p class="card__meta" style="margin-bottom: var(--space-4);">Changing it signs out your other devices.</p>
+      <form class="form" method="post">
+        <input type="hidden" name="action" value="password" />
+        <Field name="current" label="Current password" type="password" autocomplete="current-password" required />
+        <Field name="new" label="New password" type="password" autocomplete="new-password" minlength={MIN_PASSWORD_LENGTH} error={errors.new} required />
+        <button class="btn btn--primary" type="submit">Change password</button>
+      </form>
+    </section>
+
+    <section class="card">
+      <h2 class="card__title">What you can do</h2>
+      <p class="card__meta" style="margin-bottom: var(--space-3);">{role.description}</p>
+      <ul style="margin:0; padding-left: 1.1rem; font-size: var(--fs-sm); color: var(--text-muted); display:grid; gap: 4px;">
+        {[...viewer.permissions].map((p) => <li>{PERMISSIONS[p]}</li>)}
+      </ul>
+    </section>
+  </div>
+  <!-- TODO(games-port): list cloud saves (repos.progress.list) and best scores per game here. -->
+</AppLayout>

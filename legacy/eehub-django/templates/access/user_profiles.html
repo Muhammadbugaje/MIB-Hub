@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Profiles · {{ u.get_full_name }}{% endblock %}
+{% block page_title %}Profiles{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+{% include "access/_user_head.html" %}
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "layers" 14 %} Profiles</span>
+  <h1 class="ee-page-header__title">{{ person.full_name }}</h1>
+  <p class="ee-page-header__description">A person can hold several profiles at once — for example a lecturer who is also an M.Sc student. They switch between them with “Acting as”.</p></div></header>
+
+<section class="ee-card">
+  <div class="ee-card__head"><h2>{% icon "layers" 17 %} Current and closed profiles</h2></div>
+  <ul class="ee-list">{% for p in profiles %}
+    <li class="{% if not p.open %}is-dimmed{% endif %}"><span class="ee-ic tone-{{ p.tone }}">{% icon p.icon 16 %}</span>
+      <div class="ee-row__body"><div class="ee-row__title">{{ p.title }}</div><div class="ee-row__meta">{{ p.sub|default:"—" }} · {{ p.status }}</div></div>
+      <form method="post" class="inline" {% if p.open %}data-confirm="The {{ p.title }} profile disappears from the switcher. If it is their last {{ p.kind }} profile, offices held inside it end today." data-confirm-title="Close this profile?" data-confirm-label="Close profile"{% endif %}>{% csrf_token %}
+        <input type="hidden" name="kind" value="{{ p.kind }}"><input type="hidden" name="profile" value="{{ p.obj.pk }}">
+        {% if p.open %}<button class="btn btn-ghost btn-sm" name="action" value="close" type="submit">{% icon "archive" 14 %} Close</button>
+        {% else %}<button class="btn btn-ghost btn-sm" name="action" value="reopen" type="submit">{% icon "rotate-ccw" 14 %} Reopen</button>{% endif %}
+      </form>
+    </li>
+  {% empty %}<li class="ee-empty" style="width:100%">No profiles yet.</li>{% endfor %}</ul>
+</section>
+
+<form method="post" class="ee-card ee-form" novalidate data-profile-form data-identify-url="{% url 'access:regno_preview' %}" id="add">{% csrf_token %}
+  <input type="hidden" name="action" value="add">
+  <div class="ee-card__head"><h2>{% icon "circle-plus" 17 %} Add a profile</h2></div>
+  {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{{ form.non_field_errors }}</div>{% endif %}
+  {% include "access/_profile_fields.html" with pf=form levels=form.fields.level.queryset %}
+  <div class="form-actions"><button type="submit" class="btn btn-primary">{% icon "plus" 16 %} Add profile</button></div>
+</form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

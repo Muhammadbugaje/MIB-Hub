@@ -1,0 +1,33 @@
+---
+/**
+ * Placeholder for admin sections that are not built yet. Each section has
+ * its own permission (see src/lib/admin-sections.ts). When a section is built, create
+ * src/pages/admin/<key>.astro; Astro prefers that file over this one.
+ */
+import AppLayout from "../../layouts/AppLayout.astro";
+import { guard } from "../../lib/guard.ts";
+import { ADMIN_SECTIONS } from "../../lib/admin-sections.ts";
+
+const section = ADMIN_SECTIONS.find((s) => s.key === Astro.params.section);
+if (!section) return Astro.rewrite("/404");
+
+const denied = guard(Astro, { permission: section.permission });
+if (denied) return denied;
+---
+
+<AppLayout title={section.title}>
+  <div class="page-head">
+    <span class="eyebrow">Admin · not built yet</span>
+    <h1>{section.title}</h1>
+    <p>{section.summary}</p>
+  </div>
+  <div class="card">
+    <h2 class="card__title">To build here</h2>
+    <ul style="margin: 0; padding-left: 1.1rem; color: var(--text-muted); display: grid; gap: 6px;">
+      {section.todo.map((t) => <li>{t}</li>)}
+    </ul>
+    <p class="card__meta" style="margin-top: var(--space-4);">
+      Needs the <code>{section.permission}</code> permission. See docs/ARCHITECTURE.md, “Admin”.
+    </p>
+  </div>
+</AppLayout>

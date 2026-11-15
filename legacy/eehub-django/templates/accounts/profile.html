@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+{% load static ee_tags %}
+{% block title %}My profile{% endblock %}
+{% block page_title %}My profile{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'css/system.css' %}">
+  <link rel="stylesheet" href="{% static 'css/signature.css' %}">
+{% endblock %}
+{% block content %}
+<div class="profile-page sys-profile" data-profile-page data-user-theme="{{ prefs.theme }}" data-user-motion="{% if prefs.reduce_motion %}reduce{% else %}normal{% endif %}">
+  <header class="ee-page-header">
+    <div class="ee-page-header__text">
+      <span class="ee-page-header__eyebrow">{% icon "circle-user" 14 %} Account</span>
+      <h1 class="ee-page-header__title">My profile</h1>
+      <p class="ee-page-header__description">Your details, the profiles you can act as, the offices you hold and how EE Hub looks for you.</p>
+    </div>
+    <div class="ee-page-header__actions">
+      <a href="{% url 'accounts:password_change' %}" class="btn btn-ghost">{% icon "key-round" 16 %}Change password</a>
+    </div>
+  </header>
+
+  {# ============================ HERO ============================ #}
+  <section class="profile-hero sys-profile__hero">
+    <div class="profile-hero-identity">
+      <div class="profile-hero-avatar" data-avatar>
+        {% if person.photo %}<img src="{{ person.photo.url }}" alt="" id="avatar-img">{% else %}<span id="avatar-initials">{{ person.plain_name|default:request.user.email|initials }}</span>{% endif %}
+      </div>
+      <div class="profile-hero-info">
+        <h2 data-live-name>{{ person.full_name|default:request.user.email }}</h2>
+        <p class="profile-hero-email">{{ request.user.email }}{% if request.user.login_id %} · <span class="ee-mono">{{ request.user.login_id }}</span>{% endif %}</p>
+        {% if profiles %}
+          <div class="profile-hero-pills">
+            {% for p in profiles %}<span class="ee-chip{% if p.key == active_key %} ee-chip--green{% endif %}">{% icon p.icon 12 %}{{ p.label }}</span>{% endfor %}
+            {% for a in appointments %}{% if a.current %}<span class="ee-chip ee-chip--{{ a.office.color|default:'gold' }}">{% icon a.office.icon 12 %}{{ a.office.label }}{% if a.is_acting %} (acting){% endif %}</span>{% endif %}{% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="profile-hero-progress{% if is_complete %} is-complete{% endif %}">
+      {% if is_complete %}
+        <div class="profile-hero-complete">{% icon "check" 20 %}<span>Profile complete. Everything is up to date.</span></div>
+      {% else %}
+        <div class="profile-hero-progress-row">
+          <span class="profile-hero-progress-label">Profile completeness</span>
+          <span class="profile-hero-progress-value">{{ completeness }}%</span>
+        </div>
+        <div class="profile-hero-bar" role="progressbar" aria-valuenow="{{ completeness }}" aria-valuemin="0" aria-valuemax="100" aria-label="Profile completeness">
+          <div class="profile-hero-bar-fill" style="width: {{ completeness }}%;"></div>
+          <div class="profile-hero-bar-marker" style="left: {{ threshold }}%;"></div>
+        </div>
+        <div class="profile-hero-progress-row profile-hero-progress-foot">
+          <span>{{ missing|length }} item{{ missing|length|pluralize }} left</span>
+          <span class="profile-hero-progress-threshold">Target {{ threshold }}%</span>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <div class="profile-body">
+    {# ---------- MAIN FORM ---------- #}
+    <div class="sys-profile__main">
+    <form method="post" enctype="multipart/form-data" class="profile-form" id="profile-form" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="section" value="details">
+      {% if form.non_field_errors %}<div class="sys-alert sys-alert--bad" role="alert">{{ form.non_field_errors|join:" " }}</div>{% endif %}
+
+      <section class="form-section" id="f-photo">
+        <header class="form-section-head"><h3>Photo</h3><p>JPG, PNG or WebP. It is cropped square and compressed automatically.</p></header>
+        <div class="form-row form-row-photo">
+          <div class="form-photo-avatar" data-avatar-small>
+            {% if person.photo %}<img src="{{ person.photo.url }}" alt="">{% else %}<span data-avatar-small-initials>{{ person.plain_name|default:request.user.email|initials }}</span>{% endif %}
+          </div>
+          <div class="form-photo-actions">
+            <label class="btn btn-ghost btn-sm" for="id_photo">{% icon "upload" 14 %}{% if person.photo %}Replace photo{% else %}Upload photo{% endif %}</label>
+            <button type="button" class="btn btn-subtle btn-sm" data-remove-photo hidden>Clear choice</button>
+            {% if person.photo %}<button type="submit" form="remove-photo-form" class="btn btn-ghost btn-sm">{% icon "trash-2" 14 %}Remove photo</button>{% endif %}
+            <span class="form-photo-name muted" data-photo-name>No file chosen</span>
+          </div>
+          <input type="file" name="photo" id="id_photo" accept="image/png,image/jpeg,image/webp" class="sr-only" data-photo-input>
+        </div>
+        {% if form.photo.errors %}<span class="error">{{ form.photo.errors|join:" " }}</span>{% endif %}
+      </section>
+
+      <section class="form-section" id="f-name">
+        <header class="form-section-head"><h3>Name</h3><p>As it should appear on letters, result sheets and the directory.</p></header>
+        <div class="form-row sys-form-4">
+          <div class="form-col"><label for="id_title">Title</label>{{ form.title }}{% if form.title.errors %}<span class="error">{{ form.title.errors|join:" " }}</span>{% endif %}</div>
+          <div class="form-col"><label for="id_first_name">First name <span class="req">*</span></label>{{ form.first_name }}{% if form.first_name.errors %}<span class="error">{{ form.first_name.errors|join:" " }}</span>{% endif %}</div>
+          <div class="form-col"><label for="id_middle_name">Middle name</label>{{ form.middle_name }}</div>
+          <div class="form-col"><label for="id_last_name">Surname <span class="req">*</span></label>{{ form.last_name }}{% if form.last_name.errors %}<span class="error">{{ form.last_name.errors|join:" " }}</span>{% endif %}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-col" id="f-gender"><label for="id_gender">Gender</label>{{ form.gender }}</div>
+          <div class="form-col" id="f-date_of_birth"><label for="id_date_of_birth">Date of birth</label>{{ form.date_of_birth }}{% if form.date_of_birth.errors %}<span class="error">{{ form.date_of_birth.errors|join:" " }}</span>{% endif %}</div>
+        </div>
+      </section>
+
+      <section class="form-section" id="f-contact">
+        <header class="form-section-head"><h3>Contact</h3><p>Used by the department office. Your sign-in e-mail is <b>{{ request.user.email }}</b>.</p></header>
+        <div class="form-row">
+          <div class="form-col" id="f-phone"><label for="id_phone">Phone</label>{{ form.phone }}{% if form.phone.errors %}<span class="error">{{ form.phone.errors|join:" " }}</span>{% endif %}</div>
+          <div class="form-col"><label for="id_personal_email">Personal e-mail</label>{{ form.personal_email }}{% if form.personal_email.errors %}<span class="error">{{ form.personal_email.errors|join:" " }}</span>{% endif %}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-col form-col-full" id="f-address"><label for="id_address">Address</label>{{ form.address }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-col" id="f-state_of_origin"><label for="id_state_of_origin">State of origin</label>{{ form.state_of_origin }}</div>
+          <div class="form-col"><label for="id_nationality">Nationality</label>{{ form.nationality }}</div>
+        </div>
+      </section>
+
+      <section class="form-section" id="f-bio">
+        <header class="form-section-head"><h3>About you</h3><p>A few lines shown on your directory card.</p></header>
+        <div class="form-row"><div class="form-col form-col-full">
+          <label for="id_bio">Bio</label>{{ form.bio }}
+        </div></div>
+      </section>
+    </form>
+    <form method="post" id="remove-photo-form" data-confirm="Your photo will be removed from EE Hub." data-confirm-title="Remove photo" data-confirm-label="Remove" hidden>
+      {% csrf_token %}<input type="hidden" name="section" value="remove_photo">
+    </form>
+
+    {# ---------- PREFERENCES ---------- #}
+    <form method="post" class="ee-card sys-prefs" id="preferences" data-prefs-form>
+      {% csrf_token %}
+      <input type="hidden" name="section" value="prefs">
+      <div class="ee-card__head"><h2>{% icon "sun-moon" 17 %}Preferences</h2><span class="ee-card__sub">Applied on this device when you save</span></div>
+      <fieldset class="sys-prefs__theme">
+        <legend>Appearance</legend>
+        <div class="sys-seg" role="radiogroup">
+          {% for v, l in themes %}
+            <label class="sys-seg__opt"><input type="radio" name="theme" value="{{ v }}" {% if prefs.theme == v %}checked{% endif %}>
+              <span>{% if v == "light" %}{% icon "sun" 15 %}{% elif v == "dark" %}{% icon "moon" 15 %}{% else %}{% icon "monitor-smartphone" 15 %}{% endif %}{{ l }}</span></label>
+          {% endfor %}
+        </div>
+      </fieldset>
+      <div class="sh-row sys-prefs__row">
+        <div><span class="sh-row__title">Reduce motion</span><span class="sh-row__desc">Calmer page transitions and no animated hero.</span></div>
+        <div class="sh-row__control"><label class="sh-switch"><input type="checkbox" name="reduce_motion" {% if prefs.reduce_motion %}checked{% endif %}><span class="sh-switch__track" aria-hidden="true"></span><span class="sh-switch__label">{% if prefs.reduce_motion %}On{% else %}Off{% endif %}</span></label></div>
+      </div>
+      <div class="sh-row sys-prefs__row">
+        <div><span class="sh-row__title">Daily e-mail digest</span><span class="sh-row__desc">One e-mail each morning with unread notifications.</span></div>
+        <div class="sh-row__control"><label class="sh-switch"><input type="checkbox" name="email_digest" {% if prefs.email_digest %}checked{% endif %}><span class="sh-switch__track" aria-hidden="true"></span><span class="sh-switch__label">{% if prefs.email_digest %}On{% else %}Off{% endif %}</span></label></div>
+      </div>
+      <div class="sys-prefs__foot"><button class="btn btn-primary btn-sm" type="submit">{% icon "save" 14 %}Save preferences</button></div>
+    </form>
+
+    {# ---------- MY SIGNATURE (Round 6) ---------- #}
+    {% if sig.enabled %}{% include "accounts/_signature.html" %}{% endif %}
+    </div>
+
+    {# ---------- SIDEBAR ---------- #}
+    <aside class="profile-side">
+      {% if not is_complete %}
+        <div class="side-card side-card-primary">
+          <div class="side-ring-large" style="--pct: {{ completeness }};">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ring-track" cx="50" cy="50" r="44"/><circle class="ring-fill" cx="50" cy="50" r="44"/></svg>
+            <div class="ring-center"><span class="ring-num" data-count-to="{{ completeness }}">{{ completeness }}</span><span class="ring-pct">%</span></div>
+          </div>
+          <div class="side-ring-info">
+            <strong>{% if below_threshold %}Below the {{ threshold }}% target{% else %}Above the {{ threshold }}% target{% endif %}</strong>
+            <p>Complete your profile so offices can reach you.</p>
+          </div>
+          <div class="side-missing">
+            <h2 class="side-missing-title">What is missing</h2>
+            <ul class="side-checklist">
+              {% for item in missing %}<li data-jump-to="{{ item.key }}"><a href="#f-{{ item.key }}" class="sys-jump"><span class="check-dot"></span><span class="check-label">{{ item.label }}</span></a></li>{% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% else %}
+        <div class="side-card side-card-primary side-card-done">
+          <div class="side-done-icon">{% icon "check" 28 %}</div>
+          <h3>Profile complete</h3>
+          <p>Every field is filled in.</p>
+        </div>
+      {% endif %}
+
+      <div class="side-card">
+        <h2 class="side-card-title">Profiles</h2>
+        {% if profiles %}
+          <ul class="sys-plist">
+            {% for p in profiles %}
+              <li class="{% if p.key == active_key %}is-current{% endif %}">
+                <span class="ee-ic tone-green">{% icon p.icon 16 %}</span>
+                <div class="ee-row__body">
+                  <div class="ee-row__title">{{ p.label }}</div>
+                  {% if p.sublabel %}<div class="ee-row__meta">{{ p.sublabel }}</div>{% endif %}
+                </div>
+                {% if p.key == active_key %}
+                  <span class="sys-tag sys-tag--ok">Current</span>
+                {% else %}
+                  <form method="post" action="{% url 'accounts:switch_profile' %}">{% csrf_token %}
+                    <input type="hidden" name="key" value="{{ p.key }}">
+                    <button class="btn btn-ghost btn-sm" type="submit">Switch to</button>
+                  </form>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="ee-muted">No profiles are attached to your account yet.</p>
+        {% endif %}
+      </div>
+
+      <div class="side-card">
+        <h2 class="side-card-title">Offices held</h2>
+        {% if appointments %}
+          <ul class="sys-plist">
+            {% for a in appointments %}
+              <li class="{% if not a.current %}is-past{% endif %}">
+                <span class="ee-ic tone-{% if a.current %}gold{% else %}slate{% endif %}">{% icon a.office.icon 16 %}</span>
+                <div class="ee-row__body">
+                  <div class="ee-row__title">{{ a.office.name }}{% if a.is_acting %} (acting){% endif %}</div>
+                  <div class="ee-row__meta">{% if a.scope_text %}{{ a.scope_text }} · {% endif %}{{ a.start_date|date:"M Y" }} – {% if a.end_date %}{{ a.end_date|date:"M Y" }}{% else %}present{% endif %}</div>
+                </div>
+                {% if a.current %}<span class="sys-tag sys-tag--gold">Now</span>{% endif %}
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="ee-muted">You do not hold an office.</p>
+        {% endif %}
+      </div>
+
+      <div class="side-card">
+        <h2 class="side-card-title">Account</h2>
+        <dl class="sys-dl">
+          <dt>Sign-in e-mail</dt><dd>{{ request.user.email }}</dd>
+          {% if request.user.login_id %}<dt>Reg / staff number</dt><dd class="ee-mono">{{ request.user.login_id }}</dd>{% endif %}
+          {% if request.user.last_login %}<dt>Last sign-in</dt><dd>{{ request.user.last_login|date:"j M Y, H:i" }}</dd>{% endif %}
+        </dl>
+        <div class="side-links">
+          <a href="{% url 'accounts:password_change' %}" class="side-link"><span>Change password</span>{% icon "chevron-right" 14 %}</a>
+          <a href="{% url 'notifications:list' %}" class="side-link"><span>My notifications</span>{% icon "chevron-right" 14 %}</a>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  {# ============================ SAVE BAR ============================ #}
+  <div class="profile-save-bar" data-save-bar aria-hidden="true" inert>
+    <div class="profile-save-bar-inner">
+      <div class="profile-save-status"><span class="profile-save-dot"></span><span data-save-text>All changes saved</span></div>
+      <div class="profile-save-actions">
+        <button type="button" class="btn btn-subtle" data-discard-btn>Discard</button>
+        <button type="submit" form="profile-form" class="btn btn-primary" data-save-btn><span data-save-label>Save changes</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+  <script src="{% static 'js/profile.js' %}" defer></script>
+  <script src="{% static 'js/system.js' %}" defer></script>
+  <script src="{% static 'js/signature-pad.js' %}" defer></script>
+{% endblock %}

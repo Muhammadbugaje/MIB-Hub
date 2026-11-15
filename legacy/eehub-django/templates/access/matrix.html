@@ -1,0 +1,63 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Permission matrix{% endblock %}
+{% block page_title %}Permission matrix{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "grid-3x3" 14 %} Access control · {{ cols|length }} column{{ cols|length|pluralize }}</span>
+    <h1 class="ee-page-header__title">Permission matrix</h1>
+    <p class="ee-page-header__description">Permissions attach to profile roles and offices, never to people. Click a cell to grant or remove — it saves at once and is audited. Click a column or a row to see who effectively holds it.</p>
+  </div>
+  <div class="ee-page-header__actions"><a class="btn btn-ghost" href="{% url 'access:offices' %}">{% icon "badge-check" 16 %} Offices</a></div>
+</header>
+{% include "access/_subnav.html" with section="matrix" %}
+
+<form method="get" class="acc-toolbar" role="search" aria-label="Filter results">
+  <div class="acc-seg" role="group" aria-label="Office category">
+    <a class="acc-seg__btn{% if category == 'all' %} is-on{% endif %}" href="?{% querystring category='all' %}">All</a>
+    {% for k, l in categories %}<a class="acc-seg__btn{% if category == k %} is-on{% endif %}" href="?{% querystring category=k %}">{{ l }}</a>{% endfor %}
+  </div>
+  <input type="hidden" name="category" value="{{ category }}">
+  <label class="acc-search">{% icon "search" 16 %}<input type="search" name="q" value="{{ q }}" placeholder="Filter permissions…" aria-label="Filter permissions"></label>
+  <label class="check"><input type="checkbox" name="roles" value="0"{% if not show_roles %} checked{% endif %} data-autosubmit><span>Hide profile roles</span></label>
+</form>
+
+<div class="acc-matrix-layout">
+  <div class="ee-card acc-matrix-card">
+    <div class="acc-matrix-scroll">
+    <table class="acc-matrix">
+      <thead><tr>
+        <th class="acc-matrix__corner" scope="col">Permission</th>
+        {% for c in cols %}<th scope="col" class="acc-matrix__col{% if c.type == 'role' %} is-role{% endif %}">
+          <button type="button" class="acc-colhead" hx-get="{% url 'access:matrix_holders' %}?col={{ c.key|urlencode }}" hx-target="#matrix-holders" title="{{ c.label }}">
+            <span class="ee-ic tone-{{ c.tone }}">{% icon c.icon 14 %}</span><span class="acc-colhead__label">{{ c.short }}</span>{% if c.type == 'office' %}<span class="acc-colhead__cnt">{{ c.holders }}</span>{% endif %}
+          </button></th>{% endfor %}
+      </tr></thead>
+      <tbody>
+      {% for g in groups %}
+        <tr class="acc-matrix__group"><th scope="rowgroup" colspan="{{ ncols }}"><span>{{ g.label }}</span>{% if g.phase %}<span class="acc-phase">Phase {{ g.phase }}</span>{% endif %}</th></tr>
+        {% for item in g.items %}
+        <tr>
+          <th scope="row" class="acc-matrix__row"><button type="button" class="acc-rowhead" hx-get="{% url 'access:matrix_holders' %}?perm={{ item.full|urlencode }}" hx-target="#matrix-holders"><span>{{ item.label }}</span><code>{{ item.full }}</code></button></th>
+          {% for c in cols %}<td class="acc-matrix__cell{% if c.type == 'role' %} is-role{% endif %}">{% if item.pk in c.perm_ids %}{% include "access/_matrix_cell.html" with col=c on=True %}{% else %}{% include "access/_matrix_cell.html" with col=c on=False %}{% endif %}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+      {% empty %}<tr><td colspan="{{ ncols }}"><p class="ee-empty">No permission matches “{{ q }}”.</p></td></tr>{% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <div class="acc-legend"><span><span class="acc-ck is-on is-static"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>Granted</span><span><span class="acc-ck is-static"></span>Not granted</span><span class="acc-legend__tip">{% icon "mouse-pointer-click" 14 %} Click a header to see holders</span></div>
+  </div>
+  <aside class="acc-matrix-side">
+    <div class="ee-card" id="matrix-holders" aria-live="polite">
+      <div class="ee-card__head"><h2>{% icon "user-search" 17 %} Who effectively has it</h2></div>
+      <p class="ee-card__sub">Click a column to list its holders, or a permission to see everyone who holds it through any office, role or grant.</p>
+    </div>
+    <div class="acc-note">{% icon "scroll-text" 15 %}<span><b>Every change is audited.</b> Edit a whole office at once on its page, including its dashboard. Profile roles: {% for r in roles %}<a href="{% url 'access:profile_role_edit' r.kind %}">{{ r.name }}</a>{% if not forloop.last %}, {% endif %}{% endfor %}.</span></div>
+  </aside>
+</div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

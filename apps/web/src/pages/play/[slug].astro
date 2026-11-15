@@ -1,0 +1,90 @@
+---
+/**
+ * /play/<slug>: the page that runs one game.
+ *
+ * Rules (from the old site's games/views.py):
+ *   - unknown slug -> 404
+ *   - hidden or switched-off game -> 404, unless the viewer has games.preview
+ *   - the game's code loads only here, through GameHost (see src/games/)
+ *
+ * TODO(games-port): per-game access rules (levels, guests), cheats/hero
+ * access modes, leaderboard panel, install-as-app manifest per game.
+ */
+import { leaderboardName } from "@mib/db";
+import GameHost from "../../games/GameHost.tsx";
+import { hasGame } from "../../games/registry.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+
+const slug = Astro.params.slug ?? "";
+const game = await repos.games.getBySlug(slug);
+const { viewer } = Astro.locals;
+const canPreview = viewer.permissions.has("games.preview");
+const playable = game && game.enabled && game.status !== "hidden";
+
+if (!game || (!playable && !canPreview)) return Astro.rewrite("/404");
+
+const settings = await repos.gameSettings.effective(game.slug, game.settings);
+const player = viewer.user
+  ? { id: viewer.user.id, displayName: leaderboardName(viewer.user.name), isStaff: viewer.permissions.has("cheats.staff") }
+  : null;
+const ready = hasGame(game.entry);
+---
+
+<PublicLayout title={game.title} description={game.description}>
+  <section class="container section" style={`--card-accent: ${game.accent}`}>
+    <a href="/#games" class="muted" style="font-size: var(--fs-sm);">← All games</a>
+    <div class="section__head" style="margin-top: var(--space-3);">
+      <div>
+        <span class="eyebrow">{game.meta.genre ?? game.category}</span>
+        <h1 style="margin-top: var(--space-2);">{game.title}</h1>
+        <p>{game.description}</p>
+      </div>
+      {!playable && <span class="badge badge--accent">Preview: hidden from players</span>}
+    </div>
+
+    {
+      ready ? (
+        <GameHost
+          client:only="react"
+          slug={game.slug}
+          entry={game.entry}
+          assetsPath={game.assetsPath}
+          settings={settings}
+          player={player}
+        />
+      ) : (
+        <div class="play-stage" data-game-slug={game.slug} data-game-entry={game.entry}>
+          <div>
+            <span class="badge badge--volt">Coming soon</span>
+            <h2 style="margin-top: var(--space-3);">This game is being moved to its new home</h2>
+            <p>It will appear right here as soon as it is ported. Your account is ready for it.</p>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      game.meta.howToPlay && (
+        <div class="card-grid" style="margin-top: var(--space-6);">
+          <div class="card">
+            <h2 class="card__title">How to play</h2>
+            <p class="card__meta">{game.meta.howToPlay}</p>
+          </div>
+          {game.meta.controls && (
+            <div class="card">
+              <h2 class="card__title">Controls</h2>
+              <p class="card__meta">{game.meta.controls}</p>
+            </div>
+          )}
+          {game.meta.modes && game.meta.modes.length > 0 && (
+            <div class="card">
+              <h2 class="card__title">Modes</h2>
+              <p class="card__meta">{game.meta.modes.join(" · ")}</p>
+            </div>
+          )}
+        </div>
+      )
+    }
+  </section>
+</PublicLayout>

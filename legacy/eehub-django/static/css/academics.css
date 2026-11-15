@@ -1,0 +1,84 @@
+/* Academics: course catalogue, allocation and assessment schemes */
+.ac-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.ac-head .ee-page-header { flex: 1 1 320px; }
+.ac-head__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.ac-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-decoration: none; }
+.ac-back:hover { color: var(--text); }
+.ac-req { color: var(--danger); }
+.ac-code { font-family: var(--font-mono); font-size: 12.5px; letter-spacing: .02em; white-space: nowrap; }
+.ac-retired td { opacity: .6; }
+.ac-actions { text-align: right; white-space: nowrap; }
+
+.ac-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin-bottom: 14px; }
+.ac-kpi { display: flex; align-items: center; gap: 12px; padding: 14px 16px; }
+.ac-kpi > span { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.ac-kpi.is-warn > span { background: var(--accent-subtle); color: var(--accent-fg); }
+.ac-kpi strong { display: block; font-size: 22px; line-height: 1.1; font-family: var(--font-display); }
+.ac-kpi small { color: var(--text-muted); font-size: 12px; }
+
+.ac-filter { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 12px; margin-bottom: 14px; padding: 14px; }
+.ac-filter .ee-field { flex: 1 1 160px; }
+.ac-filter .ee-field label { font-size: 11.5px; }
+.ac-pager { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 14px; font-size: 13px; color: var(--text-muted); }
+
+.ac-form { max-width: 920px; }
+.ac-form textarea { font-family: var(--font-mono); font-size: 13px; }
+.ac-checks { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.ee-field--check label { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; cursor: pointer; }
+.ac-form__bar { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 6px; border-top: 1px solid var(--divider); }
+.ac-danger { margin-top: 14px; }
+
+.ac-offerings { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.ac-offering { display: grid; gap: 6px; color: inherit; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.ac-offering:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); }
+.ac-offering.is-empty { border-style: dashed; }
+.ac-offering__top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ac-offering__title { font-weight: 650; font-size: 14px; line-height: 1.35; }
+.ac-offering__people { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; }
+.ac-person { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700;
+  background: var(--primary-subtle); color: var(--primary-subtle-fg); border: 2px solid var(--surface); }
+.ac-person.is-coord { background: var(--accent-subtle); color: var(--accent-fg); box-shadow: 0 0 0 2px var(--accent); }
+.ac-none { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-muted); font-weight: 600; }
+.ac-allocate { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--divider); }
+
+/* Assessment scheme builder */
+.ac-scheme { display: grid; gap: 10px; margin-top: 10px; }
+.ac-scheme__bar { display: flex; height: 12px; border-radius: 999px; overflow: hidden; background: var(--surface-sunken); }
+.ac-scheme__bar span { height: 100%; transition: width .25s ease; }
+.ac-scheme__head, .ac-scheme__row { display: grid; grid-template-columns: minmax(0, 1fr) 84px 96px 36px; gap: 8px; align-items: center; }
+.ac-scheme__head { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+.ac-scheme__row input { width: 100%; min-width: 0; }
+.ac-scheme__row .ac-dot { display: none; }
+.ac-scheme__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ac-scheme__total { font-size: 14px; }
+.ac-scheme__total.is-ok { color: var(--success, #15803d); }
+.ac-scheme__total.is-bad { color: var(--danger); }
+.ac-presets { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+.ac-presets button { border: 0; cursor: pointer; padding: 6px 9px; }
+.ac-prose { font-size: 14px; line-height: 1.65; }
+@media (max-width: 560px) {
+  .ac-scheme__head { display: none; }
+  .ac-scheme__row { grid-template-columns: 1fr 1fr 36px; }
+  .ac-scheme__row input[name=label] { grid-column: 1 / -1; }
+}
+.ac-inline { align-items: center; }
+.ac-inline input { width: 130px; }
+.ac-sessions { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); }
+.ac-sem { align-items: flex-start !important; }
+.ac-sem.is-current { background: color-mix(in srgb, var(--accent) 7%, transparent); border-radius: 12px; }
+.ac-dates { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; margin-top: 8px; font-size: 12px; color: var(--text-muted); }
+.ac-dates label { display: grid; gap: 3px; }
+/* allocation: carry-forward, load, other departments */
+.ac-tools { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.ac-prev { display: flex; gap: 5px; align-items: flex-start; color: var(--text-muted); font-size: 12px; }
+.ac-carry { display: grid; gap: 8px; margin: 10px 0; padding: 12px; border-radius: 12px; background: var(--surface-sunken); }
+.ac-auto { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin: 10px 0; padding: 10px 12px; border: 1px dashed var(--border); border-radius: 12px; font-size: 13px; }
+.ac-auto > div { flex: 1 1 220px; }
+.ac-muted { color: var(--text-muted); font-weight: 400; }
+.ac-warn { color: var(--accent-fg, #92400e); display: flex; gap: 5px; align-items: flex-start; }
+.ac-tick { display: grid; place-items: center; width: 28px; }
+.ac-tick input { width: 18px; height: 18px; }
+.ac-pad { padding: 12px 16px; }
+.ac-units { text-align: right; font-size: 18px; white-space: nowrap; }
+.ac-units small { display: block; font-size: 11.5px; font-weight: 400; color: var(--text-muted); }
+.ac-narrow { max-width: 760px; }

@@ -1,0 +1,180 @@
+/* Round 6 course registration: detected-record strip, step guide, blocked rows,
+   outside-department requests and the Registration Officer's desk.
+   Prefix rg-. Builds on teaching.css (tp-) and uses tokens only. */
+
+/* ---- What EE Hub detected ------------------------------------------------ */
+.rg-detect { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+.rg-detect__tile { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 16px; border: 1px solid var(--border);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 7%, var(--surface)), var(--surface)); min-width: 0; }
+.rg-detect__tile small { display: block; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+.rg-detect__tile b { display: block; font-size: 13.5px; line-height: 1.3; overflow-wrap: anywhere; }
+.rg-detect__ic { width: 36px; height: 36px; border-radius: 12px; display: grid; place-items: center; flex: none;
+  background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.rg-detect__tile.is-closed .rg-detect__ic { background: var(--danger-subtle); color: var(--danger-fg); }
+@media (max-width: 900px) { .rg-detect { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .rg-detect__tile { padding: 10px; gap: 8px; } .rg-detect__ic { width: 30px; height: 30px; border-radius: 10px; } }
+
+/* ---- Step-by-step guide ------------------------------------------------------ */
+.rg-guide { margin-bottom: 12px; padding: 0; overflow: hidden; }
+.rg-guide > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+.rg-guide > summary::-webkit-details-marker { display: none; }
+.rg-guide > summary > span:nth-child(2) { flex: 1; min-width: 0; }
+.rg-guide > summary b { display: block; font-size: 14px; }
+.rg-guide > summary small { display: block; font-size: 12px; color: var(--text-muted); }
+.rg-guide > summary > svg { color: var(--text-muted); transition: transform .2s ease; }
+.rg-guide[open] > summary > svg { transform: rotate(180deg); }
+.rg-guide__badge { width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center; flex: none;
+  background: var(--accent-subtle); color: var(--accent-fg); }
+.rg-guide__steps { list-style: none; margin: 0; padding: 4px 16px 16px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; counter-reset: s; }
+.rg-guide__steps li { display: flex; gap: 10px; padding: 12px; border-radius: 14px; background: var(--surface-sunken); }
+.rg-guide__steps b { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+.rg-guide__steps p { margin: 4px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--text-muted); }
+.rg-guide__n { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; flex: none; font-weight: 800; font-size: 12.5px;
+  background: var(--primary); color: var(--primary-fg, #fff); }
+@media (max-width: 1000px) { .rg-guide__steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .rg-guide__steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: no-preference) {
+  .rg-guide[open] .rg-guide__steps li { animation: rg-rise .35s ease both; }
+  .rg-guide[open] .rg-guide__steps li:nth-child(2) { animation-delay: .04s; }
+  .rg-guide[open] .rg-guide__steps li:nth-child(3) { animation-delay: .08s; }
+  .rg-guide[open] .rg-guide__steps li:nth-child(4) { animation-delay: .12s; }
+  .rg-guide[open] .rg-guide__steps li:nth-child(5) { animation-delay: .16s; }
+  .rg-guide[open] .rg-guide__steps li:nth-child(6) { animation-delay: .2s; }
+}
+@keyframes rg-rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* ---- Sections ------------------------------------------------------------------ */
+.rg-sec .ee-card__head h2 { display: flex; align-items: center; gap: 8px; }
+.rg-num { width: 24px; height: 24px; border-radius: 8px; display: inline-grid; place-items: center; font-size: 12px; font-weight: 800;
+  background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.rg-sec--override { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
+.rg-lead { display: flex; align-items: center; gap: 6px; margin: 0 0 10px; font-size: 12.5px; color: var(--text-muted); }
+.rg-lead--ok { color: var(--success-fg); }
+.rg-earlier { margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.tp-course.is-blocked label { cursor: not-allowed; border-style: dashed; background: color-mix(in srgb, var(--danger) 4%, var(--surface)); }
+.tp-course.is-blocked .tp-course__box { border-color: var(--danger); color: var(--danger-fg); background: var(--danger-subtle); }
+.tp-course.is-blocked .tp-course__title { color: var(--text-muted); }
+.tp-course.is-external label { background: color-mix(in srgb, var(--volt, #13c4dc) 6%, var(--surface)); }
+.tp-pre.is-block { background: var(--danger-subtle); color: var(--danger-fg); }
+.tp-pre.is-ok { background: var(--accent-subtle); color: var(--accent-fg); }
+.rg-blocked { display: flex; align-items: flex-start; gap: 5px; font-size: 11.5px; font-weight: 600; color: var(--danger-fg); margin-top: 3px; line-height: 1.4; }
+.rg-blocked svg { flex: none; margin-top: 1px; }
+
+/* ---- Outside-department requests ------------------------------------------------------ */
+.rg-reqs { list-style: none; margin: 0 0 10px; padding: 0; display: grid; gap: 8px; }
+.rg-req { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; border: 1px solid var(--border); }
+.rg-req__ic { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; flex: none; background: var(--warning-subtle); color: var(--warning-fg); }
+.rg-req.is-rejected .rg-req__ic { background: var(--danger-subtle); color: var(--danger-fg); }
+.rg-req__body { flex: 1; min-width: 0; }
+.rg-req__body b { display: block; font-size: 13.5px; }
+.rg-req__body small { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; font-size: 12px; color: var(--text-muted); }
+
+/* ---- Dialog ---------------------------------------------------------------------------------- */
+.rg-dialog { border: 1px solid var(--border); border-radius: 20px; padding: 0; width: min(520px, calc(100vw - 24px)); background: var(--surface); color: var(--text);
+  box-shadow: var(--shadow-xl); }
+.rg-dialog::backdrop { background: var(--overlay, rgba(0, 0, 0, .45)); }
+.rg-dialog form { padding: 18px; display: grid; gap: 12px; }
+.rg-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.rg-dialog header h2 { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 17px; }
+.rg-dialog__lead { margin: 0; font-size: 13px; line-height: 1.5; color: var(--text-muted); }
+.rg-dialog footer { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
+@media (max-width: 560px) {
+  .rg-dialog { margin: auto 0 0; width: 100vw; max-width: 100vw; border-radius: 20px 20px 0 0; }
+  .rg-dialog form { padding-bottom: max(18px, env(safe-area-inset-bottom)); }
+}
+
+/* ---- Registration desk ---------------------------------------------------------------------- */
+.rg-desk { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+@media (max-width: 1000px) { .rg-desk { grid-template-columns: 1fr; } }
+.rg-desk__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.rg-ticket { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; padding: 14px; }
+.rg-ticket__av { width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; font-size: 13px;
+  background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.rg-ticket h3 { margin: 0; font-size: 14.5px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.rg-ticket__meta { font-size: 12.5px; color: var(--text-muted); margin: 2px 0 0; }
+.rg-ticket__course { margin: 8px 0 0; padding: 10px 12px; border-radius: 12px; background: var(--surface-sunken); font-size: 13px; }
+.rg-ticket__course b { font-family: var(--font-display); }
+.rg-ticket__act { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.rg-ticket__act input[type=text] { flex: 1 1 200px; min-height: 38px; }
+.rg-ticket__act form { display: contents; }
+.rg-ov { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px; }
+.rg-ov__body { flex: 1; min-width: 0; }
+.rg-ov__body b { font-size: 13.5px; }
+.rg-ov__body small { display: block; font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.rg-ov.is-ended { opacity: .65; }
+.rg-howlist { counter-reset: s; list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.rg-howlist li { display: flex; gap: 12px; }
+.rg-howlist p { margin: 4px 0 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.6; }
+.rg-sec .tp-courses, .rg-sec .tp-courses > li, .rg-sec .tp-course label { width: 100%; box-sizing: border-box; }
+.rg-sec .tp-courses { justify-items: stretch; }
+.rg-sec .ee-card__head { flex-wrap: wrap; }
+.tp-reg__side { min-width: 0; }
+.rg-meter { box-sizing: border-box; max-width: 100%; }
+.tp-reg__side { grid-template-columns: minmax(0, 1fr); }
+.rg-meter { grid-template-columns: minmax(0, 1fr); }
+.rg-meter .tp-meter__actions { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.rg-meter .tp-meter__actions .btn { min-width: 0; white-space: normal; }
+.rg-meter .tp-meter__actions { grid-template-columns: auto minmax(0, 1fr); }
+.rg-meter .tp-meter__actions .btn { white-space: nowrap; padding-inline: 12px; }
+.rg-dialog[open] { position: fixed; inset: 0; margin: auto; height: fit-content; max-height: calc(100dvh - 24px); overflow: auto; }
+@media (max-width: 560px) { .rg-dialog[open] { inset: auto 0 0 0; margin: 0; } }
+
+/* ---- Round 7 (R7C): course form routing (Settings) and the review stepper -------------------- */
+.rg-route__flow { list-style: none; margin: 0 0 14px; padding: 0; display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px 26px; }
+.rg-route__step { position: relative; display: flex; align-items: flex-start; gap: 10px; flex: 1 1 220px; min-width: 0; max-width: 340px;
+  padding: 14px; border-radius: 16px; background: var(--surface); border: 1.5px solid var(--primary); box-shadow: var(--shadow-xs); }
+.rg-route__step:not(:last-child)::after { content: "→"; position: absolute; right: -21px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); font-size: 18px; }
+.rg-route__step.is-student { border-color: var(--border-strong); }
+.rg-route__step.is-hod { border-color: var(--gold-500, var(--accent)); }
+.rg-route__step > div:first-of-type { flex: 1; min-width: 0; }
+.rg-route__step b { display: block; font-size: 14px; }
+.rg-route__step small { display: block; font-size: 12px; color: var(--text-muted); overflow-wrap: anywhere; }
+.rg-route__meta { margin-top: 4px; }
+.rg-warn { color: var(--warning-fg); display: inline-flex; align-items: center; gap: 4px; }
+.rg-route__n { width: 28px; height: 28px; border-radius: 50%; flex: none; display: grid; place-items: center; font-weight: 700; font-size: 13px;
+  background: var(--primary); color: var(--primary-fg); }
+.rg-route__step.is-student .rg-route__n { background: var(--text-muted); color: var(--surface); }
+.rg-route__step.is-hod .rg-route__n { background: var(--gold-600, var(--accent)); color: #fff; }
+.rg-route__tools { flex: none; gap: 4px; }
+.rg-route__tools .btn { min-width: 36px; padding: 0 8px; }
+.rg-route__add { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.rg-route__add small { display: block; color: var(--text-muted); font-size: 12.5px; }
+.rg-route__notes { margin-top: 14px; }
+.rg-route__notes h2 { display: flex; align-items: center; gap: 8px; font-size: 15px; margin: 0 0 8px; }
+.rg-route__notes ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13.5px; }
+.rg-route__plain { display: grid; gap: 8px; margin-top: 12px; }
+@media (max-width: 640px) {
+  .rg-route__flow { flex-direction: column; gap: 22px; }
+  .rg-route__step { max-width: none; flex: none; flex-wrap: wrap; }
+  .rg-route__tools { width: 100%; justify-content: flex-end; flex-direction: row; }
+  .rg-route__step:not(:last-child)::after { content: "↓"; right: auto; left: 26px; top: auto; bottom: -21px; transform: none; }
+  .rg-route__tools .btn { min-width: 44px; min-height: 44px; }
+}
+
+/* the chain on the student's form and on the review page */
+.rg-chain { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.rg-chain li { display: flex; align-items: center; gap: 8px; font-size: 13px; min-width: 0; }
+.rg-chain__dot { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; flex: none; font-size: 11px; font-weight: 700;
+  background: var(--surface-sunken); color: var(--text-muted); border: 1px solid var(--border); }
+.rg-chain .is-done .rg-chain__dot { background: var(--success-subtle); color: var(--success-fg); border-color: transparent; }
+.rg-chain .is-now .rg-chain__dot { background: var(--primary); color: var(--primary-fg); border-color: transparent; box-shadow: 0 0 0 4px var(--primary-subtle); }
+.rg-chain .is-returned .rg-chain__dot { background: var(--danger-subtle); color: var(--danger-fg); }
+.rg-chain small { display: block; color: var(--text-muted); font-size: 11.5px; }
+.rg-trail { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 6px; font-size: 12.5px; color: var(--text-muted); }
+.rg-trail b { color: var(--text); }
+.rg-step-chip { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; padding: 2px 8px; border-radius: 999px;
+  background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.rg-step-chip.is-mine { background: var(--accent-subtle); color: var(--accent-fg); }
+.rg-route-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--text-muted); margin: 0 0 10px; }
+.rg-elect__list { list-style: none; margin: 0; padding: 0 16px 14px; display: grid; gap: 8px; }
+.rg-elect__list li { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-radius: 12px; background: var(--warning-subtle); color: var(--text); }
+.rg-elect__list li > svg { color: var(--warning-fg); flex: none; margin-top: 2px; }
+.rg-elect__list li.is-ok { background: var(--success-subtle); }
+.rg-elect__list li.is-ok > svg { color: var(--success-fg); }
+.rg-elect__list b { display: block; font-size: 13.5px; }
+.rg-elect__list small { display: block; font-size: 12.5px; color: var(--text-muted); }
+@media (max-width: 640px) {
+  .rg-route .rg-route__tools.btn-group { flex-direction: row; flex-wrap: nowrap; width: 100%; justify-content: flex-end; }
+  .rg-route .rg-route__tools.btn-group > .btn { width: auto; flex: 0 0 44px; }
+}

@@ -1,0 +1,2 @@
+{% load ee_tags %}{% if value %}{% if found %}<div class="acc-test-result is-ok" role="status">{% icon "circle-check" 18 %}<div><b><code>{{ value }}</code> is a {{ found.name }} number.</b><p>{{ kind_label }}{% if found.programme %} · {{ found.programme }}{% endif %}</p></div></div>
+{% else %}<div class="acc-test-result is-bad" role="status">{% icon "circle-x" 18 %}<div><b><code>{{ value }}</code> matches no active format.</b><p>Check the number, or add a format with this as a sample.</p></div></div>{% endif %}{% endif %}

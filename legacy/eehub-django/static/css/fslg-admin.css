@@ -1,0 +1,95 @@
+/* Arcade Management → FSLG Characters / Config / Credits (games/fslg_admin.py, static/js/games/fslg-admin.js).
+   Site tokens only; no colour-mix (older WebKit). Phones first: one column under 900 px, touch targets 44 px. */
+.fa { max-width: 1280px; }
+.fa h3 { margin: 6px 0 0; font-size: 14px; }
+.fa-cols { display: grid; gap: 18px; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); align-items: start; }
+.fa-cols--even { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.fa-cols--wide { grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); }
+.fa-list { position: sticky; top: 12px; max-height: calc(100vh - 24px); overflow: hidden; display: flex; flex-direction: column; }
+.fa-filters { display: grid; gap: 10px; }
+.fa-count { font-size: 12.5px; color: var(--text-muted); margin: 0; }
+.fa-people { list-style: none; margin: 0; padding: 0; overflow-y: auto; display: grid; gap: 6px; min-height: 0; }
+.fa-person { width: 100%; text-align: left; display: grid; gap: 2px; padding: 9px 11px; min-height: 44px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); color: var(--text); cursor: pointer; font: inherit; }
+.fa-person:hover { border-color: var(--primary); }
+.fa-person[aria-current="true"] { border-color: var(--primary); box-shadow: inset 3px 0 0 var(--primary); background: var(--primary-subtle, var(--surface)); }
+.fa-person b { font-size: 14px; }
+.fa-person small { color: var(--text-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fa-chips { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 2px; }
+.fa-n { font-size: 11px; color: var(--text-muted); margin-left: auto; }
+.fa-edit { min-width: 0; }
+.fa-head { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; align-items: center; }
+.fa-head h2 { font-size: 22px; margin: 0 0 4px; overflow-wrap: anywhere; }
+.fa-head p { margin: 0 0 10px; }
+.fa-prev canvas { width: 180px; height: 210px; border-radius: 14px; background: radial-gradient(circle at 50% 35%, #475569, #0f172a); display: block; }
+.fa-body { display: grid; gap: 14px; }
+.fa .gs-fields { align-items: start; }
+.fa textarea.gs-input, .fa .fa-line textarea { font-weight: 400; font-family: inherit; }
+.fa-body textarea, .fa textarea { width: 100%; resize: vertical; font: 14px/1.45 inherit; font-family: inherit; }
+.fa-body input[type="range"] { width: 100%; }
+.fa-body input[type="color"], .fa-colour { width: 100%; min-height: 40px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); padding: 3px; }
+.fa-hint { font-size: 12.5px; color: var(--text-muted); margin: 0; overflow-wrap: anywhere; }
+.fa-status { font-size: 13px; font-weight: 600; }
+.fa-status--ok { color: var(--success, #15803d); }
+.fa-status--bad { color: var(--danger, #c0392b); }
+.fa-routine { display: grid; gap: 8px; }
+.fa-routine input { width: 84px; min-width: 0; }
+.fa-routine select { max-width: 240px; padding: 8px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); }
+.fa-group { border: 1px solid var(--border); border-radius: 12px; padding: 0 12px; margin-top: 8px; }
+.fa-group summary { cursor: pointer; font-weight: 700; padding: 11px 0; min-height: 44px; box-sizing: border-box; }
+.fa-line { display: grid; gap: 6px; padding: 10px 0; border-top: 1px solid var(--border); }
+.fa-line--edited { box-shadow: inset 3px 0 0 var(--accent, #c9a227); padding-left: 10px; }
+.fa-orig { font-size: 12.5px; color: var(--text-muted); display: grid; gap: 1px; }
+.fa-orig small { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; }
+.fa-where { color: var(--text-muted); font-size: 11.5px; }
+.fa-err { color: var(--danger, #c0392b); font-size: 12.5px; }
+.fa-err:empty { display: none; }
+/* config preview */
+.fa-preview { display: grid; gap: 12px; }
+.fa-title { border-radius: 14px; padding: 22px 16px; text-align: center; color: #fff; display: grid; gap: 6px; }
+.fa-title b { font: 900 clamp(22px, 4vw, 36px)/1.05 system-ui, sans-serif; letter-spacing: -.02em; overflow-wrap: anywhere; }
+.fa-title span { font-size: 14px; opacity: .85; }
+.fa-sign { width: 100%; height: auto; border-radius: 10px; display: block; }
+.fa-letters { display: flex; justify-content: center; gap: 10px; padding: 14px; border-radius: 12px; background: #9fd27c; flex-wrap: wrap; }
+.fa-glyph { display: grid; grid-template-columns: repeat(3, 12px); grid-auto-rows: 12px; gap: 2px; }
+.fa-glyph i { display: block; border-radius: 2px; }
+.fa-tab { display: flex; align-items: center; gap: 8px; margin: 0; padding: 8px 12px; border-radius: 10px 10px 0 0; background: var(--neutral-subtle); font-size: 13px; max-width: 280px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.fa-tab__dot { width: 12px; height: 12px; border-radius: 3px; background: var(--primary); flex: none; }
+/* credits */
+.fa-grow { flex: 1 1 220px; }
+.fa-sec { border: 1px solid var(--border); border-radius: 14px; padding: 12px; display: grid; gap: 10px; margin-top: 10px; }
+.fa-sec__head .fa-sec__t { flex: 1 1 180px; font-weight: 700; }
+.fa-entries { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.fa-entry { display: grid; grid-template-columns: 22px repeat(3, minmax(0, 1fr)); gap: 6px; align-items: center; padding: 8px; border: 1px solid var(--border); border-radius: 11px; background: var(--surface); }
+.fa-entry .fa-wide { grid-column: span 2; display: grid; }
+.fa-entry .fa-wide + .fa-wide { grid-column: span 1; }
+.fa-entry .fa-ctl { grid-column: 2 / -1; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.fa-entry .gs-input { min-width: 0; }
+.fa-grip { cursor: grab; color: var(--text-muted); text-align: center; user-select: none; grid-row: span 3; }
+.fa-pending { border-style: dashed; }
+.fa-off { opacity: .55; }
+.fa-drag { opacity: .4; }
+.fa-over { outline: 2px solid var(--primary); }
+.fa-mini { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; min-height: 44px; }
+.fa-mini input { width: 18px; height: 18px; }
+.fa-warn { border-color: var(--accent, #c9a227); color: var(--text); background: var(--accent-subtle, transparent); }
+.fa-warn ul { margin: 0; padding-left: 18px; }
+.fa-roll { max-height: 70vh; overflow-y: auto; text-align: center; border-radius: 12px; padding: 18px 12px; background: #0b1220; color: #fff; }
+.fa-roll h3 { font-size: 22px; margin: 0; }
+.fa-r-tag { opacity: .8; font-size: 13px; }
+.fa-r-section { margin-top: 18px; font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: #fbbf24; }
+.fa-r-name { font-weight: 800; margin-top: 8px; }
+.fa-r-role, .fa-r-note { font-size: 12.5px; opacity: .8; }
+.fa-r-gap { height: 10px; }
+.fa-r-outro { margin-top: 16px; font-weight: 700; }
+@media (max-width: 900px) {
+  .fa-cols, .fa-cols--even, .fa-cols--wide { grid-template-columns: minmax(0, 1fr); }
+  .fa-list { position: static; max-height: 46vh; }
+}
+@media (max-width: 560px) {
+  .fa-head { grid-template-columns: 110px minmax(0, 1fr); gap: 12px; }
+  .fa-prev canvas { width: 110px; height: 128px; }
+  .fa-head h2 { font-size: 18px; }
+  .fa-entry { grid-template-columns: 18px minmax(0, 1fr); }
+  .fa-entry .fa-wide, .fa-entry .fa-wide + .fa-wide, .fa-entry .fa-ctl { grid-column: 2; }
+  .fa-entry > .gs-input { grid-column: 2; }
+}

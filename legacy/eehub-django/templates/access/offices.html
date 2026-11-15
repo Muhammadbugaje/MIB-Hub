@@ -1,0 +1,68 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Offices{% endblock %}
+{% block page_title %}Offices{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "badge-check" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Offices</h1>
+    <p class="ee-page-header__description">HOD, Exam Officer, Class Rep and every other role held by appointment. Each office carries its own permissions and its own dashboard.</p>
+  </div>
+  <div class="ee-page-header__actions">
+    {% if request.user|has_perm:"accounts.matrix_edit" %}<a class="btn btn-ghost" href="{% url 'access:matrix' %}">{% icon "grid-3x3" 16 %} Matrix</a>{% endif %}
+    <a class="btn btn-primary" href="{% url 'access:office_create' %}">{% icon "circle-plus" 16 %} New office</a>
+  </div>
+</header>
+{% include "access/_subnav.html" with section="offices" %}
+
+{% if templates %}
+<section class="acc-templates">
+  <div class="acc-templates__head"><b>{% icon "layout-template" 15 %} Build an office on the fly</b><span class="ee-card__sub">Start from a template: permissions, dashboard, icon and colour come with it.</span></div>
+  <div class="acc-templates__row">{% for t in templates %}
+    <a class="acc-tpl" href="{% url 'access:office_create' %}?from={{ t.code }}"><span class="ee-ic tone-{{ t.color }}">{% icon t.icon 16 %}</span><span><b>{{ t.short_name|default:t.name }}</b><small>{{ t.description|truncatechars:60 }}</small></span>{% icon "plus" 15 %}</a>
+  {% endfor %}</div>
+</section>
+{% endif %}
+
+<form method="get" class="acc-toolbar" role="search" aria-label="Filter results">
+  <label class="acc-search">{% icon "search" 16 %}<input type="search" name="q" value="{{ q }}" placeholder="Search offices…" aria-label="Search offices"></label>
+  <select name="category" aria-label="Category" data-autosubmit><option value="">Every category</option>{% for k, l in categories %}<option value="{{ k }}"{% if category == k %} selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+  <select name="show" aria-label="Show" data-autosubmit><option value="">Active and inactive</option><option value="templates"{% if show == "templates" %} selected{% endif %}>Templates only</option><option value="inactive"{% if show == "inactive" %} selected{% endif %}>Switched off</option></select>
+  <button class="btn btn-ghost" type="submit">Filter</button>
+</form>
+
+{% for g in grouped %}
+<section class="acc-ogroup">
+  <h2 class="acc-ogroup__title">{{ g.label }} <span>{{ g.offices|length }}</span></h2>
+  <div class="acc-ocards">{% for o in g.offices %}
+    <article class="acc-ocard{% if not o.is_active %} is-off{% endif %}">
+      <div class="acc-ocard__top">
+        <span class="ee-ic tone-{{ o.color }}">{% icon o.icon 18 %}</span>
+        <div class="acc-ocard__name"><a href="{% url 'access:office_edit' o.code %}" class="link-plain"><b>{{ o.name }}</b></a>
+          <small>{{ o.get_profile_kind_display }} · {{ o.get_scope_kind_display }}</small></div>
+        <span class="acc-holders" title="Current holders">{% icon "users" 13 %} {{ o.holders }}{% if o.max_holders %}/{{ o.max_holders }}{% endif %}</span>
+      </div>
+      {% if o.description %}<p class="acc-ocard__desc">{{ o.description|truncatechars:110 }}</p>{% endif %}
+      <div class="acc-chips">
+        <span class="ee-chip">{% icon "shield-check" 12 %} {{ o.perm_count }} permission{{ o.perm_count|pluralize }}</span>
+        <span class="ee-chip">{% icon "layout-dashboard" 12 %} {{ o.dashboard_widgets|length }} widget{{ o.dashboard_widgets|length|pluralize }}</span>
+        {% if o.is_template %}<span class="ee-chip ee-chip--gold">Template</span>{% endif %}
+        {% if not o.is_active %}<span class="ee-chip ee-chip--ember">Switched off</span>{% endif %}
+        {% if not o.is_system %}<span class="ee-chip ee-chip--volt">Custom</span>{% endif %}
+      </div>
+      <div class="acc-ocard__actions">
+        <a class="btn btn-ghost btn-sm" href="{% url 'access:office_edit' o.code %}">{% icon "pencil" 14 %} Edit</a>
+        {% if request.user|has_perm:"accounts.offices_appoint" and o.is_active %}<a class="btn btn-ghost btn-sm" href="{% url 'access:office_appoint' o.code %}">{% icon "user-plus" 14 %} Appoint</a>{% endif %}
+        <a class="btn btn-ghost btn-sm" href="{% url 'access:office_create' %}?from={{ o.code }}" title="Copy this office">{% icon "copy" 14 %} Copy</a>
+      </div>
+    </article>
+  {% endfor %}</div>
+</section>
+{% empty %}
+  {% url 'access:offices' as clear %}{% include "partials/empty_state.html" with variant="filtered" title="No offices match" body="Try another search or category." action_url=clear action_label="Show all offices" action_class="btn-ghost" %}
+{% endfor %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

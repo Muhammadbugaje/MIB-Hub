@@ -1,0 +1,50 @@
+{% load ee_tags %}{% with w=f.field.widget.input_type|default:"" %}
+{% if f.field.widget.input_type == "checkbox" %}
+  <label class="mg-switch" for="{{ f.id_for_label }}">
+    {{ f }}<span class="mg-switch__track" aria-hidden="true"></span>
+    <span class="mg-switch__text"><b>{{ f.label }}</b>{% if f.help_text %}<small>{{ f.help_text }}</small>{% endif %}</span>
+  </label>
+  {% if f.errors %}<ul class="errorlist">{% for e in f.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+{% elif f.field.widget.input_type == "file" %}
+  <div class="ee-field mg-file">
+    <span class="mg-label">{{ f.label }}{% if f.field.required %} <span class="mg-req">*</span>{% endif %}</span>
+    {% with cur=f.value %}{% if cur and cur.url %}
+      <div class="mg-file__current"><img src="{{ cur.url }}" alt=""><div><small>Current picture</small>{% if not f.field.required %}<label class="check"><input type="checkbox" name="{{ f.html_name }}-clear" id="{{ f.id_for_label }}-clear"> Remove it</label>{% endif %}</div></div>
+    {% endif %}{% endwith %}
+    <label class="mg-drop" data-drop>
+      <span class="mg-drop__ic">{% icon "image-plus" 22 %}</span>
+      <span class="mg-drop__t">Drop a picture here, or <b>browse</b></span>
+      <span class="mg-drop__h">JPG, PNG or WebP. Large photos are resized automatically.</span>
+      <input type="file" name="{{ f.html_name }}" id="{{ f.id_for_label }}" accept="image/jpeg,image/png,image/webp">
+      <img class="mg-drop__preview" alt="" hidden>
+    </label>
+    {% if f.help_text %}<p class="help">{{ f.help_text }}</p>{% endif %}
+    {% if f.errors %}<ul class="errorlist">{% for e in f.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+{% elif f.field.widget.attrs.data_markdown or "mg-md__input" in f.field.widget.attrs.class %}
+  <div class="ee-field mg-md" data-md>
+    <div class="mg-md__bar">
+      <label class="mg-label" for="{{ f.id_for_label }}">{{ f.label }}</label>
+      <div class="mg-md__tools" role="toolbar" aria-label="Formatting" data-segmented>
+        <button type="button" data-md-wrap="**" title="Bold">{% icon "bold" 15 %}</button>
+        <button type="button" data-md-wrap="*" title="Italic">{% icon "italic" 15 %}</button>
+        <button type="button" data-md-line="## " title="Heading">{% icon "heading-2" 15 %}</button>
+        <button type="button" data-md-line="- " title="List">{% icon "list" 15 %}</button>
+        <button type="button" data-md-line="1. " title="Numbered list">{% icon "list-ordered" 15 %}</button>
+        <button type="button" data-md-link title="Link">{% icon "link" 15 %}</button>
+      </div>
+      <div class="mg-md__modes" role="group" aria-label="Editor mode" data-segmented><button type="button" class="is-active" aria-pressed="true" data-md-mode="write">Write</button><button type="button" aria-pressed="false" data-md-mode="preview" data-preview-url="{% url 'manage:preview' %}">Preview</button></div>
+    </div>
+    {{ f }}
+    <div class="mg-md__preview pub-prose" hidden></div>
+    <p class="help">{% if f.help_text %}{{ f.help_text }} {% endif %}Markdown: ## heading, **bold**, - list, [text](https://link).</p>
+    {% if f.errors %}<ul class="errorlist">{% for e in f.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+{% else %}
+  <div class="ee-field">
+    <label class="mg-label" for="{{ f.id_for_label }}">{{ f.label }}{% if f.field.required %} <span class="mg-req">*</span>{% endif %}</label>
+    {{ f }}
+    {% if f.help_text %}<p class="help">{{ f.help_text }}</p>{% endif %}
+    {% if f.errors %}<ul class="errorlist">{% for e in f.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+  </div>
+{% endif %}{% endwith %}

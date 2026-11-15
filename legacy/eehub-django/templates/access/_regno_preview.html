@@ -1,0 +1,17 @@
+{% load ee_tags %}{% if p.error %}<div class="acc-rx acc-rx--bad">{% icon "circle-x" 18 %}<div><b>Pattern problem</b><p>{{ p.error }}</p></div></div>
+{% elif p.empty %}<div class="acc-rx acc-rx--empty">{% icon "wand-sparkles" 22 %}<div><b>Type one or more sample numbers</b><p>EE Hub reads them and writes the pattern for you — U21EE1031 becomes “U, 2 digits, EE, 4 digits”.</p></div></div>
+{% else %}
+<div class="acc-rx">
+  <div class="acc-rx__label">{% if p.auto %}{% icon "wand-sparkles" 14 %} Pattern written from your samples{% else %}{% icon "pencil" 14 %} Your pattern{% endif %}</div>
+  <div class="acc-rx__code"><code>{{ p.pattern }}</code><button type="button" class="btn btn-ghost btn-icon btn-sm" data-copy="{{ p.pattern }}" aria-label="Copy pattern">{% icon "copy" 15 %}</button></div>
+  {% include "access/_regno_tokens.html" with tokens=p.tokens %}
+  <p class="acc-rx__explain"><b>In words:</b> {{ p.explain|default:"(no plain-English reading for this pattern)" }}.</p>
+  {% if p.example %}<p class="acc-rx__example">Example that fits: <code>{{ p.example }}</code></p>{% endif %}
+  {% if p.samples %}<ul class="acc-samples">{% for s in p.samples %}<li class="{% if s.ok %}is-ok{% else %}is-bad{% endif %}">{% if s.ok %}{% icon "check" 13 %}{% else %}{% icon "x" 13 %}{% endif %}<code>{{ s.value }}</code></li>{% endfor %}</ul>{% endif %}
+  {% if p.overlaps %}<div class="acc-rx__warn">{% icon "triangle-alert" 15 %}<span>Numbers like this also match {% for c in p.overlaps %}<b>{{ c.name }}</b>{% if not forloop.last %}, {% endif %}{% endfor %}. The format with the lower priority number is checked first.</span></div>{% endif %}
+</div>
+{% endif %}
+{% if p.test %}<div class="acc-test-result {% if p.test_ok %}is-ok{% else %}is-bad{% endif %}" role="status">
+  {% if p.test_ok %}{% icon "circle-check" 18 %}<div><b><code>{{ p.test }}</code> fits this format.</b>{% if p.also %}<p>It also fits {% for c in p.also %}{{ c.name }}{% if not forloop.last %}, {% endif %}{% endfor %}.</p>{% endif %}</div>
+  {% else %}{% icon "circle-x" 18 %}<div><b><code>{% if p.why %}<span class="acc-ok-part">{{ p.why.ok_part }}</span><span class="acc-bad-part">{{ p.why.bad_part }}</span>{% else %}{{ p.test }}{% endif %}</code> does not fit.</b>{% if p.why %}<p>{{ p.why.text }}</p>{% endif %}{% if p.also %}<p>It fits {% for c in p.also %}<b>{{ c.name }}</b>{% if not forloop.last %}, {% endif %}{% endfor %} instead.</p>{% endif %}</div>{% endif %}
+</div>{% endif %}

@@ -62,8 +62,8 @@
   }
  },
  "hair": {
-  "root": "#3b2417",
-  "tip": "#93603c",
+  "root": "#4c2f1d",
+  "tip": "#a06a42",
   "grad": 0.25,
   "gradAmt": 0.9,
   "part": 0,
@@ -92,12 +92,17 @@
   "gravity": 0.6,
   "taperStart": 0.7,
   "tipPow": 0.7,
-  "rough": 0.68,
+  "rough": 0.85,
   "gloss": 0.0,
   "sheen": "#9a6a48",
   "lockStart": 0.1,
-  "capOverlap": 0.07,
-  "softStart": 0.12
+  "capOverlap": -0.012,
+  "softStart": 0.12,
+  "capTone": 1.45,
+  "partTone": 0.32,
+  "partWidth": 1.5,
+  "noSelfShadow": true,
+  "env": 0.6
  },
  "outfits": [
   {

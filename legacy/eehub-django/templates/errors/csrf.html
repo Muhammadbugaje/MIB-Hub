@@ -1,0 +1,20 @@
+{% extends "errors/_base.html" %}
+{% block title %}Page expired{% endblock %}
+{% block code %}Security check{% endblock %}
+{% block heading %}This page expired before you sent it{% endblock %}
+{% block lead %}For your safety EE Hub checks that every form comes from a page it just gave you. This one was too old (or your browser blocked our cookie). Go back, refresh the page, and send it again — nothing was saved.{% endblock %}
+{% block art %}
+<svg viewBox="0 0 240 160" width="240" height="160" role="presentation" focusable="false">
+  <circle class="ea-orbit" cx="120" cy="80" r="62" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 8"/>
+  <g class="ea-float">
+    <path d="M120 42l34 12v24c0 22-15 36-34 42-19-6-34-20-34-42V54z" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/>
+    <circle cx="120" cy="80" r="14" fill="none" stroke="var(--primary)" stroke-width="3"/>
+    <path d="M120 72v9l6 4" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>
+{% endblock %}
+{% block actions %}
+  <a class="btn btn-primary" href="javascript:history.back()">Go back and refresh</a>
+  <a class="btn btn-ghost" href="/">Go to the home page</a>
+{% endblock %}
+{% block extra %}{% if reason %}<p class="error-lead" style="margin-top:18px;font-size:.8rem;opacity:.7">Reason: {{ reason }}</p>{% endif %}{% endblock %}

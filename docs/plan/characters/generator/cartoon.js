@@ -45,7 +45,7 @@ function surf(g, nu, nv, P, o = {}) {
   const base = g.p.length / 3;
   pts.forEach((p, idx) => {
     const n = N[idx], l = Math.hypot(n[0], n[1], n[2]) || 1, i = idx % W, j = (idx - i) / W, u = i / nu, v = j / nv;
-    g.p.push(p[0], p[1], p[2]); g.n.push(flip * n[0] / l, flip * n[1] / l, flip * n[2] / l);
+    g.p.push(p[0], p[1], p[2]); { let q = [flip * n[0] / l, flip * n[1] / l, flip * n[2] / l]; if (o.nrm) q = o.nrm(p, q); g.n.push(q[0], q[1], q[2]); }
     g.uv.push(u * (o.us || 1), v * (o.vs || 1));
     const c = o.col ? o.col(u, v, p) : (o.color || [1, 1, 1]); g.c.push(c[0], c[1], c[2], 1);
   });
@@ -246,7 +246,8 @@ function buildFace(G, H, look, scene) {
   const BB = G.B, czAt = y => BB.prof(Math.min(y, 0.771))[3];
   const nk = curve([[0, H.c[1] - 0.02, 0.012], [0, 0.79, 0.01], [0, 0.768, czAt(0.768)], [0, 0.74, czAt(0.74)], [0, 0.712, czAt(0.712)]]);
   tube(G.skin, nk, 48, 40, (t, p) => { const b = BB.prof(Math.min(p.y, 0.771)), w = sst(0.786, 0.768, p.y), e = 0.0012;
-    return { rx: lerp(BB.neckR, b[0] + e, w), rz: lerp(BB.neckR * 1.05, b[1] + e, w), rzb: lerp(BB.neckR * 1.05, b[2] + e, w) }; });
+    return { rx: lerp(BB.neckR, b[0] + e, w), rz: lerp(BB.neckR * 1.05, b[1] + e, w), rzb: lerp(BB.neckR * 1.05, b[2] + e, w) }; },
+    { nrm: (p, q) => { const w = sst(0.79, 0.772, p[1]); if (w <= 0) return q; const h = norm([q[0], 0, q[2]]); return norm([lerp(q[0], h[0], w), lerp(q[1], 0, w), lerp(q[2], h[2], w)]); } });
   // eyes
   const ex = F.eyeX * F.w, ey = F.eyeY * F.chin, er = F.eyeR, eh = F.eyeH || 1.05;
   const eyes = [];
@@ -322,8 +323,15 @@ function buildHair(G, H, B, look) {
   const capOff = S.cap || 0.006, vol = S.volume || 0;
   const offAt = (d, t) => capOff + vol * 0.012 * sst(0.0, 0.6, d[1] + 0.3) * (0.5 + 0.5 * t) + (d[2] > 0 ? vol * 0.006 : 0);
   const capPt = (s, t, sd, extra = 0) => { const d = slerp(partDir(s), bound(s, sd), t), r = rad(d) + offAt(d, t) + extra, p = H.P(d), l = Math.hypot(p[0], p[1], p[2]); return [p[0] / l * r + C[0], p[1] / l * r + C[1], p[2] / l * r + C[2]]; };
-  const gcol = (u, v) => root.map(x => x);
-  [-1, 1].forEach(sd => surf(G.hair, 30, 18, (u, v) => capPt(u, lerp(-(S.capOverlap || 0), 1, v), sd), { center: C, col: gcol, us: 6, vs: 1 }));
+  const capC = root.map(x => Math.min(1, x * (S.capTone || 1))), gcol = (u, v) => capC;
+  [-1, 1].forEach(sd => surf(G.scalp, 30, 18, (u, v) => capPt(u, lerp(-(S.capOverlap || 0), 1, v), sd), { center: C, col: gcol, us: 6, vs: 1 }));
+  // continuous scalp dome under both cap halves: no see-through at the parting; parting = soft colour line
+  { const skinC = hex(look.skin), pd = []; for (let i = 0; i <= 40; i++) pd.push(partDir(i / 40 * 0.6));
+    const pw = (S.partWidth || 1.3) * D, pmix = S.partTone == null ? 0.28 : S.partTone;
+    surf(G.scalp, 72, 30, (u, v) => { const az = (u * 2 - 1) * Math.PI, el = lerp(89.6 * D, hl(az) + 1.0 * D, v), d = dirOf(az, el), r = rad(d) + capOff * 0.5, p = H.P(d), l = Math.hypot(p[0], p[1], p[2]);
+      return [p[0] / l * r + C[0], p[1] / l * r + C[1], p[2] / l * r + C[2]]; },
+      { closed: true, center: C, us: 6, vs: 1, col: (u, v, p) => { const d = norm([p[0] - C[0], p[1] - C[1], p[2] - C[2]]); let m = 1; pd.forEach(q => { m = Math.min(m, Math.acos(clamp(d[0] * q[0] + d[1] * q[1] + d[2] * q[2], -1, 1))); });
+        const k = pmix * (1 - sst(0, pw, m)); return capC.map((x, i) => x + (skinC[i] * 0.8 - x) * k); } }); }
   // collision bodies
   const collide = p => {
     // head
@@ -382,7 +390,7 @@ function buildHair(G, H, B, look) {
 
 /* ---------------- clothing ---------------- */
 function torsoGarment(g, B, sp, o = {}) {
-  const yb = sp.bottom, off = sp.off || 0.004, neckY = (sp.neckUp ? 0.765 + sp.neckUp : 0.766), nd = sp.neckDepth || 0, nshape = sp.neck || 'crew';
+  const yb = sp.bottom, off = sp.off || 0.004, neckY = (sp.neckUp ? 0.765 + sp.neckUp : (sp.neckY || 0.763)), nd = sp.neckDepth || 0, nshape = sp.neck || 'crew';
   const flareTop = sp.flareTop || 0.56, flare = sp.flare || 0;
   const topY = th => { const fr = Math.max(0, -Math.sin(th)), bk = Math.max(0, Math.sin(th)); let d = 0;
     if (nshape === 'square') d = nd * sst(0.6, 0.8, fr) + 0.004 * sst(0.3, 0.6, fr);
@@ -402,8 +410,8 @@ function torsoGarment(g, B, sp, o = {}) {
     return p;
   }, { closed: !sp.openFront, center: [0, (yb + 0.75) / 2, 0], us: sp.us || 3, vs: sp.vs || 3, col: o.col });
   if (nshape !== 'none' && !sp.openFront) {
-    const tp = []; for (let i = 0; i <= 64; i++) { const th = i / 64 * 2 * Math.PI, y = topY(th); const p = torsoPt(B, y, th, off + 0.0105, null); tp.push([p[0], y + 0.0005, p[2]]); }
-    tube(g, curve(tp), 8, 160, () => ({ rx: 0.0022, rz: 0.0022 }), { ref: () => new V(0, 1, 0) });
+    const tp = []; for (let i = 0; i <= 128; i++) { const th = i / 128 * 2 * Math.PI, y = topY(th); const p = torsoPt(B, y, th, off + 0.0105, null); tp.push([p[0], y + 0.0005, p[2]]); }
+    tube(g, curve(tp), 8, 320, () => ({ rx: 0.0022, rz: 0.0022 }), { ref: () => new V(0, 1, 0) });
   }
   return null;
 }
@@ -453,7 +461,7 @@ function sunglasses(G, H, sp) {
 function cap(G, H, sp) {
   const C = H.c, F = H.F, R = [F.w + 0.014, F.top * 0.62 + 0.012, F.d + 0.012], y0 = C[1] + F.top * 0.28;
   surf(G.cap, 40, 14, (u, v) => { const th = u * 2 * Math.PI, ph = v * Math.PI / 2; return [Math.sin(th) * Math.sin(ph) * R[0], y0 + Math.cos(ph) * R[1] * 1.0, C[2] + 0.004 - Math.cos(th) * Math.sin(ph) * R[2]]; }, { closed: true, center: [C[0], y0, C[2]] });
-  surf(G.cap, 24, 6, (u, v) => { const a = (u - 0.5) * 2.6, r = lerp(R[2] * 0.95, R[2] + 0.06, v); return [Math.sin(a) * r * (R[0] / R[2]) * (1 - 0.25 * v), y0 + 0.004 - v * 0.012 - Math.abs(Math.sin(a)) * 0.006 * v, C[2] + 0.004 - Math.cos(a) * r]; }, { center: [0, y0 + 1, C[2]] });
+  surf(G.cap, 24, 6, (u, v) => { const a = (u - 0.5) * 1.9, r = lerp(R[2] * 0.95, R[2] + 0.07, v); return [Math.sin(a) * r * (R[0] / R[2]) * (1 - 0.25 * v), y0 + 0.004 - v * 0.012 - Math.abs(Math.sin(a)) * 0.006 * v, C[2] + 0.004 - Math.cos(a) * r]; }, { center: [0, y0 + 1, C[2]] });
   ell(G.cap, [0, y0 + R[1] * 0.99, C[2] + 0.004], [0.006, 0.003, 0.006]);
   for (let i = 0; i < 3; i++) { const a = (i - 1) * 0.9; tube(G.capTrim, curve([[Math.sin(a) * R[0] * 0.98, y0 + 0.003, C[2] + 0.004 - Math.cos(a) * R[2] * 0.98], [Math.sin(a) * R[0] * 0.6, y0 + R[1] * 0.85, C[2] + 0.004 - Math.cos(a) * R[2] * 0.6], [0, y0 + R[1] * 1.0, C[2] + 0.004]]), 4, 10, () => ({ rx: 0.0009, rz: 0.0009 })); }
 }
@@ -520,7 +528,7 @@ function pbr(scene, name, col, o = {}) {
 function build(scene, look, outfitIdx = 0) {
   SEED = look.seed || 7;
   const B = bodyModel(look), H = headModel(look), O = look.outfits[outfitIdx];
-  const keys = ['skin', 'eye', 'lash', 'brow', 'lip', 'mouth', 'teeth', 'hair', 'shoe', 'frame', 'lens', 'cap', 'capTrim', 'choker', 'metal', 'cat', 'catEye', 'bag', 'white', 'btn'];
+  const keys = ['skin', 'eye', 'lash', 'brow', 'lip', 'mouth', 'teeth', 'hair', 'scalp', 'shoe', 'frame', 'lens', 'cap', 'capTrim', 'choker', 'metal', 'cat', 'catEye', 'bag', 'white', 'btn'];
   const G = {}; keys.forEach(k => G[k] = new Geo()); G.B = B;
   const garmentGeos = [];
   const skinC = hex(look.skin);
@@ -568,7 +576,7 @@ function build(scene, look, outfitIdx = 0) {
     lip: pbr(scene, 'lip', hex(look.face.mouth.lip), { rough: 0.35, clear: 0.4, clearRough: 0.25 }),
     mouth: pbr(scene, 'mouth', hex('#5a1e22'), { rough: 0.6 }),
     teeth: pbr(scene, 'teeth', hex('#f6f1ea'), { rough: 0.3 }),
-    hair: pbr(scene, 'hair', [1, 1, 1], { rough: look.hair.rough || 0.45, tex: streakTex(scene), sheen: 0.4, sheenCol: hex(look.hair.sheen || '#ffd9b0'), clear: look.hair.gloss == null ? 0.3 : look.hair.gloss, clearRough: 0.2 }),
+    hair: pbr(scene, 'hair', [1, 1, 1], { rough: look.hair.rough || 0.45, tex: streakTex(scene), sheen: 0.4, sheenCol: hex(look.hair.sheen || '#ffd9b0'), clear: look.hair.gloss == null ? 0.3 : look.hair.gloss, clearRough: 0.2, env: look.hair.env }),
     shoe: pbr(scene, 'shoe', [1, 1, 1], { rough: 0.6 }),
     frame: pbr(scene, 'frame', hex('#1a1412'), { rough: 0.3, clear: 0.6 }),
     lens: pbr(scene, 'lens', hex('#2a1d18'), { rough: 0.05, clear: 1, clearRough: 0.02 }),
@@ -581,12 +589,12 @@ function build(scene, look, outfitIdx = 0) {
     bag: pbr(scene, 'bag', hex((O.items.find(i => i.type === 'bag') || {}).col || '#141214'), { rough: 0.4, clear: 0.4 }),
     white: pbr(scene, 'white', hex((O.items.find(i => i.trimCol) || {}).trimCol || '#f4f2ee'), { rough: 0.8 }),
     btn: pbr(scene, 'btn', hex((O.items.find(i => i.buttons) || { buttons: {} }).buttons.col || '#ffffff'), { rough: 0.3, clear: 0.6 }),
-  };
+  }; M.scalp = M.hair;
   const root = new BABYLON.TransformNode('char_' + look.name, scene), meshes = [];
   keys.forEach(k => { const m = G[k].mesh(look.name + '_' + k, scene, M[k]); if (m) { m.parent = root; meshes.push(m); } });
   garmentGeos.forEach(([g, mat, ty], i) => { const m = g.mesh(look.name + '_' + ty + i, scene, mat); if (m) { m.parent = root; meshes.push(m); } });
   root.scaling.setAll(look.height || 1.7);
-  meshes.forEach(m => { m.receiveShadows = true; });
+  meshes.forEach(m => { m.receiveShadows = !(m.name.endsWith('_scalp') || (look.hair.noSelfShadow && m.name.endsWith('_hair'))); });
   return { root, meshes, B, H, update: t => { root.getChildMeshes().forEach(() => {}); } };
 }
 window.CC = { build };

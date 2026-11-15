@@ -1,0 +1,26 @@
+{% load ee_tags %}<div class="acc-picker" data-perm-picker>
+  <div class="acc-picker__bar">
+    <label class="acc-search">{% icon "search" 16 %}<input type="search" placeholder="Search permissions…" data-picker-search aria-label="Search permissions"></label>
+    <span class="acc-picker__count"><b data-picker-total>{{ selected_count }}</b> selected</span>
+    <button type="button" class="btn btn-ghost btn-sm" data-picker-expand>Open all</button>
+  </div>
+  {% for g in picker %}
+  <details class="acc-pgroup" data-picker-group{% if g.on_count or forloop.first %} open{% endif %}>
+    <summary>
+      <span class="acc-pgroup__title">{{ g.label }}</span>
+      {% if g.phase %}<span class="acc-phase" title="Starts to do something in phase {{ g.phase }}">Phase {{ g.phase }}</span>{% endif %}
+      <span class="acc-pgroup__count"><span data-group-count>{{ g.on_count }}</span>/{{ g.items|length }}</span>
+      <label class="acc-pgroup__all" onclick="event.stopPropagation()"><input type="checkbox" data-group-all aria-label="Select every permission in {{ g.label }}"> All</label>
+    </summary>
+    <ul class="acc-plist">
+      {% for i in g.items %}
+      <li data-picker-item data-search="{{ i.label|lower }} {{ i.full }}">
+        <label class="check"><input type="checkbox" name="perms" value="{{ i.full }}"{% if i.on %} checked{% endif %}>
+          <span class="acc-plist__text"><span>{{ i.label }}</span><code class="acc-code">{{ i.full }}</code></span></label>
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
+  <p class="acc-picker__none ee-empty" data-picker-none hidden>No permission matches that search.</p>
+</div>

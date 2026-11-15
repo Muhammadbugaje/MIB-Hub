@@ -1,0 +1,4 @@
+three.js r158 (npm three@0.158.0), MIT licence (see LICENSE).
+Only the files EE Hub's particle-field scene needs are kept.
+Local change: in examples/jsm/** the bare `from 'three'` imports were rewritten to
+'../../../build/three.module.min.js' so the modules load without an import map.

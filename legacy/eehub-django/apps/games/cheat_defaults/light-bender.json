@@ -1,0 +1,60 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Solve and finish this level",
+      "typed": "lbwin9",
+      "dial": "*179#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "solve",
+      "label": "Show the solution",
+      "typed": "lbsol1",
+      "dial": "*171#",
+      "note": "Turns the mirrors to a working answer."
+    },
+    {
+      "id": "moves",
+      "label": "Reset the turn counter",
+      "typed": "lbmov7",
+      "dial": "*177#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this level",
+      "typed": "lbstr4",
+      "dial": "*174#",
+      "note": ""
+    },
+    {
+      "id": "last",
+      "label": "Jump to the last level",
+      "typed": "lbend8",
+      "dial": "*178#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "lbslow3",
+      "dial": "*173#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "lbyay5",
+      "dial": "*175#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "No characters here: maker mode shows the solution, skips any level and jumps anywhere."
+  }
+}

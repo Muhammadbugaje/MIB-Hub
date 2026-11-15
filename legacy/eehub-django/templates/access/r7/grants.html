@@ -1,0 +1,50 @@
+{% extends "base.html" %}{% load ee_tags pager_tags %}
+{% block title %}Access grants{% endblock %}
+{% block page_title %}Access grants{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "timer" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Access grants</h1>
+    <p class="ee-page-header__description">Extra access for a piece of work, with a reason and an end date: an acting HOD, a temporary officer, a tutor for a semester. It stops by itself when the date passes.{% if not sees_all %} You see the grants you gave and the ones you hold.{% endif %}</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    <a class="btn btn-ghost" href="{% url 'access:how' %}#grants">{% icon "life-buoy" 16 %} How it works</a>
+    {% if can_give %}<a class="btn btn-primary" href="{% url 'access:grant_create' %}">{% icon "circle-plus" 16 %} Give access</a>{% endif %}
+  </div>
+</header>
+{% include "access/_subnav.html" with section="grants" %}
+
+<form method="get" class="r7a-toolbar" role="search">
+  <div class="acc-seg" role="tablist" aria-label="Status">
+    <a class="acc-seg__btn{% if status == 'current' %} is-on{% endif %}" href="?status=current">Running and upcoming <span class="r7a-count">{{ counts.current }}</span></a>
+    <a class="acc-seg__btn{% if status == 'ended' %} is-on{% endif %}" href="?status=ended">Ended <span class="r7a-count">{{ counts.ended }}</span></a>
+    <a class="acc-seg__btn{% if status == 'revoked' %} is-on{% endif %}" href="?status=revoked">Revoked <span class="r7a-count">{{ counts.revoked }}</span></a>
+  </div>
+  <input type="hidden" name="status" value="{{ status }}">
+  <label class="r7a-search">{% icon "search" 16 %}<input type="search" name="q" value="{{ q }}" placeholder="Name, e-mail, reason…" aria-label="Search grants"></label>
+</form>
+
+{% if rows %}
+<section class="ee-card">
+  <ul class="ee-list r7a-grants">{% for r in rows %}{% with g=r.g %}
+    <li class="{% if r.status == 'expired' or r.status == 'revoked' %}is-dimmed{% endif %}">
+      <span class="ee-ic {% if r.status == 'active' %}tone-green{% elif r.status == 'upcoming' %}tone-volt{% else %}tone-slate{% endif %}">{% if g.office_id %}{% icon g.office.icon 16 %}{% else %}{% icon "key-round" 16 %}{% endif %}</span>
+      <div class="ee-row__body">
+        <div class="ee-row__title">{{ g.user.get_full_name }} · {{ g.what|truncatechars:90 }}</div>
+        <div class="ee-row__meta">“{{ g.reason|truncatechars:80 }}” · {{ g.starts_at|date:"j M Y" }} → {{ g.ends_at|date:"j M Y" }}{% if g.scope_level %} · {{ g.scope_level }}{% endif %}{% if g.profile_kind %} · as {{ g.get_profile_kind_display|lower }}{% endif %} · by {{ g.granted_by.get_full_name|default:"system" }}{% if g.granted_via %} ({{ g.granted_via.grantor_office.label }}){% endif %}{% if g.source_label %} · for {{ g.source_label|truncatechars:40 }}{% endif %}{% if r.status == 'revoked' %} · revoked {{ g.revoked_at|date:"j M Y" }}{% if g.revoke_reason %}: {{ g.revoke_reason|truncatechars:50 }}{% endif %}{% endif %}</div>
+      </div>
+      <span class="badge {% if r.status == 'active' %}badge-success{% elif r.status == 'upcoming' %}badge-info{% endif %}">{% if r.status == 'active' %}Running{% elif r.status == 'upcoming' %}Starts {{ g.starts_at|date:"j M" }}{% elif r.status == 'expired' %}Ended{% else %}Revoked{% endif %}</span>
+      {% if r.can_revoke %}<form method="post" action="{% url 'access:grant_revoke' g.pk %}" class="inline" data-confirm="{{ g.user.get_full_name }} loses this access straight away." data-confirm-title="Revoke this grant?" data-confirm-label="Revoke">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="btn btn-ghost btn-sm" type="submit">{% icon "undo-2" 14 %} Revoke</button></form>{% endif %}
+    </li>{% endwith %}{% endfor %}</ul>
+</section>
+{% pager page %}
+{% else %}
+{% url 'access:grant_create' as new_url %}
+{% if can_give %}{% include "partials/empty_state.html" with title="No grants here" body="Give someone access for a while: choose the person, what they need, why, and until when." action_url=new_url action_label="Give access" %}
+{% else %}{% include "partials/empty_state.html" with title="No grants here" body="Grants you give or receive appear here." %}{% endif %}
+{% endif %}
+</div>
+{% endblock %}

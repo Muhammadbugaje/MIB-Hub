@@ -1,0 +1,42 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}Appointments to review{% endblock %}
+{% block page_title %}Appointments to review{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "user-x" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Appointments to review</h1>
+    <p class="ee-page-header__description">People who hold an office their profile no longer allows: for example a student or alumnus in a staff office, or a class rep who is not in that class. End them here; nobody new can be appointed this way.</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    <a class="btn btn-ghost" href="{% url 'access:how' %}#eligibility">{% icon "life-buoy" 16 %} How it works</a>
+    {% if rows %}<form method="post" action="{% url 'access:review_end_all' %}" class="inline" data-confirm="Every appointment listed here that you are allowed to end stops today. The people lose those offices' permissions at once." data-confirm-title="End all {{ rows|length }}?" data-confirm-label="End all">{% csrf_token %}<button class="btn btn-primary" type="submit">{% icon "calendar-x" 16 %} End all</button></form>{% endif %}
+  </div>
+</header>
+{% include "access/_subnav.html" with section="review" %}
+
+{% if rows %}
+<section class="ee-card">
+  <div class="ee-card__head"><h2>{% icon "triangle-alert" 17 %} {{ rows|length }} appointment{{ rows|length|pluralize }} break the rules</h2></div>
+  <ul class="ee-list r7a-review">{% for r in rows %}
+    <li>
+      <span class="ee-ic tone-{{ r.a.office.color|default:'gold' }}">{% icon r.a.office.icon 16 %}</span>
+      <div class="ee-row__body">
+        <div class="ee-row__title">{% if r.a.person.user_id %}<a href="{% url 'access:user_detail' r.a.person.user_id %}">{{ r.a.person.full_name }}</a>{% else %}{{ r.a.person.full_name }}{% endif %} · {{ r.a.office.name }}</div>
+        <div class="ee-row__meta">As {{ r.a.get_profile_kind_display|lower }} · {{ r.a.scope_text }} · since {{ r.a.start_date|date:"j M Y" }}</div>
+        <div class="r7a-why">{% icon "circle-alert" 14 %} {{ r.why }}</div>
+      </div>
+      <div class="btn-group">
+        {% if r.can_end %}<form method="post" action="{% url 'access:appointment_end' r.a.pk %}" class="inline" data-confirm="{{ r.a.person.plain_name }} stops holding {{ r.a.office.name }} today." data-confirm-title="End this appointment?" data-confirm-label="End appointment">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><input type="hidden" name="reason" value="not eligible for this office"><button type="submit" class="btn btn-ghost btn-sm">{% icon "calendar-x" 14 %} End</button></form>{% else %}<span class="badge">Not in your area</span>{% endif %}
+        {% if perms.accounts.offices_manage %}<a class="btn btn-ghost btn-sm" href="{% url 'access:office_edit' r.a.office.code %}#eligibility">Office rules</a>{% endif %}
+      </div>
+    </li>{% endfor %}</ul>
+</section>
+{% else %}
+{% url 'access:offices' as offices_url %}
+{% include "partials/empty_state.html" with title="Every appointment follows the rules" body="Nobody holds an office their profile does not allow. If you change who may hold an office, anyone affected appears here." action_url=offices_url action_label="See offices" %}
+{% endif %}
+</div>
+{% endblock %}

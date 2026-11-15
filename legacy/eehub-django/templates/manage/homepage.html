@@ -1,0 +1,80 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Homepage · Website{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/manage.css' %}">{% endblock %}
+{% block content %}
+<div class="mg-page">
+  {% include "manage/_shell_top.html" %}
+  <header class="mg-head">
+    <span class="mg-head__ic">{% icon "layout-template" 22 %}</span>
+    <div class="mg-head__text"><p class="ee-page-header__eyebrow">Website</p><h1>Homepage</h1><p>Choose what the homepage shows, the order of its sections and the style of the hero.</p></div>
+    <a class="btn btn-ghost" href="{% url 'content:home' %}" target="_blank" rel="noopener">{% icon "external-link" 15 %} View the homepage</a>
+  </header>
+
+  <div class="mg-home">
+    <form method="post" class="ee-card mg-home__settings" novalidate>
+      {% csrf_token %}<input type="hidden" name="action" value="settings">
+      <h2 class="mg-card-h">{% icon "house" 16 %} Homepage mode</h2>
+      <div class="mg-modes">
+        {% for radio in form.mode %}
+        <label class="mg-mode">
+          {{ radio.tag }}
+          <span class="mg-mode__art mg-mode__art--{{ radio.data.value }}" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span class="mg-mode__t"><b>{{ radio.choice_label }}</b><small>{% if radio.data.value == "default" %}The built-in landing page with the sections below.{% elif radio.data.value == "default_plus" %}The landing page, then every page marked 'show on homepage'.{% else %}One page you choose replaces the homepage.{% endif %}</small></span>
+        </label>
+        {% endfor %}
+      </div>
+      <div class="ee-field mg-page-pick" data-show-when="page">
+        <label class="mg-label" for="{{ form.page_slug.id_for_label }}">{{ form.page_slug.label }}</label>{{ form.page_slug }}
+        {% if form.page_slug.errors %}<ul class="errorlist">{% for e in form.page_slug.errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+      </div>
+
+      <h2 class="mg-card-h mg-mt">{% icon "sparkles" 16 %} Hero</h2>
+      <div class="mg-chips-radio">
+        {% for radio in form.hero_mode %}<label class="mg-chipr">{{ radio.tag }}<span>{% if radio.data.value == "animated" %}{% icon "zap" 15 %}{% elif radio.data.value == "slides" %}{% icon "gallery-horizontal" 15 %}{% else %}{% icon "layers" 15 %}{% endif %}{{ radio.choice_label }}</span></label>{% endfor %}
+      </div>
+      <p class="help">Slides: {{ slides_count }} active · <a href="{% url 'manage:slides' %}">manage hero slides</a>. Without slides the animated circuit is used.</p>
+      <div class="ee-field"><label class="mg-label" for="{{ form.typewriter_words.id_for_label }}">{{ form.typewriter_words.label }}</label>{{ form.typewriter_words }}<p class="help">{{ form.typewriter_words.help_text }}</p></div>
+      {% include "manage/_field.html" with f=form.show_ticker %}
+      {% include "manage/_field.html" with f=form.reduced_motion_default %}
+      <div class="mg-savebar mg-savebar--inline"><button class="btn btn-primary" type="submit">{% icon "save" 16 %} Save settings</button></div>
+    </form>
+
+    <form method="post" class="ee-card mg-home__sections" data-sections>
+      {% csrf_token %}<input type="hidden" name="action" value="sections">
+      <div class="mg-card-row"><h2 class="mg-card-h">{% icon "rows-3" 16 %} Sections</h2><span class="mg-count">Drag to reorder · switch off to hide</span></div>
+      <ol class="mg-sections" data-sortable>
+        {% for s in sections %}
+        <li class="mg-sec{% if not s.is_enabled %} is-off{% endif %}" draggable="true" data-key="{{ s.key }}">
+          <input type="hidden" name="order" value="{{ s.key }}">
+          <span class="mg-sec__grip" aria-hidden="true">{% icon "grip-vertical" 18 %}</span>
+          <span class="mg-sec__n">{{ forloop.counter }}</span>
+          <div class="mg-sec__body">
+            <b>{{ s.get_key_display }}</b>
+            <details><summary>Heading{% if s.title %}: {{ s.title }}{% endif %}</summary>
+              <input class="input" name="title_{{ s.key }}" value="{{ s.title }}" placeholder="Default heading" aria-label="Heading for {{ s.get_key_display }}">
+              <input class="input" name="subtitle_{{ s.key }}" value="{{ s.subtitle }}" placeholder="Default subtitle" aria-label="Subtitle for {{ s.get_key_display }}">
+            </details>
+          </div>
+          <span class="mg-sec__move"><button type="button" class="btn btn-ghost btn-sm btn-icon" data-move="-1" aria-label="Move {{ s.get_key_display }} up">{% icon "arrow-up" 14 %}</button><button type="button" class="btn btn-ghost btn-sm btn-icon" data-move="1" aria-label="Move {{ s.get_key_display }} down">{% icon "arrow-down" 14 %}</button></span>
+          <label class="mg-switch mg-switch--sm" title="Show on the homepage"><input type="checkbox" name="enabled" value="{{ s.key }}"{% if s.is_enabled %} checked{% endif %} aria-label="Show {{ s.get_key_display }}"><span class="mg-switch__track" aria-hidden="true"></span></label>
+        </li>
+        {% endfor %}
+      </ol>
+      <div class="mg-savebar mg-savebar--inline"><button class="btn btn-primary" type="submit">{% icon "save" 16 %} Save sections</button><span class="mg-count" data-sections-status></span></div>
+    </form>
+  </div>
+
+  <form method="post" class="ee-card mg-home__pages" novalidate>
+    {% csrf_token %}<input type="hidden" name="action" value="home_pages">
+    <div class="mg-card-row"><h2 class="mg-card-h">{% icon "file-text" 16 %} Pages on the homepage</h2><span class="mg-count">Used when the mode is 'Default + selected pages'{% if current_mode != "default_plus" %} (not the current mode){% endif %}</span></div>
+    {% if pages %}
+    <div class="ee-table-wrap"><table class="ee-table is-stacked">
+      <thead><tr><th>Page</th><th>Show</th><th>Order</th></tr></thead>
+      <tbody>{% for p in pages %}<tr><td data-label="Page"><b>{{ p.title }}</b> <small class="mg-sub">/p/{{ p.slug }}/</small></td><td data-label="Show"><label class="mg-switch mg-switch--sm"><input type="checkbox" name="show_{{ p.pk }}"{% if p.show_on_home %} checked{% endif %} aria-label="Show {{ p.title }} on the homepage"><span class="mg-switch__track" aria-hidden="true"></span></label></td><td data-label="Order"><input class="input mg-num" name="home_order_{{ p.pk }}" value="{{ p.home_order }}" inputmode="numeric" aria-label="Order"></td></tr>{% endfor %}</tbody>
+    </table></div>
+    <div class="mg-savebar mg-savebar--inline"><button class="btn btn-primary" type="submit">{% icon "save" 16 %} Save pages</button><a class="btn btn-ghost" href="{% url 'manage:page_create' %}">{% icon "plus" 15 %} New page</a></div>
+    {% else %}<p class="mg-count">No published pages yet. <a href="{% url 'manage:page_create' %}">Create one</a>.</p>{% endif %}
+  </form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/manage.js' %}" defer></script>{% endblock %}

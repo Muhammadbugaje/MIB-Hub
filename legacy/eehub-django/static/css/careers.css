@@ -1,0 +1,10 @@
+/* Careers: CV builder preview (Phase 8). The sheet stays paper-white in dark mode, like a printed page. */
+.cv-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 1040px) { .cv-layout { grid-template-columns: minmax(0, 1fr); } }
+.cv-sheet { background: #fff; color: #1d2320; border-radius: 6px; padding: 28px 30px; box-shadow: var(--shadow-md); font-size: 13px; line-height: 1.5; position: sticky; top: 80px; min-width: 0; overflow-wrap: anywhere; border: 1px solid var(--border); }
+.cv-sheet h2 { margin: 0; font-size: 22px; color: #16201b; }
+.cv-sheet .cv-head { margin: 2px 0 0; color: #14563a; font-size: 14px; }
+.cv-sheet .cv-contact { margin: 4px 0 10px; color: #5a616b; font-size: 12px; padding-bottom: 10px; border-bottom: 2px solid #14563a; }
+.cv-sheet h3 { margin: 14px 0 4px; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: #14563a; }
+.cv-sheet p { margin: 0 0 6px; color: #1d2320; } .cv-sheet b { color: #16201b; } .cv-sheet small { color: #5a616b; }
+@media (max-width: 1040px) { .cv-sheet { position: static; padding: 20px; } }

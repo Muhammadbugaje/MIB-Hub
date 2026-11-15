@@ -1,0 +1,6 @@
+{% extends base_template|default:"games/base_app.html" %}{% load static ee_tags %}
+{% block title %}{{ game.title }} is locked{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games.css' %}">{% endblock %}
+{% block arcade_wrap %}
+<div class="gm-page"><div class="ee-empty">{{ game.title }} opens at {{ game.level }} level. {{ note }} <a href="{% url 'games:index' %}">Back to the arcade</a></div></div>
+{% endblock %}

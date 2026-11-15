@@ -1,0 +1,60 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Solve and finish this room",
+      "typed": "llwin9",
+      "dial": "*959#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "solve",
+      "label": "Wire the answer",
+      "typed": "llsol1",
+      "dial": "*951#",
+      "note": "Places a working set of gates."
+    },
+    {
+      "id": "moves",
+      "label": "Reset the move counter",
+      "typed": "llmov7",
+      "dial": "*957#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this room",
+      "typed": "llstr4",
+      "dial": "*954#",
+      "note": ""
+    },
+    {
+      "id": "last",
+      "label": "Jump to the last room",
+      "typed": "llend8",
+      "dial": "*958#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "llslow3",
+      "dial": "*953#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "llyay5",
+      "dial": "*955#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Maker mode wires the answer, skips any room and jumps anywhere; he also appears as a selectable avatar."
+  }
+}

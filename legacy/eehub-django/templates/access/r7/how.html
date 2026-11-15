@@ -1,0 +1,47 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}How access works{% endblock %}
+{% block page_title %}How access works{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow r7a-how">
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "life-buoy" 14 %} Guide</span>
+  <h1 class="ee-page-header__title">How access works</h1>
+  <p class="ee-page-header__description">Need-to-know: each person sees what their profile, offices and current grants allow, and nothing else.</p></div>
+  <div class="ee-page-header__actions"><a class="btn btn-primary" href="{% url 'access:my_access' %}">{% icon "shield-check" 16 %} See my access</a></div>
+</header>
+
+<nav class="r7a-toc" aria-label="On this page">
+  <a href="#formula">The formula</a><a href="#eligibility">Who may hold an office</a><a href="#delegation">Delegation</a>
+  <a href="#grants">Grants</a><a href="#classes">Classes and announcements</a><a href="#access-log">Access log</a><a href="#features">Switching modules off</a>
+</nav>
+
+<section class="ee-card" id="formula"><div class="ee-card__head"><h2>{% icon "sigma" 17 %} The formula</h2></div>
+  <p>For the profile you are acting as (student, lecturer, staff or alumni), EE Hub adds up:</p>
+  <ol class="r7a-steps"><li>the base permissions of that profile,</li><li>the offices you hold <b>in that profile</b>,</li><li>access grants that are running now,</li><li>and takes away any personal revocation.</li></ol>
+  <p>Switching profile switches the whole set: acting as a student never carries lecturer powers. Changes apply at once; a grant stops the moment it ends.</p></section>
+
+<section class="ee-card" id="eligibility"><div class="ee-card__head"><h2>{% icon "user-check" 17 %} Who may hold an office</h2></div>
+  <p>An office is held by a profile, not by a person. Each office lists the profile kinds allowed to hold it (Offices → edit → <i>Who may hold it</i>). The defaults:</p>
+  <ul class="r7a-bullets"><li>HOD, Deputy HOD, Exam, Registration, Course Allocation and Timetable Officers, coordinators, QA, EESA Staff Adviser: <b>lecturers</b>.</li>
+    <li>Laboratory Officer and Departmental Secretary: <b>staff</b>.</li>
+    <li>Class rep and assistant: <b>active students of that level</b>. Tutors: students or lecturers. EESA executives and the electoral committee: active students. Alumni mentor: alumni.</li></ul>
+  <p>Appointment forms only offer eligible people. Imports, the admin and every other screen refuse anyone else. Appointments made before the rules existed and that break them are listed under {% if request.user|has_perm:"accounts.offices_manage" or request.user|has_perm:"accounts.offices_appoint" %}<a href="{% url 'access:review_appointments' %}">To review</a>{% else %}"To review" (for the HOD and office managers){% endif %}, with one click to end each.</p></section>
+
+<section class="ee-card" id="delegation"><div class="ee-card__head"><h2>{% icon "git-fork" 17 %} Delegation</h2></div>
+  <p>The super admin may appoint anyone anywhere. Everyone else appoints through a <b>delegation rule</b> attached to an office they hold: the HOD inside the department, the EESA President inside EESA, a level coordinator and a class rep for their own level only (a class rep makes tutors). Rules live under People and access → Delegation and can be changed there.</p>
+  <p>Nobody can grant a permission they do not hold, or act outside their area.</p></section>
+
+<section class="ee-card" id="grants"><div class="ee-card__head"><h2>{% icon "timer" 17 %} Grants</h2></div>
+  <p>A grant is extra access for a piece of work: who, what, why, from and until. Give either permissions or an office (an acting appointment). The person is notified, it shows on their <a href="{% url 'access:my_access' %}">My access</a> page, and it ends by itself. You can revoke it early. The longest grant is set in Settings (<code>access.grant_max_days</code>).</p></section>
+
+<section class="ee-card" id="classes"><div class="ee-card__head"><h2>{% icon "megaphone" 17 %} Classes and announcements</h2></div>
+  <p>The Course Allocation Officer, the HOD and the records officers see every class list with its reps and tutors; a level coordinator sees their own level. Names and registration numbers only, unless the office handles student records. An announcement or reminder goes to every student of a class or a course, in their notifications. These officers do not see chats, course forms, results, welfare or requests, and nobody but the super admin can act as another user.</p></section>
+
+<section class="ee-card" id="access-log"><div class="ee-card__head"><h2>{% icon "eye" 17 %} Access log</h2></div>
+  <p>Opening restricted personal data (staff contacts, student records and contacts, results, course forms, welfare) is written to the access log, which the HOD and the super admin can read. Viewing your own data is not logged.</p></section>
+
+<section class="ee-card" id="features"><div class="ee-card__head"><h2>{% icon "toggle-right" 17 %} Switching modules off</h2></div>
+  <p>Settings → <i>Modules and features</i> lists every module. A switched-off module leaves the menus, tab bar and dashboards, stops sending notifications and shows a friendly "switched off" page. Nothing is deleted; switching it on again brings everything back. Each switch shows who last changed it.</p></section>
+</div>
+{% endblock %}

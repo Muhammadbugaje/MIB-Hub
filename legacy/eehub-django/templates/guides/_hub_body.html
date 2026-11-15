@@ -1,0 +1,46 @@
+{% load ee_tags static %}<div class="gd" data-guides-hub>
+  <section class="gd-hero">
+    <span class="gd-hero__art" aria-hidden="true">{% icon "life-buoy" 220 %}</span>
+    <span class="gd-hero__eyebrow">{% icon "life-buoy" 14 %} Help and how-to</span>
+    <h1>{% if request.user.is_authenticated %}How can we help, {{ request.user.get_short_name|default:"there" }}?{% else %}How-to guides for EE Hub{% endif %}</h1>
+    <p>Step-by-step guides with pictures of the real pages, for students, lecturers and department officers. Each one downloads as a PDF you can keep.</p>
+    <label class="gd-search">{% icon "search" 18 %}<span class="sr-only">Search the guides</span>
+      <input type="search" placeholder="Search: register courses, CBT, SIWES, signature…" data-guides-search autocomplete="off"></label>
+    <div class="gd-hero__books">
+      {% for key, title in handbooks %}<a class="gd-book" href="{% url 'content:guide_handbook' key %}" target="_blank" rel="noopener">{% icon "book-down" 16 %} {{ title }} (PDF)</a>{% endfor %}
+    </div>
+  </section>
+
+  <div class="gd-filters" role="toolbar" aria-label="Show guides for">
+    {% if my_audiences %}<button type="button" class="gd-chip" data-aud-filter="mine" aria-pressed="true">{% icon "sparkles" 14 %} For you</button>{% endif %}
+    <button type="button" class="gd-chip" data-aud-filter="all" aria-pressed="{% if my_audiences %}false{% else %}true{% endif %}">All <small>{{ total }}</small></button>
+    {% for a, ic, tone, label in audiences %}<button type="button" class="gd-chip" data-aud-filter="{{ a }}" aria-pressed="false">{% icon ic 14 %} {{ label }}</button>{% endfor %}
+  </div>
+
+  {% if featured %}<section data-guides-featured>
+    <h2 class="gd-h2">{% if request.user.is_authenticated %}Start here{% else %}Popular guides{% endif %}</h2>
+    <div class="gd-featured">{% for g in featured %}
+      <a class="gd-feat gd-tone-{{ g.tone }}" href="{% url 'content:guide_detail' g.slug %}"><span class="gd-ic gd-ic--sm">{% icon g.icon 18 %}</span><span><b>{{ g.title }}</b><small>{{ g.n_steps }} step{{ g.n_steps|pluralize }} · {{ g.minutes }} min</small></span></a>
+    {% endfor %}</div>
+  </section>{% endif %}
+
+  {% for area in areas %}
+  <section class="gd-area gd-tone-{{ area.tone }}" id="{{ area.id }}" data-guides-area>
+    <div class="gd-area__head"><span class="gd-ic">{% icon area.icon 22 %}</span><div><h2>{{ area.key }}</h2><p>{{ area.blurb }}</p></div></div>
+    <div class="gd-grid">
+      {% for g in area.guides %}
+      <a class="gd-card gd-tone-{{ g.tone }}" href="{% url 'content:guide_detail' g.slug %}" data-guide data-aud="{{ g.audience }}" data-mine="{% if g.for_you %}1{% else %}0{% endif %}" data-search="{{ g.search }}">
+        {% if g.public is False %}<span class="gd-card__lock" title="Signed-in staff only">{% icon "lock" 14 %}</span>{% endif %}
+        <div class="gd-card__top"><span class="gd-ic">{% icon g.icon 22 %}</span><h3>{{ g.title }}</h3></div>
+        <p>{{ g.summary }}</p>
+        <div class="gd-card__foot"><span class="gd-aud">{{ g.audience }}</span>
+          {% if g.n_steps %}<span>{% icon "list-ordered" 13 %} {{ g.n_steps }} steps</span><span>{% icon "image" 13 %} with pictures</span>{% endif %}
+          <span>{% icon "clock" 13 %} {{ g.minutes|default:3 }} min</span></div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+  <p class="gd-empty" data-guides-empty hidden>{% icon "search-x" 22 %}<br>No guide matches that. Try a shorter word, or <a href="{% url 'content:contact' %}">ask the department</a>.</p>
+  <p class="gd-help">{% icon "mail" 18 %}<span>Still stuck? {% if request.user.is_authenticated %}<a href="{% url 'complaints:new' %}">Report a problem</a> or <a href="{% url 'messaging:inbox' %}">message the department</a>.{% else %}<a href="{% url 'content:contact' %}">Write to the department</a> and choose 'Portal support'.{% endif %}</span></p>
+</div>

@@ -1,0 +1,79 @@
+/* Arcade Game Settings (/arcade/settings/). Uses the site tokens; no colour-mix so older WebKit renders it. */
+.gs { display: grid; gap: 18px; max-width: 1080px; }
+.gs-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.gs-bar h1 { margin: 0; font-size: 22px; }
+.gs-bar__tools { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+.gs-lead { margin: 0; color: var(--text-muted); font-size: 14px; line-height: 1.55; max-width: 70ch; }
+.gs-card { border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; background: var(--surface); display: grid; gap: 12px; }
+.gs-card h2 { margin: 0; font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.gs-card p { margin: 0; color: var(--text-muted); font-size: 13.5px; line-height: 1.55; }
+.gs-grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.gs-tabs { display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+.gs-tabs a { padding: 7px 13px; border-radius: 999px; font-size: 13.5px; font-weight: 600; color: var(--text-muted); text-decoration: none; }
+.gs-tabs a[aria-current] { background: var(--primary); color: var(--primary-fg, #fff); }
+.gs-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 12px; }
+.gs-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.gs-table th { text-align: left; font-size: 11.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); padding: 9px 12px; background: var(--surface-2, var(--neutral-subtle)); border-bottom: 1px solid var(--border); white-space: nowrap; }
+.gs-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.gs-table tr:last-child td, .gs-table tbody tr:last-child th { border-bottom: 0; }
+.gs-table tbody th { white-space: normal; }
+.gs-table td small { display: block; color: var(--text-muted); font-size: 12px; }
+.gs-input { width: 100%; min-width: 120px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); font: 600 14px ui-monospace, SFMono-Regular, Menlo, monospace; }
+.gs-input--plain { font: 14px inherit; font-family: inherit; }
+.gs-input:focus { outline: 2px solid var(--primary); outline-offset: 1px; }
+.gs-tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--neutral-subtle); color: var(--text-muted); white-space: nowrap; }
+.gs-tag--on { background: var(--primary-subtle); color: var(--primary-subtle-fg, var(--primary)); }
+.gs-tag--warn { background: var(--accent-subtle); color: var(--accent-fg, var(--text)); }
+.gs-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.gs-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); }
+.gs-check input { margin-top: 3px; width: 18px; height: 18px; flex: none; }
+.gs-check small, .gs-field small { display: block; color: var(--text-muted); font-size: 12.5px; font-weight: 400; margin-top: 2px; }
+.gs-field { display: grid; gap: 5px; font-size: 13px; font-weight: 600; color: var(--text); }
+.gs-field select { padding: 8px 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); font-size: 14px; }
+.gs-fields { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: end; }
+.gs-errors { border: 1px solid var(--danger, #c0392b); border-radius: 12px; padding: 10px 14px; color: var(--danger, #c0392b); font-size: 13.5px; }
+.gs-errors ul { margin: 0; padding-left: 18px; }
+.gs-once { border: 2px dashed var(--accent, #c9a227); border-radius: 14px; padding: 14px 16px; background: var(--accent-subtle); display: grid; gap: 6px; }
+.gs-once b { font: 700 22px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; color: var(--text); user-select: all; word-break: break-all; }
+.gs-once p { color: var(--text); }
+.gs-link { background: none; border: 0; padding: 0; color: var(--primary); font-size: 12.5px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.gs-link:hover { text-decoration: underline; }
+.gs-game { font-weight: 700; color: var(--text); text-decoration: none; }
+.gs-game:hover { text-decoration: underline; }
+.gs-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: baseline; }
+@media (max-width: 640px) {
+  .gs-bar__tools { margin-left: 0; width: 100%; }
+  .gs-table--stack thead { display: none; }
+  .gs-table--stack tr { display: grid; gap: 6px; padding: 12px; border-bottom: 1px solid var(--border); }
+  .gs-table--stack tr:last-child { border-bottom: 0; }
+  .gs-table--stack td { padding: 0; border: 0; }
+  .gs-table--stack td[data-l]::before { content: attr(data-l); display: block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3px; }
+  .gs-compact tr { grid-template-columns: 1fr 1fr; }
+  .gs-compact td:first-child, .gs-compact td:last-child { grid-column: 1 / -1; }
+}
+/* round 2: Arcade Management */
+.gs-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.gs-nav a { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 13.5px; font-weight: 600; text-decoration: none; }
+.gs-nav a[aria-current] { background: var(--primary); border-color: var(--primary); color: var(--primary-fg, #fff); }
+.gs-help summary { cursor: pointer; font-weight: 700; font-size: 15px; color: var(--text); }
+.gs-help ol { margin: 10px 0 0; padding-left: 20px; color: var(--text-muted); font-size: 13.5px; line-height: 1.6; }
+.gs-help li b { color: var(--text); }
+.gs-area { width: 100%; min-height: 70px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 9px; background: var(--surface); color: var(--text); font: 13.5px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; resize: vertical; }
+.gs-sub { margin: 6px 0 0; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.gs-off td { opacity: .55; }
+.gs-off td:first-child, .gs-off td:last-child { opacity: 1; }
+.gs-switch { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+.gs-switch input { width: 18px; height: 18px; }
+.gs-dl { display: grid; grid-template-columns: minmax(150px, 30%) 1fr; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin: 0; }
+.gs-dl dt, .gs-dl dd { margin: 0; padding: 9px 12px; border-bottom: 1px solid var(--border); font-size: 13.5px; line-height: 1.5; }
+.gs-dl dt { font-weight: 700; color: var(--text); background: var(--surface-2, var(--neutral-subtle)); }
+.gs-dl dd { color: var(--text); }
+.gs-dl dt:last-of-type, .gs-dl dd:last-of-type { border-bottom: 0; }
+.gs-code { font: 700 14px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); white-space: nowrap; }
+.gs-search { display: flex; gap: 8px; flex-wrap: wrap; }
+.gs-search input { flex: 1 1 220px; }
+.gs-manage { display: inline-flex; align-items: center; gap: 7px; padding: 8px 14px; border-radius: 999px; background: #fff; color: #0f2d22; font-weight: 700; font-size: 13.5px; text-decoration: none; box-shadow: 0 1px 0 rgba(0,0,0,.12); }
+@media (max-width: 640px) {
+  .gs-dl { grid-template-columns: 1fr; }
+  .gs-dl dt { border-bottom: 0; padding-bottom: 2px; }
+}

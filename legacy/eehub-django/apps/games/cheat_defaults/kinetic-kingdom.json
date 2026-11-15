@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Clear this level",
+      "typed": "kkwin9",
+      "dial": "*559#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "god",
+      "label": "Cannot be hurt",
+      "typed": "kkgod1",
+      "dial": "*551#",
+      "note": ""
+    },
+    {
+      "id": "lives",
+      "label": "99 lives",
+      "typed": "kkliv7",
+      "dial": "*557#",
+      "note": ""
+    },
+    {
+      "id": "time",
+      "label": "The clock never runs out",
+      "typed": "kktim4",
+      "dial": "*554#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every level open",
+      "typed": "kkall8",
+      "dial": "*558#",
+      "note": "Until you leave the page."
+    },
+    {
+      "id": "shield",
+      "label": "Shield for 30 s",
+      "typed": "kkshd6",
+      "dial": "*556#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "kkslow3",
+      "dial": "*553#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "kkyay5",
+      "dial": "*555#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Cannot be hurt, never runs out of lives or time, every level open."
+  }
+}

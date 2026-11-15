@@ -1,0 +1,287 @@
+/* ==========================================================================
+   EE Hub — app shell, round 2 (NBTE Phase 8 navigation)
+
+   Loaded after ee.css. Owns:
+     1. Sidebar: icon-tile groups and items (P8 qa-redesign §7/§10)
+     2. Profile switch: segmented control at the top of the sidebar
+     3. Compact "Acting as" card
+     4. Top bar: profile swap button, phone search button
+     5. Phone tab bar: one green accent, switch tab, 3+ profile sheet
+     6. Drawer polish, reduced motion, print
+   Colours come from tiles.css (--qa-tile-*, --qa-c-*) and tokens.css.
+   ========================================================================== */
+
+/* ------------------------------------------------------------ 1. sidebar */
+.ee-nav { --tc: var(--qa-c-green); --tile: var(--qa-tile-green); gap: 1px; padding-block-start: var(--space-2); scroll-behavior: smooth; }
+.ee-nav .ee-tile { transition: transform 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard); }
+.ee-tile--xs { width: 20px; height: 20px; border-radius: 6px; }
+.ee-tile--xs svg { width: 12px; height: 12px; }
+
+/* Group heads: tile + title in body text colour, chevron at the end. */
+.ee-nav .app-nav-group-head {
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 40px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.84375rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.005em;
+}
+.ee-nav .app-nav-group-head:hover { color: var(--text); }
+.ee-nav .app-nav-group-title { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ee-nav .app-nav-group-head .app-nav-badge { margin-inline-start: 0; }
+.ee-nav .app-nav-group.is-open .ee-nav-group-count { display: none; }
+.ee-nav .app-nav-group-head:hover .ee-tile,
+.ee-nav .app-nav-group.has-active > .app-nav-group-head .ee-tile,
+.ee-nav .app-nav-group.is-open > .app-nav-group-head .ee-tile {
+  transform: scale(1.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 3px 10px color-mix(in srgb, var(--tc) 45%, transparent);
+}
+.ee-nav .app-nav-group + .app-nav-group { margin-block-start: 2px; }
+
+/* Group bodies: a hairline rail under the tile; items take the group hue. */
+.ee-nav .app-nav-group-body { padding-inline-start: 10px; margin-inline-start: 22px; border-inline-start: 1px solid var(--divider); }
+.ee-nav .app-nav-group.is-open .app-nav-group-body { padding-block: 2px 6px; }
+.ee-nav .app-nav-group.is-open .app-nav-group-body::before { content: none; }
+.ee-nav .app-nav-item,
+.ee-sidebar-foot .app-nav-item {
+  gap: 10px;
+  min-height: 36px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 0.84375rem;
+  transition: background-color var(--dur-fast) var(--ease-standard), color var(--dur-fast) var(--ease-standard);
+}
+.ee-nav .app-nav-item::before { content: none !important; }
+.ee-nav .app-nav-item > svg,
+.ee-sidebar-foot .app-nav-item > svg {
+  width: 16px; height: 16px;
+  color: var(--tc);
+  opacity: .85;
+  transition: transform 180ms var(--ease-standard), opacity 180ms var(--ease-standard), filter 180ms var(--ease-standard);
+}
+.ee-nav .app-nav-item:hover > svg { opacity: 1; transform: scale(1.1); filter: drop-shadow(0 0 5px color-mix(in srgb, var(--tc) 55%, transparent)); }
+.ee-nav .app-nav-item.active {
+  background: color-mix(in srgb, var(--tc) 13%, transparent);
+  color: var(--text);
+  font-weight: var(--fw-semibold);
+}
+.ee-nav .app-nav-item.active > svg { opacity: 1; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--tc) 60%, transparent)); }
+.ee-nav .app-nav-item.has-tile:hover .ee-tile,
+.ee-nav .app-nav-item.has-tile.active .ee-tile { transform: scale(1.08); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 3px 8px color-mix(in srgb, var(--tc) 45%, transparent); }
+
+/* Top-level links (Dashboard, Notifications): the icon is the tile. */
+.ee-nav > .ee-nav-top { min-height: 40px; padding: 6px 10px; border-radius: 12px; color: var(--text); font-weight: var(--fw-semibold); }
+.ee-nav > .ee-nav-top:hover .ee-tile,
+.ee-nav > .ee-nav-top.active .ee-tile { transform: scale(1.06); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 3px 10px color-mix(in srgb, var(--tc) 45%, transparent); }
+.ee-nav > .ee-nav-top + .app-nav-group { margin-block-start: 8px; }
+
+/* Badges: one quiet red for counts that need attention. */
+.ee-nav .app-nav-badge, .ee-sidebar-foot .app-nav-badge { background: var(--danger); color: #fff; min-width: 19px; height: 19px; font-size: 0.6875rem; }
+
+.ee-sidebar-foot { display: grid; gap: 1px; padding: var(--space-2) var(--space-3) max(var(--space-3), env(safe-area-inset-bottom, 0px)); }
+.ee-sidebar-foot .app-nav-item { color: var(--text-muted); }
+.ee-sidebar-view { display: none; padding: 8px 4px 0; }
+.ee-sidebar-view .view-switch { width: 100%; justify-content: space-between; }
+@media (max-width: 1023px) { .ee-sidebar-view { display: block; } }
+
+/* ------------------------------------------------------ 2. profile switch */
+.ee-pswitch { padding: var(--space-3) var(--space-3) 0; }
+.ee-pswitch__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n, 2), minmax(0, 1fr));
+  padding: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sunken);
+  isolation: isolate;
+}
+.ee-pswitch__seg {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font: inherit;
+  font-size: 0.78125rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--dur) var(--ease-standard), transform 120ms var(--ease-standard);
+}
+.ee-pswitch__seg:hover { color: var(--text); }
+.ee-pswitch__seg.is-active { color: var(--text); cursor: default; }
+.ee-pswitch__seg:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.ee-pswitch__seg:active { transform: scale(0.97); }
+.ee-pswitch__lbl { overflow: hidden; text-overflow: ellipsis; }
+.ee-pswitch__ic {
+  display: inline-grid; place-items: center; flex: none;
+  width: 20px; height: 20px; border-radius: 6px;
+  color: var(--tc);
+  transition: background 240ms var(--ease-standard), color 240ms var(--ease-standard);
+}
+.ee-pswitch__ic svg { width: 13px; height: 13px; stroke-width: 2.3; }
+.ee-pswitch__seg.is-active .ee-pswitch__ic { background: var(--tile); color: #fff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 6px color-mix(in srgb, var(--tc) 40%, transparent); }
+.ee-pswitch__thumb {
+  position: absolute;
+  z-index: 0;
+  inset-block: 3px;
+  inset-inline-start: 3px;
+  width: calc((100% - 6px) / var(--n, 2));
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 3px 8px rgba(0, 0, 0, 0.08);
+  transform: translateX(calc(100% * var(--i, 0)));
+  transition: transform 360ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+[dir="rtl"] .ee-pswitch__thumb { transform: translateX(calc(-100% * var(--i, 0))); }
+:root[data-theme="dark"] .ee-pswitch__thumb { background: color-mix(in srgb, #fff 12%, var(--surface)); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .ee-pswitch__thumb { background: color-mix(in srgb, #fff 12%, var(--surface)); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4); }
+}
+.ee-pswitch.is-switching .ee-pswitch__track { opacity: .85; }
+/* Three profiles: icon on top of the label so all fit in the sidebar width. */
+.ee-pswitch__track.is-n3 .ee-pswitch__seg { flex-direction: column; gap: 1px; min-height: 44px; padding: 3px 4px; font-size: 0.6875rem; }
+.ee-pswitch__track.is-n3 { border-radius: 14px; }
+.ee-pswitch__track.is-n3 .ee-pswitch__seg, .ee-pswitch__track.is-n3 .ee-pswitch__thumb { border-radius: 11px; }
+/* Four or more: a scrolling strip, the active segment carries its own fill. */
+.ee-pswitch__track.is-scroll {
+  display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 20px), transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 20px), transparent);
+}
+.ee-pswitch__track.is-scroll::-webkit-scrollbar { display: none; }
+.ee-pswitch__track.is-scroll .ee-pswitch__seg { flex: 0 0 auto; scroll-snap-align: start; padding-inline: 10px; }
+.ee-pswitch__track.is-scroll .ee-pswitch__seg.is-active { background: var(--surface); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 3px 8px rgba(0, 0, 0, 0.08); }
+.ee-pswitch__track.is-scroll .ee-pswitch__thumb { display: none; }
+
+/* ---------------------------------------------------- 3. acting-as card */
+.ee-acting.ee-acting--compact {
+  margin: 10px 12px 2px;
+  padding: 8px 10px;
+  gap: 4px 9px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--tc, var(--primary)) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tc, var(--primary)) 16%, transparent);
+}
+.ee-acting--compact .ee-acting__text { line-height: 1.2; }
+.ee-acting--compact .ee-acting__text small { font-size: 0.65625rem; letter-spacing: 0; text-transform: none; font-weight: var(--fw-semibold); }
+.ee-acting--compact .ee-acting__text b { font-size: 0.8125rem; }
+.ee-acting__sub { color: var(--text-muted); font-size: 0.71875rem; font-weight: var(--fw-medium); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ee-acting--compact .ee-acting__offices { gap: 4px; }
+.ee-acting--compact .ee-chip { font-size: 0.65625rem; padding: 3px 7px; }
+
+/* ------------------------------------------------------------ 4. top bar */
+.ee-topsearch-btn { display: none; }
+.ee-swap { display: contents; }
+.ee-swap__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 38px;
+  padding: 0 10px 0 5px;
+  border: 1px solid var(--divider);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.78125rem;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease-standard), box-shadow var(--dur) var(--ease-standard), transform 120ms var(--ease-standard);
+}
+.ee-swap__btn .ee-tile { width: 28px; height: 28px; border-radius: 999px; }
+.ee-swap__btn:hover { border-color: color-mix(in srgb, var(--tc) 45%, transparent); box-shadow: 0 2px 10px color-mix(in srgb, var(--tc) 22%, transparent); }
+.ee-swap__btn:active { transform: scale(0.97); }
+.ee-swap__btn:focus-visible { outline: none; box-shadow: var(--shadow-focus); }
+.ee-swap__arrow { color: var(--text-subtle); }
+@media (max-width: 1023px) { .ee-swap { display: none; } }   /* the tab bar carries the switch on phones */
+@media (max-width: 380px) {
+  .app-topbar .app-topsearch { display: none; }
+  .ee-topsearch-btn { display: inline-grid; place-items: center; }
+}
+
+/* -------------------------------------------------------- 5. tab bar */
+@media (max-width: 1023px) {
+  .ee-tabbar .app-tabbar__inner { gap: 2px; }
+  .ee-tabbar .app-tab { min-width: 0; color: var(--text-subtle); }
+  .ee-tabbar .app-tab__icon { width: 40px; height: 28px; border-radius: 999px; transition: background 240ms var(--ease-standard), color 240ms var(--ease-standard); }
+  .ee-tabbar .app-tab__icon svg { width: 22px; height: 22px; stroke-width: 1.75; }
+  .ee-tabbar .app-tab__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  /* One accent: only the current tab is green. */
+  .ee-tabbar .app-tab.is-active { background: color-mix(in srgb, var(--qa-c-green) 13%, transparent); color: var(--qa-c-green); }
+  .ee-tabbar .app-tab.is-active .app-tab__icon svg { stroke-width: 2.2; }
+  .ee-tabbar .app-tab[aria-expanded="true"] { color: var(--text); }
+  .ee-tabbar .app-tab__badge { top: -3px; inset-inline-start: calc(50% + 6px); }
+  /* The switch tab: the other profile's icon with a small swap mark. */
+  .app-tab-form { display: contents; }
+  .ee-tabbar .app-tab--switch { color: var(--text-muted); }
+  .ee-tabbar .app-tab--switch .app-tab__icon svg { color: var(--tc); }
+  .app-tab__swap {
+    position: absolute;
+    inset-block-end: -2px;
+    inset-inline-start: calc(50% + 5px);
+    display: grid; place-items: center;
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--tile); color: #fff;
+    box-shadow: 0 0 0 2px var(--surface);
+  }
+  .ee-tabbar .app-tab .app-tab__swap svg { width: 9px; height: 9px; color: #fff; stroke-width: 2.8; }
+  /* Six tabs (with the switch tab): slightly smaller labels so they fit 360px. */
+  .ee-tabbar .app-tabbar__inner:has(> :nth-child(6)) .app-tab__label { font-size: 0.625rem; letter-spacing: -0.01em; }
+  .ee-tabbar .app-tabbar__inner:has(> :nth-child(6)) .app-tab { padding-inline: 0; }
+  /* 3+ profiles: a sheet above the bar. */
+  .app-tab-sheet { display: contents; }
+  .app-tab-sheet > summary { list-style: none; }
+  .app-tab-sheet > summary::-webkit-details-marker { display: none; }
+  .app-tab-sheet[open] > summary { color: var(--text); }
+  .app-tab-sheet__menu {
+    position: absolute;
+    inset-inline: 6px;
+    bottom: calc(100% + 8px);
+    display: grid;
+    gap: 2px;
+    padding: 6px;
+    border-radius: 22px;
+    background: var(--surface);          /* solid: blur does not nest inside the glass bar */
+    border: 1px solid var(--divider);
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
+    animation: ee-sheet-in 220ms var(--ease-emphasized);
+  }
+  .app-tab-sheet__item {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    min-height: 48px; padding: 6px 10px; border: 0; border-radius: 16px;
+    background: transparent; color: var(--text); font: inherit; text-align: start; cursor: pointer;
+  }
+  .app-tab-sheet__item:hover, .app-tab-sheet__item.is-current { background: color-mix(in srgb, var(--tc) 10%, transparent); }
+  .app-tab-sheet__text { display: flex; flex-direction: column; min-width: 0; flex: 1; line-height: 1.2; }
+  .app-tab-sheet__text b { font-size: 0.875rem; }
+  .app-tab-sheet__text small { color: var(--text-muted); font-size: 0.75rem; }
+  .app-tab-sheet__tick { color: var(--primary); }
+}
+@keyframes ee-sheet-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+
+/* ------------------------------------------------- 6. drawer and a11y */
+@media (max-width: 1023px) {
+  .ee-sidebar { width: min(19rem, 88vw); border-radius: 0 22px 22px 0; }
+  .ee-sidebar .app-sidebar-header { padding: var(--space-4) var(--space-4) var(--space-3); }
+  .app-sidebar-backdrop { background: rgba(4, 12, 8, 0.42); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+}
+@media (min-width: 1024px) {
+  .ee-sidebar .app-sidebar-header { padding: var(--space-4) var(--space-4) var(--space-3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ee-nav .ee-tile, .ee-nav .app-nav-item > svg, .ee-pswitch__thumb, .ee-pswitch__ic, .ee-tabbar .app-tab__icon, .app-tab-sheet__menu { transition: none; animation: none; transform: none !important; }
+}
+@media print { .ee-pswitch, .ee-swap, .app-tab-sheet { display: none !important; } }

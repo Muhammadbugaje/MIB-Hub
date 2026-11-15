@@ -270,7 +270,7 @@ A fourth, playful theory the game allows: **he has not arrived yet.** Everything
 
 #### Dr. Zainab: the doctor (Lead and special character, about 1,200 lines)
 - **Who:** A house officer (new doctor) at the teaching hospital in Year 1; a graduate of {{UNI_NAME}}'s medical faculty. (Owner confirmed: a new doctor, a house officer.) Voiced by the real Zainab, so every line is written for her to perform and approve.
-- **Looks:** hijab styles, scrubs or smart modest outfits, a cat keychain, a pen torch, tired eyes and a perfect eyebrow.
+- **Looks:** very fair-skinned (her friends' affectionate nickname for her is "Snow White"; it is used warmly, never to mock); hijab styles, scrubs or smart modest outfits, a cat keychain, a pen torch, tired eyes and a perfect eyebrow.
 - **Personality:** very nice, properly kind, funny; roasts you while she treats you; goes **sharp and quiet** when you do not listen, and that is scarier than shouting. Loves cats (hers are **Kimchi** and **Suya**) and Korean culture: K-dramas on night shift, instant ramyeon in the call room, a few Korean words used correctly. **[OWNER: a Korean speaker should check her phrases, and she should love the culture, never imitate it.]**
 - **Speech:** warm, quick, clinical when it matters. Counts instructions on her fingers. Says your full name when cross.
 - **Sample lines:**
@@ -1683,6 +1683,7 @@ The owner's rule: when a special character is approved and switched on, they joi
 | M24 Convocation Night | Jiya, Taty, Madison | Hold the gate; run the far fence; start the chant | Slots filled by those you asked |
 | M26 Grand Opening | Madison | Starts a dance on the one-way escalator | A trader rides it three times |
 | M27 Plug and Play | Madison | The third bargaining round | You bargain |
+| M28 Okada Diploma | Taty | Order three's customer; races your okada to the gate on foot (Never Tired) | The goalkeeper is an Education player who eats the pie during a corner |
 | M30 Meter Reader | Jiya | Talks a guard out of noticing you | Reset to the last corner |
 | M31 Point of Order | Jiya | **Signature:** the courtroom roast; coaches you in the library | Nusaiba wins the point alone |
 | M33 Faculty Week | Jiya, Taty | Quiz question-master; five-a-side ringer | Dr. Okonkwo; Bolaji |
@@ -1692,6 +1693,7 @@ The owner's rule: when a special character is approved and switched on, they joi
 | M43 The Plan | Jiya, Taty | Defines "trespass"; scouts the mall on a jog | Nusaiba; {{ROOMIE}} |
 | M44 Unplug Iron Mama | Madison | The midnight flash sale becomes a dance | Mubarak's sale alone |
 | M46 The Hearing | Jiya | Sits behind Nusaiba; one "Objection." | Nusaiba alone |
+| M47 Two Papers, One Day | Jiya, Taty | A qualifier judge who gives the robot its one perfect mark; Taty clears the okada's path through the crowd | Three visiting judges; you thread the crowd yourself |
 | M48 Sign-Out, Small | all | Sign a white shirt; one line each | None needed |
 | Years 3–5 | Jiya, Taty, Madison | See `missions/FORMAT.md` §6.2 (M50, M52, M54, M57, M63, M66, M68, M69, M75–M76, M78, M79, M83, M85, M86, M88, M100, M102, M107, M111, M112, M114, M118) | Listed there |
 

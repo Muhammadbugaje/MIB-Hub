@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Give access{% endblock %}
+{% block page_title %}Give access{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+<a class="acc-back" href="{% url 'access:grants' %}">{% icon "arrow-left" 15 %} Access grants</a>
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "timer" 14 %} Time-boxed grant</span>
+  <h1 class="ee-page-header__title">Give access for a while</h1>
+  <p class="ee-page-header__description">You can only give what you hold yourself, inside your own area, for at most {{ max_days }} days. The person is told, and the access stops by itself at the end date.</p></div>
+  <div class="ee-page-header__actions"><a class="btn btn-ghost" href="{% url 'access:how' %}#grants">{% icon "life-buoy" 16 %} How it works</a></div>
+</header>
+
+<form method="post" class="ee-form r7a-grantform" novalidate data-grant-form>{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{% icon "circle-alert" 18 %}<div>{{ form.non_field_errors }}</div></div>{% endif %}
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "user-search" 17 %} 1. Who</h2></div>
+    <input type="hidden" name="user" value="{{ form.user.value|default:'' }}" data-grant-user>
+    <div class="acc-chosen" data-chosen{% if not chosen %} hidden{% endif %}>
+      <span class="avatar avatar-sm" data-chosen-initials>{% if chosen %}{{ chosen.get_full_name|initials }}{% endif %}</span>
+      <div class="ee-row__body"><b data-chosen-name>{{ chosen.get_full_name }}</b><small class="ee-muted" data-chosen-meta>{{ chosen.email }}</small></div>
+      <button type="button" class="btn btn-ghost btn-sm" data-chosen-clear>Change</button>
+    </div>
+    <div data-person-search{% if chosen %} hidden{% endif %}>
+      <label class="acc-search acc-search--lg">{% icon "search" 17 %}<input type="search" name="q" placeholder="Name, e-mail, registration or staff number…" autocomplete="off" aria-label="Search people"
+        hx-get="{% url 'access:person_search' %}?need=user{% if search_office %}&office={{ search_office }}{% endif %}" hx-trigger="input changed delay:250ms, search" hx-target="#person-results" hx-params="q"></label>
+      <div id="person-results" class="acc-person-results"><p class="ee-card__sub">Type at least two letters.</p></div>
+    </div>
+    {{ form.user.errors }}
+  </section>
+
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "key-round" 17 %} 2. What</h2></div>
+    <div class="acc-choice">{% for radio in form.what %}<label class="acc-choice__opt">{{ radio.tag }}<span><b>{{ radio.choice_label }}</b><small>{% if radio.data.value == "perms" %}One or more permissions you hold{% else %}An acting appointment that ends with the grant{% endif %}</small></span></label>{% endfor %}</div>
+    <div class="r7a-what" data-what="perms">
+      {% for g, items in perm_groups %}<fieldset class="r7a-permgroup"><legend>{{ g }}</legend>
+        {% for val, label in items %}<label class="check"><input type="checkbox" name="permissions" value="{{ val }}"{% if val in posted_perms %} checked{% endif %}><span>{{ label }}</span></label>{% endfor %}
+      </fieldset>{% empty %}<p class="acc-note">{% icon "info" 15 %} You cannot grant single permissions; give an office instead.</p>{% endfor %}
+      {{ form.permissions.errors }}
+    </div>
+    <div class="r7a-what" data-what="office">
+      {% if offices %}<div class="ee-form-grid">{% include "access/_field.html" with f=form.office %}{% include "access/_field.html" with f=form.scope_level %}</div>
+      {% else %}<p class="acc-note">{% icon "info" 15 %} Your offices do not let you appoint anyone.</p>{% endif %}
+    </div>
+    {% include "access/_field.html" with f=form.profile_kind %}
+  </section>
+
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "calendar-range" 17 %} 3. Why and until when</h2></div>
+    {% include "access/_field.html" with f=form.reason %}
+    <div class="ee-form-grid">{% include "access/_field.html" with f=form.starts_on %}{% include "access/_field.html" with f=form.ends_on %}</div>
+  </section>
+  <div class="form-actions btn-group"><button type="submit" class="btn btn-primary btn-lg">{% icon "check" 16 %} Give access</button><a class="btn btn-ghost" href="{% url 'access:grants' %}">Cancel</a></div>
+</form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access_r7.js' %}" defer></script>{% endblock %}

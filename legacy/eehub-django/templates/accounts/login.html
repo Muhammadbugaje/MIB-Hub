@@ -1,0 +1,15 @@
+{% extends "base_auth.html" %}{% load ee_tags %}
+{% block title %}Sign in{% endblock %}
+{% block content %}
+<h1>Welcome back</h1>
+<p class="lead">Sign in with your e-mail, registration number or staff number.</p>
+{% if maintenance_mode %}<div class="alert alert-info" role="status">{{ maintenance_message|default:"The portal is under maintenance." }} Public pages remain available; administrator access is still enabled.</div>{% endif %}
+{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post" class="ee-form" novalidate>{% csrf_token %}
+  <input type="hidden" name="next" value="{{ next }}">
+  <div class="ee-field"><label for="id_identifier">E-mail or registration / staff number</label>{{ form.identifier }}</div>
+  <div class="ee-field"><label for="id_password">Password</label><div class="pw-input">{{ form.password }}<button type="button" class="pw-toggle" data-pw-toggle="id_password" aria-label="Show password" aria-pressed="false"><span class="pw-toggle__show">{% icon "eye" 18 %}</span><span class="pw-toggle__hide">{% icon "eye-off" 18 %}</span></button></div></div>
+  <div class="ee-signin__row"><label class="checkbox">{{ form.remember }} Keep me signed in</label><a href="{% url 'accounts:password_reset' %}">Forgot password?</a></div>
+  <button class="btn btn-primary btn-lg" type="submit" style="width:100%">{% icon "log-in" 18 %} Sign in</button>
+</form>
+{% endblock %}

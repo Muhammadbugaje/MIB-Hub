@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240"><defs><linearGradient id="sag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F0DC9C"/><stop offset=".5" stop-color="#C8A951"/><stop offset="1" stop-color="#A88A35"/></linearGradient>
+<linearGradient id="sac" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7EF0FF"/><stop offset="1" stop-color="#13C4DC"/></linearGradient>
+<radialGradient id="sad" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#1A6B45"/><stop offset="1" stop-color="#0A2B20"/></radialGradient></defs>
+<path d="M202.11 107.88 L228.66 111.45 L228.66 128.55 L202.11 132.12 L197.17 150.55 L218.38 166.93 L209.83 181.74 L185.05 171.56 L171.56 185.05 L181.74 209.83 L166.93 218.38 L150.55 197.17 L132.12 202.11 L128.55 228.66 L111.45 228.66 L107.88 202.11 L89.45 197.17 L73.07 218.38 L58.26 209.83 L68.44 185.05 L54.95 171.56 L30.17 181.74 L21.62 166.93 L42.83 150.55 L37.89 132.12 L11.34 128.55 L11.34 111.45 L37.89 107.88 L42.83 89.45 L21.62 73.07 L30.17 58.26 L54.95 68.44 L68.44 54.95 L58.26 30.17 L73.07 21.62 L89.45 42.83 L107.88 37.89 L111.45 11.34 L128.55 11.34 L132.12 37.89 L150.55 42.83 L166.93 21.62 L181.74 30.17 L171.56 54.95 L185.05 68.44 L209.83 58.26 L218.38 73.07 L197.17 89.45Z" fill="url(#sag)"/>
+<circle cx="120" cy="120" r="74" fill="url(#sad)"/>
+<circle cx="120" cy="120" r="64" fill="none" stroke="#7EF0FF" stroke-opacity=".35" stroke-width="2" stroke-dasharray="3 7"/>
+<path d="M134 52 L82 132 H114 L100 190 L160 102 H128 L146 52 Z" fill="url(#sac)" stroke="#E8FDFF" stroke-width="2" stroke-linejoin="round" transform="translate(120 120) scale(.82) translate(-120 -121)"/>
+</svg>

@@ -1,0 +1,79 @@
+{% extends "base.html" %}{% load ee_tags static pager_tags ie_tags %}
+{% block title %}Users{% endblock %}
+{% block page_title %}Users{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page users-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "users" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Users</h1>
+    <p class="ee-page-header__description">{{ total }} user{{ total|pluralize }}{% if filtered %} match these filters{% endif %}. Each person signs in once and switches between their profiles.</p>
+  </div>
+  <div class="ee-page-header__actions">
+    {% if request.user|has_perm:"accounts.users_import" %}<a class="btn btn-ghost" href="{% url 'access:user_import' %}">{% icon "file-spreadsheet" 16 %} Import</a>{% endif %}{% export_menu "users" css="btn btn-ghost" %}
+    <a class="btn btn-primary" href="{% url 'access:user_create' %}">{% icon "user-plus" 16 %} Add a user</a>
+  </div>
+</header>
+{% include "access/_subnav.html" with section="users" %}
+
+<form method="get" class="users-filter" role="search" aria-label="Filter results">
+  <div class="users-filter-search">{% icon "search" 16 %}<input type="search" name="q" value="{{ q }}" placeholder="Name, e-mail, registration or staff number…" autocomplete="off" aria-label="Search users"></div>
+  <div class="users-filter-select"><select name="kind" aria-label="Profile">
+    <option value="">Every profile</option>
+    {% for k, label in kinds %}<option value="{{ k }}"{% if kind == k %} selected{% endif %}>{{ label }}</option>{% endfor %}
+    <option value="none"{% if kind == "none" %} selected{% endif %}>No profile</option>
+    <option value="superuser"{% if kind == "superuser" %} selected{% endif %}>Administrators</option>
+  </select></div>
+  <div class="users-filter-select"><select name="office" aria-label="Office">
+    <option value="">Any office</option>
+    {% for o in offices %}<option value="{{ o.code }}"{% if office == o.code %} selected{% endif %}>{{ o.name }}</option>{% endfor %}
+  </select></div>
+  <div class="users-filter-select"><select name="active" aria-label="Status">
+    <option value="">Active and locked</option>
+    <option value="1"{% if active == "1" %} selected{% endif %}>Active only</option>
+    <option value="0"{% if active == "0" %} selected{% endif %}>Locked only</option>
+  </select></div>
+  <div class="users-filter-actions">
+    <button type="submit" class="btn btn-primary">Apply</button>
+    {% if filtered %}<a href="{% url 'access:users' %}" class="btn btn-ghost">Reset</a>{% endif %}
+  </div>
+</form>
+
+{% if rows %}
+<div class="users-table-wrap">
+  <table class="users-table">
+    <thead><tr><th>Name</th><th>Profiles</th><th>Offices</th><th>Last seen</th><th>Status</th><th><span class="sr-only">Actions</span></th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td class="users-cell-primary">
+          <a class="users-cell-user link-plain" href="{% url 'access:user_detail' r.u.pk %}">
+            <span class="users-avatar{% if not r.u.is_active %} users-avatar-inactive{% endif %}">{{ r.u.get_full_name|initials }}</span>
+            <span class="users-user-info"><span class="users-user-name">{{ r.u.get_full_name }}</span>
+              <span class="users-user-email">{{ r.u.email }}{% if r.u.login_id %} · <span class="ee-mono">{{ r.u.login_id }}</span>{% endif %}</span></span>
+          </a>
+        </td>
+        <td data-label="Profiles"><span class="acc-chips">{% for c in r.chips %}<span class="ee-chip ee-chip--{{ c.tone }}">{{ c.label }}</span>{% empty %}{% if r.u.is_superuser %}<span class="ee-chip ee-chip--plum">Administrator</span>{% else %}<span class="users-cell-meta-empty">None</span>{% endif %}{% endfor %}</span></td>
+        <td data-label="Offices"><span class="acc-chips">{% for o in r.offices %}<span class="ee-chip ee-chip--{{ o.color }}">{% icon o.icon 12 %} {{ o.label }}</span>{% empty %}<span class="users-cell-meta-empty">—</span>{% endfor %}</span></td>
+        <td data-label="Last seen" class="users-cell-meta">{% if r.u.last_seen %}{{ r.u.last_seen|timesince }} ago{% else %}<span class="users-cell-meta-empty">Never</span>{% endif %}</td>
+        <td data-label="Status">{% if r.u.is_active %}<span class="users-status users-status-active">Active</span>{% else %}<span class="users-status users-status-inactive">Locked</span>{% endif %}{% if r.u.must_change_password %} <span class="badge badge-warn" title="Must choose a new password at next sign-in">Temp password</span>{% endif %}</td>
+        <td class="users-actions users-cell-actions"><a href="{% url 'access:user_detail' r.u.pk %}" class="btn btn-ghost btn-sm">Manage {% icon "chevron-right" 13 %}</a></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% show_all_toggle page %}{% if page.has_other_pages %}
+<nav class="users-pagination" aria-label="Pages">
+  {% if page.has_previous %}<a href="?{% querystring page=page.previous_page_number %}" class="users-pagination-btn">{% icon "chevron-left" 13 %} Previous</a>{% endif %}
+  <span class="users-pagination-count">Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+  {% if page.has_next %}<a href="?{% querystring page=page.next_page_number %}" class="users-pagination-btn">Next {% icon "chevron-right" 13 %}</a>{% endif %}
+</nav>
+{% endif %}
+{% else %}
+  {% if filtered %}{% url 'access:users' as clear_url %}{% include "partials/empty_state.html" with variant="filtered" title="No users match" body="Try a shorter search or clear the filters." action_url=clear_url action_label="Clear filters" action_class="btn-ghost" %}
+  {% else %}{% url 'access:user_create' as add_url %}{% include "partials/empty_state.html" with title="No users yet" body="Add the first user, or import a list from Excel." action_url=add_url action_label="Add a user" %}{% endif %}
+{% endif %}
+</div>
+{% endblock %}

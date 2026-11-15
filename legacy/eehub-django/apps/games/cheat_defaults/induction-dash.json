@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Finish this run",
+      "typed": "idwin9",
+      "dial": "*369#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "god",
+      "label": "Hits cost no hearts",
+      "typed": "idgod1",
+      "dial": "*361#",
+      "note": ""
+    },
+    {
+      "id": "hearts",
+      "label": "Hearts refilled",
+      "typed": "idhrt7",
+      "dial": "*367#",
+      "note": ""
+    },
+    {
+      "id": "boost",
+      "label": "Top speed now",
+      "typed": "idbst4",
+      "dial": "*364#",
+      "note": ""
+    },
+    {
+      "id": "energy",
+      "label": "Target energy banked",
+      "typed": "idjul8",
+      "dial": "*368#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every track and cart open",
+      "typed": "idall6",
+      "dial": "*366#",
+      "note": "Opens all 30 tracks and all five carts."
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "idslow3",
+      "dial": "*363#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "idyay5",
+      "dial": "*365#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Hits cost no hearts, always above cruising speed, every track and cart open."
+  }
+}

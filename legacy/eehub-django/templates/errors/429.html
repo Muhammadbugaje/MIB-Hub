@@ -1,0 +1,18 @@
+{% extends "errors/_base.html" %}
+{% block title %}Too many tries{% endblock %}
+{% block code %}Error 429{% endblock %}
+{% block heading %}Please wait a little and try again{% endblock %}
+{% block lead %}This page was used many times from your connection in a short time, so EE Hub is pausing it to protect people's records. Wait {{ minutes|default:"a few" }} minute{{ minutes|pluralize }} and try again.{% endblock %}
+{% block art %}
+<svg viewBox="0 0 240 160" width="240" height="160" role="presentation" focusable="false">
+  <circle class="ea-orbit" cx="120" cy="80" r="62" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 8"/>
+  <g class="ea-float">
+    <circle cx="120" cy="80" r="30" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/>
+    <path d="M120 64v16l10 8" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>
+{% endblock %}
+{% block actions %}
+  <a class="btn btn-primary" href="javascript:history.back()">Go back</a>
+  <a class="btn btn-ghost" href="/">Go to the home page</a>
+{% endblock %}

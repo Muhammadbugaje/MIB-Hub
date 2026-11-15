@@ -1,0 +1,75 @@
+{% load ee_tags static %}<div class="gd">
+  <header class="gd-ghead">
+    <div>
+      <nav class="gd-crumbs" aria-label="Breadcrumb"><a href="{% url 'content:guides' %}">Help and how-to</a>{% icon "chevron-right" 13 %}<span>{{ guide.area }}</span></nav>
+      <h1>{{ guide.title }}</h1>
+      <p>{{ guide.summary }}</p>
+      <div class="gd-meta"><span>{% icon aud_meta.0 13 %} {{ guide.audience|default:"Everyone" }}</span>
+        {% if guide.steps %}<span>{% icon "list-ordered" 13 %} {{ guide.steps|length }} steps</span>{% endif %}
+        {% if guide.n_pictures %}<span>{% icon "image" 13 %} {{ guide.n_pictures }} pictures</span>{% endif %}
+        <span>{% icon "clock" 13 %} {{ guide.minutes|default:3 }} min</span></div>
+    </div>
+    <div class="gd-actions">
+      <a class="gd-btn gd-btn--gold" href="{% url 'content:guide_pdf' guide.slug %}?download=1">{% icon "download" 16 %} Download PDF</a>
+      <a class="gd-btn gd-btn--glass" href="{% url 'content:guide_pdf' guide.slug %}" target="_blank" rel="noopener">{% icon "printer" 16 %} Open to print</a>
+      {% if page_url and request.user.is_authenticated %}<a class="gd-btn gd-btn--glass" href="{{ page_url }}">{% icon "arrow-up-right" 16 %} Go to the page</a>{% endif %}
+    </div>
+  </header>
+
+  <div class="gd-layout">
+    <article>
+      {% if guide.illustrated %}
+      {% if guide.who or guide.before %}<div class="gd-intro">
+        {% if guide.who %}<section class="gd-box"><h2>{% icon "user-round" 16 %} Who this is for</h2><p>{{ guide.who }}</p></section>{% endif %}
+        {% if guide.before %}<section class="gd-box"><h2>{% icon "list-checks" 16 %} Before you start</h2><ul>{% for b in guide.before %}<li>{{ b }}</li>{% endfor %}</ul></section>{% endif %}
+      </div>{% endif %}
+
+      <ol class="gd-steps">
+        {% for s in guide.steps %}
+        <li class="gd-step" id="step-{{ s.n }}">
+          <div class="gd-step__head"><span class="gd-step__n" aria-hidden="true">{{ s.n }}</span><div><h3><span class="sr-only">Step {{ s.n }}: </span>{{ s.title }}</h3><p>{{ s.text }}</p></div></div>
+          {% if s.img or s.img_phone %}<div class="gd-shots{% if s.img and s.img_phone %} gd-shots--both{% endif %}">
+            {% if s.img %}<figure class="gd-shot"><a href="{% static s.img.path %}" data-guide-zoom><img src="{% static s.img.path %}" width="{{ s.img.w }}" height="{{ s.img.h }}" loading="lazy" decoding="async" alt="Screenshot for step {{ s.n }}: {{ s.title }}"></a><figcaption>{% icon "monitor" 12 %} On a computer · press to enlarge</figcaption></figure>{% endif %}
+            {% if s.img_phone %}<figure class="gd-shot gd-shot--phone"><a href="{% static s.img_phone.path %}" data-guide-zoom><img src="{% static s.img_phone.path %}" width="{{ s.img_phone.w }}" height="{{ s.img_phone.h }}" loading="lazy" decoding="async" alt="Phone screenshot for step {{ s.n }}: {{ s.title }}"></a><figcaption>{% icon "smartphone" 12 %} On a phone</figcaption></figure>{% endif %}
+          </div>{% endif %}
+        </li>
+        {% endfor %}
+      </ol>
+
+      {% if guide.tips %}<h2 class="gd-sec-h">{% icon "lightbulb" 18 %} Tips</h2><div class="gd-tips" style="margin-top:0">
+        {% for t in guide.tips %}<div class="gd-tip">{% icon "lightbulb" 18 %}<div><b>{{ t.0 }}</b><p>{{ t.1 }}</p></div></div>{% endfor %}</div>{% endif %}
+      {% if guide.problems %}<h2 class="gd-sec-h">{% icon "circle-help" 18 %} Common problems</h2><div class="gd-problems">
+        {% for q in guide.problems %}<details><summary>{% icon "circle-alert" 16 %} {{ q.0 }}</summary><p>{{ q.1 }}</p></details>{% endfor %}</div>{% endif %}
+      {% else %}
+      <div class="gd-blocks">
+        {% for b in guide.blocks %}{% with kind=b.0 %}
+          {% if kind == "p" %}<p>{{ b.1 }}</p>
+          {% elif kind == "h" %}<h2>{{ b.1 }}</h2>
+          {% elif kind == "steps" %}<ol>{% for s in b.1 %}<li>{{ s }}</li>{% endfor %}</ol>
+          {% elif kind == "bullets" %}<ul>{% for s in b.1 %}<li>{{ s }}</li>{% endfor %}</ul>
+          {% else %}<div class="gd-tip">{% if kind == "important" %}{% icon "triangle-alert" 18 %}{% elif kind == "soon" %}{% icon "rocket" 18 %}{% else %}{% icon "lightbulb" 18 %}{% endif %}<div><b>{{ b.1 }}</b><p>{{ b.2 }}</p></div></div>{% endif %}
+        {% endwith %}{% endfor %}
+      </div>
+      {% endif %}
+
+      {% if guide.related_guides %}<h2 class="gd-sec-h">{% icon "link" 18 %} Related guides</h2><div class="gd-related">
+        {% for r in guide.related_guides %}<a class="gd-feat gd-tone-{{ r.tone }}" href="{% url 'content:guide_detail' r.slug %}"><span class="gd-ic gd-ic--sm">{% icon r.icon 18 %}</span><span><b>{{ r.title }}</b><small>{{ r.audience }}</small></span></a>{% endfor %}</div>{% endif %}
+
+      <nav class="gd-pn" aria-label="More guides">
+        {% if prev_guide %}<a href="{% url 'content:guide_detail' prev_guide.slug %}"><small>Previous</small><b>{{ prev_guide.title }}</b></a>{% endif %}
+        {% if next_guide %}<a class="next" href="{% url 'content:guide_detail' next_guide.slug %}"><small>Next</small><b>{{ next_guide.title }}</b></a>{% endif %}
+      </nav>
+    </article>
+
+    <aside class="gd-aside">
+      {% if guide.steps %}<div class="gd-panel gd-panel--toc"><h2>Steps</h2><nav class="gd-toc">{% for s in guide.steps %}<a href="#step-{{ s.n }}"><b>{{ s.n }}</b>{{ s.title }}</a>{% endfor %}</nav></div>{% endif %}
+      <div class="gd-panel"><h2>Keep it</h2>
+        <a class="gd-btn gd-btn--plain" style="width:100%" href="{% url 'content:guide_pdf' guide.slug %}?download=1">{% icon "file-down" 16 %} This guide as PDF</a>
+        <a class="gd-btn gd-btn--plain" style="width:100%;margin-top:8px" href="{% url 'content:guide_handbook' 'students' %}">{% icon "book-down" 16 %} Student handbook</a>
+        {% if request.user.is_authenticated %}<a class="gd-btn gd-btn--plain" style="width:100%;margin-top:8px" href="{% url 'content:guide_handbook' 'staff' %}">{% icon "book-down" 16 %} Staff handbook</a>{% endif %}
+        <a class="gd-btn gd-btn--plain" style="width:100%;margin-top:8px" href="{% url 'content:guides' %}">{% icon "life-buoy" 16 %} All guides</a>
+      </div>
+    </aside>
+  </div>
+  <dialog class="gd-lightbox" data-guide-lightbox aria-label="Enlarged screenshot"><button type="button" data-close aria-label="Close">×</button><img alt=""></dialog>
+</div>

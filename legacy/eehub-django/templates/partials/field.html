@@ -1,0 +1,13 @@
+{% comment %}One form field, the portal way (see core/templatetags/forms_tags.py and static/css/forms.css).
+Context: f (BoundField), kind, wide, label, help, prefix, suffix, cls, required, errors, auto_id.{% endcomment %}{% if kind == "hidden" %}{{ f }}{% elif kind == "checkbox" %}<div class="ee-field ee-field--check{% if wide %} ee-field--wide{% endif %}{% if errors %} has-error{% endif %}{% if cls %} {{ cls }}{% endif %}" data-field="{{ f.name }}">
+  <label class="ee-check" for="{{ f.id_for_label }}">{{ f }}<span>{{ label }}</span></label>
+  {% if help %}<div class="help ee-field__help" id="{{ auto_id }}_helptext">{{ help }}</div>{% endif %}{{ errors }}
+</div>{% elif kind == "choices" %}<fieldset class="ee-field ee-field--choices{% if wide %} ee-field--wide{% endif %}{% if errors %} has-error{% endif %}{% if cls %} {{ cls }}{% endif %}" data-field="{{ f.name }}"{% if help %} aria-describedby="{{ auto_id }}_helptext"{% endif %}>
+  <legend class="ee-field__label">{{ label }}{% if required %} <span class="ee-req" aria-hidden="true">*</span>{% endif %}</legend>
+  <div class="ee-choices" id="{{ auto_id }}">{% for r in f %}<label class="ee-choice" for="{{ r.id_for_label }}">{{ r.tag }}<span>{{ r.choice_label }}</span></label>{% endfor %}</div>
+  {% if help %}<div class="help ee-field__help" id="{{ auto_id }}_helptext">{{ help }}</div>{% endif %}{{ errors }}
+</fieldset>{% else %}<div class="ee-field ee-field--{{ kind }}{% if wide %} ee-field--wide{% endif %}{% if errors %} has-error{% endif %}{% if cls %} {{ cls }}{% endif %}" data-field="{{ f.name }}">
+  <label class="ee-field__label" for="{{ f.id_for_label }}">{{ label }}{% if required %} <span class="ee-req" aria-hidden="true">*</span>{% endif %}</label>
+  {% if prefix or suffix %}<div class="ee-input-group">{% if prefix %}<span class="ee-input-group__affix" aria-hidden="true">{{ prefix }}</span>{% endif %}{{ f }}{% if suffix %}<span class="ee-input-group__affix" aria-hidden="true">{{ suffix }}</span>{% endif %}</div>{% else %}{{ f }}{% endif %}
+  {% if help %}<div class="help ee-field__help" id="{{ auto_id }}_helptext">{{ help }}</div>{% endif %}{{ errors }}
+</div>{% endif %}

@@ -1,0 +1,147 @@
+{
+ "name": "Madison",
+ "height": 1.63,
+ "seed": 9,
+ "body": {
+  "slim": 0.6,
+  "curvy": 0.25,
+  "fat": 0,
+  "muscle": 0
+ },
+ "skin": "#f1d0b6",
+ "blush": 0.3,
+ "blushCol": "#e8908a",
+ "face": {
+  "w": 0.075,
+  "top": 0.095,
+  "chin": 0.1,
+  "d": 0.085,
+  "jaw": 0.72,
+  "chinFwd": 0.95,
+  "cheek": 0.35,
+  "skull": 0.5,
+  "flat": 0.25,
+  "eyeX": 0.42,
+  "eyeY": -0.07,
+  "eyeR": 0.0212,
+  "eyeH": 1.0,
+  "eyeSink": 0.62,
+  "iris": "#2a1710",
+  "irisIn": "#5c3a22",
+  "irisA": 0.74,
+  "pupilA": 0.3,
+  "lidUp": 0.45,
+  "lidLo": 0.5,
+  "tilt": 0.1,
+  "lash": 0.0021,
+  "wing": 0.25,
+  "lowerLash": 0.0006,
+  "shadow": "#dcae96",
+  "lashCol": "#120b08",
+  "brow": {
+   "col": "#1a1210",
+   "y": 1.25,
+   "w": 0.0042,
+   "arch": 0.15,
+   "peak": 0.75,
+   "len": 1.05,
+   "tail": -0.25,
+   "tilt": -0.08
+  },
+  "nose": {
+   "y": -0.3,
+   "size": 0.95
+  },
+  "mouth": {
+   "y": -0.58,
+   "w": 0.021,
+   "smile": 0.7,
+   "open": 0.3,
+   "lip": "#c9665f",
+   "full": 1.0
+  },
+  "eyePm": 1.2,
+  "lashes": 4,
+  "crease": 0
+ },
+ "hair": {
+  "root": "#141114",
+  "tip": "#141114",
+  "grad": 0.4,
+  "gradAmt": 0,
+  "part": 0,
+  "hairline": 34,
+  "temple": 48,
+  "cap": 0.006,
+  "volume": 0.6,
+  "locks": 3,
+  "endY": 0.8,
+  "endJitter": 0.004,
+  "lockW": 0.02,
+  "thick": 0.005,
+  "wave": 0.04,
+  "waveFreq": 1.1,
+  "spread": 0.02,
+  "gravity": 0.6,
+  "taperStart": 0.7,
+  "tipPow": 0.7,
+  "rough": 0.45,
+  "gloss": 0.35,
+  "sheen": "#8a90b0",
+  "lockStart": 0.3,
+  "capOverlap": -0.012,
+  "softStart": 0.12,
+  "capTone": 1.45,
+  "partTone": 0,
+  "partWidth": 1.5,
+  "noSelfShadow": true,
+  "env": 0.6,
+  "backLonger": 0.0,
+  "fringe": {
+   "el": 19,
+   "az": 60
+  }
+ },
+ "outfits": [
+  {
+   "id": "street",
+   "label": "Hoodie + wide trousers",
+   "items": [
+    {
+     "type": "top",
+     "col": "#b9a6e0",
+     "neck": "crew",
+     "neckDepth": 0.006,
+     "off": 0.012,
+     "loose": 0.006,
+     "bottom": 0.455,
+     "hood": true,
+     "sleeve": {
+      "len": 0.94,
+      "flare": 0.003
+     }
+    },
+    {
+     "type": "pants",
+     "col": "#3a3d46",
+     "off": 0.006,
+     "hem": 0.04,
+     "minR": 0.04,
+     "top": 0.555
+    },
+    {
+     "type": "shoes",
+     "style": "sneakers",
+     "col": "#f5f3ef",
+     "sole": "#ffffff",
+     "laces": "#ffffff"
+    },
+    {
+     "type": "phone"
+    }
+   ]
+  }
+ ],
+ "hairMargin": 0.006,
+ "headScale": 1.1
+}

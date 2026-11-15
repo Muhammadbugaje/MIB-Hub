@@ -1,0 +1,68 @@
+---
+/**
+ * Create an account (email + password). New accounts get the "player" role;
+ * a visitor can never choose their own role (see lib/auth.ts, input: false).
+ */
+import Alert from "../../components/Alert.astro";
+import Field from "../../components/Field.astro";
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import { MIN_PASSWORD_LENGTH, auth, authErrorMessage, redirectWithCookies } from "../../lib/auth.ts";
+import { safeNext } from "../../lib/guard.ts";
+import { siteConfig } from "../../site.config.ts";
+
+const next = safeNext(Astro.url.searchParams.get("next"), "/account/profile");
+if (Astro.locals.viewer.user) return Astro.redirect(next);
+
+let error = "";
+const errors: Record<string, string> = {};
+let name = "";
+let email = "";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  name = String(form.get("name") ?? "").trim();
+  email = String(form.get("email") ?? "").trim();
+  const password = String(form.get("password") ?? "");
+  const confirm = String(form.get("confirm") ?? "");
+
+  if (name.length < 2) errors.name = "Tell us what to call you (2 letters or more).";
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.email = "Enter a valid email address.";
+  if (password.length < MIN_PASSWORD_LENGTH) errors.password = `Use at least ${MIN_PASSWORD_LENGTH} characters.`;
+  else if (password !== confirm) errors.confirm = "The two passwords do not match.";
+
+  if (Object.keys(errors).length === 0) {
+    const res = await auth.api.signUpEmail({
+      body: { name, email, password },
+      headers: Astro.request.headers,
+      asResponse: true,
+    });
+    if (res.ok) return redirectWithCookies(safeNext(String(form.get("next") ?? ""), next), res);
+    error = await authErrorMessage(res);
+  }
+  Astro.response.status = 400;
+}
+---
+
+<AuthLayout title="Create account" headline="Join the hub.">
+  <h1>Create your account</h1>
+  <p class="lead">Free, and it saves your progress across every game on {siteConfig.name}.</p>
+  {error && <Alert tone="danger">{error}</Alert>}
+  <form class="form" method="post" novalidate style="margin-top: var(--space-4);">
+    <input type="hidden" name="next" value={next} />
+    <Field name="name" label="Your name" autocomplete="name" value={name} error={errors.name} required autofocus />
+    <Field name="email" label="Email" type="email" autocomplete="email" value={email} error={errors.email} required />
+    <Field
+      name="password"
+      label="Password"
+      type="password"
+      autocomplete="new-password"
+      minlength={MIN_PASSWORD_LENGTH}
+      hint={`At least ${MIN_PASSWORD_LENGTH} characters.`}
+      error={errors.password}
+      required
+    />
+    <Field name="confirm" label="Type it again" type="password" autocomplete="new-password" error={errors.confirm} required />
+    <button class="btn btn--primary btn--lg btn--block" type="submit">Create account</button>
+  </form>
+  <p class="auth__switch">Already have an account? <a href={`/auth/sign-in?next=${encodeURIComponent(next)}`}>Sign in</a></p>
+</AuthLayout>

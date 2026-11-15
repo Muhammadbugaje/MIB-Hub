@@ -1,0 +1,60 @@
+/* EE Hub additions to NBTE messaging.css: kind tabs, class groups, the members/files panel, live thread. */
+.mx-kinds { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 12px; }
+.mx-kind { padding: 6px 14px; border-radius: 9px; font-size: 13px; font-weight: 600; color: var(--text-muted); text-decoration: none; }
+.mx-kind.is-on { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+.mx-auto { display: inline-block; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px;
+  border-radius: 6px; background: var(--volt-subtle); color: var(--volt); vertical-align: 2px; margin-left: 4px; }
+.mx-class-av { background: linear-gradient(135deg, var(--brand-600, #1a6b45), var(--volt, #0b9db2)) !important; color: #fff !important; }
+.mx-role { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: var(--accent-subtle); color: var(--accent-fg); }
+.mx-sub { font-size: 12.5px; color: var(--text-muted); }
+.mx-pinned { display: flex; align-items: center; gap: 8px; font-size: 12.5px; padding: 8px 12px; margin: 0 0 10px; border-radius: 12px;
+  background: var(--accent-subtle); color: var(--text); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
+.mx-pinned b { color: var(--accent-fg); }
+.mx-pinned span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-pinned form { margin: 0; }
+.mx-link { background: none; border: 0; padding: 0; color: var(--link); font: inherit; font-size: 12px; cursor: pointer; }
+.mx-readonly { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); padding: 12px 14px; border: 1px dashed var(--border-strong);
+  border-radius: 14px; margin-top: 12px; }
+
+/* thread + info panel */
+.mx-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; max-width: 1180px; margin: 0 auto; align-items: start; }
+.mx-layout .msg-page-thread { max-width: none; width: 100%; min-width: 0; }
+.mx-info { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 16px; display: flex; flex-direction: column; gap: 16px;
+  box-shadow: var(--shadow-sm); }
+.mx-info__head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; position: relative; }
+.mx-info__av { width: 58px !important; height: 58px !important; border-radius: 18px !important; }
+.mx-info__head b { font-size: 15px; }
+.mx-info__head small { color: var(--text-muted); font-size: 12px; line-height: 1.45; }
+.mx-info__close { position: absolute; right: 0; top: 0; display: none; }
+.mx-h { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
+.mx-members, .mx-files { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 340px; overflow: auto; }
+.mx-members li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 8px; font-size: 13px; }
+.mx-members__n { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-members small, .mx-files small { color: var(--text-muted); font-size: 11.5px; }
+.mx-files li { display: flex; flex-direction: column; gap: 1px; font-size: 13px; }
+.mx-files a { display: flex; gap: 6px; align-items: center; color: var(--text); text-decoration: none; min-width: 0; }
+.mx-files a span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mx-files small { padding-left: 20px; }
+.mx-more { font-size: 12px; margin: 6px 0 0; }
+.mx-settings { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.mx-switch { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.mx-info section form { margin: 0; }
+
+@media (min-width: 1200px) {
+  .mx-layout { grid-template-columns: minmax(0, 1fr) 300px; }
+  .mx-info { position: sticky; top: calc(var(--topbar-h, 64px) + 16px); }
+  .mx-info-toggle { display: none !important; }
+}
+@media (max-width: 1199.98px) {
+  .mx-info { position: fixed; z-index: var(--z-drawer, 60); top: 0; right: 0; bottom: 0; width: min(340px, 92vw); border-radius: 18px 0 0 18px;
+    transform: translateX(105%); transition: transform .22s var(--ease-standard, ease); overflow: auto; box-shadow: var(--shadow-xl); }
+  .mx-info.is-open { transform: none; }
+  .mx-info__close { display: inline-flex; }
+}
+
+/* NBTE's composer fades into white; follow the EE page background instead */
+.mx-layout .msg-reply { background: linear-gradient(to bottom, transparent, var(--bg, var(--surface-2)) 30%); }
+[data-theme="dark"] .mx-layout .msg-reply { background: linear-gradient(to bottom, transparent, var(--bg, #0b110e) 30%); }
+.msg-bubble .msg-bubble-text a { color: inherit; text-decoration: underline; overflow-wrap: anywhere; }
+.msg-bubble-text { overflow-wrap: anywhere; }
+.wf-picker .msg-picker-panel { z-index: 30; }

@@ -1,0 +1,111 @@
+/* Round 7 access screens (R7A): features, grants, delegation, review, access log, classes.
+   Tokens only (light and dark come from tokens.css). Mobile first. */
+.r7a-page { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.r7a-muted { color: var(--text-muted); }
+.r7a-wide { width: 100%; }
+.r7a-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; min-width: 0; }
+.r7a-search { display: flex; align-items: center; gap: 8px; flex: 1 1 220px; min-width: 0; max-width: 420px;
+  padding: 0 12px; min-height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface); color: var(--text-muted); }
+.r7a-search input { border: 0; background: transparent; outline: 0; flex: 1; min-width: 0; font: inherit; color: var(--text); min-height: 42px; }
+.r7a-search:focus-within { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent); }
+.r7a-select { width: auto; min-height: 44px; max-width: 100%; }
+.r7a-count { display: inline-block; min-width: 1.5em; padding: 0 6px; margin-left: 4px; border-radius: var(--radius-pill);
+  background: var(--surface-sunken); font-size: 11px; text-align: center; }
+.r7a-key { font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); overflow-wrap: anywhere; }
+
+/* Feature cards */
+.r7a-fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 12px; }
+.r7a-fcard { display: flex; flex-direction: column; gap: 8px; padding: 14px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border); background: var(--surface); min-width: 0; scroll-margin-top: 90px; }
+.r7a-fcard.is-off { background: var(--surface-sunken); }
+.r7a-fcard.is-off .r7a-fcard__title h2 { color: var(--text-muted); }
+.r7a-fcard:target { border-color: var(--primary); box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 18%, transparent); }
+.r7a-fcard__head { display: flex; align-items: center; gap: 10px; }
+.r7a-fcard__title { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.r7a-fcard__title h2 { margin: 0; font-size: 15px; line-height: 1.25; overflow-wrap: anywhere; }
+.r7a-fcard__body { margin: 0; font-size: 13px; color: var(--text-muted); overflow-wrap: anywhere; }
+.r7a-fcard__meta { margin: auto 0 0; font-size: 12px; color: var(--text-muted); display: flex; gap: 6px; align-items: center; }
+.r7a-switchform { margin: 0; display: inline-flex; }
+.r7a-switch { position: relative; width: 52px; height: 30px; flex: none; border-radius: var(--radius-pill); border: 0; cursor: pointer;
+  background: var(--border-strong); transition: background .2s; padding: 0; }
+.r7a-switch::after { content: ""; position: absolute; inset: -7px -2px; }       /* 44 px tap target */
+.r7a-switch span { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  box-shadow: 0 1px 3px rgb(0 0 0 / .3); transition: transform .2s; }
+.r7a-switch[aria-checked="true"] { background: var(--primary); }
+.r7a-switch[aria-checked="true"] span { transform: translateX(22px); }
+.r7a-switch:focus-visible { outline: 3px solid color-mix(in srgb, var(--primary) 45%, transparent); outline-offset: 2px; }
+.r7a-switch--sm { width: 44px; height: 26px; }
+.r7a-switch--sm span { width: 20px; height: 20px; }
+.r7a-switch--sm[aria-checked="true"] span { transform: translateX(18px); }
+@media (prefers-reduced-motion: reduce) { .r7a-switch, .r7a-switch span { transition: none; } }
+.r7a-finer { border-top: 1px solid var(--divider, var(--border)); padding-top: 8px; font-size: 13px; }
+.r7a-finer summary { cursor: pointer; font-weight: 600; color: var(--text-muted); min-height: 32px; display: flex; align-items: center; }
+.r7a-finer ul { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 8px; }
+.r7a-finer li { display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.r7a-finer__text { display: flex; flex-direction: column; min-width: 0; gap: 1px; }
+.r7a-finer__text small { color: var(--text-muted); font-size: 12px; overflow-wrap: anywhere; }
+
+/* Lists */
+.r7a-why { margin-top: 4px; display: flex; gap: 6px; align-items: flex-start; font-size: 12.5px; color: var(--danger); overflow-wrap: anywhere; }
+.r7a-review li, .r7a-grants li { flex-wrap: wrap; }
+.r7a-review .ee-row__body, .r7a-grants .ee-row__body { flex: 1 1 240px; min-width: 0; }
+.is-dimmed { opacity: .72; }
+
+/* Grant form */
+.r7a-permgroup { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 10px 12px; margin: 10px 0 0;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 6px 16px; }
+.r7a-permgroup legend { font-size: 12px; font-weight: 700; padding: 0 6px; color: var(--text-muted); }
+.r7a-permgroup .check, .r7a-checkgrid .check { min-height: 36px; }
+.r7a-checkgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 4px 16px; padding: 8px 0; }
+.r7a-what { margin-top: 10px; }
+.r7a-what[hidden], [data-audience][hidden] { display: none; }
+
+/* My access / delegation */
+.r7a-ogrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 8px; }
+.r7a-otile { display: flex; align-items: center; gap: 10px; padding: 10px 12px; min-height: 52px; border-radius: var(--radius-md);
+  border: 1px solid var(--border); background: var(--surface); color: var(--text); text-decoration: none; min-width: 0; }
+.r7a-otile > span:nth-child(2) { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.r7a-otile small { color: var(--text-muted); font-size: 12px; }
+.r7a-otile:hover { border-color: var(--primary); text-decoration: none; }
+.r7a-rules { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 6px; font-size: 12.5px; color: var(--text-muted); }
+.r7a-rules li { display: flex; gap: 6px; align-items: flex-start; }
+.r7a-rgrid, .r7a-cgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 12px; }
+.r7a-rule .ee-card__head h2, .r7a-class .ee-card__head h2 { display: flex; align-items: center; gap: 8px; min-width: 0; overflow-wrap: anywhere; }
+.r7a-rule dd, .r7a-class dd { margin: 0; display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.r7a-class__actions { margin-top: 12px; }
+.r7a-subhead { margin-top: 14px; }
+.r7a-top { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 12.5px; color: var(--text-muted); }
+
+/* Class list */
+.r7a-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.r7a-table .table { min-width: 0; width: 100%; }
+.r7a-inline-search { margin: 0; flex: 0 1 260px; min-width: 0; }
+@media (min-width: 1101px) { .ee-grid > .r7a-twothirds { grid-column: span 4; } }
+@media (min-width: 761px) and (max-width: 1100px) { .ee-grid > .r7a-twothirds { grid-column: span 6; } }
+.r7a-wraphead { flex-wrap: wrap; gap: 8px; }
+.r7a-key { align-self: flex-start; display: inline; background: none; padding: 0; border: 0; }
+@media (max-width: 560px) {
+  .r7a-hide-sm { display: none; }
+  .r7a-table thead { display: none; }
+  .r7a-table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; padding: 10px 2px;
+    border-bottom: 1px solid var(--border); }
+  .r7a-table td { display: block; border: 0 !important; padding: 0 !important; min-width: 0; overflow-wrap: anywhere; }
+  .r7a-table td.r7a-hide-sm { display: none; }
+  .r7a-table .r7a-td-name { font-weight: 600; grid-column: 1; grid-row: 1; }
+  .r7a-table .r7a-td-status { grid-column: 2; grid-row: 1 / span 2; align-self: center; }
+  .r7a-table .r7a-td-reg { grid-column: 1; grid-row: 2; font-size: 12.5px; color: var(--text-muted); }
+  .r7a-table .r7a-td-phone { grid-column: 1; grid-row: 3; font-size: 12.5px; color: var(--text-muted); }
+  .r7a-wraphead h2 { white-space: nowrap; }
+  .r7a-table .r7a-td-phone::before { content: attr(data-label) ": "; }
+  .r7a-inline-search { flex: 1 1 100%; }
+  .r7a-inline-search .r7a-search { max-width: none; }
+}
+
+/* How it works */
+.r7a-toc { display: flex; flex-wrap: wrap; gap: 6px; }
+.r7a-toc a { padding: 8px 12px; min-height: 36px; border-radius: var(--radius-pill); background: var(--surface-sunken);
+  font-size: 12.5px; font-weight: 600; color: var(--text); text-decoration: none; }
+.r7a-how section { scroll-margin-top: 90px; }
+.r7a-how p, .r7a-how li { font-size: 14px; line-height: 1.6; }
+.r7a-steps, .r7a-bullets { margin: 6px 0 10px; padding-left: 20px; }
+.r7a-preview { align-items: center; }

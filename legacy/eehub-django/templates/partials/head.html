@@ -1,0 +1,34 @@
+{% load static ee_tags %}  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#f5f2ed" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#070b09" media="(prefers-color-scheme: dark)">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ site_info.short_name|default:'EE Hub' }}">
+  <meta property="og:title" content="{% firstof og_title site_info.department_name %}">
+  {# Round 6: versioned icon/manifest URLs (?v=ee6) so a browser that once ran another app on this address re-fetches EE Hub's icons #}
+  <meta property="og:description" content="{{ site_info.tagline }}">
+  <link rel="icon" href="{% url 'config:favicon' %}?v=ee6" type="image/svg+xml">
+  {# A page may install as its own app (each arcade game): app_manifest / app_icon / app_title from the view #}
+  <link rel="manifest" href="{% if app_manifest %}{{ app_manifest }}{% else %}{% url 'content:manifest' %}?v=ee6{% endif %}">
+  {# Installable app (Round 5G): icons, iOS home screen, service worker #}
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/icons/favicon-32.png' %}">
+  <link rel="apple-touch-icon" href="{% if app_icon %}{{ app_icon }}{% else %}{% static 'img/icons/apple-touch-icon.png' %}{% endif %}">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="{% firstof app_title site_info.short_name 'EE Hub' %}">
+  <meta name="application-name" content="{{ site_info.short_name|default:'EE Hub' }}">
+  <meta name="ee-user" content="{% if request.user.is_authenticated %}{{ request.user.pk }}{% endif %}">
+  <link rel="stylesheet" href="{% static 'css/pwa.css' %}">
+  <script src="{% static 'js/pwa.js' %}" defer></script>
+  <link rel="preload" href="{% static 'fonts/inter-var.woff2' %}" as="font" type="font/woff2" crossorigin>
+  {% if request.user.is_authenticated %}<script>window.EE_PREFS={theme:"{{ request.user.preferences.theme|default:'system'|escapejs }}",motion:{% if request.user.preferences.reduce_motion %}true{% else %}false{% endif %}};</script>{% endif %}
+  <script src="{% static 'js/theme-init.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">

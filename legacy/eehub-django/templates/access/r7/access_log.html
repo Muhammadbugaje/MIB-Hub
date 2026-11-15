@@ -1,0 +1,39 @@
+{% extends "base.html" %}{% load ee_tags pager_tags %}
+{% block title %}Access log{% endblock %}
+{% block page_title %}Access log{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "eye" 14 %} People and access · {{ week }} view{{ week|pluralize }} in the last 7 days</span>
+    <h1 class="ee-page-header__title">Who viewed personal data</h1>
+    <p class="ee-page-header__description">Every time someone opens restricted personal data (staff contacts, student records and contacts, results, course forms, welfare cases), it is written here. People viewing their own records are not logged.</p>
+  </div>
+  <div class="ee-page-header__actions"><a class="btn btn-ghost" href="{% url 'access:how' %}#access-log">{% icon "life-buoy" 16 %} How it works</a></div>
+</header>
+{% include "access/_subnav.html" with section="log" %}
+
+<form method="get" class="r7a-toolbar" role="search">
+  <label class="r7a-search">{% icon "search" 16 %}<input type="search" name="q" value="{{ q }}" placeholder="Viewer, person or record…" aria-label="Search the access log"></label>
+  <select name="kind" class="input r7a-select" aria-label="Kind of data"><option value="">All kinds</option>{% for k, l in kinds %}<option value="{{ k }}"{% if k == kind %} selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+  <select name="days" class="input r7a-select" aria-label="Period">{% for d, l in periods %}<option value="{{ d }}"{% if d == days %} selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+  <button class="btn btn-ghost" type="submit">Filter</button>
+</form>
+
+{% if top %}<div class="r7a-top">{% icon "trending-up" 15 %} Most views this week: {% for t in top %}<span class="ee-chip">{{ t.user_repr|default:"unknown" }} · {{ t.n }}</span> {% endfor %}</div>{% endif %}
+
+{% if page.object_list %}
+<section class="ee-card">
+  <ul class="ee-list">{% for e in page.object_list %}
+    <li><span class="ee-ic tone-{% if e.kind == 'welfare' or e.kind == 'results' %}plum{% elif e.kind == 'staff_contact' or e.kind == 'student_contact' %}gold{% else %}slate{% endif %}">{% icon "eye" 15 %}</span>
+      <div class="ee-row__body"><div class="ee-row__title">{{ e.user_repr|default:"Someone" }} viewed {{ e.get_kind_display|lower }}{% if e.subject %} of {{ e.subject.full_name }}{% endif %}</div>
+        <div class="ee-row__meta">{{ e.at|date:"j M Y, H:i" }}{% if e.profile_kind %} · as {{ e.profile_kind }}{% endif %}{% if e.impersonator %} · while {{ e.impersonator.get_full_name }} was acting as them{% endif %}{% if e.object_repr %} · {{ e.object_repr|truncatechars:60 }}{% endif %}{% if e.note %} · {{ e.note|truncatechars:60 }}{% endif %}</div></div>
+    </li>{% endfor %}</ul>
+</section>
+{% pager page %}
+{% else %}
+{% include "partials/empty_state.html" with title="Nothing logged for these filters" body="When someone opens restricted personal data it appears here. Try a longer period or clear the filters." %}
+{% endif %}
+</div>
+{% endblock %}

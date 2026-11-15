@@ -1,0 +1,68 @@
+{% load static ee_tags ee_shell %}<!DOCTYPE html>
+<html lang="en" data-view="auto">
+<head>
+  {% include "partials/head.html" %}
+  <meta name="description" content="{% block meta_description %}{{ site_info.short_name }} · {{ site_info.department_name }}, {{ site_info.organisation_name }}{% endblock %}">
+  <title>{% block title %}{{ site_info.short_name|default:SITE_NAME }}{% endblock %} · {{ site_info.short_name|default:SITE_NAME }}</title>
+  <link rel="stylesheet" href="{% static 'css/notifications.css' %}">
+  <link rel="stylesheet" href="{% static 'css/users.css' %}">
+  <link rel="stylesheet" href="{% static 'css/search.css' %}">
+  {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/apple.css' %}">
+  <link rel="stylesheet" href="{% static 'css/polish.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ee.css' %}">
+  <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+  <link rel="stylesheet" href="{% static 'css/tiles.css' %}">
+  <link rel="stylesheet" href="{% static 'css/shell.css' %}">
+  <link rel="stylesheet" href="{% static 'css/alive.css' %}">
+  <link rel="stylesheet" href="{% static 'css/a11y.css' %}">
+  <link rel="stylesheet" href="{% static 'css/standards.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sweep.css' %}">
+</head>
+<body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' class="ee-app {% if request.is_impersonating %}impersonating{% endif %}{% block body_class %}{% endblock %}">
+  <a class="skip-link" href="#app-content">Skip to main content</a>
+  {% if request.is_impersonating %}{% include "partials/impersonation_banner.html" %}{% endif %}
+  {% setting "site.banner_message" "" as banner %}{% if banner %}<div class="ee-site-banner ee-site-banner--{% setting 'site.banner_tone' 'info' %}" role="status">{% icon "megaphone" 16 %}<span>{{ banner }}</span></div>{% endif %}
+
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="page-loader-inner">
+      <span class="page-loader-logo">{% brand_logo "primary" 44 %}</span>
+      <div class="page-loader-bar" role="progressbar" aria-label="Loading"></div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <div class="app-sidebar-backdrop" aria-hidden="true"></div>
+    {% include "partials/sidebar.html" %}
+    <div class="app-main">
+      {% include "partials/topbar.html" %}
+      <main class="app-content" id="app-content" tabindex="-1">
+        {% optional_include "partials/profile_nudge.html" %}
+        {% block content %}{% endblock %}
+      </main>
+      <footer class="app-footer">
+        <span>© {% now "Y" %} {{ site_info.department_name }}, {{ site_info.organisation_name }} · {{ site_info.footer_note }}</span>
+        {% include "partials/view_switch.html" %}
+      </footer>
+    </div>
+  </div>
+
+  {% if request.user.is_authenticated %}{% include "partials/mobile_tabbar.html" %}{% endif %}
+  {% include "partials/toasts.html" %}
+
+  <script src="{% static 'vendor/htmx.min.js' %}" defer></script>
+  <script src="{% static 'js/app.js' %}" defer></script>
+  <script src="{% static 'js/ui.js' %}" defer></script>
+  <script src="{% static 'js/dialog.js' %}" defer></script>
+  <script src="{% static 'js/notifications.js' %}" defer></script>
+  <script src="{% static 'js/apple.js' %}" defer></script>
+  <script src="{% static 'js/ee.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+  <script src="{% static 'js/polish.js' %}" defer></script>
+  <script src="{% static 'js/shell.js' %}" defer></script>
+  <script src="{% static 'js/alive.js' %}" defer></script>
+  {% optional_include "partials/ux_scripts.html" %}
+  <script src="{% static 'js/a11y.js' %}" defer></script>
+  <script src="{% static 'js/sweep.js' %}" defer></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{% load ee_tags %}{% if people %}<ul class="acc-people" role="listbox" aria-label="Matching people">
+{% for row in people %}{% if not need_user or row.p.user_id %}<li><button type="button" class="acc-person" data-pick-person="{% if need_user %}{{ row.p.user_id }}{% else %}{{ row.p.pk }}{% endif %}" data-name="{{ row.p.full_name }}" data-kinds="{{ row.kinds|join:',' }}" data-email="{{ row.p.user.email|default:'' }}">
+  <span class="avatar avatar-sm">{{ row.p.plain_name|initials }}</span>
+  <span class="acc-person__text"><b>{{ row.p.full_name }}</b><small>{{ row.p.user.email|default:"No sign-in" }}</small></span>
+  <span class="acc-person__kinds">{% for k in row.kinds %}<span class="ee-chip">{{ k }}</span>{% empty %}<span class="ee-chip ee-chip--ember">no profile</span>{% endfor %}</span>
+</button></li>{% endif %}{% endfor %}</ul>
+{% elif q|length >= 2 %}<p class="ee-empty">{% if office %}Nobody who may hold {{ office.name }} matches “{{ q }}”.{% else %}Nobody matches “{{ q }}”.{% endif %}</p>
+{% else %}<p class="ee-card__sub">Type at least two letters of a name, e-mail or number.</p>{% endif %}

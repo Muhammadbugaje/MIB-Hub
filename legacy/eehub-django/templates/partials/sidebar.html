@@ -1,0 +1,71 @@
+{% load ee_tags %}{% comment %}
+  Round 2 (NBTE Phase 8 navigation): icon-tile sidebar.
+  - Profile switch (segmented control) at the top when the user has 2+ profiles.
+  - A compact "Acting as" card with the active profile's offices.
+  - Groups from core/nav.py: gradient tile per group (Group.icon / Group.tone),
+    collapsible with chevrons; items take the group's hue; office dashboards
+    get their own tile in the office colour.
+  The same markup is the phone drawer (≤1023px) opened from the tab bar.
+{% endcomment %}<aside class="app-sidebar ee-sidebar" id="app-sidebar" aria-label="Sidebar">
+  <div class="app-sidebar-header">
+    {% load static %}<link rel="stylesheet" href="{% static 'css/brand-lockup.css' %}">
+    {# Round 6: the EE mark big, "Electrical Engineering" over "Ahmadu Bello University" #}
+    <a href="{% url 'dashboards:home' %}" class="app-brand ee-lockup" aria-label="{{ site_info.short_name|default:'EE Hub' }} dashboard">
+      <span class="app-brand-mark ee-lockup__mark">{% brand_logo "primary" 46 %}</span>
+      <span class="app-brand-text ee-lockup__text">
+        <span class="app-brand-title ee-lockup__title">{{ site_info.department_name|cut:"Department of "|default:"Electrical Engineering" }}</span>
+        <span class="app-brand-sub ee-lockup__sub">{{ site_info.organisation_name|cut:", Zaria"|default:"Ahmadu Bello University" }}</span>
+      </span>
+    </a>
+    <button type="button" class="app-topbar-btn app-sidebar-close" data-drawer-toggle="app-sidebar" aria-label="Close navigation menu">{% icon "x" 18 %}</button>
+  </div>
+
+  {% if profile_segments|length > 1 %}{% include "partials/profile_switch.html" %}{% endif %}
+
+  {% if active_profile %}
+  <div class="ee-acting ee-acting--compact" data-tone="{% for s in profile_segments %}{% if s.active %}{{ s.tone }}{% endif %}{% endfor %}">
+    <span class="ee-tile ee-tile--sm" aria-hidden="true">{% icon active_profile.icon 14 %}</span>
+    <span class="ee-acting__text">{% if profile_segments|length < 2 %}<small>Acting as</small>{% endif %}<b>{{ active_profile.label }}</b>{% if active_profile.sublabel %}<span class="ee-acting__sub">{{ active_profile.sublabel }}</span>{% endif %}</span>
+    {% if active_offices %}<span class="ee-acting__offices">{% for a in active_offices|slice:":3" %}<span class="ee-chip ee-chip--{{ a.office.color }}">{{ a.office.label }}</span>{% endfor %}{% if active_offices|length > 3 %}<span class="ee-chip ee-chip--slate">+{{ active_offices|length|add:"-3" }}</span>{% endif %}</span>{% endif %}
+  </div>
+  {% endif %}
+
+  <nav class="app-nav ee-nav" aria-label="Main menu">
+    {% for g in nav_menu %}
+      {% if not g.label %}
+        {% for it in g.items %}
+          <a href="{{ it.url }}" class="app-nav-item ee-nav-top{% if it.active %} active{% endif %}" data-tone="{{ it.tone|default:g.tone }}"{% if it.active %} aria-current="page"{% endif %}>
+            <span class="ee-tile ee-tile--sm" aria-hidden="true">{% icon it.icon 14 %}</span><span>{{ it.label }}</span>
+            {% if it.count %}<span class="app-nav-badge">{{ it.count }}</span>{% endif %}
+          </a>
+        {% endfor %}
+      {% else %}
+      <div class="app-nav-group{% if g.open %} is-open{% endif %}{% if g.active %} has-active{% endif %}" data-group="{{ g.key }}" data-tone="{{ g.tone }}">
+        <button type="button" class="app-nav-group-head" aria-expanded="{% if g.open %}true{% else %}false{% endif %}">
+          <span class="ee-tile ee-tile--sm" aria-hidden="true">{% icon g.icon 14 %}</span>
+          <span class="app-nav-group-title">{{ g.label }}</span>
+          {% if g.count %}<span class="app-nav-badge ee-nav-group-count">{{ g.count }}</span>{% endif %}
+          {% icon "chevron-down" 14 "app-nav-group-chevron" %}
+        </button>
+        <div class="app-nav-group-body">
+        {% for it in g.items %}
+          <a href="{{ it.url }}" class="app-nav-item{% if it.active %} active{% endif %}{% if it.tile %} has-tile{% endif %}"{% if it.tone %} data-tone="{{ it.tone }}"{% endif %}{% if it.active %} aria-current="page"{% endif %}>
+            {% if it.tile %}<span class="ee-tile ee-tile--xs" aria-hidden="true">{% icon it.icon 12 %}</span>{% else %}{% icon it.icon 16 %}{% endif %}<span>{{ it.label }}</span>
+            {% if it.count %}<span class="app-nav-badge">{{ it.count }}</span>{% endif %}
+          </a>
+        {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </nav>
+
+  <div class="app-sidebar-footer ee-sidebar-foot">
+    {% if request.user.is_staff %}
+      <a href="/admin/" class="app-nav-item" data-tone="slate">{% icon "database" 16 %}<span>Django admin</span></a>
+    {% endif %}
+    <a href="{% url 'content:home' %}" class="app-nav-item" data-tone="teal">{% icon "globe" 16 %}<span>Public website</span></a>
+    <button type="button" class="app-nav-item" data-tone="green" data-pwa-install hidden>{% icon "smartphone" 16 %}<span>Install EE Hub</span></button>
+    <div class="ee-sidebar-view">{% include "partials/view_switch.html" %}</div>
+  </div>
+</aside>

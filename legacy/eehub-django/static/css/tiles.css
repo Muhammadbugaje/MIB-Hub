@@ -1,0 +1,57 @@
+/* ==========================================================================
+   EE Hub — tile tokens (from NBTE Phase 8 tokens.css, kept out of tokens.css)
+
+   --qa-c-<tone>     the flat hue (tinted icons, labels, glows)
+   --qa-tile-<tone>  the gradient fill of an icon tile
+   Same hues in light and dark: white glyphs on a saturated tile read in both.
+   EE adds `gold` (ABU gold) and `volt` (the EE cyan) and tunes `green` to the
+   brand green. Utility: .ee-tile[data-tone] / .ee-tone-<tone> set --tile / --tc.
+   ========================================================================== */
+:root {
+  --qa-c-slate: #7c7c84;   --qa-tile-slate: linear-gradient(160deg, #a3a3ab 0%, #6b6b73 100%);
+  --qa-c-green: #23885a;   --qa-tile-green: linear-gradient(160deg, #3fb57a 0%, #14653f 100%);
+  --qa-c-teal: #1b9e98;    --qa-tile-teal: linear-gradient(160deg, #4fd1c5 0%, #148a85 100%);
+  --qa-c-blue: #2f7cf6;    --qa-tile-blue: linear-gradient(160deg, #5aa9ff 0%, #1e66e6 100%);
+  --qa-c-indigo: #5b5bd6;  --qa-tile-indigo: linear-gradient(160deg, #8a87ff 0%, #4f4cc9 100%);
+  --qa-c-purple: #9a4fd0;  --qa-tile-purple: linear-gradient(160deg, #c27cf2 0%, #8a3fc2 100%);
+  --qa-c-orange: #f08a00;  --qa-tile-orange: linear-gradient(160deg, #ffb547 0%, #f07800 100%);
+  --qa-c-pink: #e2456e;    --qa-tile-pink: linear-gradient(160deg, #ff7a98 0%, #d93462 100%);
+  --qa-c-red: #e5484d;     --qa-tile-red: linear-gradient(160deg, #ff7b72 0%, #d93a3f 100%);
+  --qa-c-gold: #b8912a;    --qa-tile-gold: linear-gradient(160deg, #e9c766 0%, #b08622 100%);
+  --qa-c-volt: #0aa5bd;    --qa-tile-volt: linear-gradient(160deg, #49dcf0 0%, #0b93a9 100%);
+}
+:root[data-theme="dark"] { --qa-c-gold: #d9b85a; --qa-c-green: #3fbf7f; --qa-c-slate: #9a9aa3; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --qa-c-gold: #d9b85a; --qa-c-green: #3fbf7f; --qa-c-slate: #9a9aa3; }
+}
+
+/* Tone carriers: anything with data-tone gets --tc (hue) and --tile (fill). */
+[data-tone="slate"]  { --tc: var(--qa-c-slate);  --tile: var(--qa-tile-slate); }
+[data-tone="green"]  { --tc: var(--qa-c-green);  --tile: var(--qa-tile-green); }
+[data-tone="teal"]   { --tc: var(--qa-c-teal);   --tile: var(--qa-tile-teal); }
+[data-tone="blue"]   { --tc: var(--qa-c-blue);   --tile: var(--qa-tile-blue); }
+[data-tone="indigo"] { --tc: var(--qa-c-indigo); --tile: var(--qa-tile-indigo); }
+[data-tone="purple"] { --tc: var(--qa-c-purple); --tile: var(--qa-tile-purple); }
+[data-tone="orange"] { --tc: var(--qa-c-orange); --tile: var(--qa-tile-orange); }
+[data-tone="pink"]   { --tc: var(--qa-c-pink);   --tile: var(--qa-tile-pink); }
+[data-tone="red"]    { --tc: var(--qa-c-red);    --tile: var(--qa-tile-red); }
+[data-tone="gold"]   { --tc: var(--qa-c-gold);   --tile: var(--qa-tile-gold); }
+[data-tone="volt"]   { --tc: var(--qa-c-volt);   --tile: var(--qa-tile-volt); }
+
+/* A standalone icon tile: <span class="ee-tile" data-tone="blue">{% icon … %}</span> */
+.ee-tile {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--tile, var(--qa-tile-slate));
+  color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.ee-tile svg { width: 16px; height: 16px; stroke-width: 2.3; }
+.ee-tile--sm { width: 24px; height: 24px; border-radius: 7px; }
+.ee-tile--sm svg { width: 14px; height: 14px; }
+.ee-tile--lg { width: 40px; height: 40px; border-radius: 11px; }
+.ee-tile--lg svg { width: 20px; height: 20px; }

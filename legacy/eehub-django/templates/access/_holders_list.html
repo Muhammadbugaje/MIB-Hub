@@ -1,0 +1,7 @@
+{% load ee_tags %}<ul class="ee-list">{% for a in holders %}
+  <li><span class="avatar avatar-sm">{{ a.person.plain_name|initials }}</span>
+    <div class="ee-row__body"><div class="ee-row__title">{% if a.person.user_id and request.user|has_perm:"accounts.users_manage" %}<a href="{% url 'access:user_detail' a.person.user_id %}">{{ a.person.full_name }}</a>{% else %}{{ a.person.full_name }}{% endif %}</div>
+      <div class="ee-row__meta">{% if a.is_acting %}Acting · {% endif %}{{ a.scope_text }} · since {{ a.start_date|date:"j M Y" }}{% if a.end_date %} · until {{ a.end_date|date:"j M Y" }}{% endif %}</div></div>
+    {% if not hide_end %}<form method="post" action="{% url 'access:appointment_end' a.pk %}" class="inline" data-confirm="{{ a.person.plain_name }} stops holding {{ a.office.name }} today and loses its permissions straight away." data-confirm-title="End this appointment?" data-confirm-label="End appointment">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button type="submit" class="btn btn-ghost btn-sm">{% icon "calendar-x" 14 %} End</button></form>{% endif %}
+  </li>
+{% empty %}<li class="ee-empty" style="width:100%">Nobody holds this office.</li>{% endfor %}</ul>

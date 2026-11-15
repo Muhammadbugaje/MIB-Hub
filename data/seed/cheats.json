@@ -1,0 +1,1704 @@
+{
+  "exported_at": "2026-11-15T18:54:06",
+  "source": "eehub-2 (Django), read-only",
+  "scheme": {
+    "algorithm": "sha256",
+    "input": "slug + \":\" + norm(code)",
+    "norm": "lower-case, every whitespace character removed (Python \"\".join(str(code).lower().split()))",
+    "output": "lowercase hex digest",
+    "why_this_scheme": "Identical to the old site (games/cheats.py sha()). The game scripts embed the same hashes between /*CH[*/ and /*]CH*/ (written by games/cheat_defaults/build.py) and compare the hash of what the player types/dials, so keeping the scheme means the ported JS works unchanged.",
+    "old_verification": "Server never verified cheat codes. views.play renders cheats.page_config(): for each enabled cheat {id, typed: sha(slug,typed), dial: sha(slug,dial)} in data-gm-config; the browser hashes the player input and compares. Codes switched off or not allowed for the viewer (access rules) are left out. Scores reported with a cheat are flagged ArcadeScore.cheated.",
+    "security_note": "Codes are short and low-entropy, so the hashes are guessable by brute force; they only stop casual reading, exactly as before."
+  },
+  "count_games": 16,
+  "count_codes": 151,
+  "plain_copy": "data/seed/private/cheats_plain.json (git-ignored)",
+  "games": [
+    {
+      "slug": "momentum-cup",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Win this match",
+          "note": "Ends the match with you one goal ahead. Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "6721aeb34698401b80e69e2b8c007700fbc35064222f6c0919f4154ff6a125df",
+          "dial_sha256": "6a070ea89b433dfbaa1337e828e3e04f559529065e97f1b52c762dc1f2385f48",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "goal",
+          "label": "Free goal",
+          "note": "Adds one goal to your score.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "e4cc34e1fb82fc103217ef6badaa55e810fa9a995a3c77d64992f214b151d1e2",
+          "dial_sha256": "5f5af1b53707ff218809ab976134947516870d3fd0177f1483c1c3f23f4509a3",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "power",
+          "label": "Superpower always ready",
+          "note": "Your power meter stays full.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2ffd23ccf49bc88f33d2bf6209301ea081440c0b0c2dc1f724323559d28652ac",
+          "dial_sha256": "f267b3cae0d514e98fef0424043cc3b4367a8093534fe85d68f8211da1c8d28c",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "wall",
+          "label": "Your goal is sealed",
+          "note": "Shots at your goal bounce out.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "98c4892efa5cfcdbb211876ac9512242a220d3cb656aff989969273dfcb8e8f0",
+          "dial_sha256": "3c08969576975f9df47f6e176a53124d60eb7357444609cf001c9c6cbf28fd9b",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "freeze",
+          "label": "Rival frozen for 8 s",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "ce6d6213c3be2d0c57ecac581ba2d85c6543b80f80353130847ea3f4c5344540",
+          "dial_sha256": "49d25625e8f9d69b782295ce45d943c2d6fb3794cbce43b7bdf6d9089d914372",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "time",
+          "label": "+30 seconds",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7cb201667b61403bc5eeff41200fd9f66bca2e409d7e700e66402cc7390426b1",
+          "dial_sha256": "098bc7673b160b5e10a045df463726fdf0894f238e7a39eb0b3b65c867b69dea",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "arenas",
+          "label": "Every arena open",
+          "note": "Until you leave the page.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "50610b7fea78a1e04421153471eafa1ec7ff138b8eb2fbe2f5aa9b428d2527bf",
+          "dial_sha256": "34537bee6b4bbb8b70ad6db89bca6b3884d9d8a009b23471e5de0093decabd09",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "coins",
+          "label": "+5,000 career coins",
+          "note": "Career mode: added to your club's bank.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "c89b0961c037027f020f1b93ef0555394a85b5ec84d732af60e50898ba118d47",
+          "dial_sha256": "388465fc54a6a6473b104332c89e9216d98ddc42c74ce157f164acfbc0617ace",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "squad",
+          "label": "Every non-legend player signed",
+          "note": "Career mode: legends still have to be earned.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "1fbb82ccb765fa9ac9d47c7ba3b7ccc29370a9182d3cffc5554859637f51fbc8",
+          "dial_sha256": "80ce0f7d374704360d88110b6d8f9f06d6d2046f332a875f9beb099786747e14",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "5fd77826a1ac37d3acb1f824d7ac858f602b388a38994dd2fa7e5725a0dbf4c6",
+          "dial_sha256": "2dd80dc3275fb3b337dbb686e372f6bd8417be2fa1d1729d41806818cada52c1",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "ddaf658e2d5098a0a3c0139bd4abfa9fccb34970f74783d15999b778710e14fe",
+          "dial_sha256": "db9fc772bfcb20e4aa3c6735a81002677ea84d3983d18766f56c83fe78a96843",
+          "source": "games/cheat_defaults/momentum-cup.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Maxed speed, jump and kick; superpower always ready; his goal is sealed, so he cannot concede; every arena open."
+      }
+    },
+    {
+      "slug": "impulse-arena",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Win this round",
+          "note": "Knocks the rival out now. Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "06495abb0acb59a8ad05ed03b97c938a961cba82425e26f7dacec6346c143770",
+          "dial_sha256": "5c8c1783f6f7c4fc2e3dbf2824da39ed44b2c512696a38afc139f317ed114f27",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "god",
+          "label": "Take no damage",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b8ea2bd682486c20ffb5e625220277436e8f63fec54e9ed16a0cc45cb79b76d4",
+          "dial_sha256": "7d1303945ce72d3843e6cc6c3a750e444adef73e7ab845cf0f52c1286d908527",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "onehit",
+          "label": "One-hit knockouts",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "5dcbe5233f792aa9205d44f21f0fe462fdc4c61f6307bbac24abb7579ed8f6d5",
+          "dial_sha256": "cdaaaa0b80dee2008672e2611edcd7a73e9f2ef6e9276b6efc65dd266536a07f",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "meter",
+          "label": "Super meter always full",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "24bd6efe52bd18fd41ca4c7d662542fa9f3c25038a74983a14c0deba5ec6843c",
+          "dial_sha256": "4524d7c23c190bee7005bfd436475ac7f2989fa2ad53041f46286eb6ab4ec6b3",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "heal",
+          "label": "Full health now",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "bdf6521b2d3d0d8543605fdc02f66317bc3d666d981e9be0b9eb4d1b6c5ba535",
+          "dial_sha256": "7638dd370c848301203e323869ee1536cc5f183061b69760e48e55056c2a3efe",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "bosses",
+          "label": "Bosses playable",
+          "note": "Unlocks Inertia, Entropy and Baron Overload.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b2360555c6d9a1e4bfd4fb8138e42c911361a7bc334117a99fde9bc117d7111f",
+          "dial_sha256": "0aff3f587d403bd151551f06eba1d08e8144b770ff7da7518852a3fadf45e419",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "tower",
+          "label": "Jump to this chapter's boss",
+          "note": "Moves your Circuit run to rung 10 of the current chapter.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "9d04c0978fbb97d5d0cf6549fbe884f0f1c146962d89622ee0fcfa884ad8f49e",
+          "dial_sha256": "3b884b6b0b74f4e21e5a44ef87f8281b7707975692121a7f08cc3bb8c7fac504",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "roster",
+          "label": "Every fighter unlocked",
+          "note": "Until you leave the page.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "364a873e6d8f918cb2f7bdf61e7e97abe22aba3e2d33bf21b8079b0070617f4a",
+          "dial_sha256": "13cebe5461ab872d35395c2818173f2dced57edf626a427d89ef0dfb0bce7a9a",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "9534b7444e0ec753b7aab35942aea2bef37e3cf3a96080f2870d787d7367555b",
+          "dial_sha256": "7f3b73701eaa40b894d48fecc3d3ff26e477b42d3b48b4a7a611527b3d65f644",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "962aeeb60cbaa901f30a24a87a5c79d9b7c975591178bdca773def1a88ada77d",
+          "dial_sha256": "695c81c234337716931725fe45b845f22b00223de3a050b127ce9040bc580139",
+          "source": "games/cheat_defaults/impulse-arena.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Wears white and gold over the fighter you pick; takes no damage, knocks out in one hit, super meter always full."
+      }
+    },
+    {
+      "slug": "volt-city",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Restore the next district",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "94f70287837c8b9f70dc3c76e7b931fbdeaecb8c2255ce101e36eeeacc1aacc2",
+          "dial_sha256": "80bb9a7b5d2c130c901812a223e6a02f89042b323105a444b9395d6d9e112319",
+          "source": "games/cheat_defaults/volt-city.json"
+        },
+        {
+          "id": "god",
+          "label": "Cannot be hurt",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "98ca1ee35e581fc9f3885b5abfff2bd490f16c05db985ab36d96f2bcea9b8626",
+          "dial_sha256": "395b0165fa23ef66aef5ce1a634b8c4186a72604d6c1de7f8a0c6cf3369b8998",
+          "source": "games/cheat_defaults/volt-city.json"
+        },
+        {
+          "id": "heal",
+          "label": "Battery full",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "f981bdc070591e6a26b393cd4d133b830eb5e4f0609f4d68ad53dc90ba6ba841",
+          "dial_sha256": "0bd5049c14001095fb0d4ad8a56497c3a69e31a1d1eaaff9b00057ac3b3eaa06",
+          "source": "games/cheat_defaults/volt-city.json"
+        },
+        {
+          "id": "dash",
+          "label": "Dash never cools down",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2d72c60097501004f55c8384496db4bc5793df76bbb452e05601f976b300afbc",
+          "dial_sha256": "507dc34b39bc3d9496f2e4df49f9e4403f3ba6c5010ea3f98d41595697176c47",
+          "source": "games/cheat_defaults/volt-city.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "3fa96a59f17bc73713e4327c2c67f89444240bcd5419d7ab9fe6caa9f7466ed7",
+          "dial_sha256": "f6bc98adf13ea0cab0a0e3c10c5f7d4f45d6c1957ac4317aca91beee38bc5de1",
+          "source": "games/cheat_defaults/volt-city.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "83ce76c0ec190de896f34abfc418d3545038073374ed278664334f7c9ef30abb",
+          "dial_sha256": "7235490e7260420bac7e655a22fc03d6a72c5fe988739be96f6a8107a111be5a",
+          "source": "games/cheat_defaults/volt-city.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Cannot be hurt, dash never cools down, can restore any district at once."
+      }
+    },
+    {
+      "slug": "kinetic-kingdom",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Clear this level",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "8f6cfa6b0dc26df145194ef93a74562fa81b570c9dd343c1f90a59aa31c7fdd9",
+          "dial_sha256": "7a1034817a380d631bc19e460e91f739985469b53bd5706354768034fed660a7",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "god",
+          "label": "Cannot be hurt",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "df56d53a2af04fcef84c04f3ea9fcea78cfce10dcbc54b158cdd9aeb30cd2c92",
+          "dial_sha256": "be1b891a4eeb51067c739fb3caee6ca4bc4dfe772442e97942e43f9794fb3e56",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "lives",
+          "label": "99 lives",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "237e027d46551518f7a240444eb13eb7af1a5aa1d33ff525a56ee1b6c4f7a28b",
+          "dial_sha256": "d7886c11aa27237d74847acb598301b9ab7fb5c2d7d9d7c360c1c39e376b8477",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "time",
+          "label": "The clock never runs out",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7a7b7d2eb2a77ba72361d28d51a2ab212588533d6ab086406b614b1e20dcadc0",
+          "dial_sha256": "27d4291944c0e046ff16c46de52ccf6e0d913e9e0784ff22c5063b0f0e2e1d93",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every level open",
+          "note": "Until you leave the page.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "14f5af216f7ba611db6d7e91022bb66aceb86b7b4f22d36c2d483d2c813c1d46",
+          "dial_sha256": "0eb8b062bce167ba8da27bace486494093a8c3be7756177d0bbb511a396a1a4e",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "shield",
+          "label": "Shield for 30 s",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "8ba433b73830cee25adb680ce28faf560e2874f57f5e834775e336f1d294c15e",
+          "dial_sha256": "96a3f39bb022f0d7fc0aa7a86799a4703276ddff4614c97abe952f8b188a1053",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "afe32a973ad468422d08d6050e812a5fd81267a4d15d20652e37c8649c92a17f",
+          "dial_sha256": "f2ba2a7eb95d61f8ef52aedd9e622078f5acc12d57ec790c4a8536928c962909",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "e95127dfdbd3e5da26552f86be9577a5c9904304d47ca2a9bd5b672951e93ac7",
+          "dial_sha256": "9fa160e2b54a4f687d86117173b70d74348fb84e6908a5e8a44ae7e309964110",
+          "source": "games/cheat_defaults/kinetic-kingdom.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Cannot be hurt, never runs out of lives or time, every level open."
+      }
+    },
+    {
+      "slug": "wavefront",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Clear this stage",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "46f1b4adb976b4dcc97086d07ed2af36bc686de74c78bca5c192e0e795d26bda",
+          "dial_sha256": "c51586ccc71ef700161bb56808c5fb82dbc5840d331fbee7d7b3c723612299eb",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "god",
+          "label": "Cannot be hurt",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "57792433432e1a09462722ff2e04beac4a785fe24df85aeb94a5ec4b9de0074e",
+          "dial_sha256": "bb3f99376a5662b6003f0b9e5ee2c6c8926306ff71bd2dbeb45eded13e91a4d0",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "guns",
+          "label": "Every weapon at level 3",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "05848f4e1f1b714100c07d1fe32da3b5820d0344530c595c95166735f9bad74e",
+          "dial_sha256": "5ce0e6260fa0f350d1bffec3973f111245644cfd0fc1a9b67bb50306f5367cbf",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "lives",
+          "label": "9 lives",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "c889292057f01137de78e46d30c9ef7784c960609c473a2cfd3ae15a16bcd3f2",
+          "dial_sha256": "4a7c704d5dab0db73fe5498a85c54a2a0dfeba263200ca920aa3343ab7722db0",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "cont",
+          "label": "9 continues",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "21fa73b5d73b6af4cdc25cc6f503e97ac62ab31bffe159bb141cbeeeb834ba55",
+          "dial_sha256": "0b8fc3595983557fb25508762bea439cdac7f346a81fd36fe858e028a7821a19",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every stage open",
+          "note": "All 12 stages.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "80933abbcc07ca8bbb5a73b577e99f60c4256ffe68b934c9d82b9ade13ba3505",
+          "dial_sha256": "55147ae3e68e546e6a3ce483ac54151eaa32653dfa0eafc6a8c5cac99fcd7e49",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "c29ef5427986431fbbe43619011b3c8536c82b0d1f7cf2b95be532d33b128dea",
+          "dial_sha256": "8a096d594b0b269ee4ed917094053fcc0c239ff3ce148a0d421b2054e1d22caf",
+          "source": "games/cheat_defaults/wavefront.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "bbdea148220425f60ef1db8b5247c64bf56ed8bbc6fdcb32bdf6275cec148a6a",
+          "dial_sha256": "c2ce7f74bb6cfd2a3e6b3648c9030b807925f5decaf6662afbf15ffd2d070b30",
+          "source": "games/cheat_defaults/wavefront.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Cannot be hurt, carries every weapon at level 3, every stage open."
+      }
+    },
+    {
+      "slug": "samaru-days",
+      "cheats": [
+        {
+          "id": "cash",
+          "label": "₦50,000",
+          "note": "Adds ₦50,000.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "05614668eb10fe00f4d2216761d1892a33f4fd0e39f0600e03de3bcd84272e86",
+          "dial_sha256": "fbe428831a4c893c060c278a619e28a538033272f3304e421bfa99f0a1a16c4d",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "rich",
+          "label": "₦1,000,000",
+          "note": "Adds ₦1,000,000.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a1394345d6450ef50471d4555475bea8f4b5991b75dd71f70ec450e20ccbf2ac",
+          "dial_sha256": "4528cb15c61a53468130d38a4e1e1870487e7ecc2c75578bacf779a282faf7bb",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "heal",
+          "label": "Full health, food and energy",
+          "note": "Refills all three bars.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "60a3296e217794c2a43d385a9286c75a4747f72d8d382cdc2fe0f2c8da4e451f",
+          "dial_sha256": "e7ec05633364b0cac4f33379808b08b8f1b34c04d1375a37813876fd4796a793",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "god",
+          "label": "Invincible",
+          "note": "Nothing can hurt you. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "401dcb0439d84a4430f816d7acd75cfb6b8803a73c0876e8b959c089663b4fdf",
+          "dial_sha256": "f1853f9e4297748119eeec756ca3d6592c4b85d77676fd4d766c33710651550f",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "notire",
+          "label": "Infinite energy",
+          "note": "Never tired, never hungry. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "5816a3c66fb6a0bc3ed19fbcba0c89dd1ae6021e24262b518449f63cb6d116da",
+          "dial_sha256": "97c8e7d637417a4f5374d6cd42a16a4bd78094532f7c4105d15da292ca59279c",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "onehit",
+          "label": "One-hit knock-out",
+          "note": "Every hit finishes the fight. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b5356a3109f856641db2cdd80e3bbbac68a7983b8ed583fd42dcc8159c561fc9",
+          "dial_sha256": "7818a5b56f91fa9b19f68857975a36e8a10aa5278c2801ffba1e4a845d9c5ee0",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "zoom",
+          "label": "Super speed",
+          "note": "Run and ride much faster. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "3b3870aad066715e404fc3981b037fae1b515d92568a943485f8c5802db8122b",
+          "dial_sha256": "c64b462945a494d2621bb5a217650b9b332942a57187c6e087f42bf4e2fb030e",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "sjump",
+          "label": "Super jump",
+          "note": "Jump about twice as high. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "4d0e91dd2ce0fc32809a2dba0b32db7caa729bc8d70330a9b73458961305be27",
+          "dial_sha256": "2bb8b9c230be1c3b5bf272c333bbfdf8b6664b00d8530321ec94fa104624e1d9",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "bighead",
+          "label": "Big head mode",
+          "note": "Fun only. Enter again to switch off.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "29ecf7c34e1b23998a9e1592c2d31ccaea517867cee10060e61160eef7dc9e10",
+          "dial_sha256": "110b498f4468668265368fafe6764536083a7997afd9e976b359cf42ef7d0d75",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "calm",
+          "label": "Security forgets you",
+          "note": "Clears the current chase.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "107a94313cbef628f98c47f7f5154cb93c5348e660b6ecfccf4387fafe3d25c7",
+          "dial_sha256": "6b5d26446788da61f8730cbab20dd2e5206eeed911884ac54c636d1e47aad899",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "calloff",
+          "label": "Send security home",
+          "note": "Security leaves and stays away. Enter again to bring them back.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "6f1b852946fc04bc2f2aa2984bb7478e808e6764f6f082c7b215df19f8f5aba5",
+          "dial_sha256": "559a84aefb90815010b8794512d5eeb0fd649eca15d0675b3e352211101c886b",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "level",
+          "label": "One level up",
+          "note": "Adds one level.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "797c89ea2a95c43b867f55416088b899b9959c207d22683bf8ba76bae06e9185",
+          "dial_sha256": "a2cc6c00d58bfc5aa377ab5d6a44ec05e71f027405a7fc6b89e9636858032ffb",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "max",
+          "label": "Every vehicle licence",
+          "note": "Level 10: every vehicle and the aircraft.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b80dfe2bc5cef8a2db0fa5ecb56347a44bccdb92fb778c626aa14748339df81c",
+          "dial_sha256": "b105e177fc95909d10d54c92b3fa41446973a9ae9b3ec320f42481032efa5095",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "toplvl",
+          "label": "Top level",
+          "note": "Level 150.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "f4825ff5e2047aff3487fec656433e8354007d89fa3cdc34bd64da9495edf697",
+          "dial_sha256": "f9ea90f88ee1b2722e8976a84ddfa08942fa4e8e7b002f4b29ab8f4f44874a1c",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "skip",
+          "label": "Skip this mission step",
+          "note": "Completes the current story step.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2fea6117c9836d7af6011e4abf481928f20173646d5b41d08d9c7e9a5691fe25",
+          "dial_sha256": "2491e6e6207bedebc8206d0db77a6e3d632d54d662f04cdbb9e4c6f7ecf03216",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "missions",
+          "label": "Pick any mission",
+          "note": "Opens a list of all 36 missions; choose one to jump to it.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2f5464ad22b7859cfad8d0173a445e3b2d445f7e31641f3ceb3537e6b57231fa",
+          "dial_sha256": "0be496b41bb4c3930a565b1cf086e2087d6768c475fc91e2586a033ae9a2a1df",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "skate",
+          "label": "Skateboard",
+          "note": "A skateboard appears.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "40ebf37b49e20e2c5bcaaf96fd53b2811895a234e9f30a93e4ea1f7d71e1d847",
+          "dial_sha256": "aa775be5d62e2ddbf4d5d6fc4ed5ca40973d1a29d828d6bb80263fc102b33863",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "okada",
+          "label": "Okada",
+          "note": "An okada appears beside you.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "6ea037bee41cd0e6d5b3d69bd2b7444cce2831528addaf164ecb5961f5ed6d00",
+          "dial_sha256": "0ad7b3e1ed4177dd9460011cfdee4de6bb90ab9f0996f54eb0d7b696a0c7e896",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "keke",
+          "label": "Keke",
+          "note": "A keke appears beside you.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "842af3734036fd144dd63194f836917bcf5523be20ec1642f0b252a4f343f0ed",
+          "dial_sha256": "9c8111408417b08652a5d7d0f62db517863bdb4278f0541556fcdf314f376b5d",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "car",
+          "label": "Saloon car",
+          "note": "A car appears beside you.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b3ed596bc5f637cd787df64e071baa34f9162ace7f62528206e925c9bb376670",
+          "dial_sha256": "8012af30dbcbc45a01a7cda969131b55397d340fba883b00c3816fe8f230eaac",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "sport",
+          "label": "Sports car",
+          "note": "A sports car appears beside you.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "486359f6e61fb3c238c5819cf30a9f880606898c1d0372992bad25a7a632e6dc",
+          "dial_sha256": "bd75d6e2d41fff1fde6ed6042453da30e3cb944366a9a0004d69fcdf9ae3c10a",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "plane",
+          "label": "Aircraft",
+          "note": "A light aircraft appears.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "aec96d36718a8f9d98c1c93b13b4f25e9b454613e112ebc4b8fe27cb1dcbdb76",
+          "dial_sha256": "a3ce293d20c0843a95c30cf7443cfdcf973b52bebd4abf7dd87b8d3e8af988ab",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "noon",
+          "label": "Morning (07:00)",
+          "note": "Sets the clock to 07:00.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "1a6bef109879a1cb4d2dcea81c80fe9fdad7651b02b70f0b2c1160f2704b4381",
+          "dial_sha256": "a90a88a342edc47fc957c8c1beda632982aad3fbcefe4c22e4bc63ff47ae702d",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "midday",
+          "label": "Midday (13:00)",
+          "note": "Sets the clock to 13:00.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "0f51a4fafd9b98d6d95a709bc9e162c2c82a8ac2d5e0a690748b9e479ee1b932",
+          "dial_sha256": "2bdfb48c565b7beedb00e28ab92e69bbc55f07fec8183c6d6b288f2c7fc8f89a",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "dusk",
+          "label": "Sunset (18:30)",
+          "note": "Sets the clock to 18:30.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "948e3d81e58447a4300b2c50f9389f83861dd060fb3e5950d9418554462790e9",
+          "dial_sha256": "1c7afec85946047e1dcdcd995b7e7c9f7eb1bbe4eecea6e056488a5edab3dcc0",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "night",
+          "label": "Midnight",
+          "note": "Sets the clock to 00:00.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7eb58f7ab76b9f6209b089406b29cf05c6027d57cb9340738c94e65a9f777ed0",
+          "dial_sha256": "8ee602aa53f9bc47e097ca231fb93fc900fa8e3a1dc41f191a9fe5ec7b3e9710",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "harmattan",
+          "label": "Harmattan haze",
+          "note": "Weather: dust haze. Enter again to clear.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a63167be9904857bc2f71c9cc0008949e73f1da7d0077c51e8ab610a713da35e",
+          "dial_sha256": "81aea75e8f1b47e086fa110776f23a189d88fd7f6520dc144fcdbace2398e45d",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "nepa",
+          "label": "Blackout",
+          "note": "The light goes and the shades come.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "1af1c196a8d81f0810d557a9bcdbeec8d8281762b60368e5a6a8c6a327324f23",
+          "dial_sha256": "feaa58252d2ef2c9b21a9275d306ea8ccca485eb898647c96d9dd830bec587ac",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "light",
+          "label": "Light back",
+          "note": "Light returns and the shades scatter.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2d12e1ce11d35dba33306fbc97160f5973ff3c9e835044ac8f045080b08f9013",
+          "dial_sha256": "9e6fdebdf196eaeadc72637f67ce6239e68832b280ac9e7b045197af1d8d4531",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "love",
+          "label": "Everybody likes you",
+          "note": "+30 friendship with everyone you know.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "fc69e9656d33532709fe0d9e2c95757a3bccf63e6552a0aff4ddc6fff23121e4",
+          "dial_sha256": "259441d14626f9c2f4f642b9d315db6882a4984b024f25f82906e3c7e4c78ef9",
+          "source": "games/cheat_defaults/samaru-days.json"
+        },
+        {
+          "id": "map",
+          "label": "Show hidden kola nuts",
+          "note": "All 150 kola nuts appear on the map.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2ba24e0e0db58f036dcbee0df5c83de649125dc3e5e162e601a46f52abbdca2b",
+          "dial_sha256": "11a56df7e1f5583e8b69982f02e22a4a0ddf5f760d05c556b8ecf2c3e24b9069",
+          "source": "games/cheat_defaults/samaru-days.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "u u d m i b",
+        "swipe": "u u d l r u",
+        "powers": null
+      }
+    },
+    {
+      "slug": "motorworks",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Finish this job",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "88eb8e09644e2f1ba9240372639bf5c5cd2dcb4d054f2d19873e3bd8ee01090d",
+          "dial_sha256": "a56112a7d8749c11ff3ab0235abab203d448c0bbe21f7cbabac6c702836bc787",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "solve",
+          "label": "Set the right controls",
+          "note": "Puts a working setting on every control.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "6582529e0aa9e9c6a02c25c5c09c8ac863c4c1c18dc492c1ebcfad3e1143cc4b",
+          "dial_sha256": "12f5893f674ce3f5a309c8f809ddeb14a9887994b955313020025ed9db1be900",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "notrip",
+          "label": "Breakers never trip",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "66e220983db18be029d91c5ac91e025eeeafebc4d0a999160eaffaf5a4ce094a",
+          "dial_sha256": "9f099eb60956518c6887b9a8ddd5a9f116a3c0d7c132f9456c9676ef1f075d7f",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this job",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "20106ecfe56ff4dbdf5797704f2817acf855b53f70999db86492239bd1c936de",
+          "dial_sha256": "7e1442d670bfcf17f788ee3bc72bbef926a4b73176452c6f5a8ef06cba1a730b",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "halls",
+          "label": "Every hall open",
+          "note": "Until you leave the page.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "6129ab8a42f35a39d7e0a4a2b95bbfbb1098ab5762be9b1e8b488ff3a0b5859c",
+          "dial_sha256": "2d351bd8c37267e76c6cbed4c9e1e996bea733b2f4d78e2c8d1269b5501cc263",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "night",
+          "label": "Open the Night shift",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d68ac03b1849e17782075503721ee542f6c890caec66bcec3b8c4bf25e7823ec",
+          "dial_sha256": "448364ba013b7e20d2c4758138f224f8b0ff9663790296772e07eca706bd4120",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "203adc2c146f8637ae78c45d37be3acc4b5c73b1191e52491a02d725fe690468",
+          "dial_sha256": "d2d85eda0ac40004f6b2214f253517941b4bd7398f0bd9700139480831b3fb55",
+          "source": "games/cheat_defaults/motorworks.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b00b8a17b8ef6b8db50c4c36c415c5ee43f168bc3f24053adecb479b50e4450a",
+          "dial_sha256": "05bd493ccd2bc70d778b1763160672f0164d0faf1acff79dfc77b8c2696a0e42",
+          "source": "games/cheat_defaults/motorworks.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Breakers never trip on him, every hall is open, the Night shift is open, and the skip key finishes any bay."
+      }
+    },
+    {
+      "slug": "storm-map",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Restore everything now",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "885509b5091fc03a7c86ceb955aa1693b3a5a8d4eff5567e4e0d55c27b589f9f",
+          "dial_sha256": "a4f9bd1f3e53f95b2cf6c1b37e0980a8b97690505b5c7f4757a09c9b7ad8dc50",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "reveal",
+          "label": "Show every fault",
+          "note": "Marks every damaged section without patrolling.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a366f07237362c7309938e1b68d29d3f1f5c02f4b1902e496924437cd5c85d9f",
+          "dial_sha256": "0b6df836a6793bdf7d0d3e115e6590069e013c1e3c2340e267cd9515450daeb0",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "safe",
+          "label": "Forgive safety violations",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "296925f21a7fafe8ee74d43ba5b131f565e818dd6a67c47bf8c4a671c5c234d5",
+          "dial_sha256": "b67e7cf9c6c0d06061d31151ca71141fc79266da7b4a5da0fcd4d6989edc7ea2",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "time",
+          "label": "+2 hours",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "dd191442529fb87faac9428d9f80311aecae3753fff671fd66b017acae624c44",
+          "dial_sha256": "9823fa6da3ef7dc19def5165d267febde44a7d21ed39239abfe2b25eef689736",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this incident",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d0f2f3c4e3a306c28d9ea4f9a0cbae447acb97e8989a0c5e420752bc32c3339d",
+          "dial_sha256": "c955d18c0c575773a01279a721af31394cb9549f1f18e3a0714a9d216e984b77",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every incident open",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "324118a1d27bb711ea20c4d3520edbe8c530faa8ef985df2f882e6df8513969f",
+          "dial_sha256": "8d6226670ced379442655fb29cc7a3feb31b0462bbafd1228ec9420ef893323c",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "bab7d7baa6069474859aad4bb502a157d00151fcdf0d5fb1820fcab60dbdd622",
+          "dial_sha256": "a9058b0fd84ec57b96f5e1f4d65c8909048355e523de0f5c24bea3deaa685356",
+          "source": "games/cheat_defaults/storm-map.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d45eb3b8b9fa10f80a84e0095f7cc492a5fa2f2ad3049d8effefccfa344014a5",
+          "dial_sha256": "082f3fcf20919585ffedde4dc4918d0463de9ee6ffaf62fbc567dfe52b88813b",
+          "source": "games/cheat_defaults/storm-map.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Safety violations never count against him, every incident and the Storm season are open, and the skip key restores the network."
+      }
+    },
+    {
+      "slug": "induction-dash",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Finish this run",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "986675d7c50ad2f73caad4cfe1a6a72167716adc7012e2f485d31d476aba97d5",
+          "dial_sha256": "658a051874e5954a880ac24515bf25c5ae5df96f146fc3e17612a97bb1336c57",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "god",
+          "label": "Hits cost no hearts",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "96470a83b34ca8b3149d68c5224f56f66dc78456c2c302e43fb5f12c0d0435f8",
+          "dial_sha256": "516b773ff6cb9149a2b713be443c0375ab154aa5754f0ad379165d4a1c96af2a",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "hearts",
+          "label": "Hearts refilled",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "e96f8174544ded5b73bde41ae12801f1e5776df1f2fc21a329f88c647cdbdd47",
+          "dial_sha256": "67970c88f6cd8f97a2ab76e649642442f32e9120f498f64dfa22b785d21a0076",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "boost",
+          "label": "Top speed now",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "009bf9364da2c3c6be435884572b7ee9f373883b448757727a106aecb64d3bc4",
+          "dial_sha256": "9b3bad126832139f140dd0853ab277faee0d9dfc1b10d4cf87a37c2cbd1b820f",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "energy",
+          "label": "Target energy banked",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "0b9c41fae37e502d378113cf8047bc485008a8e8ceb8a05d77277286ced4f164",
+          "dial_sha256": "b1cf3c46cfe5646633240c1144c22f2b7864d6fa9ba41b96c7d45c0441483411",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every track and cart open",
+          "note": "Opens all 30 tracks and all five carts.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "fdd6d572c12a5f38be805ca38b96f6ebfae0b22267a70868b1b7b91764b7dc79",
+          "dial_sha256": "53273986a560636940737e5dcb2fe45220be1ef27479a0a7c998fb70dc147c23",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "003b3020602279b387e0c9e329c269f379800756ccb4cdef4b3f77928568bf78",
+          "dial_sha256": "4cb43c90e37babb3c91fe6e1815e0cf06c63b1b1102fdf2193160ddb4299f7d4",
+          "source": "games/cheat_defaults/induction-dash.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "ca5c0a9c5f09b2305925817522e0451bfbe6560c687ce271cf76534ac5be629d",
+          "dial_sha256": "97da96b91bce65271266c28e5809916f0df328910d98235747111a168383f088",
+          "source": "games/cheat_defaults/induction-dash.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Hits cost no hearts, always above cruising speed, every track and cart open."
+      }
+    },
+    {
+      "slug": "logic-labyrinth",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Solve and finish this room",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "f7ca7b5e031856efe4f63a0512ce0099a52bd9ad6200c8fc51ea007abb4b01cd",
+          "dial_sha256": "aa90d153d17cfeea2ef1d6d2749ba2ff97de21e7cdee9efcdaabc8371aea28ea",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "solve",
+          "label": "Wire the answer",
+          "note": "Places a working set of gates.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "17f858cd2a995832c083f8a2dd38f4cf9a764e980dd280978ffd299a58de1db0",
+          "dial_sha256": "eb2054bef36c585dcabb7775471dc9181dc6c3f754f0c1375eee21503a37d3d7",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "moves",
+          "label": "Reset the move counter",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "e3c8e77f9e06f3703ef2f17bcbbf84a083687ac51f0e414ac9a6b076337f7b73",
+          "dial_sha256": "effc3e47ccea45e069bff70ca837a0a128de6014eefe2f17154f75d718336d45",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this room",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "27b25ff1c145d4f0f8694aa81bcef745b592b3262435f92d9907dce9719b9cc3",
+          "dial_sha256": "07e5715c8ed0b9311fce563355d586f02b7a3b62149ec7f38d757e849f2c3fb7",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "last",
+          "label": "Jump to the last room",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "f296b11fedd5749cfe2993da79874976cabde82470065ea47bfdf7fb811b603c",
+          "dial_sha256": "af98f98d492bebbab284063f80092dc05989398b750d1ceaa84a7c9392f83acc",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a2b893eb549e1bbc426215270a35359251548242977da6b1755edd470d73cf2d",
+          "dial_sha256": "8eed1b0b88e553f21a429ffacfb8dcc0c1c1fcc48fc5403ade58ff112f2965de",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "3342977648ce159ef27c05c7d671ccbbce76522b20300db08c4d1538dad97468",
+          "dial_sha256": "a8949a65cf10f72ed96a48192ce134564da4266f8c4b4d2bfb393503921927b0",
+          "source": "games/cheat_defaults/logic-labyrinth.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Maker mode wires the answer, skips any room and jumps anywhere; he also appears as a selectable avatar."
+      }
+    },
+    {
+      "slug": "signal-surfer",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Deliver this message",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "8c814f0fdfd1e44e4d3e9a9067e3c1e57250a16db903fd3df0c34e40c932553e",
+          "dial_sha256": "eb6fa2f5919bb00475a93c491dcf0317cc80f67172654b9ca4a8b7d5bd17e6b6",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "battery",
+          "label": "Battery refilled",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a6888d799575e8de1c0cb52c1d522a4ef1e999917e2f7fc0528801818e1ae93d",
+          "dial_sha256": "3de240374d475b295c93e2a9e44a9bc7e5062fda4a13cea40fb72e8c56f9e56d",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "time",
+          "label": "+20 seconds",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "461a12d0e52b6ff252bc2957308df9fb4bdea651ac01568c9201d8dab7399d7f",
+          "dial_sha256": "b706670eb9808fc23fa3c3dfc1d78b4d3689b86a75a6629d3c41d4bef4999552",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "clear",
+          "label": "Interference cleared",
+          "note": "Removes every interferer from this channel.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "ecd0df61ab6ec52f15699c620de9f2695d9557173b9b5e320517c7ecbefbd7d6",
+          "dial_sha256": "6e80a860fff84ddaba44ea3aa6022ff87eb70abc4798e47f55cfdca7e67617ab",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "engineer",
+          "label": "Auto-engineer for 30 s",
+          "note": "Picks frequency, power and rate for you.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "0a0842d10b64cfe95f3c6346b309165f8b7ffd7f405ed1ae3ce9666c8e99f973",
+          "dial_sha256": "aeb07823843680eab66f8745e06a3c921f47b436ff9ecd0d8bedc10c16655db1",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every channel open",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "01510191d394694f339403c9afac4925945f4627706ca76de7609d2d3c11b05f",
+          "dial_sha256": "4ca0a1d69f82e0116d6de30100858a42681def2cbc2475e3dad005612cb95669",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "06eb89c34b28ab03c042076a90c4c8bcf9dd5d8f76e6b82b8de53171dc0338e7",
+          "dial_sha256": "22edf1123ac3847cfca7a2a81e8b4d5133745502647358099fead184f1bcdf74",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "955db8c0f7d96672bff75fd47cc327d0c4c27da5620e648b64d78f3cf5142a58",
+          "dial_sha256": "f59fc77fa337cdcc2fd65f9001b765923019633c00d69b572bfa6566b63f6612",
+          "source": "games/cheat_defaults/signal-surfer.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Surfs on the auto-engineer: frequency, power and rate set for him every half second; every channel open."
+      }
+    },
+    {
+      "slug": "circuit-forge",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Solve and finish this circuit",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "ca6af08515f9e2bba3a6c97ff7268e9cc21a0c24823ec050f49ee6bd4924b27b",
+          "dial_sha256": "86dca4527ffdd7b0e53e7959fd57438f75e5b2d371bd5b8c3029d05a154610b9",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "solve",
+          "label": "Fit the right parts",
+          "note": "Fills every slot with a working answer.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "778c4817c34439917be47e457abd8681a5069781b090ab7b2674d556f80967df",
+          "dial_sha256": "4a4adf5c82a84b0154d64b897779e7a20b93c9ee5ccccebda436ed123a0d9805",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "tries",
+          "label": "Reset the switch-on counter",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "28b0a2c602ba295d7213acc4c909913addceecd556959f50f1530f9a9317dd05",
+          "dial_sha256": "7476aa5d56302734d5d85cc2f09a59fbfbd7a806616606a39f8ea8b1443aa44c",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this circuit",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "1a9c2420bed4e66a6329c414468bf672b272d6b9d751f35fdc01e74bd3a99e57",
+          "dial_sha256": "a55fbc80c2a60b55fd829403d3d5a1332f6b1d864314ca9c6749f88271c66414",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "last",
+          "label": "Jump to the last circuit",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "fb5e3639c1ff7ee35ff2359195d04929053843af56628ebe41aae378631cfef0",
+          "dial_sha256": "90b9d698c228eb6013321a1f6ec04f6bcfd24f55fdc259c9a524b3dcc82c9621",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "bff664d31e8dac830e6d61caa5a4a9896b7451bd10b63c7867f19b59cd8816a5",
+          "dial_sha256": "60df989a4e403414460cd5f76e318ecb48ef6808f4941eb08905692e587f4a65",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "58335ffe38e8363aab8703450286182ec304b5134c48a9a7b3d7178b22211925",
+          "dial_sha256": "cec7eb54daa0ce18d2780fdf8e290dc47898db87c13886c2cae1484343b97fc6",
+          "source": "games/cheat_defaults/circuit-forge.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "No characters here: maker mode fits the right parts, skips any circuit and jumps anywhere."
+      }
+    },
+    {
+      "slug": "light-bender",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Solve and finish this level",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d62092392f17b281667588cf0c3530ef66ef41b9b46a86af4748deed77302212",
+          "dial_sha256": "20afe04be1680ed30fadebc01374443b443d44f851486df33cec859a1a94ff2f",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "solve",
+          "label": "Show the solution",
+          "note": "Turns the mirrors to a working answer.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "32cf1e91b3b4b5e329a468b14334b931745c5f7be48d24b193a611e9e76f7204",
+          "dial_sha256": "5a8b81a780a63966fd8e2bb708d968b8aa8eb8f826557d858968b9bcbe9f6450",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "moves",
+          "label": "Reset the turn counter",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "73a38db1a1aff9105e2852139261f15097d3f07c9dbbe42e558530ec19c2f60e",
+          "dial_sha256": "cbbd14090249acb86481033bd1e18612471bb86e6170189561411311a38c7f54",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this level",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d0302d90a9b47fcd0d12b3a3df6cc980c0b37493f4acbb76832d88c4bca9a11f",
+          "dial_sha256": "4e45b88f79987b385a907b6906a7addffabe383b8715707f7a18ac6d36583f18",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "last",
+          "label": "Jump to the last level",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "af04894fc7425596ddf21514ddf9f68427b2503fb4c4e18bdb2dd9523f5adc28",
+          "dial_sha256": "9d539f463a2649d6c831c3a5921912793c2512a0437174767765a689696fe8bd",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "3bd7f9b9344683e0669f41d3f364f39d10a4495e867d39766d9206422e2db962",
+          "dial_sha256": "f20186ef255da234850c7231811675dbece616fa8361b6fed1a6302af5495669",
+          "source": "games/cheat_defaults/light-bender.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "289c8593b53426271ddea6430531b84d9bf1149dab2bad5d702e4adc487420e2",
+          "dial_sha256": "66f7bd1f00c956783740650ced3806bb18e1eab4b5c6cfb22df632bc01cf3cfc",
+          "source": "games/cheat_defaults/light-bender.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "No characters here: maker mode shows the solution, skips any level and jumps anywhere."
+      }
+    },
+    {
+      "slug": "maglev-rescue",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Deliver this pod",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "c4162bb9f48cb8bb2008abf1914dffcfdcfd7c725ab6434d5376114c431d30c8",
+          "dial_sha256": "8172afe645f1800cf43630d4fb879be4d05889e6980f033f5cc161888bd1db92",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "design",
+          "label": "Engineer's gains fitted",
+          "note": "Pole-placement gains for this line.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "470267b19a13246ce9dba8f514550fc81811533a6ad79fdefac7aad780a0472d",
+          "dial_sha256": "fccdec04470576dad705fb2e2df6b7b7c17338c4e02f3823cdf54d177fc8975c",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "shield",
+          "label": "Rail contact forgiven",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "df9a138dd7ab9d4b6174846fa36a6558fc81fe759c98b9af282595b146267d57",
+          "dial_sha256": "49b04e2eb7e1551644ebf8fda7aeaa08ea313ede73aff657b4c8d8e687e01822",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "calm",
+          "label": "Gusts and sensor noise off",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "500276ee561427387585e3f0e8ad8ec377ab18b341102c28d5754b2b31e75f3e",
+          "dial_sha256": "6343a9703d8fca25106c7df2f7966637d41fba1d2cdcbaed4a114035c269ecfb",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "light",
+          "label": "Payloads removed",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2ccc2edc5db1e411c8b0ba6e7efdb67491273eef49c656ec3ee254c6cf35a200",
+          "dial_sha256": "1908a96e392d9160902538b068e3105c9c5a617d1a9b9061f671eae4bb35ac81",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every line open",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "d36d1cdcb0ea6b3eb8c76c24ac598ade7d4d97005e6528b00fa74b030620ba52",
+          "dial_sha256": "6d53a03c8a5ce8dd3252867a7a2df87dbf54f4ca3ba0a78c7de6ee8f0cb6437f",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "e5675bcc7b2aee57ba9e327b40d04437f704edfecaf75c1a505ae8317ba3fc32",
+          "dial_sha256": "6ed18672c20927c824515e31d062e3a8860382584e9a425540e71e0cec24e3df",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2f883c56261217c7f9f6a4c97efa458ee3034b5fa96b63db13d329ca061f9efb",
+          "dial_sha256": "065910ea7a469a4090c12102c29d283ba54899d35375a9057e4f09ca57b09cd9",
+          "source": "games/cheat_defaults/maglev-rescue.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Holds the gap with pole-placement gains on every line; every line open."
+      }
+    },
+    {
+      "slug": "algorithm-garage",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Finish this job",
+          "note": "Submits a working program. Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "dc00caa1ac720796757da2912ac2b23a192415119b2c39e86bdd85261f476dbb",
+          "dial_sha256": "0dfd7e488ebaf5f18a08c0883d11a009fcdc163d503c260d2d87d05e69e45219",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "solve",
+          "label": "Show a working program",
+          "note": "Puts a reference program in the editor.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "2a544c175a2280e64210974e422792ad87b23101c026cf98a394581fbcb6676d",
+          "dial_sha256": "3302b0f16b138bdbd3f5e00eff007f16f269c157962dafe8a8323b2d64291e73",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "fast",
+          "label": "Fast replay",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "a766636102b1a9936841b87a69ffbd4b6439afef81b49664fa702b7a79b818e9",
+          "dial_sha256": "e12eba049b4da099089811617250f5ffa0dc3f40cbfb9ed820539ac9ee62eaf5",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "stars",
+          "label": "Three stars for this job",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "83c7d86d73845a3e381596a3d932fde0b63c4c8d248f176ad81b7545775cea40",
+          "dial_sha256": "0942857670031a683f900b88604d9db7285805ede291a4b782a7313820c9b56a",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every job open",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "25c70645c2f467f76cc0f760a96bd5d885418a883c83127ee55502ae9a85975c",
+          "dial_sha256": "0737806ce7fd01352d1e935c23b28811fd62ae352e10e238619633c019a87458",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "orders",
+          "label": "Open Work orders",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "b52cf7db060e70af453be795acb27926ae92cad655bfc371a68adaeba5f51434",
+          "dial_sha256": "89dd93e16ddf89edeca1d6995bafc97dff6fac858536a22681c1eeda1ac4a53f",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7b7459b125e7e2a9d2f9ff355e7b2e27ddd8bc74e891626ce10a2f059380fc58",
+          "dial_sha256": "8e1a59f864138b0b493bb1ec0cfa0541837d000bb57590dc5078fb983c425dde",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "8108140c380948a79cb65739a3c5ce40deebf08a74418a7663d49dfb5e972d48",
+          "dial_sha256": "24d272b17904e24cda863cb92466c1d51b9cf141d1008e86403db43c27eabd4a",
+          "source": "games/cheat_defaults/algorithm-garage.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Every job and Work orders are open; the skip key submits a working program for any job."
+      }
+    },
+    {
+      "slug": "drive-room",
+      "cheats": [
+        {
+          "id": "skip",
+          "label": "Job done",
+          "note": "Also the maker's skip key.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7f391dbc6dd4ca457d8a71e3e2d9270bb9521bbffcee92d84a2e6c26082b762e",
+          "dial_sha256": "bfd0069e77e643da823d5cc77b5c39a61f4a8c280caffdc2135a0e75aea27aad",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "auto",
+          "label": "Engineer's settings fitted",
+          "note": "Cheapest suitable converter and a tuned speed loop.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "3750a1566e8c8d359e060ce6fe81f05d8f7ae0a3ef34fdffda46172b2b4d2b8e",
+          "dial_sha256": "e1135f1519d9f4d32057b862c58ea2f0e821eedd3a1a58f666ba476b308327af",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "budget",
+          "label": "+1000 budget",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "8421d5ad36c54d852e9cc4edee48f65e1d1133c699824db537006dc831053e38",
+          "dial_sha256": "997c07bc8e40f7cf0cbd4ec6adffc5713de2c9d6ab79c35efd6b14ad36df095e",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "notrip",
+          "label": "Overcurrent trip off",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "eaeeaffd16e4297cfa448b3a02cf103936b9813e785f42ec08f5d84b6a204051",
+          "dial_sha256": "c693a22f2378f18da64f7fad1cb46e524955f4cda52deb660b839973f3d8028d",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "tol",
+          "label": "Tolerance tripled",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "5c55010da7e39dacf003746d8a4eb58ce281698ab64c3adb71b0c66654c5f37a",
+          "dial_sha256": "1a3d93f546755cffd484ababc46e0599fc74f203099926137258e390be25753d",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "unlock",
+          "label": "Every job open",
+          "note": "",
+          "how": "",
+          "on": true,
+          "typed_sha256": "caca5654c75fb53493d07d9edf5dfdbcdc40c5c96b4e675ced60cbc8fdb533d0",
+          "dial_sha256": "6c56567db5090041ec78cb1eaee1bc40daa2f2dabc104c2fdcb7c5e985048ced",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "slow",
+          "label": "Slow motion for a while",
+          "note": "Cosmetic and helpful.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "7a7040f479466153ca398b7537b204e1651231247b28a5e262973767f7252115",
+          "dial_sha256": "ce2c59de09a4d54c15df43a747e4d2e49fadb365943694a5d78fa00e77ffa4d7",
+          "source": "games/cheat_defaults/drive-room.json"
+        },
+        {
+          "id": "party",
+          "label": "Confetti storm",
+          "note": "Cosmetic only.",
+          "how": "",
+          "on": true,
+          "typed_sha256": "c5f942427f370cad83c05cb0ad404ad7713dc9d0b14d1dab4b63496c5c14e977",
+          "dial_sha256": "8993acc996cb7a6ac361e9fc253a72cc7fdbedbcd804d63279f4518541474a86",
+          "source": "games/cheat_defaults/drive-room.json"
+        }
+      ],
+      "hero_reveal": {
+        "name": "M.I. BUGAJE",
+        "combo": "Up Up Down Down Left Right M I B",
+        "swipe": "Up Up Down Left Right",
+        "powers": "Gets the engineer's converter and gains on every job; every job open."
+      }
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Win this round",
+      "typed": "iawin9",
+      "dial": "*429#",
+      "note": "Knocks the rival out now. Also the maker's skip key."
+    },
+    {
+      "id": "god",
+      "label": "Take no damage",
+      "typed": "iagod1",
+      "dial": "*421#",
+      "note": ""
+    },
+    {
+      "id": "onehit",
+      "label": "One-hit knockouts",
+      "typed": "iaone7",
+      "dial": "*427#",
+      "note": ""
+    },
+    {
+      "id": "meter",
+      "label": "Super meter always full",
+      "typed": "iamet4",
+      "dial": "*424#",
+      "note": ""
+    },
+    {
+      "id": "heal",
+      "label": "Full health now",
+      "typed": "iahp08",
+      "dial": "*428#",
+      "note": ""
+    },
+    {
+      "id": "bosses",
+      "label": "Bosses playable",
+      "typed": "iabos6",
+      "dial": "*426#",
+      "note": "Unlocks Inertia, Entropy and Baron Overload."
+    },
+    {
+      "id": "tower",
+      "label": "Jump to this chapter's boss",
+      "typed": "iatop2",
+      "dial": "*422#",
+      "note": "Moves your Circuit run to rung 10 of the current chapter."
+    },
+    {
+      "id": "roster",
+      "label": "Every fighter unlocked",
+      "typed": "iaall3",
+      "dial": "*420#",
+      "note": "Until you leave the page."
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "iaslow3",
+      "dial": "*423#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "iayay5",
+      "dial": "*425#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Wears white and gold over the fighter you pick; takes no damage, knocks out in one hit, super meter always full."
+  }
+}

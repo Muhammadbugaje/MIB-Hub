@@ -1,0 +1,30 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Edit {{ u.get_full_name }}{% endblock %}
+{% block page_title %}Edit user{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+{% include "access/_user_head.html" %}
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "pencil" 14 %} Edit user</span>
+  <h1 class="ee-page-header__title">{{ u.get_full_name }}</h1>
+  <p class="ee-page-header__description">Names live on the person record and appear everywhere in EE Hub.</p></div></header>
+<form method="post" class="ee-form" novalidate>{% csrf_token %}
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "circle-user-round" 17 %} The person</h2></div>
+    <div class="ee-form-grid">
+      {% include "access/_field.html" with f=form.title %}{% include "access/_field.html" with f=form.first_name %}
+      {% include "access/_field.html" with f=form.middle_name %}{% include "access/_field.html" with f=form.last_name %}
+      {% include "access/_field.html" with f=form.gender %}{% include "access/_field.html" with f=form.phone %}
+      {% include "access/_field.html" with f=form.personal_email %}
+    </div>
+  </section>
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "key-round" 17 %} Sign-in</h2></div>
+    <div class="ee-form-grid">{% include "access/_field.html" with f=form.email %}{% include "access/_field.html" with f=form.login_id %}</div>
+    {% if request.user.is_superuser %}{% include "access/_field.html" with f=form.is_staff %}{% endif %}
+  </section>
+  <div class="form-actions acc-sticky-actions"><button type="submit" class="btn btn-primary">{% icon "save" 16 %} Save changes</button><a class="btn btn-ghost" href="{% url 'access:user_detail' u.pk %}">Cancel</a></div>
+</form>
+</div>
+{% endblock %}

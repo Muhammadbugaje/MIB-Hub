@@ -1,0 +1,40 @@
+---
+/**
+ * The bare HTML page every layout builds on: <head>, theme script, styles.
+ * Use PublicLayout, AppLayout or AuthLayout in pages, not this directly.
+ */
+import "@mib/ui/styles.css";
+import "../styles/app.css";
+import { THEME_INIT_SCRIPT } from "@mib/ui/theme";
+import { pageTitle, siteConfig } from "../site.config.ts";
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+}
+const { title, description = siteConfig.description, bodyClass } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content={siteConfig.themeColor.light} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={siteConfig.themeColor.dark} media="(prefers-color-scheme: dark)" />
+    <title>{pageTitle(title)}</title>
+    <meta name="description" content={description} />
+    <meta property="og:site_name" content={siteConfig.name} />
+    <meta property="og:title" content={pageTitle(title)} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Sets html[data-theme] before the first paint (no white flash). Logic: packages/ui/src/theme.ts -->
+    <script is:inline set:html={THEME_INIT_SCRIPT} />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <slot />
+  </body>
+</html>

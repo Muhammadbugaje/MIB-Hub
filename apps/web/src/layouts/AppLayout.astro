@@ -1,0 +1,109 @@
+---
+/**
+ * Signed-in pages (profile, admin): sidebar navigation + top bar.
+ * Links the viewer lacks permission for are not shown; the pages themselves
+ * still check permissions with guard() (hiding a link is not security).
+ *
+ * <AppLayout title="Profile"> ...page... </AppLayout>
+ */
+import ThemeToggle from "@mib/ui/components/ThemeToggle.tsx";
+import Icon, { type IconName } from "../components/Icon.astro";
+import Logo from "../components/Logo.astro";
+import type { Permission } from "../lib/permissions.ts";
+import { ROLE_INFO, isRole } from "../lib/permissions.ts";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const { viewer } = Astro.locals;
+const path = Astro.url.pathname;
+
+interface NavItem {
+  href: string;
+  label: string;
+  icon: IconName;
+  permission?: Permission;
+  /** Not built yet: shows a small "soon" tag. */
+  todo?: boolean;
+}
+
+const mainNav: NavItem[] = [
+  { href: "/", label: "Home", icon: "home" },
+  { href: "/#games", label: "Games", icon: "gamepad" },
+  { href: "/account/profile", label: "Profile", icon: "user" },
+];
+
+// The admin area. Each section is a TODO for the admin-panel worker (see docs/ARCHITECTURE.md).
+const adminNav: NavItem[] = [
+  { href: "/admin", label: "Overview", icon: "shield", permission: "admin.access" },
+  { href: "/admin/games", label: "Games", icon: "gamepad", permission: "games.manage", todo: true },
+  { href: "/admin/cheats", label: "Cheats & heroes", icon: "key", permission: "games.manage_settings", todo: true },
+  { href: "/admin/content", label: "Game content", icon: "file", permission: "games.manage_content", todo: true },
+  { href: "/admin/sounds", label: "Sounds", icon: "music", permission: "games.manage_sounds", todo: true },
+  { href: "/admin/users", label: "Users & roles", icon: "users", permission: "users.view", todo: true },
+  { href: "/admin/scores", label: "Leaderboards", icon: "trophy", permission: "scores.moderate", todo: true },
+  { href: "/admin/audit", label: "Audit log", icon: "list", permission: "audit.view", todo: true },
+  { href: "/admin/settings", label: "Site settings", icon: "settings", permission: "site.settings", todo: true },
+];
+
+const visible = (items: NavItem[]) => items.filter((i) => !i.permission || viewer.permissions.has(i.permission));
+const isCurrent = (href: string) => (href === "/admin" ? path === "/admin" : path === href || path.startsWith(href + "/"));
+const initials = (viewer.user?.name ?? "?")
+  .split(/\s+/)
+  .map((p) => p[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+const roleLabel = isRole(viewer.role) ? ROLE_INFO[viewer.role].label : viewer.role;
+const admin = visible(adminNav);
+---
+
+<BaseLayout title={title}>
+  <div class="app">
+    <aside class="app-sidebar">
+      <Logo />
+      <nav class="app-nav" aria-label="App">
+        {
+          visible(mainNav).map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              <Icon name={item.icon} />
+              {item.label}
+            </a>
+          ))
+        }
+        {admin.length > 0 && <div class="app-nav__label">Admin</div>}
+        {
+          admin.map((item) => (
+            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+              <Icon name={item.icon} />
+              {item.label}
+              {item.todo && <span class="app-nav__todo">soon</span>}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="app-sidebar__foot">Signed in as {roleLabel}</div>
+    </aside>
+
+    <div class="app-main">
+      <header class="app-topbar">
+        <div class="app-topbar__title">{title}</div>
+        <ThemeToggle client:load />
+        <a class="user-chip" href="/account/profile">
+          <span class="avatar">{initials}</span>
+          <span>{viewer.user?.name}</span>
+        </a>
+        <form method="post" action="/auth/sign-out">
+          <button class="btn btn--ghost btn--icon" type="submit" aria-label="Sign out" title="Sign out">
+            <Icon name="logout" size={18} />
+          </button>
+        </form>
+      </header>
+      <main id="main" class="app-content page-enter">
+        <slot />
+      </main>
+    </div>
+  </div>
+</BaseLayout>

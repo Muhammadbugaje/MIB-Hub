@@ -1,0 +1,699 @@
+/* ==========================================================================
+   EE Hub — one form system (Round 4)
+
+   Loaded from base.html after ee.css, so it is the last word on how fields
+   look across the portal. Every selector is wrapped in :where() so the
+   specificity stays at one class: app stylesheets that deliberately style a
+   special control (score cells, search pills, switches, bulk checkboxes)
+   keep winning when they are more specific, while unstyled Django widgets
+   and the half-dozen field partials (.ee-field, .pg-field, .field, .input)
+   all line up on the same grid.
+
+   Contents
+     1. Tokens
+     2. Text-like controls (input, select, textarea, .input)
+     3. States: hover, focus, invalid, disabled, read-only
+     4. File inputs
+     5. Checkboxes, radios, switches
+     6. Choice lists (Django RadioSelect / CheckboxSelectMultiple)
+     7. Field wrappers: label, required marker, help, errors
+     8. Grids and fieldsets
+     9. Input groups (prefix / suffix)
+    10. Filter bars and inline forms
+    11. Action bars (sticky on phones)
+    12. Compact controls in tables
+    13. Dark mode touches
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- 1 tokens */
+:root {
+  --field-h: 44px;                 /* = .btn min-height, so rows line up */
+  --field-h-sm: 36px;
+  --field-pad-x: 0.8rem;
+  --field-radius: var(--radius-sm, 10px);
+  --field-font: 0.9375rem;         /* 15px desktop; 16px on phones (no iOS zoom) */
+  --field-bg: var(--surface);
+  --field-border: var(--border-strong);
+  --field-border-hover: color-mix(in srgb, var(--text) 32%, transparent);
+  --field-ring: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
+  --field-ring-danger: 0 0 0 4px color-mix(in srgb, var(--danger) 18%, transparent);
+  --field-label: var(--text);
+  --field-gap: 6px;
+  --check-size: 18px;
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  --tick: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='5 12.5 10 17.5 19 7'/%3E%3C/svg%3E");
+  --dash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round'%3E%3Cline x1='6' y1='12' x2='18' y2='12'/%3E%3C/svg%3E");
+}
+@media (max-width: 767px) { :root { --field-font: 1rem; } }
+
+/* ------------------------------------------------- 2 text-like controls */
+:is(.app-content, .ee-dialog, .ee-modal, .modal, dialog)
+  :where(input:not([type]), input[type="text"], input[type="email"], input[type="password"],
+         input[type="search"], input[type="number"], input[type="url"], input[type="tel"],
+         input[type="date"], input[type="datetime-local"], input[type="time"],
+         input[type="month"], input[type="week"], select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-height: var(--field-h);
+  margin: 0;
+  padding: 0.5rem var(--field-pad-x);
+  --border: var(--field-border);   /* apple.css paints selects with var(--border) */
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
+  background-color: var(--field-bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--field-font);
+  line-height: 1.4;
+  box-shadow: none;
+  transition: border-color var(--dur, 200ms) var(--ease-standard, ease),
+              box-shadow var(--dur, 200ms) var(--ease-standard, ease),
+              background-color var(--dur, 200ms) var(--ease-standard, ease);
+}
+/* Full width only for plain controls; an extra class means the app sized it. */
+:is(.app-content, .ee-dialog, .ee-modal, .modal, dialog)
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="range"]):not([type="color"]):not([type="image"]):not([type="submit"]):not([type="button"]):not([type="reset"]), select, textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"]) {
+  width: 100%;
+}
+/* Fixed-height single-line inputs keep the same box as selects and buttons. */
+:is(.app-content, .ee-dialog, .ee-modal, .modal, dialog)
+  :where(input:not([type]), input[type="text"], input[type="email"], input[type="password"],
+         input[type="search"], input[type="number"], input[type="url"], input[type="tel"],
+         input[type="date"], input[type="datetime-local"], input[type="time"],
+         input[type="month"], input[type="week"], input.input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: var(--field-h);
+  padding-block: 0;
+}
+:is(.app-content, .ee-dialog, .ee-modal, .modal, dialog) :where(select:not([multiple]):not([size]), select.input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: var(--field-h);
+  padding-block: 0;
+  padding-inline-end: 2.4rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: var(--chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 12px 12px;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+[dir="rtl"] :is(.app-content) :where(select:not([multiple]):not([size])):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { background-position: left 0.85rem center; padding-inline: 2.4rem var(--field-pad-x); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(select[multiple], select[size]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: auto;
+  min-height: 8.5rem;
+  padding: 6px;
+  background-image: none;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(select[multiple] option, select[size] option):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(select[multiple] option:checked):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  background: var(--primary-subtle) linear-gradient(0deg, var(--primary-subtle), var(--primary-subtle));
+  color: var(--primary-subtle-fg);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(textarea, textarea.input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: auto;
+  min-height: 6.5rem;
+  padding-block: 0.65rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+/* Native pickers: same text baseline, themed calendar icon. */
+:is(.app-content) :where(input[type="date"], input[type="datetime-local"], input[type="time"], input[type="month"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  font-variant-numeric: tabular-nums;
+}
+:is(.app-content) :where(input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)::-webkit-calendar-picker-indicator { opacity: 0.75; cursor: pointer; border-radius: 6px; padding: 4px; }
+:is(.app-content) :where(input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)::-webkit-calendar-picker-indicator:hover { opacity: 1; background: var(--surface-sunken); }
+:is(.app-content) :where(input[type="number"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { font-variant-numeric: tabular-nums; }
+:is(.app-content) :where(input, textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)::placeholder { color: var(--text-subtle); opacity: 1; }
+
+/* ---------------------------------------------------------------- 3 states */
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]):not([type="hidden"]), select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):hover {
+  --border: var(--field-border-hover);
+  border-color: var(--field-border-hover);
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):not([type="color"]), select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):focus {
+  outline: none;
+  --border: var(--primary);
+  border-color: var(--primary);
+  box-shadow: var(--field-ring);
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input, select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):where([aria-invalid="true"], .error, .is-invalid),
+:is(.has-error, .acc-has-error, .is-invalid, .ee-field--error)
+  :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  --border: var(--danger);
+  border-color: var(--danger);
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input, select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):where([aria-invalid="true"], .error, .is-invalid):focus,
+:is(.has-error, .acc-has-error, .is-invalid, .ee-field--error)
+  :where(input:not([type="checkbox"]):not([type="radio"]), select, textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):focus {
+  box-shadow: var(--field-ring-danger);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input, select, textarea, .input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):disabled {
+  background-color: var(--surface-sunken);
+  color: var(--text-muted);
+  border-style: dashed;
+  cursor: not-allowed;
+  opacity: 1;
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)[readonly] {
+  background-color: var(--surface-2);
+  color: var(--text-muted);
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)[readonly]:focus {
+  box-shadow: none;
+  border-color: var(--field-border);
+}
+
+/* ------------------------------------------------------------ 4 file input */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="file"]):not(.sr-only):not(.visually-hidden):not([hidden]) {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-height: var(--field-h);
+  padding: 5px;
+  border: 1px dashed var(--field-border);
+  border-radius: var(--field-radius);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: var(--fs-sm, 0.875rem);
+  line-height: 32px;
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease-standard), background-color var(--dur) var(--ease-standard);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="file"]):not(.sr-only):not(.visually-hidden):not([hidden]):hover { border-color: var(--primary); background: var(--primary-subtle); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="file"]):not(.sr-only):not(.visually-hidden):not([hidden]):focus-visible { outline: none; border-style: solid; border-color: var(--primary); box-shadow: var(--field-ring); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="file"]):not(.sr-only):not(.visually-hidden):not([hidden])::file-selector-button {
+  height: 32px;
+  margin: 0 0.75rem 0 0;
+  padding: 0 0.9rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill, 999px);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: var(--fw-semibold, 600);
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease-standard), border-color var(--dur) var(--ease-standard);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="file"]):not(.sr-only):not(.visually-hidden):not([hidden]):hover::file-selector-button {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-fg);
+}
+/* ClearableFileInput: "Currently: <a> [x] Clear <br> Change: <input>" */
+:is(.app-content) :where(.ee-field, .pg-field, .field, p) :where(input[type="checkbox"][name$="-clear"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { margin-inline: 8px 4px; vertical-align: -3px; }
+:is(.app-content) :where(label[for$="-clear_id"]) {
+  display: inline !important;
+  margin: 0 !important;
+  font-weight: var(--fw-medium, 500) !important;
+  color: var(--text-muted) !important;
+}
+
+/* ------------------------------------------- 5 checkbox, radio and switch */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-content: center;
+  box-sizing: border-box;
+  width: var(--check-size);
+  height: var(--check-size);
+  min-width: var(--check-size);    /* survives app rules that say width: auto */
+  min-height: var(--check-size);
+  margin: 0;
+  padding: 0;
+  border: 1.5px solid var(--field-border-hover);
+  border-radius: 5px;
+  background: var(--field-bg) no-repeat center / 0 0;
+  vertical-align: -0.2em;
+  cursor: pointer;
+  transition: background-color var(--dur-fast, 120ms) var(--ease-standard),
+              border-color var(--dur-fast, 120ms) var(--ease-standard),
+              background-size var(--dur, 200ms) var(--ease-spring),
+              box-shadow var(--dur, 200ms) var(--ease-standard);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { border-radius: 50%; }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):hover { border-color: var(--primary); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  background-image: var(--tick);
+  background-size: 14px 14px;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):indeterminate {
+  border-color: var(--primary);
+  background-color: var(--primary);
+  background-image: var(--dash);
+  background-size: 14px 14px;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):checked {
+  border-color: var(--primary);
+  background-color: var(--field-bg);
+  box-shadow: inset 0 0 0 4px var(--primary);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):focus-visible {
+  outline: none;
+  box-shadow: var(--field-ring);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):checked:focus-visible {
+  box-shadow: inset 0 0 0 4px var(--primary), var(--field-ring);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)[aria-invalid="true"] { border-color: var(--danger); }
+@media (forced-colors: active) {
+  :is(.app-content) :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { appearance: auto; }
+}
+
+/* Switch: <input type=checkbox role=switch> or .ee-switch wrapper */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"][role="switch"], .ee-switch > input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  width: 40px;
+  height: 24px;
+  min-width: 40px;
+  min-height: 24px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--border-strong);
+  background-image: none;
+  box-shadow: none;
+  position: relative;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"][role="switch"], .ee-switch > input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input)::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform var(--dur, 200ms) var(--ease-spring);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"][role="switch"], .ee-switch > input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):checked {
+  background: var(--success, var(--primary));
+  background-image: none;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"][role="switch"], .ee-switch > input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):checked::before { transform: translateX(16px); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(input[type="checkbox"][role="switch"], .ee-switch > input[type="checkbox"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input):focus-visible { box-shadow: var(--field-ring); }
+.ee-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; font-weight: var(--fw-medium, 500); }
+
+/* A label that wraps a checkbox/radio: box and text on one line, text wraps
+   under itself, not under the box. Covers every partial in the portal. */
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :is(label:not([class]):has(> input[type="checkbox"], > input[type="radio"]), .check, .pg-check, .ee-check) {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font-size: var(--fs-sm, 0.875rem);
+  font-weight: var(--fw-medium, 500);
+  line-height: 1.4;
+  color: var(--text);
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :is(label:not([class]):has(> input[type="checkbox"], > input[type="radio"]), .check, .pg-check, .ee-check) > :where(input[type="checkbox"], input[type="radio"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  margin-top: calc((1.4em - var(--check-size)) / 2);
+}
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :where(label:has(> input[type="checkbox"][role="switch"])) > input { margin-top: calc((1.4em - 24px) / 2); }
+
+/* ------------------------------------------------------------ 6 choice lists */
+/* Django renders RadioSelect / CheckboxSelectMultiple as
+   <div id="id_x"><div><label for><input> Text</label></div>…</div>.
+   Lay them out as a tidy wrapping list of tappable rows. */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(div[id^="id_"]):has(> div > label > input[type="radio"], > div > label > input[type="checkbox"]),
+:is(.app-content) :where(.ee-choices) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(div[id^="id_"]) > div:has(> label > input[type="radio"], > label > input[type="checkbox"]) { display: contents; }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(div[id^="id_"]) > div > label:has(> input[type="radio"], > input[type="checkbox"]),
+:is(.app-content) label.ee-choice {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 40px;
+  margin: 0;
+  padding: 9px 14px 9px 11px;
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
+  background: var(--field-bg);
+  font-size: var(--fs-sm, 0.875rem);
+  font-weight: var(--fw-medium, 500);
+  cursor: pointer;
+  transition: border-color var(--dur) var(--ease-standard), background-color var(--dur) var(--ease-standard);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(div[id^="id_"]) > div > label:has(> input[type="radio"], > input[type="checkbox"]):hover,
+:is(.app-content) label.ee-choice:hover { border-color: var(--primary); }
+:is(.app-content, .ee-dialog, .modal, dialog) :where(div[id^="id_"]) > div > label:has(> input:checked),
+:is(.app-content) label.ee-choice:has(> input:checked) {
+  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  background: var(--primary-subtle);
+  color: var(--primary-subtle-fg);
+}
+/* Long checkbox lists (permissions, recipients) read better as columns. */
+:is(.app-content) :where(div[id^="id_"]):has(> div:nth-child(9) > label > input[type="checkbox"]),
+:is(.app-content) :where(.ee-choices--columns) {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  max-height: 22rem;
+  overflow: auto;
+  padding: 2px;
+}
+
+/* ------------------------------------------- 7 field wrapper + label + help */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-field, .pg-field, .field) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  min-width: 0;
+  margin: 0;
+}
+:is(.app-content) :where(.field + .field) { margin-block-start: var(--space-4, 1rem); }
+:is(.app-content) :where(.ee-form-grid, .pg-grid2, .ee-form, .pg-form) > :where(.field + .field) { margin-block-start: 0; }
+:is(.app-content, .ee-dialog, .modal, dialog)
+  :is(.ee-field, .pg-field, .field) > :is(label:not(:has(> input[type="checkbox"], > input[type="radio"])), .pg-label, .ee-field__label, legend) {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: var(--field-label);
+  font-size: 0.8125rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.35;
+  letter-spacing: 0;
+  text-transform: none;
+}
+/* Required marker: one look everywhere (acc-req, ac-req, plain spans). */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-req, .acc-req, .ac-req, .req, .required-mark),
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-field, .pg-field, .field) > label > span[aria-hidden="true"]:not([class]) {
+  margin-inline-start: 2px;
+  color: var(--danger);
+  font-weight: var(--fw-bold, 700);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-field, .pg-field, .field) > :where(.help, small, .hint, .helptext, .ee-field__help),
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.helptext) {
+  display: block;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: var(--fw-regular, 400);
+  line-height: 1.45;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.errorlist) {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--danger);
+  font-size: 0.8rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.4;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.errorlist) > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  animation: field-error-in var(--dur, 200ms) var(--ease-emphasized, ease);
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.errorlist) > li::before {
+  content: "";
+  flex: 0 0 14px;
+  height: 14px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v7h-2zm0 9h2v2h-2z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm-1 5h2v7h-2zm0 9h2v2h-2z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+/* Non-field errors at the top of a form read as a banner. */
+:is(.app-content) :where(form > .errorlist.nonfield, form > .errorlist:first-child, .errorlist.nonfield) {
+  padding: 10px 14px;
+  border: 1px solid color-mix(in srgb, var(--danger) 30%, transparent);
+  border-radius: var(--radius-md, 12px);
+  background: var(--danger-subtle);
+  color: var(--danger-fg);
+  margin-bottom: var(--space-3, 12px);
+}
+/* Checkbox-only field: box and label on one row; help sits under the text. */
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-field--check, .acc-field--check, .ee-field--checkbox) {
+  gap: 4px;
+  justify-content: center;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) :where(.ee-field--check, .acc-field--check, .ee-field--checkbox) > :where(.help, small, .helptext, .ee-field__help, .errorlist) {
+  padding-inline-start: calc(var(--check-size) + 10px);
+}
+/* Fields with a wrapped label: keep inputs aligned along a row. */
+:is(.app-content) :where(.ee-form-grid, .pg-grid2) { align-items: start; }
+:is(.app-content) :where(.ee-field--wide, .pg-field--wide, .as-wide, .ee-span-all) { grid-column: 1 / -1; }
+
+/* Plain {{ form.as_p }} / as_div output */
+:is(.app-content) :where(form) > p:has(> label + :is(input, select, textarea)) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+  margin: 0 0 var(--space-4, 1rem);
+}
+:is(.app-content) :where(form) > p > label { margin: 0; font-size: 0.8125rem; font-weight: var(--fw-semibold, 600); }
+
+/* -------------------------------------------------- 8 grids and fieldsets */
+:is(.app-content) :where(.ee-form) { display: grid; gap: var(--space-4, 1rem); }
+:is(.app-content) :where(.ee-form-grid) {
+  display: grid;
+  gap: 16px 18px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+:is(.app-content) :where(.ee-form-grid--2) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+:is(.app-content) :where(.ee-form-grid--3) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
+@media (min-width: 1024px) {
+  :is(.app-content) :where(.ee-form-grid--2) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  :is(.app-content) :where(.ee-form-grid--3) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+:is(.app-content) :where(.pg-grid2) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+:is(.app-content) :where(.ee-fieldset, fieldset.ee-card) {
+  margin: 0;
+  min-width: 0;
+}
+:is(.app-content) :where(.ee-fieldset) {
+  display: grid;
+  gap: var(--space-4, 1rem);
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg, 18px);
+  background: var(--surface);
+}
+:is(.app-content) :where(.ee-fieldset) > legend {
+  float: left;               /* puts the legend inside the box, as a heading */
+  width: 100%;
+  margin: 0 0 4px;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: var(--fw-bold, 700);
+  color: var(--text);
+}
+:is(.app-content) :where(.ee-fieldset) > legend + * { clear: both; }
+
+/* ---------------------------------------------- 9 input groups (pre/suffix) */
+:is(.app-content) :where(.ee-input-group) {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
+  background: var(--field-bg);
+  transition: border-color var(--dur) var(--ease-standard), box-shadow var(--dur) var(--ease-standard);
+}
+:is(.app-content) :where(.ee-input-group):hover { border-color: var(--field-border-hover); }
+:is(.app-content) :where(.ee-input-group):focus-within { border-color: var(--primary); box-shadow: var(--field-ring); }
+:is(.app-content) :where(.ee-input-group) > :where(input, select):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0 !important;
+  box-shadow: none !important;
+  background-color: transparent;
+}
+:is(.app-content) :where(.ee-input-group__affix) {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--fs-sm, 0.875rem);
+  font-weight: var(--fw-semibold, 600);
+  background: var(--surface-2);
+  white-space: nowrap;
+}
+:is(.app-content) :where(.ee-input-group__affix):first-child { border-inline-end: 1px solid var(--border); border-start-start-radius: inherit; border-end-start-radius: inherit; }
+:is(.app-content) :where(.ee-input-group__affix):last-child { border-inline-start: 1px solid var(--border); border-start-end-radius: inherit; border-end-end-radius: inherit; }
+
+/* ------------------------------------------------- 10 filter bars, inline */
+/* Toolbars of search + selects + button that sit above lists. Everything
+   shares --field-h, wraps cleanly, and stacks two-up on phones. */
+:is(.app-content) :where(.ee-filters) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+:is(.app-content) :where(.ee-filters) > :where(input[type="search"], input[type="text"], .ee-filters__grow):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { flex: 1 1 220px; }
+:is(.app-content) :where(.ee-filters) > :where(select):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { flex: 0 1 auto; max-width: 100%; }
+@media (max-width: 599px) {
+  :is(.app-content) :where(.ee-filters) > :where(select):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { flex: 1 1 calc(50% - 4px); }
+  :is(.app-content) :where(.ee-filters) > :where(.btn) { flex: 1 1 auto; }
+}
+/* Inline one-field forms ("Look up", "Track", "Add category"): field grows. */
+:is(.app-content) :where(.ee-inline-form) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+:is(.app-content) :where(.ee-inline-form) > :where(.ee-field, input, select) { flex: 1 1 220px; }
+
+/* ------------------------------------------------------- 11 action bars */
+:is(.app-content) :where(.form-actions, .pg-form-actions, .cb-actions, .ee-form-actions) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 767px) {
+  :is(.app-content) :where(.form-actions, .pg-form-actions, .ee-form-actions) > :where(.btn) { flex: 1 1 auto; }
+}
+/* Sticky save bars: one frosted strip that never hides content behind it on
+   phones (it rides above the floating tab bar). */
+:is(.app-content) :where(.acc-sticky-actions, .ee-form-actions--sticky, .mg-savebar) {
+  position: sticky;
+  bottom: 12px;
+  z-index: 15;
+  margin-top: var(--space-3, 12px);
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-glass-strong, var(--surface));
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  box-shadow: var(--shadow-md);
+}
+@media (max-width: 1023px) {
+  :is(.app-content) :where(.acc-sticky-actions, .ee-form-actions--sticky, .mg-savebar) {
+    bottom: calc(max(10px, env(safe-area-inset-bottom, 0px)) + 74px);
+  }
+}
+
+/* ---------------------------------------------- 12 compact controls in tables */
+:is(.app-content) :where(td, th, .is-compact, .ee-compact) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]), select:not([multiple])):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: var(--field-h-sm);
+  min-height: var(--field-h-sm);
+  padding-inline: 0.6rem;
+  font-size: var(--fs-sm, 0.875rem);
+}
+:is(.app-content) :where(td, th, .is-compact, .ee-compact) :where(select:not([multiple])):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { padding-inline-end: 2rem; background-position: right 0.6rem center; }
+:is(.app-content) :where(td, th) :where(textarea):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { min-height: 2.6rem; font-size: var(--fs-sm, 0.875rem); }
+:is(.app-content) :where(td) :where(input[type="number"]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) { text-align: end; }
+:is(.app-content) :where(.btn-sm) ~ :where(select, input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input), :is(.app-content) :where(.btn-sm-row) :where(select, input):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  height: 34px;
+  min-height: 34px;
+}
+
+/* ------------------------------------------------------- 13 dark touches */
+:root[data-theme="dark"] {
+  --field-bg: color-mix(in srgb, var(--surface) 80%, #000);
+  --field-border: rgba(255, 255, 255, 0.16);
+  --field-border-hover: rgba(255, 255, 255, 0.32);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --field-bg: color-mix(in srgb, var(--surface) 80%, #000);
+    --field-border: rgba(255, 255, 255, 0.16);
+    --field-border-hover: rgba(255, 255, 255, 0.32);
+  }
+}
+
+/* ------------------------------------------- 14 partials/field.html extras */
+:is(.app-content, .ee-dialog, .modal, dialog) fieldset:where(.ee-field) { padding: 0; border: 0; min-inline-size: 0; }
+:is(.app-content, .ee-dialog, .modal, dialog) fieldset:where(.ee-field) > legend { margin-bottom: var(--field-gap); }
+:is(.app-content) :where(.ee-field--choices) > .ee-choices + :where(.help, .errorlist) { margin-top: 2px; }
+/* <label class="ee-field"><span>Label</span><input>…<small>help</small></label> */
+:is(.app-content, .ee-dialog, .modal, dialog) label:where(.ee-field, .pg-field, .field) {
+  font-size: inherit;
+  font-weight: inherit;
+  cursor: default;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) label:where(.ee-field, .pg-field, .field) > span:first-child {
+  color: var(--field-label);
+  font-size: 0.8125rem;
+  font-weight: var(--fw-semibold, 600);
+  line-height: 1.35;
+}
+:is(.app-content, .ee-dialog, .modal, dialog) label:where(.ee-field, .pg-field, .field) > span:first-child small { font-weight: var(--fw-regular, 400); color: var(--text-muted); }
+/* <input list=…>: Chrome's datalist arrow shares the calendar indicator; show our chevron instead. */
+:is(.app-content) input[list]::-webkit-calendar-picker-indicator { display: none !important; }
+:is(.app-content) :where(input[list]):where(:not([class]), [class=""], [class="input"], [class="input ee-mono"], [class="ee-mono"], [class="as-mono"], .ee-input) {
+  padding-inline-end: 2.4rem;
+  background-image: var(--chevron);
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 12px 12px;
+}
+/* Visually hidden controls (custom upload buttons, toggles) stay hidden. */
+:is(.app-content, .ee-dialog, .modal, dialog) :is(input, select, textarea):is(.sr-only, .visually-hidden, .visually-hidden-focusable:not(:focus)) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  border: 0 !important;
+  white-space: nowrap !important;
+}
+
+/* ------------------------------------------- 15 list filter bars (pg-filter) */
+/* Search pill + selects in one row on desktop; two-up on phones. */
+:is(.app-content) .pg-filter > select { width: auto; flex: 0 1 220px; }
+:is(.app-content) .pg-search { min-height: var(--field-h); border-color: var(--field-border); border-radius: var(--field-radius); }
+:is(.app-content) .pg-search:focus-within { border-color: var(--primary); box-shadow: var(--field-ring); }
+:is(.app-content) .pg-search input { height: calc(var(--field-h) - 2px); min-height: 0; }
+@media (max-width: 599px) {
+  :is(.app-content) .pg-filter > select { flex: 1 1 calc(50% - 4px); }
+}
+:is(.app-content) .ee-card__head + :is(.ee-form-grid, .ee-field, .pg-grid2, .ee-fieldset) { margin-top: 6px; }
+
+/* -------------------------------- 16 editable rows in stacked tables (phones) */
+@media (max-width: 760px) {
+  :is(.app-content) .ee-table.is-stacked td:has(> :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea)) { align-items: center; }
+  :is(.app-content) .ee-table.is-stacked td:has(> :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea))::before { flex: 0 0 30%; }
+  :is(.app-content) .ee-table.is-stacked td > :is(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea) { flex: 1 1 auto; min-width: 0; width: auto; }
+}
+
+/* ---- Leftovers from the form audit ------------------------------------- */
+/* Settings: long-text settings get room on phones. */
+@media (max-width: 640px) {
+  textarea.sys-input { flex: 1 1 100%; min-height: 88px; }
+}
+/* Reminders and other list pages: empty states fill their card and sit centred. */
+section > .ee-empty-state, .ee-card > .ee-empty-state { width: 100%; margin-inline: auto; text-align: center; }
+/* CBT question form: option letters centre against their option. */
+.cb-optrow { align-items: center; }
+.cb-optrow > .cx-letter { align-self: center; }
+/* Bulk checkboxes inside row cards: no stretched gap. */
+.p6-row > .bulk-check, .ee-card > .bulk-check { flex: 0 0 auto; width: auto; margin: 0; }

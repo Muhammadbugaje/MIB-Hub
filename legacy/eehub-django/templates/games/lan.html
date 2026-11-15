@@ -1,0 +1,56 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wi-Fi play code</title>
+<style>
+  :root { color-scheme: light dark; --bg: #f6f7fb; --card: #fff; --ink: #14213d; --muted: #5b6475; --acc: #f59e0b; --line: #e3e6ee; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #0f1420; --card: #171e2d; --ink: #eef2f8; --muted: #a3adbf; --line: #2a3346; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--bg); color: var(--ink); }
+  main { max-width: 520px; margin: 0 auto; padding: 24px 16px 40px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 20px; }
+  h1 { font-size: 1.35rem; margin: 0 0 8px; }
+  p { margin: 8px 0; color: var(--muted); }
+  p b { color: var(--ink); }
+  textarea { width: 100%; min-height: 110px; font: 13px/1.4 ui-monospace, Menlo, monospace; padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+  button { font: inherit; font-weight: 700; padding: 12px 18px; border: 0; border-radius: 12px; background: var(--acc); color: #1b1300; cursor: pointer; min-height: 44px; }
+  .ok { color: #16a34a; font-weight: 700; }
+</style>
+</head>
+<body>
+<main>
+  <div class="card">
+    <h1 data-title>Wi-Fi play code</h1>
+    <p data-msg>Reading the code…</p>
+    <div data-copy hidden>
+      <p>If the game did not pick it up, copy this code and paste it into the game's <b>Wi-Fi play</b> box:</p>
+      <textarea readonly data-code aria-label="Pairing code"></textarea>
+      <p><button type="button" data-copybtn>Copy code</button></p>
+    </div>
+  </div>
+</main>
+<script>
+(function () {
+  "use strict";
+  var h = location.hash.replace(/^#/, ""), q = {}, msg = document.querySelector("[data-msg]");
+  h.split("&").forEach(function (kv) { var i = kv.indexOf("="); if (i > 0) q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); });
+  var code = q.o || q.a || "", kind = q.o ? "offer" : q.a ? "answer" : "";
+  var box = document.querySelector("[data-copy]"), ta = document.querySelector("[data-code]");
+  if (!code) { msg.textContent = "This page opens from a Wi-Fi play QR code in {{ game_name|escapejs }}. No code was found in the link."; return; }
+  ta.value = code; box.hidden = false;
+  var got = false;
+  try {
+    var ch = new BroadcastChannel("ee-arcade-lan");
+    ch.onmessage = function (e) { if (e.data && e.data.t === "ack") { got = true; msg.innerHTML = "<span class='ok'>Sent to your game.</span> Switch back to the game tab; you can close this one."; } };
+    ch.postMessage({ t: kind, code: code });
+    setTimeout(function () { if (!got) msg.innerHTML = "Open the game on this phone (in this same browser) and this code goes to it by itself. If the game is open as a home-screen app, copy the code below and paste it there."; }, 1500);
+  } catch (e) { msg.textContent = "Copy the code below and paste it into the game's Wi-Fi play box."; }
+  document.querySelector("[data-copybtn]").addEventListener("click", function () {
+    ta.select(); try { navigator.clipboard.writeText(code).then(function () { msg.textContent = "Copied."; }); } catch (e) { document.execCommand && document.execCommand("copy"); msg.textContent = "Copied."; }
+  });
+})();
+</script>
+</body>
+</html>

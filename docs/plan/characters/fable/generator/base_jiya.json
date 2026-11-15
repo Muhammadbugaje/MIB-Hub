@@ -1,0 +1,253 @@
+{
+ "name": "Jiya",
+ "height": 1.72,
+ "seed": 11,
+ "body": {
+  "slim": 0.8,
+  "curvy": 0.25,
+  "fat": 0.0,
+  "muscle": 0.05
+ },
+ "skin": "#cf9670",
+ "blush": 0.28,
+ "blushCol": "#e0806e",
+ "face": {
+  "w": 0.078,
+  "top": 0.095,
+  "chin": 0.1,
+  "d": 0.085,
+  "jaw": 0.76,
+  "chinFwd": 0.95,
+  "cheek": 0.25,
+  "skull": 0.5,
+  "flat": 0.25,
+  "eyeX": 0.42,
+  "eyeY": -0.07,
+  "eyeR": 0.0195,
+  "eyeH": 1.0,
+  "eyeSink": 0.62,
+  "iris": "#3b2014",
+  "irisIn": "#8a5530",
+  "irisA": 0.74,
+  "pupilA": 0.3,
+  "lidUp": 0.36,
+  "lidLo": 0.55,
+  "tilt": 0.06,
+  "lash": 0.0021,
+  "wing": 0.4,
+  "lowerLash": 0.0006,
+  "shadow": "#c08a72",
+  "lashCol": "#120b08",
+  "brow": {
+   "col": "#24150e",
+   "y": 1.25,
+   "w": 0.0058,
+   "arch": 0.22,
+   "peak": 0.75,
+   "len": 1.05,
+   "tail": -0.25,
+   "tilt": -0.08
+  },
+  "nose": {
+   "y": -0.3,
+   "size": 0.95
+  },
+  "mouth": {
+   "y": -0.58,
+   "w": 0.026,
+   "smile": 1.0,
+   "open": 0.75,
+   "lip": "#a5524c",
+   "full": 1.0
+  }
+ },
+ "hair": {
+  "root": "#4c2f1d",
+  "tip": "#a06a42",
+  "grad": 0.25,
+  "gradAmt": 0.9,
+  "part": 0,
+  "hairline": 34,
+  "temple": 48,
+  "cap": 0.0035,
+  "volume": 0.2,
+  "locks": 12,
+  "layers": [
+   {
+    "off": 0.0025,
+    "w": 1.0
+   },
+   {
+    "off": 0.007,
+    "w": 1.1
+   }
+  ],
+  "endY": 0.585,
+  "endJitter": 0.03,
+  "lockW": 0.034,
+  "thick": 0.0034,
+  "wave": 0.5,
+  "waveFreq": 1.1,
+  "spread": 0.06,
+  "gravity": 0.6,
+  "taperStart": 0.7,
+  "tipPow": 0.7,
+  "rough": 0.85,
+  "gloss": 0.0,
+  "sheen": "#9a6a48",
+  "lockStart": 0.1,
+  "capOverlap": -0.012,
+  "softStart": 0.12,
+  "capTone": 1.45,
+  "partTone": 0.32,
+  "partWidth": 1.5,
+  "noSelfShadow": true,
+  "env": 0.6
+ },
+ "outfits": [
+  {
+   "id": "sundress",
+   "label": "Pink sundress (modest)",
+   "items": [
+    {
+     "type": "dress",
+     "col": "#f4a9b8",
+     "neck": "square",
+     "neckDepth": 0.012,
+     "off": 0.004,
+     "bottom": 0.22,
+     "flare": 0.055,
+     "flareTop": 0.57,
+     "sleeve": {
+      "len": 0.2,
+      "puff": 0.012
+     },
+     "buttons": {
+      "col": "#fff6f4",
+      "n": 6,
+      "top": 0.71,
+      "gap": 0.028
+     },
+     "sheen": 0.5,
+     "sheenCol": "#ffe0e8"
+    },
+    {
+     "type": "shoes",
+     "style": "flats",
+     "col": "#ead3c0"
+    },
+    {
+     "type": "sunglasses"
+    }
+   ]
+  },
+  {
+   "id": "jersey",
+   "label": "Football jersey + red cap",
+   "items": [
+    {
+     "type": "top",
+     "col": "#d8202a",
+     "neck": "crew",
+     "neckDepth": 0.01,
+     "off": 0.009,
+     "loose": 0.004,
+     "bottom": 0.5,
+     "sleeve": {
+      "len": 0.32,
+      "flare": 0.006
+     },
+     "trims": [
+      {
+       "y": 0.757,
+       "off": 0.006,
+       "th": 0.004
+      }
+     ],
+     "cuffs": true,
+     "trimCol": "#f4f4f4",
+     "pattern": {
+      "type": "jersey",
+      "bg": "#d8202a"
+     }
+    },
+    {
+     "type": "pants",
+     "col": "#6f8fb8",
+     "off": 0.005,
+     "hem": 0.045,
+     "minR": 0.026,
+     "top": 0.555,
+     "pattern": {
+      "type": "denim",
+      "bg": "#6d8fbc"
+     }
+    },
+    {
+     "type": "shoes",
+     "style": "sneakers",
+     "col": "#f5f3ef",
+     "sole": "#ffffff",
+     "laces": "#ffffff"
+    },
+    {
+     "type": "cap",
+     "col": "#d01e26"
+    }
+   ]
+  },
+  {
+   "id": "gown",
+   "label": "Law graduation gown",
+   "items": [
+    {
+     "type": "top",
+     "col": "#f5f2ec",
+     "neck": "crew",
+     "neckDepth": 0.012,
+     "off": 0.004,
+     "bottom": 0.5
+    },
+    {
+     "type": "skirt",
+     "col": "#18161a",
+     "off": 0.006,
+     "top": 0.565,
+     "bottom": 0.23,
+     "flare": 0.02,
+     "flareTop": 0.5
+    },
+    {
+     "type": "gown",
+     "col": "#121014",
+     "neck": "crew",
+     "neckDepth": 0.0,
+     "off": 0.013,
+     "bottom": 0.2,
+     "flare": 0.07,
+     "flareTop": 0.72,
+     "openFront": [
+      0.28,
+      0.42
+     ],
+     "sleeve": {
+      "len": 0.92,
+      "flare": 0.03
+     },
+     "sheen": 0.6,
+     "sheenCol": "#6a6070",
+     "rough": 0.7
+    },
+    {
+     "type": "bands"
+    },
+    {
+     "type": "shoes",
+     "style": "flats",
+     "col": "#151214"
+    }
+   ]
+  }
+ ],
+ "hairMargin": 0.006
+}

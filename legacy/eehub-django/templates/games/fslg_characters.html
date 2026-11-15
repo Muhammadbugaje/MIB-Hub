@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Characters · {{ cfg.gameName }} · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}"><link rel="stylesheet" href="{% static 'css/fslg-admin.css' %}">{% endblock %}
+{% block content %}
+<div class="gs fa">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>{{ cfg.gameName }}: characters</h1>
+  </header>
+  {% include "games/_settings_nav.html" with at="fslg_chars" %}
+  <p class="gs-lead">Every person in the game: the campus people and the story cast. Change how they look, how they behave and what they say. Only your changes are stored; <b>Reset</b> brings back the game's own version. Players get the changes the next time the game starts (open games pick them up within two minutes). Edited lines are marked <b>needs re-record</b> in the voice script.</p>
+  <div class="fa-cols">
+    <aside class="gs-card fa-list" aria-label="People">
+      <div class="fa-filters">
+        <label class="gs-field">Search <input class="gs-input gs-input--plain" type="search" id="fa-q" placeholder="Name, role or a line they say" autocomplete="off"></label>
+        <label class="gs-field">Role <select id="fa-kind"><option value="">Everybody</option><option value="student">Students</option><option value="staff">Staff</option><option value="trader">Traders and town</option><option value="family">Family</option><option value="story">Story cast</option><option value="edited">Changed by you</option></select></label>
+      </div>
+      <p class="fa-count" id="fa-count" aria-live="polite">Loading the game's people…</p>
+      <ul class="fa-people" id="fa-people"></ul>
+    </aside>
+    <section class="gs-card fa-edit" id="fa-edit" aria-live="polite"><p>Pick a person on the left.</p></section>
+  </div>
+  <template id="fa-voice-roles">{% for r in voice_roles %}<option value="{{ r }}">{{ r }}</option>{% endfor %}</template>
+</div>
+{% include "games/_fslg_admin_head.html" %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Class announcement{% endblock %}
+{% block page_title %}Class announcement{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+<a class="acc-back" href="{% url 'access:classes' %}">{% icon "arrow-left" 15 %} Classes</a>
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "megaphone" 14 %} Broadcast</span>
+  <h1 class="ee-page-header__title">Send an announcement or reminder</h1>
+  <p class="ee-page-header__description">It reaches every student of one class, or every student registered on one course, in their notifications. Students cannot reply here, and you do not join any chat.</p></div>
+  <div class="ee-page-header__actions"><a class="btn btn-ghost" href="{% url 'access:how' %}#classes">{% icon "life-buoy" 16 %} How it works</a></div>
+</header>
+<form method="post" class="ee-form" novalidate data-broadcast-form>{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{% icon "circle-alert" 18 %}<div>{{ form.non_field_errors }}</div></div>{% endif %}
+  {% if preview %}<div class="alert alert-warn r7a-preview" role="status">{% icon "send" 18 %}<div><b>{{ preview.count }} student{{ preview.count|pluralize }} of {{ preview.target }} will get this.</b> Check the text below, then send.</div></div>
+  <input type="hidden" name="confirm" value="1">{% endif %}
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "users-round" 17 %} 1. To whom</h2></div>
+    <div class="acc-choice">{% for radio in form.audience %}<label class="acc-choice__opt">{{ radio.tag }}<span><b>{{ radio.choice_label }}</b><small>{% if radio.data.value == "level" %}Every active student of the level{% else %}Students registered on one course this semester{% endif %}</small></span></label>{% endfor %}</div>
+    <div data-audience="level">{% include "access/_field.html" with f=form.level %}</div>
+    <div data-audience="offering">{% if has_offerings %}{% include "access/_field.html" with f=form.offering %}{% else %}<p class="acc-note">{% icon "info" 15 %} No courses are offered this semester yet.</p>{% endif %}</div>
+  </section>
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "pencil" 17 %} 2. Message</h2></div>
+    <div class="ee-form-grid">{% include "access/_field.html" with f=form.kind %}{% include "access/_field.html" with f=form.title %}</div>
+    {% include "access/_field.html" with f=form.body %}
+  </section>
+  <div class="form-actions btn-group"><button type="submit" class="btn btn-primary btn-lg">{% icon "send" 16 %} {% if preview %}Send to {{ preview.count }}{% else %}Check and send{% endif %}</button><a class="btn btn-ghost" href="{% url 'access:classes' %}">Cancel</a></div>
+</form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access_r7.js' %}" defer></script>{% endblock %}

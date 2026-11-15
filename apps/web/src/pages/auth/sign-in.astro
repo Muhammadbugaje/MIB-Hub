@@ -1,0 +1,61 @@
+---
+/**
+ * Sign in with email + password. A plain HTML form: it posts back to this
+ * page, which asks Better Auth to sign in and then redirects with the
+ * session cookie. Works without JavaScript.
+ */
+import Alert from "../../components/Alert.astro";
+import Field from "../../components/Field.astro";
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import { auth, authErrorMessage, redirectWithCookies } from "../../lib/auth.ts";
+import { repos } from "../../lib/db.ts";
+import { safeNext } from "../../lib/guard.ts";
+
+const next = safeNext(Astro.url.searchParams.get("next"), "/account/profile");
+if (Astro.locals.viewer.user) return Astro.redirect(next);
+
+let error = "";
+let email = "";
+const reset = Astro.url.searchParams.get("reset") === "done";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  email = String(form.get("email") ?? "").trim();
+  const password = String(form.get("password") ?? "");
+  const remember = form.get("remember") === "on";
+
+  const existing = email ? await repos.users.findByEmail(email) : undefined;
+  if (!email || !password) {
+    error = "Enter your email and password.";
+  } else if (existing?.banned) {
+    error = "This account has been suspended. Contact the site owner if you think this is a mistake.";
+  } else {
+    const res = await auth.api.signInEmail({
+      body: { email, password, rememberMe: remember },
+      headers: Astro.request.headers,
+      asResponse: true,
+    });
+    if (res.ok) return redirectWithCookies(safeNext(String(form.get("next") ?? ""), next), res);
+    error = await authErrorMessage(res);
+  }
+  Astro.response.status = 400;
+}
+---
+
+<AuthLayout title="Sign in" headline="Welcome back.">
+  <h1>Sign in</h1>
+  <p class="lead">Pick up where you left off.</p>
+  {reset && <Alert tone="success">Your password was changed. Sign in with the new one.</Alert>}
+  {error && <Alert tone="danger">{error}</Alert>}
+  <form class="form" method="post" novalidate style="margin-top: var(--space-4);">
+    <input type="hidden" name="next" value={next} />
+    <Field name="email" label="Email" type="email" autocomplete="email" value={email} required autofocus />
+    <Field name="password" label="Password" type="password" autocomplete="current-password" required />
+    <div class="auth__row">
+      <label class="checkbox"><input type="checkbox" name="remember" checked /> Keep me signed in</label>
+      <a href="/auth/forgot-password">Forgot password?</a>
+    </div>
+    <button class="btn btn--primary btn--lg btn--block" type="submit">Sign in</button>
+  </form>
+  <p class="auth__switch">New here? <a href={`/auth/register?next=${encodeURIComponent(next)}`}>Create an account</a></p>
+</AuthLayout>

@@ -153,6 +153,7 @@ Every one of their lines is a **draft for the real person to change**; their voi
 | M19 The Vice-Chancellor's Cup | Finds the guest-player rule (with Nusaiba) | Fitness coach on the bench | |
 | M26 Grand Opening | | | Starts a dance on the one-way escalator |
 | M27 Plug and Play | | | The third bargaining round |
+| M28 Okada Diploma | | Order three's customer (a visiting team's keeper); races your okada to the gate on foot | |
 | M30 Meter Reader | Talks a guard out of noticing you | | |
 | M31 Point of Order | Coaches you in the law library | | |
 | M37 Scout in the Stands | | Out-runs the goat | |
@@ -160,6 +161,7 @@ Every one of their lines is a **draft for the real person to change**; their voi
 | M42 Night Shift | | The diesel relay | |
 | M43 The Plan | Reads the by-laws; defines "trespass" | Scouts the mall on a jog | |
 | M46 The Hearing | Sits behind Nusaiba; one "Objection." | | |
+| M47 Two Papers, One Day | A judge at the robotics qualifier; gives the robot its one perfect mark | Clears the path for the okada through the change-over crowd | |
 
 ### 6.2 Planned appearances, Years 3–5 (guidance for the second writer; change the detail, keep the spread)
 | Mission | Who | Suggested help | Suggested fallback |
@@ -199,6 +201,7 @@ Every one of their lines is a **draft for the real person to change**; their voi
 3. **Looks (from the owner's reference photos; cartoon style, modest outfits).**
    - **Jiya:** tall and slim; long wavy dark-brown hair with caramel ends; sunglasses pushed up on her head. Outfits: smart-casual with a gamer hoodie; a red football cap and jersey (she loves football); a law graduation gown for court scenes. She also loves **chess** (cameo J4: she crushes Shamsu).
    - **Taty:** long straight black hair; a black choker. Outfits: gym wear; a floral dress with white sneakers; a black romantic dress for dinners; rock-concert energy (she throws the horns sign when she wins). Cats and games.
+   - **Dr. Zainab:** very fair-skinned; her friends' affectionate nickname for her is **"Snow White"** (used by friends in a few warm barks, never mocking, never by patients). Hijab styles, scrubs or smart modest outfits, a cat keychain, a pen torch, tired eyes and a perfect eyebrow. No text may describe her as dark or deep-skinned.
 4. **Voices:** special characters are voiced by the real people. Their voices are locked to them. Only the owner's (MIB's) voice may be reused. The character editor's free voices are for the custom fresher only.
 
 ## 7. Checklist before you save a mission

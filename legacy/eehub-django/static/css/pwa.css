@@ -1,0 +1,116 @@
+/* EE Hub — pwa.css (Round 5G): update bar, iOS install sheet, offline page. */
+
+/* ---- "A new version of EE Hub is ready" ------------------------------------------- */
+.ee-update {
+  position: fixed; z-index: 2000; left: 12px; right: 12px; margin: 0 auto; width: max-content; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(140%); opacity: 0;
+  display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 24px); box-sizing: border-box;
+  padding: 8px 8px 8px 14px; border-radius: 16px;
+  background: var(--brand-800, #0a2b20); color: #eafff4;
+  border: 1px solid color-mix(in srgb, var(--gold-400, #d9be6e) 45%, transparent);
+  box-shadow: 0 18px 48px -12px rgba(0, 0, 0, .45);
+  font-size: 14px; font-weight: 600;
+  transition: transform .3s var(--ease-out, ease-out), opacity .3s;
+}
+.ee-update.is-in { transform: none; opacity: 1; }
+.ee-update__ic { color: var(--gold-300, #e6d39a); display: grid; place-items: center; flex: none; }
+.ee-update__text { min-width: 0; flex: 1 1 auto; line-height: 1.3; }
+.ee-update__go {
+  flex: none; height: 36px; padding: 0 14px; border-radius: 11px; border: 0; cursor: pointer;
+  font: inherit; font-weight: 700; color: #1d1503;
+  background: linear-gradient(135deg, #f0dc9c, var(--gold-500, #c8a951) 60%, #b8963d);
+}
+.ee-update__go:disabled { opacity: .7; cursor: progress; }
+.ee-update__x {
+  flex: none; width: 32px; height: 32px; border-radius: 10px; border: 0; cursor: pointer;
+  background: transparent; color: inherit; font-size: 20px; line-height: 1; opacity: .75;
+}
+.ee-update__x:hover { opacity: 1; background: rgba(255, 255, 255, .08); }
+.ee-update button:focus-visible { outline: 2px solid var(--gold-300, #e6d39a); outline-offset: 2px; }
+/* above the phone tab bar */
+@media (max-width: 768px) { .ee-app .ee-update { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); } }
+@media (prefers-reduced-motion: reduce) { .ee-update { transition: none; } }
+:root[data-motion="reduce"] .ee-update { transition: none; }
+
+/* ---- Install buttons (hidden until the browser offers installation) ----------------- */
+[data-pwa-install][hidden] { display: none !important; }
+button.app-nav-item[data-pwa-install] { width: 100%; border: 0; background: none; font: inherit; text-align: left; cursor: pointer; }
+.is-standalone [data-pwa-install] { display: none !important; }
+
+/* ---- iPhone / iPad: "Add to Home Screen" sheet ------------------------------------- */
+.ee-install-sheet { position: fixed; inset: 0; z-index: 2100; display: none; align-items: flex-end; justify-content: center;
+  background: rgba(2, 8, 6, .55); padding: 16px; }
+.ee-install-sheet.is-open { display: flex; }
+.ee-install-sheet__card { width: min(420px, 100%); background: var(--surface, #fff); color: var(--text, #102018);
+  border-radius: 22px; padding: 22px; box-shadow: 0 30px 80px rgba(0, 0, 0, .35); text-align: center; }
+.ee-install-sheet__card img { border-radius: 14px; margin: 0 auto 8px; display: block; }
+.ee-install-sheet__card h2 { font-family: var(--font-display); font-size: 20px; margin: 0 0 10px; }
+.ee-install-sheet__card ol { text-align: left; margin: 0 0 16px; padding-left: 22px; line-height: 1.6; font-size: 14.5px; }
+.ee-install-sheet__card .btn { width: 100%; }
+
+/* ---- Offline page ------------------------------------------------------------------ */
+.ee-offline { min-height: 100vh; min-height: 100dvh; display: grid; place-items: center; padding: 24px 16px;
+  background:
+    radial-gradient(900px 500px at 15% -10%, color-mix(in srgb, var(--brand-500, #1a6b45) 28%, transparent), transparent 60%),
+    radial-gradient(700px 420px at 110% 110%, color-mix(in srgb, var(--volt-500, #13c4dc) 16%, transparent), transparent 60%),
+    var(--bg, #f5f2ed);
+  color: var(--text, #102018); }
+.ee-offline__card { width: min(560px, 100%); }
+.ee-offline__brand { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.ee-offline__brand b { display: block; font-family: var(--font-display); font-size: 17px; }
+.ee-offline__brand small { color: var(--text-muted); font-size: 12.5px; }
+.ee-offline__hero { position: relative; overflow: hidden; border-radius: 24px; padding: 26px 24px; color: #eafff4;
+  background: linear-gradient(140deg, var(--brand-600, #14563a), var(--brand-900, #051a13)); box-shadow: 0 24px 60px -24px rgba(5, 26, 19, .6); }
+.ee-offline__hero h1 { font-family: var(--font-display); font-size: clamp(24px, 6vw, 30px); line-height: 1.2; margin: 10px 0 6px; color: #fff; }
+.ee-offline__hero p { margin: 0; color: #cfe7da; font-size: 14.5px; line-height: 1.6; max-width: 40ch; }
+.ee-offline__wave { position: absolute; right: -10px; top: 0; width: 60%; height: 100%; opacity: .5; pointer-events: none; }
+.ee-offline__pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px;
+  background: rgba(240, 163, 94, .18); color: #ffd7b0; border: 1px solid rgba(240, 163, 94, .35); }
+.ee-offline__pill.is-online { background: rgba(126, 224, 176, .18); color: #c8f5df; border-color: rgba(126, 224, 176, .4); }
+.ee-offline__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; position: relative; }
+.ee-offline__section { margin-top: 18px; background: var(--surface, #fff); border: 1px solid var(--border); border-radius: 20px; padding: 18px; }
+.ee-offline__section h2 { font-family: var(--font-display); font-size: 16px; margin: 0 0 10px; display: flex; align-items: center; gap: 8px; }
+.ee-offline__section p { margin: 0; font-size: 14px; color: var(--text-muted); }
+.ee-offline__today { display: grid; gap: 4px; padding: 14px; border-radius: 14px; background: var(--primary-subtle); color: var(--primary-subtle-fg); }
+.ee-offline__today small { font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.ee-offline__today strong { font-size: 17px; }
+.ee-offline__legend { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.ee-offline__legend li { font-size: 12.5px; padding: 4px 10px; border-radius: 999px; background: var(--surface-sunken, #eee); color: var(--text); }
+.ee-offline__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ee-offline__list a { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 12px;
+  color: var(--text); text-decoration: none; border: 1px solid var(--border); }
+.ee-offline__list a:hover, .ee-offline__list a:focus-visible { border-color: var(--border-strong); background: var(--primary-subtle); }
+.ee-offline__list span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; font-size: 14px; }
+.ee-offline__list small { flex: none; color: var(--text-muted); font-size: 12px; }
+.ee-offline__foot { margin-top: 16px; font-size: 12.5px; color: var(--text-muted); text-align: center; }
+
+/* ---- E-mail preview page (/core/emails/preview/) ------------------------------------ */
+.em-prev { display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 900px) { .em-prev { grid-template-columns: minmax(0, 1fr); } }
+.em-prev__list { padding: 8px; }
+.em-prev__list ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+.em-prev__item { display: flex; gap: 10px; align-items: center; width: 100%; text-align: left; padding: 10px; border-radius: 12px;
+  border: 1px solid transparent; background: none; color: var(--text); font: inherit; cursor: pointer; }
+.em-prev__item:hover { background: var(--surface-sunken); }
+.em-prev__item.is-active { background: var(--primary-subtle); border-color: color-mix(in srgb, var(--primary) 30%, transparent); }
+.em-prev__item b { display: block; font-size: 14px; }
+.em-prev__item small { color: var(--text-muted); font-size: 12px; }
+.em-prev__ic { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; flex: none; background: var(--surface-sunken); color: var(--primary); }
+.em-prev__view { padding: 16px; min-width: 0; }
+.em-prev__head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.em-prev__head h2 { margin: 2px 0 4px; font-size: 18px; }
+.em-prev__head p { margin: 0; font-size: 13px; }
+.em-prev__tpl { font-size: 12px; color: var(--text-muted); }
+.em-prev__modes { display: flex; flex-wrap: wrap; gap: 6px; align-self: flex-start; }
+.em-prev__modes .is-active { background: var(--primary); color: var(--primary-fg, #fff); border-color: transparent; }
+.em-prev__frame-wrap { background: var(--surface-sunken); border-radius: 14px; padding: 10px; overflow: hidden; }
+.em-prev__frame { display: block; width: 100%; height: 760px; border: 0; border-radius: 10px; background: #fff; margin: 0 auto; transition: width .25s; }
+.em-prev__frame.is-phone { width: 375px; max-width: 100%; }
+.ee-offline__retry { color: #1d1503; border: 0; background: linear-gradient(135deg, #f0dc9c, var(--gold-500, #c8a951) 60%, #b8963d); font-weight: 700; }
+.ee-offline__retry:hover { filter: brightness(1.05); color: #1d1503; }
+
+/* R7J (D6): the card column never grows past the phone width */
+.ee-offline { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+.ee-offline__card, .ee-offline__list, .ee-offline__legend { min-width: 0; max-width: 100%; }
+.ee-offline__list { grid-template-columns: minmax(0, 1fr); }
+.ee-offline__list li, .ee-offline__list a { min-width: 0; }

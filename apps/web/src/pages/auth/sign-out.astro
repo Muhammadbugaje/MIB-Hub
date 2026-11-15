@@ -1,0 +1,24 @@
+---
+/**
+ * Sign out. Only a POST signs you out (so a link or image on another site
+ * cannot sign you out); a GET shows a confirm button.
+ */
+import AuthLayout from "../../layouts/AuthLayout.astro";
+import { auth, redirectWithCookies } from "../../lib/auth.ts";
+
+if (Astro.request.method === "POST") {
+  if (!Astro.locals.viewer.user) return Astro.redirect("/", 303);
+  const res = await auth.api.signOut({ headers: Astro.request.headers, asResponse: true });
+  return redirectWithCookies("/", res);
+}
+if (!Astro.locals.viewer.user) return Astro.redirect("/");
+---
+
+<AuthLayout title="Sign out" headline="See you soon.">
+  <h1>Sign out?</h1>
+  <p class="lead">You are signed in as {Astro.locals.viewer.user.email}.</p>
+  <form method="post" class="form">
+    <button class="btn btn--primary btn--lg btn--block" type="submit">Sign out</button>
+    <a class="btn btn--ghost btn--block" href="/account/profile">Stay signed in</a>
+  </form>
+</AuthLayout>

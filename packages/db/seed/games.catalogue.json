@@ -1,0 +1,642 @@
+[
+  {
+    "slug": "momentum-cup",
+    "title": "Momentum Cup",
+    "description": "Big-headed scientists play head-football in seven arenas, with superpowers, a roaring crowd and a six-round cup against Count Entropy.",
+    "category": "versus",
+    "level": 100,
+    "accent": "#3dd68c",
+    "entry": "kickoff",
+    "sort": 10,
+    "meta": {
+      "genre": "Scientist head-football",
+      "howToPlay": "Read the ball's arc, get under it, dash, pick the kick angle and fire your superpower at the right moment.",
+      "modes": [
+        "Career: 5 leagues and the Legends ladder",
+        "Classic six-round cup",
+        "Quick match",
+        "Two players, one device"
+      ],
+      "tags": [
+        "quick",
+        "versus",
+        "physics"
+      ],
+      "controls": "A/D move · double-tap dash · W jump · S/Q kick · E power",
+      "sessionLength": "3–5 min a match",
+      "topics": [
+        "Motion in 2D: projectiles",
+        "Collisions",
+        "Force and Newton's laws"
+      ],
+      "courses": [
+        "PHYS 111"
+      ],
+      "dependencies": [
+        "kickoff-career"
+      ]
+    }
+  },
+  {
+    "slug": "impulse-arena",
+    "title": "Impulse Arena",
+    "description": "One-on-one lab duels where every hit is an impulse and heavier fighters really are harder to shove.",
+    "category": "versus",
+    "level": 100,
+    "accent": "#f6c445",
+    "entry": "clash",
+    "sort": 20,
+    "meta": {
+      "genre": "Scientist arena fighter",
+      "howToPlay": "Read your opponent, land an impulse, watch Δv = J/m decide the knockback, counter.",
+      "modes": [
+        "Circuit story ladder",
+        "Survival",
+        "Time attack",
+        "Combo trials",
+        "Versus CPU",
+        "Two players, one device",
+        "Training room"
+      ],
+      "tags": [
+        "quick",
+        "versus",
+        "physics"
+      ],
+      "controls": "WASD move · J/U punch · K/I kick · L block · O special",
+      "sessionLength": "2–4 min a duel",
+      "topics": [
+        "Force and Newton's laws",
+        "Impulse and momentum",
+        "Work, energy and power"
+      ],
+      "courses": [
+        "PHYS 111"
+      ],
+      "dependencies": [
+        "clashdata",
+        "clashcareer"
+      ]
+    }
+  },
+  {
+    "slug": "volt-city",
+    "title": "Volt City",
+    "description": "Walk a blacked-out city and restore each district by steering a charge with fields you build.",
+    "category": "open-world",
+    "level": 100,
+    "accent": "#7ef0ff",
+    "entry": "fieldbound",
+    "sort": 30,
+    "meta": {
+      "genre": "Open-world lite: charge puzzles",
+      "howToPlay": "Explore, find a dark district, place charges, release, watch superposition steer the probe, restore power.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "physics"
+      ],
+      "controls": "WASD walk · E interact",
+      "sessionLength": "5–10 min a district",
+      "topics": [
+        "Electrostatics",
+        "Coulomb's law; superposition",
+        "Electric field and field lines"
+      ],
+      "courses": [
+        "PHYS 122"
+      ],
+      "dependencies": [
+        "fieldsim",
+        "voltworld",
+        "voltlab"
+      ]
+    }
+  },
+  {
+    "slug": "kinetic-kingdom",
+    "title": "Kinetic Kingdom",
+    "description": "Run, jump and stomp through seven worlds of Count Entropy's minions (41 levels), earning new abilities from every boss, with the physics of every jump on screen.",
+    "category": "arcade",
+    "level": 100,
+    "accent": "#4ade80",
+    "entry": "platformer",
+    "sort": 40,
+    "meta": {
+      "genre": "Side-scrolling platformer",
+      "howToPlay": "Read the jump, run, leap, stomp, find the secrets, beat each world's boss, race your own ghost.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "controls": "←/→ move · Space jump · Shift run / air dash · ↓ pound",
+      "sessionLength": "3–5 min a level",
+      "topics": [
+        "Kinematics: jumps as projectiles",
+        "Friction f = μN",
+        "Work–energy and springs",
+        "Circular motion",
+        "Net force ΣF = ma",
+        "Weight w = mg"
+      ],
+      "courses": [
+        "PHYS 111"
+      ],
+      "dependencies": [
+        "platformer-levels"
+      ]
+    }
+  },
+  {
+    "slug": "wavefront",
+    "title": "Wavefront",
+    "description": "Fight Count Entropy's machines across eight stages with weapons made of light: every one follows a real wave law.",
+    "category": "versus",
+    "level": 100,
+    "accent": "#7ef0ff",
+    "entry": "shooter",
+    "sort": 50,
+    "meta": {
+      "genre": "Run-and-gun wave shooter",
+      "howToPlay": "Run and aim, tune your frequency, pick the right wave weapon, cross your polariser to his beams, beat the boss.",
+      "modes": [
+        "Single player",
+        "Two players, one device"
+      ],
+      "tags": [
+        "physics",
+        "versus"
+      ],
+      "controls": "A/D run · W/S aim · Space jump · J fire · E/Q frequency · I shield",
+      "sessionLength": "3–6 min a stage",
+      "topics": [
+        "Wave nature of light, c = fλ, E = hf",
+        "Huygens' principle and diffraction gratings, d sinθ = nλ",
+        "Young's double slit, y = nλL/d",
+        "Polarisation and Malus's law, I = I₀cos²θ",
+        "Electromagnetic waves and pulses"
+      ],
+      "courses": [
+        "PHYS 124",
+        "PHYS 122"
+      ],
+      "dependencies": [
+        "shooterdata"
+      ]
+    }
+  },
+  {
+    "slug": "samaru-days",
+    "title": "Freshers School Life (Classic)",
+    "description": "Your first year at a beautiful school: classes, MACD at Shinkafi, okada, friends, races, seven gardens, and the mystery of who keeps taking the light.",
+    "category": "open-world",
+    "level": 100,
+    "accent": "#f59e0b",
+    "entry": "samaru",
+    "sort": 60,
+    "meta": {
+      "genre": "3D open-world school life",
+      "howToPlay": "Explore, eat and rest, attend class to level up, earn licences from skateboard to aircraft, follow the story, then chase the long goals.",
+      "modes": [
+        "Story",
+        "Free roam",
+        "Up to 6 players on the same Wi-Fi"
+      ],
+      "tags": [
+        "open",
+        "versus"
+      ],
+      "controls": "WASD move · mouse look · Shift run · E do · J hit · Q phone",
+      "sessionLength": "As long as you like",
+      "topics": [
+        "Motion in 2D: momentum, drag and grip",
+        "Campus general knowledge and first-year revision questions"
+      ],
+      "courses": [
+        "PHYS 111",
+        "ENGG 102"
+      ],
+      "dependencies": [
+        "fslg-map",
+        "samaru-sim",
+        "samaru-data",
+        "fslg.config",
+        "fslg-story-y1",
+        "fslg-story-y2",
+        "fslg-story-y3",
+        "fslg-story-y4",
+        "fslg-story-y5",
+        "fslg-story-side",
+        "fslg-story-coop",
+        "fslg-story-choices",
+        "fslg-story-likes",
+        "samaru-draw",
+        "samaru-core",
+        "samaru-story",
+        "samaru-overrides",
+        "samaru-intro",
+        "samaru-3d",
+        "samaru-anim",
+        "samaru-wardrobe",
+        "samaru-veh",
+        "samaru-fx",
+        "samaru-touch",
+        "samaru-settings",
+        "samaru-guide",
+        "samaru-moment",
+        "samaru-life",
+        "samaru-interior",
+        "samaru-mall",
+        "samaru-friends",
+        "samaru-brawl",
+        "samaru-jobs",
+        "samaru-crowd",
+        "samaru-city",
+        "samaru-ui",
+        "samaru-inv",
+        "samaru-phone",
+        "samaru-texts",
+        "samaru-travel",
+        "samaru-wild",
+        "samaru-map",
+        "samaru-voice",
+        "samaru-minigames",
+        "samaru-audio",
+        "samaru-water",
+        "samaru-kit",
+        "samaru-switch",
+        "samaru-conseq",
+        "samaru-romance",
+        "samaru-prosper",
+        "samaru-cook",
+        "samaru-workshop",
+        "samaru-maker",
+        "samaru-weather",
+        "samaru-worldlife",
+        "samaru-saves"
+      ]
+    }
+  },
+  {
+    "slug": "motorworks",
+    "title": "Motorworks Trails",
+    "description": "Explore a machine workshop; change supply, load and field to make each machine do its job.",
+    "category": "open-world",
+    "level": 300,
+    "accent": "#f6c445",
+    "entry": "motorworks",
+    "sort": 70,
+    "meta": {
+      "genre": "Open-world lite: workshop",
+      "howToPlay": "Explore a bay, test input and load, observe speed and torque, unlock the next bay.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "physics"
+      ],
+      "controls": "Arrows walk · E open · Tab pick control · Q/E turn it",
+      "sessionLength": "3–8 min a bay",
+      "topics": [
+        "Electromechanical energy conversion",
+        "DC machine construction"
+      ],
+      "courses": [
+        "EEEN 309"
+      ],
+      "dependencies": [
+        "motorsim"
+      ]
+    }
+  },
+  {
+    "slug": "storm-map",
+    "title": "Gridkeepers: Storm Map",
+    "description": "After a storm, travel a small network, find faults and restore supply in a safe order.",
+    "category": "open-world",
+    "level": 300,
+    "accent": "#ffd84a",
+    "entry": "stormmap",
+    "sort": 80,
+    "meta": {
+      "genre": "Open-world lite: grid restoration",
+      "howToPlay": "Patrol, diagnose, isolate, restore, keep the lights on.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "puzzle"
+      ],
+      "controls": "Tap to drive · tap a line to switch · E act",
+      "sessionLength": "5–10 min a storm",
+      "topics": [
+        "Electric energy sources",
+        "Transmission and distribution"
+      ],
+      "courses": [
+        "EEEN 327"
+      ],
+      "dependencies": [
+        "gridsim"
+      ]
+    }
+  },
+  {
+    "slug": "induction-dash",
+    "title": "Induction Dash",
+    "description": "Ride a magnet cart through copper coils. Every coil pays out energy, and Lenz's law brakes you for it.",
+    "category": "arcade",
+    "level": 100,
+    "accent": "#ffd86b",
+    "entry": "dash",
+    "sort": 90,
+    "meta": {
+      "genre": "Magnet-cart runner",
+      "howToPlay": "Pick a lane, hit coils at speed, jump crates, dodge drones, bank enough joules.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "quick",
+        "physics"
+      ],
+      "controls": "▲/▼ lane · Space jump",
+      "sessionLength": "2–4 min a run",
+      "topics": [
+        "Electromagnetic induction",
+        "Faraday's and Lenz's laws",
+        "Generator principle e = Blv"
+      ],
+      "courses": [
+        "PHYS 122",
+        "ENGG 205"
+      ],
+      "dependencies": [
+        "inductionsim"
+      ]
+    }
+  },
+  {
+    "slug": "logic-labyrinth",
+    "title": "Logic Labyrinth",
+    "description": "Doors, bridges, lasers and lifts obey the logic you wire. Count Entropy has scrambled all of it.",
+    "category": "puzzle",
+    "level": 300,
+    "accent": "#7ef0ff",
+    "entry": "logic",
+    "sort": 100,
+    "meta": {
+      "genre": "Logic puzzle-platformer",
+      "howToPlay": "Read the lock, flip levers, place gates from a limited box, check the truth table, walk out.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "controls": "A/D walk · E flip · N/G gates",
+      "sessionLength": "3–6 min a room",
+      "topics": [
+        "Number systems and codes",
+        "Boolean algebra & logic gates",
+        "De Morgan; universal gates",
+        "K-maps: SOP and POS",
+        "Adders, MUX and decoders",
+        "Flip-flops and counters"
+      ],
+      "courses": [
+        "EEEN 307",
+        "EEEN 405"
+      ],
+      "dependencies": [
+        "logicsim"
+      ]
+    }
+  },
+  {
+    "slug": "signal-surfer",
+    "title": "Signal Surfer",
+    "description": "Shape amplitude and frequency to ride a signal through a noisy channel to the receiver.",
+    "category": "arcade",
+    "level": 300,
+    "accent": "#7ef0ff",
+    "entry": "surfer",
+    "sort": 110,
+    "meta": {
+      "genre": "Wave arcade",
+      "howToPlay": "Tune, transmit, beat the noise, decode.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "controls": "W/S tune · A/D power · Q/E bit rate",
+      "sessionLength": "3–6 min a channel",
+      "topics": [
+        "Overview of telecommunication systems",
+        "Noise"
+      ],
+      "courses": [
+        "EEEN 342"
+      ],
+      "dependencies": [
+        "labkit",
+        "signalsim"
+      ]
+    }
+  },
+  {
+    "slug": "circuit-forge",
+    "title": "Circuit Forge",
+    "description": "Fix 51 circuits Count Entropy sabotaged by filling every slot from the parts tray. New chapters open at every level, from Ohm's law to op-amps, power factor and fault currents.",
+    "category": "puzzle",
+    "level": 100,
+    "accent": "#e9c46a",
+    "entry": "forge",
+    "sort": 120,
+    "meta": {
+      "genre": "Circuit puzzle, 100 to 500 level",
+      "howToPlay": "Read the goal, pick a part, switch on, read the meters, refine.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "controls": "1–8 parts · Space switch on · H hint",
+      "sessionLength": "3–6 min a circuit",
+      "topics": [
+        "Ohm's law",
+        "Series/parallel resistors",
+        "Kirchhoff's laws",
+        "Network theorems",
+        "RC time constants",
+        "AC reactance and resonance",
+        "Op-amps",
+        "DC machines",
+        "Voltage drop",
+        "Power factor",
+        "Fault analysis"
+      ],
+      "courses": [
+        "PHYS 162",
+        "PHYS 122",
+        "ENGG 205",
+        "EEEN 309",
+        "EEEN 415",
+        "EEEN 527"
+      ],
+      "dependencies": [
+        "circuitsim",
+        "circuit-100"
+      ]
+    }
+  },
+  {
+    "slug": "light-bender",
+    "title": "Light Bender",
+    "description": "45 laser puzzles in seven chapters: turn mirrors and splitters, thread glass, prisms, lenses and colour filters to light Count Entropy's broken receivers. Plus a daily beam and a free optics lab.",
+    "category": "puzzle",
+    "level": 100,
+    "accent": "#ff8080",
+    "entry": "bender",
+    "sort": 130,
+    "meta": {
+      "genre": "Laser-and-mirror puzzle",
+      "howToPlay": "Predict the bounce, turn a mirror, watch the beam, refine, light the receiver.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "quick",
+        "puzzle",
+        "physics"
+      ],
+      "controls": "Q/E turn · N select · H hint",
+      "sessionLength": "2–5 min a level",
+      "topics": [
+        "Reflection: plane mirrors",
+        "Beam splitters",
+        "Refraction, Snell's law",
+        "Critical angle and total internal reflection",
+        "Thin lenses",
+        "Colour filters"
+      ],
+      "courses": [
+        "PHYS 124",
+        "PHYS 162"
+      ],
+      "dependencies": [
+        "opticsim",
+        "bender-levels"
+      ]
+    }
+  },
+  {
+    "slug": "maglev-rescue",
+    "title": "Maglev Rescue",
+    "description": "Hold a levitating pod steady by tuning coil current against gravity.",
+    "category": "arcade",
+    "level": 300,
+    "accent": "#a78bfa",
+    "entry": "maglev",
+    "sort": 140,
+    "meta": {
+      "genre": "Magnetic-control challenge",
+      "howToPlay": "Sense the gap, adjust current, settle, deliver.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "controls": "Tune gains · W/S gap · T retune",
+      "sessionLength": "3–6 min a line",
+      "topics": [
+        "Time-varying fields",
+        "Magnetic force"
+      ],
+      "courses": [
+        "EEEN 320"
+      ],
+      "dependencies": [
+        "labkit",
+        "maglevsim"
+      ]
+    }
+  },
+  {
+    "slug": "algorithm-garage",
+    "title": "Algorithm Garage",
+    "description": "Write short MATLAB-style instruction lists that drive a workshop robot.",
+    "category": "puzzle",
+    "level": 300,
+    "accent": "#7ef0ff",
+    "entry": "garage",
+    "sort": 150,
+    "meta": {
+      "genre": "Programming robot challenge",
+      "howToPlay": "Plan steps, run, debug, optimise.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "controls": "C code · R run · F fast replay",
+      "sessionLength": "3–8 min a job",
+      "topics": [
+        "Getting started",
+        "Arrays",
+        "Control flow"
+      ],
+      "courses": [
+        "EEEN 316"
+      ],
+      "dependencies": [
+        "js/matlab/mlab",
+        "js/matlab/mlab-lib",
+        "garagesim"
+      ]
+    }
+  },
+  {
+    "slug": "drive-room",
+    "title": "Drive Room",
+    "description": "Pick converter and control settings so a drive meets a load's speed profile.",
+    "category": "arcade",
+    "level": 500,
+    "accent": "#ffb347",
+    "entry": "driveroom",
+    "sort": 160,
+    "meta": {
+      "genre": "Motor-control sim",
+      "howToPlay": "Read the load, set the drive, run, tune.",
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "controls": "Pick a converter · tune · Q/E Kp",
+      "sessionLength": "3–6 min a job",
+      "topics": [
+        "Introduction to electric drives"
+      ],
+      "courses": [
+        "EEEN 524"
+      ],
+      "dependencies": [
+        "labkit",
+        "drivesim"
+      ]
+    }
+  }
+]

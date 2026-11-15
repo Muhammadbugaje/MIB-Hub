@@ -1,0 +1,241 @@
+{% load static ee_tags %}<!DOCTYPE html>
+<html lang="en" data-view="auto">
+<head>
+  {% include "partials/head.html" %}
+  <meta name="description" content="{% block meta_description %}{{ site_info.department_name }}, {{ site_info.organisation_name }}. {{ site_info.tagline }}{% endblock %}">
+  {# Round 6: every public title starts with the department ("Electrical Engineering · ABU Zaria | News"). #}
+  <title>{% block full_title %}{{ site_info.department_name|cut:"Department of " }} · {% setting "site.organisation_short" "ABU Zaria" %} | {% block title %}Home{% endblock %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/apple.css' %}">
+  <link rel="stylesheet" href="{% static 'css/polish.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ee.css' %}">
+  <link rel="stylesheet" href="{% static 'css/public.css' %}">
+  <link rel="stylesheet" href="{% static 'css/fx.css' %}">
+  {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/a11y.css' %}">
+  <link rel="stylesheet" href="{% static 'css/standards.css' %}">
+  <link rel="stylesheet" href="{% static 'css/sweep.css' %}">
+</head>
+{% setting "appearance.motion" "full" as fx_motion %}{% setting "appearance.text_animations" True as fx_text %}{% setting "appearance.scroll_animations" True as fx_scroll %}
+<body class="public-body pub {% block body_class %}{% endblock %}{% if fx_motion == "off" %} is-calm{% endif %}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' data-fx-motion="{{ fx_motion|default:'full' }}" data-fx-text="{% if fx_text %}1{% else %}0{% endif %}" data-fx-scroll="{% if fx_scroll %}1{% else %}0{% endif %}" data-fx-src="{% static 'js/fx/scenes.js' %}">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  {% if request.is_impersonating %}{% include "partials/impersonation_banner.html" %}{% endif %}
+  {% setting "site.banner_message" "" as banner %}{% if banner %}<div class="ee-site-banner ee-site-banner--{% setting 'site.banner_tone' 'info' %}" role="status">{% icon "megaphone" 16 %}<span>{{ banner }}</span></div>{% endif %}
+  {% setting "brand.show_abu_crest" True as show_crest %}
+
+  {# ---------------------------------------------------------------- header #}
+  <header class="pub-nav {% block nav_class %}{% endblock %}" data-pub-nav>
+    <div class="pub-nav__bar">
+      <a class="pub-brand" href="{% url 'content:home' %}">
+        {# Round 6 lockup: ABU crest · the big EE mark · "Electrical Engineering" over "Ahmadu Bello University" #}
+        {% if show_crest %}<img class="pub-brand__crest pub-brand__crest--light" src="{% static 'img/brand/abu-crest.svg' %}" alt="" width="44" height="44"><img class="pub-brand__crest pub-brand__crest--white" src="{% static 'img/brand/abu-crest-white.svg' %}" alt="" width="44" height="44"><span class="pub-brand__rule" aria-hidden="true"></span>{% endif %}
+        <span class="pub-brand__ee">{% brand_logo "primary" 52 %}</span>
+        <span class="pub-brand__lock"><b>{{ site_info.department_name|cut:"Department of " }}</b><small>{{ site_info.organisation_name|cut:", Zaria" }}<span class="pub-brand__city">, Zaria</span></small></span>
+      </a>
+
+      {% with about_pages=public_nav_pages|get_item:"about" academic_pages=public_nav_pages|get_item:"academics" student_pages=public_nav_pages|get_item:"students" research_pages=public_nav_pages|get_item:"research" community_pages=public_nav_pages|get_item:"community" %}
+      <nav class="pub-links" aria-label="Main">
+        <a class="pub-link {% nav_active 'content:home' %}" href="{% url 'content:home' %}">Home</a>
+        <div class="pub-menu">
+          <button class="pub-link" type="button" aria-expanded="false" data-pub-menu>About {% icon "chevron-down" 14 %}</button>
+          <div class="pub-menu__panel">
+            {% for p in about_pages %}<a href="{{ p.get_absolute_url }}">{% icon p.icon 16 %}<span>{{ p.title }}</span></a>{% endfor %}
+            {% if not about_pages %}<a href="{% url 'content:history' %}">{% icon "landmark" 16 %}<span>Our history</span></a>{% endif %}
+            <a href="{% url 'content:hods' %}">{% icon "crown" 16 %}<span>Heads of Department</span></a>
+            <a href="{% url 'content:staff' %}">{% icon "users" 16 %}<span>People</span></a>
+            <a href="{% url 'content:history' %}">{% icon "milestone" 16 %}<span>Milestones</span></a>
+          </div>
+        </div>
+        <div class="pub-menu">
+          <button class="pub-link" type="button" aria-expanded="false" data-pub-menu>Academics {% icon "chevron-down" 14 %}</button>
+          <div class="pub-menu__panel">
+            <a href="{% url 'content:programmes' %}">{% icon "graduation-cap" 16 %}<span>Programmes</span></a>
+            {% for p in academic_pages %}<a href="{{ p.get_absolute_url }}">{% icon p.icon 16 %}<span>{{ p.title }}</span></a>{% endfor %}
+            {% for p in research_pages %}<a href="{{ p.get_absolute_url }}">{% icon p.icon 16 %}<span>{{ p.title }}</span></a>{% endfor %}
+            {% for t in public_nav_menu.academics %}<a href="{{ t.url }}"{% if t.active %} aria-current="page"{% endif %}>{% icon t.icon 16 %}<span>{{ t.label }}</span></a>{% endfor %}
+          </div>
+        </div>
+        <div class="pub-menu">
+          <button class="pub-link" type="button" aria-expanded="false" data-pub-menu>Students {% icon "chevron-down" 14 %}</button>
+          <div class="pub-menu__panel">
+            {% for p in student_pages %}<a href="{{ p.get_absolute_url }}">{% icon p.icon 16 %}<span>{{ p.title }}</span></a>{% endfor %}
+            {% for t in public_nav_menu.students %}<a href="{{ t.url }}">{% icon t.icon 16 %}<span>{{ t.label }}</span></a>{% endfor %}
+            <a href="{% url 'content:guides' %}">{% icon "life-buoy" 16 %}<span>How-to guides</span></a>
+          </div>
+        </div>
+        <div class="pub-menu">
+          <button class="pub-link" type="button" aria-expanded="false" data-pub-menu>Community {% icon "chevron-down" 14 %}</button>
+          <div class="pub-menu__panel">
+            <a href="{% url 'content:news' %}">{% icon "newspaper" 16 %}<span>News</span></a>
+            <a href="{% url 'content:events' %}">{% icon "calendar-days" 16 %}<span>Events</span></a>
+            <a href="{% url 'content:gallery' %}">{% icon "images" 16 %}<span>Gallery</span></a>
+            {% for p in community_pages %}<a href="{{ p.get_absolute_url }}">{% icon p.icon 16 %}<span>{{ p.title }}</span></a>{% endfor %}
+            {% for t in public_nav_menu.community %}<a href="{{ t.url }}"{% if t.active %} aria-current="page"{% endif %}>{% icon t.icon 16 %}<span>{{ t.label }}</span></a>{% endfor %}
+          </div>
+        </div>
+        {% for t in public_nav_top %}<a class="pub-link{% if t.active %} active{% endif %}" href="{{ t.url }}"{% if t.active %} aria-current="page"{% endif %}>{{ t.label }}</a>{% endfor %}
+        <a class="pub-link {% nav_active 'content:contact' %}" href="{% url 'content:contact' %}">Contact</a>
+      </nav>
+
+      <div class="pub-actions">
+        {% load ee_shell %}{% optional_include "assistant/ask_button.html" %}
+        <button class="theme-toggle pub-icon-btn" type="button" aria-label="Switch light or dark theme" aria-pressed="false" data-theme-toggle>
+          {% icon "sun" 18 "icon-sun" %}{% icon "moon" 18 "icon-moon" %}
+        </button>
+        {% if request.user.is_authenticated %}
+          <a class="pub-signin" href="{% url 'dashboards:home' %}">{% icon "layout-dashboard" 16 %}<span>Dashboard</span></a>
+        {% else %}
+          <a class="pub-signin" href="{% url 'accounts:login' %}" data-signin-modal>{% icon "log-in" 16 %}<span>Sign in</span></a>
+        {% endif %}
+        <button class="pub-icon-btn pub-burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="pub-drawer" data-pub-drawer-open>{% icon "menu" 20 %}</button>
+      </div>
+    </div>
+
+    {# ---- mobile drawer ---- #}
+    <div class="pub-drawer" id="pub-drawer" aria-hidden="true" data-pub-drawer>
+      <div class="pub-drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="pub-drawer__head">
+          <span class="pub-drawer__title">{% brand_logo "primary" 40 %}<span class="pub-drawer__lock"><b>{{ site_info.department_name|cut:"Department of " }}</b><small>{{ site_info.organisation_name|cut:", Zaria" }}</small></span></span>
+          <span class="pub-drawer__head-actions">
+            <button class="theme-toggle pub-icon-btn" type="button" aria-label="Switch light or dark theme" aria-pressed="false" data-theme-toggle>{% icon "sun" 18 "icon-sun" %}{% icon "moon" 18 "icon-moon" %}</button>
+            <button class="pub-icon-btn" type="button" aria-label="Close menu" data-pub-drawer-close>{% icon "x" 20 %}</button>
+          </span>
+        </div>
+        <div class="pub-drawer__body">
+          <a class="pub-drawer__link" href="{% url 'content:home' %}">{% icon "house" 18 %}Home</a>
+          <p class="pub-drawer__group">About</p>
+          {% for p in about_pages %}<a class="pub-drawer__link" href="{{ p.get_absolute_url }}">{% icon p.icon 18 %}{{ p.title }}</a>{% endfor %}
+          <a class="pub-drawer__link" href="{% url 'content:hods' %}">{% icon "crown" 18 %}Heads of Department</a>
+          <a class="pub-drawer__link" href="{% url 'content:staff' %}">{% icon "users" 18 %}People</a>
+          <a class="pub-drawer__link" href="{% url 'content:history' %}">{% icon "milestone" 18 %}Milestones</a>
+          <p class="pub-drawer__group">Academics and students</p>
+          <a class="pub-drawer__link" href="{% url 'content:programmes' %}">{% icon "graduation-cap" 18 %}Programmes</a>
+          {% for p in academic_pages %}<a class="pub-drawer__link" href="{{ p.get_absolute_url }}">{% icon p.icon 18 %}{{ p.title }}</a>{% endfor %}
+          {% for p in research_pages %}<a class="pub-drawer__link" href="{{ p.get_absolute_url }}">{% icon p.icon 18 %}{{ p.title }}</a>{% endfor %}
+          {% for p in student_pages %}<a class="pub-drawer__link" href="{{ p.get_absolute_url }}">{% icon p.icon 18 %}{{ p.title }}</a>{% endfor %}
+          {% for t in public_nav_menu.academics %}<a class="pub-drawer__link" href="{{ t.url }}">{% icon t.icon 18 %}{{ t.label }}</a>{% endfor %}
+          {% for t in public_nav_menu.students %}<a class="pub-drawer__link" href="{{ t.url }}">{% icon t.icon 18 %}{{ t.label }}</a>{% endfor %}
+          <a class="pub-drawer__link" href="{% url 'content:guides' %}">{% icon "life-buoy" 18 %}How-to guides</a>
+          <p class="pub-drawer__group">Community</p>
+          <a class="pub-drawer__link" href="{% url 'content:news' %}">{% icon "newspaper" 18 %}News</a>
+          <a class="pub-drawer__link" href="{% url 'content:events' %}">{% icon "calendar-days" 18 %}Events</a>
+          <a class="pub-drawer__link" href="{% url 'content:gallery' %}">{% icon "images" 18 %}Gallery</a>
+          {% for p in community_pages %}<a class="pub-drawer__link" href="{{ p.get_absolute_url }}">{% icon p.icon 18 %}{{ p.title }}</a>{% endfor %}
+          {% for t in public_nav_menu.community %}<a class="pub-drawer__link" href="{{ t.url }}">{% icon t.icon 18 %}{{ t.label }}</a>{% endfor %}
+          {% for t in public_nav_top %}<a class="pub-drawer__link" href="{{ t.url }}">{% icon t.icon 18 %}{{ t.label }}</a>{% endfor %}
+          <a class="pub-drawer__link" href="{% url 'content:contact' %}">{% icon "mail" 18 %}Contact</a>
+        </div>
+        <div class="pub-drawer__foot">
+          {% if request.user.is_authenticated %}
+            <a class="pub-btn pub-btn--gold pub-btn--block" href="{% url 'dashboards:home' %}">{% icon "layout-dashboard" 18 %}Go to my dashboard</a>
+          {% else %}
+            <a class="pub-btn pub-btn--gold pub-btn--block" href="{% url 'accounts:login' %}" data-signin-modal>{% icon "log-in" 18 %}Sign in to EE Hub</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endwith %}
+  </header>
+
+  <main id="main" class="pub-main" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ---------------------------------------------------------------- footer #}
+  <footer class="pub-footer">
+    <svg class="pub-footer__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 30 C120 0 240 0 360 30 S600 60 720 30 960 0 1080 30 1320 60 1440 30" fill="none" stroke="#c8a951" stroke-width="1.5"/>
+      <path d="M0 30 C120 60 240 60 360 30 S600 0 720 30 960 60 1080 30 1320 0 1440 30" fill="none" stroke="#38e1f5" stroke-width="1.5"/>
+    </svg>
+    <div class="pub-wrap">
+      <div class="pub-footer__grid">
+        <div class="pub-footer__about">
+          <div class="pub-footer__brand">
+            <span class="pub-footer__ee">{% brand_logo "primary" 72 %}</span>
+            <div class="pub-footer__lock"><b>{{ site_info.department_name|cut:"Department of " }}</b><span>{{ site_info.organisation_name|cut:", Zaria" }}</span><small>{{ site_info.faculty_name }} · Zaria</small></div>
+            <img class="pub-footer__crest" src="{% static 'img/brand/abu-crest-white.svg' %}" alt="Ahmadu Bello University crest" width="52" height="52" loading="lazy">
+          </div>
+          {% if site_info.address %}<p class="pub-footer__text">{{ site_info.address }}</p>{% endif %}
+          <ul class="pub-footer__contact">
+            {% if site_info.email %}<li>{% icon "mail" 16 %}<a href="mailto:{{ site_info.email }}">{{ site_info.email }}</a></li>{% endif %}
+            {% if site_info.phone %}<li>{% icon "phone" 16 %}<a href="tel:{{ site_info.phone }}">{{ site_info.phone }}</a></li>{% endif %}
+            {% if site_info.office_hours %}<li>{% icon "clock" 16 %}<span>{{ site_info.office_hours }}</span></li>{% endif %}
+          </ul>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Department</h2>
+          {% for p in public_nav_pages|get_item:"about" %}<a href="{{ p.get_absolute_url }}">{{ p.title }}</a>{% endfor %}
+          <a href="{% url 'content:staff' %}">People</a>
+          <a href="{% url 'content:hods' %}">Heads of Department</a>
+          <a href="{% url 'content:contact' %}">Contact</a>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Academics</h2>
+          <a href="{% url 'content:programmes' %}">Programmes</a>
+          {% for p in public_nav_pages|get_item:"students" %}<a href="{{ p.get_absolute_url }}">{{ p.title }}</a>{% endfor %}
+          <a href="{% url 'content:guides' %}">How-to guides</a>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Community</h2>
+          <a href="{% url 'content:news' %}">News</a>
+          <a href="{% url 'content:events' %}">Events</a>
+          <a href="{% url 'content:gallery' %}">Gallery</a>
+          <a href="{% url 'content:history' %}">Our history</a>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">EE Hub portal</h2>
+          <p class="pub-footer__text">One account for students, lecturers, staff and alumni.</p>
+          {% if request.user.is_authenticated %}
+            <a class="pub-btn pub-btn--gold pub-btn--sm" href="{% url 'dashboards:home' %}">{% icon "layout-dashboard" 16 %}My dashboard</a>
+          {% else %}
+            <a class="pub-btn pub-btn--gold pub-btn--sm" href="{% url 'accounts:login' %}" data-signin-modal>{% icon "log-in" 16 %}Sign in</a>
+          {% endif %}
+          <a class="pub-footer__muted" href="{% url 'accounts:password_reset' %}">Forgot your password?</a>
+        </div>
+      </div>
+      <div class="pub-footer__bottom">
+        <span>© {% now "Y" %} {{ site_info.department_name }}, {{ site_info.organisation_name }}</span>
+        {% if site_info.footer_note %}<span class="pub-footer__note">{{ site_info.footer_note }}</span>{% endif %}
+        <span class="pub-footer__mark">{% brand_logo "primary" 22 %}Powered by {{ site_info.short_name }}</span>
+      </div>
+    </div>
+  </footer>
+
+  {# ---------------------------------------------------------------- quick sign-in #}
+  {% if not request.user.is_authenticated %}
+  <div class="ee-signin" id="ee-signin" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="ee-signin-title">
+    <div class="ee-signin__panel">
+      <div class="ee-signin__head">
+        <div class="pub-signin-crest">{% if show_crest %}<img src="{% static 'img/brand/abu-crest-white.svg' %}" alt="" width="34" height="34">{% endif %}{% brand_logo "primary" 32 %}</div>
+        <h2 id="ee-signin-title">Sign in to {{ site_info.short_name }}</h2>
+        <p>Students, lecturers, staff and alumni use one account.</p>
+        <button class="ee-signin__close" type="button" aria-label="Close" data-signin-close>{% icon "x" 18 %}</button>
+      </div>
+      <form class="ee-signin__body ee-form" method="post" action="{% url 'accounts:login' %}" data-signin-form novalidate>
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.GET.next|default:'' }}">
+        <div class="ee-signin__error" role="alert"></div>
+        <div class="ee-field"><label for="si-identifier">E-mail or registration / staff number</label>
+          <input class="input" id="si-identifier" name="identifier" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
+        <div class="ee-field"><label for="si-password">Password</label>
+          <input class="input" id="si-password" name="password" type="password" autocomplete="current-password" required></div>
+        <div class="ee-signin__row"><label class="checkbox"><input type="checkbox" name="remember" checked> Keep me signed in</label><a href="{% url 'accounts:password_reset' %}">Forgot password?</a></div>
+        <button class="btn btn-primary btn-lg" type="submit" style="width:100%">{% icon "log-in" 18 %} Sign in</button>
+        <p class="pub-signin-alt"><a href="{% url 'accounts:login' %}">Open the full sign-in page</a> · <a href="{% url 'content:guide_detail' 'signing-in' %}">Help signing in</a></p>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+  {% include "partials/toasts.html" %}
+
+  <script src="{% static 'js/app.js' %}" defer></script>
+  <script src="{% static 'js/dialog.js' %}" defer></script>
+  <script src="{% static 'js/ee.js' %}" defer></script>
+  <script src="{% static 'js/public.js' %}" defer></script>
+  <script src="{% static 'js/fx/reveal.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+  <script src="{% static 'js/polish.js' %}" defer></script>
+  <script src="{% static 'js/a11y.js' %}" defer></script>
+  <script src="{% static 'js/sweep.js' %}" defer></script>
+</body>
+</html>

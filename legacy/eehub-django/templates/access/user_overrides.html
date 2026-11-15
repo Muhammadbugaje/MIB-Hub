@@ -1,0 +1,37 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Overrides · {{ u.get_full_name }}{% endblock %}
+{% block page_title %}Personal overrides{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+{% include "access/_user_head.html" %}
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "key-round" 14 %} Personal overrides</span>
+  <h1 class="ee-page-header__title">Exceptions for {{ u.get_full_name }}</h1>
+  <p class="ee-page-header__description">Use sparingly. A grant adds one permission on top of profiles and offices; a revoke takes one away even if an office gives it. Every change needs a reason and is audited.</p></div></header>
+
+<section class="ee-card">
+  <div class="ee-card__head"><h2>{% icon "list-checks" 17 %} In place</h2></div>
+  <ul class="ee-list">{% for r in rows %}
+    <li class="{% if not r.o.is_active %}is-dimmed{% endif %}"><span class="ee-ic {% if r.o.effect == 'grant' %}tone-green{% else %}tone-red{% endif %}">{% if r.o.effect == 'grant' %}{% icon "plus" 15 %}{% else %}{% icon "minus" 15 %}{% endif %}</span>
+      <div class="ee-row__body"><div class="ee-row__title">{{ r.o.get_effect_display }}: {{ r.label }} <code class="acc-code">{{ r.full }}</code></div>
+        <div class="ee-row__meta">“{{ r.o.reason }}” · by {{ r.o.granted_by.get_full_name|default:"system" }} · {% if r.o.expires_at %}{% if r.o.is_active %}until{% else %}expired{% endif %} {{ r.o.expires_at|date:"j M Y" }}{% else %}no expiry{% endif %}</div></div>
+      {% if can_edit %}<form method="post" class="inline" data-confirm="Remove this {{ r.o.get_effect_display|lower }} of “{{ r.label }}”?" data-confirm-title="Remove override?" data-confirm-label="Remove">{% csrf_token %}<input type="hidden" name="override" value="{{ r.o.pk }}"><button class="btn btn-ghost btn-sm" name="action" value="remove" type="submit">{% icon "trash-2" 14 %} Remove</button></form>{% endif %}
+    </li>
+  {% empty %}<li class="ee-empty" style="width:100%">No overrides. Everything comes from profiles and offices.</li>{% endfor %}</ul>
+</section>
+
+{% if can_edit %}
+<form method="post" class="ee-card ee-form" novalidate>{% csrf_token %}
+  <input type="hidden" name="action" value="add">
+  <div class="ee-card__head"><h2>{% icon "circle-plus" 17 %} Add an override</h2></div>
+  {% include "access/_field.html" with f=form.permission %}
+  <div class="ee-field"><span class="acc-label">Effect</span>
+    <div class="acc-choice">{% for radio in form.effect %}<label class="acc-choice__opt">{{ radio.tag }}<span><b>{{ radio.choice_label }}</b><small>{% if radio.data.value == "grant" %}Give this permission{% else %}Take it away, even if an office gives it{% endif %}</small></span></label>{% endfor %}</div>
+  </div>
+  <div class="ee-form-grid">{% include "access/_field.html" with f=form.reason %}{% include "access/_field.html" with f=form.expires_on %}</div>
+  <div class="form-actions"><button type="submit" class="btn btn-primary">{% icon "save" 16 %} Save override</button></div>
+</form>
+{% else %}<p class="acc-note">{% icon "info" 15 %} Only people who can change the permission matrix can add overrides.</p>{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}People and access{% endblock %}
+{% block page_title %}People and access{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "shield-half" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Who can do what</h1>
+    <p class="ee-page-header__description">One sign-in per person, several profiles, and offices that stack inside a profile. Permissions follow offices, never individuals.</p>
+  </div>
+  <div class="ee-page-header__actions">
+    {% if request.user|has_perm:"accounts.users_manage" %}<a class="btn btn-primary" href="{% url 'access:user_create' %}">{% icon "user-plus" 16 %} Add a user</a>{% endif %}
+    {% if request.user|has_perm:"accounts.offices_manage" %}<a class="btn btn-ghost" href="{% url 'access:office_create' %}">{% icon "circle-plus" 16 %} New office</a>{% endif %}
+  </div>
+</header>
+{% include "access/_subnav.html" with section="home" %}
+
+<div class="ee-kpis acc-kpis">
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-green">{% icon "users" 17 %}</span><div class="ee-kpi__lbl">Users</div><div class="ee-kpi__num" data-countup="{{ counts.users }}">{{ counts.users }}</div><div class="ee-kpi__foot">{{ counts.active }} can sign in</div></div>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-volt">{% icon "graduation-cap" 17 %}</span><div class="ee-kpi__lbl">Students</div><div class="ee-kpi__num" data-countup="{{ counts.students }}">{{ counts.students }}</div><div class="ee-kpi__foot">active profiles</div></div>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-green">{% icon "presentation" 17 %}</span><div class="ee-kpi__lbl">Lecturers and staff</div><div class="ee-kpi__num">{{ counts.lecturers|add:counts.staff }}</div><div class="ee-kpi__foot">{{ counts.lecturers }} lecturers · {{ counts.staff }} staff</div></div>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-gold">{% icon "badge-check" 17 %}</span><div class="ee-kpi__lbl">Offices</div><div class="ee-kpi__num">{{ counts.offices }}</div><div class="ee-kpi__foot">{{ counts.appointments }} current appointment{{ counts.appointments|pluralize }}</div></div>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-plum">{% icon "key-round" 17 %}</span><div class="ee-kpi__lbl">Personal overrides</div><div class="ee-kpi__num">{{ counts.overrides }}</div><div class="ee-kpi__foot">grants and revokes in force</div></div>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-volt">{% icon "timer" 17 %}</span><div class="ee-kpi__lbl">Access grants</div><div class="ee-kpi__num">{{ counts.grants }}</div><div class="ee-kpi__foot">running now, each with an end date</div></div>
+  <a class="ee-kpi" href="{% url 'access:review_appointments' %}"><span class="ee-kpi__ic {% if counts.to_review %}tone-ember{% else %}tone-green{% endif %}">{% icon "user-x" 17 %}</span><div class="ee-kpi__lbl">Appointments to review</div><div class="ee-kpi__num">{{ counts.to_review }}</div><div class="ee-kpi__foot">{% if counts.to_review %}break the office rules{% else %}all follow the rules{% endif %}</div></a>
+  <div class="ee-kpi"><span class="ee-kpi__ic tone-slate">{% icon "id-card" 17 %}</span><div class="ee-kpi__lbl">Number formats</div><div class="ee-kpi__num">{{ counts.formats }}</div><div class="ee-kpi__foot">{{ counts.must_change }} user{{ counts.must_change|pluralize }} on a temporary password</div></div>
+</div>
+
+<div class="ee-grid acc-section">
+  <section class="w-full ee-card">
+    <div class="ee-card__head"><h2>{% icon "zap" 17 %} Shortcuts</h2></div>
+    <div class="ee-actions-grid">{% for s in shortcuts %}<a class="ee-action" href="{{ s.url }}"><span class="ee-ic tone-{{ s.tone }}">{% icon s.icon 16 %}</span>{{ s.label }}</a>{% endfor %}</div>
+  </section>
+
+  <section class="w-half ee-card">
+    <div class="ee-card__head"><h2>{% icon "id-card" 17 %} Recent appointments</h2>{% if request.user|has_perm:"accounts.offices_manage" %}<a class="ee-card__link" href="{% url 'access:offices' %}">Offices →</a>{% endif %}</div>
+    <ul class="ee-list">{% for a in recent %}
+      <li><span class="ee-ic tone-{{ a.office.color|default:'green' }}">{% icon a.office.icon 16 %}</span>
+        <div class="ee-row__body"><div class="ee-row__title">{{ a.person.full_name }}</div>
+          <div class="ee-row__meta">{% if a.is_acting %}Acting {% endif %}{{ a.office.name }} · {{ a.scope_text }} · from {{ a.start_date|date:"j M Y" }}</div></div>
+        {% if a.is_current %}<span class="badge badge-success">Current</span>{% elif a.start_date > today %}<span class="badge badge-info">Starts {{ a.start_date|date:"j M" }}</span>{% else %}<span class="badge">Ended</span>{% endif %}
+      </li>{% empty %}<li class="ee-empty" style="width:100%">No appointments yet.</li>{% endfor %}</ul>
+  </section>
+
+  <section class="w-half ee-card">
+    <div class="ee-card__head"><h2>{% icon "scroll-text" 17 %} Access changes</h2>{% if request.user|has_perm:"core.view_audit_log" %}<a class="ee-card__link" href="{% url 'core:audit_log' %}">Audit log →</a>{% endif %}</div>
+    <ul class="ee-list">{% for e in activity %}
+      <li><span class="ee-ic tone-slate">{% icon "history" 16 %}</span>
+        <div class="ee-row__body"><div class="ee-row__title">{{ e.get_action_display }} · {{ e.object_repr|truncatechars:60 }}</div>
+          <div class="ee-row__meta">{{ e.actor_repr|default:"system"|truncatechars:40 }} · {{ e.timestamp|timesince }} ago{% if e.note %} · {{ e.note|truncatechars:60 }}{% endif %}</div></div>
+      </li>{% empty %}<li class="ee-empty" style="width:100%">Nothing has changed yet.</li>{% endfor %}</ul>
+  </section>
+</div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

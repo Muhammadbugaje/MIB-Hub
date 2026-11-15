@@ -1,0 +1,102 @@
+{% load ee_tags %}<header class="app-topbar">
+  <button class="app-topbar-btn mobile-only" type="button" aria-label="Open navigation menu" data-drawer-toggle="app-sidebar" aria-controls="app-sidebar" aria-expanded="false">{% icon "menu" 20 %}</button>
+  <p class="app-topbar-title">{% block page_title %}{{ site_info.short_name }}{% endblock %}</p>
+
+  {% if request.user.is_authenticated %}
+  <form class="app-topsearch" role="search" aria-label="Site search" action="{% url 'core:search' %}" method="get">
+    <label class="sr-only" for="app-topsearch-q">Search</label>
+    {% icon "search" 16 "app-topsearch__icon" %}
+    <input class="app-topsearch__input" id="app-topsearch-q" name="q" type="search" placeholder="Search people, pages, news…" autocomplete="off" enterkeyhint="search" aria-keyshortcuts="/ Control+K Meta+K" data-ee-search>
+    <kbd class="app-topsearch__kbd" aria-hidden="true">/</kbd>
+  </form>
+  {% endif %}
+
+  <div class="app-topbar-actions">
+    {% load ee_shell %}{% optional_include "assistant/ask_button.html" %}
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'core:search' %}" class="app-topbar-btn ee-topsearch-btn" aria-label="Search">{% icon "search" 18 %}</a>
+      {% if profile_other %}
+      <form class="ee-swap" method="post" action="{% url 'accounts:switch_profile' %}" data-profile-switch>
+        {% csrf_token %}<input type="hidden" name="key" value="{{ profile_other.key }}"><input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <button type="submit" class="ee-swap__btn" data-tone="{{ profile_other.tone }}" title="Switch to {{ profile_other.label }}" aria-label="Switch to {{ profile_other.label }}">
+          <span class="ee-tile ee-tile--sm" aria-hidden="true">{% icon profile_other.icon 14 %}</span>
+          <span class="ee-swap__lbl">{{ profile_other.short }}</span>{% icon "arrow-left-right" 14 "ee-swap__arrow" %}
+        </button>
+      </form>
+      {% endif %}
+      <div class="app-notifications">
+        <button class="app-topbar-btn notif-bell" type="button" aria-label="Notifications" data-dropdown-trigger="notif-menu" aria-expanded="false" aria-controls="notif-menu" aria-haspopup="true" id="notif-bell">
+          {% icon "bell" 18 %}<span class="notif-badge" id="notif-badge" {% if not nav_badges.notifications %}hidden{% endif %} aria-hidden="true">{{ nav_badges.notifications|default:0 }}</span>
+        </button>
+        <div class="dropdown notif-dropdown" id="notif-menu" data-dropdown-menu aria-hidden="true">
+          <header class="notif-dropdown-head"><strong>Notifications</strong><button type="button" class="link-btn" id="notif-mark-all" hidden>Mark all read</button></header>
+          <div class="notif-dropdown-list" id="notif-list" aria-busy="true">
+            <div class="notif-dropdown-empty notif-skeleton" aria-label="Loading notifications">
+              <div class="skeleton-row"><span class="skeleton skeleton-avatar"></span><div><div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text is-short"></div></div></div>
+            </div>
+          </div>
+          <footer class="notif-dropdown-foot"><a href="{% url 'notifications:list' %}" class="notif-viewall">View all notifications</a></footer>
+        </div>
+      </div>
+    {% endif %}
+
+    <button class="theme-toggle" type="button" aria-label="Toggle theme" aria-pressed="false" data-theme-toggle>
+      {% icon "sun" 18 "icon-sun" %}{% icon "moon" 18 "icon-moon" %}
+    </button>
+
+    {% if request.user.is_authenticated %}
+      <div class="app-user ee-switcher">
+        <button class="app-user-trigger" type="button" data-dropdown-trigger="user-menu" aria-expanded="false" aria-controls="user-menu" aria-haspopup="true">
+          <span class="app-user-avatar">{% if request.user.person_or_none.photo %}<img src="{{ request.user.person.photo.url }}" alt="">{% else %}{{ request.user.get_full_name|initials }}{% endif %}</span>
+          <span class="ee-switcher__text"><small>Acting as</small><b>{% if active_profile %}{{ active_profile.label }}{% if active_offices %} · {{ active_offices.0.office.label }}{% endif %}{% else %}{{ request.user.get_short_name }}{% endif %}</b></span>
+          {% icon "chevrons-up-down" 15 %}
+        </button>
+        <div class="dropdown ee-switcher__menu" id="user-menu" data-dropdown-menu aria-hidden="true">
+          <div class="dropdown-header">
+            <strong>{{ request.user.get_full_name }}</strong>
+            <span class="muted">{{ request.user.email }}</span>
+          </div>
+          {% if profiles|length > 1 or profiles %}
+          <div class="dropdown-sep"></div>
+          <div class="ee-switcher__label">Switch profile</div>
+          {% for p in profiles %}
+            <form method="post" action="{% url 'accounts:switch_profile' %}">{% csrf_token %}
+              <input type="hidden" name="key" value="{{ p.key }}"><input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button type="submit" class="dropdown-item ee-switcher__item {% if active_profile.key == p.key %}is-current{% endif %}" {% if active_profile.key == p.key %}aria-current="true"{% endif %}>
+                <span class="ee-switcher__ic">{% icon p.icon 16 %}</span>
+                <span class="ee-switcher__body"><b>{{ p.label }}</b>{% if p.sublabel %}<small>{{ p.sublabel }}</small>{% endif %}
+                  {% if p.offices %}<span class="ee-switcher__offices">{% for a in p.offices %}<span class="ee-chip ee-chip--{{ a.office.color }}">{{ a.office.label }}</span>{% endfor %}</span>{% endif %}
+                </span>
+                {% if active_profile.key == p.key %}{% icon "check" 16 "ee-switcher__tick" %}{% endif %}
+              </button>
+            </form>
+          {% endfor %}
+          {% endif %}
+          <div class="dropdown-sep"></div>
+          <a href="{% url 'accounts:profile' %}" class="dropdown-item">{% icon "circle-user-round" 14 %} My profile</a>
+          <a href="{% url 'accounts:password_change' %}" class="dropdown-item">{% icon "key-round" 14 %} Change password</a>
+          {% load guide_tags %}{% guide_link "" "menu" %}
+          <button type="button" class="dropdown-item" data-pwa-install hidden>{% icon "smartphone" 14 %} Install EE Hub</button>
+          {% if request.impersonator or request.user.is_superuser %}
+            {# Nov 2026: Act as another user, one click from the profile menu (superusers) #}
+            <div class="dropdown-sep"></div>
+            <div class="ee-switcher__label">{% if request.impersonator %}Acting as {{ request.user.get_short_name }} · you are {{ request.impersonator.get_short_name }}{% else %}Support{% endif %}</div>
+            <form class="ee-actas" method="get" action="{% url 'core:impersonate_pick' %}" role="search" aria-label="Find someone to act as">
+              <span class="ee-actas__ic">{% icon "venetian-mask" 14 %}</span>
+              <input type="search" name="q" placeholder="{% if request.impersonator %}Switch to… name or number{% else %}Act as… name or number{% endif %}" aria-label="Find someone to act as" autocomplete="off">
+              <button type="submit" aria-label="Find">{% icon "arrow-right" 14 %}</button>
+            </form>
+            <a href="{% url 'core:impersonate_pick' %}" class="dropdown-item">{% icon "users" 14 %} {% if request.impersonator %}Switch to another user{% else %}Act as another user{% endif %}</a>
+            {% if request.impersonator %}
+            <form method="post" action="{% url 'core:impersonate_stop' %}">{% csrf_token %}<button type="submit" class="dropdown-item danger">{% icon "undo-2" 14 %} Return to my account</button></form>
+            {% endif %}
+          {% endif %}
+          <div class="dropdown-sep"></div>
+          <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button type="submit" class="dropdown-item danger">{% icon "log-out" 14 %} Sign out</button></form>
+        </div>
+      </div>
+    {% else %}
+      <a href="{% url 'accounts:login' %}" class="app-topbar-btn app-topbar-signin" data-signin-modal>{% icon "log-in" 16 %}<span>Sign in</span></a>
+    {% endif %}
+  </div>
+</header>

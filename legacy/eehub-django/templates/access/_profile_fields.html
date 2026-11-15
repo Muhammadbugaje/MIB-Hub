@@ -1,0 +1,22 @@
+{# The fields of a ProfileForm `pf`; JS shows the ones that fit the chosen kind. #}
+<div class="ee-form-grid" data-profile-fields>
+  {% include "access/_field.html" with f=pf.kind %}
+  {% include "access/_field.html" with f=pf.reg_number show="student" cls="acc-regno-field" %}
+  {% include "access/_field.html" with f=pf.programme show="student" %}
+  <div class="ee-field{% if pf.level.errors %} acc-has-error{% endif %}" data-kind-show="student">
+    <label for="{{ pf.level.id_for_label }}">{{ pf.level.label }}</label>
+    <select name="{{ pf.level.html_name }}" id="{{ pf.level.id_for_label }}" class="input" data-level-select>
+      <option value="">-</option>
+      {% for l in levels %}<option value="{{ l.pk }}" data-programme="{{ l.programme_id }}"{% if pf.level.value|stringformat:"s" == l.pk|stringformat:"s" %} selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>{{ pf.level.errors }}
+  </div>
+  {% include "access/_field.html" with f=pf.entry_mode show="student" %}
+  {% include "access/_field.html" with f=pf.staff_number show="lecturer staff" %}
+  {% include "access/_field.html" with f=pf.rank show="lecturer" %}
+  {% include "access/_field.html" with f=pf.designation show="staff" %}
+  {% include "access/_field.html" with f=pf.programme_name show="alumni" %}
+  {% include "access/_field.html" with f=pf.graduation_year show="alumni" %}
+</div>
+<div class="acc-regno-live" data-kind-show="student" id="regno-live" aria-live="polite">
+  {% if formats %}<span class="ee-card__sub">Formats: {% for c in formats %}{% if c.profile_kind == "student" %}<span class="ee-chip ee-chip--volt" title="{{ c.pattern }}">{{ c.name }}</span> {% endif %}{% endfor %}</span>{% endif %}
+</div>

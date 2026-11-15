@@ -1,0 +1,38 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}Delegation{% endblock %}
+{% block page_title %}Delegation{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "git-fork" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Who may appoint and grant</h1>
+    <p class="ee-page-header__description">Each rule says what the holder of one office may hand on, and where. Nobody can grant a permission they do not hold, or act outside their area. The super admin can do everything.</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    <a class="btn btn-ghost" href="{% url 'access:how' %}#delegation">{% icon "life-buoy" 16 %} How it works</a>
+    {% if can_edit %}<a class="btn btn-primary" href="{% url 'access:delegation_create' %}">{% icon "circle-plus" 16 %} New rule</a>{% endif %}
+  </div>
+</header>
+{% include "access/_subnav.html" with section="delegation" %}
+
+{% if rows %}
+<div class="r7a-rgrid">{% for row in rows %}{% with r=row.r %}
+  <article class="ee-card r7a-rule{% if not r.is_active %} is-dimmed{% endif %}">
+    <div class="ee-card__head"><h2><span class="ee-ic tone-{{ r.grantor_office.color|default:'gold' }}">{% icon r.grantor_office.icon 16 %}</span> {{ r.grantor_office.name }}</h2>
+      {% if can_edit %}<a class="ee-card__link" href="{% url 'access:delegation_edit' r.pk %}">Edit</a>{% endif %}</div>
+    {% if r.note %}<p class="ee-card__sub">{{ r.note }}</p>{% endif %}
+    <dl class="acc-dl">
+      <dt>Where</dt><dd>{{ r.get_scope_rule_display }}{% if not r.is_active %} · <b>switched off</b>{% endif %}</dd>
+      <dt>Appoints to</dt><dd>{% for o in row.offices|slice:":12" %}<span class="ee-chip">{{ o.label }}</span> {% empty %}Nothing{% endfor %}{% if row.offices|length > 12 %}<span class="ee-chip">+{{ row.offices|length|add:"-12" }} more</span>{% endif %}</dd>
+      <dt>Grants</dt><dd>{% if r.any_held_permission %}Any permission they hold{% else %}{% for p in row.perms %}<span class="ee-chip">{{ p.name|capfirst }}</span> {% empty %}No single permissions{% endfor %}{% endif %}</dd>
+      <dt>Longest grant</dt><dd>{% if r.max_days %}{{ r.max_days }} days{% else %}Site limit{% endif %}</dd>
+    </dl>
+  </article>{% endwith %}{% endfor %}</div>
+{% else %}
+{% url 'access:delegation_create' as new_url %}
+{% include "partials/empty_state.html" with title="No delegation rules" body="Without rules only the super admin can appoint. Add a rule for the HOD first." action_url=new_url action_label="New rule" %}
+{% endif %}
+</div>
+{% endblock %}

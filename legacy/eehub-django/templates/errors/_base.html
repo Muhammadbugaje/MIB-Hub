@@ -1,0 +1,48 @@
+{% load static %}<!DOCTYPE html>
+{% comment %}
+  Standalone error page shell (UI overhaul Phase 5). Deliberately independent
+  of base.html: no context processors, no request, no database, so 500.html
+  still renders when the app itself is broken. Only the static tag is used.
+{% endcomment %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="noindex">
+  <title>{% block title %}Something went wrong{% endblock %} · EE Hub</title>
+  <link rel="icon" href="{% static 'img/brand/ee-mark.svg' %}" type="image/svg+xml">
+  <script src="{% static 'js/theme-init.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/fonts.css' %}"><link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/utilities.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+  <link rel="stylesheet" href="{% static 'css/errors.css' %}">
+  <link rel="stylesheet" href="{% static 'css/apple.css' %}">
+  <link rel="stylesheet" href="{% static 'css/a11y.css' %}">
+</head>
+<body class="error-body">
+  <main class="error-page" id="main">
+    <a class="error-brand" href="/">
+      <img src="{% static 'img/brand/ee-mark.svg' %}" alt="" width="40" height="40">
+      <span>EE Hub · Electrical Engineering, ABU</span>
+    </a>
+
+    <div class="error-art" aria-hidden="true">{% block art %}{% endblock %}</div>
+
+    <p class="error-code">{% block code %}{% endblock %}</p>
+    <h1 class="error-title">{% block heading %}{% endblock %}</h1>
+    <p class="error-lead">{% block lead %}{% endblock %}</p>
+
+    <div class="error-actions">
+      {% block actions %}
+        <a class="btn btn-primary" href="/">Go to the home page</a>
+      {% endblock %}
+    </div>
+
+    {% block extra %}{% endblock %}
+  </main>
+</body>
+</html>

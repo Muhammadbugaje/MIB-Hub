@@ -1,0 +1,15 @@
+{% load static ee_tags ux_tags %}{% if request.user.is_authenticated %}<link rel="stylesheet" href="{% static 'css/ux.css' %}">{% endif %}{% profile_nudge as nudge %}{% if nudge %}
+{# Profile completeness banner (hidden per browser session) + data for the "continue anyway" interrupt (static/js/profile-nudge.js). Ported from NBTE Phase 8. #}
+{% comment %}R7J: one slim line instead of the tall banner. Never on task pages (ballots, receipts, chats,
+tests, labs, forms being filled); Home and the profile page have their own completeness card. In the browser
+it shows on the first suitable page of a session only, and a dismiss hides it for 7 days (profile-nudge.js).{% endcomment %}
+{% with vn=request.resolver_match.view_name ns=request.resolver_match.namespace %}{% if nudge.banner and ns != "elections" and ns != "messaging" and ns != "classroom" and ns != "cbt" and ns != "labs" and ns != "registration" and ns != "studentrequests" and ns != "requests" %}
+<div class="pn-banner pn-banner--slim" role="region" aria-label="Profile completeness" data-profile-banner hidden>
+  <div class="pn-banner__ring" style="--pct: {{ nudge.percent }}" aria-hidden="true"><span>{{ nudge.percent }}</span></div>
+  <p class="pn-banner__text"><strong>Profile {{ nudge.percent }}%</strong><span> complete · {{ nudge.threshold }}% needed{% if nudge.missing_top %}: add {{ nudge.missing_top|join:", "|lower }}{% if nudge.missing_more %} +{{ nudge.missing_more }}{% endif %}{% endif %}</span></p>
+  {% if vn != "accounts:profile" %}<a class="pn-banner__link" href="{{ nudge.profile_url }}">Complete my profile {% icon "arrow-right" 14 %}</a>{% endif %}
+  <button type="button" class="pn-banner__close" data-profile-banner-dismiss aria-label="Hide for this session" title="Hide for this session">{% icon "x" 15 %}</button>
+</div>
+{% endif %}{% endwith %}
+{{ nudge|json_script:"profile-nudge-data" }}
+{% endif %}

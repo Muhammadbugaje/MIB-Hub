@@ -429,11 +429,11 @@ async function sceneA(night) {
     const who = Q.get('cc').split(','), outs = (Q.get('o') || '0').split(',').map(Number), px = +(Q.get('px') || -6), pz = +(Q.get('pz') || -0.4);
     window.CCH = [];
     for (let i = 0; i < who.length; i++) { const look = await (await fetch(who[i] + '.json?v=' + Date.now())).json(); const c = CC.build(scene, look, outs[i] || 0);
-      c.root.position = new V3(px + (i - (who.length - 1) / 2) * 0.62, 0, pz); c.root.rotation.y = (i ? -1 : 1) * 0.18; c.meshes.forEach(m => { CASTERS.push(m); m.receiveShadows = true; if (m.material && m.material.sheen) { m.material.sheen.intensity *= 0.25; } }); window.CCH.push(c); }
+      c.root.position = new V3(px + (i - (who.length - 1) / 2) * 0.62, 0, pz); c.root.rotation.y = (i ? -1 : 1) * 0.18; c.meshes.forEach(m => { CASTERS.push(m); m.receiveShadows = true; if (m.material && m.material.sheen) { if (Q.get('nosheen')) m.material.sheen.isEnabled = false; else m.material.sheen.intensity *= 0.25; } if (m.material) m.material.environmentIntensity = +(Q.get('env') || 0.15); }); window.CCH.push(c); }
     { const all = window.CCH.flatMap(c => c.meshes);
-      const f = new BABYLON.DirectionalLight('ccFill', new V3(0.35, -0.45, 1), scene); f.diffuse = new C3(1, 0.86, 0.72); f.intensity = +(Q.get('fi') || 2.0); f.includedOnlyMeshes = all; SUN.excludedMeshes.push(...all);
-      const rim = new BABYLON.DirectionalLight('ccRim', SUN.direction.clone(), scene); rim.diffuse = new C3(1, 0.7, 0.45); rim.intensity = 1.6; rim.includedOnlyMeshes = all;
-      const r = new BABYLON.HemisphericLight('ccSky', new V3(0, 1, -0.3), scene); r.diffuse = new C3(1, 0.85, 0.75); r.groundColor = new C3(0.5, 0.3, 0.2); r.intensity = 0.5; r.includedOnlyMeshes = all;
+      const f = new BABYLON.DirectionalLight('ccFill', new V3(0.35, -0.45, 1), scene); f.diffuse = new C3(1, 0.86, 0.72); f.intensity = +(Q.get('fi') || 3.2); f.includedOnlyMeshes = all; SUN.excludedMeshes.push(...all);
+      const rim = new BABYLON.DirectionalLight('ccRim', SUN.direction.clone(), scene); rim.diffuse = new C3(1, 0.7, 0.45); rim.intensity = 1.6; rim.includedOnlyMeshes = all; window.CCRIM = rim;
+      const r = new BABYLON.HemisphericLight('ccSky', new V3(0, 1, -0.3), scene); r.diffuse = new C3(1, 0.85, 0.75); r.groundColor = new C3(0.5, 0.3, 0.2); r.intensity = 0.5; r.includedOnlyMeshes = all; window.CCL = { f, r };
       all.forEach(m => { if (m.material) m.material.maxSimultaneousLights = 8; }); }
     await person({ type: 'Casual3_Female', skin: 'light', shirt: new C3(0.25, 0.5, 0.8), pants: new C3(0.2, 0.2, 0.25), hair: new C3(0.3, 0.17, 0.08), anim: 'Walk', frame: 0.7, pos: [-1.5, 1.6], rot: H - 0.02, speed: 1.0, w: 0.9, h: 1.58 });
   } else {
@@ -569,7 +569,11 @@ window.frame = (name, i, fps) => {
 };
 
 /* ---------- boot + timer-driven rendering ---------- */
-window.view = (name, a) => { a = a || {}; CAM.position = new V3(...a.pos); CAM.setTarget(new V3(...a.tgt)); CAM.fov = a.fov || 0.6; if (PIPE) PIPE.imageProcessing.vignetteCameraFov = CAM.fov; for (let i = 0; i < 4; i++) scene.render(); return 1; };
+window.CCDEF = { fi: 16, fc: '#fff6f0', hi: 2.5, hc: '#ffffff', ri: 1.0, env: 0.15, sat: 1.6, gb: 0.18 };
+window.view = (name, a) => { a = a || {}; if (!a.L && !Q.get('raw')) a.L = window.CCDEF; if (a.L && window.CCL) { const L = a.L, all = window.CCH.flatMap(c => c.meshes);
+    if (L.fi != null) CCL.f.intensity = L.fi; if (L.fc) CCL.f.diffuse = C3.FromHexString(L.fc); if (L.hi != null) CCL.r.intensity = L.hi; if (L.hc) { CCL.r.diffuse = C3.FromHexString(L.hc); CCL.r.groundColor = C3.FromHexString(L.hc).scale(0.6); } if (L.ri != null) CCRIM.intensity = L.ri;
+    all.forEach(m => { const mt = m.material; if (!mt) return; if (L.env != null) mt.environmentIntensity = L.env;
+      if (mt.name.startsWith('g') && mt.albedoColor) { if (!mt._a0) mt._a0 = mt.albedoColor.clone(); const o = mt._a0, gr = (o.r + o.g + o.b) / 3, k = L.sat || 1, b2 = L.gb || 1; mt.albedoColor = new C3(Math.max(0, gr + (o.r - gr) * k) * b2, Math.max(0, gr + (o.g - gr) * k) * b2, Math.max(0, gr + (o.b - gr) * k) * b2); } }); } CAM.position = new V3(...a.pos); CAM.setTarget(new V3(...a.tgt)); CAM.fov = a.fov || 0.6; if (PIPE) PIPE.imageProcessing.vignetteCameraFov = CAM.fov; for (let i = 0; i < 4; i++) scene.render(); return 1; };
 window.renderN = n => { for (let i = 0; i < n; i++) scene.render(); return 1; };
 window.snap = (type) => { scene.render(); return canvas.toDataURL(type || 'image/jpeg', 0.9); };
 (async () => {

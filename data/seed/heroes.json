@@ -1,0 +1,174 @@
+{
+  "exported_at": "2026-11-15T18:54:06",
+  "source": "eehub-2 (Django), read-only",
+  "scheme": {
+    "hasher": "Django PBKDF2PasswordHasher (django.contrib.auth.hashers.make_password / check_password), Django 5.x default",
+    "format": "pbkdf2_sha256$<iterations>$<salt>$<base64(pbkdf2_hmac(sha256, password, salt, iterations, dklen=32))>",
+    "password_input": "norm(code): lower-cased, all whitespace removed, BEFORE hashing and before checking",
+    "verify_in_typescript": "split on '$'; derived = pbkdf2Sync(norm(code), salt (utf-8 string, not decoded), iterations, 32, 'sha256'); compare base64(derived) to part 4 with timingSafeEqual. Node crypto.pbkdf2 or WebCrypto deriveBits({name:'PBKDF2',hash:'SHA-256',salt,iterations}, 256) both work.",
+    "old_verification_flow": "POST /arcade/api/hero/ (views.api_hero) -> cheats.check_hero(slug, code, request): game must exist, hero_enabled(slug), allowed(slug,\"hero\",request) by hero_access; stored = GameSettings[slug].hero_hash OR GameSettings[\"*\"].hero_hash; check_password(norm(code), stored); if none stored, make_password(\"x\") is run to equalise timing. A DEBUG-only starter code (cheats.DEBUG_STARTERS) is also accepted on dev copies when no hash exists.",
+    "creation": "cheats.ensure_hero_code(): first open of Arcade Management generates XXXX-XXXX-XXXX from alphabet ABCDEFGHJKLMNPQRSTUVWXYZ23456789 and shows it once; set_hero_code() stores make_password(norm(code)).",
+    "rule": "Hashes copied verbatim. Not decoded, not cracked; plain codes unknown to this export."
+  },
+  "count": 2,
+  "hashes": [
+    {
+      "scope": "*",
+      "scope_meaning": "site-wide fallback for every game",
+      "hash": "pbkdf2_sha256$1200000$YZ0JONObfVqTvlJHqVvP1o$JttEihlP3rqTrNaKjiWljDgN813ykFeVvBdcVTT5UMo=",
+      "format": {
+        "algorithm": "pbkdf2_sha256",
+        "iterations": 1200000,
+        "salt_length": 22
+      },
+      "set_at": "2026-11-14 00:22:07.190997"
+    },
+    {
+      "scope": "samaru-days",
+      "scope_meaning": "this game only (wins over the site-wide hash)",
+      "hash": "pbkdf2_sha256$1200000$lOPUJH6BlbtCTJXSAoHeZz$ZmAiX+kpfWp08+KSVdYjuR8ccGCoMN9VA6+2eGHqWno=",
+      "format": {
+        "algorithm": "pbkdf2_sha256",
+        "iterations": 1200000,
+        "salt_length": 22
+      },
+      "set_at": "2026-11-14 00:24:47.283152"
+    }
+  ],
+  "hero_characters": [
+    {
+      "slug": "momentum-cup",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Maxed speed, jump and kick; superpower always ready; his goal is sealed, so he cannot concede; every arena open."
+    },
+    {
+      "slug": "impulse-arena",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Wears white and gold over the fighter you pick; takes no damage, knocks out in one hit, super meter always full."
+    },
+    {
+      "slug": "volt-city",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Cannot be hurt, dash never cools down, can restore any district at once."
+    },
+    {
+      "slug": "kinetic-kingdom",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Cannot be hurt, never runs out of lives or time, every level open."
+    },
+    {
+      "slug": "wavefront",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Cannot be hurt, carries every weapon at level 3, every stage open."
+    },
+    {
+      "slug": "samaru-days",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "u u d m i b",
+      "swipe": "u u d l r u",
+      "powers": ""
+    },
+    {
+      "slug": "motorworks",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Breakers never trip on him, every hall is open, the Night shift is open, and the skip key finishes any bay."
+    },
+    {
+      "slug": "storm-map",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Safety violations never count against him, every incident and the Storm season are open, and the skip key restores the network."
+    },
+    {
+      "slug": "induction-dash",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Hits cost no hearts, always above cruising speed, every track and cart open."
+    },
+    {
+      "slug": "logic-labyrinth",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Maker mode wires the answer, skips any room and jumps anywhere; he also appears as a selectable avatar."
+    },
+    {
+      "slug": "signal-surfer",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Surfs on the auto-engineer: frequency, power and rate set for him every half second; every channel open."
+    },
+    {
+      "slug": "circuit-forge",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "No characters here: maker mode fits the right parts, skips any circuit and jumps anywhere."
+    },
+    {
+      "slug": "light-bender",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "No characters here: maker mode shows the solution, skips any level and jumps anywhere."
+    },
+    {
+      "slug": "maglev-rescue",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Holds the gap with pole-placement gains on every line; every line open."
+    },
+    {
+      "slug": "algorithm-garage",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Every job and Work orders are open; the skip key submits a working program for any job."
+    },
+    {
+      "slug": "drive-room",
+      "name": "M.I. BUGAJE",
+      "full": "Muhammad Iliyasu Bugaje",
+      "combo": "Up Up Down Down Left Right M I B",
+      "swipe": "Up Up Down Left Right",
+      "powers": "Gets the engineer's converter and gains on every job; every job open."
+    }
+  ],
+  "debug_starter": {
+    "slug": "samaru-days",
+    "debug_only": true,
+    "hash": "pbkdf2_sha256$1200000$_02X6EDauva3Poqs3B7yhA$ZdHes/JpSzWOD6dCRW/aRBrQK/0ipXfrWVxqGNtaOC8=",
+    "note": "Hashed by this export from the plain DEBUG_STARTERS value in games/cheats.py (plain copy in private/cheats_plain.json). Only for local dev; the old site refused it when DEBUG was off."
+  }
+}

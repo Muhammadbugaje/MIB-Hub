@@ -1,0 +1,144 @@
+/* ==========================================================================
+   EE Hub — visual themes and motion (Round 6)
+   Scenes: static/js/fx/scenes.js · Scroll and text motion: static/js/fx/reveal.js
+   Every hidden-before-reveal rule is gated by html.fx-on, which reveal.js sets
+   only when motion is allowed, so without JavaScript (or with reduced motion,
+   or motion "off" in Settings) everything is simply visible.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------- scenes */
+.fx-scene { position: absolute; inset: 0; overflow: hidden; pointer-events: none; contain: strict;
+  background: var(--fx-poster, none) center / cover no-repeat, var(--fx-bg, #04100c); }
+.fx-scene .fx-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1.1s cubic-bezier(.2, .7, .2, 1); }
+.fx-scene.is-ready .fx-canvas { opacity: 1; }
+.fx-scene.is-failed .fx-canvas { display: none; }
+
+/* Fallback colours per scene (show while loading, if WebGL is missing, or with motion off) */
+.fx-scene[data-fx-scene="electric_field"] { --fx-bg: radial-gradient(60% 70% at 70% 50%, #0d3a33 0%, #04100c 70%); }
+.fx-scene[data-fx-scene="waves"]          { --fx-bg: linear-gradient(180deg, #04100c 0%, #071a14 55%, #0b2a20 100%); }
+.fx-scene[data-fx-scene="black_hole"]     { --fx-bg: radial-gradient(40% 50% at 70% 50%, #2a2410 0%, #04100c 60%); }
+.fx-scene[data-fx-scene="galaxy"]         { --fx-bg: radial-gradient(45% 55% at 68% 50%, #12343a 0%, #04100c 70%); }
+.fx-scene[data-fx-scene="fluid"]          { --fx-bg: radial-gradient(60% 60% at 60% 50%, #0b2b3a 0%, #04050c 70%); }
+.fx-scene[data-fx-scene="particles"]      { --fx-bg: radial-gradient(50% 60% at 60% 50%, #120d2c 0%, #000 70%); }
+
+/* Hero with a scene: the scene replaces the classic circuit art; the hero's own
+   left-side scrim (.pub-hero::before) keeps the copy readable. */
+.pub-hero__fx { position: absolute; inset: 0; z-index: -2; }
+.pub-hero--fx { background: #04100c; }
+.pub-hero--fx-fluid::before, .pub-hero--fx-particles::before {
+  background: radial-gradient(115% 95% at 30% 46%, rgba(4, 5, 12, .72) 0%, rgba(4, 5, 12, .6) 30%, rgba(4, 5, 12, .3) 60%, rgba(4, 5, 12, .12) 100%),
+              linear-gradient(180deg, rgba(3, 12, 10, .4), transparent 18%, transparent 80%, rgba(3, 12, 10, .55)); }
+.pub-hero--fx .pub-arc-tag { display: none; }
+@media (max-width: 700px) {
+  .pub-hero--fx::before, .pub-hero--fx-fluid::before, .pub-hero--fx-particles::before { background: linear-gradient(180deg, rgba(3, 12, 10, .15) 0%, rgba(3, 12, 10, .2) 18%, rgba(3, 12, 10, .62) 38%, rgba(3, 12, 10, .72) 70%, rgba(3, 12, 10, .55) 100%); }
+}
+
+/* A dark band (numbers / courses) with a background scene */
+.fx-band { position: relative; isolation: isolate; }
+.fx-band > .fx-scene { z-index: -1; opacity: .6; }
+.fx-band > .fx-scene::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4, 16, 12, .55), rgba(4, 16, 12, .2) 40%, rgba(4, 16, 12, .6)); }
+
+/* ---------------------------------------------------------------- word pop-ups */
+.fx-split .sr-only { position: absolute; }
+.fx-on.fx-text .fx-split .fx-w { display: inline-block; vertical-align: top; overflow: clip; overflow-clip-margin: .2em;
+  padding: .06em .02em .12em; margin: -.06em -.02em -.12em; }
+.fx-on.fx-text .fx-split .fx-wi { display: inline-block;
+  transform: translate3d(0, 108%, 0) rotate(5deg); transform-origin: 0 100%; opacity: 0;
+  transition: transform .9s cubic-bezier(.19, 1, .22, 1), opacity .5s ease;
+  transition-delay: calc(var(--d0, 0ms) + var(--i, 0) * 55ms); }
+.fx-on.fx-text :is(.is-in, .fx-in) .fx-split .fx-wi { transform: none; opacity: 1; }
+/* soft variant (leads): no mask, a short rise */
+.fx-on.fx-text .fx-split--soft .fx-w { overflow: visible; }
+.fx-on.fx-text .fx-split--soft .fx-wi { transform: translate3d(0, 14px, 0); transition-duration: .6s, .6s;
+  transition-delay: calc(var(--d0, 0ms) + var(--i, 0) * 18ms); }
+/* the hero's own entrance animation hands over to the words */
+.fx-on.fx-hero .pub-hero__copy > .pub-hero__title, .fx-on.fx-hero .pub-hero__copy > .pub-hero__lead.fx-split { animation: none; }
+.fx-gentle.fx-text .fx-split .fx-wi { transform: translate3d(0, 40%, 0); transition-duration: .6s, .5s; }
+
+/* ---------------------------------------------------------------- section parts */
+.fx-on .fx-up { opacity: 0; translate: 0 18px; transition: opacity .7s ease, translate .9s cubic-bezier(.19, 1, .22, 1);
+  transition-delay: calc(var(--k, 0) * 90ms + 60ms); }
+.fx-on .is-in .fx-up, .fx-on .fx-up.is-in { opacity: 1; translate: 0 0; }
+.fx-on .fx-sec .pub-eyebrow.fx-up { translate: -14px 0; }
+.fx-on .fx-sec.is-in .pub-eyebrow.fx-up { translate: 0 0; }
+
+.fx-on .fx-item { opacity: 0; translate: 0 28px; scale: .975;
+  transition: opacity .7s ease, translate .95s cubic-bezier(.19, 1, .22, 1), scale .95s cubic-bezier(.19, 1, .22, 1);
+  transition-delay: var(--fx-delay, 0ms); }
+.fx-on .fx-item.is-in { opacity: 1; translate: 0 0; scale: 1; }
+.fx-gentle .fx-item { translate: 0 10px; scale: 1; }
+
+/* A drawn accent under each section eyebrow */
+.fx-on .fx-sec .pub-sh .pub-eyebrow { position: relative; }
+.fx-on .fx-sec .pub-sh .pub-eyebrow::after { content: ""; position: absolute; left: 0; bottom: -6px; height: 2px; width: 46px; border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-500), var(--volt-400)); transform: scaleX(0); transform-origin: 0 50%;
+  transition: transform 1s cubic-bezier(.19, 1, .22, 1) .35s; }
+.fx-on .fx-sec.is-in .pub-sh .pub-eyebrow::after { transform: scaleX(1); }
+
+/* ---------------------------------------------------------------- tilt + glare */
+.fx-tilt { position: relative; }
+.fx-tilt.is-tilting { transform: perspective(900px) rotateX(var(--fx-rx, 0deg)) rotateY(var(--fx-ry, 0deg)) translate3d(0, -3px, 0);
+  transition: transform .18s ease-out; }
+.fx-glare { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .35s ease;
+  background: radial-gradient(circle at var(--fx-mx, 50%) var(--fx-my, 50%), rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 52%); }
+:root[data-theme="dark"] .fx-glare { background: radial-gradient(circle at var(--fx-mx, 50%) var(--fx-my, 50%), rgba(126, 240, 255, .14), rgba(126, 240, 255, 0) 55%); }
+.fx-tilt.is-tilting > .fx-glare { opacity: 1; }
+
+/* ---------------------------------------------------------------- progress hairline */
+.fx-progress { position: fixed; left: 0; right: 0; top: 0; height: 2px; z-index: 90; pointer-events: none; transform: scaleX(0); transform-origin: 0 50%;
+  background: linear-gradient(90deg, var(--gold-500), var(--volt-400) 60%, #a78bfa); box-shadow: 0 0 10px rgba(56, 225, 245, .5); }
+
+/* ---------------------------------------------------------------- discipline marquee */
+.fx-marquee { position: relative; overflow: hidden; padding: clamp(18px, 3vw, 30px) 0; background: var(--pub-tint, var(--surface-2));
+  border-block: 1px solid var(--border); contain: paint; }
+:root[data-theme="dark"] .fx-marquee { background: #07120e; }
+.fx-marquee__row { display: flex; width: max-content; gap: 0; animation: fx-marq 46s linear infinite; }
+.fx-marquee__row + .fx-marquee__row { margin-top: 6px; animation-direction: reverse; animation-duration: 58s; }
+.fx-marquee__set { display: flex; align-items: center; flex: none; }
+.fx-marquee__w { font-family: var(--font-display); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; white-space: nowrap;
+  font-size: clamp(30px, 1rem + 4.2vw, 74px); padding: 0 .28em; transform: skewX(var(--fx-skew, 0deg)); transition: transform .4s ease-out; }
+.fx-marquee__w--o { color: transparent; -webkit-text-stroke: 1.2px color-mix(in srgb, var(--text) 38%, transparent); }
+.fx-marquee__w--g { background: linear-gradient(100deg, var(--gold-500), var(--volt-500)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:root[data-theme="dark"] .fx-marquee__w--g { background-image: linear-gradient(100deg, var(--gold-400), var(--volt-400)); }
+.fx-marquee__sep { flex: none; color: var(--gold-500); opacity: .8; display: inline-flex; }
+.fx-marquee__sep svg { width: clamp(18px, 2.2vw, 34px); height: auto; }
+.fx-marquee:hover .fx-marquee__row { animation-play-state: paused; }
+@keyframes fx-marq { to { transform: translate3d(-50%, 0, 0); } }
+.is-calm .fx-marquee__row, .is-offscreen .fx-marquee__row { animation-play-state: paused; }
+
+/* ---------------------------------------------------------------- reduced / off */
+.fx-static .fx-marquee__row { animation: none; }
+.fx-static .fx-marquee__row:nth-child(2) { display: none; }
+.fx-static .fx-marquee { overflow-x: auto; }
+@media (prefers-reduced-motion: reduce) {
+  .fx-marquee__row { animation: none !important; }
+  .fx-scene .fx-canvas { transition: none; }
+  .fx-tilt.is-tilting { transform: none; }
+}
+html[data-motion="reduce"] .fx-marquee__row { animation: none !important; }
+
+/* Centred forms (particles, galaxy is self-offset) sit right of the copy on wide screens */
+@media (min-width: 1000px) {
+  .pub-hero--fx-particles .pub-hero__fx { left: 30%; }
+}
+/* Fluid ink is vivid: keep it behind the copy as an accent, not a wall of colour */
+.pub-hero--fx-fluid .fx-scene.is-ready .fx-canvas { opacity: .85; }
+@media (max-width: 700px) { .pub-hero--fx-fluid .fx-scene.is-ready .fx-canvas { opacity: .7; } }
+/* A soft dark pool behind the text column (as in the Flowstate original): the headline,
+   lead and buttons keep their contrast whatever the scene draws. The hero is dark in
+   both themes, so one scrim serves light and dark. */
+.pub-hero--fx .pub-hero__copy { position: relative; isolation: isolate; }
+.pub-hero--fx .pub-hero__copy::before { content: ""; position: absolute; z-index: -1; inset: -12% -18% -14% -22%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(3, 10, 9, .78) 0%, rgba(3, 10, 9, .62) 45%, rgba(3, 10, 9, .28) 75%, rgba(3, 10, 9, 0) 100%); }
+.pub-hero--fx-fluid .pub-hero__copy::before, .pub-hero--fx-particles .pub-hero__copy::before {
+  background: radial-gradient(closest-side, rgba(4, 5, 12, .86) 0%, rgba(4, 5, 12, .72) 50%, rgba(4, 5, 12, .34) 80%, rgba(4, 5, 12, 0) 100%); }
+.pub-hero--fx .pub-counters { position: relative; }
+.pub-hero--fx .pub-counter { background-color: rgba(4, 10, 9, .55); }
+
+/* ---------------------------------------------------------------- cheap theme switch
+   public.js sets html.theme-switching for ~3 frames around a light/dark toggle. */
+html.theme-switching *, html.theme-switching *::before, html.theme-switching *::after {
+  transition: none !important; animation-play-state: paused !important; }
+/* Homepage sections far below the fold skip style, layout and paint until they come
+   near the screen (also what makes a theme switch cheap); their size is remembered. */
+#home-sections > section, .pub-footer { content-visibility: auto; contain-intrinsic-size: auto 760px; }

@@ -1,0 +1,23 @@
+{% extends base_template|default:"games/base_app.html" %}{% load static ee_tags %}
+{% block title %}Arcade leaderboards{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games.css' %}">{% endblock %}
+{% block arcade_wrap %}
+<div class="gm-page">
+  <header class="gm-bar"><a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a><h1>Leaderboards</h1>
+    <div class="gm-bar__tools gm-seg" role="tablist" aria-label="Period">
+      <a class="btn btn-sm {% if not week %}btn-primary{% else %}btn-ghost{% endif %}" href="?period=all" {% if not week %}aria-current="page"{% endif %}>All time</a>
+      <a class="btn btn-sm {% if week %}btn-primary{% else %}btn-ghost{% endif %}" href="?period=week" {% if week %}aria-current="page"{% endif %}>This week</a></div></header>
+  <p class="gm-small">Every row is a real saved result: each player's best score in each game. Names show as first name and initial. Two-player matches on one device don't count. You can hide yourself from the arcade page.</p>
+  <section class="gm-panel">
+    <h2>{% icon "crown" 16 %} Top players by experience</h2>
+    {% if xp %}<ol class="gm-board gm-board--wide">{% for r in xp %}<li class="{% if r.me %}is-me{% endif %}"><span class="gm-rank gm-rank--{{ r.rank }}">{{ r.rank }}</span><span>{{ r.name }}{% if r.guest %} <em class="gm-guest-tag">guest</em>{% endif %}</span><span class="gm-small">Level {{ r.level }} · {{ r.badges }} badge{{ r.badges|pluralize }}</span><b>{{ r.xp }} XP</b></li>{% endfor %}</ol>
+    {% else %}<p>No one has earned XP yet. Play any game to start the table.</p>{% endif %}
+  </section>
+  <div class="gm-boards">{% for b in boards %}
+    <section class="gm-panel" style="--gm-a:{{ b.g.accent }}"><h2>{{ b.g.title }}</h2>
+      {% if b.rows %}<ol class="gm-board">{% for r in b.rows %}<li class="{% if r.me %}is-me{% endif %}"><span class="gm-rank gm-rank--{{ r.rank }}">{{ r.rank }}</span><span>{{ r.name }}{% if r.guest %} <em class="gm-guest-tag">guest</em>{% endif %}{% if r.cheated %} <em class="gm-guest-tag" title="Set with a cheat code or the secret character">cheat</em>{% endif %}</span><b>{{ r.score }}</b></li>{% endfor %}</ol>
+      {% else %}<p class="gm-small">No scores {% if week %}this week{% else %}yet{% endif %}.</p>{% endif %}
+      {% if b.mine %}<p class="gm-small">Your best: {{ b.mine.score }}, rank {{ b.mine.rank }} all time.</p>{% endif %}
+    </section>{% endfor %}</div>
+</div>
+{% endblock %}

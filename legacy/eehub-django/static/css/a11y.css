@@ -1,0 +1,230 @@
+/* ==========================================================================
+   EE Hub — accessibility layer (Round 5F, WCAG 2.2 AA)
+
+   Loaded LAST by base.html, base_public.html, base_auth.html,
+   cbt/base_exam.html and errors/_base.html, so it can correct shared tokens
+   and components without editing tokens.css / ee.css / components.css.
+   Measured with axe-core 4 on ~150 pages in light and dark themes; see
+   docs/ACCESSIBILITY.md for the before/after numbers.
+
+   Sections
+     1. Contrast tokens (light + dark)
+     2. Dark-mode fills: primary buttons keep white text at >= 4.5:1
+     3. Component colour fixes (chips, tones, badges)
+     4. Headings that changed level (card heads h3 -> h2, exam h1)
+     5. Links inside text are underlined (1.4.1 / link-in-text-block)
+     6. Focus visibility
+     7. Phone: tap targets, tab bar clearance, wrapping, scroll containers
+   ========================================================================== */
+
+/* ---- 1. Contrast tokens ------------------------------------------------- */
+:root, :root[data-theme="light"] {
+  /* #6f7a74 was 4.45:1 on white and 3.75:1 on the sunken surface. */
+  --text-subtle: #5d6862;
+  /* volt as TEXT (chips, eyebrows) was 2.6-2.9:1 on its own tint. */
+  --volt: #0a6b78;
+  --primary-ink: var(--primary);
+  --badge-bg: var(--red-700);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --volt: var(--volt-400);
+    --primary-ink: var(--brand-glow-400);
+    --badge-bg: var(--red-600);
+    /* White on #2a925f was 3.9:1. The fill gets darker; text that used
+       --primary moves to --primary-ink (section 2). */
+    --primary: #1f7d50;
+    --primary-hover: #22865a;
+    --primary-active: #1a6b45;
+    --text-subtle: #a2a2a7;
+  }
+}
+:root[data-theme="dark"] {
+  --volt: var(--volt-400);
+  --primary-ink: var(--brand-glow-400);
+  --badge-bg: var(--red-600);
+  --primary: #1f7d50;
+  --primary-hover: #22865a;
+  --primary-active: #1a6b45;
+  --text-subtle: #a2a2a7;
+}
+
+/* ---- 2. Dark mode: text that used --primary -------------------------------
+   --primary is now the darker FILL in dark mode; rules that used it as a TEXT
+   colour (generated from every stylesheet, Round 5F) use --primary-ink. */
+:root[data-theme="dark"] .app-tab.is-active,
+:root[data-theme="dark"] a:hover > .module-icon, :root[data-theme="dark"] a:hover .module-icon, :root[data-theme="dark"] .home-action:hover .home-action-icon, :root[data-theme="dark"] a.kpi-card:hover .kpi-card-icon,
+:root[data-theme="dark"] .qa-portal-cta svg,
+:root[data-theme="dark"] .howto-tip-emoji .ui-icon, :root[data-theme="dark"] .howto-callout-icon .ui-icon, :root[data-theme="dark"] .mm-help-section-icon .ui-icon, :root[data-theme="dark"] .mm-help-split-icon .ui-icon, :root[data-theme="dark"] .mm-help-cta-icon .ui-icon,
+:root[data-theme="dark"] .as-chip:hover,
+:root[data-theme="dark"] .as-vote__b:hover,
+:root[data-theme="dark"] .as-act__btn svg,
+:root[data-theme="dark"] .as-ticks svg,
+:root[data-theme="dark"] .as-empty svg,
+:root[data-theme="dark"] .cx-opt__chk,
+:root[data-theme="dark"] .cx-gate__rules svg,
+:root[data-theme="dark"] .cb-facts-big span,
+:root[data-theme="dark"] .cb-rules svg,
+:root[data-theme="dark"] .cp-promise > svg,
+:root[data-theme="dark"] .cx-action--primary > summary,
+:root[data-theme="dark"] .ee-switcher__ic,
+:root[data-theme="dark"] .ee-switcher__tick,
+:root[data-theme="dark"] .mg-empty__ic,
+:root[data-theme="dark"] .mg-drop__ic,
+:root[data-theme="dark"] .mm-scrawl,
+:root[data-theme="dark"] .wb-panel__more,
+:root[data-theme="dark"] .wb-feed a:hover,
+:root[data-theme="dark"] .pg-scorelist li.is-total b,
+:root[data-theme="dark"] .pub-btn--ghost:hover,
+:root[data-theme="dark"] .pub-hod--more:hover,
+:root[data-theme="dark"] .pub-prog:hover .pub-prog__chev,
+:root[data-theme="dark"] .pub-org__act svg,
+:root[data-theme="dark"] .pub-ql__item:hover .pub-ql__go,
+:root[data-theme="dark"] .em-prev__ic,
+:root[data-theme="dark"] .app-topsearch:focus-within .app-topsearch__icon,
+:root[data-theme="dark"] .app-topsearch__cancel,
+:root[data-theme="dark"] .app-tab-sheet__tick,
+:root[data-theme="dark"] .sc-dropzone:hover .sc-dropzone-icon, :root[data-theme="dark"] .sc-dropzone.is-dragging .sc-dropzone-icon,
+:root[data-theme="dark"] .sc-dropzone-title b,
+:root[data-theme="dark"] .sc-dropzone-current-info a:hover,
+:root[data-theme="dark"] .sc-placement:has(input:checked) .sc-placement-icon,
+:root[data-theme="dark"] .tp-mini > svg,
+:root[data-theme="dark"] .tt__dh.is-today b,
+:root[data-theme="dark"] .tt-agenda__day.is-today h3,
+:root[data-theme="dark"] .abu-tile:hover .abu-tile__go,
+:root[data-theme="dark"] .fpv__file-icon
+  { color: var(--primary-ink); }
+
+/* ---- 3. Component colour fixes ----------------------------------------- */
+.ee-chip--plum { color: #6d28d9; }
+.ee-chip--ember { color: #9a3412; }
+.tone-plum { color: #6d28d9; }
+:root[data-theme="dark"] .ee-chip--plum, :root[data-theme="dark"] .tone-plum { color: #c4b5fd; }
+:root[data-theme="dark"] .ee-chip--ember { color: #ffb08f; }
+.ee-nav .app-nav-badge, .ee-sidebar-foot .app-nav-badge, .app-tab__badge, .notif-badge { background: var(--badge-bg); color: #fff; }
+.hb-tag--cognate { color: #1d4fa8; }
+.pg-eyebrow { color: #0f6f6a; }
+:root[data-theme="dark"] .pg-eyebrow { color: #5fd3cc; }
+.pg-eyebrow--blue { color: #1d5fd0; }
+:root[data-theme="dark"] .pg-eyebrow--blue { color: #8bb8ff; }
+.pg-avatar { color: #1d4fa8; }
+/* Penalty pills (ABU regulations / student life): the warning and ember
+   accents are darkened as text on their own 14% tint. */
+.abu-pen--rustication .abu-pen__p, .abu-pen--loss .abu-pen__p { color: color-mix(in srgb, var(--c) 72%, #000); }
+:root[data-theme="dark"] :is(.abu-pen--rustication, .abu-pen--loss) .abu-pen__p { color: var(--c); }
+.pub-tabs .is-active small { opacity: 1; color: inherit; }
+:root[data-theme="dark"] .pg-avatar { color: #9cc2ff; }
+.lc-rank { color: #6b2f9a; }
+:root[data-theme="dark"] .lc-rank { color: #d3a8f5; }
+.contact-badge.is-unassigned { color: var(--amber-800); }
+.hb-cp-scheme small { opacity: 1; }
+.cb-tag.cb-tag--ok { color: #fff; background: var(--grass-700); }
+:root[data-theme="dark"] .cb-tag.cb-tag--ok { color: #052e16; background: var(--grass-400); }
+
+/* ---- 4. Headings --------------------------------------------------------- */
+/* Card titles are section headings under the page h1 (they were h3, which
+   skipped a level). Same look as the old .ee-card__head h3 rule. */
+.ee-card__head h2, .rq-card-head h2, .mm-card-head h2 {
+  margin: 0; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;
+  font-family: var(--font-sans); letter-spacing: -0.02em; line-height: var(--lh-snug);
+}
+.mm-card-head h2 svg { color: var(--volt); }
+/* The exam bar title is the page's h1. */
+.cx-bar__h { margin: 0; font: inherit; letter-spacing: inherit; color: inherit; }
+/* Visually hidden page h1 where the design shows the title another way. */
+.a11y-h1 { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+/* ---- 5. Links inside running text --------------------------------------- */
+:where(.app-content, .pub-main, .ee-auth__main, .ee-dialog) :where(p, li, dd, small, span, .help, .muted, .rs-sub, .ee-field__help, .pub-callout) > a:not([class]) {
+  text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px;
+}
+.app-content p > a:not([class]):hover, .pub-main p > a:not([class]):hover { text-decoration-thickness: 2px; }
+
+/* ---- 6. Focus ------------------------------------------------------------ */
+/* One visible ring everywhere (WCAG 2.4.7 / 2.4.11): components that removed
+   the outline without a replacement get the shared ring back. */
+:where(a, button, summary, [tabindex]:not([tabindex="-1"]), input, select, textarea, [role="tab"], [role="button"]):focus-visible {
+  outline: 2px solid var(--accent, var(--gold-500));
+  outline-offset: 2px;
+}
+:where(.app-nav-item, .app-nav-group-head, .dropdown-item, .app-tab, .ee-pswitch__seg, .pub-link, .pub-drawer__link, .pub-menu__panel a, .hb-row, .cx-pal button):focus-visible {
+  outline: 2px solid var(--gold-500); outline-offset: -2px; border-radius: 10px;
+}
+.skip-link:focus, .skip-link:focus-visible { z-index: 2000; outline: 3px solid var(--gold-500); outline-offset: 2px; }
+/* Focus never hides under the sticky top bar or the phone tab bar (2.4.11). */
+html { scroll-padding-top: calc(var(--topbar-h, 64px) + 8px); }
+@media (max-width: 1023px) { html { scroll-padding-bottom: 96px; } }
+/* Keyboard targets of in-page anchors: main receives focus but shows no ring. */
+main[tabindex="-1"]:focus, #cx-main:focus { outline: none; }
+
+/* ---- 7. Phone ------------------------------------------------------------ */
+@media (max-width: 1023px), (pointer: coarse) {
+  /* 44px for primary actions and the shell's icon buttons (2.5.8 asks 24px;
+     the owner's brief asks 44px for primary actions). */
+  .app-topbar-btn, .theme-toggle, .as-ask-btn, .pub-icon-btn, .cx-iconbtn { min-width: 44px; min-height: 44px; }
+  .app-topbar-btn:not(.app-topbar-signin), .theme-toggle { width: 44px; height: 44px; }
+  .btn-primary, .btn-primary.btn-sm, button[type="submit"].btn, .pub-btn, .pub-btn--sm, .ee-pswitch__seg, .sys-slotbtn, .as-send { min-height: 44px; }
+  .btn-sm { min-height: 40px; }
+  .btn, .as-send { min-width: 44px; }
+  .pub-btn.pub-btn--sm { min-height: 44px; }
+  .fp-link { min-height: 32px; }
+  .rm-menu__opt, .dropdown-item { min-height: 44px; }
+  .app-topbar-actions { gap: 2px; }
+}
+@media (max-width: 1023px) {
+  /* Entrance animations (data-reveal slides) and decorative art never widen
+     the page; real scroll areas (tables, tab strips) scroll inside themselves. */
+  .app-main, .pub-main { overflow-x: clip; }
+  /* Long words, codes and e-mail addresses wrap instead of widening the page. */
+  .app-content, .pub-main { overflow-wrap: anywhere; }
+  .app-content :where(h1, h2, h3, p, dd, td, .ee-row__title, .ee-row__meta) { overflow-wrap: anywhere; }
+  .app-content :where(input, select, textarea):not([type="checkbox"]):not([type="radio"]) { max-width: 100%; min-width: 0; }
+  /* Content clears the floating tab bar (and the save bar some forms add). */
+  .ee-app .app-content { padding-bottom: calc(var(--space-8) + 72px + env(safe-area-inset-bottom, 0px)); }
+  /* Tables scroll inside their card, never the page. */
+  .app-content .ee-card > table, .app-content .card > table { display: block; overflow-x: auto; max-width: 100%; }
+}
+
+/* ---- Auth pages: the card title is the page h1 (the art panel is aria-hidden) */
+.ee-auth__card h1 { font-family: var(--font-display); font-size: 28px; margin: 0 0 4px; }
+.ee-auth__art-copy .ee-auth__dept { font-family: var(--font-display); font-weight: var(--fw-bold); color: #fff; font-size: clamp(2rem, 1.4rem + 2vw, 3rem); line-height: 1.05; margin: 8px 0 10px; letter-spacing: -0.03em; }
+@media (max-width: 880px) { .ee-auth__art-copy .ee-auth__dept { font-size: 1.6rem; } }
+
+/* ---- Link tabs mark the current page with aria-current (aria-selected is only valid on role=tab) */
+.tab[aria-current="page"] { color: var(--text); }
+.acc-subnav .tab[aria-current="page"] { box-shadow: inset 0 -2px 0 var(--primary); }
+
+/* ---- CBT exam: the watermark is decoration, drawn from an attribute so it is
+   not page text (1.4.3 exempts decoration; screen readers never meet it). */
+.cx-wmark span::before { content: attr(data-wm); }
+.fp-step.is-done { color: var(--success-fg); }
+nav li > a:not([class]), [role="navigation"] li > a:not([class]) { text-decoration: none; }
+
+/* ---- Off-canvas panels that are closed are hidden from tab order and screen
+   readers, and no longer widen the page on phones. */
+@media (max-width: 1199.98px) {
+  .mx-info:not(.is-open) { visibility: hidden; transition: transform .22s var(--ease-standard, ease), visibility 0s linear .22s; }
+  .mx-info.is-open { visibility: visible; transition: transform .22s var(--ease-standard, ease); }
+  .mx-layout { overflow-x: clip; }
+}
+
+/* Scroll wrappers contain their absolutely positioned bits (sr-only header
+   text, sticky helpers), so nothing escapes the wrapper and widens the page. */
+.ee-table-wrap, .p6-table-wrap, .table-wrap { position: relative; }
+/* A closed profile sheet (details with display: contents) never lays out its menu. */
+.app-tab-sheet:not([open]) > .app-tab-sheet__menu { display: none; }
+/* CBT cards whose title moved from h3 to h2 (same look). */
+.cb-bank h2 { margin: 4px 0 0; font-size: 15.5px; font-family: var(--font-display); }
+.cb-readycard__body h2 { margin: 0; font-size: 15px; font-family: var(--font-sans); display: flex; align-items: center; gap: 8px; }
+
+/* Checkpoint 4: with 44px touch targets the phone bar ran out of room and cut "EE Hub" to "EE …".
+   Keep the short name whole; the search pill gives way instead. */
+@media (max-width: 639px) {
+  .app-topbar-title { flex-shrink: 0; max-width: none; white-space: nowrap; }
+  .app-topsearch { flex: 1 1 56px; min-width: 44px; }
+}
+@media (max-width: 400px) {
+  /* Too narrow for a readable placeholder: show the magnifier alone (the field keeps its label). */
+  .app-topsearch__input::placeholder { color: transparent; }
+  .app-topsearch { flex: 0 1 48px; }
+}

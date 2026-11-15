@@ -1,0 +1,26 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}{{ role.name }} profile role{% endblock %}
+{% block page_title %}Profile role{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:matrix' %}">{% icon "arrow-left" 15 %} Permission matrix</a>
+<header class="ee-page-header">
+  <div class="ee-page-header__text acc-office-title"><span class="ee-ic tone-{{ tone }} acc-office-title__ic">{% icon icon 22 %}</span>
+    <div><span class="ee-page-header__eyebrow">Profile role</span><h1 class="ee-page-header__title">Every {{ role.name|lower }}</h1>
+    <p class="ee-page-header__description">The base permissions and home dashboard every {{ role.name|lower }} profile gets, before any office is added on top.</p></div></div>
+  <div class="ee-page-header__actions acc-seg">{% for r in roles %}<a class="acc-seg__btn{% if r.pk == role.pk %} is-on{% endif %}" href="{% url 'access:profile_role_edit' r.kind %}">{{ r.name }}</a>{% endfor %}</div>
+</header>
+<form method="post" class="acc-two" novalidate>{% csrf_token %}
+  <div class="acc-two__main">
+    <section class="ee-card ee-form"><div class="ee-card__head"><h2>{% icon "pencil" 17 %} Name</h2></div>
+      <div class="ee-form-grid">{% include "access/_field.html" with f=form.name %}{% include "access/_field.html" with f=form.description %}</div></section>
+    <section class="ee-card"><div class="ee-card__head"><h2>{% icon "shield-check" 17 %} Base permissions</h2></div>{% include "access/_perm_picker.html" %}</section>
+    <section class="ee-card" id="dashboard"><div class="ee-card__head"><h2>{% icon "layout-dashboard" 17 %} Home dashboard</h2></div>{% include "access/_widget_picker.html" %}</section>
+  </div>
+  <aside class="acc-two__side"><div class="acc-savebar ee-card"><button type="submit" class="btn btn-primary btn-block">{% icon "save" 16 %} Save {{ role.name|lower }} role</button>
+    <p class="ee-card__sub">Applies to every {{ role.name|lower }} profile straight away. Keep base permissions small; give extra powers through offices.</p></div></aside>
+</form>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,110 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}{{ u.get_full_name }}{% endblock %}
+{% block page_title %}User{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:users' %}">{% icon "arrow-left" 15 %} All users</a>
+<header class="acc-person-head ee-card">
+  <span class="acc-person-head__avatar{% if not u.is_active %} is-locked{% endif %}">{% if person.photo %}<img src="{{ person.photo.url }}" alt="">{% else %}{{ u.get_full_name|initials }}{% endif %}</span>
+  <div class="acc-person-head__text">
+    <h1>{{ u.get_full_name }}</h1>
+    <p class="ee-muted">{{ u.email }}{% if u.login_id %} · signs in with <span class="ee-mono">{{ u.login_id }}</span>{% endif %}</p>
+    <div class="acc-chips">
+      {% if u.is_active %}<span class="badge badge-success">Active</span>{% else %}<span class="badge badge-danger">Locked</span>{% endif %}
+      {% if u.is_superuser %}<span class="ee-chip ee-chip--plum">Administrator</span>{% endif %}
+      {% if u.must_change_password %}<span class="badge badge-warn">Temporary password</span>{% endif %}
+      {% for r in refs %}<span class="ee-chip">{% icon r.icon 12 %} {{ r.label }}</span>{% endfor %}
+    </div>
+  </div>
+  <div class="acc-person-head__actions">
+    <a class="btn btn-ghost btn-sm" href="{% url 'access:user_edit' u.pk %}">{% icon "pencil" 15 %} Edit</a>
+    <a class="btn btn-ghost btn-sm" href="{% url 'access:user_profiles' u.pk %}">{% icon "layers" 15 %} Profiles</a>
+    <a class="btn btn-ghost btn-sm" href="{% url 'access:user_overrides' u.pk %}">{% icon "key-round" 15 %} Overrides</a>
+    {% if can_reset_password %}<a class="btn btn-ghost btn-sm" href="{% url 'access:user_reset_password' u.pk %}">{% icon "lock" 15 %} Reset password</a>{% endif %}
+    {% if u.pk != request.user.pk %}
+    <form method="post" action="{% url 'access:user_toggle_active' u.pk %}" class="inline"
+          data-confirm="{% if u.is_active %}{{ u.get_full_name }} will be signed out and cannot sign in until you unlock the account.{% else %}{{ u.get_full_name }} will be able to sign in again.{% endif %}"
+          data-confirm-title="{% if u.is_active %}Lock this account?{% else %}Unlock this account?{% endif %}"
+          data-confirm-label="{% if u.is_active %}Lock account{% else %}Unlock{% endif %}"
+          {% if not u.is_active %}data-confirm-tone="default"{% endif %}>{% csrf_token %}
+      {% if u.is_active %}<button class="btn btn-ghost btn-sm btn-danger" type="submit">{% icon "user-x" 15 %} Lock</button>{% else %}<button class="btn btn-primary btn-sm" type="submit">{% icon "user-check" 15 %} Unlock</button>{% endif %}
+    </form>{% endif %}
+  </div>
+</header>
+
+{% if temp_password %}
+<div class="acc-temp-pw" role="status">
+  <span class="ee-ic tone-gold">{% icon "key-round" 18 %}</span>
+  <div><b>Temporary password — shown only this once</b><p>Give it to {{ person.first_name|default:"the user" }} privately. They must choose a new one when they first sign in.</p></div>
+  <code class="acc-temp-pw__value">{{ temp_password }}</code>
+  <button type="button" class="btn btn-ghost btn-sm" data-copy="{{ temp_password }}">{% icon "copy" 15 %} Copy</button>
+</div>
+{% endif %}
+
+<div class="acc-two">
+  <div class="acc-two__main">
+    <section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "layers" 17 %} Profiles</h2><a class="ee-card__link" href="{% url 'access:user_profiles' u.pk %}">Add or close →</a></div>
+      <ul class="ee-list">{% for p in profiles %}
+        <li class="{% if not p.open %}is-dimmed{% endif %}"><span class="ee-ic tone-{{ p.tone }}">{% icon p.icon 16 %}</span>
+          <div class="ee-row__body"><div class="ee-row__title">{{ p.title }}</div><div class="ee-row__meta">{{ p.sub|default:"—" }}</div></div>
+          <span class="badge{% if p.open %} badge-success{% endif %}">{{ p.status }}</span></li>
+      {% empty %}<li class="ee-empty" style="width:100%">No profiles yet. <a href="{% url 'access:user_profiles' u.pk %}">Add one</a>.</li>{% endfor %}</ul>
+    </section>
+
+    <section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "badge-check" 17 %} Offices</h2></div>
+      <ul class="ee-list">{% for a in appointments %}
+        <li class="{% if not a.is_current %}is-dimmed{% endif %}"><span class="ee-ic tone-{{ a.office.color }}">{% icon a.office.icon 16 %}</span>
+          <div class="ee-row__body"><div class="ee-row__title">{% if a.is_acting %}Acting {% endif %}{{ a.office.name }}</div>
+            <div class="ee-row__meta">In the {{ a.get_profile_kind_display|lower }} profile · {{ a.scope_text }} · {{ a.start_date|date:"j M Y" }} – {% if a.end_date %}{{ a.end_date|date:"j M Y" }}{% else %}open{% endif %}</div></div>
+          {% if a.is_current %}<span class="badge badge-success">Current</span>
+            {% if request.user|has_perm:"accounts.offices_appoint" %}<form method="post" action="{% url 'access:appointment_end' a.pk %}" class="inline" data-confirm="{{ person.plain_name }} stops holding {{ a.office.name }} today. The permissions it gives are removed straight away." data-confirm-title="End this appointment?" data-confirm-label="End appointment">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}"><button class="btn btn-ghost btn-sm" type="submit">End</button></form>{% endif %}
+          {% elif a.start_date > today %}<span class="badge badge-info">Starts {{ a.start_date|date:"j M" }}</span>{% else %}<span class="badge">Ended</span>{% endif %}
+        </li>
+      {% empty %}<li class="ee-empty" style="width:100%">Holds no office. Appoint people from an office's page.</li>{% endfor %}</ul>
+    </section>
+
+    <section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "shield-check" 17 %} Effective permissions</h2><span class="ee-card__sub">What they can do in each profile, today</span></div>
+      {% if u.is_superuser %}<p class="acc-note">{% icon "shield-check" 15 %} Administrators hold every permission.</p>{% endif %}
+      {% for pv in perm_views %}
+      <details class="acc-effective"{% if forloop.first %} open{% endif %}>
+        <summary><span class="ee-ic tone-green">{% icon pv.ref.icon 15 %}</span><b>{{ pv.ref.label }}</b>{% if pv.ref.offices %}<span class="acc-chips">{% for a in pv.ref.offices %}<span class="ee-chip ee-chip--{{ a.office.color }}">{{ a.office.label }}</span>{% endfor %}</span>{% endif %}<span class="acc-effective__count">{{ pv.count }}</span></summary>
+        {% for g in pv.groups %}<div class="acc-effective__group"><span class="acc-effective__label">{{ g.label }}</span><span class="acc-chips">{% for i in g.items %}<span class="ee-chip ee-chip--green" title="{{ i.full }}">{{ i.label }}</span>{% endfor %}</span></div>
+        {% empty %}<p class="ee-card__sub">No permissions in this profile.</p>{% endfor %}
+        {% if pv.other %}<div class="acc-effective__group"><span class="acc-effective__label">Other</span><span class="acc-chips">{% for o in pv.other|slice:":30" %}<span class="ee-chip ee-mono">{{ o }}</span>{% endfor %}{% if pv.other|length > 30 %}<span class="ee-chip">+{{ pv.other|length|add:"-30" }} more</span>{% endif %}</span></div>{% endif %}
+      </details>
+      {% empty %}<p class="ee-empty">No profile, so no permissions yet.</p>{% endfor %}
+    </section>
+  </div>
+
+  <aside class="acc-two__side">
+    <section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "circle-user-round" 17 %} Details</h2></div>
+      <dl class="acc-dl">
+        <dt>Name</dt><dd>{{ person.full_name|default:"—" }}</dd>
+        <dt>Gender</dt><dd>{{ person.get_gender_display|default:"—" }}</dd>
+        <dt>Phone</dt><dd>{{ person.phone|default:"—" }}</dd>
+        <dt>Profile complete</dt><dd>{% if person %}{{ person.completeness }}%{% else %}—{% endif %}</dd>
+        <dt>Joined</dt><dd>{{ u.date_joined|date:"j M Y" }}</dd>
+        <dt>Last sign-in</dt><dd>{{ u.last_login|date:"j M Y, H:i"|default:"Never" }}</dd>
+        <dt>Last seen</dt><dd>{% if u.last_seen %}{{ u.last_seen|timesince }} ago{% else %}—{% endif %}</dd>
+      </dl>
+    </section>
+    <section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "key-round" 17 %} Personal overrides</h2><a class="ee-card__link" href="{% url 'access:user_overrides' u.pk %}">Manage →</a></div>
+      <ul class="ee-list">{% for o in overrides %}
+        <li class="{% if not o.is_active %}is-dimmed{% endif %}"><span class="ee-ic {% if o.effect == 'grant' %}tone-green{% else %}tone-red{% endif %}">{% if o.effect == 'grant' %}{% icon "plus" 15 %}{% else %}{% icon "minus" 15 %}{% endif %}</span>
+          <div class="ee-row__body"><div class="ee-row__title">{{ o.permission.name|capfirst }}</div><div class="ee-row__meta">{{ o.reason }}{% if o.expires_at %} · until {{ o.expires_at|date:"j M Y" }}{% endif %}</div></div></li>
+      {% empty %}<li class="ee-card__sub">None. Everything comes from profiles and offices.</li>{% endfor %}</ul>
+    </section>
+    {% if history %}<section class="ee-card">
+      <div class="ee-card__head"><h2>{% icon "history" 17 %} Account history</h2></div>
+      <ul class="ee-list">{% for e in history %}<li><div class="ee-row__body"><div class="ee-row__title">{{ e.get_action_display }}{% if e.note %} · {{ e.note }}{% endif %}</div><div class="ee-row__meta">{{ e.actor_repr|truncatechars:40 }} · {{ e.timestamp|date:"j M Y, H:i" }}</div></div></li>{% endfor %}</ul>
+    </section>{% endif %}
+  </aside>
+</div>
+</div>
+{% endblock %}

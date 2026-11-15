@@ -1,0 +1,37 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}{% if rule %}Edit delegation rule{% else %}New delegation rule{% endif %}{% endblock %}
+{% block page_title %}Delegation rule{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page acc-narrow">
+<a class="acc-back" href="{% url 'access:delegation' %}">{% icon "arrow-left" 15 %} Delegation</a>
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "git-fork" 14 %} Delegation rule</span>
+  <h1 class="ee-page-header__title">{% if rule %}{{ rule.grantor_office.name }}{% else %}New rule{% endif %}</h1>
+  <p class="ee-page-header__description">Whoever holds the office below may appoint to the chosen offices and grant the chosen permissions (only those they hold), inside the scope you set.</p></div></header>
+<form method="post" class="ee-form" novalidate>{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "crown" 17 %} Grantor and scope</h2></div>
+    <div class="ee-form-grid">{% include "access/_field.html" with f=form.grantor_office %}{% include "access/_field.html" with f=form.scope_rule %}{% include "access/_field.html" with f=form.max_days %}</div>
+    {% include "access/_field.html" with f=form.note %}
+    {% include "access/_field.html" with f=form.is_active %}
+  </section>
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "badge-check" 17 %} Offices</h2></div>
+    <fieldset class="r7a-permgroup"><legend>{{ form.office_categories.label }}</legend>{% for cb in form.office_categories %}<label class="check">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>{% endfor %}</fieldset>
+    <details class="r7a-finer" {% if form.offices.value %}open{% endif %}><summary>{{ form.offices.label }}</summary><div class="r7a-checkgrid">{% for cb in form.offices %}<label class="check">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>{% endfor %}</div></details>
+    <details class="r7a-finer" {% if form.except_offices.value %}open{% endif %}><summary>{{ form.except_offices.label }}</summary><div class="r7a-checkgrid">{% for cb in form.except_offices %}<label class="check">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>{% endfor %}</div></details>
+  </section>
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "key-round" 17 %} Permissions</h2></div>
+    {% include "access/_field.html" with f=form.any_held_permission %}
+    <details class="r7a-finer" {% if form.permissions.value %}open{% endif %}><summary>{{ form.permissions.label }}</summary><div class="r7a-checkgrid">{% for cb in form.permissions %}<label class="check">{{ cb.tag }}<span>{{ cb.choice_label|capfirst }}</span></label>{% endfor %}</div></details>
+  </section>
+  <div class="form-actions btn-group"><button type="submit" class="btn btn-primary">{% icon "save" 16 %} Save rule</button><a class="btn btn-ghost" href="{% url 'access:delegation' %}">Cancel</a></div>
+</form>
+{% if rule %}<form method="post" class="ee-card acc-danger-zone" data-confirm="Holders of {{ rule.grantor_office.name }} can no longer appoint or grant through this rule." data-confirm-title="Delete this rule?" data-confirm-label="Delete">{% csrf_token %}
+  <div class="ee-card__head"><h2>{% icon "trash-2" 17 %} Delete</h2></div><p class="ee-card__sub">Existing appointments and grants stay; only new ones are affected.</p>
+  <div><button class="btn btn-ghost" type="submit" name="action" value="delete">Delete rule</button></div></form>{% endif %}
+</div>
+{% endblock %}

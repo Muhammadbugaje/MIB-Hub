@@ -1,0 +1,43 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Registration numbers{% endblock %}
+{% block page_title %}Registration numbers{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "id-card" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Registration-number formats</h1>
+    <p class="ee-page-header__description">Give EE Hub a few sample numbers and it writes the rule for you. Every new student, import and sign-in number is checked against these formats.</p>
+  </div>
+  <div class="ee-page-header__actions"><a class="btn btn-primary" href="{% url 'access:regno_create' %}">{% icon "circle-plus" 16 %} New format</a></div>
+</header>
+{% include "access/_subnav.html" with section="regno" %}
+
+<section class="ee-card acc-identify">
+  <div class="ee-card__head"><h2>{% icon "scan-line" 17 %} Which format is this number?</h2></div>
+  <label class="acc-search acc-search--lg">{% icon "id-card" 17 %}<input type="search" name="test" placeholder="Type any registration or staff number" autocomplete="off" spellcheck="false" aria-label="Number to check"
+    hx-get="{% url 'access:regno_preview' %}?mode=identify" hx-trigger="input changed delay:200ms, search" hx-target="#identify-result" hx-params="test"></label>
+  <div id="identify-result" aria-live="polite"></div>
+</section>
+
+{% if rows %}
+<div class="acc-regno-cards">{% for r in rows %}
+  <article class="ee-card acc-regno-card{% if not r.c.is_active %} is-off{% endif %}">
+    <div class="acc-regno-card__head">
+      <div><a href="{% url 'access:regno_edit' r.c.pk %}" class="link-plain"><b>{{ r.c.name }}</b></a>
+        <small class="ee-muted">{{ r.c.get_profile_kind_display }}{% if r.c.programme %} · {{ r.c.programme }}{% endif %} · priority {{ r.c.priority }}</small></div>
+      <span class="acc-chips">{% if not r.c.is_active %}<span class="ee-chip ee-chip--ember">Off</span>{% endif %}{% if r.c.auto_pattern %}<span class="ee-chip ee-chip--volt">{% icon "wand-sparkles" 11 %} Auto</span>{% endif %}<span class="ee-chip">{{ r.c.n_students }} student{{ r.c.n_students|pluralize }}</span></span>
+    </div>
+    {% include "access/_regno_tokens.html" with tokens=r.tokens %}
+    <div class="acc-regno-card__foot"><code class="acc-code">{{ r.c.pattern }}</code>
+      {% if r.c.sample_list %}<span class="ee-card__sub">e.g. {{ r.c.sample_list|slice:":3"|join:", " }}</span>{% endif %}
+      <a class="btn btn-ghost btn-sm" href="{% url 'access:regno_edit' r.c.pk %}">{% icon "pencil" 14 %} Edit</a></div>
+  </article>
+{% endfor %}</div>
+{% else %}
+  {% url 'access:regno_create' as add_url %}{% include "partials/empty_state.html" with title="No formats yet" body="Without a format, any registration number is accepted." action_url=add_url action_label="Add the first format" %}
+{% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,45 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Game config · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}"><link rel="stylesheet" href="{% static 'css/fslg-admin.css' %}">{% endblock %}
+{% block content %}
+<div class="gs fa">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>Game name and branding</h1>
+  </header>
+  {% include "games/_settings_nav.html" with at="fslg_config" %}
+  <p class="gs-lead">One place for the game's name. Menus, the loading screen, the opening film, signs and the giant letters on campus, the credits, the browser tab and the home-screen app all follow it. Story text uses tokens such as <code>{{"{{"}}GAME_NAME}}</code>, so nothing needs rewriting when the name changes.</p>
+  <div class="fa-cols fa-cols--even">
+    <form class="gs-card" id="fa-config" novalidate>
+      <h2>{% icon "type" 16 %} Name and colours</h2>
+      <div class="gs-fields">
+        <label class="gs-field">Game name <input class="gs-input gs-input--plain" name="gameName" maxlength="60" required><small>1 to 60 characters.</small></label>
+        <label class="gs-field">Short name <input class="gs-input gs-input--plain" name="gameShortName" maxlength="12" required><small>Under the home-screen icon; 12 characters at most.</small></label>
+        <label class="gs-field">Initials <input class="gs-input gs-input--plain" name="initialsOverride" maxlength="6" placeholder="automatic"><small>Empty: <b id="fa-auto-init">—</b> (first letter of each word). Or type 1 to 6 letters.</small></label>
+        <label class="gs-field">Tagline <input class="gs-input gs-input--plain" name="tagline" maxlength="120"></label>
+        <label class="gs-field">Currency name <input class="gs-input gs-input--plain" name="currencyName" maxlength="20" required></label>
+        <label class="gs-field">Main colour <input type="color" name="primaryColour" class="fa-colour"></label>
+        <label class="gs-field">Second colour <input type="color" name="secondaryColour" class="fa-colour"></label>
+      </div>
+      <div class="gs-errors" id="fa-config-err" hidden></div>
+      <label class="gs-field">Note for the change log (optional) <input class="gs-input gs-input--plain" name="note" maxlength="200"></label>
+      <div class="gs-row"><button class="btn btn-primary" type="submit">{% icon "save" 15 %} Save for everyone</button><button class="btn btn-ghost" type="button" data-fa="defaults">{% icon "rotate-ccw" 15 %} Back to the original name</button><span class="fa-status" id="fa-status" role="status"></span></div>
+    </form>
+    <section class="gs-card" aria-labelledby="fa-prev-h">
+      <h2 id="fa-prev-h">{% icon "eye" 16 %} Live preview</h2>
+      <div class="fa-preview" id="fa-preview">
+        <div class="fa-title"><b data-p="upper"></b><span data-p="tagline"></span></div>
+        <canvas class="fa-sign" id="fa-sign" width="1024" height="512" aria-label="Billboard preview"></canvas>
+        <canvas class="fa-sign" id="fa-plate" width="512" height="128" aria-label="Main Gate sign preview"></canvas>
+        <div class="fa-letters" id="fa-letters" aria-label="The giant letters in the Selfie Garden"></div>
+        <p class="fa-tab"><span class="fa-tab__dot"></span><span data-p="name"></span></p>
+        <p class="gm-small">Home-screen label: <b data-p="short"></b> · Money: <b data-p="currency"></b></p>
+        <p class="gm-small" data-p="sample"></p>
+      </div>
+    </section>
+  </div>
+  <section class="gs-card" aria-labelledby="fa-hist-h"><h2 id="fa-hist-h">{% icon "history" 16 %} History</h2><div id="fa-history" data-kind="config" data-key=""><p>Loading…</p></div></section>
+</div>
+{{ defaults|json_script:"fa-defaults" }}
+{% include "games/_fslg_admin_head.html" %}
+{% endblock %}

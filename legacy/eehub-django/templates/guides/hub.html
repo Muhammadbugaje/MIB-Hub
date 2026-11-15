@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}Help and how-to{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/guides.css' %}">{% endblock %}
+{% block content %}{% include "guides/_hub_body.html" %}{% endblock %}
+{% block extra_js %}<script src="{% static 'js/guides.js' %}" defer></script>{% endblock %}

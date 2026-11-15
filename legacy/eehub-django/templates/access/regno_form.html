@@ -1,0 +1,59 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}{% if obj %}{{ obj.name }}{% else %}New registration-number format{% endif %}{% endblock %}
+{% block page_title %}Registration numbers{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:regno_list' %}">{% icon "arrow-left" 15 %} Registration numbers</a>
+<header class="ee-page-header"><div class="ee-page-header__text">
+  <span class="ee-page-header__eyebrow">{% icon "id-card" 14 %} {% if obj %}Edit format{% else %}New format{% endif %}</span>
+  <h1 class="ee-page-header__title">{% if obj %}{{ obj.name }}{% else %}Teach EE Hub a number format{% endif %}</h1>
+  <p class="ee-page-header__description">Paste a few real-looking numbers, one per line. EE Hub works out which parts stay the same and which change, and shows the rule as you type.</p></div></header>
+
+<form method="post" class="acc-regno-layout" novalidate id="regno-form"
+      hx-post="{% url 'access:regno_preview' %}" hx-trigger="input changed delay:250ms from:[data-live], change from:[data-live]" hx-target="#regno-preview" hx-swap="innerHTML" hx-sync="this:replace">{% csrf_token %}
+  {% if obj %}<input type="hidden" name="pk" value="{{ obj.pk }}">{% endif %}
+  <div class="acc-regno-layout__form">
+    <section class="ee-card ee-form">
+      <div class="ee-card__head"><h2>{% icon "list" 17 %} 1. Sample numbers</h2></div>
+      <div class="ee-field{% if form.samples.errors %} acc-has-error{% endif %}">
+        <label for="{{ form.samples.id_for_label }}">Samples <span class="ee-card__sub">one per line</span></label>
+        <textarea name="samples" id="{{ form.samples.id_for_label }}" rows="5" class="input ee-mono acc-samples-input" spellcheck="false" autocapitalize="characters" placeholder="U21EE1031&#10;U22EE1047" data-live>{{ form.samples.value|default_if_none:"" }}</textarea>
+        <div class="help">Mix shapes if you need to (for example U21EE1031 and PGS/2024/0012): each shape becomes an alternative.</div>{{ form.samples.errors }}
+      </div>
+      <div class="ee-field acc-field--check"><label class="check acc-switch"><input type="checkbox" name="auto_pattern" id="id_auto_pattern"{% if form.auto_pattern.value %} checked{% endif %} data-live data-auto-toggle><span>Write the pattern from the samples</span></label></div>
+      <div class="ee-field{% if form.pattern.errors %} acc-has-error{% endif %}" data-manual-pattern{% if form.auto_pattern.value %} hidden{% endif %}>
+        <label for="id_pattern">Pattern (regular expression)</label>
+        <input type="text" name="pattern" id="id_pattern" class="input ee-mono" spellcheck="false" value="{{ form.pattern.value|default_if_none:'' }}" data-live placeholder="^U\d{2}EE\d{4}$">
+        <div class="help">For experts. Letters are compared in capitals.</div>{{ form.pattern.errors }}
+      </div>
+    </section>
+    <section class="ee-card ee-form">
+      <div class="ee-card__head"><h2>{% icon "tag" 17 %} 2. About this format</h2></div>
+      <div class="ee-form-grid">
+        {% include "access/_field.html" with f=form.name %}{% include "access/_field.html" with f=form.code %}
+        <div class="ee-field"><label for="id_profile_kind">Used for</label><select name="profile_kind" id="id_profile_kind" class="input" data-live>{% for v, l in form.fields.profile_kind.choices %}<option value="{{ v }}"{% if form.profile_kind.value == v %} selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+        {% include "access/_field.html" with f=form.programme %}
+        {% include "access/_field.html" with f=form.priority %}
+      </div>
+      {% include "access/_field.html" with f=form.is_active %}
+    </section>
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary btn-lg">{% icon "save" 16 %} Save format</button>
+      <a class="btn btn-ghost" href="{% url 'access:regno_list' %}">Cancel</a>
+      {% if obj %}<button type="submit" form="regno-delete" class="btn btn-ghost btn-danger ms-auto">{% icon "trash-2" 15 %} Delete</button>{% endif %}
+    </div>
+  </div>
+  <aside class="acc-regno-layout__preview">
+    <section class="ee-card acc-rx-card">
+      <div class="ee-card__head"><h2>{% icon "scan-eye" 17 %} Live preview</h2></div>
+      <div id="regno-preview" aria-live="polite">{% include "access/_regno_preview.html" %}</div>
+      <div class="ee-field acc-test-box"><label for="id_test">Try a number</label>
+        <label class="acc-search">{% icon "id-card" 16 %}<input type="search" name="test" id="id_test" autocomplete="off" spellcheck="false" placeholder="e.g. U23EE0042" data-live></label></div>
+    </section>
+  </aside>
+</form>
+{% if obj %}<form method="post" id="regno-delete" data-confirm="{{ obj.name }} is removed. Numbers already saved are not changed." data-confirm-title="Delete this format?" data-confirm-label="Delete">{% csrf_token %}<input type="hidden" name="action" value="delete"></form>{% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

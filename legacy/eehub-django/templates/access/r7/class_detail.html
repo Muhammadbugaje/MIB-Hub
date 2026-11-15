@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% load ee_tags pager_tags %}
+{% block title %}{{ level }} class list{% endblock %}
+{% block page_title %}Class list{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:classes' %}">{% icon "arrow-left" 15 %} Classes</a>
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "users-round" 14 %} {{ page.paginator.count }} student{{ page.paginator.count|pluralize }}</span>
+    <h1 class="ee-page-header__title">{{ level }}</h1>
+    <p class="ee-page-header__description">{% if contacts %}Phone numbers and personal e-mails are shown because your office handles student records; opening this list is logged.{% else %}Names and registration numbers only. Contact details stay with the officers who handle student records.{% endif %}</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    {% if can_broadcast %}<a class="btn btn-primary" href="{% url 'access:broadcast' %}?level={{ level.pk }}">{% icon "megaphone" 16 %} Announce to this class</a>{% endif %}
+  </div>
+</header>
+
+<div class="ee-grid">
+  <section class="w-third ee-card">
+    <div class="ee-card__head"><h2>{% icon "megaphone" 17 %} Class officers</h2></div>
+    <ul class="ee-list">{% for a in reps %}<li><span class="ee-ic tone-gold">{% icon a.office.icon 15 %}</span><div class="ee-row__body"><div class="ee-row__title">{{ a.person.full_name }}</div><div class="ee-row__meta">{{ a.office.label }} · since {{ a.start_date|date:"j M Y" }}</div></div></li>{% empty %}<li class="ee-empty r7a-wide">No class rep yet.</li>{% endfor %}</ul>
+    <div class="ee-card__head r7a-subhead"><h2>{% icon "book-marked" 17 %} Tutors</h2></div>
+    <ul class="ee-list">{% for a in tutors %}<li><span class="ee-ic tone-volt">{% icon "book-marked" 15 %}</span><div class="ee-row__body"><div class="ee-row__title">{{ a.person.full_name }}</div><div class="ee-row__meta">As {{ a.get_profile_kind_display|lower }}{% if a.scope_label %} · {{ a.scope_label }}{% endif %}{% if a.end_date %} · until {{ a.end_date|date:"j M Y" }}{% endif %}</div></div></li>{% empty %}<li class="ee-empty r7a-wide">No tutors yet.</li>{% endfor %}</ul>
+  </section>
+  <section class="w-full r7a-twothirds ee-card">
+    <div class="ee-card__head r7a-wraphead"><h2>{% icon "list" 17 %} Students</h2>
+      <form method="get" role="search" class="r7a-inline-search"><label class="r7a-search">{% icon "search" 15 %}<input type="search" name="q" value="{{ q }}" placeholder="Name or reg number" aria-label="Search the class"></label></form></div>
+    <div class="table-wrap r7a-table"><table class="table">
+      <thead><tr><th>Name</th><th>Reg number</th><th class="r7a-hide-sm">Entry</th><th>Status</th>{% if contacts %}<th>Phone</th><th class="r7a-hide-sm">Personal e-mail</th>{% endif %}</tr></thead>
+      <tbody>{% for st in page.object_list %}<tr>
+        <td class="r7a-td-name">{{ st.person.surname_first }}</td><td class="ee-mono r7a-td-reg">{{ st.reg_number }}</td><td class="r7a-hide-sm">{{ st.entry_mode|default:"-" }}</td>
+        <td class="r7a-td-status">{% if st.status == "active" %}<span class="badge badge-success">Active</span>{% else %}<span class="badge">{{ st.get_status_display }}</span>{% endif %}</td>
+        {% if contacts %}<td class="r7a-td-phone" data-label="Phone">{{ st.person.phone|default:"-" }}</td><td class="r7a-hide-sm">{{ st.person.personal_email|default:"-" }}</td>{% endif %}
+      </tr>{% empty %}<tr><td colspan="6" class="ee-empty">{% if q %}Nobody matches “{{ q }}”.{% else %}No students in this class yet.{% endif %}</td></tr>{% endfor %}</tbody>
+    </table></div>
+    {% pager page %}
+  </section>
+</div>
+</div>
+{% endblock %}

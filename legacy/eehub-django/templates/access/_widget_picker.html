@@ -1,0 +1,19 @@
+{% load ee_tags %}<div class="acc-wpicker" data-widget-picker>
+  <p class="ee-card__sub">Ticked widgets appear on the dashboard in this order. Drag a row, or use the arrows, to reorder.</p>
+  <ol class="acc-wlist" data-widget-list>
+    {% for row in widgets %}
+    <li class="acc-witem{% if row.on %} is-on{% endif %}" draggable="true" data-widget-item>
+      <span class="acc-witem__grip" aria-hidden="true">{% icon "grip-vertical" 16 %}</span>
+      <label class="check acc-witem__main"><input type="checkbox" name="widgets" value="{{ row.w.code }}"{% if row.on %} checked{% endif %}>
+        <span class="ee-ic tone-green acc-witem__ic">{% icon row.w.icon 15 %}</span>
+        <span class="acc-witem__text"><b>{{ row.w.title }}</b><small>{{ row.w.description|default:row.w.code }}{% if row.w.perm %} · needs permission{% endif %}</small></span>
+      </label>
+      <span class="acc-witem__size">{{ row.w.size }}</span>
+      <span class="acc-witem__moves">
+        <button type="button" class="btn btn-ghost btn-icon btn-sm" data-widget-up aria-label="Move {{ row.w.title }} up">{% icon "chevron-up" 16 %}</button>
+        <button type="button" class="btn btn-ghost btn-icon btn-sm" data-widget-down aria-label="Move {{ row.w.title }} down">{% icon "chevron-down" 16 %}</button>
+      </span>
+    </li>
+    {% endfor %}
+  </ol>
+</div>

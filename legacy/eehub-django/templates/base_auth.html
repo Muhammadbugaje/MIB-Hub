@@ -1,0 +1,38 @@
+{% load static ee_tags %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% include "partials/head.html" %}
+  <title>{% block title %}Sign in{% endblock %} · {{ site_info.short_name }}</title>
+  <link rel="stylesheet" href="{% static 'css/apple.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ee.css' %}">
+  <link rel="stylesheet" href="{% static 'css/auth-ee.css' %}">
+  <link rel="stylesheet" href="{% static 'css/ux.css' %}">
+  {% block extra_css %}{% endblock %}
+  <link rel="stylesheet" href="{% static 'css/a11y.css' %}">
+</head>
+<body class="ee-auth {% block body_class %}{% endblock %}">
+  <a class="skip-link" href="#app-content">Skip to main content</a>
+  <div class="ee-auth__art" aria-hidden="true">
+    <img src="{% static 'img/hero-scene.svg' %}" alt="">
+    <div class="ee-auth__art-copy">
+      <div class="ee-auth__crest">{% setting "brand.show_abu_crest" True as crest %}{% if crest %}<img src="{% static 'img/brand/abu-crest-white.svg' %}" alt="">{% endif %}{% brand_logo "primary" 46 %}</div>
+      <p class="ee-auth__kicker">{{ site_info.organisation_name }}</p>
+      <p class="ee-auth__dept">{{ site_info.department_name }}</p>
+      <p>{{ site_info.tagline }}</p>
+    </div>
+  </div>
+  <main class="ee-auth__main" id="app-content" tabindex="-1">
+    {% block auth_top %}<a class="ee-auth__home" href="{% url 'content:home' %}">{% icon "arrow-left" 16 %} Back to the website</a>{% endblock %}
+    <div class="ee-auth__card">
+      {% block content %}{% endblock %}
+    </div>
+    <p class="ee-auth__foot">{{ site_info.short_name }} · {{ site_info.footer_note }}</p>
+  </main>
+  {% include "partials/toasts.html" %}
+  <script src="{% static 'js/app.js' %}" defer></script>
+  <script src="{% static 'js/ee.js' %}" defer></script>
+  <script src="{% static 'js/password-tools.js' %}" defer></script>
+  {% block extra_js %}{% endblock %}
+  <script src="{% static 'js/a11y.js' %}" defer></script>
+</body>
+</html>

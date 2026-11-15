@@ -1,0 +1,12 @@
+---
+/** A coloured message box. <Alert tone="danger">Wrong password</Alert> */
+interface Props {
+  tone?: "info" | "success" | "warning" | "danger";
+}
+const { tone = "info" } = Astro.props;
+const role = tone === "danger" ? "alert" : "status";
+---
+
+<div class:list={["alert", `alert--${tone}`, tone === "danger" && "alert--shake"]} role={role}>
+  <slot />
+</div>

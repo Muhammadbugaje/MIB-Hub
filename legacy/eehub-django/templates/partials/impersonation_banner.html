@@ -1,0 +1,12 @@
+{% load ee_tags %}<div class="impersonation-banner" id="impersonation-banner" role="status" aria-live="polite">
+  <button type="button" class="imp-tag" aria-label="Toggle impersonation banner" data-impersonation-toggle>{% icon "venetian-mask" 12 %}<span class="imp-tag-text">Impersonating</span></button>
+  <span class="imp-name"><span class="imp-name-full">{{ request.user.get_full_name }}</span><span class="imp-name-short">{{ request.user.get_short_name }}</span>
+    {% if active_profile %}<span class="imp-meta imp-meta-role">· {{ active_profile.label }}</span>{% endif %}</span>
+  <div class="imp-actions">
+    <a class="impersonation-return impersonation-switch" href="{% url 'core:impersonate_pick' %}" title="Switch to another user">{% icon "users" 12 %}<span class="impersonation-return-text">Switch</span></a>
+    <form method="post" action="{% url 'core:impersonate_stop' %}" class="imp-return">{% csrf_token %}
+      <button type="submit" class="impersonation-return">{% icon "undo-2" 12 %}<span class="impersonation-return-text">Return to {{ request.impersonator.get_full_name }}</span></button>
+    </form>
+    <button type="button" class="imp-toggle" aria-label="Collapse banner" aria-expanded="true" data-impersonation-toggle>{% icon "chevron-down" 14 %}</button>
+  </div>
+</div>

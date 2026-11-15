@@ -1,0 +1,100 @@
+/* ==========================================================================
+   EE Hub — Thread & message list styles (legacy shared module).
+   v6 (UI overhaul): the app shell, sidebar, topbar and dropdowns moved to
+   layout.css and components.css. Only the thread/message primitives that
+   several apps still use remain here.
+   ========================================================================== */
+
+/* ---------------------------------------------------------------------------
+   Threads / messages (kept for compatibility)
+   --------------------------------------------------------------------------- */
+.thread-list { display: flex; flex-direction: column; gap: var(--space-1); }
+.thread-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  color: inherit;
+  text-decoration: none;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+.thread-row:hover { background: var(--bg-sunken); color: inherit; }
+.thread-row.unread { background: var(--primary-soft); }
+.thread-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--primary-fg);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+  font-size: var(--text-base);
+}
+.thread-body { min-width: 0; }
+.thread-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 2px;
+}
+.thread-head strong { font-weight: 600; font-size: var(--text-sm); }
+.thread-preview {
+  font-size: var(--text-sm);
+  color: var(--fg-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.thread-time {
+  font-size: var(--text-xs);
+  color: var(--fg-subtle);
+  white-space: nowrap;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-2) 0 var(--space-6);
+}
+.message-bubble {
+  max-width: 72%;
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.message-bubble.mine {
+  margin-inline-start: auto;
+  background: var(--primary);
+  color: var(--primary-fg);
+  border-color: var(--primary);
+}
+.message-bubble.mine header strong,
+.message-bubble.mine header time { color: var(--primary-fg); opacity: 0.9; }
+.message-bubble.system {
+  background: var(--bg-sunken);
+  border-style: dashed;
+  max-width: 100%;
+  color: var(--fg-muted);
+  font-size: var(--text-sm);
+  text-align: center;
+}
+.message-bubble header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+  font-size: var(--text-xs);
+}
+.message-body { line-height: var(--leading-relaxed); font-size: var(--text-sm); }
+.reply-form { padding-top: var(--space-5); border-top: 1px solid var(--divider); }
+
+@media (max-width: 700px) {
+  .message-bubble { max-width: 92%; }
+}

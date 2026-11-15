@@ -1,0 +1,8 @@
+{% load ee_tags %}{% if page.has_other_pages or toggle %}<nav class="pgx" aria-label="{{ aria_label }}">
+  {% if page.has_other_pages %}<div class="pagination">
+    {% if prev_url %}<a href="{{ prev_url }}" aria-label="Previous page">{% icon "chevron-left" 14 %}</a>{% else %}<span class="disabled" aria-hidden="true">{% icon "chevron-left" 14 %}</span>{% endif %}
+    {% for i, url in links %}{% if i is None %}<span class="ellipsis">…</span>{% elif i == page.number %}<span class="current" aria-current="page">{{ i }}</span>{% else %}<a href="{{ url }}">{{ i }}</a>{% endif %}{% endfor %}
+    {% if next_url %}<a href="{{ next_url }}" aria-label="Next page">{% icon "chevron-right" 14 %}</a>{% else %}<span class="disabled" aria-hidden="true">{% icon "chevron-right" 14 %}</span>{% endif %}
+  </div>{% endif %}
+  {{ toggle }}
+</nav>{% endif %}

@@ -1,0 +1,1 @@
+{% for alt in tokens %}<div class="acc-tokens">{% if tokens|length > 1 %}<span class="acc-tokens__or">{% if forloop.first %}Either{% else %}or{% endif %}</span>{% endif %}{% for t in alt %}<span class="acc-tok acc-tok--{{ t.kind }}" title="{{ t.regex }}"><b>{{ t.sample }}</b><small>{{ t.label }}</small></span>{% endfor %}</div>{% endfor %}

@@ -1,0 +1,18 @@
+{% extends "errors/_base.html" %}
+{% block title %}{{ label }} is switched off{% endblock %}
+{% block code %}Switched off{% endblock %}
+{% block heading %}{{ label }} is switched off for now{% endblock %}
+{% block lead %}The department has turned this part of EE Hub off{% if feature.affects %}: {{ feature.affects|lower }}{% else %}.{% endif %} Nothing is lost. When it is switched on again, everything is where you left it.{% endblock %}
+{% block art %}
+<svg viewBox="0 0 240 160" width="240" height="160" role="presentation" focusable="false">
+  <circle cx="120" cy="80" r="62" fill="none" stroke="currentColor" stroke-opacity=".18" stroke-width="2" stroke-dasharray="4 8"/>
+  <rect x="70" y="58" width="100" height="44" rx="22" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"/>
+  <circle cx="92" cy="80" r="15" fill="var(--text-subtle)" fill-opacity=".55"/>
+  <line x1="128" y1="80" x2="152" y2="80" stroke="var(--border-strong)" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="182" cy="36" r="5" fill="var(--primary)"/>
+</svg>
+{% endblock %}
+{% block actions %}
+  <a class="btn btn-primary" href="{% if request.user.is_authenticated %}{% url 'dashboards:home' %}{% else %}/{% endif %}">{% if request.user.is_authenticated %}Go to my dashboard{% else %}Go to the home page{% endif %}</a>
+  {% if can_switch %}<a class="btn btn-ghost" href="{% url 'config:features' %}#feature-{{ feature.area }}">Switch it on</a>{% endif %}
+{% endblock %}

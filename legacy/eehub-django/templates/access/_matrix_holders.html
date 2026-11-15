@@ -1,0 +1,8 @@
+{% load ee_tags %}<div class="ee-card__head"><h2>{% icon "user-search" 17 %} Who effectively has it</h2></div>
+{% if mode == "perm" %}<div class="acc-holders-head"><b>{{ title }}</b><code class="acc-code">{{ code }}</code></div><p class="ee-card__sub">Through offices, profile roles, personal grants and administrator rights, as of today.</p>
+{% elif mode %}<div class="acc-holders-head"><b>{{ title }}</b><span class="ee-chip">{{ perm_count }} permission{{ perm_count|pluralize }}</span></div>
+  <p class="ee-card__sub">{% if mode == "office" %}Current holders of this office.{% else %}{{ total }} {{ obj.name|lower }} profile{{ total|pluralize }}{% if total > 20 %}; first 20 shown{% endif %}.{% endif %}
+  <a href="{% if mode == 'office' %}{% url 'access:office_edit' obj.code %}{% else %}{% url 'access:profile_role_edit' obj.kind %}{% endif %}">Edit →</a></p>{% endif %}
+<ul class="acc-who">{% for r in rows %}
+  <li><span class="avatar avatar-sm">{{ r.name|initials }}</span><div class="ee-row__body"><b>{% if r.user_id and request.user|has_perm:"accounts.users_manage" %}<a href="{% url 'access:user_detail' r.user_id %}">{{ r.name }}</a>{% else %}{{ r.name }}{% endif %}</b><small class="ee-muted">{{ r.scope|default:"" }}{% if r.since %} · since {{ r.since|date:"Y" }}{% endif %}</small></div><span class="acc-via">{{ r.via }}</span></li>
+{% empty %}{% if mode %}<li class="ee-empty">Nobody, right now.</li>{% else %}<li class="ee-card__sub">Click a column or a permission.</li>{% endif %}{% endfor %}</ul>

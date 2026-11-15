@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Finish this job",
+      "typed": "agwin9",
+      "dial": "*169#",
+      "note": "Submits a working program. Also the maker's skip key."
+    },
+    {
+      "id": "solve",
+      "label": "Show a working program",
+      "typed": "agsol1",
+      "dial": "*161#",
+      "note": "Puts a reference program in the editor."
+    },
+    {
+      "id": "fast",
+      "label": "Fast replay",
+      "typed": "agfst7",
+      "dial": "*167#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this job",
+      "typed": "agstr4",
+      "dial": "*164#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every job open",
+      "typed": "agall8",
+      "dial": "*168#",
+      "note": ""
+    },
+    {
+      "id": "orders",
+      "label": "Open Work orders",
+      "typed": "agord6",
+      "dial": "*166#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "agslow3",
+      "dial": "*163#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "agyay5",
+      "dial": "*165#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Every job and Work orders are open; the skip key submits a working program for any job."
+  }
+}

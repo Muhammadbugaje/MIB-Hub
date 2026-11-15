@@ -1,0 +1,93 @@
+/* Lifecycle (purple): promotion overview, level transitions, graduation, alumni, staff log. */
+.lc-levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.lc-level { display: grid; gap: 10px; padding: 16px; text-decoration: none; color: inherit; transition: transform .15s, box-shadow .15s; }
+.lc-level:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.lc-move { display: flex; align-items: center; gap: 10px; }
+.lc-move b { font-family: var(--font-display); font-size: 19px; }
+.lc-move svg { color: var(--qa-c-purple, #9a4fd0); }
+.lc-move .p6-sub { margin-left: auto; }
+.lc-split { display: flex; height: 10px; border-radius: 99px; overflow: hidden; background: var(--surface-sunken); }
+.lc-split i { display: block; height: 100%; }
+.lc-split .eligible { background: var(--success); }
+.lc-split .carryover { background: var(--accent); }
+.lc-split .not_eligible { background: var(--danger); }
+.lc-split .withdrawal { background: var(--qa-c-purple, #9a4fd0); }
+.lc-split .no_record { background: var(--border-strong, var(--border)); }
+.lc-legend { display: flex; flex-wrap: wrap; gap: 6px 12px; font-size: 11.5px; color: var(--text-muted); }
+.lc-legend span { display: inline-flex; align-items: center; gap: 5px; }
+.lc-legend i { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+.lc-rule { display: flex; flex-wrap: wrap; gap: 6px; }
+.lc-rule span { font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); }
+.lc-row { display: flex; gap: 12px; align-items: center; padding: 11px 14px; }
+.lc-row > input[type=checkbox] { width: 18px; height: 18px; flex: none; accent-color: var(--qa-c-purple, #9a4fd0); }
+.lc-row .p6-row__body b { white-space: nowrap; }
+.lc-nums { display: flex; gap: 14px; font-size: 12px; color: var(--text-muted); flex-wrap: wrap; }
+.lc-nums b { color: var(--text); font-variant-numeric: tabular-nums; font-size: 13px; }
+@media (max-width: 640px) { .lc-row { flex-wrap: wrap; } .lc-row .p6-row__right { width: 100%; padding-left: 30px; justify-content: flex-start; } }
+.lc-bar { position: sticky; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  margin-top: 14px; padding: 10px 12px 10px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-lg); }
+.lc-bar__text { flex: 1 1 200px; font-size: 13px; }
+.lc-bar__text b { font-variant-numeric: tabular-nums; }
+@media (max-width: 768px) { .lc-bar { bottom: calc(76px + env(safe-area-inset-bottom)); } }
+.lc-class { font-weight: 700; font-size: 12.5px; }
+.lc-public { max-width: 620px; margin: 0 auto; padding: 32px 16px 64px; }
+.lc-public .ee-card { padding: 22px; }
+.lc-public h1 { font-family: var(--font-display); font-size: clamp(26px, 5vw, 34px); line-height: 1.1; margin: 6px 0 8px; }
+.lc-public .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--qa-c-purple, #9a4fd0); }
+.lc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.lc-rank { display: inline-flex; align-items: center; gap: 6px; padding: 5px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 700;
+  background: color-mix(in srgb, var(--qa-c-purple, #9a4fd0) 13%, transparent); color: var(--qa-c-purple, #9a4fd0); }
+.lc-doc { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid var(--border); font-size: 13px; }
+.lc-doc:first-child { border-top: 0; }
+.lc-doc b { display: block; overflow-wrap: anywhere; }
+.lc-doc .p6-actions { margin-left: auto; flex-wrap: nowrap; }
+
+/* ---- Round 6: graduate totals + alumni sign-up --------------------------------- */
+.lc-stats { display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px; margin: 0 0 14px; }
+.lc-stat { flex: 1 1 120px; display: grid; gap: 2px; padding: 12px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
+.lc-stat b { font-family: var(--font-display); font-size: 22px; letter-spacing: -.02em; }
+.lc-stat span { font-size: 12px; color: var(--text-muted); font-weight: 600; }
+.lc-stat--green b { color: var(--success); }
+.lc-stat--gold b { color: var(--warning, #b7791f); }
+.lc-stat--slate b { color: var(--text-subtle); }
+.lc-stat__actions { flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+.ie-export { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+.lc-kind { font-size: 11px; font-weight: 700; letter-spacing: .03em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; background: var(--surface-sunken); color: var(--text-muted); }
+.lc-kind--signup { background: color-mix(in srgb, var(--qa-c-purple, #9a4fd0) 14%, transparent); color: var(--qa-c-purple, #9a4fd0); }
+.lc-join { display: grid; gap: 16px; max-width: 860px; }
+.lc-join__hero { position: relative; display: flex; align-items: center; gap: 18px; padding: 22px; overflow: hidden; isolation: isolate;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--qa-c-purple, #9a4fd0) 14%, var(--surface)), var(--surface) 70%); }
+.lc-join__hero::after { content: ""; position: absolute; inset: auto -40px -60px auto; width: 220px; height: 220px; border-radius: 50%; z-index: -1;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent, #c8a951) 30%, transparent), transparent 70%); }
+.lc-join__cap { flex: none; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 20px; color: #fff;
+  background: linear-gradient(135deg, var(--qa-c-purple, #9a4fd0), color-mix(in srgb, var(--qa-c-purple, #9a4fd0) 60%, #000)); box-shadow: var(--shadow-lg); }
+.lc-join__text { flex: 1 1 auto; min-width: 0; }
+.lc-join__eyebrow { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--qa-c-purple, #9a4fd0); }
+.lc-join__text h1 { margin: 2px 0 4px; font-size: clamp(22px, 3vw, 30px); letter-spacing: -.02em; }
+.lc-join__text p { margin: 0; color: var(--text-muted); }
+.lc-join__clock { flex: none; display: grid; justify-items: center; padding: 10px 16px; border-radius: 16px; background: var(--surface); border: 1px solid var(--border); }
+.lc-join__clock b { font-family: var(--font-display); font-size: 28px; line-height: 1; }
+.lc-join__clock span { font-size: 12px; font-weight: 600; color: var(--text-muted); }
+.lc-join__clock small { font-size: 11px; color: var(--text-subtle); }
+.lc-join__clock.is-close b { color: var(--danger); }
+.lc-steps { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; flex-wrap: wrap; }
+.lc-steps li { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border-radius: 99px; border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--text-muted); background: var(--surface); }
+.lc-steps li span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--surface-sunken); font-size: 11px; }
+.lc-steps li.is-done span { background: var(--success); color: #fff; }
+.lc-steps li.is-on { color: var(--text); border-color: var(--qa-c-purple, #9a4fd0); }
+.lc-steps li.is-on span { background: var(--qa-c-purple, #9a4fd0); color: #fff; }
+.lc-join__h { margin: 4px 0 -4px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+.lc-consent { display: grid; gap: 10px; padding: 12px 14px; border-radius: 14px; background: var(--surface-sunken); }
+.lc-check { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.45; cursor: pointer; }
+.lc-check input { margin-top: 3px; flex: none; width: 18px; height: 18px; accent-color: var(--primary); }
+.lc-join__wait, .lc-join__done { display: flex; gap: 14px; align-items: flex-start; padding: 18px; }
+.lc-join__wait > svg { color: var(--warning, #b7791f); flex: none; }
+.lc-join__done > svg { color: var(--success); flex: none; }
+.lc-join__wait h2, .lc-join__done h2 { margin: 0 0 4px; font-size: 17px; }
+.lc-how { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 760px; }
+.lc-how li { padding: 16px 18px; }
+.lc-how p { margin: 6px 0 0; color: var(--text-muted); }
+@media (max-width: 560px) {
+  .lc-join__hero { flex-wrap: wrap; padding: 18px; }
+  .lc-join__clock { flex: 1 1 100%; grid-auto-flow: column; justify-content: start; gap: 8px; align-items: baseline; }
+}

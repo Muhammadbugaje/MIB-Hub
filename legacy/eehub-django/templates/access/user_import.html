@@ -1,0 +1,89 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Import users{% endblock %}
+{% block page_title %}Import users{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:users' %}">{% icon "arrow-left" 15 %} All users</a>
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "file-spreadsheet" 14 %} People and access</span>
+    <h1 class="ee-page-header__title">Import users</h1>
+    <p class="ee-page-header__description">{{ spec.description }}</p>
+  </div>
+  <div class="ee-page-header__actions">
+    <a class="btn btn-ghost" href="?template=1">{% icon "download" 16 %} Download template</a>
+    {% if wizard_url %}<a class="btn btn-ghost" href="{{ wizard_url }}">{% icon "arrow-left-right" 16 %} Import and export wizard</a>{% endif %}
+  </div>
+</header>
+
+<ol class="acc-steps" aria-label="Progress">
+  <li class="{% if stage == 'upload' %}is-current{% else %}is-done{% endif %}"><span>1</span> Upload</li>
+  <li class="{% if stage == 'preview' %}is-current{% elif stage == 'done' %}is-done{% endif %}"><span>2</span> Check</li>
+  <li class="{% if stage == 'done' %}is-current{% endif %}"><span>3</span> Import</li>
+</ol>
+
+<div class="acc-two">
+<div class="acc-two__main">
+{% if stage == "upload" %}
+  <form method="post" enctype="multipart/form-data" class="ee-card ee-form">{% csrf_token %}
+    <input type="hidden" name="action" value="preview">
+    <label class="acc-drop" data-drop>
+      <span class="ee-ic tone-green">{% icon "upload" 20 %}</span>
+      <b>Choose an Excel or CSV file</b>
+      <small data-drop-name>Use the template so the column names match. Up to 2,000 rows.</small>
+      <input type="file" name="file" accept=".xlsx,.xlsm,.csv" required>
+    </label>
+    <div class="form-actions"><button type="submit" class="btn btn-primary">{% icon "scan-line" 16 %} Check the file</button></div>
+    <p class="ee-card__sub">Nothing is saved at this step. You will see every row first.</p>
+  </form>
+{% elif stage == "preview" %}
+  <section class="ee-card">
+    <div class="acc-import-sum">
+      <span class="acc-file"><span class="acc-file__x">{% if filename|lower|slice:"-3:" == "csv" %}CSV{% else %}XLS{% endif %}</span>{{ filename }}</span>
+      <span class="acc-stat tone-green"><b>{{ result.created }}</b> new</span>
+      <span class="acc-stat tone-volt"><b>{{ result.updated }}</b> to update</span>
+      <span class="acc-stat {% if result.rejected %}tone-red{% else %}tone-slate{% endif %}"><b>{{ result.rejected|length }}</b> with problems</span>
+    </div>
+    <div class="ee-table-wrap acc-import-table">
+      <table class="ee-table">
+        <thead><tr><th>Row</th>{% for c in columns %}<th>{{ c.name }}</th>{% endfor %}<th>Check</th></tr></thead>
+        <tbody>{% for r in rows %}{% with n=forloop.counter %}
+          <tr class="{% if n in rejected_numbers %}acc-row-bad{% endif %}">
+            <td class="ee-mono">{{ n }}</td>
+            {% for c in columns %}<td>{{ r|get_item:c.name|default_if_none:"" }}</td>{% endfor %}
+            <td>{% if n in rejected_numbers %}<span class="acc-why">{% icon "circle-x" 14 %} {{ rejected_numbers|get_item:n|join:"; " }}</span>{% else %}<span class="badge badge-success">{% icon "check" 12 %} Ready</span>{% endif %}</td>
+          </tr>{% endwith %}{% endfor %}</tbody>
+      </table>
+    </div>
+    {% if rows|length >= 200 %}<p class="ee-card__sub">Showing the first 200 rows.</p>{% endif %}
+    <div class="form-actions acc-import-foot">
+      <form method="post" class="inline" data-confirm="{{ result.created }} user{{ result.created|pluralize }} will be created and {{ result.updated }} updated.{% if result.rejected %} {{ result.rejected|length }} row{{ result.rejected|length|pluralize }} with problems will be skipped.{% endif %}" data-confirm-title="Import now?" data-confirm-label="Import" data-confirm-tone="default">{% csrf_token %}
+        <input type="hidden" name="action" value="commit">
+        <button class="btn btn-primary" type="submit"{% if not result.created and not result.updated %} disabled{% endif %}>{% icon "check" 16 %} Import {{ result.created|add:result.updated }} row{{ result.created|add:result.updated|pluralize }}</button>
+      </form>
+      <a class="btn btn-ghost" href="{% url 'access:user_import' %}">Choose another file</a>
+    </div>
+  </section>
+{% else %}
+  <section class="ee-card acc-import-done">
+    <span class="ee-ic tone-green">{% icon "circle-check" 22 %}</span>
+    <h2>Import finished</h2>
+    <p>{{ result.created }} created · {{ result.updated }} updated{% if result.rejected %} · {{ result.rejected|length }} skipped{% endif %}</p>
+    <p class="ee-card__sub">New users get a random password and must reset it with “Forgot password”, or you can reset it for them from their page.</p>
+    {% if result.rejected %}<ul class="ee-list acc-import-rejects">{% for r in result.rejected %}<li><span class="ee-mono">Row {{ r.row_number }}</span><div class="ee-row__body"><span class="acc-why">{{ r.errors|join:"; " }}</span></div></li>{% endfor %}</ul>{% endif %}
+    <div class="form-actions"><a class="btn btn-primary" href="{% url 'access:users' %}">See users</a><a class="btn btn-ghost" href="{% url 'access:user_import' %}">Import another file</a></div>
+  </section>
+{% endif %}
+</div>
+<aside class="acc-two__side">
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "table-2" 17 %} Columns</h2></div>
+    <ul class="acc-cols">{% for c in spec.columns %}<li><b>{{ c.name }}</b>{% if c.required %} <span class="acc-req">required</span>{% endif %}{% if c.help %}<small>{{ c.help }}</small>{% endif %}</li>{% endfor %}</ul>
+  </section>
+  <p class="acc-note">{% icon "shield-check" 15 %} Registration numbers are checked against the <a href="{% url 'access:regno_list' %}">registration-number formats</a>, so a mistyped number is caught before anything is saved.</p>
+</aside>
+</div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

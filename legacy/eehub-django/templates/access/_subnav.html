@@ -1,0 +1,11 @@
+{% load ee_tags %}<nav class="tabs acc-subnav" aria-label="People and access">
+  <a class="tab" href="{% url 'access:home' %}"{% if section == "home" %} aria-current="page"{% endif %}>{% icon "shield-half" 15 %} Overview</a>
+  {% if request.user|has_perm:"accounts.users_manage" %}<a class="tab" href="{% url 'access:users' %}"{% if section == "users" %} aria-current="page"{% endif %}>{% icon "users" 15 %} Users</a>{% endif %}
+  {% if request.user|has_perm:"accounts.offices_manage" %}<a class="tab" href="{% url 'access:offices' %}"{% if section == "offices" %} aria-current="page"{% endif %}>{% icon "badge-check" 15 %} Offices</a>{% endif %}
+  {% if request.user|has_perm:"accounts.offices_manage" or request.user|has_perm:"accounts.offices_appoint" %}<a class="tab" href="{% url 'access:review_appointments' %}"{% if section == "review" %} aria-current="page"{% endif %}>{% icon "user-x" 15 %} To review</a>{% endif %}
+  {% if request.user|has_perm:"accounts.grants_manage" or request.user|has_perm:"accounts.matrix_edit" %}<a class="tab" href="{% url 'access:grants' %}"{% if section == "grants" %} aria-current="page"{% endif %}>{% icon "timer" 15 %} Grants</a>{% endif %}
+  {% if request.user|has_perm:"accounts.matrix_edit" or request.user|has_perm:"accounts.offices_manage" %}<a class="tab" href="{% url 'access:delegation' %}"{% if section == "delegation" %} aria-current="page"{% endif %}>{% icon "git-fork" 15 %} Delegation</a>{% endif %}
+  {% if request.user|has_perm:"accounts.matrix_edit" %}<a class="tab" href="{% url 'access:matrix' %}"{% if section == "matrix" %} aria-current="page"{% endif %}>{% icon "grid-3x3" 15 %} Permission matrix</a>{% endif %}
+  {% if request.user|has_perm:"accounts.access_log_view" %}<a class="tab" href="{% url 'access:access_log' %}"{% if section == "log" %} aria-current="page"{% endif %}>{% icon "eye" 15 %} Access log</a>{% endif %}
+  {% if request.user|has_perm:"accounts.regno_manage" %}<a class="tab" href="{% url 'access:regno_list' %}"{% if section == "regno" %} aria-current="page"{% endif %}>{% icon "id-card" 15 %} Registration numbers</a>{% endif %}
+</nav>

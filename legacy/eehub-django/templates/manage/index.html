@@ -1,0 +1,46 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Website · Overview{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/manage.css' %}">{% endblock %}
+{% block content %}
+<div class="mg-page">
+  {% include "manage/_shell_top.html" %}
+  <section class="ee-hero-card mg-hero">
+    <div>
+      <p class="eyebrow">Manage the website</p>
+      <h1>Everything visitors see, in one place</h1>
+      <p>Homepage mode: <b>{% if home_mode == "default_plus" %}Default + selected pages{% elif home_mode == "page" %}One custom page{% else %}Default landing page{% endif %}</b> · Hero: <b>{% if hero_mode == "slides" %}Uploaded slides{% elif hero_mode == "both" %}Both{% else %}Animated circuit{% endif %}</b></p>
+    </div>
+    <div class="mg-hero__acts">
+      <a class="btn mg-btn-gold" href="{% url 'content:home' %}" target="_blank" rel="noopener">{% icon "external-link" 16 %} Open the website</a>
+      {% if request.user|has_perm:"accounts.content_news" %}<a class="btn mg-btn-glass" href="{% url 'manage:news_create' %}">{% icon "plus" 16 %} Publish news</a>{% endif %}
+    </div>
+  </section>
+
+  <div class="mg-areas">
+    {% for a in areas %}
+    <article class="mg-area">
+      <a class="mg-area__main" href="{{ a.url }}">
+        <span class="mg-area__ic tone-{{ a.tone }}">{% icon a.icon 20 %}</span>
+        <span class="mg-area__n">{{ a.count }}</span>
+        <b>{{ a.label }}</b>
+        <small>{{ a.sub }}</small>
+      </a>
+      {% if a.new %}<a class="mg-area__new" href="{{ a.new }}" aria-label="Add to {{ a.label }}">{% icon "plus" 15 %}</a>{% endif %}
+    </article>
+    {% endfor %}
+  </div>
+
+  {% if recent %}
+  <section class="ee-card mg-mt">
+    <div class="ee-card__head"><h2>{% icon "history" 17 %} Recently changed</h2></div>
+    <ul class="ee-list">
+      {% for o in recent %}
+      <li><span class="ee-ic tone-slate">{% if o.kind_label == "News" %}{% icon "newspaper" 16 %}{% elif o.kind_label == "Event" %}{% icon "calendar-days" 16 %}{% elif o.kind_label == "Album" %}{% icon "images" 16 %}{% else %}{% icon "file-text" 16 %}{% endif %}</span>
+        <div class="ee-row__body"><a class="ee-row__title" href="{{ o.edit_url }}">{{ o }}</a><div class="ee-row__meta">{{ o.kind_label }} · {{ o.updated_at|timesince }} ago{% if not o.is_published %} · draft{% endif %}</div></div>
+        <a class="btn btn-ghost btn-sm" href="{{ o.edit_url }}">{% icon "pencil" 14 %} Edit</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}{% load static ee_tags pager_tags %}
+{% block title %}{{ kind.plural }} · Website{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/manage.css' %}">{% endblock %}
+{% block content %}
+<div class="mg-page">
+  {% include "manage/_shell_top.html" %}
+  <header class="mg-head">
+    <span class="mg-head__ic">{% icon kind.icon 22 %}</span>
+    <div class="mg-head__text">
+      <p class="ee-page-header__eyebrow">Website</p>
+      <h1>{{ kind.plural }}</h1>
+      <p>{{ kind.intro }}</p>
+    </div>
+    <a class="btn btn-primary" href="{% url kind.create_url %}">{% icon "plus" 16 %} New {{ kind.singular }}</a>
+  </header>
+
+  <form class="mg-filters" method="get" role="search" aria-label="Filter results">
+    <label class="mg-search">{% icon "search" 16 %}<span class="sr-only">Search</span><input class="input" type="search" name="q" value="{{ q }}" placeholder="Search {{ kind.plural|lower }}"></label>
+    {% if filter_choices %}
+    <select class="input mg-select" name="f" data-autosubmit aria-label="{{ kind.filter_label }}">
+      <option value="">Every {{ kind.filter_label|lower }}</option>
+      {% for v, l in filter_choices %}<option value="{{ v }}"{% if flt == v %} selected{% endif %}>{{ l }}</option>{% endfor %}
+    </select>
+    {% endif %}
+    {% if q or flt %}<a class="btn btn-ghost btn-sm" href="?">{% icon "x" 14 %} Clear</a>{% endif %}
+    <span class="mg-count">{{ page_obj.paginator.count }} of {{ total }}</span>
+  </form>
+
+  {% if rows %}
+  <div class="ee-table-wrap">
+    <table class="ee-table is-stacked mg-table">
+      <thead><tr>{% for h in headers %}<th>{{ h }}</th>{% endfor %}<th class="mg-actions-h"><span class="sr-only">Actions</span></th></tr></thead>
+      <tbody>
+        {% for r in rows %}
+        <tr>
+          {% for label, cell in r.cells %}<td data-label="{{ label }}"{% if forloop.first %} class="mg-first"{% endif %}>{% if forloop.first or forloop.counter == 2 %}<a class="mg-rowlink" href="{{ r.edit }}">{{ cell }}</a>{% else %}{{ cell }}{% endif %}</td>{% endfor %}
+          <td class="mg-actions">
+            <a class="btn btn-ghost btn-sm" href="{{ r.edit }}">{% icon "pencil" 14 %}<span>Edit</span></a>
+            {% if r.public %}<a class="btn btn-ghost btn-sm btn-icon" href="{{ r.public }}" target="_blank" rel="noopener" title="View on the website" aria-label="View on the website">{% icon "external-link" 14 %}</a>{% endif %}
+            {% if kind.toggle %}
+            <form method="post" action="{% url 'manage:toggle' kind.key r.obj.pk %}">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="btn btn-ghost btn-sm" type="submit">{% if r.toggle_on %}{% icon "eye-off" 14 %}<span>{{ kind.toggle_labels.0 }}</span>{% else %}{% icon "eye" 14 %}<span>{{ kind.toggle_labels.1 }}</span>{% endif %}</button>
+            </form>
+            {% endif %}
+            {% if not r.obj.is_system %}
+            <form method="post" action="{% url 'manage:delete' kind.key r.obj.pk %}" data-confirm="Delete “{{ r.obj }}”?{% if kind.soft %} It disappears from the website; an administrator can restore it.{% else %} This cannot be undone.{% endif %}" data-confirm-title="Delete {{ kind.singular }}" data-confirm-label="Delete">{% csrf_token %}<input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button class="btn btn-ghost btn-sm btn-icon mg-danger" type="submit" title="Delete" aria-label="Delete {{ r.obj }}">{% icon "trash-2" 14 %}</button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% show_all_toggle page_obj %}{% if page_obj.has_other_pages %}
+  <nav class="mg-pager">{% if page_obj.has_previous %}<a class="btn btn-ghost btn-sm" href="?q={{ q|urlencode }}&f={{ flt }}&page={{ page_obj.previous_page_number }}">{% icon "arrow-left" 14 %} Previous</a>{% endif %}<span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>{% if page_obj.has_next %}<a class="btn btn-ghost btn-sm" href="?q={{ q|urlencode }}&f={{ flt }}&page={{ page_obj.next_page_number }}">Next {% icon "arrow-right" 14 %}</a>{% endif %}</nav>
+  {% endif %}
+  {% else %}
+  <div class="mg-empty">
+    <span class="mg-empty__ic">{% icon kind.icon 28 %}</span>
+    {% if q or flt %}<h2>Nothing matches</h2><p>Try another search or clear the filter.</p><a class="btn btn-ghost" href="?">Clear filters</a>
+    {% else %}<h2>No {{ kind.plural|lower }} yet</h2><p>{{ kind.intro }}</p><a class="btn btn-primary" href="{% url kind.create_url %}">{% icon "plus" 16 %} Add the first {{ kind.singular }}</a>{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/manage.js' %}" defer></script>{% endblock %}

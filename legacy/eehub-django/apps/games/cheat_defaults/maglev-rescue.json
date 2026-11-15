@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Deliver this pod",
+      "typed": "mrwin9",
+      "dial": "*649#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "design",
+      "label": "Engineer's gains fitted",
+      "typed": "mrpid1",
+      "dial": "*641#",
+      "note": "Pole-placement gains for this line."
+    },
+    {
+      "id": "shield",
+      "label": "Rail contact forgiven",
+      "typed": "mrshd7",
+      "dial": "*647#",
+      "note": ""
+    },
+    {
+      "id": "calm",
+      "label": "Gusts and sensor noise off",
+      "typed": "mrcal4",
+      "dial": "*644#",
+      "note": ""
+    },
+    {
+      "id": "light",
+      "label": "Payloads removed",
+      "typed": "mrlit2",
+      "dial": "*642#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every line open",
+      "typed": "mrall8",
+      "dial": "*648#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "mrslow3",
+      "dial": "*643#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "mryay5",
+      "dial": "*645#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Holds the gap with pole-placement gains on every line; every line open."
+  }
+}

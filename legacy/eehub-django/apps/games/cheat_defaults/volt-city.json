@@ -1,0 +1,53 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Restore the next district",
+      "typed": "vcwin9",
+      "dial": "*849#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "god",
+      "label": "Cannot be hurt",
+      "typed": "vcgod1",
+      "dial": "*841#",
+      "note": ""
+    },
+    {
+      "id": "heal",
+      "label": "Battery full",
+      "typed": "vchp07",
+      "dial": "*847#",
+      "note": ""
+    },
+    {
+      "id": "dash",
+      "label": "Dash never cools down",
+      "typed": "vcdsh4",
+      "dial": "*844#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "vcslow3",
+      "dial": "*843#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "vcyay5",
+      "dial": "*845#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Cannot be hurt, dash never cools down, can restore any district at once."
+  }
+}

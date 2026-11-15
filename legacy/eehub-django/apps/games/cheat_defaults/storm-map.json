@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Restore everything now",
+      "typed": "smwin9",
+      "dial": "*279#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "reveal",
+      "label": "Show every fault",
+      "typed": "smsee1",
+      "dial": "*271#",
+      "note": "Marks every damaged section without patrolling."
+    },
+    {
+      "id": "safe",
+      "label": "Forgive safety violations",
+      "typed": "smsaf7",
+      "dial": "*277#",
+      "note": ""
+    },
+    {
+      "id": "time",
+      "label": "+2 hours",
+      "typed": "smtim4",
+      "dial": "*274#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this incident",
+      "typed": "smstr8",
+      "dial": "*278#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every incident open",
+      "typed": "small6",
+      "dial": "*276#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "smslow3",
+      "dial": "*273#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "smyay5",
+      "dial": "*275#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Safety violations never count against him, every incident and the Storm season are open, and the skip key restores the network."
+  }
+}

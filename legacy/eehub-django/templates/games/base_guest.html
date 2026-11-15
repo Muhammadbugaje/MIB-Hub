@@ -1,0 +1,4 @@
+{% extends "base_public.html" %}{% load ee_tags %}
+{% block content %}<main class="gm-guest-shell"><div class="gm-guest-bar"><span>{% icon "gamepad-2" 16 %} Playing as <b>{{ guest.name }}</b> (guest)</span>
+  <form method="post" action="{% url 'games:guest_signout' %}">{% csrf_token %}<button class="btn btn-ghost btn-sm" type="submit">Sign out</button></form></div>
+  {% block arcade_wrap %}{% endblock %}</main>{% endblock %}

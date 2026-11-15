@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Job done",
+      "typed": "drwin9",
+      "dial": "*539#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "auto",
+      "label": "Engineer's settings fitted",
+      "typed": "draut1",
+      "dial": "*531#",
+      "note": "Cheapest suitable converter and a tuned speed loop."
+    },
+    {
+      "id": "budget",
+      "label": "+1000 budget",
+      "typed": "drcsh7",
+      "dial": "*537#",
+      "note": ""
+    },
+    {
+      "id": "notrip",
+      "label": "Overcurrent trip off",
+      "typed": "drtrp4",
+      "dial": "*534#",
+      "note": ""
+    },
+    {
+      "id": "tol",
+      "label": "Tolerance tripled",
+      "typed": "drtol2",
+      "dial": "*532#",
+      "note": ""
+    },
+    {
+      "id": "unlock",
+      "label": "Every job open",
+      "typed": "drall8",
+      "dial": "*538#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "drslow3",
+      "dial": "*533#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "dryay5",
+      "dial": "*535#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Gets the engineer's converter and gains on every job; every job open."
+  }
+}

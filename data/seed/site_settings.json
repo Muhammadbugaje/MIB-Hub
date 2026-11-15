@@ -1,0 +1,186 @@
+{
+  "exported_at": "2026-11-15T18:54:06",
+  "source": "eehub-2 (Django), read-only",
+  "module_switch": {
+    "key": "features.games",
+    "db_value": "true",
+    "code_default": false,
+    "defined_in": "core/features.py Feature(\"games\", ..., default=False)",
+    "effect": "Whole arcade incl. management pages 404/feature-off when false.",
+    "db_row": {
+      "key": "features.games",
+      "label": "Learning arcade",
+      "scope": "global",
+      "value": "true",
+      "value_type": "bool",
+      "choices": [],
+      "description": "Switch the whole module on or off. Browser learning games tied to course topics. Students see games up to their current level. Off by default.",
+      "group": "Modules and features",
+      "editable_by": "",
+      "dual_control": 0
+    }
+  },
+  "config_entries": [
+    {
+      "key": "games.guests_enabled",
+      "default": true,
+      "type": "bool",
+      "group": "Academic calendar",
+      "label": "Arcade: let guests from other departments play",
+      "db_value": null,
+      "source": "config/defaults.py:449"
+    },
+    {
+      "key": "games.guest_days",
+      "default": 365,
+      "type": "int",
+      "group": "Academic calendar",
+      "label": "Arcade: delete guest players after (days)",
+      "db_value": null,
+      "source": "config/defaults.py:451",
+      "note": "purge with manage.py purge_arcade_guests [--all]"
+    },
+    {
+      "key": "appearance.motion",
+      "related": "site-wide motion level (not arcade-specific)",
+      "db_row": {
+        "key": "appearance.motion",
+        "label": "Motion on the public website",
+        "scope": "global",
+        "value": "full",
+        "value_type": "str",
+        "choices": [
+          [
+            "full",
+            "Full"
+          ],
+          [
+            "reduced",
+            "Reduced"
+          ],
+          [
+            "off",
+            "Off"
+          ]
+        ],
+        "description": "full = everything moves; reduced = slower scenes, shorter entrances; off = no scenes or scroll animation. Visitors whose device asks for reduced motion always get a still page.",
+        "group": "Appearance and motion",
+        "editable_by": "",
+        "dual_control": 0
+      }
+    }
+  ],
+  "arcade_global_row": {
+    "slug": "*",
+    "stored_keys": [],
+    "hero_code_set": true,
+    "effective": {
+      "cheats_enabled": true,
+      "cheats_on_boards": false,
+      "hero_enabled": true,
+      "cheat_access": "everyone",
+      "hero_access": "code",
+      "cheat_users": "(user ids; 0 stored, not exported)",
+      "hero_users": "(user ids; 0 stored, not exported)"
+    },
+    "cheat_access_choices": [
+      [
+        "everyone",
+        "Everyone who can play"
+      ],
+      [
+        "signed",
+        "Signed-in accounts only (no guests)"
+      ],
+      [
+        "staff",
+        "Staff and lecturers only"
+      ],
+      [
+        "named",
+        "Only the people named below"
+      ]
+    ],
+    "hero_access_choices": [
+      [
+        "code",
+        "Anyone who knows the reveal move and the code"
+      ],
+      [
+        "signed",
+        "Signed-in accounts with the code (no guests)"
+      ],
+      [
+        "staff",
+        "Staff and lecturers with the code"
+      ],
+      [
+        "named",
+        "Only the people named below, with the code"
+      ]
+    ],
+    "resolution": "Per game: GameSettings[slug] value if set, else the \"*\" row, else the default above. cheats_enabled is AND of site-wide and per-game."
+  },
+  "per_game_keys": {
+    "enabled": "bool, default true",
+    "cheats_enabled": "bool, default true",
+    "cheats_on_boards": "bool|null (null = inherit)",
+    "hero_enabled": "bool|null",
+    "cheat_access/hero_access": "mode, optional per game",
+    "cheat_users/hero_users": "[user id]",
+    "rules": "{rule key: value} over cheat_defaults rules",
+    "cheats": "{cheat id: {typed?, dial?, how?, off?}}",
+    "hero_hash": "pbkdf2 (heroes.json)",
+    "starter_off": "bool, retires the DEBUG starter"
+  },
+  "access_rules": {
+    "source": "games/access.py",
+    "permission": "games.manage_game_settings (\"Can open Game Settings\"); accounts.access.is_super_admin also passes (cheats.can_manage)",
+    "sounds_upload": "is_super_admin only (games/sounds.py)",
+    "fslg_admin": "see docs/port/MANAGEMENT.md",
+    "levels": "Students: games with level <= their StudentProfile.level.number; postgraduate (number<100) -> 500; staff kinds lecturer/staff/admin and super admins -> 500 (preview all); guests -> 100 only; anonymous -> must sign in or join as guest.",
+    "guest": "GuestPlayer: name + reg number + hashed PIN, session key \"arcade_guest\", expires after games.guest_days",
+    "switched_off_games": "hidden from the index and 404 on play for everyone except managers"
+  },
+  "sound": {
+    "global_replacements": {
+      "model": "games.GlobalSound",
+      "rows": 0,
+      "max_bytes": 2097152,
+      "max_seconds": 120.0,
+      "min_seconds": 0.05,
+      "formats": {
+        "wav": "audio/wav",
+        "mp3": "audio/mpeg",
+        "m4a": "audio/mp4"
+      },
+      "name_pattern": "^[a-z0-9_][a-z0-9_.:-]{0,79}$"
+    },
+    "play_order": "switched off > player own file (IndexedDB) > super-admin GlobalSound > default recording (static/audio/sfx manifest: per-game pack then core) > synthesised effect",
+    "client_storage": {
+      "per_game_sound_prefs": "localStorage \"ee-arcade-snd-<slug>\" {name:{off,vol,...}}",
+      "arcade_prefs": "localStorage \"ee-arcade-<key>\"",
+      "game_settings": "localStorage \"ee-arcade-set-<slug>\""
+    },
+    "client_defaults": {
+      "volume": 60,
+      "muted_on_load": true
+    },
+    "buses": [
+      "ui",
+      "feet",
+      "impacts",
+      "vehicles",
+      "world",
+      "ambience"
+    ],
+    "max_voices": 26,
+    "assets": "static/audio/sfx/manifest.json, sizes.json, CREDITS.md (CC0); static/audio/fslg-intro; static/audio/voice/manifest.json"
+  },
+  "fslg_content": {
+    "model": "games.FSLGContent (+FSLGContentVersion)",
+    "rows": 0,
+    "versions": 0,
+    "note": "No admin overrides stored; game defaults apply."
+  }
+}

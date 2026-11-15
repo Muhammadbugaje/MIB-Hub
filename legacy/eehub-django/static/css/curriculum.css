@@ -1,0 +1,141 @@
+/* Round 7 (R7C) curriculum: catalogue study link, course content, prerequisite maps, progress to graduation,
+   the public programme page. Prefix cv-. Tokens only; light and dark. */
+
+/* ---- Catalogue cards: "Open the study page" (F4) ------------------------------------- */
+.cat-grid > li.has-study { display: flex; flex-direction: column; }
+.cat-grid > li.has-study .cat-card { height: auto; flex: 1; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.cat-study { display: flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; font-size: 13px; font-weight: 650; text-decoration: none;
+  color: var(--primary-subtle-fg); background: var(--primary-subtle); border: 1px solid var(--border); border-top: 0;
+  border-radius: 0 0 var(--radius-lg, 16px) var(--radius-lg, 16px); }
+.cat-study svg:last-child { margin-left: auto; }
+.cat-study:hover, .cat-study:focus-visible { background: color-mix(in srgb, var(--primary) 18%, var(--surface)); color: var(--text); }
+.cat-grid > li.has-study .cat-edit { bottom: 54px; }
+.cv-oldhit { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; margin: 0 0 12px; border-radius: 14px;
+  background: var(--info-subtle); color: var(--text); font-size: 13.5px; }
+.cv-oldhit > svg { color: var(--info-fg); flex: none; margin-top: 2px; }
+.cv-oldhit small { color: var(--text-muted); }
+
+/* ---- Course detail: modules, outcomes, grading ------------------------------------------ */
+.cv-alt { margin: 2px 0 0; font-size: 12.5px; color: var(--text-muted); }
+.cv-old { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 0; font-size: 12.5px; color: var(--text-muted); }
+.cv-modules { margin: 0; padding-left: 0; list-style: none; display: grid; gap: 10px; }
+.cv-modules li { padding: 10px 12px; border-radius: 12px; background: var(--surface-sunken); }
+.cv-modules b { display: block; font-size: 13.5px; margin-bottom: 4px; }
+.cv-modules p { margin: 0; font-size: 13.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.cv-outcomes { margin: 6px 0 0; padding-left: 20px; display: grid; gap: 4px; font-size: 13.5px; line-height: 1.5; }
+.cv-grading { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.cv-grading li { display: flex; align-items: baseline; gap: 8px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--border); font-size: 13px; min-width: 0; }
+.cv-grading b { font-family: var(--font-display); font-size: 17px; }
+.cv-flags ul { margin: 0; padding-left: 18px; font-size: 12.5px; color: var(--text-muted); display: grid; gap: 4px; }
+.cv-flags h3 svg { color: var(--warning-fg); }
+
+/* ---- Mini prerequisite map (per course) ------------------------------------------------- */
+.cv-mini { display: flex; gap: 8px; overflow-x: auto; padding: 4px 2px 8px; scroll-snap-type: x proximity; }
+.cv-mini__col { flex: 1 0 96px; display: grid; align-content: start; gap: 6px; scroll-snap-align: start; }
+.cv-mini__col small { font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--text-muted); text-transform: uppercase; }
+.cv-node { display: block; padding: 7px 9px; border-radius: 10px; font-size: 12px; font-weight: 650; text-decoration: none; text-align: center;
+  color: var(--text); background: var(--surface); border: 1.5px solid var(--border); white-space: nowrap; min-height: 32px; }
+.cv-node:hover { border-color: var(--primary); }
+.cv-node.is-focus { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+.cv-node--restricted { border-style: dashed; }
+.cv-node--cognate, .cv-node--general { color: var(--text-muted); }
+
+/* ---- Full prerequisite map --------------------------------------------------------------- */
+.cv-map-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.cv-map-tools input[type=search] { flex: 1 1 200px; min-height: 42px; min-width: 0; }
+.cv-legend { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--text-muted); margin: 0 0 10px; }
+.cv-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.cv-legend i { width: 14px; height: 10px; border-radius: 3px; border: 1.5px solid var(--border-strong); display: inline-block; }
+.cv-legend i.is-req { border-color: var(--accent); background: var(--accent-subtle); }
+.cv-legend i.is-next { border-color: var(--primary); background: var(--primary-subtle); }
+.cv-map { position: relative; overflow-x: auto; padding: 8px 4px 16px; }
+.cv-map__cols { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(5, minmax(150px, 1fr)); gap: 28px; min-width: 860px; }
+.cv-map__col h2 { font-size: 13px; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 8px; }
+.cv-map__sem { font-size: 11px; color: var(--text-muted); margin: 10px 0 4px; font-weight: 600; }
+.cv-map__node { display: block; width: 100%; text-align: left; padding: 7px 9px; margin: 0 0 6px; border-radius: 10px; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text); font: inherit; font-size: 12px; cursor: pointer; min-height: 40px; transition: opacity .15s, border-color .15s, background .15s; }
+.cv-map__node b { display: block; font-size: 12.5px; }
+.cv-map__node span { display: block; color: var(--text-muted); font-size: 11.5px; line-height: 1.3; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-map__node.is-lonely { opacity: .75; }
+.cv-map__node.cv-node--restricted { border-style: dashed; }
+.cv-map.is-focused .cv-map__node { opacity: .28; }
+.cv-map.is-focused .cv-map__node.is-on { opacity: 1; }
+.cv-map__node.is-focus { background: var(--primary); color: var(--primary-fg); border-color: var(--primary); }
+.cv-map__node.is-focus span { color: inherit; opacity: .85; }
+.cv-map__node.is-req { border-color: var(--accent); background: var(--accent-subtle); }
+.cv-map__node.is-next { border-color: var(--primary); background: var(--primary-subtle); }
+.cv-map__node.is-hit { box-shadow: 0 0 0 3px var(--shadow-focus, var(--primary-subtle)); }
+.cv-map svg.cv-map__lines { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: visible; }
+.cv-map__lines path { fill: none; stroke: var(--border-strong); stroke-width: 1.3; opacity: .55; }
+.cv-map.is-focused .cv-map__lines path { opacity: .08; }
+.cv-map.is-focused .cv-map__lines path.is-on { opacity: 1; stroke: var(--primary); stroke-width: 2; }
+.cv-map-panel { margin-top: 12px; }
+.cv-map-panel h2 { font-size: 16px; margin: 0 0 4px; }
+.cv-map-panel .btn-group { margin-top: 10px; }
+.cv-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 0; }
+/* phones: the list view replaces the drawn map */
+.cv-maplist { display: none; }
+@media (max-width: 760px) {
+  .cv-map { display: none; }
+  .cv-maplist { display: grid; gap: 12px; }
+  .cv-maplist section h2 { font-size: 14px; margin: 0 0 6px; }
+  .cv-maplist details { border: 1px solid var(--border); border-radius: 12px; padding: 0; background: var(--surface); margin-bottom: 6px; }
+  .cv-maplist summary { list-style: none; cursor: pointer; padding: 10px 12px; min-height: 44px; display: flex; gap: 8px; align-items: center; }
+  .cv-maplist summary::-webkit-details-marker { display: none; }
+  .cv-maplist summary b { flex: none; }
+  .cv-maplist summary span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-muted); font-size: 13px; }
+  .cv-maplist .cv-maplist__body { padding: 0 12px 12px; font-size: 13px; }
+}
+
+/* ---- Progress to graduation (C10) --------------------------------------------------------- */
+.cv-prog { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 860px) { .cv-prog { grid-template-columns: 1fr; } }
+.cv-ring { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.cv-ring svg { width: 132px; height: 132px; flex: none; }
+.cv-ring circle { fill: none; stroke-width: 12; }
+.cv-ring .is-track { stroke: var(--surface-sunken); }
+.cv-ring .is-bar { stroke: var(--primary); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; }
+.cv-ring .is-now { stroke: var(--accent); stroke-linecap: round; transform: rotate(-90deg); transform-origin: 50% 50%; opacity: .7; }
+.cv-ring text { fill: var(--text); font-family: var(--font-display); font-weight: 700; }
+.cv-ring__facts { display: grid; gap: 6px; min-width: 0; }
+.cv-ring__facts b { font-family: var(--font-display); font-size: 22px; }
+.cv-ring__facts small { color: var(--text-muted); font-size: 12.5px; display: block; }
+.cv-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.cv-list li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 12px; background: var(--surface-sunken); font-size: 13px; min-width: 0; }
+.cv-list li > span:nth-child(2) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cv-list li > em { font-style: normal; color: var(--text-muted); font-size: 12px; flex: none; }
+.cv-list .ac-code { flex: none; }
+.cv-levels { display: grid; gap: 10px; }
+.cv-levels h3 { font-size: 13px; margin: 6px 0; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+.cv-w { display: grid; gap: 10px; }
+.cv-w__bar { height: 10px; border-radius: 99px; background: var(--surface-sunken); overflow: hidden; }
+.cv-w__bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent)); border-radius: inherit; }
+.cv-w__facts { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12.5px; color: var(--text-muted); }
+.cv-w__facts b { color: var(--text); font-size: 15px; }
+.cv-head { margin: 0 0 12px; min-width: 0; }
+.cv-head h2 { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 16px; }
+.cv-head p { margin: 4px 0 0; font-size: 12.5px; color: var(--text-muted); }
+.cv-note { display: flex; gap: 6px; align-items: flex-start; margin: 10px 0 0; font-size: 12.5px; color: var(--text-muted); line-height: 1.5; }
+.cv-note > svg { flex: none; margin-top: 2px; }
+.cv-fold { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 8px; background: var(--surface); }
+.cv-fold > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; padding: 10px 12px; min-height: 44px; }
+.cv-fold > summary::-webkit-details-marker { display: none; }
+.cv-fold > summary span { color: var(--text-muted); font-size: 12.5px; margin-right: auto; }
+.cv-fold > summary > svg { transition: transform .2s ease; color: var(--text-muted); }
+.cv-fold[open] > summary > svg { transform: rotate(180deg); }
+.cv-fold > .cv-list { padding: 0 10px 10px; }
+
+/* Nov 2026: interactive lab straight from the catalogue card and the course page */
+.cat-study:has(+ .cat-study--lab) { border-radius: 0; }
+.cat-study--lab { color: var(--text); background: color-mix(in srgb, #f59e0b 14%, var(--surface)); }
+.cat-study--lab:hover, .cat-study--lab:focus-visible { background: color-mix(in srgb, #f59e0b 26%, var(--surface)); }
+.cat-grid > li.has-study:has(.cat-study--lab) .cat-edit { bottom: 98px; }
+.cat-lab h3 small { font-weight: 600; color: var(--text-muted); font-size: 12px; }
+.cat-lab > .cat-muted { margin: -4px 0 10px; }
+.cat-lab__list { list-style: none; margin: 0 0 10px; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 8px; }
+.cat-lab__list a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 10px; border-radius: 12px; border: 1px solid var(--border);
+  color: inherit; text-decoration: none; font-size: 13.5px; font-weight: 600; background: var(--surface); }
+.cat-lab__list a > span:nth-child(2) { flex: 1; min-width: 0; }
+.cat-lab__list a:hover, .cat-lab__list a:focus-visible { border-color: var(--primary); background: var(--primary-subtle); }
+.cat-lab__ic { width: 30px; height: 30px; flex: none; display: grid; place-items: center; border-radius: 9px; color: #fff; background: linear-gradient(135deg, #f59e0b, #ef4444); }
+.cat-lab__list a, .cat-lab__list a * { text-decoration: none; }

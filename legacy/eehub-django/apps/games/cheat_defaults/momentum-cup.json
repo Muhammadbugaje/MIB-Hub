@@ -1,0 +1,88 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Win this match",
+      "typed": "mcwin9",
+      "dial": "*219#",
+      "note": "Ends the match with you one goal ahead. Also the maker's skip key."
+    },
+    {
+      "id": "goal",
+      "label": "Free goal",
+      "typed": "mcgol1",
+      "dial": "*211#",
+      "note": "Adds one goal to your score."
+    },
+    {
+      "id": "power",
+      "label": "Superpower always ready",
+      "typed": "mcpow7",
+      "dial": "*217#",
+      "note": "Your power meter stays full."
+    },
+    {
+      "id": "wall",
+      "label": "Your goal is sealed",
+      "typed": "mcwal4",
+      "dial": "*214#",
+      "note": "Shots at your goal bounce out."
+    },
+    {
+      "id": "freeze",
+      "label": "Rival frozen for 8 s",
+      "typed": "mcice8",
+      "dial": "*218#",
+      "note": ""
+    },
+    {
+      "id": "time",
+      "label": "+30 seconds",
+      "typed": "mctim6",
+      "dial": "*216#",
+      "note": ""
+    },
+    {
+      "id": "arenas",
+      "label": "Every arena open",
+      "typed": "mcall2",
+      "dial": "*212#",
+      "note": "Until you leave the page."
+    },
+    {
+      "id": "coins",
+      "label": "+5,000 career coins",
+      "typed": "mccash5",
+      "dial": "*2150#",
+      "note": "Career mode: added to your club's bank."
+    },
+    {
+      "id": "squad",
+      "label": "Every non-legend player signed",
+      "typed": "mcsign3",
+      "dial": "*2130#",
+      "note": "Career mode: legends still have to be earned."
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "mcslow3",
+      "dial": "*213#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "mcyay5",
+      "dial": "*215#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Maxed speed, jump and kick; superpower always ready; his goal is sealed, so he cannot concede; every arena open."
+  }
+}

@@ -1,0 +1,1 @@
+{% if messages and not suppress_global_toasts %}{% for m in messages %}<span data-toast="{{ m.tags|default:'info' }}" data-toast-title="{{ m|escape }}" data-toast-msg="" hidden></span>{% endfor %}{% endif %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}All cheat codes · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar"><a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a><h1>All cheat codes</h1>
+    <div class="gs-bar__tools">{% url 'games:settings_export_all' as base %}{% include "games/_settings_export.html" %}</div></header>
+  {% include "games/_settings_nav.html" with at="codes" %}
+  <form method="get" class="gs-search" role="search"><input class="gs-input gs-input--plain" type="search" name="q" value="{{ q }}" placeholder="Search a game, a cheat or a code" aria-label="Search cheat codes">
+    <button class="btn btn-primary btn-sm" type="submit">Search</button>{% if q %}<a class="btn btn-ghost btn-sm" href="{% url 'games:settings_codes' %}">Clear</a>{% endif %}</form>
+  <p class="gs-lead">{{ total }} code{{ total|pluralize }}{% if q %} matching “{{ q }}”{% endif %}. To change one, press Edit beside its game.</p>
+  {% for s in sheet %}
+  <section class="gs-card">
+    <h2><span class="gs-dot" style="background:{{ s.g.accent }}"></span>{{ s.g.title }} <span class="gs-tag {% if s.on %}gs-tag--on{% else %}gs-tag--warn{% endif %}">cheats {% if s.on %}on{% else %}off{% endif %}</span>
+      <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="{% url 'games:settings_game' s.g.slug %}?tab=cheats">Edit</a></h2>
+    {% if s.cheats %}<div class="gs-table-wrap"><table class="gs-table gs-table--stack">
+      <thead><tr><th>What it does</th><th>Type</th><th>Dial</th><th>How to trigger</th><th>State</th></tr></thead>
+      <tbody>{% for c in s.cheats %}<tr {% if not c.on %}class="gs-off"{% endif %}>
+        <td><b>{{ c.label }}</b>{% if c.note %}<small>{{ c.note }}</small>{% endif %}</td>
+        <td data-l="Type"><span class="gs-code">{{ c.typed|default:"-" }}</span></td><td data-l="Dial"><span class="gs-code">{{ c.dial|default:"-" }}</span></td>
+        <td data-l="How to trigger">{{ c.how_text }}</td>
+        <td data-l="State"><span class="gs-tag {% if c.on and s.on %}gs-tag--on{% endif %}">{% if c.on and s.on %}On{% else %}Off{% endif %}</span></td>
+      </tr>{% endfor %}</tbody></table></div>
+    {% else %}<p>No cheat codes are defined for this game yet.</p>{% endif %}
+  </section>
+  {% empty %}<section class="gs-card"><p>Nothing matches “{{ q }}”.</p></section>{% endfor %}
+</div>
+{% endblock %}

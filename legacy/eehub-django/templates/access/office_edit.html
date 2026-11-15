@@ -1,0 +1,87 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}{{ office.name }}{% endblock %}
+{% block page_title %}Edit office{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<a class="acc-back" href="{% url 'access:offices' %}">{% icon "arrow-left" 15 %} Offices</a>
+<header class="ee-page-header">
+  <div class="ee-page-header__text acc-office-title">
+    <span class="ee-ic tone-{{ office.color }} acc-office-title__ic" data-office-preview-icon>{% icon office.icon 22 %}</span>
+    <div><span class="ee-page-header__eyebrow">{{ office.get_category_display }}{% if office.created_from %} · from {{ office.created_from.name }}{% endif %}</span>
+    <h1 class="ee-page-header__title">{{ office.name }}</h1>
+    <p class="ee-page-header__description">Sits inside the {{ office.get_profile_kind_display|lower }} profile · scope: {{ office.get_scope_kind_display|lower }} · <span class="ee-mono">{{ office.code }}</span></p></div>
+  </div>
+  <div class="ee-page-header__actions">
+    <a class="btn btn-ghost" href="{% url 'dashboards:office' office.code %}">{% icon "layout-dashboard" 16 %} View dashboard</a>
+    {% if request.user|has_perm:"accounts.offices_appoint" and office.is_active %}<a class="btn btn-ghost" href="{% url 'access:office_appoint' office.code %}">{% icon "user-plus" 16 %} Appoint</a>{% endif %}
+    <a class="btn btn-ghost" href="{% url 'access:office_create' %}?from={{ office.code }}">{% icon "copy" 16 %} Copy</a>
+  </div>
+</header>
+
+<form method="post" class="acc-two" novalidate id="office-form">{% csrf_token %}
+  <div class="acc-two__main">
+    <section class="ee-card ee-form">
+      <div class="ee-card__head"><h2>{% icon "badge-check" 17 %} The office</h2></div>
+      {% if form.non_field_errors %}<div class="alert alert-danger">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="ee-form-grid">
+        {% include "access/_field.html" with f=form.name %}{% include "access/_field.html" with f=form.short_name %}
+        {% include "access/_field.html" with f=form.category %}{% include "access/_field.html" with f=form.profile_kind %}
+        {% include "access/_field.html" with f=form.scope_kind %}{% include "access/_field.html" with f=form.rank %}
+        {% include "access/_field.html" with f=form.max_holders %}
+      </div>
+      {% include "access/_field.html" with f=form.description %}
+      <div class="ee-form-grid">
+        <div class="ee-field{% if form.icon.errors %} acc-has-error{% endif %}"><label for="{{ form.icon.id_for_label }}">Icon</label>
+          <div class="acc-icon-input"><span class="ee-ic tone-{{ office.color }}" data-icon-preview>{% icon office.icon 16 %}</span>{{ form.icon }}</div>
+          <div class="help">A <a href="https://lucide.dev/icons/" target="_blank" rel="noopener">Lucide</a> icon name.</div>{{ form.icon.errors }}</div>
+        <div class="ee-field"><span class="acc-label">Colour</span>
+          <div class="acc-swatches" role="radiogroup" aria-label="Colour">{% for val, label in form.fields.color.widget.choices %}
+            <label class="acc-swatch tone-{{ val }}" title="{{ label }}"><input type="radio" name="color" value="{{ val }}"{% if form.color.value == val %} checked{% endif %}><span class="sr-only">{{ label }}</span></label>{% endfor %}</div></div>
+      </div>
+      <div class="acc-checks">{% include "access/_field.html" with f=form.is_active %}{% include "access/_field.html" with f=form.is_template %}</div>
+    </section>
+
+    <section class="ee-card" id="eligibility">
+      <div class="ee-card__head"><h2>{% icon "user-check" 17 %} Who may hold it</h2><a class="ee-card__link" href="{% url 'access:how' %}#eligibility">How it works</a></div>
+      <p class="ee-card__sub">Appointment forms only offer people with one of these profiles. Imports, the admin and every other screen refuse anyone else.</p>
+      <div class="ee-field{% if form.allowed_kinds.errors %} acc-has-error{% endif %}"><span class="acc-label">{{ form.allowed_kinds.label }}</span>
+        <div class="acc-checks">{% for cb in form.allowed_kinds %}<label class="check">{{ cb.tag }}<span>{{ cb.choice_label }}</span></label>{% endfor %}</div>
+        <div class="help">{{ form.allowed_kinds.help_text }}</div>{{ form.allowed_kinds.errors }}</div>
+      {% include "access/_field.html" with f=form.level_must_match %}
+    </section>
+
+    <section class="ee-card" id="permissions">
+      <div class="ee-card__head"><h2>{% icon "shield-check" 17 %} Permissions</h2><span class="ee-card__sub">Everyone holding this office gets these, inside its profile</span></div>
+      {% include "access/_perm_picker.html" %}
+    </section>
+
+    <section class="ee-card" id="dashboard">
+      <div class="ee-card__head"><h2>{% icon "layout-dashboard" 17 %} Dashboard</h2></div>
+      {% include "access/_widget_picker.html" %}
+    </section>
+  </div>
+
+  <aside class="acc-two__side">
+    <div class="acc-savebar ee-card">
+      <button type="submit" class="btn btn-primary btn-block">{% icon "save" 16 %} Save office</button>
+      <p class="ee-card__sub">Changes take effect at the holders' next page load. Every change is audited.</p>
+    </div>
+    <section class="ee-card" id="holders">
+      <div class="ee-card__head"><h2>{% icon "users" 17 %} Holders{% if office.max_holders %} <span class="ee-chip">max {{ office.max_holders }}</span>{% endif %}</h2>{% if request.user|has_perm:"accounts.offices_appoint" and office.is_active %}<a class="ee-card__link" href="{% url 'access:office_appoint' office.code %}">Appoint →</a>{% endif %}</div>
+      {% include "access/_holders_list.html" %}
+    </section>
+    {% if copies %}<section class="ee-card"><div class="ee-card__head"><h2>{% icon "copy" 17 %} Offices made from this</h2></div>
+      <ul class="ee-list">{% for c in copies %}<li><span class="ee-ic tone-{{ c.color }}">{% icon c.icon 15 %}</span><div class="ee-row__body"><a class="ee-row__title" href="{% url 'access:office_edit' c.code %}">{{ c.name }}</a></div></li>{% endfor %}</ul></section>{% endif %}
+    <section class="ee-card acc-danger-zone">
+      <div class="ee-card__head"><h2>{% icon "trash-2" 17 %} Delete</h2></div>
+      {% if office.is_system %}<p class="ee-card__sub">This office ships with EE Hub and cannot be deleted. Untick “Active” to switch it off.</p>
+      {% else %}<p class="ee-card__sub">Only an office that was never held can be deleted.</p>
+      <button type="submit" form="office-delete" class="btn btn-ghost btn-danger btn-sm">{% icon "trash-2" 14 %} Delete office</button>{% endif %}
+    </section>
+  </aside>
+</form>
+{% if not office.is_system %}<form method="post" id="office-delete" data-confirm="{{ office.name }} and its dashboard design are removed for good." data-confirm-title="Delete this office?" data-confirm-label="Delete">{% csrf_token %}<input type="hidden" name="action" value="delete"></form>{% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}

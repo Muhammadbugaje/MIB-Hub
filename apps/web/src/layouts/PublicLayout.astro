@@ -1,0 +1,89 @@
+---
+/**
+ * Public pages (home, games, devlog...): glass header, content, footer.
+ * <PublicLayout title="Games"> ...page... </PublicLayout>
+ */
+import ThemeToggle from "@mib/ui/components/ThemeToggle.tsx";
+import Logo from "../components/Logo.astro";
+import { siteConfig } from "../site.config.ts";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description } = Astro.props;
+const { viewer } = Astro.locals;
+const path = Astro.url.pathname;
+const year = new Date().getFullYear();
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="site-header">
+    <div class="container site-header__bar">
+      <Logo />
+      <nav class="site-nav" aria-label="Main">
+        {
+          siteConfig.nav.map((item) => (
+            <a href={item.href} aria-current={item.href === path ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="site-header__actions">
+        <ThemeToggle client:load />
+        {
+          viewer.user ? (
+            <a class="btn btn--primary btn--sm" href="/account/profile">
+              Your account
+            </a>
+          ) : (
+            <>
+              <a class="btn btn--ghost btn--sm" href="/auth/sign-in">
+                Sign in
+              </a>
+              <a class="btn btn--primary btn--sm" href="/auth/register">
+                Create account
+              </a>
+            </>
+          )
+        }
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page-enter">
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div>
+        <Logo />
+        <p class="muted" style="margin-top: var(--space-3); max-width: 42ch; font-size: var(--fs-sm);">
+          {siteConfig.description}
+        </p>
+      </div>
+      <div>
+        <h2>Play</h2>
+        <ul>
+          <li><a href="/#games">All games</a></li>
+          <!-- TODO(public-pages): Devlog, Credits, Press kit, Community (Discord) -->
+        </ul>
+      </div>
+      <div>
+        <h2>Account</h2>
+        <ul>
+          <li><a href="/auth/sign-in">Sign in</a></li>
+          <li><a href="/auth/register">Create an account</a></li>
+          <li><a href="/auth/forgot-password">Forgot your password?</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container site-footer__bottom">
+      <span>© {year} {siteConfig.name}. Created by {siteConfig.creator}.</span>
+      <span>{siteConfig.footerNote}</span>
+    </div>
+  </footer>
+</BaseLayout>

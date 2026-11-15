@@ -1,0 +1,7 @@
+{% load ee_tags %}<div class="ee-card"><div class="ee-card__head"><h2>{% icon "school" 17 %} Classes</h2><a class="ee-card__link" href="{% url 'access:classes' %}">All classes →</a></div>
+<ul class="ee-list">{% for r in rows %}<li><span class="ee-ic tone-volt">{% icon "users-round" 15 %}</span>
+  <div class="ee-row__body"><div class="ee-row__title"><a href="{% url 'access:class_detail' r.l.pk %}">{{ r.l }}</a></div>
+  <div class="ee-row__meta">{% if r.reps %}Rep: {{ r.reps|join:", " }}{% else %}No class rep yet{% endif %} · {{ r.tutors }} tutor{{ r.tutors|pluralize }}</div></div><b>{{ r.n }}</b></li>
+{% empty %}<li class="ee-empty" style="width:100%">No classes with students yet.</li>{% endfor %}</ul>
+{% if request.user|has_perm:"accounts.class_broadcast" %}<div class="btn-group" style="margin-top:10px"><a class="btn btn-ghost btn-sm" href="{% url 'access:broadcast' %}">{% icon "megaphone" 14 %} Send an announcement</a></div>{% endif %}
+</div>

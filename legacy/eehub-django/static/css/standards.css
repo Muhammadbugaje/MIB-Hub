@@ -1,0 +1,83 @@
+/* EE Hub shared standards (R7S, master plan F7 / D5 / D6).
+   Loaded once by templates/base.html, templates/base_public.html and the
+   admin base. Low specificity (:where) so page styles can still refine.
+
+   1. Button groups      .btn-group: 8 px gap, wraps, 44 px tap targets on
+                         touch, stacks full width under 480 px
+                         (opt out: .btn-group--inline).
+   2. Safety rule        buttons written side by side outside a group still
+                         get 8 px between them.
+   3. Logo swap          {% logo %} / {% crest %} light and dark files.
+   4. Overflow guards    long words and media never push the page sideways.
+*/
+
+/* 1. Button groups ------------------------------------------------------ */
+:where(.btn-group) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+:where(.btn-group--end) { justify-content: flex-end; }
+:where(.btn-group--center) { justify-content: center; }
+:where(.btn-group) > :where(form) { display: contents; }
+:where(.btn-group) > * { margin: 0; }
+
+@media (pointer: coarse) {
+  :where(.btn-group) > :where(.btn, .pub-btn, a, button, input[type="submit"], input[type="button"]),
+  :where(.btn-group) > :where(form) > :where(.btn, .pub-btn, button) {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 479.98px) {
+  :where(.btn-group:not(.btn-group--inline)) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  :where(.btn-group:not(.btn-group--inline)) > :where(.btn, .pub-btn, a, button),
+  :where(.btn-group:not(.btn-group--inline)) > :where(form) > :where(.btn, .pub-btn, button) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* 2. Safety rule: adjacent buttons outside a group ---------------------- */
+/* Specificity (0,2,0) on purpose: it must beat `.btn { margin: 0 }` style resets.
+   Inside a flex parent that already has a gap this only adds a little space. */
+:where(:not(.btn-group)) > .btn + .btn,
+:where(:not(.btn-group)) > .pub-btn + .pub-btn,
+:where(:not(.btn-group)) > .btn + .pub-btn,
+:where(:not(.btn-group)) > .pub-btn + .btn {
+  margin-inline-start: 8px;
+}
+/* ... and when such a pair wraps onto two lines (narrow table cells) */
+:where(:not(.btn-group)) > .btn:has(+ .btn),
+:where(:not(.btn-group)) > .btn + .btn,
+:where(:not(.btn-group)) > .pub-btn:has(+ .pub-btn),
+:where(:not(.btn-group)) > .pub-btn + .pub-btn {
+  margin-block: 3px;
+}
+
+/* 2b. Portal top bar (shared shell): its icon buttons sat 0-2 px apart on
+   phones. 6 px on phones, 8 px from 480 px. The search field gives way. */
+.app-topbar-actions { gap: 6px; }
+@media (min-width: 480px) { .app-topbar-actions { gap: 8px; } }
+
+/* 3. Logo and crest swap ------------------------------------------------- */
+.logo-swap--dark { display: none !important; }
+:root[data-theme="dark"] .logo-swap--light { display: none !important; }
+:root[data-theme="dark"] .logo-swap--dark { display: inline-block !important; }
+/* (theme-init.js always sets data-theme; Unfold marks dark admin pages with html.dark) */
+html.dark .logo-swap--light { display: none !important; }   /* Unfold admin */
+html.dark .logo-swap--dark { display: inline-block !important; }
+:where(.ee-logo-img, .abu-crest) { flex: none; object-fit: contain; vertical-align: middle; }
+
+/* 4. Overflow guards ----------------------------------------------------- */
+/* break-word (not anywhere) so table columns keep their natural widths */
+:where(h1, h2, h3, h4, h5, h6, p, li, dd, dt, figcaption, blockquote, legend) {
+  overflow-wrap: break-word;
+}
+:where(pre) { overflow-x: auto; max-width: 100%; }
+:where(input, select, textarea) { max-width: 100%; }

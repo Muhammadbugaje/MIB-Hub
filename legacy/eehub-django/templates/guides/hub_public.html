@@ -1,0 +1,6 @@
+{% extends "base_public.html" %}{% load static %}
+{% block title %}How-to guides{% endblock %}
+{% block meta_description %}Step-by-step guides with pictures for EE Hub: signing in, course registration, CBT tests, SIWES, projects and more.{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/guides.css' %}">{% endblock %}
+{% block content %}<div class="gd-public"><div class="gd-wrap">{% include "guides/_hub_body.html" %}</div></div>{% endblock %}
+{% block extra_js %}<script src="{% static 'js/guides.js' %}" defer></script>{% endblock %}

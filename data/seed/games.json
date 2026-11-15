@@ -1,0 +1,1822 @@
+{
+  "exported_at": "2026-11-15T18:54:06",
+  "source": "eehub-2 (Django), read-only",
+  "count": 16,
+  "playable": 16,
+  "catalogue_source": "games/catalogue.py (Python list; no DB table for the catalogue)",
+  "levels": [
+    100,
+    200,
+    300,
+    400,
+    500
+  ],
+  "page_loader": {
+    "description": "templates/games/play.html loads, all with defer, in this order: the shared shell, (samaru-days only) qrcode + arcade-lan, then each dep from catalogue extra.deps (or the bundle), then level packs the viewer may open (level <= viewer max_level), then the game entry script. A name containing \"/\" is a static path + \".js\"; otherwise static/js/games/<name>.js.",
+    "shell": [
+      {
+        "name": "arcade",
+        "static_path": "static/js/games/arcade.js",
+        "exists": true,
+        "bytes": 104251
+      },
+      {
+        "name": "arcade-settings",
+        "static_path": "static/js/games/arcade-settings.js",
+        "exists": true,
+        "bytes": 50938
+      },
+      {
+        "name": "arcade-audio",
+        "static_path": "static/js/games/arcade-audio.js",
+        "exists": true,
+        "bytes": 21986
+      },
+      {
+        "name": "arcade-sounds",
+        "static_path": "static/js/games/arcade-sounds.js",
+        "exists": true,
+        "bytes": 42779
+      },
+      {
+        "name": "arcade-offline",
+        "static_path": "static/js/games/arcade-offline.js",
+        "exists": true,
+        "bytes": 24950
+      }
+    ],
+    "css": "static/css/games.css",
+    "stage_data_attributes": [
+      "data-gm-slug",
+      "data-gm-user (\"u<pk>\" or \"guest\")",
+      "data-gm-api (/arcade/api/)",
+      "data-csrf",
+      "data-gm-locked (JSON locked packs)",
+      "data-gm-config (JSON page_config: hashed cheats, rules, hero meta)",
+      "data-gm-three (samaru-days)"
+    ]
+  },
+  "games": [
+    {
+      "slug": "momentum-cup",
+      "title": "Momentum Cup",
+      "order": 0,
+      "category": "Scientist head-football",
+      "level": 100,
+      "description": "Big-headed scientists play head-football in seven arenas, with superpowers, a roaring crowd and a six-round cup against Count Entropy.",
+      "gameplay_loop": "Read the ball's arc, get under it, dash, pick the kick angle and fire your superpower at the right moment.",
+      "courses": [
+        "PHYS 111"
+      ],
+      "topics": [
+        "Motion in 2D: projectiles",
+        "Collisions",
+        "Force and Newton's laws"
+      ],
+      "modes": [
+        "Career: 5 leagues and the Legends ladder",
+        "Classic six-round cup",
+        "Quick match",
+        "Two players, one device"
+      ],
+      "tags": [
+        "quick",
+        "versus",
+        "physics"
+      ],
+      "session": "3–5 min a match",
+      "controls": "A/D move · double-tap dash · W jump · S/Q kick · E power",
+      "accent": "#3dd68c",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": true,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/momentum-cup-192.png",
+          "512": "static/img/games/momentum-cup-512.png",
+          "maskable_192": "static/img/games/momentum-cup-maskable-192.png",
+          "maskable_512": "static/img/games/momentum-cup-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "kickoff",
+          "static_path": "static/js/games/kickoff.js",
+          "exists": true,
+          "bytes": 120952
+        },
+        "deps_in_load_order": [
+          {
+            "name": "kickoff-career",
+            "static_path": "static/js/games/kickoff-career.js",
+            "exists": true,
+            "bytes": 25036
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "impulse-arena",
+      "title": "Impulse Arena",
+      "order": 1,
+      "category": "Scientist arena fighter",
+      "level": 100,
+      "description": "One-on-one lab duels where every hit is an impulse and heavier fighters really are harder to shove.",
+      "gameplay_loop": "Read your opponent, land an impulse, watch Δv = J/m decide the knockback, counter.",
+      "courses": [
+        "PHYS 111"
+      ],
+      "topics": [
+        "Force and Newton's laws",
+        "Impulse and momentum",
+        "Work, energy and power"
+      ],
+      "modes": [
+        "Circuit story ladder",
+        "Survival",
+        "Time attack",
+        "Combo trials",
+        "Versus CPU",
+        "Two players, one device",
+        "Training room"
+      ],
+      "tags": [
+        "quick",
+        "versus",
+        "physics"
+      ],
+      "session": "2–4 min a duel",
+      "controls": "WASD move · J/U punch · K/I kick · L block · O special",
+      "accent": "#f6c445",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": true,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/impulse-arena-192.png",
+          "512": "static/img/games/impulse-arena-512.png",
+          "maskable_192": "static/img/games/impulse-arena-maskable-192.png",
+          "maskable_512": "static/img/games/impulse-arena-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "clash",
+          "static_path": "static/js/games/clash.js",
+          "exists": true,
+          "bytes": 142782
+        },
+        "deps_in_load_order": [
+          {
+            "name": "clashdata",
+            "static_path": "static/js/games/clashdata.js",
+            "exists": true,
+            "bytes": 127334
+          },
+          {
+            "name": "clashcareer",
+            "static_path": "static/js/games/clashcareer.js",
+            "exists": true,
+            "bytes": 15209
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "volt-city",
+      "title": "Volt City",
+      "order": 2,
+      "category": "Open-world lite: charge puzzles",
+      "level": 100,
+      "description": "Walk a blacked-out city and restore each district by steering a charge with fields you build.",
+      "gameplay_loop": "Explore, find a dark district, place charges, release, watch superposition steer the probe, restore power.",
+      "courses": [
+        "PHYS 122"
+      ],
+      "topics": [
+        "Electrostatics",
+        "Coulomb's law; superposition",
+        "Electric field and field lines"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "physics"
+      ],
+      "session": "5–10 min a district",
+      "controls": "WASD walk · E interact",
+      "accent": "#7ef0ff",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/volt-city-192.png",
+          "512": "static/img/games/volt-city-512.png",
+          "maskable_192": "static/img/games/volt-city-maskable-192.png",
+          "maskable_512": "static/img/games/volt-city-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "fieldbound",
+          "static_path": "static/js/games/fieldbound.js",
+          "exists": true,
+          "bytes": 158041
+        },
+        "deps_in_load_order": [
+          {
+            "name": "fieldsim",
+            "static_path": "static/js/games/fieldsim.js",
+            "exists": true,
+            "bytes": 3625
+          },
+          {
+            "name": "voltworld",
+            "static_path": "static/js/games/voltworld.js",
+            "exists": true,
+            "bytes": 33694
+          },
+          {
+            "name": "voltlab",
+            "static_path": "static/js/games/voltlab.js",
+            "exists": true,
+            "bytes": 26351
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "kinetic-kingdom",
+      "title": "Kinetic Kingdom",
+      "order": 3,
+      "category": "Side-scrolling platformer",
+      "level": 100,
+      "description": "Run, jump and stomp through seven worlds of Count Entropy's minions (41 levels), earning new abilities from every boss, with the physics of every jump on screen.",
+      "gameplay_loop": "Read the jump, run, leap, stomp, find the secrets, beat each world's boss, race your own ghost.",
+      "courses": [
+        "PHYS 111"
+      ],
+      "topics": [
+        "Kinematics: jumps as projectiles",
+        "Friction f = μN",
+        "Work–energy and springs",
+        "Circular motion",
+        "Net force ΣF = ma",
+        "Weight w = mg"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "session": "3–5 min a level",
+      "controls": "←/→ move · Space jump · Shift run / air dash · ↓ pound",
+      "accent": "#4ade80",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/kinetic-kingdom-192.png",
+          "512": "static/img/games/kinetic-kingdom-512.png",
+          "maskable_192": "static/img/games/kinetic-kingdom-maskable-192.png",
+          "maskable_512": "static/img/games/kinetic-kingdom-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "platformer",
+          "static_path": "static/js/games/platformer.js",
+          "exists": true,
+          "bytes": 149216
+        },
+        "deps_in_load_order": [
+          {
+            "name": "platformer-levels",
+            "static_path": "static/js/games/platformer-levels.js",
+            "exists": true,
+            "bytes": 109164
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "wavefront",
+      "title": "Wavefront",
+      "order": 4,
+      "category": "Run-and-gun wave shooter",
+      "level": 100,
+      "description": "Fight Count Entropy's machines across eight stages with weapons made of light: every one follows a real wave law.",
+      "gameplay_loop": "Run and aim, tune your frequency, pick the right wave weapon, cross your polariser to his beams, beat the boss.",
+      "courses": [
+        "PHYS 124",
+        "PHYS 122"
+      ],
+      "topics": [
+        "Wave nature of light, c = fλ, E = hf",
+        "Huygens' principle and diffraction gratings, d sinθ = nλ",
+        "Young's double slit, y = nλL/d",
+        "Polarisation and Malus's law, I = I₀cos²θ",
+        "Electromagnetic waves and pulses"
+      ],
+      "modes": [
+        "Single player",
+        "Two players, one device"
+      ],
+      "tags": [
+        "physics",
+        "versus"
+      ],
+      "session": "3–6 min a stage",
+      "controls": "A/D run · W/S aim · Space jump · J fire · E/Q frequency · I shield",
+      "accent": "#7ef0ff",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/wavefront-192.png",
+          "512": "static/img/games/wavefront-512.png",
+          "maskable_192": "static/img/games/wavefront-maskable-192.png",
+          "maskable_512": "static/img/games/wavefront-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "shooter",
+          "static_path": "static/js/games/shooter.js",
+          "exists": true,
+          "bytes": 130031
+        },
+        "deps_in_load_order": [
+          {
+            "name": "shooterdata",
+            "static_path": "static/js/games/shooterdata.js",
+            "exists": true,
+            "bytes": 42123
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "samaru-days",
+      "title": "Freshers School Life",
+      "order": 5,
+      "category": "3D open-world school life",
+      "level": 100,
+      "description": "Your first year at a beautiful school: classes, MACD at Shinkafi, okada, friends, races, seven gardens, and the mystery of who keeps taking the light.",
+      "gameplay_loop": "Explore, eat and rest, attend class to level up, earn licences from skateboard to aircraft, follow the story, then chase the long goals.",
+      "courses": [
+        "PHYS 111",
+        "ENGG 102"
+      ],
+      "topics": [
+        "Motion in 2D: momentum, drag and grip",
+        "Campus general knowledge and first-year revision questions"
+      ],
+      "modes": [
+        "Story",
+        "Free roam",
+        "Up to 6 players on the same Wi-Fi"
+      ],
+      "tags": [
+        "open",
+        "versus"
+      ],
+      "session": "As long as you like",
+      "controls": "WASD move · mouse look · Shift run · E do · J hit · Q phone",
+      "accent": "#f59e0b",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": "FSLG",
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/samaru-days-192.png",
+          "512": "static/img/games/samaru-days-512.png",
+          "maskable_192": "static/img/games/samaru-days-maskable-192.png",
+          "maskable_512": "static/img/games/samaru-days-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": "2026-11-14 00:24:47.283152",
+        "has_hero_hash": true,
+        "has_cheat_overrides": false,
+        "rules_schema": [
+          {
+            "key": "warnings",
+            "label": "Warnings before security gives chase",
+            "type": "int",
+            "default": 5,
+            "min": 3,
+            "max": 6
+          },
+          {
+            "key": "window",
+            "label": "Seconds after the last warning in which one more offence starts a chase",
+            "type": "int",
+            "default": 20,
+            "min": 5,
+            "max": 120
+          },
+          {
+            "key": "warnExpire",
+            "label": "Calm seconds before a warning is forgotten",
+            "type": "int",
+            "default": 40,
+            "min": 10,
+            "max": 600
+          },
+          {
+            "key": "guards",
+            "label": "Most guards in one chase",
+            "type": "int",
+            "default": 2,
+            "min": 1,
+            "max": 4
+          },
+          {
+            "key": "guardSpeed",
+            "label": "Guard speed as a share of the player's sprint",
+            "type": "float",
+            "default": 0.86,
+            "min": 0.3,
+            "max": 0.97
+          },
+          {
+            "key": "sight",
+            "label": "How far a guard can see (metres)",
+            "type": "int",
+            "default": 45,
+            "min": 8,
+            "max": 200
+          },
+          {
+            "key": "search",
+            "label": "Seconds guards search before giving up",
+            "type": "int",
+            "default": 12,
+            "min": 2,
+            "max": 120
+          },
+          {
+            "key": "decay",
+            "label": "Heat lost per second while behaving",
+            "type": "float",
+            "default": 1.2,
+            "min": 0.05,
+            "max": 20
+          },
+          {
+            "key": "fine",
+            "label": "Fine when caught (naira)",
+            "type": "int",
+            "default": 200,
+            "min": 0,
+            "max": 100000
+          },
+          {
+            "key": "fareBase",
+            "label": "Shuttle fare for the shortest hop (naira)",
+            "type": "int",
+            "default": 100,
+            "min": 0,
+            "max": 5000
+          },
+          {
+            "key": "farePerKm",
+            "label": "Shuttle fare added per kilometre (naira)",
+            "type": "int",
+            "default": 40,
+            "min": 0,
+            "max": 5000
+          },
+          {
+            "key": "fareMax",
+            "label": "Highest shuttle fare, the Phase 2 run (naira)",
+            "type": "int",
+            "default": 200,
+            "min": 0,
+            "max": 20000
+          },
+          {
+            "key": "kekeFactor",
+            "label": "Keke fare as a multiple of the shuttle fare",
+            "type": "float",
+            "default": 1.5,
+            "min": 1,
+            "max": 5
+          },
+          {
+            "key": "wildWarn",
+            "label": "Metres past the fence before the patrol's first warning",
+            "type": "int",
+            "default": 400,
+            "min": 50,
+            "max": 5000
+          },
+          {
+            "key": "wildLimit",
+            "label": "Metres past the fence at which the patrol always catches you",
+            "type": "int",
+            "default": 1500,
+            "min": 300,
+            "max": 20000
+          },
+          {
+            "key": "wildPatience",
+            "label": "Seconds between patrol warnings and before the chase",
+            "type": "int",
+            "default": 22,
+            "min": 5,
+            "max": 300
+          },
+          {
+            "key": "wildFine",
+            "label": "Fine when the patrol drives you back (naira)",
+            "type": "int",
+            "default": 150,
+            "min": 0,
+            "max": 100000
+          }
+        ],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "samaru",
+          "static_path": "static/js/games/samaru.js",
+          "exists": true,
+          "bytes": 5086
+        },
+        "deps_in_load_order": [
+          {
+            "name": "fslg-map",
+            "static_path": "static/js/games/fslg-map.js",
+            "exists": true,
+            "bytes": 62844
+          },
+          {
+            "name": "samaru-sim",
+            "static_path": "static/js/games/samaru-sim.js",
+            "exists": true,
+            "bytes": 71361
+          },
+          {
+            "name": "samaru-data",
+            "static_path": "static/js/games/samaru-data.js",
+            "exists": true,
+            "bytes": 90057
+          },
+          {
+            "name": "fslg.config",
+            "static_path": "static/js/games/fslg.config.js",
+            "exists": true,
+            "bytes": 899
+          },
+          {
+            "name": "fslg-story-y1",
+            "static_path": "static/js/games/fslg-story-y1.js",
+            "exists": true,
+            "bytes": 163415
+          },
+          {
+            "name": "fslg-story-y2",
+            "static_path": "static/js/games/fslg-story-y2.js",
+            "exists": true,
+            "bytes": 58309
+          },
+          {
+            "name": "fslg-story-y3",
+            "static_path": "static/js/games/fslg-story-y3.js",
+            "exists": true,
+            "bytes": 56787
+          },
+          {
+            "name": "fslg-story-y4",
+            "static_path": "static/js/games/fslg-story-y4.js",
+            "exists": true,
+            "bytes": 55885
+          },
+          {
+            "name": "fslg-story-y5",
+            "static_path": "static/js/games/fslg-story-y5.js",
+            "exists": true,
+            "bytes": 57146
+          },
+          {
+            "name": "fslg-story-side",
+            "static_path": "static/js/games/fslg-story-side.js",
+            "exists": true,
+            "bytes": 77920
+          },
+          {
+            "name": "fslg-story-coop",
+            "static_path": "static/js/games/fslg-story-coop.js",
+            "exists": true,
+            "bytes": 119743
+          },
+          {
+            "name": "fslg-story-choices",
+            "static_path": "static/js/games/fslg-story-choices.js",
+            "exists": true,
+            "bytes": 37455
+          },
+          {
+            "name": "fslg-story-likes",
+            "static_path": "static/js/games/fslg-story-likes.js",
+            "exists": true,
+            "bytes": 28067
+          },
+          {
+            "name": "samaru-draw",
+            "static_path": "static/js/games/samaru-draw.js",
+            "exists": true,
+            "bytes": 32278
+          },
+          {
+            "name": "samaru-core",
+            "static_path": "static/js/games/samaru-core.js",
+            "exists": true,
+            "bytes": 123446
+          },
+          {
+            "name": "samaru-story",
+            "static_path": "static/js/games/samaru-story.js",
+            "exists": true,
+            "bytes": 71142
+          },
+          {
+            "name": "samaru-overrides",
+            "static_path": "static/js/games/samaru-overrides.js",
+            "exists": true,
+            "bytes": 34130
+          },
+          {
+            "name": "samaru-intro",
+            "static_path": "static/js/games/samaru-intro.js",
+            "exists": true,
+            "bytes": 65276
+          },
+          {
+            "name": "samaru-3d",
+            "static_path": "static/js/games/samaru-3d.js",
+            "exists": true,
+            "bytes": 95203
+          },
+          {
+            "name": "samaru-anim",
+            "static_path": "static/js/games/samaru-anim.js",
+            "exists": true,
+            "bytes": 93274
+          },
+          {
+            "name": "samaru-wardrobe",
+            "static_path": "static/js/games/samaru-wardrobe.js",
+            "exists": true,
+            "bytes": 33193
+          },
+          {
+            "name": "samaru-veh",
+            "static_path": "static/js/games/samaru-veh.js",
+            "exists": true,
+            "bytes": 88071
+          },
+          {
+            "name": "samaru-fx",
+            "static_path": "static/js/games/samaru-fx.js",
+            "exists": true,
+            "bytes": 26700
+          },
+          {
+            "name": "samaru-touch",
+            "static_path": "static/js/games/samaru-touch.js",
+            "exists": true,
+            "bytes": 25381
+          },
+          {
+            "name": "samaru-settings",
+            "static_path": "static/js/games/samaru-settings.js",
+            "exists": true,
+            "bytes": 5350
+          },
+          {
+            "name": "samaru-guide",
+            "static_path": "static/js/games/samaru-guide.js",
+            "exists": true,
+            "bytes": 36964
+          },
+          {
+            "name": "samaru-moment",
+            "static_path": "static/js/games/samaru-moment.js",
+            "exists": true,
+            "bytes": 16695
+          },
+          {
+            "name": "samaru-life",
+            "static_path": "static/js/games/samaru-life.js",
+            "exists": true,
+            "bytes": 34139
+          },
+          {
+            "name": "samaru-interior",
+            "static_path": "static/js/games/samaru-interior.js",
+            "exists": true,
+            "bytes": 73770
+          },
+          {
+            "name": "samaru-mall",
+            "static_path": "static/js/games/samaru-mall.js",
+            "exists": true,
+            "bytes": 50516
+          },
+          {
+            "name": "samaru-friends",
+            "static_path": "static/js/games/samaru-friends.js",
+            "exists": true,
+            "bytes": 28615
+          },
+          {
+            "name": "samaru-brawl",
+            "static_path": "static/js/games/samaru-brawl.js",
+            "exists": true,
+            "bytes": 21104
+          },
+          {
+            "name": "samaru-jobs",
+            "static_path": "static/js/games/samaru-jobs.js",
+            "exists": true,
+            "bytes": 16554
+          },
+          {
+            "name": "samaru-crowd",
+            "static_path": "static/js/games/samaru-crowd.js",
+            "exists": true,
+            "bytes": 14196
+          },
+          {
+            "name": "samaru-city",
+            "static_path": "static/js/games/samaru-city.js",
+            "exists": true,
+            "bytes": 32569
+          },
+          {
+            "name": "samaru-ui",
+            "static_path": "static/js/games/samaru-ui.js",
+            "exists": true,
+            "bytes": 46508
+          },
+          {
+            "name": "samaru-inv",
+            "static_path": "static/js/games/samaru-inv.js",
+            "exists": true,
+            "bytes": 60258
+          },
+          {
+            "name": "samaru-phone",
+            "static_path": "static/js/games/samaru-phone.js",
+            "exists": true,
+            "bytes": 72102
+          },
+          {
+            "name": "samaru-texts",
+            "static_path": "static/js/games/samaru-texts.js",
+            "exists": true,
+            "bytes": 23731
+          },
+          {
+            "name": "samaru-travel",
+            "static_path": "static/js/games/samaru-travel.js",
+            "exists": true,
+            "bytes": 12976
+          },
+          {
+            "name": "samaru-wild",
+            "static_path": "static/js/games/samaru-wild.js",
+            "exists": true,
+            "bytes": 20420
+          },
+          {
+            "name": "samaru-map",
+            "static_path": "static/js/games/samaru-map.js",
+            "exists": true,
+            "bytes": 31462
+          },
+          {
+            "name": "samaru-voice",
+            "static_path": "static/js/games/samaru-voice.js",
+            "exists": true,
+            "bytes": 15743
+          },
+          {
+            "name": "samaru-minigames",
+            "static_path": "static/js/games/samaru-minigames.js",
+            "exists": true,
+            "bytes": 89332
+          },
+          {
+            "name": "samaru-audio",
+            "static_path": "static/js/games/samaru-audio.js",
+            "exists": true,
+            "bytes": 15099
+          },
+          {
+            "name": "samaru-water",
+            "static_path": "static/js/games/samaru-water.js",
+            "exists": true,
+            "bytes": 101742
+          },
+          {
+            "name": "samaru-kit",
+            "static_path": "static/js/games/samaru-kit.js",
+            "exists": true,
+            "bytes": 13031
+          },
+          {
+            "name": "samaru-switch",
+            "static_path": "static/js/games/samaru-switch.js",
+            "exists": true,
+            "bytes": 26515
+          },
+          {
+            "name": "samaru-conseq",
+            "static_path": "static/js/games/samaru-conseq.js",
+            "exists": true,
+            "bytes": 12762
+          },
+          {
+            "name": "samaru-romance",
+            "static_path": "static/js/games/samaru-romance.js",
+            "exists": true,
+            "bytes": 43019
+          },
+          {
+            "name": "samaru-prosper",
+            "static_path": "static/js/games/samaru-prosper.js",
+            "exists": true,
+            "bytes": 105
+          },
+          {
+            "name": "samaru-cook",
+            "static_path": "static/js/games/samaru-cook.js",
+            "exists": true,
+            "bytes": 102
+          },
+          {
+            "name": "samaru-workshop",
+            "static_path": "static/js/games/samaru-workshop.js",
+            "exists": true,
+            "bytes": 106
+          },
+          {
+            "name": "samaru-maker",
+            "static_path": "static/js/games/samaru-maker.js",
+            "exists": true,
+            "bytes": 103
+          },
+          {
+            "name": "samaru-weather",
+            "static_path": "static/js/games/samaru-weather.js",
+            "exists": true,
+            "bytes": 105
+          },
+          {
+            "name": "samaru-worldlife",
+            "static_path": "static/js/games/samaru-worldlife.js",
+            "exists": true,
+            "bytes": 107
+          },
+          {
+            "name": "samaru-saves",
+            "static_path": "static/js/games/samaru-saves.js",
+            "exists": true,
+            "bytes": 15672
+          }
+        ],
+        "level_packs": {},
+        "three_js": "static/vendor/three@0.158.0/build/three.module.min.js (ES module URL passed via data-gm-three; loaded by the game)",
+        "production_bundle": {
+          "name": "fslg.bundle",
+          "path": "static/js/games/fslg.bundle.js",
+          "built_by": "games/bundle.py (python manage.py build_fslg)",
+          "used_when": "not DEBUG and bundle newer than every dep"
+        },
+        "extra_page_scripts": [
+          {
+            "name": "qrcode-generator",
+            "static_path": "static/vendor/qrcode-generator@1.4.4/qrcode.js"
+          },
+          {
+            "name": "arcade-lan",
+            "static_path": "static/js/games/arcade-lan.js",
+            "exists": true,
+            "bytes": 23055
+          }
+        ]
+      }
+    },
+    {
+      "slug": "motorworks",
+      "title": "Motorworks Trails",
+      "order": 6,
+      "category": "Open-world lite: workshop",
+      "level": 300,
+      "description": "Explore a machine workshop; change supply, load and field to make each machine do its job.",
+      "gameplay_loop": "Explore a bay, test input and load, observe speed and torque, unlock the next bay.",
+      "courses": [
+        "EEEN 309"
+      ],
+      "topics": [
+        "Electromechanical energy conversion",
+        "DC machine construction"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "physics"
+      ],
+      "session": "3–8 min a bay",
+      "controls": "Arrows walk · E open · Tab pick control · Q/E turn it",
+      "accent": "#f6c445",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/motorworks-192.png",
+          "512": "static/img/games/motorworks-512.png",
+          "maskable_192": "static/img/games/motorworks-maskable-192.png",
+          "maskable_512": "static/img/games/motorworks-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "motorworks",
+          "static_path": "static/js/games/motorworks.js",
+          "exists": true,
+          "bytes": 30333
+        },
+        "deps_in_load_order": [
+          {
+            "name": "motorsim",
+            "static_path": "static/js/games/motorsim.js",
+            "exists": true,
+            "bytes": 21736
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "storm-map",
+      "title": "Gridkeepers: Storm Map",
+      "order": 7,
+      "category": "Open-world lite: grid restoration",
+      "level": 300,
+      "description": "After a storm, travel a small network, find faults and restore supply in a safe order.",
+      "gameplay_loop": "Patrol, diagnose, isolate, restore, keep the lights on.",
+      "courses": [
+        "EEEN 327"
+      ],
+      "topics": [
+        "Electric energy sources",
+        "Transmission and distribution"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "open",
+        "puzzle"
+      ],
+      "session": "5–10 min a storm",
+      "controls": "Tap to drive · tap a line to switch · E act",
+      "accent": "#ffd84a",
+      "playable": true,
+      "needs_lecturer_confirmation": true,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/storm-map-192.png",
+          "512": "static/img/games/storm-map-512.png",
+          "maskable_192": "static/img/games/storm-map-maskable-192.png",
+          "maskable_512": "static/img/games/storm-map-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "stormmap",
+          "static_path": "static/js/games/stormmap.js",
+          "exists": true,
+          "bytes": 24757
+        },
+        "deps_in_load_order": [
+          {
+            "name": "gridsim",
+            "static_path": "static/js/games/gridsim.js",
+            "exists": true,
+            "bytes": 28687
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "induction-dash",
+      "title": "Induction Dash",
+      "order": 8,
+      "category": "Magnet-cart runner",
+      "level": 100,
+      "description": "Ride a magnet cart through copper coils. Every coil pays out energy, and Lenz's law brakes you for it.",
+      "gameplay_loop": "Pick a lane, hit coils at speed, jump crates, dodge drones, bank enough joules.",
+      "courses": [
+        "PHYS 122",
+        "ENGG 205"
+      ],
+      "topics": [
+        "Electromagnetic induction",
+        "Faraday's and Lenz's laws",
+        "Generator principle e = Blv"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "quick",
+        "physics"
+      ],
+      "session": "2–4 min a run",
+      "controls": "▲/▼ lane · Space jump",
+      "accent": "#ffd86b",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/induction-dash-192.png",
+          "512": "static/img/games/induction-dash-512.png",
+          "maskable_192": "static/img/games/induction-dash-maskable-192.png",
+          "maskable_512": "static/img/games/induction-dash-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "dash",
+          "static_path": "static/js/games/dash.js",
+          "exists": true,
+          "bytes": 37461
+        },
+        "deps_in_load_order": [
+          {
+            "name": "inductionsim",
+            "static_path": "static/js/games/inductionsim.js",
+            "exists": true,
+            "bytes": 8943
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "logic-labyrinth",
+      "title": "Logic Labyrinth",
+      "order": 9,
+      "category": "Logic puzzle-platformer",
+      "level": 300,
+      "description": "Doors, bridges, lasers and lifts obey the logic you wire. Count Entropy has scrambled all of it.",
+      "gameplay_loop": "Read the lock, flip levers, place gates from a limited box, check the truth table, walk out.",
+      "courses": [
+        "EEEN 307",
+        "EEEN 405"
+      ],
+      "topics": [
+        "Number systems and codes",
+        "Boolean algebra & logic gates",
+        "De Morgan; universal gates",
+        "K-maps: SOP and POS",
+        "Adders, MUX and decoders",
+        "Flip-flops and counters"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "session": "3–6 min a room",
+      "controls": "A/D walk · E flip · N/G gates",
+      "accent": "#7ef0ff",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/logic-labyrinth-192.png",
+          "512": "static/img/games/logic-labyrinth-512.png",
+          "maskable_192": "static/img/games/logic-labyrinth-maskable-192.png",
+          "maskable_512": "static/img/games/logic-labyrinth-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "logic",
+          "static_path": "static/js/games/logic.js",
+          "exists": true,
+          "bytes": 68345
+        },
+        "deps_in_load_order": [
+          {
+            "name": "logicsim",
+            "static_path": "static/js/games/logicsim.js",
+            "exists": true,
+            "bytes": 14188
+          }
+        ],
+        "level_packs": {
+          "300": {
+            "script": "logic-300",
+            "title": "Gates, De Morgan and K-maps (EEEN 307)",
+            "file": {
+              "name": "logic-300",
+              "static_path": "static/js/games/logic-300.js",
+              "exists": true,
+              "bytes": 24392
+            }
+          },
+          "400": {
+            "script": "logic-400",
+            "title": "Adders, MUX, decoders and flip-flops (EEEN 405)",
+            "file": {
+              "name": "logic-400",
+              "static_path": "static/js/games/logic-400.js",
+              "exists": true,
+              "bytes": 21043
+            }
+          }
+        },
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "signal-surfer",
+      "title": "Signal Surfer",
+      "order": 10,
+      "category": "Wave arcade",
+      "level": 300,
+      "description": "Shape amplitude and frequency to ride a signal through a noisy channel to the receiver.",
+      "gameplay_loop": "Tune, transmit, beat the noise, decode.",
+      "courses": [
+        "EEEN 342"
+      ],
+      "topics": [
+        "Overview of telecommunication systems",
+        "Noise"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "session": "3–6 min a channel",
+      "controls": "W/S tune · A/D power · Q/E bit rate",
+      "accent": "#7ef0ff",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/signal-surfer-192.png",
+          "512": "static/img/games/signal-surfer-512.png",
+          "maskable_192": "static/img/games/signal-surfer-maskable-192.png",
+          "maskable_512": "static/img/games/signal-surfer-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "surfer",
+          "static_path": "static/js/games/surfer.js",
+          "exists": true,
+          "bytes": 18032
+        },
+        "deps_in_load_order": [
+          {
+            "name": "labkit",
+            "static_path": "static/js/games/labkit.js",
+            "exists": true,
+            "bytes": 8226
+          },
+          {
+            "name": "signalsim",
+            "static_path": "static/js/games/signalsim.js",
+            "exists": true,
+            "bytes": 11006
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "circuit-forge",
+      "title": "Circuit Forge",
+      "order": 11,
+      "category": "Circuit puzzle, 100 to 500 level",
+      "level": 100,
+      "description": "Fix 51 circuits Count Entropy sabotaged by filling every slot from the parts tray. New chapters open at every level, from Ohm's law to op-amps, power factor and fault currents.",
+      "gameplay_loop": "Read the goal, pick a part, switch on, read the meters, refine.",
+      "courses": [
+        "PHYS 162",
+        "PHYS 122",
+        "ENGG 205",
+        "EEEN 309",
+        "EEEN 415",
+        "EEEN 527"
+      ],
+      "topics": [
+        "Ohm's law",
+        "Series/parallel resistors",
+        "Kirchhoff's laws",
+        "Network theorems",
+        "RC time constants",
+        "AC reactance and resonance",
+        "Op-amps",
+        "DC machines",
+        "Voltage drop",
+        "Power factor",
+        "Fault analysis"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "session": "3–6 min a circuit",
+      "controls": "1–8 parts · Space switch on · H hint",
+      "accent": "#e9c46a",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/circuit-forge-192.png",
+          "512": "static/img/games/circuit-forge-512.png",
+          "maskable_192": "static/img/games/circuit-forge-maskable-192.png",
+          "maskable_512": "static/img/games/circuit-forge-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "forge",
+          "static_path": "static/js/games/forge.js",
+          "exists": true,
+          "bytes": 34409
+        },
+        "deps_in_load_order": [
+          {
+            "name": "circuitsim",
+            "static_path": "static/js/games/circuitsim.js",
+            "exists": true,
+            "bytes": 21027
+          },
+          {
+            "name": "circuit-100",
+            "static_path": "static/js/games/circuit-100.js",
+            "exists": true,
+            "bytes": 6551
+          }
+        ],
+        "level_packs": {
+          "200": {
+            "script": "circuit-200",
+            "title": "Network theorems, dividers and RC timing (ENGG 205)",
+            "file": {
+              "name": "circuit-200",
+              "static_path": "static/js/games/circuit-200.js",
+              "exists": true,
+              "bytes": 10390
+            }
+          },
+          "300": {
+            "script": "circuit-300",
+            "title": "DC machines, AC reactance, filters and resonance (EEEN 309)",
+            "file": {
+              "name": "circuit-300",
+              "static_path": "static/js/games/circuit-300.js",
+              "exists": true,
+              "bytes": 7991
+            }
+          },
+          "400": {
+            "script": "circuit-400",
+            "title": "Op-amps, cable sizing and voltage drop (EEEN 415)",
+            "file": {
+              "name": "circuit-400",
+              "static_path": "static/js/games/circuit-400.js",
+              "exists": true,
+              "bytes": 7243
+            }
+          },
+          "500": {
+            "script": "circuit-500",
+            "title": "Power factor correction and fault currents (EEEN 527)",
+            "file": {
+              "name": "circuit-500",
+              "static_path": "static/js/games/circuit-500.js",
+              "exists": true,
+              "bytes": 7218
+            }
+          }
+        },
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "light-bender",
+      "title": "Light Bender",
+      "order": 12,
+      "category": "Laser-and-mirror puzzle",
+      "level": 100,
+      "description": "45 laser puzzles in seven chapters: turn mirrors and splitters, thread glass, prisms, lenses and colour filters to light Count Entropy's broken receivers. Plus a daily beam and a free optics lab.",
+      "gameplay_loop": "Predict the bounce, turn a mirror, watch the beam, refine, light the receiver.",
+      "courses": [
+        "PHYS 124",
+        "PHYS 162"
+      ],
+      "topics": [
+        "Reflection: plane mirrors",
+        "Beam splitters",
+        "Refraction, Snell's law",
+        "Critical angle and total internal reflection",
+        "Thin lenses",
+        "Colour filters"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "quick",
+        "puzzle",
+        "physics"
+      ],
+      "session": "2–5 min a level",
+      "controls": "Q/E turn · N select · H hint",
+      "accent": "#ff8080",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/light-bender-192.png",
+          "512": "static/img/games/light-bender-512.png",
+          "maskable_192": "static/img/games/light-bender-maskable-192.png",
+          "maskable_512": "static/img/games/light-bender-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "bender",
+          "static_path": "static/js/games/bender.js",
+          "exists": true,
+          "bytes": 32450
+        },
+        "deps_in_load_order": [
+          {
+            "name": "opticsim",
+            "static_path": "static/js/games/opticsim.js",
+            "exists": true,
+            "bytes": 25366
+          },
+          {
+            "name": "bender-levels",
+            "static_path": "static/js/games/bender-levels.js",
+            "exists": true,
+            "bytes": 16158
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "maglev-rescue",
+      "title": "Maglev Rescue",
+      "order": 13,
+      "category": "Magnetic-control challenge",
+      "level": 300,
+      "description": "Hold a levitating pod steady by tuning coil current against gravity.",
+      "gameplay_loop": "Sense the gap, adjust current, settle, deliver.",
+      "courses": [
+        "EEEN 320"
+      ],
+      "topics": [
+        "Time-varying fields",
+        "Magnetic force"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "session": "3–6 min a line",
+      "controls": "Tune gains · W/S gap · T retune",
+      "accent": "#a78bfa",
+      "playable": true,
+      "needs_lecturer_confirmation": true,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/maglev-rescue-192.png",
+          "512": "static/img/games/maglev-rescue-512.png",
+          "maskable_192": "static/img/games/maglev-rescue-maskable-192.png",
+          "maskable_512": "static/img/games/maglev-rescue-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "maglev",
+          "static_path": "static/js/games/maglev.js",
+          "exists": true,
+          "bytes": 18868
+        },
+        "deps_in_load_order": [
+          {
+            "name": "labkit",
+            "static_path": "static/js/games/labkit.js",
+            "exists": true,
+            "bytes": 8226
+          },
+          {
+            "name": "maglevsim",
+            "static_path": "static/js/games/maglevsim.js",
+            "exists": true,
+            "bytes": 11744
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "algorithm-garage",
+      "title": "Algorithm Garage",
+      "order": 14,
+      "category": "Programming robot challenge",
+      "level": 300,
+      "description": "Write short MATLAB-style instruction lists that drive a workshop robot.",
+      "gameplay_loop": "Plan steps, run, debug, optimise.",
+      "courses": [
+        "EEEN 316"
+      ],
+      "topics": [
+        "Getting started",
+        "Arrays",
+        "Control flow"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "puzzle"
+      ],
+      "session": "3–8 min a job",
+      "controls": "C code · R run · F fast replay",
+      "accent": "#7ef0ff",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/algorithm-garage-192.png",
+          "512": "static/img/games/algorithm-garage-512.png",
+          "maskable_192": "static/img/games/algorithm-garage-maskable-192.png",
+          "maskable_512": "static/img/games/algorithm-garage-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "garage",
+          "static_path": "static/js/games/garage.js",
+          "exists": true,
+          "bytes": 21534
+        },
+        "deps_in_load_order": [
+          {
+            "name": "js/matlab/mlab",
+            "static_path": "static/js/matlab/mlab.js",
+            "exists": true,
+            "bytes": 88245
+          },
+          {
+            "name": "js/matlab/mlab-lib",
+            "static_path": "static/js/matlab/mlab-lib.js",
+            "exists": true,
+            "bytes": 91308
+          },
+          {
+            "name": "garagesim",
+            "static_path": "static/js/games/garagesim.js",
+            "exists": true,
+            "bytes": 25368
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    },
+    {
+      "slug": "drive-room",
+      "title": "Drive Room",
+      "order": 15,
+      "category": "Motor-control sim",
+      "level": 500,
+      "description": "Pick converter and control settings so a drive meets a load's speed profile.",
+      "gameplay_loop": "Read the load, set the drive, run, tune.",
+      "courses": [
+        "EEEN 524"
+      ],
+      "topics": [
+        "Introduction to electric drives"
+      ],
+      "modes": [
+        "Single player"
+      ],
+      "tags": [
+        "physics"
+      ],
+      "session": "3–6 min a job",
+      "controls": "Pick a converter · tune · Q/E Kp",
+      "accent": "#ffb347",
+      "playable": true,
+      "needs_lecturer_confirmation": false,
+      "planned_online": false,
+      "enabled": true,
+      "enabled_source": "default (no override row)",
+      "icon": {
+        "glyph": null,
+        "generator": "games/icons.py (initials on accent colour)",
+        "files": {
+          "192": "static/img/games/drive-room-192.png",
+          "512": "static/img/games/drive-room-512.png",
+          "maskable_192": "static/img/games/drive-room-maskable-192.png",
+          "maskable_512": "static/img/games/drive-room-maskable-512.png"
+        }
+      },
+      "settings": {
+        "stored_overrides": {},
+        "stored_updated": null,
+        "has_hero_hash": false,
+        "has_cheat_overrides": false,
+        "rules_schema": [],
+        "effective_flags_note": "enabled/cheats_enabled default true; cheats_on_boards and hero_enabled fall back to the site-wide \"*\" row (site_settings.json)"
+      },
+      "js": {
+        "entry": {
+          "name": "driveroom",
+          "static_path": "static/js/games/driveroom.js",
+          "exists": true,
+          "bytes": 19814
+        },
+        "deps_in_load_order": [
+          {
+            "name": "labkit",
+            "static_path": "static/js/games/labkit.js",
+            "exists": true,
+            "bytes": 8226
+          },
+          {
+            "name": "drivesim",
+            "static_path": "static/js/games/drivesim.js",
+            "exists": true,
+            "bytes": 17345
+          }
+        ],
+        "level_packs": {},
+        "three_js": null,
+        "production_bundle": null,
+        "extra_page_scripts": []
+      }
+    }
+  ]
+}

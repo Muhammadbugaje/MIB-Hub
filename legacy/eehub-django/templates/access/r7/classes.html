@@ -1,0 +1,36 @@
+{% extends "base.html" %}{% load ee_tags %}
+{% block title %}Classes{% endblock %}
+{% block page_title %}Classes{% endblock %}
+{% block extra_css %}{% include "access/r7/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+<header class="ee-page-header">
+  <div class="ee-page-header__text">
+    <span class="ee-page-header__eyebrow">{% icon "school" 14 %} {{ total }} active student{{ total|pluralize }}</span>
+    <h1 class="ee-page-header__title">Classes, reps and tutors</h1>
+    <p class="ee-page-header__description">Each class with its class rep, assistant rep and tutors. Open a class for its list. Chats, course forms, results, welfare and requests are not shown here.</p>
+  </div>
+  <div class="ee-page-header__actions btn-group">
+    <a class="btn btn-ghost" href="{% url 'access:how' %}#classes">{% icon "life-buoy" 16 %} How it works</a>
+    {% if can_broadcast %}<a class="btn btn-primary" href="{% url 'access:broadcast' %}">{% icon "megaphone" 16 %} Send an announcement</a>{% endif %}
+  </div>
+</header>
+
+{% if rows %}
+<div class="r7a-cgrid">{% for r in rows %}
+  <article class="ee-card r7a-class">
+    <div class="ee-card__head"><h2><span class="ee-ic tone-volt">{% icon "users-round" 16 %}</span> {{ r.l }}</h2><span class="badge">{{ r.n }} student{{ r.n|pluralize }}</span></div>
+    <dl class="acc-dl">
+      <dt>Class rep</dt><dd>{% for a in r.reps %}{{ a.person.full_name }}{% if a.office.code == "assistant-class-rep" %} <small class="r7a-muted">(assistant)</small>{% endif %}{% if not forloop.last %}, {% endif %}{% empty %}<span class="r7a-muted">None yet</span>{% endfor %}</dd>
+      <dt>Tutors</dt><dd>{% for a in r.tutors|slice:":6" %}{{ a.person.full_name }}{% if not forloop.last %}, {% endif %}{% empty %}<span class="r7a-muted">None yet</span>{% endfor %}{% if r.tutors|length > 6 %} +{{ r.tutors|length|add:"-6" }}{% endif %}</dd>
+    </dl>
+    <div class="btn-group r7a-class__actions">
+      <a class="btn btn-ghost btn-sm" href="{% url 'access:class_detail' r.l.pk %}">{% icon "list" 14 %} Class list</a>
+      {% if can_broadcast %}<a class="btn btn-ghost btn-sm" href="{% url 'access:broadcast' %}?level={{ r.l.pk }}">{% icon "megaphone" 14 %} Announce</a>{% endif %}
+    </div>
+  </article>{% endfor %}</div>
+{% else %}
+{% include "partials/empty_state.html" with title="No classes to show" body="You see the classes your office serves. Ask the HOD if a level is missing." %}
+{% endif %}
+</div>
+{% endblock %}

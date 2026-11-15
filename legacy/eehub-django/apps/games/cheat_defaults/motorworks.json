@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Finish this job",
+      "typed": "mwwin9",
+      "dial": "*319#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "solve",
+      "label": "Set the right controls",
+      "typed": "mwsol1",
+      "dial": "*311#",
+      "note": "Puts a working setting on every control."
+    },
+    {
+      "id": "notrip",
+      "label": "Breakers never trip",
+      "typed": "mwbrk7",
+      "dial": "*317#",
+      "note": ""
+    },
+    {
+      "id": "stars",
+      "label": "Three stars for this job",
+      "typed": "mwstr4",
+      "dial": "*314#",
+      "note": ""
+    },
+    {
+      "id": "halls",
+      "label": "Every hall open",
+      "typed": "mwall8",
+      "dial": "*318#",
+      "note": "Until you leave the page."
+    },
+    {
+      "id": "night",
+      "label": "Open the Night shift",
+      "typed": "mwngt6",
+      "dial": "*316#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "mwslow3",
+      "dial": "*313#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "mwyay5",
+      "dial": "*315#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Breakers never trip on him, every hall is open, the Night shift is open, and the skip key finishes any bay."
+  }
+}

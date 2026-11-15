@@ -1,0 +1,5 @@
+{% if f.widget_type == "checkbox" %}<div class="ee-field acc-field--check"><label class="check" for="{{ f.id_for_label }}">{{ f }}<span>{{ f.label }}</span></label>{% if f.help_text %}<div class="help">{{ f.help_text }}</div>{% endif %}{{ f.errors }}</div>
+{% else %}<div class="ee-field{% if f.errors %} acc-has-error{% endif %}{% if cls %} {{ cls }}{% endif %}"{% if show %} data-kind-show="{{ show }}"{% endif %}>
+  <label for="{{ f.id_for_label }}">{{ f.label }}{% if f.field.required %} <span class="acc-req" aria-hidden="true">*</span>{% endif %}</label>
+  {{ f }}{% if f.help_text %}<div class="help">{{ f.help_text }}</div>{% endif %}{{ f.errors }}
+</div>{% endif %}

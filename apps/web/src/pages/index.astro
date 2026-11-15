@@ -1,0 +1,127 @@
+---
+/**
+ * Home page (minimal for now).
+ * TODO(public-pages): trailer, devlog, latest event, creator spotlight,
+ * community link (V3 §12.1). Keep it fast on 3G: no game code loads here.
+ */
+import Icon from "../components/Icon.astro";
+import PublicLayout from "../layouts/PublicLayout.astro";
+import { repos } from "../lib/db.ts";
+import { siteConfig } from "../site.config.ts";
+
+const games = await repos.games.listPublic();
+const showcase = games.slice(0, 3);
+const fills = ["72%", "48%", "86%"];
+const glyph = (title: string) =>
+  title
+    .split(/\s+/)
+    .map((w) => w[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+const { viewer } = Astro.locals;
+---
+
+<PublicLayout>
+  <section class="hero">
+    <div class="hero__orb hero__orb--a" aria-hidden="true"></div>
+    <div class="hero__orb hero__orb--b" aria-hidden="true"></div>
+    <div class="container hero__grid">
+      <div>
+        <span class="eyebrow">{siteConfig.name} · {games.length} games and counting</span>
+        <h1 class="hero__title">Games worth <em>staying up</em> for.</h1>
+        <p class="hero__lead">{siteConfig.description}</p>
+        <div class="hero__cta">
+          <a class="btn btn--primary btn--lg" href="#games"><Icon name="play" size={18} /> Browse the games</a>
+          {
+            viewer.user ? (
+              <a class="btn btn--lg" href="/account/profile">
+                Your profile
+              </a>
+            ) : (
+              <a class="btn btn--lg" href="/auth/register">
+                Create a free account
+              </a>
+            )
+          }
+        </div>
+        <p class="hero__note">No downloads. Runs in your browser, on phones too.</p>
+      </div>
+
+      <div class="showcase" aria-hidden="true">
+        {
+          showcase.map((g, i) => (
+            <div class="showcase__card" style={`--card-accent: ${g.accent}; --fill: ${fills[i]}`}>
+              <div class="showcase__glyph">{glyph(g.title)}</div>
+              <h3>{g.title}</h3>
+              <p>{g.meta.genre}</p>
+              <div class="showcase__bar">
+                <span />
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" id="games">
+    <div class="section__head">
+      <div>
+        <span class="eyebrow">The games</span>
+        <h2>Pick one and press play</h2>
+      </div>
+      <p>Every game keeps your scores and saves on your account, so you can switch devices and carry on.</p>
+    </div>
+    {
+      games.length === 0 ? (
+        <div class="empty">
+          <Icon name="gamepad" size={28} />
+          <strong>No games yet</strong>
+          <span>Run <code>npm run db:seed</code> to load the catalogue.</span>
+        </div>
+      ) : (
+        <div class="card-grid stagger">
+          {games.map((g) => (
+            <a class="card game-card lift" href={`/play/${g.slug}`} style={`--card-accent: ${g.accent}`}>
+              <div class="game-card__art">
+                <span>{glyph(g.title)}</span>
+              </div>
+              <div class="game-card__body">
+                <span class="eyebrow">{g.meta.genre ?? g.category}</span>
+                <h3>{g.title}</h3>
+                <p>{g.description}</p>
+              </div>
+              <div class="game-card__foot">
+                <span>{g.meta.sessionLength}</span>
+                <span class="game-card__play">
+                  Play <Icon name="arrow-right" size={14} />
+                </span>
+              </div>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </section>
+
+  <section class="section container">
+    <div class="feature-grid">
+      <div class="card feature">
+        <div class="feature__icon"><Icon name="device" /></div>
+        <h3>Play anywhere</h3>
+        <p>Built for the browser and for phones on slow data. Nothing to install.</p>
+      </div>
+      <div class="card feature">
+        <div class="feature__icon"><Icon name="cloud" /></div>
+        <h3>Your progress, saved</h3>
+        <p>Saves stay on your device first and sync to your account when you are online.</p>
+      </div>
+      <div class="card feature">
+        <div class="feature__icon"><Icon name="trophy" /></div>
+        <h3>Fair leaderboards</h3>
+        <p>Runs that used cheat codes are kept off the boards, and you choose whether your name appears.</p>
+      </div>
+    </div>
+  </section>
+</PublicLayout>

@@ -1,0 +1,123 @@
+/* Round 6 timetables: the printable days x periods table (tts-), the index of
+   class timetables (tti-), personal reminders (tt-remind, tt-switch) and the
+   bare print pages (A4 landscape). Tokens only, light and dark. */
+
+/* ---- The table ------------------------------------------------------------ */
+.tts-card { padding: 0; overflow: hidden; margin-bottom: 12px; }
+.tts-card .ee-card__head { padding: 14px 16px 0; }
+.tts-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.tts { width: 100%; min-width: 900px; border-collapse: collapse; table-layout: fixed; font-size: 12px; }
+.tts--exams { min-width: 760px; table-layout: auto; }
+.tts th, .tts td { border: 1px solid var(--border); padding: 6px 6px; vertical-align: middle; }
+.tts thead th { background: var(--brand-700, #134326); color: #fff; font-weight: 700; font-size: 11.5px; text-align: center; position: sticky; top: 0; }
+.tts thead th small { display: block; font-weight: 500; opacity: .75; font-size: 10px; }
+.tts--exams thead th { text-align: left; }
+.tts__corner { width: 104px; }
+.tts__dayname { width: 104px; text-align: left; background: color-mix(in srgb, var(--primary) 8%, var(--surface)); }
+.tts__dayname b { display: block; font-size: 12.5px; }
+.tts__dayname small { display: none; color: var(--text-muted); font-weight: 500; font-size: 11px; }
+.tts--exams .tts__dayname { width: 150px; }
+.tts--exams .tts__dayname small { display: block; }
+.tts__day { border-top: 2px solid color-mix(in srgb, var(--primary) 55%, var(--border)); }
+.tts__slot { text-align: center; line-height: 1.3; border-left-width: 3px !important; }
+.tts__slot b { font-family: var(--font-mono); font-size: 12px; }
+.tts__slot em { font-style: normal; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); }
+.tts__slot > span { display: block; }
+.tts__grp { font-size: 10.5px; font-weight: 700; }
+.tts__v { font-size: 11px; }
+.tts__who { font-size: 10.5px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tts__time { font-size: 10px; color: var(--text-muted); font-family: var(--font-mono); }
+.tts__brk { text-align: center; font-size: 11px; font-style: italic; color: var(--text-muted);
+  background: repeating-linear-gradient(135deg, var(--surface-sunken) 0 6px, transparent 6px 12px); }
+.tts__free { background: var(--surface); }
+.tts__mono { font-family: var(--font-mono); white-space: nowrap; }
+.tts__note { font-size: 11.5px; color: var(--text-muted); }
+.tts-hint { display: none; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); margin: -4px 0 12px; }
+@media (max-width: 900px) { .tts-hint { display: flex; } }
+.tts .tt-c1 { background: rgba(26, 107, 69, .14); border-left-color: #1a6b45; }
+.tts .tt-c2 { background: rgba(19, 196, 220, .15); border-left-color: #0b9db2; }
+.tts .tt-c3 { background: rgba(200, 169, 81, .2); border-left-color: #a88a35; }
+.tts .tt-c4 { background: rgba(139, 92, 246, .15); border-left-color: #8b5cf6; }
+.tts .tt-c5 { background: rgba(255, 122, 69, .15); border-left-color: #ff7a45; }
+.tts .tt-c6 { background: rgba(37, 99, 235, .13); border-left-color: #2563eb; }
+.tts-legend { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 8px 0 4px; }
+.tts-legend th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--text-muted); padding: 6px 16px; }
+.tts-legend td { padding: 7px 16px; border-top: 1px solid var(--border); }
+.tts-legend td:first-child { font-family: var(--font-mono); white-space: nowrap; }
+@media (max-width: 560px) { .tts-legend th:nth-child(3), .tts-legend td:nth-child(3) { display: none; } .tts-legend td, .tts-legend th { padding: 6px 10px; } }
+
+/* ---- Index -------------------------------------------------------------------- */
+.tti-prog { margin-bottom: 18px; }
+.tti-prog__title { display: flex; align-items: center; gap: 8px; font-size: 15px; margin: 0 0 10px; }
+.tti-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+.tti-card { display: grid; gap: 10px; padding: 14px; }
+.tti-card.is-mine { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.tti-card.is-empty { border-style: dashed; }
+.tti-card__top { display: flex; align-items: center; gap: 10px; }
+.tti-card__top > div { flex: 1; min-width: 0; }
+.tti-card__top b { display: block; font-size: 14px; }
+.tti-card__top small { display: block; font-size: 12px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tti-card__lvl { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; flex: none; font-family: var(--font-display);
+  font-size: 19px; font-weight: 800; line-height: 1; color: #fff; background: linear-gradient(135deg, var(--brand-700, #134326), var(--brand-500, #1a6b45)); }
+.tti-card__lvl small { font-size: 10px; font-weight: 700; opacity: .8; display: block; text-align: center; }
+.tti-card.is-empty .tti-card__lvl { background: var(--surface-sunken); color: var(--text-muted); }
+.tti-card__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin: 0; }
+.tti-card__stats div { padding: 6px 8px; border-radius: 10px; background: var(--surface-sunken); }
+.tti-card__stats dt { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+.tti-card__stats dd { margin: 0; font-family: var(--font-display); font-size: 17px; font-weight: 700; }
+.tti-card__act { display: flex; flex-wrap: wrap; gap: 6px; }
+.tti-card__none { display: flex; align-items: center; gap: 5px; margin: 0; font-size: 12.5px; color: var(--text-muted); flex-wrap: wrap; }
+
+/* ---- Personal reminders ----------------------------------------------------------- */
+.tt-remind__form { display: grid; gap: 8px; margin-bottom: 12px; }
+.tt-remind__when { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; }
+.tt-remind__when select { min-height: 34px; padding: 4px 8px; border-radius: 9px; }
+.tt-switch { position: relative; display: grid; grid-template-columns: 38px 1fr; column-gap: 10px; align-items: center; cursor: pointer; padding: 6px 0; }
+.tt-switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.tt-switch > span { grid-row: 1 / span 2; width: 38px; height: 22px; border-radius: 99px; background: var(--border-strong, var(--border)); position: relative; transition: background .2s ease; }
+.tt-switch > span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: #fff; box-shadow: var(--shadow-sm); transition: transform .2s ease; }
+.tt-switch input:checked + span { background: var(--primary); }
+.tt-switch input:checked + span::after { transform: translateX(16px); }
+.tt-switch input:focus-visible + span { box-shadow: var(--shadow-focus); }
+.tt-switch b { font-size: 13px; }
+.tt-switch small { font-size: 11.5px; color: var(--text-muted); }
+.tt-remind__state { display: flex; align-items: center; gap: 5px; margin: 0; font-size: 12px; color: var(--text-muted); }
+.tt-remind__cal { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+@media (prefers-reduced-motion: reduce) { .tt-switch > span, .tt-switch > span::after { transition: none; } }
+
+/* ---- Bare print pages (A4 landscape) ---------------------------------------------------- */
+.tts-print { margin: 0; padding: 18px 22px; background: #fff; color: #1b2420; font-family: "Inter", system-ui, sans-serif; }
+.tts-print .tts { min-width: 0; font-size: 10.5px; }
+.tts-print .tts th, .tts-print .tts td { border-color: #b9c6bd; }
+.tts-print .tts thead th { background: #134326; color: #fff; position: static; }
+.tts-print .tts__dayname { background: #eef4ef; }
+.tts-print .tts__free { background: #fff; }
+.tts-print .tts__brk { background: #f3eedc; color: #5a616b; }
+.tts-print__head { display: flex; align-items: center; gap: 16px; padding-bottom: 10px; margin-bottom: 12px; border-bottom: 2px solid #c8a951; }
+.tts-print__head > div { flex: 1; text-align: center; }
+.tts-print__head p { margin: 0; }
+.tts-print__uni { font-family: "Times New Roman", Times, serif; font-weight: 700; font-size: 18px; color: #134326; text-transform: uppercase; letter-spacing: .02em; }
+.tts-print__dept { font-family: "Times New Roman", Times, serif; font-weight: 700; font-size: 15px; }
+.tts-print__head h1 { margin: 4px 0 0; font-size: 14px; color: #1f6b3e; }
+.tts-print__sub { font-size: 12px; color: #5a616b; }
+.tts-print__btn { border: 1px solid #134326; background: #134326; color: #fff; border-radius: 10px; padding: 8px 14px; font: inherit; cursor: pointer; }
+.tts-print__foot { margin-top: 10px; font-size: 10px; color: #5a616b; }
+.tts-print .tts-legend { font-size: 10.5px; margin-top: 12px; }
+.tts-print .tts-legend td, .tts-print .tts-legend th { padding: 3px 8px; }
+@page { size: A4 landscape; margin: 10mm; }
+@media print {
+  .tts-print { padding: 0; }
+  .tts-print__btn { display: none; }
+  .tts-print .tts { page-break-inside: auto; }
+  .tts-print .tts tr { page-break-inside: avoid; }
+  .tts-print * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .app-sidebar, .app-topbar, .mobile-tabbar, .app-tabbar, .tp-head__actions, .ac-back, .tts-hint { display: none !important; }
+  .tts { min-width: 0; }
+}
+.tt-remind__when select { width: auto; flex: 0 1 auto; }
+.tt-switch { margin: 0; }
+.tt-remind__cal .btn { flex: 1 1 auto; justify-content: center; }
+.tti-quiet { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 0; font-size: 12px; color: var(--text-muted); }
+.tti-quiet:empty { display: none; }
+.tti-quiet:not(:empty)::before { content: "No courses this semester:"; margin-right: 2px; }
+.tti-grid:empty { display: none; }

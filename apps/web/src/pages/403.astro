@@ -1,0 +1,17 @@
+---
+// Shown (via Astro.rewrite) when a signed-in user lacks a permission. See lib/guard.ts.
+import PublicLayout from "../layouts/PublicLayout.astro";
+
+Astro.response.status = 403;
+---
+
+<PublicLayout title="Not allowed">
+  <section class="container error-page">
+    <div>
+      <div class="error-page__code">403</div>
+      <h1>This page is not for your account</h1>
+      <p class="muted">You are signed in, but your role does not include this. Ask the site owner if you need access.</p>
+      <a class="btn btn--primary" href="/">Back home</a>
+    </div>
+  </section>
+</PublicLayout>

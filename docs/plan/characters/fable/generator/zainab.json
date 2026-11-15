@@ -1,0 +1,123 @@
+{
+ "name": "Zainab",
+ "height": 1.66,
+ "seed": 5,
+ "body": {
+  "slim": 0.75,
+  "curvy": 0.2,
+  "fat": 0,
+  "muscle": 0
+ },
+ "skin": "#f6dccd",
+ "blush": 0.3,
+ "blushCol": "#eda09a",
+ "face": {
+  "w": 0.075,
+  "top": 0.095,
+  "chin": 0.1,
+  "d": 0.085,
+  "jaw": 0.68,
+  "chinFwd": 0.95,
+  "cheek": 0.25,
+  "skull": 0.5,
+  "flat": 0.25,
+  "eyeX": 0.42,
+  "eyeY": -0.07,
+  "eyeR": 0.0212,
+  "eyeH": 1.0,
+  "eyeSink": 0.62,
+  "iris": "#2a1710",
+  "irisIn": "#6a4026",
+  "irisA": 0.74,
+  "pupilA": 0.3,
+  "lidUp": 0.46,
+  "lidLo": 0.5,
+  "tilt": 0.08,
+  "lash": 0.0021,
+  "wing": 0.3,
+  "lowerLash": 0.0006,
+  "shadow": "#dfb8a8",
+  "lashCol": "#120b08",
+  "brow": {
+   "col": "#2a1a14",
+   "y": 1.25,
+   "w": 0.0044,
+   "arch": 0.3,
+   "peak": 0.75,
+   "len": 1.05,
+   "tail": -0.25,
+   "tilt": -0.02
+  },
+  "nose": {
+   "y": -0.3,
+   "size": 0.95
+  },
+  "mouth": {
+   "y": -0.58,
+   "w": 0.022,
+   "smile": 0.6,
+   "open": 0.0,
+   "lip": "#c26462",
+   "full": 1.15
+  },
+  "eyePm": 1.2,
+  "lashes": 4,
+  "noEars": true
+ },
+ "hair": {
+  "none": true,
+  "root": "#120c0a",
+  "rough": 0.8
+ },
+ "outfits": [
+  {
+   "id": "doctor",
+   "label": "House officer",
+   "items": [
+    {
+     "type": "dress",
+     "col": "#2c4f6e",
+     "neck": "crew",
+     "neckDepth": 0.004,
+     "off": 0.004,
+     "bottom": 0.07,
+     "flare": 0.03,
+     "flareTop": 0.5
+    },
+    {
+     "type": "gown",
+     "col": "#f7f6f2",
+     "neck": "crew",
+     "neckDepth": 0.0,
+     "off": 0.012,
+     "bottom": 0.3,
+     "flare": 0.02,
+     "flareTop": 0.5,
+     "openFront": [
+      0.2,
+      0.3
+     ],
+     "sleeve": {
+      "len": 0.93,
+      "flare": 0.004
+     },
+     "rough": 0.8
+    },
+    {
+     "type": "hijab",
+     "col": "#2f7f7a"
+    },
+    {
+     "type": "stethoscope"
+    },
+    {
+     "type": "shoes",
+     "style": "flats",
+     "col": "#2a2224"
+    }
+   ]
+  }
+ ],
+ "hairMargin": 0.006,
+ "headScale": 1.1
+}

@@ -1,0 +1,67 @@
+{
+  "cheats": [
+    {
+      "id": "skip",
+      "label": "Deliver this message",
+      "typed": "sswin9",
+      "dial": "*779#",
+      "note": "Also the maker's skip key."
+    },
+    {
+      "id": "battery",
+      "label": "Battery refilled",
+      "typed": "ssbat4",
+      "dial": "*774#",
+      "note": ""
+    },
+    {
+      "id": "time",
+      "label": "+20 seconds",
+      "typed": "sstim6",
+      "dial": "*776#",
+      "note": ""
+    },
+    {
+      "id": "clear",
+      "label": "Interference cleared",
+      "typed": "ssclr2",
+      "dial": "*772#",
+      "note": "Removes every interferer from this channel."
+    },
+    {
+      "id": "engineer",
+      "label": "Auto-engineer for 30 s",
+      "typed": "sseng7",
+      "dial": "*777#",
+      "note": "Picks frequency, power and rate for you."
+    },
+    {
+      "id": "unlock",
+      "label": "Every channel open",
+      "typed": "ssall8",
+      "dial": "*778#",
+      "note": ""
+    },
+    {
+      "id": "slow",
+      "label": "Slow motion for a while",
+      "typed": "ssslow3",
+      "dial": "*773#",
+      "note": "Cosmetic and helpful."
+    },
+    {
+      "id": "party",
+      "label": "Confetti storm",
+      "typed": "ssyay5",
+      "dial": "*775#",
+      "note": "Cosmetic only."
+    }
+  ],
+  "hero": {
+    "name": "M.I. BUGAJE",
+    "full": "Muhammad Iliyasu Bugaje",
+    "combo": "Up Up Down Down Left Right M I B",
+    "swipe": "Up Up Down Left Right",
+    "powers": "Surfs on the auto-engineer: frequency, power and rate set for him every half second; every channel open."
+  }
+}

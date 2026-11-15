@@ -17,7 +17,7 @@ def js(code, to=180):
     if box.get("e"): print("JSERR", str(box["e"])[:300], flush=True)
     return box.get("r")
 wv.loadRequest_(NSURLRequest.requestWithURL_(NSURL.URLWithString_(url))); t0 = time.time(); r = None
-while time.time() - t0 < 300:
+while time.time() - t0 < 600:
     spin(0.5); r = js("String(window.__ready)")
     if r in ("true", "error"): break
 print("ready", r, "%.0fs" % (time.time() - t0), "errors", js("JSON.stringify((window.__err||[]).slice(0,8))"), flush=True)

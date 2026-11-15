@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}{% if obj %}Edit {{ kind.singular }}{% else %}New {{ kind.singular }}{% endif %} · Website{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/public.css' %}"><link rel="stylesheet" href="{% static 'css/manage.css' %}">{% endblock %}
+{% block content %}
+<div class="mg-page">
+  {% include "manage/_shell_top.html" %}
+  <a class="mg-back" href="{% url kind.list_url %}">{% icon "arrow-left" 15 %} All {{ kind.plural|lower }}</a>
+  <header class="mg-head">
+    <span class="mg-head__ic">{% icon kind.icon 22 %}</span>
+    <div class="mg-head__text">
+      <p class="ee-page-header__eyebrow">{{ kind.plural }}</p>
+      <h1>{% if obj %}{{ obj }}{% else %}New {{ kind.singular }}{% endif %}</h1>
+      {% if obj %}<p>Last changed {{ obj.updated_at|date:"j M Y, H:i" }}</p>{% else %}<p>{{ kind.intro }}</p>{% endif %}
+    </div>
+    {% if public %}<a class="btn btn-ghost" href="{{ public }}" target="_blank" rel="noopener">{% icon "external-link" 15 %} View on the website</a>{% endif %}
+  </header>
+
+  <form method="post" enctype="multipart/form-data" class="mg-form" novalidate data-dirty-guard>
+    {% csrf_token %}
+    {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{% for e in form.non_field_errors %}{{ e }} {% endfor %}</div>{% endif %}
+    {% if form.errors and not form.non_field_errors %}<div class="alert alert-danger" role="alert">Please correct the highlighted fields.</div>{% endif %}
+    <div class="mg-form__grid">
+      <section class="ee-card mg-form__main">
+        {% for f in main_fields %}{% include "manage/_field.html" %}{% endfor %}
+      </section>
+      <aside class="mg-form__side">
+        <section class="ee-card">
+          <h2 class="mg-card-h">{% icon "settings-2" 16 %} Settings</h2>
+          {% for f in side_fields %}{% include "manage/_field.html" %}{% endfor %}
+          {% if live_value is not None %}<p class="mg-live">{% icon "activity" 15 %} Shows now: <b>{{ obj.prefix }}{{ live_value }}{{ obj.suffix }}</b></p>{% endif %}
+        </section>
+        <div class="mg-savebar">
+          <button class="btn btn-primary" type="submit">{% icon "save" 16 %} Save</button>
+          {% if not obj %}<button class="btn btn-ghost" type="submit" name="then" value="new">Save and add another</button>{% endif %}
+          <a class="btn btn-ghost" href="{% url kind.list_url %}">Cancel</a>
+        </div>
+        {% if obj and not obj.is_system %}
+        <p class="mg-delete-note">{% icon "trash-2" 14 %} <button type="submit" form="mg-delete" class="link-btn mg-danger">Delete this {{ kind.singular }}</button></p>
+        {% endif %}
+      </aside>
+    </div>
+  </form>
+  {% if obj and not obj.is_system %}
+  <form id="mg-delete" method="post" action="{% url 'manage:delete' kind.key obj.pk %}" data-confirm="Delete “{{ obj }}”?{% if kind.soft %} It disappears from the website; an administrator can restore it.{% else %} This cannot be undone.{% endif %}" data-confirm-title="Delete {{ kind.singular }}" data-confirm-label="Delete" hidden>{% csrf_token %}</form>
+  {% endif %}
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/manage.js' %}" defer></script>{% endblock %}

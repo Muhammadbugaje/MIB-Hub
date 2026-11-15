@@ -1,0 +1,42 @@
+---
+/**
+ * The MIB-Hub logo: a rounded mark (brand green with a gold spark and a
+ * play shape) plus the site name from site.config.ts.
+ * <Logo />  or  <Logo href="/admin" />  or  <Logo markOnly />
+ */
+import { siteConfig } from "../site.config.ts";
+
+interface Props {
+  href?: string;
+  markOnly?: boolean;
+}
+const { href = "/", markOnly = false } = Astro.props;
+
+// Split "MIB-Hub" into "MIB" and "-Hub" so the second part can take the accent colour.
+const dash = siteConfig.name.indexOf("-");
+const first = dash > 0 ? siteConfig.name.slice(0, dash) : siteConfig.name;
+const rest = dash > 0 ? siteConfig.name.slice(dash) : "";
+const gid = "logo-grad";
+---
+
+<a class="logo" href={href} aria-label={`${siteConfig.name}, home`}>
+  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+    <defs>
+      <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#2fa36b"></stop>
+        <stop offset="1" stop-color="#0f3d2e"></stop>
+      </linearGradient>
+    </defs>
+    <rect x="1" y="1" width="38" height="38" rx="12" fill={`url(#${gid})`}></rect>
+    <rect x="1.5" y="1.5" width="37" height="37" rx="11.5" fill="none" stroke="rgba(255,255,255,.18)"></rect>
+    <path d="M15 12.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 15 12.5z" fill="#fff"></path>
+    <circle cx="30.5" cy="9.5" r="3.2" fill="#d9be6e"></circle>
+  </svg>
+  {
+    !markOnly && (
+      <span>
+        {first}<span class="logo__accent">{rest}</span>
+      </span>
+    )
+  }
+</a>

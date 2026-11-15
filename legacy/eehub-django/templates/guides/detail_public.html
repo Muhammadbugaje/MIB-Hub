@@ -1,0 +1,6 @@
+{% extends "base_public.html" %}{% load static %}
+{% block title %}{{ guide.title }}{% endblock %}
+{% block meta_description %}{{ guide.summary }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/guides.css' %}">{% endblock %}
+{% block content %}<div class="gd-public"><div class="gd-wrap">{% include "guides/_guide_body.html" %}</div></div>{% endblock %}
+{% block extra_js %}<script src="{% static 'js/guides.js' %}" defer></script>{% endblock %}

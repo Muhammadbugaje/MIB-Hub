@@ -1,0 +1,9 @@
+{% load ee_tags static %}<link rel="stylesheet" href="{% static 'css/guides.css' %}"><div class="ee-card">
+<div class="ee-card__head"><h2>{% icon "life-buoy" 17 %} How-to guides</h2><a class="ee-card__link" href="{% url 'content:guides' %}">All {{ c.n_all }} →</a></div>
+<div class="gd gd-w">
+  {% for g in c.rows %}<a class="gd-w__row gd-tone-{{ g.tone }}" href="{% url 'content:guide_detail' g.slug %}"><span class="gd-ic gd-ic--sm">{% icon g.icon 16 %}</span><span><b>{{ g.title }}</b><small>{{ g.n_steps }} steps · with pictures</small></span></a>{% endfor %}
+  <div class="gd-w__foot">
+    <a class="btn btn-subtle btn-sm" href="{% url 'content:guides' %}">{% icon "search" 14 %} Find a guide</a>
+    <a class="btn btn-ghost btn-sm" href="{% url 'content:guide_handbook' c.book %}">{% icon "book-down" 14 %} {{ c.book_title }} (PDF)</a>
+  </div>
+</div></div>

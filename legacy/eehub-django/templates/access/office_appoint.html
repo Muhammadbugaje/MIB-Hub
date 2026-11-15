@@ -1,0 +1,55 @@
+{% extends "base.html" %}{% load ee_tags static %}
+{% block title %}Appoint · {{ office.name }}{% endblock %}
+{% block page_title %}Appoint{% endblock %}
+{% block extra_css %}{% include "access/_assets.html" %}{% endblock %}
+{% block content %}
+<div class="acc-page">
+{% if perms.accounts.offices_manage %}<a class="acc-back" href="{% url 'access:office_edit' office.code %}">{% icon "arrow-left" 15 %} {{ office.name }}</a>{% else %}<a class="acc-back" href="{% url 'access:my_access' %}">{% icon "arrow-left" 15 %} My access</a>{% endif %}
+<header class="ee-page-header"><div class="ee-page-header__text acc-office-title">
+  <span class="ee-ic tone-{{ office.color }} acc-office-title__ic">{% icon office.icon 22 %}</span>
+  <div><span class="ee-page-header__eyebrow">Appoint</span>
+  <h1 class="ee-page-header__title">{{ office.name }}</h1>
+  <p class="ee-page-header__description">Only {{ allowed_text }} can hold it{% if office.level_must_match %}, and only students of the level it serves{% endif %} · scope: {{ office.get_scope_kind_display|lower }}{% if office.max_holders %} · at most {{ office.max_holders }} holder{{ office.max_holders|pluralize }} per scope{% endif %}.</p></div></div>
+  <div class="ee-page-header__actions"><a class="btn btn-ghost" href="{% url 'access:how' %}#eligibility">{% icon "life-buoy" 16 %} How it works</a></div></header>
+
+<div class="acc-two">
+<form method="post" class="acc-two__main ee-form" novalidate data-appoint-form data-office-kind="{{ picker_kind }}">{% csrf_token %}
+  {% if form.non_field_errors %}<div class="alert alert-danger" role="alert">{% icon "circle-alert" 18 %}<div>{{ form.non_field_errors }}</div></div>{% endif %}
+  {% if full %}<div class="alert alert-warn" role="note">{% icon "triangle-alert" 18 %}<div>This office is full. End a current appointment before appointing someone new.</div></div>{% endif %}
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "user-search" 17 %} 1. Who</h2></div>
+    {{ form.person }}
+    <div class="acc-chosen" data-chosen{% if not chosen %} hidden{% endif %}>
+      <span class="avatar avatar-sm" data-chosen-initials>{% if chosen %}{{ chosen.plain_name|initials }}{% endif %}</span>
+      <div class="ee-row__body"><b data-chosen-name>{{ chosen.full_name }}</b><small class="ee-muted" data-chosen-meta>{{ chosen.user.email }}</small></div>
+      <button type="button" class="btn btn-ghost btn-sm" data-chosen-clear>Change</button>
+    </div>
+    <div data-person-search{% if chosen %} hidden{% endif %}>
+      <label class="acc-search acc-search--lg">{% icon "search" 17 %}<input type="search" name="q" placeholder="Name, e-mail, registration or staff number…" autocomplete="off" aria-label="Search people"
+        hx-get="{% url 'access:person_search' %}?office={{ office.code }}" hx-trigger="input changed delay:250ms, search" hx-target="#person-results" hx-params="q"></label>
+      <div id="person-results" class="acc-person-results"><p class="ee-card__sub">Type at least two letters. Only people who may hold this office are listed.</p></div>
+    </div>
+    {{ form.person.errors }}
+  </section>
+  <section class="ee-card">
+    <div class="ee-card__head"><h2>{% icon "crosshair" 17 %} 2. Scope and dates</h2></div>
+    <div class="ee-form-grid">
+      {% include "access/_field.html" with f=form.profile_kind %}
+      {% include "access/_field.html" with f=form.scope_programme %}
+      {% include "access/_field.html" with f=form.scope_level %}
+      {% include "access/_field.html" with f=form.scope_label %}
+      {% include "access/_field.html" with f=form.start_date %}
+      {% include "access/_field.html" with f=form.end_date %}
+    </div>
+    {% include "access/_field.html" with f=form.note %}
+    {% include "access/_field.html" with f=form.is_acting %}
+  </section>
+  <div class="form-actions"><button type="submit" class="btn btn-primary btn-lg"{% if full %} disabled{% endif %}>{% icon "badge-check" 16 %} Appoint</button><a class="btn btn-ghost" href="{% if perms.accounts.offices_manage %}{% url 'access:office_edit' office.code %}{% else %}{% url 'access:my_access' %}{% endif %}">Cancel</a></div>
+</form>
+<aside class="acc-two__side">
+  <section class="ee-card"><div class="ee-card__head"><h2>{% icon "users" 17 %} Current holders</h2></div>{% include "access/_holders_list.html" %}</section>
+</aside>
+</div>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/access.js' %}" defer></script>{% endblock %}
