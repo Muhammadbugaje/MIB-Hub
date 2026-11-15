@@ -20,6 +20,7 @@ import { db, repos } from "../src/lib/db.ts";
 import { REPO_ROOT, env } from "../src/lib/env.ts";
 import { ROLES, ROLE_INFO } from "../src/lib/permissions.ts";
 import { siteConfig } from "../src/site.config.ts";
+import { seedContent } from "./seed-content.ts";
 
 interface CatalogueEntry {
   slug: string;
@@ -79,7 +80,10 @@ async function main() {
     if (!(key in current)) await repos.siteSettings.set(key, value);
   }
 
-  // 4. Owner account
+  // 4. Site v2 content: cheats, heroes, cast, news, events, store, credits, FAQs, switches
+  await seedContent(repos);
+
+  // 5. Owner account
   const email = process.env.OWNER_EMAIL?.trim().toLowerCase();
   const password = process.env.OWNER_PASSWORD;
   const name = process.env.OWNER_NAME?.trim() || "Site Owner";

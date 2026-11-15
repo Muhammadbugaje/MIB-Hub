@@ -5,7 +5,7 @@
  * The admin panel can only set a new code, never read the old one.
  */
 import { and, asc, eq, inArray } from "drizzle-orm";
-import { hashCode, newSalt, normaliseCode, verifyCode } from "../crypto.ts";
+import { LEGACY_SALT, hashCode, isDjangoHash, newSalt, normaliseCode, verifyCode, verifyDjangoPbkdf2 } from "../crypto.ts";
 import { cheat, hero } from "../schema/index.ts";
 import type { AppDb, PasswordHasher } from "../types.ts";
 import { ALL_GAMES } from "./games.ts";
@@ -93,9 +93,59 @@ export function cheatsRepo(db: AppDb) {
         .from(cheat)
         .where(and(eq(cheat.gameSlug, gameSlug), eq(cheat.enabled, true), inArray(cheat.channel, [channel, "any"])));
       for (const row of rows) {
-        if (await verifyCode(gameSlug, code, row.codeSalt, row.codeHash)) return hideSecret(row);
+        if (await verifyCode(gameSlug, code, row.codeSalt, row.codeHash)) {
+          if (row.codeSalt === LEGACY_SALT) {
+            // First correct use of an imported code: upgrade it to a salted hash.
+            const salt = newSalt();
+            await db
+              .update(cheat)
+              .set({ codeSalt: salt, codeHash: await hashCode(gameSlug, code, salt), updatedAt: new Date() })
+              .where(eq(cheat.id, row.id));
+          }
+          return hideSecret(row);
+        }
       }
       return null;
+    },
+
+    /**
+     * Import a cheat from the old site as-is: the unsalted legacy hash is kept
+     * (marked with LEGACY_SALT) and upgraded on first use. Skips existing rows.
+     */
+    async importLegacy(input: {
+      gameSlug: string;
+      key: string;
+      label: string;
+      channel: "typed" | "dial";
+      legacyHash: string;
+      how?: string;
+      enabled?: boolean;
+      effect?: Record<string, unknown>;
+    }): Promise<boolean> {
+      const existing = await db
+        .select({ id: cheat.id })
+        .from(cheat)
+        .where(and(eq(cheat.gameSlug, input.gameSlug), eq(cheat.key, input.key), eq(cheat.channel, input.channel)))
+        .limit(1);
+      if (existing.length) return false;
+      await db.insert(cheat).values({
+        gameSlug: input.gameSlug,
+        key: input.key,
+        label: input.label,
+        channel: input.channel,
+        how: input.how ?? "",
+        enabled: input.enabled ?? true,
+        effect: input.effect ?? {},
+        codeHash: input.legacyHash.toLowerCase(),
+        codeSalt: LEGACY_SALT,
+      });
+      return true;
+    },
+
+    /** Every game's cheats (admin overview), without secrets. */
+    async listAll(): Promise<CheatInfo[]> {
+      const rows = await db.select().from(cheat).orderBy(asc(cheat.gameSlug), asc(cheat.key));
+      return rows.map(hideSecret);
     },
   };
 }
@@ -153,9 +203,45 @@ export function heroesRepo(db: AppDb, hasher: PasswordHasher) {
       rows.sort((a, b) => Number(b.gameSlug === gameSlug) - Number(a.gameSlug === gameSlug));
       const norm = normaliseCode(code);
       for (const row of rows) {
+        if (isDjangoHash(row.passwordHash)) {
+          if (await verifyDjangoPbkdf2(row.passwordHash, norm)) {
+            // First correct use of an imported Django hash: re-hash with scrypt.
+            await db.update(hero).set({ passwordHash: await hasher.hash(norm), updatedAt: new Date() }).where(eq(hero.id, row.id));
+            return hide(row);
+          }
+          continue;
+        }
         if (await hasher.verify(row.passwordHash, norm)) return hide(row);
       }
       return null;
+    },
+
+    /** Import a hero whose password hash came from the old Django site (kept until first use). */
+    async importLegacy(input: {
+      name: string;
+      djangoHash: string;
+      gameSlug?: string;
+      fullName?: string;
+      details?: Record<string, string>;
+    }): Promise<boolean> {
+      if (!isDjangoHash(input.djangoHash)) throw new Error("Not a Django PBKDF2 hash.");
+      const slug = input.gameSlug ?? ALL_GAMES;
+      const existing = await db.select({ id: hero.id }).from(hero).where(eq(hero.gameSlug, slug)).limit(1);
+      if (existing.length) return false;
+      await db.insert(hero).values({
+        name: input.name,
+        fullName: input.fullName ?? "",
+        gameSlug: slug,
+        access: "code",
+        details: input.details ?? {},
+        passwordHash: input.djangoHash,
+      });
+      return true;
+    },
+
+    /** Every hero (admin overview), without the hash. */
+    async listAll(): Promise<HeroInfo[]> {
+      return (await db.select().from(hero).orderBy(asc(hero.gameSlug))).map(hide);
     },
   };
 }
