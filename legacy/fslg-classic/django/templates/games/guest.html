@@ -1,0 +1,39 @@
+{% extends "base_public.html" %}{% load static ee_tags %}
+{% block title %}Learning arcade{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games.css' %}">{% endblock %}
+{% block content %}
+<main class="gm-guest-shell">
+  <section class="gm-hero gm-hero--guest">
+    <div class="gm-hero__text">
+      <h1>Learning arcade</h1>
+      <p>Physics and electrical engineering you can play: head-football, a lab fighter, laser puzzles, circuit puzzles and more. Department students and staff, sign in with your EE Hub account. Everyone else can play the 100-level games as a guest.</p>
+    </div>
+    <div class="gm-hero__cast" aria-hidden="true"><canvas class="gm-cast" width="420" height="200" data-gm-cast></canvas></div>
+  </section>
+  {% if closed %}
+  <div class="ee-empty">Guest play is switched off at the moment. Department members can still <a href="{% url 'accounts:login' %}?next=/arcade/">sign in</a>.</div>
+  {% else %}
+  {% if errors %}<div class="gm-alert" role="alert">{% for e in errors %}<p>{{ e }}</p>{% endfor %}</div>{% endif %}
+  <div class="gm-two">
+    <form method="post" class="gm-panel gm-form">{% csrf_token %}<input type="hidden" name="mode" value="return"><input type="hidden" name="next" value="{{ next }}">
+      <h2>{% icon "log-in" 16 %} I've played before</h2>
+      <label>Name<input name="name" required maxlength="40" autocomplete="name" value="{% if form.mode == 'return' %}{{ form.name }}{% endif %}"></label>
+      <label>Registration number<input name="reg_number" required maxlength="30" value="{% if form.mode == 'return' %}{{ form.reg_number }}{% endif %}"></label>
+      <label>PIN<input name="pin" required inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" autocomplete="current-password"></label>
+      <button class="btn btn-primary" type="submit">Continue playing</button>
+    </form>
+    <form method="post" class="gm-panel gm-form">{% csrf_token %}<input type="hidden" name="mode" value="new"><input type="hidden" name="next" value="{{ next }}">
+      <h2>{% icon "user-plus" 16 %} New guest player</h2>
+      <label>Name (shown as first name and initial on leaderboards)<input name="name" required maxlength="40" autocomplete="name" value="{% if form.mode == 'new' %}{{ form.name }}{% endif %}"></label>
+      <label>Registration number<input name="reg_number" required maxlength="30" value="{% if form.mode == 'new' %}{{ form.reg_number }}{% endif %}"></label>
+      <label>Choose a 4–6 digit PIN<input name="pin" required inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" autocomplete="new-password"></label>
+      <label>Type the PIN again<input name="pin2" required inputmode="numeric" pattern="[0-9]{4,6}" maxlength="6" autocomplete="new-password"></label>
+      <button class="btn btn-primary" type="submit">Start playing</button>
+      <p class="gm-small">We keep only your name, reg. number and a scrambled copy of your PIN, so your progress and leaderboard place follow you. Guest players are deleted after {{ days }} days.</p>
+    </form>
+  </div>
+  <p class="gm-small">Department student or staff? <a href="{% url 'accounts:login' %}?next=/arcade/">Sign in with your EE Hub account</a> to unlock every level you've reached.</p>
+  {% endif %}
+</main>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/games/arcade.js' %}" defer></script>{% endblock %}

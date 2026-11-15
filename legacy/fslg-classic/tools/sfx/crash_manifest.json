@@ -1,0 +1,695 @@
+{
+ "built": "2026-11-14",
+ "credits": [
+  [
+   "fslg3/crash_car_1",
+   "fs_151624.mp3",
+   "Clank Car Crash Collision",
+   "https://freesound.org/people/qubodup/sounds/151624/",
+   "qubodup (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_1",
+   "impactPlate_heavy_002.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_2",
+   "fs_332058.mp3",
+   "Collision",
+   "https://freesound.org/people/qubodup/sounds/332058/",
+   "qubodup (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_2",
+   "impactSoft_heavy_001.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_3",
+   "fs_237375.mp3",
+   "Car Crash",
+   "https://freesound.org/people/squareal/sounds/237375/",
+   "squareal (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_light_1",
+   "fs_340539.mp3",
+   "Car_Door_Hit.wav",
+   "https://freesound.org/people/mickyman5000/sounds/340539/",
+   "mickyman5000 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_light_2",
+   "impactPlate_heavy_003.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_light_2",
+   "impactSoft_medium_003.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_light_3",
+   "impactPlate_heavy_001.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_car_light_3",
+   "impactSoft_medium_004.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bus_1",
+   "fs_879268.mp3",
+   "Heavy Slam Impact",
+   "https://freesound.org/people/Qvantor/sounds/879268/",
+   "Qvantor (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bus_1",
+   "fs_151624.mp3",
+   "Clank Car Crash Collision",
+   "https://freesound.org/people/qubodup/sounds/151624/",
+   "qubodup (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bus_1",
+   "impactPlate_heavy_004.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bus_2",
+   "fs_209772.mp3",
+   "Metal Boom",
+   "https://freesound.org/people/Johnnyfarmer/sounds/209772/",
+   "Johnnyfarmer (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bus_2",
+   "fs_332056.mp3",
+   "Fast Collision",
+   "https://freesound.org/people/qubodup/sounds/332056/",
+   "qubodup (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_1",
+   "fs_332056.mp3",
+   "Fast Collision",
+   "https://freesound.org/people/qubodup/sounds/332056/",
+   "qubodup (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_1",
+   "fs_697092.mp3",
+   "hollow plastic box, dropped",
+   "https://freesound.org/people/Lemato/sounds/697092/",
+   "Lemato (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_2",
+   "impactTin_medium_002.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_2",
+   "fs_272065.mp3",
+   "Thrown Object",
+   "https://freesound.org/people/Bexhillcollege/sounds/272065/",
+   "Bexhillcollege (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_3",
+   "impactPlate_light_003.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_3",
+   "fs_697091.mp3",
+   "hollow plastic box, dropped (2)",
+   "https://freesound.org/people/Lemato/sounds/697091/",
+   "Lemato (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_moto_3",
+   "fs_173598.mp3",
+   "Plastic Bottle Hit",
+   "https://freesound.org/people/WarcakeStudios/sounds/173598/",
+   "WarcakeStudios (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bicycle_1",
+   "fs_707010.mp3",
+   "Bike falling over.wav",
+   "https://freesound.org/people/MioMeg/sounds/707010/",
+   "MioMeg (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bicycle_2",
+   "fs_453764.mp3",
+   "bicycle impact floor or ground fall metal hit rattly.flac",
+   "https://freesound.org/people/kyles/sounds/453764/",
+   "kyles (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_bicycle_3",
+   "fs_78483.mp3",
+   "Bike_Wreck.wav",
+   "https://freesound.org/people/1sticky8/sounds/78483/",
+   "1sticky8 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_skate_1",
+   "fs_717547.mp3",
+   "SPRTSkate_Drop-skateboard-ground-concrete_01",
+   "https://freesound.org/people/nico-audio/sounds/717547/",
+   "nico-audio (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_skate_2",
+   "fs_262081.mp3",
+   "Skateboard Drop.1.wav",
+   "https://freesound.org/people/rokenjocu/sounds/262081/",
+   "rokenjocu (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_skate_3",
+   "fs_515231.mp3",
+   "skateboard drop",
+   "https://freesound.org/people/nolimitkid/sounds/515231/",
+   "nolimitkid (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_wall_1",
+   "fs_457741.mp3",
+   "Wall Bump 1.wav",
+   "https://freesound.org/people/Osiruswaltz/sounds/457741/",
+   "Osiruswaltz (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_wall_2",
+   "fs_321477.mp3",
+   "Concrete Hit ",
+   "https://freesound.org/people/dslrguide/sounds/321477/",
+   "dslrguide (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_wall_2",
+   "impactSoft_heavy_003.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_wall_3",
+   "fs_344402.mp3",
+   "Body Wall Impact.wav",
+   "https://freesound.org/people/jawbutch/sounds/344402/",
+   "jawbutch (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_wall_3",
+   "impactWood_heavy_000.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_pole_1",
+   "fs_386228.mp3",
+   "Wood - Wood on wood 1 stereo",
+   "https://freesound.org/people/ldezem/sounds/386228/",
+   "ldezem (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_pole_2",
+   "impactPlank_medium_001.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_pole_2",
+   "impactSoft_medium_001.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_pole_3",
+   "fs_421929.mp3",
+   "Chopping wood 02",
+   "https://freesound.org/people/micahlg/sounds/421929/",
+   "micahlg (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crash_pole_3",
+   "impactWood_heavy_002.ogg",
+   "Kenney \u2014 Impact Sounds",
+   "https://kenney.nl/assets/impact-sounds",
+   "Kenney (kenney.nl)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/scrape_1",
+   "fs_874460.mp3",
+   "Dumpster Scrape",
+   "https://freesound.org/people/FairhavenCollection/sounds/874460/",
+   "FairhavenCollection (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/scrape_2",
+   "fs_321488.mp3",
+   "Scraping Stone ",
+   "https://freesound.org/people/dslrguide/sounds/321488/",
+   "dslrguide (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_1",
+   "fs_518799.mp3",
+   "Shaken Bush",
+   "https://freesound.org/people/Mateusz_Chenc/sounds/518799/",
+   "Mateusz_Chenc (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_2",
+   "fs_106113.mp3",
+   "bushhit.wav",
+   "https://freesound.org/people/j1987/sounds/106113/",
+   "j1987 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_3",
+   "fs_106114.mp3",
+   "bushmovement.wav",
+   "https://freesound.org/people/j1987/sounds/106114/",
+   "j1987 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_big_1",
+   "fs_106114.mp3",
+   "bushmovement.wav",
+   "https://freesound.org/people/j1987/sounds/106114/",
+   "j1987 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_big_1",
+   "fs_452570.mp3",
+   "branch breaking forest twig snap crunch.wav",
+   "https://freesound.org/people/kyles/sounds/452570/",
+   "kyles (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_big_2",
+   "fs_569485.mp3",
+   "Bush Branches Rustling 1 17",
+   "https://freesound.org/people/Sheyvan/sounds/569485/",
+   "Sheyvan (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_big_2",
+   "fs_106113.mp3",
+   "bushhit.wav",
+   "https://freesound.org/people/j1987/sounds/106113/",
+   "j1987 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/rustle_big_2",
+   "fs_164472.mp3",
+   "Crack of branch 3.wav",
+   "https://freesound.org/people/deleted_user_2104797/sounds/164472/",
+   "deleted_user_2104797 (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crops_1",
+   "fs_396013.mp3",
+   "Rustling Grass 2.wav",
+   "https://freesound.org/people/morganpurkis/sounds/396013/",
+   "morganpurkis (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ],
+  [
+   "fslg3/crops_2",
+   "fs_396012.mp3",
+   "Rustling Grass 3",
+   "https://freesound.org/people/morganpurkis/sounds/396012/",
+   "morganpurkis (Freesound)",
+   "CC0 1.0",
+   "2026-11-14"
+  ]
+ ],
+ "durations": {
+  "fslg3/crash_bicycle_1": 0.85,
+  "fslg3/crash_bicycle_2": 0.57,
+  "fslg3/crash_bicycle_3": 0.7,
+  "fslg3/crash_bus_1": 0.75,
+  "fslg3/crash_bus_2": 0.9,
+  "fslg3/crash_car_1": 0.54,
+  "fslg3/crash_car_2": 0.75,
+  "fslg3/crash_car_3": 0.92,
+  "fslg3/crash_car_light_1": 0.44,
+  "fslg3/crash_car_light_2": 0.34,
+  "fslg3/crash_car_light_3": 0.35,
+  "fslg3/crash_moto_1": 0.46,
+  "fslg3/crash_moto_2": 0.47,
+  "fslg3/crash_moto_3": 0.47,
+  "fslg3/crash_pole_1": 0.33,
+  "fslg3/crash_pole_2": 0.42,
+  "fslg3/crash_pole_3": 0.31,
+  "fslg3/crash_skate_1": 0.47,
+  "fslg3/crash_skate_2": 0.56,
+  "fslg3/crash_skate_3": 0.58,
+  "fslg3/crash_wall_1": 0.6,
+  "fslg3/crash_wall_2": 0.6,
+  "fslg3/crash_wall_3": 0.6,
+  "fslg3/crops_1": 0.6,
+  "fslg3/crops_2": 0.54,
+  "fslg3/rustle_1": 0.6,
+  "fslg3/rustle_2": 0.65,
+  "fslg3/rustle_3": 0.6,
+  "fslg3/rustle_big_1": 1.0,
+  "fslg3/rustle_big_2": 1.0,
+  "fslg3/scrape_1": 0.85,
+  "fslg3/scrape_2": 0.7
+ },
+ "entries": {
+  "crash_bicycle": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_bicycle_1",
+    "fslg3/crash_bicycle_2",
+    "fslg3/crash_bicycle_3"
+   ],
+   "g": 0.85,
+   "max": 2,
+   "p": 0.08
+  },
+  "crash_bus": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_bus_1",
+    "fslg3/crash_bus_2"
+   ],
+   "g": 1,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.05
+  },
+  "crash_car": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_car_1",
+    "fslg3/crash_car_2",
+    "fslg3/crash_car_3"
+   ],
+   "g": 1,
+   "max": 2,
+   "p": 0.07
+  },
+  "crash_car_light": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_car_light_1",
+    "fslg3/crash_car_light_2",
+    "fslg3/crash_car_light_3"
+   ],
+   "g": 0.85,
+   "max": 2,
+   "p": 0.08
+  },
+  "crash_moto": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_moto_1",
+    "fslg3/crash_moto_2",
+    "fslg3/crash_moto_3"
+   ],
+   "g": 0.95,
+   "max": 2,
+   "p": 0.07
+  },
+  "crash_pole": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_pole_1",
+    "fslg3/crash_pole_2",
+    "fslg3/crash_pole_3"
+   ],
+   "g": 0.95,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.07
+  },
+  "crash_skate": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_skate_1",
+    "fslg3/crash_skate_2",
+    "fslg3/crash_skate_3"
+   ],
+   "g": 0.85,
+   "max": 2,
+   "p": 0.08
+  },
+  "crash_wall": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/crash_wall_1",
+    "fslg3/crash_wall_2",
+    "fslg3/crash_wall_3"
+   ],
+   "g": 1,
+   "max": 2,
+   "p": 0.07
+  },
+  "crops": {
+   "bus": "world",
+   "f": [
+    "fslg3/crops_1",
+    "fslg3/crops_2"
+   ],
+   "g": 0.7,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.1
+  },
+  "rustle": {
+   "bus": "world",
+   "f": [
+    "fslg3/rustle_1",
+    "fslg3/rustle_2",
+    "fslg3/rustle_3"
+   ],
+   "g": 0.7,
+   "max": 3,
+   "p": 0.1
+  },
+  "rustle_big": {
+   "bus": "world",
+   "f": [
+    "fslg3/rustle_big_1",
+    "fslg3/rustle_big_2"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.08
+  },
+  "scrape": {
+   "bus": "impacts",
+   "f": [
+    "fslg3/scrape_1",
+    "fslg3/scrape_2"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "max": 1,
+   "p": 0.06
+  }
+ },
+ "pack": "samaru-days",
+ "sizes": {
+  "m4a": {
+   "fslg3/crash_bicycle_1": 7840,
+   "fslg3/crash_bicycle_2": 5693,
+   "fslg3/crash_bicycle_3": 6854,
+   "fslg3/crash_bus_1": 6994,
+   "fslg3/crash_bus_2": 8383,
+   "fslg3/crash_car_1": 5411,
+   "fslg3/crash_car_2": 7323,
+   "fslg3/crash_car_3": 8568,
+   "fslg3/crash_car_light_1": 4818,
+   "fslg3/crash_car_light_2": 3840,
+   "fslg3/crash_car_light_3": 3839,
+   "fslg3/crash_moto_1": 4874,
+   "fslg3/crash_moto_2": 4862,
+   "fslg3/crash_moto_3": 4815,
+   "fslg3/crash_pole_1": 3742,
+   "fslg3/crash_pole_2": 4518,
+   "fslg3/crash_pole_3": 3294,
+   "fslg3/crash_skate_1": 4863,
+   "fslg3/crash_skate_2": 5831,
+   "fslg3/crash_skate_3": 5851,
+   "fslg3/crash_wall_1": 6098,
+   "fslg3/crash_wall_2": 5763,
+   "fslg3/crash_wall_3": 5920,
+   "fslg3/crops_1": 6051,
+   "fslg3/crops_2": 5522,
+   "fslg3/rustle_1": 6045,
+   "fslg3/rustle_2": 6419,
+   "fslg3/rustle_3": 6143,
+   "fslg3/rustle_big_1": 9345,
+   "fslg3/rustle_big_2": 9344,
+   "fslg3/scrape_1": 8155,
+   "fslg3/scrape_2": 6858
+  },
+  "ogg": {
+   "fslg3/crash_bicycle_1": 4968,
+   "fslg3/crash_bicycle_2": 3406,
+   "fslg3/crash_bicycle_3": 4590,
+   "fslg3/crash_bus_1": 3742,
+   "fslg3/crash_bus_2": 4666,
+   "fslg3/crash_car_1": 3125,
+   "fslg3/crash_car_2": 4603,
+   "fslg3/crash_car_3": 5517,
+   "fslg3/crash_car_light_1": 2577,
+   "fslg3/crash_car_light_2": 1974,
+   "fslg3/crash_car_light_3": 2021,
+   "fslg3/crash_moto_1": 2693,
+   "fslg3/crash_moto_2": 3025,
+   "fslg3/crash_moto_3": 2904,
+   "fslg3/crash_pole_1": 1805,
+   "fslg3/crash_pole_2": 2492,
+   "fslg3/crash_pole_3": 2243,
+   "fslg3/crash_skate_1": 2651,
+   "fslg3/crash_skate_2": 3296,
+   "fslg3/crash_skate_3": 3717,
+   "fslg3/crash_wall_1": 3581,
+   "fslg3/crash_wall_2": 3254,
+   "fslg3/crash_wall_3": 3381,
+   "fslg3/crops_1": 3701,
+   "fslg3/crops_2": 3771,
+   "fslg3/rustle_1": 3962,
+   "fslg3/rustle_2": 3870,
+   "fslg3/rustle_3": 4089,
+   "fslg3/rustle_big_1": 6208,
+   "fslg3/rustle_big_2": 6047,
+   "fslg3/scrape_1": 5030,
+   "fslg3/scrape_2": 4415
+  }
+ }
+}

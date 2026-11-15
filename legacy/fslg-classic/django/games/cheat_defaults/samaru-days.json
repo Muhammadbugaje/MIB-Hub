@@ -1,0 +1,364 @@
+{
+ "cheats": [
+  {
+   "id": "cash",
+   "label": "₦50,000",
+   "typed": "zobo50k",
+   "dial": "*7352*18#",
+   "note": "Adds ₦50,000."
+  },
+  {
+   "id": "rich",
+   "label": "₦1,000,000",
+   "typed": "ogaboss1m",
+   "dial": "*7352*96#",
+   "note": "Adds ₦1,000,000."
+  },
+  {
+   "id": "heal",
+   "label": "Full health, food and energy",
+   "typed": "bellefull",
+   "dial": "*4186*27#",
+   "note": "Refills all three bars."
+  },
+  {
+   "id": "god",
+   "label": "Invincible",
+   "typed": "ironbody",
+   "dial": "*4186*90#",
+   "note": "Nothing can hurt you. Enter again to switch off."
+  },
+  {
+   "id": "notire",
+   "label": "Infinite energy",
+   "typed": "nodulling",
+   "dial": "*4186*53#",
+   "note": "Never tired, never hungry. Enter again to switch off."
+  },
+  {
+   "id": "onehit",
+   "label": "One-hit knock-out",
+   "typed": "oneslap",
+   "dial": "*4186*71#",
+   "note": "Every hit finishes the fight. Enter again to switch off."
+  },
+  {
+   "id": "zoom",
+   "label": "Super speed",
+   "typed": "fastfast",
+   "dial": "*2907*44#",
+   "note": "Run and ride much faster. Enter again to switch off."
+  },
+  {
+   "id": "sjump",
+   "label": "Super jump",
+   "typed": "jumpam",
+   "dial": "*2907*61#",
+   "note": "Jump about twice as high. Enter again to switch off."
+  },
+  {
+   "id": "bighead",
+   "label": "Big head mode",
+   "typed": "coconut",
+   "dial": "*2907*83#",
+   "note": "Fun only. Enter again to switch off."
+  },
+  {
+   "id": "calm",
+   "label": "Security forgets you",
+   "typed": "nobodysawme",
+   "dial": "*6431*05#",
+   "note": "Clears the current chase."
+  },
+  {
+   "id": "calloff",
+   "label": "Send security home",
+   "typed": "gatefree",
+   "dial": "*6431*72#",
+   "note": "Security leaves and stays away. Enter again to bring them back."
+  },
+  {
+   "id": "level",
+   "label": "One level up",
+   "typed": "plusone",
+   "dial": "*5820*11#",
+   "note": "Adds one level."
+  },
+  {
+   "id": "max",
+   "label": "Every vehicle licence",
+   "typed": "tenlicence",
+   "dial": "*5820*39#",
+   "note": "Level 10: every vehicle and the aircraft."
+  },
+  {
+   "id": "toplvl",
+   "label": "Top level",
+   "typed": "vcvc150",
+   "dial": "*5820*150#",
+   "note": "Level 150."
+  },
+  {
+   "id": "skip",
+   "label": "Skip this mission step",
+   "typed": "passam",
+   "dial": "*9164*20#",
+   "note": "Completes the current story step."
+  },
+  {
+   "id": "missions",
+   "label": "Pick any mission",
+   "typed": "pickam",
+   "dial": "*9164*36#",
+   "note": "Opens a list of all 36 missions; choose one to jump to it."
+  },
+  {
+   "id": "skate",
+   "label": "Skateboard",
+   "typed": "getboard",
+   "dial": "*3075*01#",
+   "note": "A skateboard appears."
+  },
+  {
+   "id": "okada",
+   "label": "Okada",
+   "typed": "getokada",
+   "dial": "*3075*03#",
+   "note": "An okada appears beside you."
+  },
+  {
+   "id": "keke",
+   "label": "Keke",
+   "typed": "getkeke",
+   "dial": "*3075*04#",
+   "note": "A keke appears beside you."
+  },
+  {
+   "id": "car",
+   "label": "Saloon car",
+   "typed": "getmotor",
+   "dial": "*3075*05#",
+   "note": "A car appears beside you."
+  },
+  {
+   "id": "sport",
+   "label": "Sports car",
+   "typed": "getfast",
+   "dial": "*3075*08#",
+   "note": "A sports car appears beside you."
+  },
+  {
+   "id": "plane",
+   "label": "Aircraft",
+   "typed": "getwings",
+   "dial": "*3075*10#",
+   "note": "A light aircraft appears."
+  },
+  {
+   "id": "noon",
+   "label": "Morning (07:00)",
+   "typed": "wakeup7",
+   "dial": "*8249*07#",
+   "note": "Sets the clock to 07:00."
+  },
+  {
+   "id": "midday",
+   "label": "Midday (13:00)",
+   "typed": "sunup13",
+   "dial": "*8249*13#",
+   "note": "Sets the clock to 13:00."
+  },
+  {
+   "id": "dusk",
+   "label": "Sunset (18:30)",
+   "typed": "sundown18",
+   "dial": "*8249*18#",
+   "note": "Sets the clock to 18:30."
+  },
+  {
+   "id": "night",
+   "label": "Midnight",
+   "typed": "deadnight",
+   "dial": "*8249*00#",
+   "note": "Sets the clock to 00:00."
+  },
+  {
+   "id": "harmattan",
+   "label": "Harmattan haze",
+   "typed": "dustydusty",
+   "dial": "*8249*55#",
+   "note": "Weather: dust haze. Enter again to clear."
+  },
+  {
+   "id": "nepa",
+   "label": "Blackout",
+   "typed": "offnepa",
+   "dial": "*1693*40#",
+   "note": "The light goes and the shades come."
+  },
+  {
+   "id": "light",
+   "label": "Light back",
+   "typed": "onnepa",
+   "dial": "*1693*41#",
+   "note": "Light returns and the shades scatter."
+  },
+  {
+   "id": "love",
+   "label": "Everybody likes you",
+   "typed": "everybodylove",
+   "dial": "*1693*77#",
+   "note": "+30 friendship with everyone you know."
+  },
+  {
+   "id": "map",
+   "label": "Show hidden kola nuts",
+   "typed": "showkola",
+   "dial": "*1693*88#",
+   "note": "All 150 kola nuts appear on the map."
+  }
+ ],
+ "hero": {
+  "name": "M.I. BUGAJE",
+  "combo": "u u d m i b",
+  "swipe": "u u d l r u"
+ },
+ "rules": [
+  {
+   "key": "warnings",
+   "label": "Warnings before security gives chase",
+   "type": "int",
+   "default": 5,
+   "min": 3,
+   "max": 6
+  },
+  {
+   "key": "window",
+   "label": "Seconds after the last warning in which one more offence starts a chase",
+   "type": "int",
+   "default": 20,
+   "min": 5,
+   "max": 120
+  },
+  {
+   "key": "warnExpire",
+   "label": "Calm seconds before a warning is forgotten",
+   "type": "int",
+   "default": 40,
+   "min": 10,
+   "max": 600
+  },
+  {
+   "key": "guards",
+   "label": "Most guards in one chase",
+   "type": "int",
+   "default": 2,
+   "min": 1,
+   "max": 4
+  },
+  {
+   "key": "guardSpeed",
+   "label": "Guard speed as a share of the player's sprint",
+   "type": "float",
+   "default": 0.86,
+   "min": 0.3,
+   "max": 0.97
+  },
+  {
+   "key": "sight",
+   "label": "How far a guard can see (metres)",
+   "type": "int",
+   "default": 45,
+   "min": 8,
+   "max": 200
+  },
+  {
+   "key": "search",
+   "label": "Seconds guards search before giving up",
+   "type": "int",
+   "default": 12,
+   "min": 2,
+   "max": 120
+  },
+  {
+   "key": "decay",
+   "label": "Heat lost per second while behaving",
+   "type": "float",
+   "default": 1.2,
+   "min": 0.05,
+   "max": 20
+  },
+  {
+   "key": "fine",
+   "label": "Fine when caught (naira)",
+   "type": "int",
+   "default": 200,
+   "min": 0,
+   "max": 100000
+  },
+  {
+   "key": "fareBase",
+   "label": "Shuttle fare for the shortest hop (naira)",
+   "type": "int",
+   "default": 100,
+   "min": 0,
+   "max": 5000
+  },
+  {
+   "key": "farePerKm",
+   "label": "Shuttle fare added per kilometre (naira)",
+   "type": "int",
+   "default": 40,
+   "min": 0,
+   "max": 5000
+  },
+  {
+   "key": "fareMax",
+   "label": "Highest shuttle fare, the Phase 2 run (naira)",
+   "type": "int",
+   "default": 200,
+   "min": 0,
+   "max": 20000
+  },
+  {
+   "key": "kekeFactor",
+   "label": "Keke fare as a multiple of the shuttle fare",
+   "type": "float",
+   "default": 1.5,
+   "min": 1,
+   "max": 5
+  },
+  {
+   "key": "wildWarn",
+   "label": "Metres past the fence before the patrol's first warning",
+   "type": "int",
+   "default": 400,
+   "min": 50,
+   "max": 5000
+  },
+  {
+   "key": "wildLimit",
+   "label": "Metres past the fence at which the patrol always catches you",
+   "type": "int",
+   "default": 1500,
+   "min": 300,
+   "max": 20000
+  },
+  {
+   "key": "wildPatience",
+   "label": "Seconds between patrol warnings and before the chase",
+   "type": "int",
+   "default": 22,
+   "min": 5,
+   "max": 300
+  },
+  {
+   "key": "wildFine",
+   "label": "Fine when the patrol drives you back (naira)",
+   "type": "int",
+   "default": 150,
+   "min": 0,
+   "max": 100000
+  }
+ ]
+}

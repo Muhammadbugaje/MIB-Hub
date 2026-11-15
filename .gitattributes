@@ -1,0 +1,17 @@
+* text=auto eol=lf
+# Binary assets: never diff or merge as text. (Git LFS can be enabled later for assets/ if the repo grows.)
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.pdf binary
+*.ogg binary
+*.m4a binary
+*.mp3 binary
+*.wav binary
+*.glb binary
+*.ktx2 binary
+*.hdr binary
+# Generated, very long single-line data: mark as generated so diffs stay readable
+legacy/fslg-classic/static/js/games/fslg-map.js linguist-generated=true -diff
+docs/legacy/voice/lines.json linguist-generated=true

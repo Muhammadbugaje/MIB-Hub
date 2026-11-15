@@ -1,0 +1,6 @@
+{# kind, label, choices, value, users, follow (text for the "follow" option, or empty) #}
+<label class="gs-field">{{ label }}
+  <select name="{{ kind }}_access">{% if follow %}<option value="" {% if not value %}selected{% endif %}>Follow the site-wide rule ({{ follow }})</option>{% endif %}
+    {% for id, text in choices %}<option value="{{ id }}" {% if id == value %}selected{% endif %}>{{ text }}</option>{% endfor %}</select></label>
+<label class="gs-field">People named (used with “Only the people named”)
+  <textarea class="gs-area" name="{{ kind }}_users" placeholder="one sign-in e-mail per line" spellcheck="false">{{ users }}</textarea></label>

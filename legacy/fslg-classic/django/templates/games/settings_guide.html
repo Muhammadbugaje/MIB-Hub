@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Secret character guide · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar"><a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a><h1>Secret character guide</h1>
+    <div class="gs-bar__tools">{% url 'games:settings_export_all' as base %}{% include "games/_settings_export.html" %}</div></header>
+  {% include "games/_settings_nav.html" with at="guide" %}
+  <section class="gs-card">
+    <h2>The short version</h2>
+    <p>In every game: <b>1.</b> on the title or character screen do the reveal move for that game (below). <b>2.</b> The secret character appears; choose him and confirm. <b>3.</b> Type the secret code in the box that opens and press Enter. He stays unlocked for that visit to the page. On this site the code is the one generated the first time Arcade Management is opened (shown once), or whichever you have set since on the <a href="{% url 'games:settings' %}">Games page</a>{% if not glob.hero_set %}; none exists yet, so open the Games page once to create it{% endif %}. Stand-in codes written in the project files never work on the live site. This guide is included in the downloads.</p>
+  </section>
+  {% for gd in guides %}
+  <section class="gs-card" id="{{ gd.g.slug }}">
+    <h2><span class="gs-dot" style="background:{{ gd.g.accent }}"></span>{{ gd.g.title }}: {{ gd.name }}
+      <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="{% url 'games:settings_game' gd.g.slug %}?tab=hero">Settings</a></h2>
+    {% include "games/_settings_guide.html" %}
+  </section>{% endfor %}
+</div>
+{% endblock %}

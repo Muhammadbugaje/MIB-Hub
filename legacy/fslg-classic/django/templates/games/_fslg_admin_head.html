@@ -1,0 +1,2 @@
+{% load static %}<div id="fslg-admin" data-api="{% url 'games:api_fslg' %}" data-csrf="{{ csrf_token }}" data-three="{{ three }}" data-page="{{ at }}" hidden></div>
+{% for s in scripts %}<script src="{% static 'js/games/'|add:s|add:'.js' %}" defer></script>{% endfor %}<script src="{% static 'js/games/fslg-admin.js' %}" defer></script>

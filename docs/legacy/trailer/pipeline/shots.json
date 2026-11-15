@@ -1,0 +1,139 @@
+[
+{
+"name": "gate",
+"n": 107,
+"setup": "putp('gate',H2,30,6.4)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2, lerp(.04,.3,k), lerp(1.1,2.3,k))"
+},
+{
+"name": "sprint",
+"n": 107,
+"setup": "put(4,-640,H2,8.5)",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+lerp(2.5,2.0,k), .07, .85)"
+},
+{
+"name": "fountain",
+"n": 107,
+"setup": "put(0,-318,H2,10)",
+"pre": "keys(i==5?['emote2']:[])",
+"post": "cam(lerp(H2-.9,H2+.9,k), .28, 1.9)"
+},
+{
+"name": "selfie",
+"n": 72,
+"setup": "putp('senate',H2,72,16.6)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2,.12,lerp(1.9,1.0,k))"
+},
+{
+"name": "punch",
+"n": 72,
+"setup": "put(8,-740,H2,12); var ks=Object.keys((window.SamaruData||{}).ENEMIES||{}); Z.spawnFoe(ks.indexOf('bully')>=0?'bully':ks[0], Z.me.x, Z.me.y+1.7); settle(4)",
+"pre": "cam(H2); keys(i%10<3?['attack']:[])",
+"post": "cam(H2+2.0+k*.6,.14,.8)",
+"info": "Z.foes.length"
+},
+{
+"name": "bike",
+"n": 72,
+"setup": "put(4,-560,H2,9.5); ride('bike')",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(2.6,1.8,k),.12,.85)"
+},
+{
+"name": "okada",
+"n": 72,
+"setup": "put(-130,-300,0,16.8); ride('okada')",
+"pre": "keys(i<40?['up']:['up','left'])",
+"post": "cam(hd()+lerp(.5,-.4,k), .16, .9)",
+"info": "'veh='+(Z.me.veh&&Z.me.veh.type)+' alt='+Z.me.alt+' '+JSON.stringify(LOG.splice(0)).slice(0,500)"
+},
+{
+"name": "car",
+"n": 107,
+"setup": "put(700,-380,H2,17.3); ride('sport')",
+"pre": "keys(['up'])",
+"post": "cam(hd()+Math.sin(k*3)*.25,.15,lerp(1.2,.9,k))",
+"info": "'veh='+(Z.me.veh&&Z.me.veh.type)+' alt='+Z.me.alt+' '+JSON.stringify(LOG.splice(0)).slice(0,500)"
+},
+{
+"name": "slide",
+"n": 72,
+"setup": "window.A0=hd()",
+"pre": "keys(i<10?['up']:['up','left','jump'])",
+"post": "cam(A0+2.4,.22,1.1)",
+"info": "'veh='+(Z.me.veh&&Z.me.veh.type)+' alt='+Z.me.alt+' '+JSON.stringify(LOG.splice(0)).slice(0,500)"
+},
+{
+"name": "takeoff",
+"n": 142,
+"sub": 6,
+"setup": "put(-665,560,0,17.6); ride('plane')",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(2.4,2.9,k), lerp(.1,.03,k), 1.4)",
+"info": "'veh='+(Z.me.veh&&Z.me.veh.type)+' alt='+Z.me.alt+' '+JSON.stringify(LOG.splice(0)).slice(0,500)"
+},
+{
+"name": "bank",
+"n": 72,
+"setup": "1",
+"pre": "keys(['up','left'])",
+"post": "cam(hd()-.5,.45,2.2)",
+"info": "'veh='+(Z.me.veh&&Z.me.veh.type)+' alt='+Z.me.alt+' '+JSON.stringify(LOG.splice(0)).slice(0,500)"
+},
+{
+"name": "security",
+"n": 107,
+"hud": true,
+"setup": "put(4,-560,H2,11); try{Z.P.sec.warns=5; Z.P.sec.since=0;}catch(e){} Z.offend('hitPed'); Z.guards.push({x:Z.me.x+2,y:Z.me.y-12,a:H2,spd:0,walk:0,st:'chase',hold:0}); Z.guards.push({x:Z.me.x-3,y:Z.me.y-18,a:H2,spd:0,walk:0,st:'chase',hold:0})",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+2.9,.2,1.3)",
+"info": "JSON.stringify(Z.P.sec&&Z.P.sec.state)+Z.guards.length"
+},
+{
+"name": "traffic",
+"n": 72,
+"setup": "put(120,-291,0,13)",
+"pre": "cam(0); keys(['up'])",
+"post": "cam(lerp(-.3,.3,k),.3,2.2)"
+},
+{
+"name": "timelapse",
+"n": 107,
+"setup": "putp('dam',H2,-40,17)",
+"pre": "Z.P.time=(17+2.6*k)*60; keys([])",
+"post": "cam(H2+lerp(-.2,.2,k),.12,1.6)"
+},
+{
+"name": "shinkafi",
+"n": 72,
+"setup": "putp('shinkafi',1.2,8,19.4); expo(2.1)",
+"pre": "Z.P.time=19.4*60; keys([])",
+"post": "cam(lerp(.6,1.8,k),.3,2.0)"
+},
+{
+"name": "coil",
+"n": 72,
+"setup": "putp('enggarden',H2,22,20); expo(2.1)",
+"pre": "Z.P.time=20*60; cam(H2); keys(['up'])",
+"post": "cam(H2+lerp(-.3,.3,k),.2,1.2)"
+},
+{
+"name": "moment",
+"n": 72,
+"hud": true,
+"setup": "put(0,-318,H2,10); Z.moment('mission',{title:'Welcome, fresher',cash:1500,xp:200})",
+"pre": "keys([])",
+"post": "cam(H2+lerp(0,1.2,k),.25,1.2)"
+},
+{
+"name": "hud",
+"n": 38,
+"hud": true,
+"setup": "put(4,-700,H2,9)",
+"pre": "cam(H2); keys(i==18?['up','map']:['up','run'])",
+"post": ""
+}
+]

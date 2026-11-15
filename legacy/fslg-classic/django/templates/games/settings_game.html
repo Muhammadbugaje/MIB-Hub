@@ -1,0 +1,108 @@
+{% extends "base.html" %}{% load static ee_tags l10n %}
+{% block title %}{{ game.title }} · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:settings' %}">{% icon "arrow-left" 15 %} Arcade Management</a>
+    <h1><span class="gs-dot" style="background:{{ game.accent }}"></span>{{ game.title }}</h1>
+    <div class="gs-bar__tools">
+      <a class="btn btn-ghost btn-sm" href="{% url 'games:play' game.slug %}">{% icon "play" 15 %} Play</a>
+      {% url 'games:settings_export' game.slug as base %}{% include "games/_settings_export.html" %}
+    </div>
+  </header>
+  <nav class="gs-tabs" aria-label="Settings sections">{% for id, label in tabs %}<a href="?tab={{ id }}" {% if id == tab %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}</nav>
+  {% if errors %}<div class="gs-errors" role="alert"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+
+  {% if tab == "general" %}
+  <form method="post" class="gs-card">{% csrf_token %}<input type="hidden" name="action" value="general"><input type="hidden" name="tab" value="general">
+    <h2>General</h2>
+    <label class="gs-check"><input type="checkbox" name="enabled" {% if enabled %}checked{% endif %}><span>Game is on<small>Off: players no longer see or open it. You still can, to test.</small></span></label>
+    <label class="gs-check"><input type="checkbox" name="cheats_enabled" {% if own_cheats_enabled %}checked{% endif %}><span>Cheat codes are on in this game<small>{% if not glob.cheats_enabled %}The site-wide master switch is off, so no cheat works anywhere right now. {% endif %}Off: none of this game's cheat codes work.</small></span></label>
+    <div class="gs-fields">
+      <label class="gs-field">Cheat results on leaderboards and reports
+        <select name="cheats_on_boards">
+          <option value="" {% if own_boards is None %}selected{% endif %}>Follow the site-wide setting ({% if glob.cheats_on_boards %}counted{% else %}kept off{% endif %})</option>
+          <option value="on" {% if own_boards is True %}selected{% endif %}>Counted, with a “cheat” tag</option>
+          <option value="off" {% if own_boards is False %}selected{% endif %}>Kept off, earn nothing</option>
+        </select><small>Right now: {% if eff_boards %}counted{% else %}kept off{% endif %}. Applies to cheat codes and the secret character alike.</small></label>
+      <label class="gs-field">Secret character
+        <select name="hero_enabled">
+          <option value="" {% if own_hero is None %}selected{% endif %}>Follow the site-wide setting ({% if glob.hero_enabled %}available{% else %}off{% endif %})</option>
+          <option value="on" {% if own_hero is True %}selected{% endif %}>Available in this game</option>
+          <option value="off" {% if own_hero is False %}selected{% endif %}>Off in this game</option>
+        </select><small>Right now: {% if eff_hero %}available{% else %}off{% endif %}.</small></label>
+    </div>
+    <p class="gs-sub">Who may use cheat codes in this game</p>
+    <div class="gs-fields">{% include "games/_settings_access.html" with kind="cheat" label="Cheat codes work for" choices=cheat_access value=own_cheat_access users=cheat_users follow="see the Games page" %}</div>
+    <p class="gs-sub">Who may use the secret character in this game</p>
+    <div class="gs-fields">{% include "games/_settings_access.html" with kind="hero" label="The secret character is for" choices=hero_access value=own_hero_access users=hero_users follow="see the Games page" %}</div>
+    <div><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
+  </form>
+
+  {% elif tab == "rules" %}
+  <form method="post" class="gs-card">{% csrf_token %}<input type="hidden" name="action" value="rules"><input type="hidden" name="tab" value="rules">
+    <h2>Rules</h2>
+    {% if rule_groups %}
+    <p>These numbers change how the game plays for everyone, from the next time its page is loaded.</p>
+    {% for grp in rule_groups %}
+    {% if grp.name %}<p class="gs-sub">{{ grp.name }}</p>{% endif %}
+    <div class="gs-table-wrap"><table class="gs-table gs-table--stack">
+      <thead><tr><th>Rule</th><th>Value</th><th>Default</th><th></th></tr></thead>
+      <tbody>{% for r in grp.rules %}<tr>
+        <td><label for="rule-{{ r.key }}"><b>{{ r.label }}</b></label>{% if r.help %}<small>{{ r.help }}</small>{% endif %}</td>
+        <td data-l="Value">{% if r.type == "bool" %}<label class="gs-check"><input id="rule-{{ r.key }}" type="checkbox" name="rule-{{ r.key }}" value="on" {% if r.value %}checked{% endif %}><span>On</span></label>
+          {% elif r.type == "choice" %}<select class="gs-input gs-input--plain" id="rule-{{ r.key }}" name="rule-{{ r.key }}">{% for c in r.choices %}<option {% if c == r.value %}selected{% endif %}>{{ c }}</option>{% endfor %}</select>
+          {% else %}<input class="gs-input" id="rule-{{ r.key }}" name="rule-{{ r.key }}" type="number" value="{{ r.value|unlocalize }}" {% if r.min is not None %}min="{{ r.min|unlocalize }}"{% endif %} {% if r.max is not None %}max="{{ r.max|unlocalize }}"{% endif %} step="{% if r.type == 'int' %}1{% else %}any{% endif %}" required>
+          {% if r.min is not None or r.max is not None %}<small>{% if r.min is not None %}from {{ r.min|unlocalize }}{% endif %} {% if r.max is not None %}up to {{ r.max|unlocalize }}{% endif %}</small>{% endif %}{% endif %}</td>
+        <td data-l="Default">{% if r.type == "bool" %}{% if r.default %}On{% else %}Off{% endif %}{% else %}{{ r.default|unlocalize }}{% endif %}{% if r.changed %} <span class="gs-tag gs-tag--warn">edited</span>{% endif %}</td>
+        <td>{% if r.changed %}<button class="gs-link" type="submit" name="reset" value="{{ r.key }}" formnovalidate>Reset</button>{% endif %}</td>
+      </tr>{% endfor %}</tbody></table></div>
+    {% endfor %}
+    <div class="gs-row"><button class="btn btn-primary btn-sm" type="submit">Save rules</button>
+      <button class="btn btn-ghost btn-sm" type="submit" name="reset" value="*" formnovalidate>Reset all to defaults</button></div>
+    {% else %}<p>This game has no adjustable rules yet. They appear here when the game declares them in <code>games/cheat_defaults/{{ game.slug }}.json</code>.</p>{% endif %}
+  </form>
+
+  {% elif tab == "cheats" %}
+  <form method="post" class="gs-card" autocomplete="off">{% csrf_token %}<input type="hidden" name="action" value="cheats"><input type="hidden" name="tab" value="cheats">
+    <h2>Cheat codes</h2>
+    {% if cheats %}
+    <p>Change how each cheat is typed, untick “On” to disable it, and say how it is triggered (this note goes into the downloads). Capitals and spaces are ignored. At least {{ min_code }} characters; dial codes use digits, * and # only.{% if not own_cheats_enabled or not glob.cheats_enabled %} <b>Cheats are currently switched off for this game</b> (General tab or the Games page).{% endif %}</p>
+    <div class="gs-table-wrap"><table class="gs-table gs-table--stack">
+      <thead><tr><th>What it does</th><th>Typed code</th><th>Dial code</th><th>How to trigger</th><th>On</th><th></th></tr></thead>
+      <tbody>{% for c in cheats %}<tr {% if not c.on %}class="gs-off"{% endif %}>
+        <td><b>{{ c.label }}</b>{% if c.note %}<small>{{ c.note }}</small>{% endif %}</td>
+        <td data-l="Typed code"><input class="gs-input" name="typed-{{ c.id }}" value="{{ c.typed }}" maxlength="40" spellcheck="false" autocapitalize="off" aria-label="Typed code for {{ c.label }}"></td>
+        <td data-l="Dial code"><input class="gs-input" name="dial-{{ c.id }}" value="{{ c.dial }}" maxlength="40" inputmode="tel" spellcheck="false" aria-label="Dial code for {{ c.label }}"></td>
+        <td data-l="How to trigger"><input class="gs-input gs-input--plain" name="how-{{ c.id }}" value="{{ c.how }}" maxlength="200" placeholder="{{ c.how_text }}" aria-label="How to trigger {{ c.label }}"></td>
+        <td data-l="On"><label class="gs-switch"><input type="checkbox" name="on-{{ c.id }}" value="on" {% if c.on %}checked{% endif %} aria-label="{{ c.label }} is on"></label></td>
+        <td>{% if c.changed %}<span class="gs-tag gs-tag--warn">edited</span> <button class="gs-link" type="submit" name="reset" value="{{ c.id }}" title="Default: {{ c.default_typed }} / {{ c.default_dial }}">Reset</button>{% endif %}</td>
+      </tr>{% endfor %}</tbody></table></div>
+    <div class="gs-row"><button class="btn btn-primary btn-sm" type="submit">Save codes</button>
+      <button class="btn btn-ghost btn-sm" type="submit" name="reset" value="*" onclick="return confirm('Put every code for this game back to its default?')">Reset all to defaults</button></div>
+    {% else %}<p>No cheat codes are defined for this game yet. They appear here when the game declares them in <code>games/cheat_defaults/{{ game.slug }}.json</code>.</p>{% endif %}
+  </form>
+
+  {% else %}
+  <section class="gs-card">
+    <h2>{{ guide.name }} ({{ guide.full }}): how to use him in {{ game.title }}</h2>
+    <p>Nobody sees this character in the roster. Follow the two steps.</p>
+    {% include "games/_settings_guide.html" with gd=guide %}
+    {% if guide.starter %}<form method="post">{% csrf_token %}<input type="hidden" name="action" value="starter_off"><input type="hidden" name="tab" value="hero">
+      <button class="btn btn-ghost btn-sm" type="submit" onclick="return confirm('Stop accepting the starter code? Only the site-wide code (or this game\'s own code) will work.')">Retire the starter code</button></form>{% endif %}
+  </section>
+  <section class="gs-card">
+    <h2>Give this game its own code</h2>
+    <form method="post" class="gs-fields" autocomplete="off">{% csrf_token %}<input type="hidden" name="action" value="hero_set"><input type="hidden" name="tab" value="hero">
+      <label class="gs-field">New code for {{ game.title }}<input class="gs-input" type="password" name="code" minlength="8" maxlength="80" required autocomplete="new-password"></label>
+      <label class="gs-field">Type it again<input class="gs-input" type="password" name="code2" minlength="8" maxlength="80" required autocomplete="new-password"></label>
+      <div><button class="btn btn-primary btn-sm" type="submit">Set code</button></div>
+    </form>
+    {% if guide.own_code %}<form method="post">{% csrf_token %}<input type="hidden" name="action" value="hero_clear"><input type="hidden" name="tab" value="hero">
+      <button class="btn btn-ghost btn-sm" type="submit">Go back to the site-wide code</button></form>{% endif %}
+    <p class="gm-small">To change the code for every game at once, use the <a href="{% url 'games:settings' %}">Games page</a>.</p>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

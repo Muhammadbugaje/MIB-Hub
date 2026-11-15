@@ -1,0 +1,31 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Credits · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}"><link rel="stylesheet" href="{% static 'css/fslg-admin.css' %}">{% endblock %}
+{% block content %}
+<div class="gs fa">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>Credits</h1>
+    <div class="gs-bar__tools"><button class="btn btn-ghost btn-sm" type="button" data-fa="roll">{% icon "play" 15 %} Play the credits</button></div>
+  </header>
+  {% include "games/_settings_nav.html" with at="fslg_credits" %}
+  <p class="gs-lead">The end credits build themselves from this list. A name reaches players only when it is <b>shown</b> and <b>approved</b>: approve someone only after they agreed to be named. Drag rows (or use the arrows) to change the order.</p>
+  <div class="fa-cols fa-cols--wide">
+    <section class="gs-card" aria-label="Credits list">
+      <div class="gs-row"><label class="gs-field fa-grow">Search <input class="gs-input gs-input--plain" type="search" id="fa-cq" placeholder="Name, role or character" autocomplete="off"></label>
+        <button class="btn btn-ghost btn-sm" type="button" data-fa="add-section">{% icon "plus" 14 %} Section</button></div>
+      <div class="gs-errors fa-warn" id="fa-warn" hidden></div>
+      <div id="fa-sections"><p>Loading…</p></div>
+      <label class="gs-field">Closing line <input class="gs-input gs-input--plain" id="fa-outro" maxlength="200"></label>
+      <label class="gs-field">Note for the change log (optional) <input class="gs-input gs-input--plain" id="fa-cnote" maxlength="200"></label>
+      <div class="gs-row"><button class="btn btn-primary" type="button" data-fa="save-credits">{% icon "save" 15 %} Save for everyone</button><span class="fa-status" id="fa-status" role="status"></span></div>
+    </section>
+    <section class="gs-card" aria-labelledby="fa-cprev-h">
+      <h2 id="fa-cprev-h">{% icon "eye" 16 %} What players see</h2>
+      <div class="fa-roll" id="fa-roll"></div>
+    </section>
+  </div>
+  <section class="gs-card" aria-labelledby="fa-hist-h"><h2 id="fa-hist-h">{% icon "history" 16 %} History</h2><div id="fa-history" data-kind="credits" data-key=""><p>Loading…</p></div></section>
+</div>
+{% include "games/_fslg_admin_head.html" %}
+{% endblock %}

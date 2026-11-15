@@ -1,0 +1,3 @@
+# The opening film: the owner's narration clips and the original score (tools/intro/)
+audio/voice/intro/
+audio/fslg-intro/

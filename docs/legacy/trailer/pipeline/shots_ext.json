@@ -1,0 +1,473 @@
+[
+{
+"name": "gate_dawn",
+"n": 188,
+"setup": "settle(250); putp('gate',H2,38,6.3)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2, lerp(.04,.3,k), lerp(1.1,2.4,k))"
+},
+{
+"name": "hero_walk",
+"n": 80,
+"setup": "put(4,-735,H2,6.6)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2+PI-.25,.06,lerp(.9,.75,k))"
+},
+{
+"name": "boulevard_sprint",
+"n": 80,
+"setup": "put(4,-650,H2,7.4)",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+lerp(2.5,2.1,k),.07,.85)"
+},
+{
+"name": "fountain_orbit",
+"n": 116,
+"setup": "put(0,-322,H2,8.2)",
+"pre": "keys([])",
+"post": "cam(lerp(H2-.9,H2+.6,k),.27,1.9)"
+},
+{
+"name": "letters",
+"n": 80,
+"setup": "putp('senate',H2,74,8.8)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2,.12,lerp(1.9,1.2,k))"
+},
+{
+"name": "senate_rise",
+"n": 80,
+"setup": "putp('senate',H2,30,9.2)",
+"pre": "cam(H2); keys([])",
+"post": "cam(H2, lerp(.05,.42,k), lerp(1.4,2.4,k))"
+},
+{
+"name": "aerial_campus",
+"n": 152,
+"setup": "put(0,-420,H2,9.6)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.2,.2,k),lerp(.85,.95,k),lerp(7,8.5,k))"
+},
+{
+"name": "p2_aerial",
+"n": 116,
+"setup": "putp('dangote',H2,20,10)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.4,.2,k),lerp(.75,.6,k),lerp(7,5.5,k))"
+},
+{
+"name": "phase2",
+"n": 80,
+"setup": "putp('dangote',H2,40,10.2)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2+lerp(-.2,.2,k),.25,2.2)"
+},
+{
+"name": "eng_quad",
+"n": 116,
+"setup": "putp('kt',-H2,30,10.4)",
+"pre": "cam(-H2); keys(['up'])",
+"post": "cam(-H2+lerp(-.3,.3,k),lerp(.5,.3,k),lerp(2.8,2.0,k))"
+},
+{
+"name": "coil_day",
+"n": 80,
+"setup": "putp('enggarden',H2,16,10.6)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.4,.4,k),.12,1.1)"
+},
+{
+"name": "lec_walk",
+"n": 80,
+"setup": "window.R1=inside('kt',9.0)",
+"pre": "keys(['up'])",
+"post": "cam(H2,.3,lerp(1.4,1.1,k))",
+"info": "R1"
+},
+{
+"name": "lec_board",
+"n": 152,
+"setup": "window.R1=lecture()",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.15,.15,k),.22,lerp(1.4,1.0,k))",
+"info": "R1+' '+(Z.interior.lec&&Z.interior.lec.phase)",
+"sub": 10
+},
+{
+"name": "library",
+"n": 80,
+"setup": "window.R1=inside('library',11)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "hostel_room",
+"n": 80,
+"setup": "window.R1=inside('ribadu',21)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.3,.3,k),.32,.95)",
+"info": "R1"
+},
+{
+"name": "canteen",
+"n": 80,
+"setup": "window.R1=inside(['shinkafi','buka'],13)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "senate_lobby",
+"n": 80,
+"setup": "window.R1=inside('senate',10)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "lab",
+"n": 80,
+"setup": "window.R1=inside(['dept_elect','ee'],11)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "sickbay",
+"n": 80,
+"setup": "window.R1=inside('sickbay',12)",
+"pre": "keys(i<8?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "library_night",
+"n": 80,
+"setup": "window.R1=inside('library',21.5)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(.3,-.3,k),.5,1.8)",
+"info": "R1"
+},
+{
+"name": "mall_atrium",
+"n": 116,
+"setup": "window.R1=mall('market',12)",
+"pre": "keys(['up'])",
+"post": "cam(H2+lerp(-.4,.3,k),.5,lerp(2.6,2.0,k))",
+"info": "R1"
+},
+{
+"name": "mall_fashion",
+"n": 80,
+"setup": "window.R1=mall('mk_fashion',12)",
+"pre": "keys(i<12?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "fitting",
+"n": 80,
+"setup": "window.R1=mall('mk_fashion',12); try{Z.wardrobe.editor('shop',function(){})}catch(e){R1+=' ERR '+e.message}",
+"pre": "keys([])",
+"post": "",
+"dom": true,
+"info": "R1+' '+ui()"
+},
+{
+"name": "mib_store",
+"n": 80,
+"setup": "window.R1=inside('mibstore',12)",
+"pre": "keys(i<10?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.45,1.6)",
+"info": "R1"
+},
+{
+"name": "arcade_room",
+"n": 80,
+"setup": "window.R1=mall('mk_arcade',15)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.4,.4,k),.4,1.7)",
+"info": "R1"
+},
+{
+"name": "mini_tabletennis",
+"n": 44,
+"setup": "fresh(14); Z.mini.open('tabletennis',{free:true}); settle(2)",
+"pre": "keys(i==2?['jump']:i>10?[['left'],['right'],['up'],['jump']][Math.floor(i/5)%4]:[])",
+"post": "",
+"hud": true,
+"no3d": true,
+"info": "Z.mini.screen()"
+},
+{
+"name": "mini_kola",
+"n": 44,
+"setup": "fresh(14); Z.mini.open('kola',{free:true}); settle(2)",
+"pre": "keys(i==2?['jump']:i>10?[['left'],['right'],['up'],['jump']][Math.floor(i/5)%4]:[])",
+"post": "",
+"hud": true,
+"no3d": true,
+"info": "Z.mini.screen()"
+},
+{
+"name": "mini_run",
+"n": 44,
+"setup": "fresh(14); Z.mini.open('run',{free:true}); settle(2)",
+"pre": "keys(i==2?['jump']:i>10?[['left'],['right'],['up'],['jump']][Math.floor(i/5)%4]:[])",
+"post": "",
+"hud": true,
+"no3d": true,
+"info": "Z.mini.screen()"
+},
+{
+"name": "mini_patrol",
+"n": 44,
+"setup": "fresh(14); Z.mini.open('patrol',{free:true}); settle(2)",
+"pre": "keys(i==2?['jump']:i>10?[['left'],['right'],['up'],['jump']][Math.floor(i/5)%4]:[])",
+"post": "",
+"hud": true,
+"no3d": true,
+"info": "Z.mini.screen()"
+},
+{
+"name": "mini_ayo",
+"n": 44,
+"setup": "fresh(14); Z.mini.open('ayo',{free:true}); settle(2)",
+"pre": "keys(i==2?['jump']:i>10?[['left'],['right'],['up'],['jump']][Math.floor(i/5)%4]:[])",
+"post": "",
+"hud": true,
+"no3d": true,
+"info": "Z.mini.screen()"
+},
+{
+"name": "dance_floor",
+"n": 152,
+"setup": "window.R1=mall('mk_dance',21); pals()",
+"pre": "keys(i==2?['emote2']:[])",
+"post": "cam(H2+lerp(-.5,.5,k),.38,1.6)",
+"info": "R1"
+},
+{
+"name": "bigmap",
+"n": 116,
+"setup": "put(4,-700,H2,10); D.press('map'); D.step(2); D.release('map'); D.step(2)",
+"pre": "if(i>12&&Z.bigmap.isOpen)Z.bigmap.zoom(1.012)",
+"post": "",
+"hud": true,
+"info": "'open='+Z.bigmap.isOpen"
+},
+{
+"name": "friends_walk",
+"n": 80,
+"setup": "put(4,-520,H2,13); window.R1=pals()",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2+PI-.35,.1,1.0)",
+"info": "R1"
+},
+{
+"name": "pillion",
+"n": 80,
+"setup": "put(4,-600,H2,13.3); pals(); settle(10); ride('okada'); roll(20)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+2.4,.12,.95)",
+"info": "Z.npcs.filter(function(n){return n.riding}).length+' riding'"
+},
+{
+"name": "job",
+"n": 80,
+"setup": "put(4,-600,H2,13.6); var o=Z.offers(); if(o[0])Z.takeJob(o[0]); settle(10)",
+"pre": "keys(['up','run'])",
+"post": "cam(H2+PI-.3,.18,1.1)",
+"hud": true,
+"info": "Z.P.job&&Z.P.job.kind"
+},
+{
+"name": "phone",
+"n": 116,
+"setup": "put(4,-700,H2,14); Z.ui.phone(); var o=document.querySelector('[data-gm-overlay]'); o.className=o.className.replace(/fw-open/g,''); window.R1=o.innerText.slice(0,60)",
+"pre": "",
+"post": "",
+"dom": true,
+"info": "R1"
+},
+{
+"name": "celebrate",
+"n": 80,
+"setup": "put(0,-322,H2,14.5); pals(); Z.moment('mission',{title:'Welcome, fresher',cash:1500,xp:200}); settle(6)",
+"pre": "keys(i==20?['emote2']:[])",
+"post": "cam(H2+k*.9,.25,1.25)",
+"hud": true
+},
+{
+"name": "friends_dance",
+"n": 80,
+"setup": "put(0,-322,H2,15.5); pals(); settle(10)",
+"pre": "keys(i==1?['emote2']:[])",
+"post": "cam(H2+2.6+k*.6,.2,1.2)"
+},
+{
+"name": "pier_date",
+"n": 116,
+"setup": "solo(); putp('dam',H2,-34,17.6); pals()",
+"pre": "keys([])",
+"post": "cam(H2+lerp(-.25,.15,k),.12,lerp(1.8,1.4,k))"
+},
+{
+"name": "courts",
+"n": 80,
+"setup": "solo(); putp('social',-.6,4,17.0)",
+"pre": "keys([])",
+"post": "cam(-.6+lerp(-.3,.3,k),.8,4.6)"
+},
+{
+"name": "lake_lapse",
+"n": 152,
+"setup": "putp('dam',H2,-40,17.4)",
+"pre": "Z.P.time=(17.4+2.6*k)*60; keys([])",
+"post": "cam(H2+lerp(-.2,.2,k),.12,1.6)"
+},
+{
+"name": "shinkafi_night",
+"n": 116,
+"setup": "putp('shinkafi',1.2,-26,19.2); expo(2.1); settle(100)",
+"pre": "Z.P.time=19.2*60; keys([])",
+"post": "cam(1.2+PI+lerp(-.2,.2,k),.22,2.6)"
+},
+{
+"name": "social_night",
+"n": 80,
+"setup": "putp('social',-.6,4,19.6); expo(2.1); settle(200)",
+"pre": "Z.P.time=19.6*60; keys([])",
+"post": "cam(-.6+k*.4,.85,4.4)"
+},
+{
+"name": "coil_night",
+"n": 80,
+"setup": "putp('enggarden',H2,16,20.2); expo(2.1)",
+"pre": "Z.P.time=20.2*60; keys([])",
+"post": "cam(H2+k*.3,.14,1.1)"
+},
+{
+"name": "fight",
+"n": 152,
+"setup": "solo(); put(8,-700,H2,12); settle(30); window.R1=rival(); Z.me.a=H2",
+"pre": "cam(H2); keys((i>=2&&i<5)?['attack']:(i>=14&&i<70)?['block']:(i>=74&&i<77)||(i>=92&&i<95)||(i>=110&&i<113)?['kick']:[])",
+"post": "cam(H2+2.0,.14,.8)",
+"hud": true,
+"info": "R1+' st='+(window.RV&&RV.st)+' hp='+(window.RV&&RV.hp)"
+},
+{
+"name": "security",
+"n": 152,
+"setup": "put(4,-560,H2,11); try{Z.P.sec.warns=5; Z.P.sec.since=0;}catch(e){} Z.P.char='musa'; Z.offend('hitPed'); Z.guards.push({x:Z.me.x+2,y:Z.me.y-12,a:H2,spd:0,walk:0,st:'chase',hold:0}); Z.guards.push({x:Z.me.x-3,y:Z.me.y-18,a:H2,spd:0,walk:0,st:'chase',hold:0})",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+2.9,.2,1.3)",
+"hud": true,
+"info": "JSON.stringify(Z.P.sec&&Z.P.sec.state)+Z.guards.length"
+},
+{
+"name": "bike_sprint",
+"n": 80,
+"setup": "Z.P.char=SamaruData.HERO.id; put(4,-600,H2,9.5); ride('bike'); roll(30)",
+"pre": "keys(['up','run'])",
+"post": "cam(hd()+lerp(2.5,2.0,k),.1,.85)"
+},
+{
+"name": "okada",
+"n": 80,
+"setup": "put(-160,-300,0,10); ride('okada'); roll(30)",
+"pre": "keys(i<30?['up']:['up','left'])",
+"post": "cam(hd()+lerp(.7,-.2,k),.14,.9)"
+},
+{
+"name": "keke",
+"n": 62,
+"setup": "put(-350,-220,H2,10.5); ride('keke'); roll(25)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+2.6,.12,.9)"
+},
+{
+"name": "drift",
+"n": 152,
+"setup": "put(700,-300,H2,12); settle(30); ride('sport'); window.A0=H2; crowd(62); roll(40)",
+"pre": "if(i==6)Z.peds.forEach(function(p){p.flee=1.6}); keys(i<26?['up']:['up','left','jump'])",
+"post": "if(i<62)cam(A0+PI-.5,.2,1.4); else cam(A0+2.3,.22,1.1)"
+},
+{
+"name": "sport",
+"n": 62,
+"setup": "put(-700,-380,H2,11.5); ride('sport'); roll(40)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(2.9,2.3,k),.1,.9)"
+},
+{
+"name": "takeoff",
+"n": 190,
+"setup": "put(-668,560,0,12.5); ride('plane')",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(2.5,2.9,k), lerp(.1,.04,k), 1.4)",
+"sub": 5,
+"info": "'alt='+Z.me.alt"
+},
+{
+"name": "bank",
+"n": 80,
+"setup": "1",
+"pre": "keys(['up','left'])",
+"post": "cam(hd()+lerp(-.2,-.5,k),.4,2.0)",
+"info": "'alt '+Z.me.alt"
+},
+{
+"name": "wild_hills",
+"n": 80,
+"setup": "var w=wildPt(350); put(w.x,w.y,H2,16.5)",
+"pre": "keys(['up','run'])",
+"post": "cam(H2+lerp(2.3,2.7,k),lerp(.3,.18,k),lerp(3,2,k))"
+},
+{
+"name": "patrol",
+"n": 80,
+"setup": "var w=wildPt(470); Z.P.char='musa'; put(w.x,w.y,H2,16.8); settle(40)",
+"pre": "keys(['up'])",
+"post": "cam(H2+2.6,.22,1.5)",
+"hud": true,
+"info": "'wild='+(Z.wild.st&&Z.wild.st.stage)"
+},
+{
+"name": "tease_coil",
+"n": 152,
+"setup": "Z.P.char=SamaruData.HERO.id; putp('enggarden',H2,10,21.5); expo(1.6)",
+"pre": "Z.P.time=21.5*60; keys([])",
+"post": "cam(H2+lerp(-.2,.2,k),lerp(.05,.18,k),lerp(.9,1.5,k))"
+},
+{
+"name": "tease_hall",
+"n": 152,
+"setup": "window.R1=inside('kt',17.9)",
+"pre": "keys([])",
+"post": "cam(H2+lerp(.15,-.15,k),.3,lerp(2.0,1.3,k))",
+"info": "R1"
+},
+{
+"name": "tease_lake",
+"n": 152,
+"setup": "solo(); Z.npcs.forEach(function(n){if(Math.hypot(n.x-Z.me.x,n.y-Z.me.y)<60){n.x+=200;}}); putp('dam',H2,-40,20.5); expo(1.5)",
+"pre": "Z.P.time=20.5*60; keys([])",
+"post": "cam(H2+lerp(-.1,.1,k),.1,2.4)"
+},
+{
+"name": "tease_senate",
+"n": 152,
+"setup": "putp('senate',H2,60,18.7)",
+"pre": "Z.P.time=(18.7+.4*k)*60; keys(['up'])",
+"post": "cam(H2,.08,lerp(1.6,1.2,k))"
+},
+{
+"name": "tease_gate",
+"n": 152,
+"setup": "putp('gate',-H2,20,19.2); expo(1.8)",
+"pre": "keys(['up'])",
+"post": "cam(-H2+PI,.06,lerp(.9,1.6,k))"
+}
+]

@@ -1,0 +1,48 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Sounds · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>Sounds</h1>
+    <div class="gs-bar__tools">{% url 'games:settings_sounds' as base %}{% include "games/_settings_export.html" %}</div>
+  </header>
+  {% include "games/_settings_nav.html" with at="sounds" %}
+  <p class="gs-lead">Sounds a super admin replaced for <b>everyone</b>. The game's own sound is never deleted: <b>Revert</b> brings it back. Players can also replace or switch off any sound for themselves in the game: Settings → Sounds. Their own choice wins on their device.</p>
+
+  <section class="gs-card" aria-labelledby="snd-list">
+    <h2 id="snd-list">{% icon "volume-2" 16 %} Replaced for everyone</h2>
+    {% if rows %}<div class="gs-table-wrap"><table class="gs-table gs-table--stack" data-sound-table>
+      <thead><tr><th>Sound</th><th>Game</th><th>Listen</th><th>File</th><th>Replaced by</th><th></th></tr></thead>
+      <tbody>{% for r in rows %}<tr data-sound="{{ r.row.slug }}/{{ r.row.name }}">
+        <td><b><code>{{ r.row.name }}</code></b>{% if r.row.original_name %}<small>{{ r.row.original_name }}</small>{% endif %}</td>
+        <td data-l="Game">{{ r.game }}</td>
+        <td data-l="Listen"><audio controls preload="none" src="{{ r.url }}" aria-label="Play {{ r.row.name }}" style="max-width:220px;height:36px"></audio></td>
+        <td data-l="File">{{ r.fmt }} · {{ r.kb }} KB · {{ r.dur }} s</td>
+        <td data-l="Replaced by">{{ r.who|default:"—" }}<small>{{ r.row.updated|date:"j M Y, H:i" }}</small></td>
+        <td><div class="gs-row">
+          <a class="btn btn-ghost btn-sm" href="{{ r.url }}&amp;download=1" download>{% icon "download" 14 %} Download</a>
+          {% if sup %}<form method="post">{% csrf_token %}<input type="hidden" name="action" value="revert"><input type="hidden" name="slug" value="{{ r.row.slug }}"><input type="hidden" name="name" value="{{ r.row.name }}">
+            <button class="btn btn-ghost btn-sm" type="submit" aria-label="Revert {{ r.row.name }} to the game's own sound">{% icon "rotate-ccw" 14 %} Revert</button></form>{% endif %}
+        </div></td>
+      </tr>{% endfor %}</tbody></table></div>
+    {% else %}<p>No sound has been replaced for everyone. Every game plays its own sounds.</p>{% endif %}
+  </section>
+
+  {% if sup %}
+  <section class="gs-card" aria-labelledby="snd-up">
+    <h2 id="snd-up">{% icon "upload" 16 %} Replace a sound for everyone</h2>
+    <p class="gm-small" style="color:var(--text-muted)">WAV, MP3 or M4A (every phone can play these), up to {{ max_mb }} MB and {{ max_s }} seconds. Easier from the game itself: Settings → Sounds → Replace, where you can listen, record and trim first.</p>
+    <form method="post" enctype="multipart/form-data" class="gs-form" style="display:grid;gap:10px;max-width:520px">{% csrf_token %}
+      <input type="hidden" name="action" value="upload">
+      <label>Game <select name="slug" required>{% for g in games %}<option value="{{ g.slug }}">{{ g.title }}</option>{% endfor %}</select></label>
+      <label>Sound name <input name="name" required list="snd-names" autocomplete="off" pattern="[a-z0-9_][a-z0-9_.:\-]{0,79}" placeholder="for example click or horn_car"></label>
+      <datalist id="snd-names">{% for n in names %}<option value="{{ n }}">{% endfor %}</datalist>
+      <label>Audio file <input type="file" name="file" required accept="audio/wav,audio/x-wav,audio/mpeg,audio/mp4,audio/x-m4a,audio/aac,.wav,.mp3,.m4a"></label>
+      <div><button class="btn btn-primary" type="submit">Use for everyone</button></div>
+    </form>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

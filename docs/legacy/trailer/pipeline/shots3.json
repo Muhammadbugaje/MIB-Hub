@@ -1,0 +1,246 @@
+[
+{
+"name": "gate_dawn",
+"n": 115,
+"setup": "putp('gate',H2,34,6.5)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2, lerp(.05,.28,k), lerp(1.2,2.2,k))"
+},
+{
+"name": "hero_gate",
+"n": 60,
+"setup": "put(4,-732,H2,6.8)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2+PI-.3,.05,.75)"
+},
+{
+"name": "sprint",
+"n": 60,
+"setup": "put(4,-640,H2,8)",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+lerp(2.5,2.1,k),.07,.85)"
+},
+{
+"name": "fountain",
+"n": 60,
+"setup": "put(0,-322,H2,10); pals()",
+"pre": "keys([])",
+"post": "cam(lerp(H2-.7,H2+.5,k),.26,1.8)"
+},
+{
+"name": "letters",
+"n": 60,
+"setup": "putp('senate',H2,74,10.5)",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2,.12,lerp(1.9,1.25,k))"
+},
+{
+"name": "int_senate",
+"n": 41,
+"setup": "window.R1=inside('senate')",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "int_lecture",
+"n": 41,
+"setup": "window.R1=inside(['kt','fslt','theatre'])",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "mission",
+"n": 41,
+"hud": true,
+"setup": "put(0,-322,H2,11); Z.moment('mission',{title:'Welcome, fresher',cash:1500,xp:200}); settle(10)",
+"pre": "keys([])",
+"post": "cam(H2+k*.8,.25,1.2)"
+},
+{
+"name": "fight",
+"n": 150,
+"hud": true,
+"setup": "put(8,-700,H2,12); settle(30); window.R1=rival(); Z.me.a=H2",
+"pre": "cam(H2); keys((i>=2&&i<5)?['attack']:(i>=14&&i<82)?['block']:(i>=84&&i<87)||(i>=102&&i<105)||(i>=120&&i<123)?['kick']:[])",
+"post": "cam(H2+2.0,.14,.8)",
+"info": "R1+' st='+(window.RV&&RV.st)+' hp='+(window.RV&&RV.hp)+' myhp='+Z.P.hp"
+},
+{
+"name": "bike",
+"n": 41,
+"setup": "put(4,-600,H2,9.5); ride('bike'); roll(30)",
+"pre": "keys(i<20?['up']:['up','run'])",
+"post": "cam(hd()+lerp(2.5,2.0,k),.1,.85)"
+},
+{
+"name": "okada",
+"n": 41,
+"setup": "put(-160,-300,0,10); ride('okada'); roll(30)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(.7,-.2,k),.14,.9)"
+},
+{
+"name": "keke",
+"n": 41,
+"setup": "put(-350,-220,H2,10.5); window.R1=ride('keke'); roll(25)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+2.6,.12,.9)",
+"info": "R1"
+},
+{
+"name": "car",
+"n": 41,
+"setup": "put(700,-380,H2,11); ride('car'); roll(30)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+.35,.14,1.0)"
+},
+{
+"name": "sport",
+"n": 41,
+"setup": "put(-700,-380,H2,11.5); ride('sport'); roll(40)",
+"pre": "keys(['up'])",
+"post": "cam(hd()+lerp(2.9,2.3,k),.1,.9)"
+},
+{
+"name": "drift",
+"n": 126,
+"setup": "put(700,-300,H2,12); settle(30); ride('sport'); window.A0=H2; window.R1=crowd(62); roll(40)",
+"pre": "if(i==6)Z.peds.forEach(function(p){p.flee=1.6}); keys(i<26?['up']:['up','left','jump'])",
+"post": "if(i<62)cam(A0+PI-.5,.2,1.4); else cam(A0+2.3,.22,1.1)",
+"info": "R1"
+},
+{
+"name": "takeoff",
+"n": 160,
+"sub": 5,
+"setup": "put(-668,560,0,12.5); window.R1=ride('plane'); window.ALT=[]",
+"pre": "keys(['up']); ALT.push(Z.me.alt||0)",
+"post": "cam(hd()+lerp(2.5,2.9,k), lerp(.1,.04,k), 1.4)",
+"info": "R1+' liftframe='+ALT.findIndex(function(a){return a>.02})+' alt='+Z.me.alt"
+},
+{
+"name": "bank",
+"n": 41,
+"setup": "1",
+"pre": "keys(['up','left'])",
+"post": "cam(hd()+lerp(-.2,-.5,k),.4,2.0)",
+"info": "'alt '+Z.me.alt"
+},
+{
+"name": "aerial",
+"n": 41,
+"setup": "1",
+"pre": "keys(['up'])",
+"post": "cam(hd(),1.0,3.2)",
+"info": "'alt '+Z.me.alt"
+},
+{
+"name": "int_library",
+"n": 23,
+"setup": "window.R1=inside('library')",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "int_hostel",
+"n": 23,
+"setup": "window.R1=inside('ribadu')",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "int_canteen",
+"n": 23,
+"setup": "window.R1=inside(['shinkafi','buka'])",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "int_shop",
+"n": 23,
+"setup": "window.R1=inside(['bookshop','p2shops','bank','market'])",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "security",
+"n": 60,
+"hud": true,
+"setup": "put(4,-560,H2,11); try{Z.P.sec.warns=5; Z.P.sec.since=0;}catch(e){} Z.offend('hitPed'); Z.guards.push({x:Z.me.x+2,y:Z.me.y-12,a:H2,spd:0,walk:0,st:'chase',hold:0}); Z.guards.push({x:Z.me.x-3,y:Z.me.y-18,a:H2,spd:0,walk:0,st:'chase',hold:0})",
+"pre": "cam(H2); keys(['up','run'])",
+"post": "cam(H2+2.9,.2,1.3)",
+"info": "JSON.stringify(Z.P.sec&&Z.P.sec.state)+Z.guards.length"
+},
+{
+"name": "friends_walk",
+"n": 60,
+"setup": "put(4,-520,H2,13); window.R1=pals()",
+"pre": "cam(H2); keys(['up'])",
+"post": "cam(H2+PI-.35,.1,1.0)",
+"info": "R1+' '+Z.friends.companions().length"
+},
+{
+"name": "int_social",
+"n": 23,
+"setup": "window.R1=inside('social')",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "int_lab",
+"n": 23,
+"setup": "window.R1=inside(['dept_elect','ee','compsci'])",
+"pre": "keys(i<6?['up']:[])",
+"post": "cam(H2+lerp(-.35,.35,k),.52,1.7)",
+"info": "R1"
+},
+{
+"name": "friends_dance",
+"n": 41,
+"setup": "put(0,-322,H2,16.5); pals(); settle(10)",
+"pre": "keys(i==1?['emote2']:[])",
+"post": "cam(H2+2.6+k*.5,.2,1.2)"
+},
+{
+"name": "lake_lapse",
+"n": 115,
+"setup": "putp('dam',H2,-40,16.8); pals()",
+"pre": "Z.P.time=(16.8+2.5*k)*60; keys([])",
+"post": "cam(H2+lerp(-.2,.2,k),.12,1.6)"
+},
+{
+"name": "shinkafi_night",
+"n": 41,
+"setup": "solo(); putp('shinkafi',1.2,8,18.9); expo(2.0)",
+"pre": "Z.P.time=18.9*60; keys([])",
+"post": "cam(lerp(.9,1.4,k),.85,4.2)"
+},
+{
+"name": "social_night",
+"n": 23,
+"setup": "putp('social',-.6,6,19.0); expo(2.0)",
+"pre": "Z.P.time=19.0*60; keys([])",
+"post": "cam(-.6+k*.3,.85,4.2)"
+},
+{
+"name": "coil_night",
+"n": 23,
+"setup": "putp('enggarden',H2,18,20); expo(2.2)",
+"pre": "Z.P.time=20*60; keys([])",
+"post": "cam(H2+k*.2,.16,1.1)"
+},
+{
+"name": "phase2_night",
+"n": 23,
+"setup": "putp('dangote',H2,30,19.3); expo(2.2)",
+"pre": "Z.P.time=19.3*60; keys([])",
+"post": "cam(H2+k*.2,.3,2.2)"
+}
+]

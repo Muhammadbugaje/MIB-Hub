@@ -1,0 +1,43 @@
+{% extends base_template|default:"games/base_app.html" %}{% load static ee_tags %}
+{% block title %}{{ game.title }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games.css' %}">{% endblock %}
+{% block arcade_wrap %}
+<div class="gm-page gm-play" style="--gm-a:{{ game.accent }}">
+  <header class="gm-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>{{ game.title }}</h1>
+    <p class="gm-card__meta">{% for c in game.courses %}<span class="gm-chip">{{ c }}</span>{% endfor %}</p>
+    <div class="gm-bar__tools">
+      {% if can_manage_games %}<a class="btn btn-primary btn-sm" href="{% url 'games:settings_game' game.slug %}?tab=cheats" title="Arcade Management: this game's cheat codes, rules and secret character">{% icon "sliders-horizontal" 15 %} <span>Manage</span></a>{% endif %}
+      <span data-gm-offline></span><span data-gm-install></span>
+      {% if game.slug == "samaru-days" %}<button type="button" class="btn btn-ghost btn-sm" data-gm-lan data-gm-lanpage="{% url 'games:lan' %}" title="Play with friends on the same Wi-Fi or a phone hotspot, with no internet">{% icon "wifi" 15 %} <span>Wi-Fi play</span></button>{% endif %}
+      <button type="button" class="btn btn-ghost btn-sm" data-gm-pause aria-pressed="false">{% icon "pause" 15 %} <span>Pause</span></button>
+      <button type="button" class="btn btn-ghost btn-sm" data-gm-settings>{% icon "settings" 15 %} <span>Settings</span></button>
+      <button type="button" class="btn btn-ghost btn-sm" data-gm-full>{% icon "maximize" 15 %} <span>Full screen</span></button>
+      <button type="button" class="btn btn-ghost btn-sm" data-gm-mute aria-pressed="true">{% icon "volume-x" 15 %} <span>Sound off</span></button>
+      <label class="gm-vol">Volume <input type="range" min="0" max="100" value="60" data-gm-vol></label>
+    </div>
+  </header>
+
+  <div class="gm-stage" data-gm-stage data-gm-slug="{{ game.slug }}" data-gm-user="{% if request.user.is_authenticated %}u{{ request.user.pk }}{% else %}guest{% endif %}" data-gm-api="{% url 'games:index' %}api/" data-csrf="{{ csrf_token }}" data-gm-locked="{{ locked_json }}" data-gm-config="{{ config_json }}"{% if game.extra.three %} data-gm-three="{% static 'vendor/three@0.158.0/build/three.module.min.js' %}"{% endif %}>
+    <canvas class="gm-canvas" data-gm-canvas tabindex="0" aria-label="{{ game.title }} game area"></canvas>
+    <div class="gm-hud" data-gm-hud aria-live="polite"></div>
+    <div class="gm-overlay" data-gm-overlay hidden></div>
+    <div class="gm-touch" data-gm-touch></div>
+  </div>
+
+  <div class="gm-under">
+    <section class="gm-panel">
+      <h2>{% icon "zap" 16 %} The physics</h2>
+      <div data-gm-concept></div>
+    </section>
+    <section class="gm-panel">
+      <h2>{% icon "gamepad-2" 16 %} Controls</h2>
+      <div data-gm-controls></div>
+      <p class="gm-small">Topics: {{ game.topics|join:", " }}.</p>
+    </section>
+  </div>
+  <noscript><div class="ee-empty">This game needs JavaScript turned on.</div></noscript>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/games/arcade.js' %}" defer></script><script src="{% static 'js/games/arcade-settings.js' %}" defer></script><script src="{% static 'js/games/arcade-audio.js' %}" defer></script><script src="{% static 'js/games/arcade-sounds.js' %}" defer></script><script src="{% static 'js/games/arcade-offline.js' %}" defer></script>{% if game.slug == "samaru-days" %}<script src="{% static 'vendor/qrcode-generator@1.4.4/qrcode.js' %}" defer></script><script src="{% static 'js/games/arcade-lan.js' %}" defer></script>{% endif %}{% for s in scripts %}<script src="{% if '/' in s %}{% static s|add:'.js' %}{% else %}{% static 'js/games/'|add:s|add:'.js' %}{% endif %}" defer></script>{% endfor %}<script src="{% static 'js/games/'|add:game.script|add:'.js' %}" defer></script>{% endblock %}

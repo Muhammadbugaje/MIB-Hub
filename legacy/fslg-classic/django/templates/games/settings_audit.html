@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Change log · Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar"><a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a><h1>Change log</h1></header>
+  {% include "games/_settings_nav.html" with at="audit" %}
+  <p class="gs-lead">Who changed what in Arcade Management, newest first (the last 300 entries). Codes themselves are never written to the log.</p>
+  <section class="gs-card">
+    {% if rows %}<div class="gs-table-wrap"><table class="gs-table gs-table--stack">
+      <thead><tr><th>When</th><th>Who</th><th>Game</th><th>What</th></tr></thead>
+      <tbody>{% for r in rows %}<tr><td>{{ r.when|date:"j M Y, H:i" }}</td><td data-l="Who">{{ r.who }}</td><td data-l="Game">{{ r.game }}</td><td data-l="What"><b>{{ r.note }}</b>{% if r.what %}<small>{{ r.what }}</small>{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+    {% else %}<p>No changes yet.</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% load ee_tags %}<nav class="gs-nav" aria-label="Arcade Management">
+  <a href="{% url 'games:settings' %}" {% if at == "home" %}aria-current="page"{% endif %}>{% icon "gamepad-2" 15 %} Games</a>
+  <a href="{% url 'games:settings_codes' %}" {% if at == "codes" %}aria-current="page"{% endif %}>{% icon "key-round" 15 %} All cheat codes</a>
+  <a href="{% url 'games:settings_guide' %}" {% if at == "guide" %}aria-current="page"{% endif %}>{% icon "user-round" 15 %} Secret character guide</a>
+  <a href="{% url 'games:settings_sounds' %}" {% if at == "sounds" %}aria-current="page"{% endif %}>{% icon "volume-2" 15 %} Sounds</a>
+  <a href="{% url 'games:settings_audit' %}" {% if at == "audit" %}aria-current="page"{% endif %}>{% icon "history" 15 %} Change log</a>
+  {% load fslg_tags %}{% fslg_super as fslg_sup %}{% if fslg_sup %}
+  <a href="{% url 'games:fslg_characters' %}" {% if at == "fslg_chars" %}aria-current="page"{% endif %}>{% icon "users" 15 %} FSLG Characters</a>
+  <a href="{% url 'games:fslg_config' %}" {% if at == "fslg_config" %}aria-current="page"{% endif %}>{% icon "type" 15 %} FSLG Config</a>
+  <a href="{% url 'games:fslg_credits' %}" {% if at == "fslg_credits" %}aria-current="page"{% endif %}>{% icon "scroll-text" 15 %} FSLG Credits</a>{% endif %}
+</nav>

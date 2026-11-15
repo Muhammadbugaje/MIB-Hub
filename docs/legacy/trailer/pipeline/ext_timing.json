@@ -1,0 +1,550 @@
+{
+ "bpm": 100.0,
+ "beat": 0.6,
+ "total": 207.0,
+ "moves": [
+  {
+   "title": "Arrival",
+   "start": 0.0,
+   "end": 19.2
+  },
+  {
+   "title": "The campus",
+   "start": 19.2,
+   "end": 36.0
+  },
+  {
+   "title": "Classes and halls",
+   "start": 36.0,
+   "end": 60.0
+  },
+  {
+   "title": "The mall",
+   "start": 60.0,
+   "end": 84.0
+  },
+  {
+   "title": "Friends and life",
+   "start": 84.0,
+   "end": 103.2
+  },
+  {
+   "title": "Day into night",
+   "start": 103.2,
+   "end": 122.39999999999999
+  },
+  {
+   "title": "Trouble",
+   "start": 122.39999999999999,
+   "end": 158.4
+  },
+  {
+   "title": "The story",
+   "start": 158.4,
+   "end": 182.4
+  },
+  {
+   "title": "Finale",
+   "start": 182.4,
+   "end": 204.0
+  }
+ ],
+ "shots": [
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "gate_dawn",
+   "start": 0.0,
+   "end": 6.0,
+   "beats": 10
+  },
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "hero_walk",
+   "start": 6.0,
+   "end": 8.4,
+   "beats": 4
+  },
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "boulevard_sprint",
+   "start": 8.4,
+   "end": 10.799999999999999,
+   "beats": 4
+  },
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "fountain_orbit",
+   "start": 10.799999999999999,
+   "end": 14.399999999999999,
+   "beats": 6
+  },
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "letters",
+   "start": 14.399999999999999,
+   "end": 16.8,
+   "beats": 4
+  },
+  {
+   "move": 1,
+   "title": "Arrival",
+   "shot": "senate_rise",
+   "start": 16.8,
+   "end": 19.2,
+   "beats": 4
+  },
+  {
+   "move": 2,
+   "title": "The campus",
+   "shot": "aerial_campus",
+   "start": 19.2,
+   "end": 24.0,
+   "beats": 8
+  },
+  {
+   "move": 2,
+   "title": "The campus",
+   "shot": "p2_aerial",
+   "start": 24.0,
+   "end": 27.599999999999998,
+   "beats": 6
+  },
+  {
+   "move": 2,
+   "title": "The campus",
+   "shot": "phase2",
+   "start": 27.599999999999998,
+   "end": 30.0,
+   "beats": 4
+  },
+  {
+   "move": 2,
+   "title": "The campus",
+   "shot": "eng_quad",
+   "start": 30.0,
+   "end": 33.6,
+   "beats": 6
+  },
+  {
+   "move": 2,
+   "title": "The campus",
+   "shot": "coil_day",
+   "start": 33.6,
+   "end": 36.0,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "lec_walk",
+   "start": 36.0,
+   "end": 38.4,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "lec_board",
+   "start": 38.4,
+   "end": 43.199999999999996,
+   "beats": 8
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "library",
+   "start": 43.199999999999996,
+   "end": 45.6,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "hostel_room",
+   "start": 45.6,
+   "end": 48.0,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "canteen",
+   "start": 48.0,
+   "end": 50.4,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "senate_lobby",
+   "start": 50.4,
+   "end": 52.8,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "lab",
+   "start": 52.8,
+   "end": 55.199999999999996,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "sickbay",
+   "start": 55.199999999999996,
+   "end": 57.599999999999994,
+   "beats": 4
+  },
+  {
+   "move": 3,
+   "title": "Classes and halls",
+   "shot": "library_night",
+   "start": 57.599999999999994,
+   "end": 60.0,
+   "beats": 4
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mall_atrium",
+   "start": 60.0,
+   "end": 63.599999999999994,
+   "beats": 6
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mall_fashion",
+   "start": 63.599999999999994,
+   "end": 66.0,
+   "beats": 4
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "fitting",
+   "start": 66.0,
+   "end": 68.39999999999999,
+   "beats": 4
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mib_store",
+   "start": 68.39999999999999,
+   "end": 70.8,
+   "beats": 4
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "arcade_room",
+   "start": 70.8,
+   "end": 73.2,
+   "beats": 4
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mini_tabletennis",
+   "start": 73.2,
+   "end": 74.39999999999999,
+   "beats": 2
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mini_kola",
+   "start": 74.39999999999999,
+   "end": 75.6,
+   "beats": 2
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mini_run",
+   "start": 75.6,
+   "end": 76.8,
+   "beats": 2
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mini_patrol",
+   "start": 76.8,
+   "end": 78.0,
+   "beats": 2
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "mini_ayo",
+   "start": 78.0,
+   "end": 79.2,
+   "beats": 2
+  },
+  {
+   "move": 4,
+   "title": "The mall",
+   "shot": "dance_floor",
+   "start": 79.2,
+   "end": 84.0,
+   "beats": 8
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "bigmap",
+   "start": 84.0,
+   "end": 87.6,
+   "beats": 6
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "friends_walk",
+   "start": 87.6,
+   "end": 90.0,
+   "beats": 4
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "pillion",
+   "start": 90.0,
+   "end": 93.6,
+   "beats": 6
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "job",
+   "start": 93.6,
+   "end": 97.2,
+   "beats": 6
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "celebrate",
+   "start": 97.2,
+   "end": 100.8,
+   "beats": 6
+  },
+  {
+   "move": 5,
+   "title": "Friends and life",
+   "shot": "friends_dance",
+   "start": 100.8,
+   "end": 103.2,
+   "beats": 4
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "pier_date",
+   "start": 103.2,
+   "end": 106.8,
+   "beats": 6
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "courts",
+   "start": 106.8,
+   "end": 109.2,
+   "beats": 4
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "lake_lapse",
+   "start": 109.2,
+   "end": 114.0,
+   "beats": 8
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "shinkafi_night",
+   "start": 114.0,
+   "end": 117.6,
+   "beats": 6
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "social_night",
+   "start": 117.6,
+   "end": 120.0,
+   "beats": 4
+  },
+  {
+   "move": 6,
+   "title": "Day into night",
+   "shot": "coil_night",
+   "start": 120.0,
+   "end": 122.39999999999999,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "fight",
+   "start": 122.39999999999999,
+   "end": 127.19999999999999,
+   "beats": 8
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "security",
+   "start": 127.19999999999999,
+   "end": 132.0,
+   "beats": 8
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "bike_sprint",
+   "start": 132.0,
+   "end": 134.4,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "okada",
+   "start": 134.4,
+   "end": 136.79999999999998,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "keke",
+   "start": 136.79999999999998,
+   "end": 139.2,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "drift",
+   "start": 139.2,
+   "end": 144.0,
+   "beats": 8
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "sport",
+   "start": 144.0,
+   "end": 146.4,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "takeoff",
+   "start": 146.4,
+   "end": 151.2,
+   "beats": 8
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "bank",
+   "start": 151.2,
+   "end": 153.6,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "wild_hills",
+   "start": 153.6,
+   "end": 156.0,
+   "beats": 4
+  },
+  {
+   "move": 7,
+   "title": "Trouble",
+   "shot": "patrol",
+   "start": 156.0,
+   "end": 158.4,
+   "beats": 4
+  },
+  {
+   "move": 8,
+   "title": "The story",
+   "shot": "tease_coil",
+   "start": 158.4,
+   "end": 163.2,
+   "beats": 8
+  },
+  {
+   "move": 8,
+   "title": "The story",
+   "shot": "tease_hall",
+   "start": 163.2,
+   "end": 168.0,
+   "beats": 8
+  },
+  {
+   "move": 8,
+   "title": "The story",
+   "shot": "tease_lake",
+   "start": 168.0,
+   "end": 172.79999999999998,
+   "beats": 8
+  },
+  {
+   "move": 8,
+   "title": "The story",
+   "shot": "tease_senate",
+   "start": 172.79999999999998,
+   "end": 177.6,
+   "beats": 8
+  },
+  {
+   "move": 8,
+   "title": "The story",
+   "shot": "tease_gate",
+   "start": 177.6,
+   "end": 182.4,
+   "beats": 8
+  },
+  {
+   "move": 9,
+   "title": "Finale",
+   "shot": "@montage",
+   "start": 182.4,
+   "end": 192.0,
+   "beats": 16
+  },
+  {
+   "move": 9,
+   "title": "Finale",
+   "shot": "@credit",
+   "start": 192.0,
+   "end": 198.0,
+   "beats": 10
+  },
+  {
+   "move": 9,
+   "title": "Finale",
+   "shot": "@cta",
+   "start": 198.0,
+   "end": 204.0,
+   "beats": 10
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}{% load static ee_tags %}
+{% block title %}Arcade Management{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games-settings.css' %}">{% endblock %}
+{% block content %}
+<div class="gs">
+  <header class="gs-bar">
+    <a class="btn btn-ghost btn-sm" href="{% url 'games:index' %}">{% icon "arrow-left" 15 %} Arcade</a>
+    <h1>Arcade Management</h1>
+    <div class="gs-bar__tools">{% url 'games:settings_export_all' as base %}{% include "games/_settings_export.html" %}</div>
+  </header>
+  <p class="gs-lead">Only the super admin and people given the “Arcade Management” permission can open this section. Every change is written to the change log.</p>
+  {% include "games/_settings_nav.html" with at="home" %}
+  {% if errors %}<div class="gs-errors" role="alert"><ul>{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul></div>{% endif %}
+
+  {% if shown_code %}
+  <div class="gs-once" role="status">
+    <p><strong>Secret character code. Write it down now: it is shown only this once.</strong></p>
+    <b>{{ shown_code }}</b>
+    <p class="gm-small">It is stored scrambled, so nobody (including this page) can show it again. If you lose it, set a new one below. Capitals and spaces don't matter when you type it; the dashes do.</p>
+  </div>
+  {% endif %}
+
+  <details class="gs-card gs-help">
+    <summary>How to use Arcade Management</summary>
+    <ol>
+      <li><b>Games</b> (this page): switch a game on or off, switch its cheats on or off, and press <b>Edit</b> for its rules, cheat codes and secret character.</li>
+      <li><b>All cheat codes</b>: every code for every game on one page, with search. Use the Download buttons for PDF, Word or Excel.</li>
+      <li><b>Edit a code</b>: open the game → Cheat codes tab → change the typed word or the dial code → Save. Untick “On” to disable one cheat.</li>
+      <li><b>Who may cheat</b>: set it for all games under “Settings for every game” below, or per game on its General tab.</li>
+      <li><b>Secret character</b>: the guide page explains the reveal move, where the code goes and his powers, per game.</li>
+      <li><b>Give someone access to this section</b>: Django admin → Users → the person → User permissions → add “Can open Game Settings”.</li>
+    </ol>
+  </details>
+
+  <section class="gs-card">
+    <h2>{% icon "gamepad-2" 16 %} Games</h2>
+    <div class="gs-table-wrap"><table class="gs-table gs-table--stack gs-compact">
+      <thead><tr><th>Game</th><th>Status</th><th>Cheats</th><th>On leaderboards</th><th>Secret character</th><th>Codes</th><th>Rules</th><th></th></tr></thead>
+      <tbody>{% for r in rows %}
+        <tr>
+          <td><span class="gs-dot" style="background:{{ r.g.accent }}"></span><a class="gs-game" href="{% url 'games:settings_game' r.g.slug %}">{{ r.g.title }}</a><small>{{ r.g.level }} level · {{ r.g.genre }}</small></td>
+          <td data-l="Status"><span class="gs-tag {% if r.enabled %}gs-tag--on{% else %}gs-tag--warn{% endif %}">{% if r.enabled %}On{% else %}Off{% endif %}</span></td>
+          <td data-l="Cheats"><span class="gs-tag {% if r.cheats_on %}gs-tag--on{% else %}gs-tag--warn{% endif %}">{% if r.cheats_on %}On{% else %}Off{% endif %}</span></td>
+          <td data-l="On leaderboards"><span class="gs-tag {% if r.boards %}gs-tag--on{% endif %}">{% if r.boards %}Counted{% else %}Kept off{% endif %}</span></td>
+          <td data-l="Secret character"><span class="gs-tag {% if r.hero %}gs-tag--on{% endif %}">{% if r.hero %}Available{% else %}Off{% endif %}</span></td>
+          <td data-l="Codes">{{ r.cheats }}{% if r.off %} <span class="gs-tag">{{ r.off }} off</span>{% endif %}{% if r.changed %} <span class="gs-tag gs-tag--warn">{{ r.changed }} edited</span>{% endif %}</td>
+          <td data-l="Rules">{{ r.rules }}{% if r.rules_changed %} <span class="gs-tag gs-tag--warn">{{ r.rules_changed }} edited</span>{% endif %}</td>
+          <td><div class="gs-row">
+            <a class="btn btn-primary btn-sm" href="{% url 'games:settings_game' r.g.slug %}?tab=cheats">Edit</a>
+            <form method="post">{% csrf_token %}<input type="hidden" name="action" value="toggle"><input type="hidden" name="slug" value="{{ r.g.slug }}">
+              <button class="gs-link" type="submit">{% if r.enabled %}Game off{% else %}Game on{% endif %}</button></form>
+            <form method="post">{% csrf_token %}<input type="hidden" name="action" value="toggle_cheats"><input type="hidden" name="slug" value="{{ r.g.slug }}">
+              <button class="gs-link" type="submit">Cheats on/off</button></form>
+          </div></td>
+        </tr>{% endfor %}
+      </tbody></table></div>
+    <p class="gm-small">A game that is switched off disappears for players; you can still open it to test.</p>
+  </section>
+
+  <div class="gs-grid">
+    <section class="gs-card">
+      <h2>{% icon "sliders-horizontal" 16 %} Settings for every game</h2>
+      <form method="post" class="gs-card" style="border:0;padding:0">{% csrf_token %}<input type="hidden" name="action" value="defaults">
+        <label class="gs-check"><input type="checkbox" name="cheats_enabled" {% if glob.cheats_enabled %}checked{% endif %}>
+          <span>Cheat codes are on<small>The master switch. Off: no cheat code works in any game, for anyone.</small></span></label>
+        <label class="gs-check"><input type="checkbox" name="cheats_on_boards" {% if glob.cheats_on_boards %}checked{% endif %}>
+          <span>Count cheat results on leaderboards and reports<small>On: they earn coins and XP and show on the boards with a “cheat” tag. Off: they are saved, but earn nothing and stay off the boards.</small></span></label>
+        <label class="gs-check"><input type="checkbox" name="hero_enabled" {% if glob.hero_enabled %}checked{% endif %}>
+          <span>Secret character available<small>Off: the reveal move does nothing and the code is refused.</small></span></label>
+        <p class="gs-sub">Who may use cheat codes</p>
+        <div class="gs-fields">{% include "games/_settings_access.html" with kind="cheat" label="Cheat codes work for" choices=cheat_access value=glob.cheat_access users=cheat_users follow="" %}</div>
+        <p class="gs-sub">Who may use the secret character</p>
+        <div class="gs-fields">{% include "games/_settings_access.html" with kind="hero" label="The secret character is for" choices=hero_access value=glob.hero_access users=hero_users follow="" %}</div>
+        <div><button class="btn btn-primary btn-sm" type="submit">Save</button></div>
+      </form>
+      <p class="gm-small">Each game can follow these or set its own on its General tab.</p>
+    </section>
+
+    <section class="gs-card">
+      <h2>{% icon "key-round" 16 %} Secret character code</h2>
+      <p>One code unlocks the secret character in every game, after the reveal move. A game can be given its own code on its Secret character tab. <a href="{% url 'games:settings_guide' %}">How to use him</a>.</p>
+      <form method="post" class="gs-fields" autocomplete="off">{% csrf_token %}<input type="hidden" name="action" value="hero_set">
+        <label class="gs-field">New code<input class="gs-input" type="password" name="code" minlength="8" maxlength="80" required autocomplete="new-password"></label>
+        <label class="gs-field">Type it again<input class="gs-input" type="password" name="code2" minlength="8" maxlength="80" required autocomplete="new-password"></label>
+        <div><button class="btn btn-primary btn-sm" type="submit">Change code</button></div>
+      </form>
+      <form method="post" class="gs-row">{% csrf_token %}<input type="hidden" name="action" value="hero_new">
+        <button class="btn btn-ghost btn-sm" type="submit">Generate a random code</button><span class="gm-small" style="color:var(--text-muted)">Replaces the current code and shows the new one once.</span></form>
+    </section>
+  </div>
+</div>
+{% endblock %}

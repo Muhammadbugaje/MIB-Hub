@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex">
+<title>Arcade cheat codes</title>
+<style>
+  body { font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; color: #111; background: #fff; margin: 0; padding: 24px 16px 60px; }
+  main { max-width: 820px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 24px; } h2 { margin: 26px 0 4px; font-size: 17px; } h3 { margin: 12px 0 2px; font-size: 14px; }
+  .muted { color: #555; font-size: 12.5px; margin: 0 0 8px; }
+  table { width: 100%; border-collapse: collapse; margin: 6px 0 8px; }
+  th, td { border: 1px solid #c9ced6; padding: 6px 9px; text-align: left; vertical-align: top; }
+  th { background: #1f2937; color: #fff; font-size: 12px; }
+  td.code { font: 700 14px ui-monospace, Menlo, monospace; white-space: nowrap; }
+  td small { display: block; color: #666; }
+  .bar { display: flex; gap: 10px; margin: 0 0 18px; } button, .bar a { font: 600 14px inherit; padding: 9px 14px; border-radius: 9px; border: 1px solid #111; background: #111; color: #fff; text-decoration: none; cursor: pointer; }
+  .bar a { background: #fff; color: #111; }
+  footer { margin-top: 28px; padding-top: 8px; border-top: 1px solid #c9ced6; color: #555; font-size: 12px; }
+  @media print { .bar { display: none; } body { padding: 0; } }
+</style></head><body><main>
+  <div class="bar"><button type="button" onclick="window.print()">Print or save as PDF</button><a href="{% if one %}{% url 'games:settings_game' one %}?tab=cheats{% else %}{% url 'games:settings' %}{% endif %}">Back</a></div>
+  <h1>Arcade cheat codes</h1>
+  <p class="muted">Confidential. Exported {{ when|date:"l j F Y, H:i" }} by {{ who }}. Codes ignore capitals and spaces. The secret character's code is not printed here: it is stored scrambled and can only be replaced, in Game Settings.</p>
+  {% for s in sheet %}<section>
+    <h2>{{ s.g.title }}</h2>
+    <p class="muted">Cheats are {% if s.on %}on{% else %}switched off{% endif %} for this game. Results made with cheats {% if s.boards %}count on the leaderboards.{% else %}are saved but kept off the leaderboards.{% endif %}</p>
+    {% if s.cheats %}<table><thead><tr><th>What it does</th><th>Type</th><th>Dial</th><th>How to trigger</th><th>State</th></tr></thead><tbody>
+      {% for c in s.cheats %}<tr><td>{{ c.label }}{% if c.note %}<small>{{ c.note }}</small>{% endif %}</td><td class="code">{{ c.typed|default:"-" }}</td><td class="code">{{ c.dial|default:"-" }}</td><td>{{ c.how_text }}</td><td>{% if c.on and s.on %}On{% else %}Off{% endif %}</td></tr>{% endfor %}
+    </tbody></table>{% else %}<p>No cheat codes are defined for this game yet.</p>{% endif %}
+    <h3>Secret character: {{ s.guide.name }}</h3>
+    {% if not s.guide.on %}<p>Switched off for this game.</p>{% else %}<table><tbody>
+      <tr><td><b>Reveal (keyboard or controller)</b></td><td>{{ s.guide.combo|default:"Not defined yet." }}</td></tr>
+      <tr><td><b>Reveal (phone)</b></td><td>{{ s.guide.swipe|default:"Not defined yet." }}</td></tr>
+      <tr><td><b>Entering the code</b></td><td>{{ s.guide.where }} {% if s.guide.starter %}Development stand-in code (local test copy only): <b>{{ s.guide.starter }}</b>. {% endif %}{% if s.guide.own_code %}Uses this game's own code.{% else %}Uses the site-wide code.{% endif %}</td></tr>
+      <tr><td><b>Who may use him</b></td><td>{{ s.guide.who }}{% if s.guide.people %}: {{ s.guide.people|join:", " }}{% endif %}</td></tr>
+      <tr><td><b>Powers</b></td><td>{{ s.guide.powers }}</td></tr>
+      {% if s.guide.shortcuts %}<tr><td><b>Test-run shortcuts</b></td><td>{{ s.guide.shortcuts }}</td></tr>{% endif %}
+      <tr><td><b>If the code is refused</b></td><td>After 8 wrong tries the code box locks for 10 minutes.</td></tr>
+    </tbody></table>{% endif %}
+  </section>{% endfor %}
+  <footer>Confidential · EE Hub arcade cheat codes · {{ when|date:"j M Y H:i" }} · {{ who }}</footer>
+</main></body></html>

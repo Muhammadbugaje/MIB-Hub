@@ -1,0 +1,101 @@
+{% extends base_template|default:"games/base_app.html" %}{% load static ee_tags %}
+{% block title %}Learning arcade{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/games.css' %}">{% endblock %}
+{% block arcade_wrap %}
+<div class="gm-page">
+  <header class="gm-hero">
+    <div class="gm-hero__text">
+      <h1>Learning arcade</h1>
+      <p>Short games where the physics is the gameplay. Pick a game, learn the idea by playing it, then read how it shows up in your course.</p>
+      <p class="gm-note">{% icon "graduation-cap" 15 %} {{ note }}</p>
+      {% if can_manage_games %}<p><link rel="stylesheet" href="{% static 'css/games-settings.css' %}"><a class="gs-manage" href="{% url 'games:settings' %}">{% icon "sliders-horizontal" 16 %} Arcade Management: cheat codes, rules and settings</a></p>{% endif %}
+    </div>
+    <div class="gm-hero__cast" aria-hidden="true"><canvas class="gm-cast" width="420" height="200" data-gm-cast></canvas></div>
+  </header>
+
+  <section class="gm-me" data-gm-api="{% url 'games:index' %}api/" data-csrf="{{ csrf_token }}" aria-label="Your arcade profile">
+    <div class="gm-me__lv"><b>{{ me.level }}</b><span>Level</span></div>
+    <div class="gm-me__main">
+      <p class="gm-me__rank">{{ me.rank }}</p>
+      <div class="gm-xp" role="progressbar" aria-label="Experience to next level" aria-valuemin="{{ me.this_xp }}" aria-valuemax="{{ me.next_xp }}" aria-valuenow="{{ me.xp }}" data-xp="{{ me.xp }}" data-a="{{ me.this_xp }}" data-b="{{ me.next_xp }}"><i></i></div>
+      <p class="gm-small">{{ me.xp }} XP · next level at {{ me.next_xp }} XP. Progress saves to your account, so it follows you to any device.</p>
+    </div>
+    <div class="gm-me__coins">{% icon "coins" 20 %} <b>{{ me.coins }}</b><span>coins</span></div>
+  </section>
+
+  <div data-gm-offline-all></div><p data-gm-install></p>
+
+  <section class="gm-story">
+    <canvas width="160" height="160" data-gm-villain aria-hidden="true"></canvas>
+    <div><h2>The story so far</h2><p>Count Entropy, a villain who wants every ordered system to fall apart, has blacked out Volt City, bought his way into the Momentum Cup final and taken over the top of the Impulse Arena. He's also sabotaged the department's circuits, smashed its solar receivers and drained the rail-line beacons. Beat him everywhere to collect every badge.</p></div>
+  </section>
+
+  {% if max_level is None %}
+  <div class="ee-empty">We can't tell which level you're in, so no games are open yet. Ask your level adviser or the exams office to set your current level on your student record.</div>
+  {% endif %}
+
+  <nav class="gm-filters" data-gm-filters aria-label="Filter games">
+    <span class="gm-filters__label">{% icon "filter" 14 %} Show</span>
+    <button type="button" class="gm-filter is-on" data-f="all" aria-pressed="true">Explore</button>
+    <button type="button" class="gm-filter" data-f="quick" aria-pressed="false">Quick play</button>
+    <button type="button" class="gm-filter" data-f="puzzle" aria-pressed="false">Puzzle</button>
+    <button type="button" class="gm-filter" data-f="physics" aria-pressed="false">Physics</button>
+    <button type="button" class="gm-filter" data-f="versus" aria-pressed="false">Versus</button>
+    <button type="button" class="gm-filter" data-f="open" aria-pressed="false">Open worlds</button>
+    <button type="button" class="gm-filter" data-f="mine" aria-pressed="false">My level</button>
+  </nav>
+  <p class="gm-small gm-filters__empty" data-gm-empty hidden>No games in this group yet — more of the roadmap lands here soon.</p>
+
+  {% for shelf in shelves %}
+  <section class="gm-shelf{% if not shelf.open %} is-locked{% endif %}" aria-labelledby="lv{{ shelf.level }}">
+    <h2 id="lv{{ shelf.level }}">{{ shelf.level }} level {% if not shelf.open %}<span class="gm-lock">{% icon "lock" 14 %} Opens when you reach {{ shelf.level }} level</span>{% endif %}</h2>
+    <div class="gm-grid">
+      {% for row in shelf.games %}{% with g=row.g %}
+      <article class="gm-card{% if row.ok %} is-ready{% endif %}" style="--gm-a:{{ g.accent }}" data-gm-tags='{% if g.tags %}{{ g.tags|join:" " }}{% endif %}'{% if row.ok %} data-gm-mine="1"{% endif %}>
+        <div class="gm-card__art" data-gm-art="{{ g.script|default:'planned' }}" aria-hidden="true"></div>
+        <div class="gm-card__body">
+          <p class="gm-card__genre">{{ g.genre }}</p>
+          <h3>{{ g.title }}</h3>
+          <p>{{ g.pitch }}</p>
+          <p class="gm-card__meta">{% for c in g.courses %}<span class="gm-chip">{{ c }}</span>{% endfor %}{% for m in g.modes %}{% if g.playable %}<span class="gm-chip gm-chip--mode">{{ m }}</span>{% endif %}{% endfor %}{% if g.session %}<span class="gm-chip gm-chip--time">{% icon "clock" 12 %} {{ g.session }}</span>{% endif %}{% if g.confirm %}<span class="gm-chip gm-chip--warn">Course fit to be confirmed</span>{% endif %}</p>
+          {% if g.controls and g.playable %}<p class="gm-card__keys">{% icon "keyboard" 13 %} {{ g.controls }}</p>{% endif %}
+          {% if row.ok %}<a class="btn btn-primary btn-sm" href="{% url 'games:play' g.slug %}">{% icon "play" 15 %} Play now</a>
+          {% elif g.playable %}<span class="gm-status">{% icon "lock" 14 %} Locked until {{ g.level }} level</span>
+          {% else %}<span class="gm-status">In the roadmap</span>{% endif %}
+          {% if g.planned_online %}<span class="gm-status gm-status--soft">Online friend matches are planned, not built yet</span>{% endif %}
+        </div>
+      </article>{% endwith %}{% endfor %}
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="gm-two">
+    <div class="gm-panel">
+      <h2>{% icon "shopping-bag" 16 %} Shop</h2>
+      <p class="gm-small">Spend coins you earn by playing. Everything here is cosmetic or a fun extra character: no real money, nothing that makes you stronger.</p>
+      <ul class="gm-shop">{% for it in me.shop %}
+        <li><span class="gm-swatch" style="background:{% if it.kind == 'char' %}#2a2f3a{% elif it.kind == 'arena' %}linear-gradient(135deg,#1e8a4c,#7ec8ff){% elif it.kind == 'weapon' %}#3a2a1a{% else %}{{ it.value }}{% endif %}" {% if it.kind == 'char' %}data-face-sw="{{ it.value }}"{% endif %}></span>
+          <span class="gm-shop__name">{{ it.label }}</span>
+          {% if it.id in me.owned %}{% if it.kind == "char" or it.kind == "arena" or it.kind == "weapon" %}<span class="gm-status">Unlocked</span>{% elif it.id in me.equipped.values %}<button class="btn btn-ghost btn-sm" data-equip="none-{{ it.kind }}">Take off</button>{% else %}<button class="btn btn-ghost btn-sm" data-equip="{{ it.id }}">Wear</button>{% endif %}
+          {% else %}<button class="btn btn-primary btn-sm" data-buy="{{ it.id }}"{% if me.coins < it.price %} disabled title="You need more coins"{% endif %}>{% icon "coins" 14 %} {{ it.price }}</button>{% endif %}</li>{% endfor %}
+      </ul>
+    </div>
+    <div class="gm-panel">
+      <h2>{% icon "award" 16 %} Badges</h2>
+      {% if me.badges %}<ul class="gm-badges">{% for b in me.badges %}<li><b>{{ b.name }}</b><span>{{ b.text }}</span></li>{% endfor %}</ul>
+      {% else %}<p>No badges yet. Win your first match or restore a Volt City district to earn one.</p>{% endif %}
+    </div>
+  </section>
+
+  <section class="gm-panel">
+    <h2>{% icon "trophy" 16 %} Leaderboards <a class="btn btn-ghost btn-sm" style="margin-left:auto" href="{% url 'games:leaderboard' %}">Full leaderboards</a></h2>
+    <div class="gm-boards">{% for b in boards %}
+      <div><h3>{{ b.g.title }}</h3>
+        {% if b.rows %}<ol class="gm-board">{% for r in b.rows %}<li class="{% if r.me %}is-me{% endif %}"><span class="gm-rank gm-rank--{{ r.rank }}">{{ r.rank }}</span><span>{{ r.name }}{% if r.guest %} <em class="gm-guest-tag">guest</em>{% endif %}{% if r.cheated %} <em class="gm-guest-tag" title="Set with a cheat code or the secret character">cheat</em>{% endif %}</span><b>{{ r.score }}</b></li>{% endfor %}</ol>
+        {% else %}<p class="gm-small">No scores yet. Be the first.</p>{% endif %}{% if b.mine %}<p class="gm-small">Your best {{ b.mine.score }}, rank {{ b.mine.rank }}.</p>{% endif %}</div>{% endfor %}
+    </div>
+    <label class="gm-small gm-optout"><input type="checkbox" data-privacy {% if me.on_leaderboard %}checked{% endif %}> Show my first name and initial on leaderboards</label>
+  </section>
+</div>
+{% endblock %}
+{% block extra_js %}<script src="{% static 'js/games/arcade.js' %}" defer></script><script src="{% static 'js/games/arcade-offline.js' %}" defer></script>{% endblock %}

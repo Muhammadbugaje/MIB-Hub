@@ -1,0 +1,196 @@
+{
+ "built": "2026-11-14",
+ "credits": [
+  [
+   "fslg_water/splash_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/splash_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/splash_small_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/splash_small_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/splash_small_3",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/swim_stroke_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/swim_stroke_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/swim_stroke_3",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/swim_under_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/swim_under_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/bubbles_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/bubbles_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/water_out_1",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/water_out_2",
+   "2026-11-14"
+  ],
+  [
+   "fslg_water/gasp_1",
+   "2026-11-14"
+  ]
+ ],
+ "durations": {
+  "fslg_water/bubbles_1": 0.7,
+  "fslg_water/bubbles_2": 0.7,
+  "fslg_water/gasp_1": 0.5,
+  "fslg_water/splash_1": 1.1,
+  "fslg_water/splash_2": 1.1,
+  "fslg_water/splash_small_1": 0.45,
+  "fslg_water/splash_small_2": 0.45,
+  "fslg_water/splash_small_3": 0.45,
+  "fslg_water/swim_stroke_1": 0.42,
+  "fslg_water/swim_stroke_2": 0.42,
+  "fslg_water/swim_stroke_3": 0.42,
+  "fslg_water/swim_under_1": 0.6,
+  "fslg_water/swim_under_2": 0.6,
+  "fslg_water/water_out_1": 1.0,
+  "fslg_water/water_out_2": 1.0
+ },
+ "entries": {
+  "bubbles": {
+   "bus": "world",
+   "f": [
+    "fslg_water/bubbles_1",
+    "fslg_water/bubbles_2"
+   ],
+   "g": 0.5,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.1
+  },
+  "gasp": {
+   "bus": "world",
+   "f": [
+    "fslg_water/gasp_1"
+   ],
+   "g": 0.45,
+   "lazy": 1,
+   "max": 1,
+   "p": 0.06
+  },
+  "splash": {
+   "bus": "world",
+   "f": [
+    "fslg_water/splash_1",
+    "fslg_water/splash_2"
+   ],
+   "g": 0.85,
+   "max": 2,
+   "p": 0.06
+  },
+  "splash_small": {
+   "bus": "world",
+   "f": [
+    "fslg_water/splash_small_1",
+    "fslg_water/splash_small_2",
+    "fslg_water/splash_small_3"
+   ],
+   "g": 0.6,
+   "max": 3,
+   "p": 0.1
+  },
+  "swim_stroke": {
+   "bus": "world",
+   "f": [
+    "fslg_water/swim_stroke_1",
+    "fslg_water/swim_stroke_2",
+    "fslg_water/swim_stroke_3"
+   ],
+   "g": 0.42,
+   "max": 2,
+   "p": 0.08
+  },
+  "swim_under": {
+   "bus": "world",
+   "f": [
+    "fslg_water/swim_under_1",
+    "fslg_water/swim_under_2"
+   ],
+   "g": 0.5,
+   "lazy": 1,
+   "max": 2,
+   "p": 0.08
+  },
+  "water_out": {
+   "bus": "world",
+   "f": [
+    "fslg_water/water_out_1",
+    "fslg_water/water_out_2"
+   ],
+   "g": 0.6,
+   "lazy": 1,
+   "max": 1,
+   "p": 0.05
+  }
+ },
+ "pack": "samaru-days",
+ "sizes": {
+  "m4a": {
+   "fslg_water/bubbles_1": 6102,
+   "fslg_water/bubbles_2": 6114,
+   "fslg_water/gasp_1": 4772,
+   "fslg_water/splash_1": 9007,
+   "fslg_water/splash_2": 9201,
+   "fslg_water/splash_small_1": 4481,
+   "fslg_water/splash_small_2": 4458,
+   "fslg_water/splash_small_3": 4442,
+   "fslg_water/swim_stroke_1": 4119,
+   "fslg_water/swim_stroke_2": 4124,
+   "fslg_water/swim_stroke_3": 4125,
+   "fslg_water/swim_under_1": 5453,
+   "fslg_water/swim_under_2": 5426,
+   "fslg_water/water_out_1": 8251,
+   "fslg_water/water_out_2": 8232
+  },
+  "ogg": {
+   "fslg_water/bubbles_1": 3687,
+   "fslg_water/bubbles_2": 3602,
+   "fslg_water/gasp_1": 2613,
+   "fslg_water/splash_1": 5524,
+   "fslg_water/splash_2": 5590,
+   "fslg_water/splash_small_1": 2339,
+   "fslg_water/splash_small_2": 2341,
+   "fslg_water/splash_small_3": 2366,
+   "fslg_water/swim_stroke_1": 2215,
+   "fslg_water/swim_stroke_2": 2227,
+   "fslg_water/swim_stroke_3": 2183,
+   "fslg_water/swim_under_1": 3053,
+   "fslg_water/swim_under_2": 3035,
+   "fslg_water/water_out_1": 4929,
+   "fslg_water/water_out_2": 4930
+  }
+ }
+}
