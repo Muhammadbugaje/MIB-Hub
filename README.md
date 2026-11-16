@@ -58,3 +58,4 @@ Planned monorepo layout (V2 §19.2, V3 §6): `apps/web`, `apps/game-fsl`, `apps/
     - Commit no build output.
     - Commit no large videos (list them by path instead; see `docs/CARRY_OVER.md`).
 11. **macOS 12 note:** Playwright doesn't run on the owner's Mac. Use the offscreen WebKit screenshot pipeline (V3 §4).
+# MIB-Hub
