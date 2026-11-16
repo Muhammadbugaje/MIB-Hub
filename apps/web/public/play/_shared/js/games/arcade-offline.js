@@ -74,7 +74,7 @@
       var mine = items.filter(function (i) { return !i.user || i.user === userId(); }).slice(0, 40);
       if (!mine.length) return { sent: 0 };
       return fetch(apiRoot + "sync/", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json", "X-CSRFToken": csrf(), "Accept": "application/json" },
-        body: JSON.stringify({ items: mine.map(function (i) { return { cid: i.cid, kind: i.kind, at: i.at, data: i.data }; }) }) })
+        body: JSON.stringify({ owner: userId(), items: mine.map(function (i) { return { cid: i.cid, kind: i.kind, at: i.at, data: i.data }; }) }) })
         .then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || "Sync failed"); return j; }); })
         .then(function (j) {
           var gone = (j.done || []).concat((j.rejected || []).map(function (x) { return x.cid; }));
@@ -268,13 +268,14 @@
   function start() {
     playUI(); allUI(); installUI();
     var OFF = "Offline — playing from your device. Results are saved here and added to your record later.";
-    if (stage && !navigator.onLine) banner(OFF, false, 15);
-    else if (stage) { // "online" can still mean no route to the server (Wi-Fi without internet): ask once
+    var show = stage && !window.MIBOffline; // MIB-Hub: /offline/mib-offline.js shows the offline banner on this page
+    if (show && !navigator.onLine) banner(OFF, false, 15);
+    else if (show) { // "online" can still mean no route to the server (Wi-Fi without internet): ask once
       var t = setTimeout(function () { banner(OFF, false, 15); }, 6000);
       fetch(apiRoot + "me/", { credentials: "same-origin", headers: { "Accept": "application/json" }, cache: "no-store" }).then(function () { clearTimeout(t); }, function () { clearTimeout(t); banner(OFF, false, 15); });
     }
-    window.addEventListener("offline", function () { if (stage) banner("Offline — playing from your device.", false, 15); });
-    window.addEventListener("online", function () { banner("Back online — syncing.", true, 4); O.flush(); });
+    window.addEventListener("offline", function () { if (show) banner("Offline — playing from your device.", false, 15); });
+    window.addEventListener("online", function () { if (show) banner("Back online — syncing.", true, 4); O.flush(); });
     if (navigator.onLine) setTimeout(function () { O.flush(); }, 2500);
     if (hasSW) navigator.serviceWorker.addEventListener("message", function (e) { if (e.data && e.data.type === "arcade-synced" && e.data.n) banner(e.data.n + " offline result" + (e.data.n > 1 ? "s were" : " was") + " added to your record.", true, 5); });
   }

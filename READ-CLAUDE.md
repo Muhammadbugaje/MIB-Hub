@@ -27,6 +27,7 @@ The owner is new to TypeScript. Explain things simply, and give the owner PDFs r
 | `docs/ARCHITECTURE.md`, `docs/DATABASE.md`, `docs/DECISIONS.md` | How the code is laid out, how the database works locally and in production, and why each choice was made. |
 | `docs/SETUP_GUIDE.md` and `.pdf` | The beginner's guide for the owner: install, run, accounts, database, deploy. |
 | `legacy/fslg-classic/` | Frozen copy of the old campus game ("Classic"). Reference only; its rendering code is not carried over. |
+| `games/work-in-progress/` | **The new open-world game ("Work in Progress", PlayCanvas 2.23.3).** Its source, tests, asset tools, `CREDITS.md` and `docs/RESEARCH.md` live here. `npm run build:wip` builds it into `apps/web/public/play/work-in-progress/`; the play page shows it through `apps/web/src/games/work-in-progress.ts`. Stills: `tools/shot.py`. |
 | `legacy/eehub-django/` | Frozen copy of all the old games' code, the site's CSS, fonts, images, sounds and templates, and the Django `games` and `accounts` apps. Reference for the port. |
 | `~/Downloads/games-files/` | Outside the repo. Videos (trailers), screenshots, notes, voice files and design art. See its `INDEX.md`. Its videos and screenshots are hard links: editing one in place also changes the original. |
 

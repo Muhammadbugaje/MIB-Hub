@@ -1,0 +1,621 @@
+{
+ "slug": "wavefront",
+ "title": "Wavefront",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Wavefront → weapon switch",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 318,
+     "fn": "updatePlayer"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → shot hits a shield"
+   ],
+   "source": "sample",
+   "files": [
+    "wave/shield_1",
+    "wave/shield_2"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 566,
+     "fn": "hitFoe"
+    },
+    {
+     "file": "shooter.js",
+     "line": 570,
+     "fn": "hitFoe"
+    },
+    {
+     "file": "shooter.js",
+     "line": 654,
+     "fn": "hitBoss"
+    },
+    {
+     "file": "shooter.js",
+     "line": 769,
+     "fn": "shieldHit"
+    },
+    {
+     "file": "shooter.js",
+     "line": 771,
+     "fn": "shieldHit"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → ship dashes"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 638,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → enemy explodes"
+   ],
+   "source": "sample",
+   "files": [
+    "wave/boom_1",
+    "wave/boom_2",
+    "wave/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 301,
+     "fn": "boom"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → you are hit"
+   ],
+   "source": "sample",
+   "files": [
+    "wave/hit_1",
+    "wave/hit_2",
+    "wave/hit_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 301,
+     "fn": "boom"
+    },
+    {
+     "file": "shooter.js",
+     "line": 376,
+     "fn": "hurt"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → ship jumps"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 330,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "kick",
+   "name": "Kick",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → boss attack"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 628,
+     "fn": "bossAttack"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "ko",
+   "name": "Knockout",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → enemy destroyed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 384,
+     "fn": "kill"
+    },
+    {
+     "file": "shooter.js",
+     "line": 665,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → you fire"
+   ],
+   "source": "sample",
+   "files": [
+    "wave/shot_1",
+    "wave/shot_2",
+    "wave/shot_3",
+    "wave/shot_4"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 414,
+     "fn": "fire"
+    },
+    {
+     "file": "shooter.js",
+     "line": 417,
+     "fn": "fire"
+    },
+    {
+     "file": "shooter.js",
+     "line": 550,
+     "fn": ""
+    },
+    {
+     "file": "shooter.js",
+     "line": 625,
+     "fn": "bossAttack"
+    },
+    {
+     "file": "shooter.js",
+     "line": 626,
+     "fn": "bossAttack"
+    },
+    {
+     "file": "shooter.js",
+     "line": 632,
+     "fn": "bossAttack"
+    },
+    {
+     "file": "shooter.js",
+     "line": 634,
+     "fn": ""
+    },
+    {
+     "file": "shooter.js",
+     "line": 636,
+     "fn": ""
+    },
+    {
+     "file": "shooter.js",
+     "line": 646,
+     "fn": "updateBoss"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → boss special attack"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 635,
+     "fn": ""
+    },
+    {
+     "file": "shooter.js",
+     "line": 637,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → boss slam"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 627,
+     "fn": "bossAttack"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → wave starts"
+   ],
+   "source": "sample",
+   "files": [
+    "core/whistle"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 170,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Wavefront → charged shot"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 429,
+     "fn": "fire"
+    },
+    {
+     "file": "shooter.js",
+     "line": 441,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Wavefront → pickup collected",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 460,
+     "fn": "collect"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Wavefront → boss gone, wave cleared"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 462,
+     "fn": "collect"
+    },
+    {
+     "file": "shooter.js",
+     "line": 673,
+     "fn": "bossGone"
+    },
+    {
+     "file": "shooter.js",
+     "line": 709,
+     "fn": "waves"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Wavefront → ship lost"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 180,
+     "fn": "survivalOver"
+    },
+    {
+     "file": "shooter.js",
+     "line": 393,
+     "fn": "checkOver"
+    },
+    {
+     "file": "shooter.js",
+     "line": 818,
+     "fn": "stageClear"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Wavefront → upgrade and power-up",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 155,
+     "fn": "addModifier"
+    },
+    {
+     "file": "shooter.js",
+     "line": 266,
+     "fn": "upgrades"
+    },
+    {
+     "file": "shooter.js",
+     "line": 371,
+     "fn": "respawn"
+    },
+    {
+     "file": "shooter.js",
+     "line": 457,
+     "fn": "collect"
+    },
+    {
+     "file": "shooter.js",
+     "line": 458,
+     "fn": "collect"
+    },
+    {
+     "file": "shooter.js",
+     "line": 459,
+     "fn": "collect"
+    },
+    {
+     "file": "shooter.js",
+     "line": 461,
+     "fn": "collect"
+    },
+    {
+     "file": "shooter.js",
+     "line": 717,
+     "fn": "startLift"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Wavefront → stage cleared"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 180,
+     "fn": "survivalOver"
+    },
+    {
+     "file": "shooter.js",
+     "line": 393,
+     "fn": "checkOver"
+    },
+    {
+     "file": "shooter.js",
+     "line": 818,
+     "fn": "stageClear"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Wavefront → stage cleared"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "shooter.js",
+     "line": 113,
+     "fn": "run"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Wavefront → stage music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    1900,
+    "synthwave",
+    {
+     "bpm": 112
+    }
+   ]
+  }
+ ]
+}

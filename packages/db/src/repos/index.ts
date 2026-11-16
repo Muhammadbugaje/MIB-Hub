@@ -13,6 +13,7 @@ import { cheatsRepo, heroesRepo } from "./cheats.ts";
 import { gameSettingsRepo, gamesRepo } from "./games.ts";
 import { profilesRepo, progressRepo, scoresRepo } from "./players.ts";
 import { gameSoundsRepo } from "./sounds.ts";
+import { offlineRepo } from "./offline.ts";
 import {
   adsRepo,
   analyticsRepo,
@@ -58,6 +59,7 @@ export function createRepos(db: AppDb, deps: { hasher: PasswordHasher }) {
     products: productsRepo(db),
     orders: ordersRepo(db),
     sounds: gameSoundsRepo(db),
+    offline: offlineRepo(db),
   };
 }
 
@@ -69,3 +71,4 @@ export * from "./players.ts";
 export * from "./platform.ts";
 export * from "./community.ts";
 export * from "./sounds.ts";
+export * from "./offline.ts";

@@ -35,7 +35,7 @@ export function send(r: Reply): Response {
 /** Read a JSON body, refusing anything bigger than `max` bytes. */
 export async function jsonBody(request: Request, max: number): Promise<{ body: Record<string, unknown>; bytes: number } | null> {
   const text = await request.text();
-  const bytes = Buffer.byteLength(text);
+  const bytes = new TextEncoder().encode(text).length;
   if (bytes > max) return { body: {}, bytes };
   if (!text) return { body: {}, bytes };
   try {

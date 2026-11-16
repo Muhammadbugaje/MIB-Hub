@@ -1,0 +1,225 @@
+{
+ "slug": "algorithm-garage",
+ "title": "Algorithm Garage",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Algorithm Garage → running a program, each step",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 68,
+     "fn": "go"
+    },
+    {
+     "file": "garage.js",
+     "line": 128,
+     "fn": "stepPlay"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Algorithm Garage → robot blocked"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 72,
+     "fn": "finishPlay"
+    },
+    {
+     "file": "garage.js",
+     "line": 129,
+     "fn": "stepPlay"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Algorithm Garage → order done, item picked up",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 73,
+     "fn": "finishPlay"
+    },
+    {
+     "file": "garage.js",
+     "line": 127,
+     "fn": "stepPlay"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Algorithm Garage → orders failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 82,
+     "fn": "win"
+    },
+    {
+     "file": "garage.js",
+     "line": 94,
+     "fn": "endOrders"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Algorithm Garage → program solved",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 77,
+     "fn": "win"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Algorithm Garage → orders complete"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "garage.js",
+     "line": 82,
+     "fn": "win"
+    },
+    {
+     "file": "garage.js",
+     "line": 94,
+     "fn": "endOrders"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Algorithm Garage → garage music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    1299,
+    "lofi",
+    {}
+   ]
+  }
+ ]
+}

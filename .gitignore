@@ -24,6 +24,9 @@ consent_forms/
 .env
 .env.*
 !.env.example
+# Wrangler's local secrets file (like .env, for `npm run preview`)
+.dev.vars
+.dev.vars.*
 *.pem
 *.key
 secrets.*
@@ -71,3 +74,6 @@ Thumbs.db
 .vscode/
 *.swp
 !legacy/fslg-classic/static/vendor/three@0.158.0/build/
+
+# --- Offline-download manifests (rebuilt by apps/web/scripts/offline-manifest.ts before dev and build) ---
+apps/web/public/offline/games/

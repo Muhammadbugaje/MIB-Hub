@@ -75,6 +75,9 @@ export const ADMIN_ICONS = {
   alert: "M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01",
   pin: "M12 17v5M9 3h6l-1 6 4 4H6l4-4z",
   wave: "M2 12h3l3-8 4 16 3-8h7",
+  mic: "M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zM19 11a7 7 0 0 1-14 0M12 18v3M8 21h8",
+  scissors: "M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12",
+  undo: "M3 7v6h6M3 13a9 9 0 1 0 3-7.7L3 8",
 } as const;
 
 export type AdminIconName = keyof typeof ADMIN_ICONS;

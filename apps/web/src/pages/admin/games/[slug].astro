@@ -11,6 +11,7 @@ import EmptyState from "../../../components/admin/EmptyState.astro";
 import FormFields from "../../../components/admin/FormFields.astro";
 import PageHead from "../../../components/admin/PageHead.astro";
 import ToggleForm from "../../../components/admin/ToggleForm.astro";
+import { soundInventory } from "../../../games/sounds/index.ts";
 import AppLayout from "../../../layouts/AppLayout.astro";
 import { audit, changed, done, fStr, hasErrors, labelize, parseFields, pillClass, type FieldDef, type FormErrors, type FormValues } from "../../../lib/admin-kit.ts";
 import { repos } from "../../../lib/db.ts";
@@ -24,6 +25,8 @@ const slug = String(Astro.params.slug ?? "");
 const game = await repos.games.getBySlug(slug);
 if (!game) return Astro.rewrite("/404");
 const canSettings = Astro.locals.viewer.permissions.has("games.manage_settings");
+const canSounds = Astro.locals.viewer.permissions.has("games.manage_sounds");
+const soundCount = soundInventory(slug)?.sounds.length ?? 0;
 
 const HERO_ACCESS = ["code", "signed", "staff", "named"] as const;
 const FIELDS: FieldDef[] = [
@@ -133,6 +136,7 @@ const ACCESS_HELP: Record<string, string> = {
       {!game.enabled && <span class="hub-pill hub-pill--red">Switched off</span>}
       <a class="btn btn--sm" href={`/play/${slug}`} target="_blank" rel="noopener"><AIcon name="play" size={15} /> Play</a>
       {canSettings && <a class="btn btn--sm" href={`/admin/cheats?game=${slug}`}><AIcon name="key" size={15} /> Cheats ({cheatCount})</a>}
+      {canSounds && <a class="btn btn--sm" href={`/admin/games/${slug}/sounds`}><AIcon name="music" size={15} /> Sounds ({soundCount})</a>}
     </Fragment>
   </PageHead>
 

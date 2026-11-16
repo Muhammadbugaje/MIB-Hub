@@ -361,7 +361,37 @@ async function seedCommunity(repos: Repos) {
   console.log(`  switches and settings: ${n} added`);
 }
 
+/* ------------------------------------------------- Work in Progress */
+
+/** The new open-world game's first playable slice (added once; admin edits are kept). */
+async function seedWorkInProgress(repos: Repos) {
+  if (await repos.games.getBySlug("work-in-progress")) return console.log("  work in progress: already there");
+  await repos.games.upsert({
+    slug: "work-in-progress",
+    title: "Work in Progress",
+    description: "An early look at the new campus game: walk a living university town with roads, shops, a market, traffic, crowds, birds and a full day and night. Missions come next.",
+    category: "open-world",
+    level: 0,
+    accent: "#e8742c",
+    status: "live",
+    enabled: true,
+    entry: "work-in-progress",
+    sort: 59,
+    assetsPath: "/play/work-in-progress/",
+    meta: {
+      genre: "3D open world (early build)",
+      howToPlay: "Choose your look, watch the arrival at the campus gate (or skip it), then explore: the campus quad, the clock that stopped at 6:06, the shops, the market and the roads. Press C for the showcase camera and T to speed up time.",
+      controls: "WASD or arrows move · Shift run · drag to look · wheel zoom · C showcase · T time speed · N day/night · M sound · Esc skip film",
+      modes: ["Free roam", "Showcase camera"],
+      tags: ["open", "new"],
+      sessionLength: "As long as you like",
+    },
+  });
+  console.log("  work in progress: added");
+}
+
 export async function seedContent(repos: Repos) {
+  await seedWorkInProgress(repos);
   await seedCheatsAndHeroes(repos);
   await seedCharacters(repos);
   await seedContentRows(repos);

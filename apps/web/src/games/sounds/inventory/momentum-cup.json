@@ -1,0 +1,684 @@
+{
+ "slug": "momentum-cup",
+ "title": "Momentum Cup",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "net",
+   "name": "Ball in the net",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → ball hits the net"
+   ],
+   "source": "file",
+   "files": [
+    "cup/net_1",
+    "cup/net_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → ball hits the crossbar or is saved"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 274,
+     "fn": "collideSeg"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 372,
+     "fn": "goal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "bounce",
+   "name": "Bounce",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → ball bounces off the ground, posts and heads"
+   ],
+   "source": "sample",
+   "files": [
+    "cup/post_1",
+    "cup/post_2",
+    "cup/post_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 269,
+     "fn": "collideCircle"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 292,
+     "fn": "ballStep"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → player dashes"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 235,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → a power shot blasts off"
+   ],
+   "source": "sample",
+   "files": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 182,
+     "fn": "kick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy hit",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → a hard tackle"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 197,
+     "fn": "hitRival"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → a player is shoved by the rival"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 197,
+     "fn": "hitRival"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → player jumps"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 239,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "kick",
+   "name": "Kick",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → a player kicks the ball"
+   ],
+   "source": "sample",
+   "files": [
+    "cup/ball_1",
+    "cup/ball_2",
+    "cup/ball_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 183,
+     "fn": "kick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "ko",
+   "name": "Knockout",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → a player is knocked flat"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 199,
+     "fn": "hitRival"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → superpower charging"
+   ],
+   "source": "sample",
+   "files": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 213,
+     "fn": "startPower"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "grunt_effort",
+   "name": "Player voice: effort",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → player shouts on kicks and powers"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 72,
+     "fn": "speak"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "grunt_laugh",
+   "name": "Player voice: laugh",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → your scientist laughs on the select screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 673,
+     "fn": "choose"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → superpower fired"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 208,
+     "fn": "power"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → heavy landing"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 332,
+     "fn": "physics"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 347,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → kick-off, half time and full time"
+   ],
+   "source": "sample",
+   "files": [
+    "core/whistle"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 417,
+     "fn": "end"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 621,
+     "fn": "end"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 1000,
+     "fn": "update"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 1008,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Momentum Cup → Tesla zap power and electric ball"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 287,
+     "fn": "ballStep"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 307,
+     "fn": ""
+    },
+    {
+     "file": "kickoff.js",
+     "line": 365,
+     "fn": "teslaZap"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Momentum Cup → power-up grabbed, or a scout report bought",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 357,
+     "fn": "grab"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 557,
+     "fn": ""
+    },
+    {
+     "file": "kickoff.js",
+     "line": 566,
+     "fn": "scout"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Momentum Cup → goal scored"
+   ],
+   "source": "sample",
+   "files": [
+    "cup/cheer"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 383,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Momentum Cup → match lost or knocked out"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 448,
+     "fn": ""
+    },
+    {
+     "file": "kickoff.js",
+     "line": 634,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Momentum Cup → tutorial step done",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 402,
+     "fn": "tutNext"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Momentum Cup → match won or cup lifted"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 448,
+     "fn": ""
+    },
+    {
+     "file": "kickoff.js",
+     "line": 634,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "_amb",
+   "name": "Background ambience",
+   "group": "ambience",
+   "usage": [
+    "Momentum Cup → stadium murmur under every match"
+   ],
+   "source": "file",
+   "files": [
+    "cup/crowd"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "cheer",
+   "name": "Crowd cheer (recorded)",
+   "group": "ambience",
+   "usage": [
+    "Momentum Cup → recorded crowd cheer after a goal"
+   ],
+   "source": "file",
+   "files": [
+    "cup/cheer"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crowd_groan",
+   "name": "Crowd groan",
+   "group": "ambience",
+   "usage": [
+    "Momentum Cup → crowd groans when you concede"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 384,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Momentum Cup → crowd roars at a goal or a big hit"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "kickoff.js",
+     "line": 93,
+     "fn": "run"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 199,
+     "fn": "hitRival"
+    },
+    {
+     "file": "kickoff.js",
+     "line": 383,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Momentum Cup → the match and menu music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    300,
+    "funk",
+    {
+     "bpm": 112
+    }
+   ]
+  }
+ ]
+}

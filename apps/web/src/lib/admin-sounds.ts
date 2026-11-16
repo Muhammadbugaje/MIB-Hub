@@ -1,61 +1,61 @@
 /**
- * Sound files for /admin/sounds (replacement sounds for every player of a
- * game). Files live under apps/web/.data/uploads/sounds/ (git-ignored; R2
- * later); the row in game_sound keeps `fileKey` = "sounds/<uuid>.<ext>".
- * They are served to staff by /api/admin/sound/<id>.
+ * Sound files for the sound manager (/admin/games/<slug>/sounds): checking an
+ * upload and storing, reading and deleting the file. Rows live in game_sound
+ * and game_sound_version (repos.sounds); each keeps `fileKey` =
+ * "sounds/<uuid>.<ext>".
+ *
+ * STORAGE: the three functions under "storage" are the only place that touches
+ * where files live. They go through the platform's blob store (src/platform/):
+ * apps/web/.data/uploads/ on disk locally (git-ignored), the R2 bucket on
+ * Cloudflare, as for every other upload.
  */
-import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
-import { join, normalize } from "node:path";
-import { SOUND_MAX_BYTES } from "@mib/db";
-import { UPLOAD_DIR } from "./uploads.ts";
+import { blobs } from "#platform";
+import { checkSoundFile, SOUND_EXT_TYPES, type SoundCheck } from "../games/sounds/audio-file.ts";
 
-export const SOUND_TYPES: Record<string, { ext: string; label: string }> = {
-  "audio/wav": { ext: "wav", label: "WAV" },
-  "audio/mpeg": { ext: "mp3", label: "MP3" },
-  "audio/mp4": { ext: "m4a", label: "M4A" },
-};
+export { SOUND_FORMATS, SOUND_LIMITS } from "../games/sounds/audio-file.ts";
 
-/** What kind of audio these first bytes are (WAV, MP3 or M4A), or null. */
-export function sniffSound(b: Uint8Array): keyof typeof SOUND_TYPES | null {
-  const ascii = (from: number, to: number) => String.fromCharCode(...b.slice(from, to));
-  if (ascii(0, 4) === "RIFF" && ascii(8, 12) === "WAVE") return "audio/wav";
-  if (ascii(0, 3) === "ID3") return "audio/mpeg";
-  if (b[0] === 0xff && b[1] !== undefined && (b[1] & 0xe0) === 0xe0) return "audio/mpeg";
-  if (ascii(4, 8) === "ftyp") return "audio/mp4";
-  return null;
-}
-
-/** Check and store a sound file. Returns its key and type. Throws a plain-English error. */
-export async function saveSound(file: File): Promise<{ fileKey: string; contentType: string; size: number }> {
-  if (file.size === 0) throw new Error("Choose a sound file.");
-  if (file.size > SOUND_MAX_BYTES) throw new Error("Sounds must be 2 MB or smaller.");
+/** Check an uploaded File (type from its bytes, size, length). */
+export async function checkUpload(file: File, declaredSeconds?: number | null): Promise<{ check: SoundCheck; bytes: Uint8Array }> {
   const bytes = new Uint8Array(await file.arrayBuffer());
-  const type = sniffSound(bytes);
-  if (!type) throw new Error("Upload a WAV, MP3 or M4A file.");
-  const name = `${crypto.randomUUID()}.${SOUND_TYPES[type]!.ext}`;
-  await mkdir(join(UPLOAD_DIR, "sounds"), { recursive: true });
-  await writeFile(join(UPLOAD_DIR, "sounds", name), bytes);
-  return { fileKey: `sounds/${name}`, contentType: type, size: bytes.length };
+  return { check: checkSoundFile(bytes, declaredSeconds), bytes };
 }
 
-function pathOf(fileKey: string): string | null {
-  const full = normalize(join(UPLOAD_DIR, fileKey));
-  return full.startsWith(join(UPLOAD_DIR, "sounds") + "/") ? full : null;
+/** The content type for a stored key, from its extension. */
+export function typeOfKey(fileKey: string): string {
+  return SOUND_EXT_TYPES[fileKey.split(".").pop()?.toLowerCase() ?? ""] ?? "application/octet-stream";
 }
 
-/** Delete a stored sound (ignores missing files). */
-export async function deleteSound(fileKey: string | null | undefined): Promise<void> {
-  const p = fileKey ? pathOf(fileKey) : null;
-  if (!p) return;
-  await unlink(p).catch(() => undefined);
+/** Check and store a sound file. Returns its key, type, size and length. Throws a plain-English error. */
+export async function saveSound(file: File, declaredSeconds?: number | null): Promise<{ fileKey: string; contentType: string; size: number; duration: number }> {
+  if (file.size === 0) throw new Error("Choose a sound file.");
+  const { check, bytes } = await checkUpload(file, declaredSeconds);
+  if (!check.ok) throw new Error(check.error);
+  const fileKey = `sounds/${crypto.randomUUID()}.${check.ext}`;
+  await putSoundBytes(fileKey, bytes);
+  return { fileKey, contentType: check.type, size: bytes.length, duration: check.seconds };
 }
 
+/* ------------------------------------------------------------- storage */
+
+/** Only "sounds/<uuid>.<ext>" keys belong here. */
+function isSoundKey(fileKey: string): boolean {
+  return /^sounds\/[a-z0-9-]+\.(wav|mp3|ogg|m4a)$/.test(fileKey);
+}
+
+async function putSoundBytes(fileKey: string, bytes: Uint8Array): Promise<void> {
+  if (!isSoundKey(fileKey)) throw new Error("Bad file key.");
+  await blobs.put(fileKey, bytes, typeOfKey(fileKey));
+}
+
+/** Read a stored sound (null when missing). */
 export async function readSound(fileKey: string): Promise<Uint8Array | null> {
-  const p = pathOf(fileKey);
-  if (!p) return null;
-  try {
-    return new Uint8Array(await readFile(p));
-  } catch {
-    return null;
+  if (!isSoundKey(fileKey)) return null;
+  return (await blobs.get(fileKey))?.bytes ?? null;
+}
+
+/** Delete stored sounds (ignores missing files). */
+export async function deleteSound(...fileKeys: (string | null | undefined)[]): Promise<void> {
+  for (const k of fileKeys) {
+    if (k && isSoundKey(k)) await blobs.delete(k);
   }
 }

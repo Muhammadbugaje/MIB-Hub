@@ -1,0 +1,429 @@
+---
+/**
+ * /admin/games/<slug>/sounds/<sound id>: one sound of one game.
+ *   - what it is and where the game uses it; play the original and the custom one;
+ *   - Studio: upload a file, record with the microphone, or edit (trim, fade,
+ *     volume, normalise) the original / a version / a file / a recording, saved
+ *     as a new version (sound-studio.ts);
+ *   - the volume every player hears; revert to the original; the version history
+ *     (play, use again, edit, delete); delete everything for this sound.
+ * Every change is written to the audit log with before and after.
+ * Needs games.manage_sounds.
+ */
+import { SOUND_NAME_RE } from "@mib/db";
+import AIcon from "../../../../../components/admin/AIcon.astro";
+import PageHead from "../../../../../components/admin/PageHead.astro";
+import SoundRuntime from "../../../../../components/admin/SoundRuntime.astro";
+import { SOUND_GROUPS, soundEntry } from "../../../../../games/sounds/index.ts";
+import { soundFileUrl } from "../../../../../games/sounds/overrides.ts";
+import AppLayout from "../../../../../layouts/AppLayout.astro";
+import { audit, done, fStr } from "../../../../../lib/admin-kit.ts";
+import { deleteSound, saveSound, SOUND_LIMITS } from "../../../../../lib/admin-sounds.ts";
+import { repos } from "../../../../../lib/db.ts";
+import { guard } from "../../../../../lib/guard.ts";
+import { timeAgo } from "../../../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "games.manage_sounds" });
+if (denied) return denied;
+
+const slug = String(Astro.params.slug ?? "");
+const id = decodeURIComponent(String(Astro.params.sound ?? ""));
+const game = await repos.games.getBySlug(slug);
+if (!game || !SOUND_NAME_RE.test(id)) return Astro.rewrite("/404");
+const known = soundEntry(slug, id);
+// A sound that is not in the list can still be managed if it has files or settings (left over, or named at run time).
+if (!known && !(await repos.sounds.get(slug, id)) && (await repos.sounds.versions(slug, id)).length === 0 && !(await repos.sounds.getSetting(slug, id))) {
+  return Astro.rewrite("/404");
+}
+const entry = known ?? { id, name: id, group: "gameplay" as const, usage: ["Not found in the game's code"], source: "file" as const, files: [], calls: [], preview: "none" as const };
+const self = `/admin/games/${slug}/sounds/${encodeURIComponent(id)}`;
+const me = Astro.locals.viewer.user?.id ?? null;
+let error = "";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 30);
+  try {
+    if (action === "upload") {
+      const file = form.get("file");
+      const source = fStr(form, "source", 10);
+      const declared = Number(fStr(form, "duration", 20));
+      if (!(file instanceof File) || file.size === 0) throw new Error("Choose a sound file.");
+      const saved = await saveSound(file, Number.isFinite(declared) && declared > 0 ? declared : null);
+      const r = await repos.sounds.addVersion({
+        gameSlug: slug,
+        name: id,
+        ...saved,
+        originalName: file.name.slice(0, 200),
+        uploadedBy: me,
+        source: source === "record" || source === "edit" ? source : "upload",
+        note: fStr(form, "note", 200),
+      });
+      await deleteSound(...r.pruned);
+      await audit(Astro, "sound.version.add", "game_sound", r.sound.id, r.before ?? undefined, { ...r.sound, source: r.version.source, note: r.version.note });
+      const how = r.version.source === "record" ? "Recording" : r.version.source === "edit" ? "Edit" : "Upload";
+      return done(Astro, `${how} saved as version ${r.version.version}. Every player now hears it.`, self);
+    }
+    if (action === "use") {
+      const r = await repos.sounds.useVersion(fStr(form, "id", 80));
+      if (!r || r.sound.gameSlug !== slug || r.sound.name !== id) throw new Error("That version was not found.");
+      await audit(Astro, "sound.version.use", "game_sound", r.sound.id, r.before ?? undefined, r.sound);
+      return done(Astro, `Players now hear version ${r.sound.version}.`, self);
+    }
+    if (action === "original") {
+      const before = await repos.sounds.useOriginal(slug, id);
+      if (before) await audit(Astro, "sound.revert", "game_sound", before.id, before, { gameSlug: slug, name: id, status: "original" });
+      return done(Astro, "Back to the game's own sound. Your versions are kept.", self);
+    }
+    if (action === "volume") {
+      const pct = Number(fStr(form, "volume", 10));
+      if (!Number.isFinite(pct)) throw new Error("Choose a volume.");
+      const r = await repos.sounds.setVolume(slug, id, pct / 100, me);
+      await audit(Astro, "sound.volume", "game_sound_setting", r.after?.id ?? r.before?.id ?? `${slug}:${id}`, r.before ?? { volume: 1 }, r.after ?? { volume: 1 });
+      return done(Astro, `Volume set to ${Math.round((r.after?.volume ?? 1) * 100)}%.`, self);
+    }
+    if (action === "delete-version") {
+      const v = await repos.sounds.removeVersion(fStr(form, "id", 80));
+      if (!v || v.gameSlug !== slug || v.name !== id) throw new Error("That version was not found.");
+      await deleteSound(v.fileKey);
+      await audit(Astro, "sound.version.delete", "game_sound_version", v.id, v, undefined);
+      return done(Astro, `Deleted version ${v.version}.`, self);
+    }
+    if (action === "purge") {
+      const before = { override: (await repos.sounds.get(slug, id)) ?? null, versions: await repos.sounds.versions(slug, id), setting: (await repos.sounds.getSetting(slug, id)) ?? null };
+      const keys = await repos.sounds.purge(slug, id);
+      await deleteSound(...keys);
+      await audit(Astro, "sound.purge", "game_sound", `${slug}:${id}`, before, undefined);
+      return done(Astro, `Deleted every custom file for “${entry.name}”. Players hear the original.`, `/admin/games/${slug}/sounds`);
+    }
+  } catch (e) {
+    error = e instanceof Error ? e.message : "That did not work.";
+  }
+}
+
+const live = await repos.sounds.get(slug, id);
+const versions = await repos.sounds.versions(slug, id);
+const setting = await repos.sounds.getSetting(slug, id);
+const volume = Math.round((setting?.volume ?? 1) * 100);
+const groupLabel = SOUND_GROUPS.find((g) => g.id === entry.group)?.label ?? entry.group;
+const SOURCE: Record<string, string> = {
+  synth: "Synthesised in code (Web Audio)",
+  sample: "A recorded file (the synthesised version plays until it loads)",
+  file: "A recorded file",
+  composed: "Composed live while you play",
+};
+const VSOURCE: Record<string, string> = { upload: "Uploaded", record: "Recorded", edit: "Edited" };
+const kb = (n: number) => (n >= 1024 * 1024 ? `${(n / 1048576).toFixed(2)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`);
+const studioEntry = JSON.stringify({ id: entry.id, preview: entry.preview, files: entry.files, song: "song" in entry ? entry.song : undefined });
+const fmtTime = (d: Date) => d.toLocaleString("en-GB", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+---
+
+<AppLayout title={`${entry.name} · ${game.title}`}>
+  <PageHead eyebrow={`${game.title} · Sounds`} title={entry.name} icon="wave" back={{ href: `/admin/games/${slug}/sounds`, label: `${game.title} sounds` }}>
+    <Fragment slot="actions">
+      {live ? <span class="hub-pill hub-pill--gold">Custom v{live.version}</span> : <span class="hub-pill hub-pill--green">Original</span>}
+      {volume !== 100 && <span class="hub-pill hub-pill--blue">Volume {volume}%</span>}
+    </Fragment>
+  </PageHead>
+
+  {error && <div class="hub-note hub-note--danger snd-error" role="alert"><AIcon name="alert" size={16} /> {error}</div>}
+
+  <div class="hub-grid hub-grid--main snd-top">
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="note" size={18} /> Where it is used</h2>
+        <span class="hub-code">{entry.id}</span>
+      </div>
+      <ul class="snd-usage">{entry.usage.map((u) => <li>{u}</li>)}</ul>
+      <dl class="hub-kv snd-kv">
+        <dt>Group</dt><dd>{groupLabel}</dd>
+        <dt>Made by</dt><dd>{SOURCE[entry.source] ?? entry.source}</dd>
+        {entry.files.length > 0 && <><dt>Files</dt><dd><span class="hub-code">{entry.files.join(", ")}</span></dd></>}
+      </dl>
+      {
+        entry.calls.length > 0 && (
+          <details class="snd-calls">
+            <summary>In the code ({entry.calls.length})</summary>
+            <ul>{entry.calls.map((c) => <li><span class="hub-code">{c.file}:{c.line}</span>{c.fn && <span class="hub-muted"> in {c.fn}()</span>}</li>)}</ul>
+          </details>
+        )
+      }
+    </section>
+
+    <section class="hub-card">
+      <div class="hub-card__head"><h2 class="hub-card__title"><AIcon name="play" size={18} /> Listen</h2></div>
+      <div class="hub-btn-row snd-listen">
+        <button class="btn btn--sm" type="button" data-play-original={studioEntry} disabled={entry.preview === "none"}><AIcon name="play" size={15} /> Original</button>
+        {live && <button class="btn btn--sm btn--accent" type="button" data-play-url={`/api/admin/sound/${live.id}?v=${live.version}`} data-gain={volume / 100}><AIcon name="play" size={15} /> Custom (v{live.version})</button>}
+        <button class="btn btn--sm btn--ghost" type="button" data-stop><AIcon name="x" size={15} /> Stop</button>
+      </div>
+      <p class="hub-muted snd-note" role="status" aria-live="polite" data-listen-msg>
+        {entry.preview === "none" ? "The game makes this sound from what is happening while you play, so it can only be heard in the game." : "The original plays exactly as the game makes it."}
+      </p>
+      <form method="post" class="snd-volume">
+        <input type="hidden" name="action" value="volume" />
+        <label class="hub-field__label" for="snd-vol">Volume every player hears</label>
+        <div class="snd-volume__row">
+          <input id="snd-vol" type="range" name="volume" min="0" max="200" step="5" value={volume} data-vol />
+          <output for="snd-vol" data-vol-out>{volume}%</output>
+          <button class="btn btn--sm" type="submit">Save volume</button>
+        </div>
+        <p class="hub-field__hint">100% plays the sound as it was made. Works for the original and for custom sounds.</p>
+      </form>
+      {
+        live && (
+          <form method="post" class="snd-revert" data-confirm="Go back to the game's own sound? Your versions are kept.">
+            <input type="hidden" name="action" value="original" />
+            <button class="btn btn--sm" type="submit"><AIcon name="undo" size={15} /> Revert to the original</button>
+          </form>
+        )
+      }
+    </section>
+  </div>
+
+  <section
+    class="hub-card snd-studio"
+    id="studio"
+    data-studio
+    data-entry={studioEntry}
+    data-max-bytes={SOUND_LIMITS.maxBytes}
+    data-max-seconds={SOUND_LIMITS.maxSeconds}
+  >
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="sparkles" size={18} /> Make a new version</h2>
+      <div class="hub-seg" role="tablist" aria-label="How">
+        <button type="button" role="tab" data-tab="upload" aria-selected="true"><AIcon name="upload" size={14} /> Upload</button>
+        <button type="button" role="tab" data-tab="record" aria-selected="false"><AIcon name="mic" size={14} /> Record</button>
+        <button type="button" role="tab" data-tab="edit" aria-selected="false"><AIcon name="scissors" size={14} /> Edit</button>
+      </div>
+    </div>
+
+    <div data-pane="upload" role="tabpanel">
+      <form method="post" enctype="multipart/form-data" data-upload-form class="snd-pane">
+        <input type="hidden" name="action" value="upload" />
+        <input type="hidden" name="source" value="upload" />
+        <input type="hidden" name="duration" value="" />
+        <div class="hub-field">
+          <label class="hub-field__label" for="snd-file">Sound file</label>
+          <input class="input" id="snd-file" name="file" type="file" required accept="audio/wav,audio/x-wav,audio/mpeg,audio/ogg,audio/mp4,audio/x-m4a,.wav,.mp3,.ogg,.m4a" />
+          <p class="hub-field__hint">WAV, MP3, OGG or M4A, up to 2 MB and {SOUND_LIMITS.maxSeconds} seconds. The file's real type and length are checked.</p>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="snd-note">Note (optional)</label>
+          <input class="input" id="snd-note" name="note" maxlength="200" placeholder="e.g. louder cheer from the Cup final" />
+        </div>
+        <div class="hub-btn-row">
+          <button class="btn btn--primary" type="submit"><AIcon name="upload" size={15} /> Upload</button>
+          <button class="btn" type="button" data-up-play><AIcon name="play" size={15} /> Listen</button>
+          <button class="btn" type="button" data-up-edit><AIcon name="scissors" size={15} /> Edit first</button>
+        </div>
+      </form>
+    </div>
+
+    <div data-pane="record" role="tabpanel" hidden>
+      <div class="snd-pane">
+        <p class="hub-muted">Record straight from your microphone (up to 30 seconds). The browser will ask to use the microphone the first time.</p>
+        <div class="hub-btn-row">
+          <button class="btn btn--primary" type="button" data-rec-allow><AIcon name="mic" size={15} /> Allow microphone</button>
+        </div>
+        <div class="snd-meter" aria-hidden="true"><i data-rec-level></i></div>
+        <label class="snd-check"><input type="checkbox" data-rec-countin checked /> Count in 3, 2, 1 before recording</label>
+        <div class="hub-btn-row">
+          <button class="btn btn--danger" type="button" data-rec-start disabled><AIcon name="mic" size={15} /> Record</button>
+          <button class="btn" type="button" data-rec-stop disabled><AIcon name="x" size={15} /> Stop</button>
+          <output class="snd-time" data-rec-time>0.0 s</output>
+        </div>
+        <div class="hub-btn-row" data-rec-take hidden>
+          <button class="btn" type="button" data-rec-play><AIcon name="play" size={15} /> Play the take</button>
+          <button class="btn" type="button" data-rec-retake><AIcon name="refresh" size={15} /> Re-take</button>
+          <button class="btn" type="button" data-rec-edit><AIcon name="scissors" size={15} /> Edit</button>
+          <button class="btn btn--primary" type="button" data-rec-save><AIcon name="check" size={15} /> Save the take</button>
+        </div>
+      </div>
+    </div>
+
+    <div data-pane="edit" role="tabpanel" hidden>
+      <div class="snd-pane">
+        <div class="snd-source">
+          <label class="hub-field__label" for="snd-src">Start from</label>
+          <select class="input" id="snd-src" data-ed-source>
+            {entry.preview === "file" || entry.preview === "synth" ? <option value="original">The original</option> : null}
+            {versions.map((v) => <option value={`/api/admin/sound/${v.id}`}>Version {v.version} ({VSOURCE[v.source] ?? v.source}){live && live.fileKey === v.fileKey ? ", playing now" : ""}</option>)}
+          </select>
+          <button class="btn" type="button" data-ed-source-load><AIcon name="refresh" size={15} /> Load</button>
+        </div>
+        <p class="hub-field__hint">You can also open a file (Upload → Edit first) or a recording (Record → Edit).</p>
+        <div data-ed-controls hidden>
+          <canvas class="snd-wave" data-ed-wave aria-label="Waveform: click to move the nearest trim point" role="img"></canvas>
+          <div class="snd-sliders">
+            <label for="ed-start">Start</label><input id="ed-start" type="range" min="0" step="0.005" data-ed="start" /><output data-ed-out="start"></output>
+            <label for="ed-end">End</label><input id="ed-end" type="range" min="0" step="0.005" data-ed="end" /><output data-ed-out="end"></output>
+            <label for="ed-fi">Fade in</label><input id="ed-fi" type="range" min="0" step="0.01" data-ed="fadeIn" /><output data-ed-out="fadeIn"></output>
+            <label for="ed-fo">Fade out</label><input id="ed-fo" type="range" min="0" step="0.01" data-ed="fadeOut" /><output data-ed-out="fadeOut"></output>
+            <label for="ed-gain">Volume</label><input id="ed-gain" type="range" min="0" max="300" step="5" value="100" data-ed="gain" /><output data-ed-out="gain"></output>
+          </div>
+          <label class="snd-check"><input type="checkbox" data-ed="normalise" /> Normalise (make the loudest part full volume)</label>
+          <p class="hub-muted" data-ed-info></p>
+          <div class="hub-btn-row">
+            <button class="btn" type="button" data-ed-play><AIcon name="play" size={15} /> Preview</button>
+            <button class="btn btn--ghost" type="button" data-ed-stop><AIcon name="x" size={15} /> Stop</button>
+            <button class="btn btn--primary" type="button" data-ed-save><AIcon name="check" size={15} /> Save as new version</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="snd-msg" role="status" aria-live="polite" data-studio-msg></p>
+    <form method="post" enctype="multipart/form-data" data-save-form hidden>
+      <input type="hidden" name="action" value="upload" />
+      <input type="hidden" name="source" value="edit" />
+      <input type="hidden" name="duration" value="" />
+      <input type="hidden" name="note" value="" />
+      <input type="file" name="file" tabindex="-1" aria-hidden="true" />
+    </form>
+  </section>
+
+  <section class="hub-card hub-card--flush snd-versions">
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="clock" size={18} /> Versions</h2>
+      <span class="hub-pill hub-pill--plain">{versions.length}</span>
+    </div>
+    {
+      versions.length === 0 ? (
+        <p class="hub-muted snd-empty">No custom versions yet. Players hear the game's own sound.</p>
+      ) : (
+        <ul class="hub-list snd-vlist">
+          {versions.map((v) => {
+            const isLive = !!live && live.fileKey === v.fileKey;
+            return (
+              <li>
+                <span class:list={["hub-list__icon", isLive ? "hub-list__icon--gold" : "hub-list__icon--volt"]}><AIcon name={v.source === "record" ? "mic" : v.source === "edit" ? "scissors" : "upload"} size={16} /></span>
+                <span class="hub-list__body">
+                  <span class="hub-list__title">Version {v.version} · {VSOURCE[v.source] ?? v.source} {isLive && <span class="hub-pill hub-pill--gold">Playing now</span>}</span>
+                  <span class="hub-list__meta">{v.duration.toFixed(2)} s · {kb(v.size)} · {v.contentType.replace("audio/", "").toUpperCase()} · <time datetime={v.createdAt.toISOString()} title={fmtTime(v.createdAt)}>{timeAgo(v.createdAt)}</time>{v.note && <> · {v.note}</>}</span>
+                </span>
+                <span class="snd-vactions">
+                  <audio controls preload="none" src={`/api/admin/sound/${v.id}`} class="snd-audio"></audio>
+                  <button class="btn btn--sm" type="button" data-edit-url={`/api/admin/sound/${v.id}`} data-edit-label={`version ${v.version}`}><AIcon name="scissors" size={14} /> Edit</button>
+                  {!isLive && (
+                    <form method="post" class="hub-inline-form">
+                      <input type="hidden" name="action" value="use" />
+                      <input type="hidden" name="id" value={v.id} />
+                      <button class="btn btn--sm" type="submit"><AIcon name="undo" size={14} /> Use this</button>
+                    </form>
+                  )}
+                  {!isLive && (
+                    <form method="post" class="hub-inline-form" data-confirm={`Delete version ${v.version}? This cannot be undone.`}>
+                      <input type="hidden" name="action" value="delete-version" />
+                      <input type="hidden" name="id" value={v.id} />
+                      <button class="btn btn--sm hub-btn-danger btn--icon" type="submit" aria-label={`Delete version ${v.version}`} title="Delete"><AIcon name="trash" size={14} /></button>
+                    </form>
+                  )}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      )
+    }
+    {
+      (versions.length > 0 || live || setting) && (
+        <div class="hub-card__foot snd-purge">
+          <span class="hub-muted">Players' games fetch the current file from <span class="hub-code">{live ? soundFileUrl(slug, id, live.version) : "(none: the original plays)"}</span></span>
+          <form method="post" data-confirm={`Delete every custom file and setting for “${entry.name}”? This cannot be undone.`}>
+            <input type="hidden" name="action" value="purge" />
+            <button class="btn btn--sm hub-btn-danger" type="submit"><AIcon name="trash" size={14} /> Delete all versions</button>
+          </form>
+        </div>
+      )
+    }
+  </section>
+  <SoundRuntime slug={slug} />
+</AppLayout>
+
+<style>
+  .snd-error { margin-bottom: var(--space-4); }
+  .snd-top { margin-bottom: var(--space-5); }
+  .snd-usage { margin: 0 0 var(--space-4); padding-left: 1.2em; display: grid; gap: 4px; }
+  .snd-kv { margin: 0; }
+  .snd-calls { margin-top: var(--space-3); font-size: var(--fs-sm); }
+  .snd-calls summary { cursor: pointer; color: var(--text-muted); }
+  .snd-calls ul { margin: var(--space-2) 0 0; padding-left: 1.2em; display: grid; gap: 2px; }
+  .snd-note { min-height: 1.4em; margin: var(--space-3) 0; }
+  .snd-volume { margin-top: var(--space-4); padding-top: var(--space-4); border-top: 1px solid var(--divider); }
+  .snd-volume__row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+  .snd-volume__row input[type="range"] { flex: 1 1 160px; }
+  .snd-volume__row output, .snd-sliders output, .snd-time { min-width: 4em; font-variant-numeric: tabular-nums; font-weight: var(--fw-semibold); }
+  .snd-revert { margin-top: var(--space-4); }
+  .snd-studio { margin-bottom: var(--space-5); scroll-margin-top: 80px; }
+  .snd-studio .hub-seg button { display: inline-flex; align-items: center; gap: 6px; }
+  .snd-pane { display: grid; gap: var(--space-4); }
+  .snd-source { display: flex; flex-wrap: wrap; align-items: end; gap: var(--space-3); }
+  .snd-source .hub-field__label { flex-basis: 100%; margin: 0; }
+  .snd-source select { flex: 1 1 220px; }
+  .snd-wave {
+    --wave: var(--volt);
+    --wave-dim: var(--border);
+    --fade: var(--accent);
+    display: block; width: 100%; height: 120px; border-radius: var(--radius-md, 12px);
+    background: var(--surface-sunken); border: 1px solid var(--divider); cursor: crosshair; margin-bottom: var(--space-4);
+  }
+  .snd-sliders { display: grid; grid-template-columns: 6em minmax(0, 1fr) 4.5em; align-items: center; gap: var(--space-2) var(--space-3); }
+  .snd-sliders label { font-weight: var(--fw-medium); font-size: var(--fs-sm); }
+  .snd-check { display: flex; align-items: center; gap: var(--space-2); font-size: var(--fs-sm); min-height: 32px; }
+  .snd-meter { height: 12px; border-radius: 99px; background: var(--surface-sunken); overflow: hidden; border: 1px solid var(--divider); }
+  .snd-meter i { display: block; height: 100%; width: 0; background: var(--success, #3dd68c); transition: width 60ms linear; }
+  .snd-meter i.is-hot { background: var(--danger); }
+  .snd-msg { min-height: 1.4em; margin: var(--space-4) 0 0; font-weight: var(--fw-semibold); color: var(--success-fg, inherit); }
+  .snd-msg.is-bad { color: var(--danger-fg, var(--danger)); }
+  .snd-versions { margin-bottom: var(--space-5); }
+  .snd-vlist { padding: 0 var(--space-5); }
+  .snd-vlist > li { flex-wrap: wrap; }
+  .snd-vlist .hub-list__body { flex: 1 1 240px; }
+  .snd-row .hub-list__meta, .snd-vlist .hub-list__meta { white-space: normal; overflow: visible; text-overflow: clip; }
+  .snd-vactions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-left: auto; }
+  .snd-audio { height: 34px; max-width: 220px; }
+  .snd-empty { padding: var(--space-4) var(--space-5); margin: 0; }
+  .snd-purge { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-top: 1px solid var(--divider); }
+  @media (max-width: 640px) {
+    .snd-vactions { margin-left: 0; width: 100%; }
+    .snd-sliders { grid-template-columns: 5em minmax(0, 1fr) 4em; }
+  }
+</style>
+
+<script>
+  import { decodeUrl, playBuffer, playOriginal, stop, type PreviewEntry } from "../../../../../components/admin/sound-kit.ts";
+  import { mountStudio } from "../../../../../components/admin/sound-studio.ts";
+
+  const note = document.querySelector<HTMLElement>("[data-listen-msg]");
+  const say = (t: string) => {
+    if (note) note.textContent = t;
+  };
+  document.querySelector<HTMLButtonElement>("[data-play-original]")?.addEventListener("click", (ev) => {
+    const e = JSON.parse((ev.currentTarget as HTMLElement).dataset.playOriginal ?? "{}") as PreviewEntry;
+    say("Loading…");
+    playOriginal(e).then(
+      (n) => say(`Playing the original: ${n}.`),
+      (err: Error) => say(err.message),
+    );
+  });
+  document.querySelector<HTMLButtonElement>("[data-play-url]")?.addEventListener("click", (ev) => {
+    const b = ev.currentTarget as HTMLElement;
+    say("Loading…");
+    decodeUrl(b.dataset.playUrl ?? "").then(
+      (buf) => {
+        playBuffer(buf, Number(b.dataset.gain ?? 1));
+        say("Playing the custom sound at the saved volume.");
+      },
+      (err: Error) => say(err.message),
+    );
+  });
+  document.querySelector("[data-stop]")?.addEventListener("click", () => stop());
+  const vol = document.querySelector<HTMLInputElement>("[data-vol]");
+  const out = document.querySelector<HTMLOutputElement>("[data-vol-out]");
+  vol?.addEventListener("input", () => {
+    if (out) out.textContent = `${vol.value}%`;
+  });
+  const studio = document.querySelector<HTMLElement>("[data-studio]");
+  if (studio) mountStudio(studio);
+</script>

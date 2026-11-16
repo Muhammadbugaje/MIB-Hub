@@ -4,3 +4,4 @@ export * from "./auth.ts";
 export * from "./platform.ts";
 export * from "./games.ts";
 export * from "./community.ts";
+export * from "./sounds.ts";

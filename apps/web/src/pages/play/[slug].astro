@@ -15,6 +15,7 @@
  */
 import "../../components/games/play.css";
 import GameHost from "../../games/GameHost.tsx";
+import OfflineButton from "../../components/games/OfflineButton.astro";
 import PlayIcon from "../../components/games/PlayIcon.astro";
 import { cheatsSettings, pageConfig, playGate } from "../../games/arcade-api.ts";
 import { LEGACY_BASE, isLegacyGame, legacyScripts, saveKeyPrefixes } from "../../games/legacy.ts";
@@ -52,6 +53,8 @@ if (switches.likes) {
 const board = switches.leaderboards ? await repos.scores.top(game.slug, { limit: 5, includeCheated: cs.cheatsOnBoards }) : [];
 
 const canSave = !!viewer.user && viewer.permissions.has("progress.save");
+/** Whose progress this device is saving (offline outbox, cloud save): same value as data-gm-user. */
+const owner = viewer.user ? `u${viewer.user.id}` : "guest";
 const stageConfig = legacy ? JSON.stringify(pageConfig(await repos.cheats.pageCodes(game.slug), cs, viewer)) : "";
 const bridge = {
   slug: game.slug,
@@ -60,6 +63,7 @@ const bridge = {
   canSave,
   tracking: switches.tracking,
   savePrefixes: saveKeyPrefixes(game.slug),
+  owner,
   guestNote: "Playing as a guest: progress stays on this device",
 };
 const contractPlayer = viewer.user
@@ -203,9 +207,16 @@ const topics = Array.isArray(meta.topics) ? (meta.topics as string[]) : [];
       )
     }
 
+    {/* Marks this page as fine to keep for offline play (the service worker checks it). */}
+    {gate.ok && <meta name="mib-offline" content={game.slug} />}
+
     {
       gate.ok && (
         <div class="mp-under">
+          <section class="gm-panel mp-offline">
+            <h2><PlayIcon name="cloud" /> Play offline</h2>
+            <OfflineButton slug={game.slug} title={game.title} owner={owner} look="play" />
+          </section>
           {legacy && (
             <section class="gm-panel">
               <h2><PlayIcon name="zap" /> The physics</h2>

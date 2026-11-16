@@ -1,13 +1,11 @@
 /**
- * Image uploads (people's photos, covers, ad images). Stored on disk under
- * apps/web/.data/uploads/ (git-ignored, so real photos never reach git) and
- * served by src/pages/uploads/[...path].ts. Later this becomes Cloudflare R2.
+ * Image uploads (people's photos, covers, ad images). Stored through the
+ * platform's blob store: apps/web/.data/uploads/ locally (git-ignored, so
+ * real photos never reach git), the R2 bucket on Cloudflare. Served by
+ * src/pages/uploads/[...path].ts.
  */
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { join, normalize, resolve } from "node:path";
-import { REPO_ROOT } from "./env.ts";
+import { blobs } from "#platform";
 
-export const UPLOAD_DIR = resolve(REPO_ROOT, "apps/web/.data/uploads");
 export const MAX_UPLOAD_BYTES = 4 * 1024 * 1024;
 
 export const IMAGE_TYPES: Record<string, string> = {
@@ -16,7 +14,6 @@ export const IMAGE_TYPES: Record<string, string> = {
   "image/webp": "webp",
   "image/gif": "gif",
 };
-const EXT_TYPES: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp", gif: "image/gif" };
 
 /** Check the file's first bytes really are the image type it claims. */
 export function sniffImage(bytes: Uint8Array): string | null {
@@ -36,21 +33,13 @@ export async function saveImage(file: File, folder: string): Promise<string> {
   if (!type || !IMAGE_TYPES[type]) throw new Error("Upload a PNG, JPEG, WebP or GIF image.");
   const safeFolder = folder.replace(/[^a-z0-9-]/gi, "").toLowerCase() || "misc";
   const name = `${crypto.randomUUID()}.${IMAGE_TYPES[type]}`;
-  await mkdir(join(UPLOAD_DIR, safeFolder), { recursive: true });
-  await writeFile(join(UPLOAD_DIR, safeFolder, name), bytes);
+  await blobs.put(`${safeFolder}/${name}`, bytes, type);
   return `/uploads/${safeFolder}/${name}`;
 }
 
-/** Read an uploaded file for serving; null when missing or outside the folder. */
+/** Read an uploaded image for serving; null when missing or not an image key. */
 export async function readUpload(path: string): Promise<{ bytes: Uint8Array; type: string } | null> {
-  const full = normalize(join(UPLOAD_DIR, path));
-  if (!full.startsWith(UPLOAD_DIR + "/")) return null;
-  const ext = full.split(".").pop()?.toLowerCase() ?? "";
-  const type = EXT_TYPES[ext];
-  if (!type) return null;
-  try {
-    return { bytes: new Uint8Array(await readFile(full)), type };
-  } catch {
-    return null;
-  }
+  const file = await blobs.get(path);
+  if (!file || !IMAGE_TYPES[file.contentType]) return null;
+  return { bytes: file.bytes, type: file.contentType };
 }

@@ -1,0 +1,194 @@
+---
+/**
+ * /admin/games/<slug>/sounds: every sound a game makes, grouped by where it is
+ * heard (menus, gameplay, rewards, ambience, music). Each row plays the
+ * original (synthesised live by the game's own engine, or its recorded file)
+ * and, when there is one, the custom replacement every player hears. Open a
+ * sound to upload, record or edit a replacement, see its versions, revert or
+ * set its volume. The list comes from src/games/sounds/inventory/<slug>.json.
+ * Needs games.manage_sounds.
+ */
+import AIcon from "../../../../components/admin/AIcon.astro";
+import EmptyState from "../../../../components/admin/EmptyState.astro";
+import PageHead from "../../../../components/admin/PageHead.astro";
+import SoundRuntime from "../../../../components/admin/SoundRuntime.astro";
+import { SOUND_GROUPS, soundInventory } from "../../../../games/sounds/index.ts";
+import { loadOverrideMap } from "../../../../games/sounds/load.ts";
+import { soundRows } from "../../../../games/sounds/overrides.ts";
+import AppLayout from "../../../../layouts/AppLayout.astro";
+import { repos } from "../../../../lib/db.ts";
+import { guard } from "../../../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "games.manage_sounds" });
+if (denied) return denied;
+
+const slug = String(Astro.params.slug ?? "");
+const game = await repos.games.getBySlug(slug);
+if (!game) return Astro.rewrite("/404");
+
+const inv = soundInventory(slug);
+const map = await loadOverrideMap(repos, slug);
+const live = new Map((await repos.sounds.list(slug)).map((r) => [r.name, r.id]));
+const counts: Record<string, number> = {};
+for (const v of await repos.sounds.versionsForGame(slug)) counts[v.name] = (counts[v.name] ?? 0) + 1;
+const rows = soundRows(inv?.sounds ?? [], map, counts);
+const groups = SOUND_GROUPS.map((g) => ({ ...g, rows: rows.filter((r) => r.group === g.id) })).filter((g) => g.rows.length > 0);
+const custom = rows.filter((r) => r.status === "custom").length;
+const tuned = rows.filter((r) => r.volume !== 1).length;
+const SOURCE: Record<string, string> = { synth: "Synthesised", sample: "Recorded", file: "Recorded", composed: "Composed live" };
+const pctOf = (v: number) => `${Math.round(v * 100)}%`;
+const href = (id: string) => `/admin/games/${slug}/sounds/${encodeURIComponent(id)}`;
+---
+
+<AppLayout title={`${game.title} · Sounds`}>
+  <PageHead
+    eyebrow="Games · Sounds"
+    title={`${game.title} sounds`}
+    icon="music"
+    lead="Every sound in this game and where you hear it. Play the original, then open a sound to replace it with an upload, a recording or an edit."
+    back={{ href: `/admin/games/${slug}`, label: game.title }}
+  >
+    <Fragment slot="actions">
+      <a class="btn btn--sm" href={`/play/${slug}`} target="_blank" rel="noopener"><AIcon name="play" size={15} /> Play the game</a>
+      <a class="btn btn--sm" href="/admin/sounds"><AIcon name="list" size={15} /> All games</a>
+    </Fragment>
+  </PageHead>
+
+  <div class="hub-stats snd-stats">
+    <div class="hub-stat hub-stat--volt"><div class="hub-stat__top">Sounds</div><div class="hub-stat__value">{rows.length}</div></div>
+    <div class="hub-stat hub-stat--gold"><div class="hub-stat__top">Custom</div><div class="hub-stat__value">{custom}</div></div>
+    <div class="hub-stat hub-stat--slate"><div class="hub-stat__top">Volume changed</div><div class="hub-stat__value">{tuned}</div></div>
+  </div>
+
+  {
+    rows.length === 0 ? (
+      <EmptyState icon="music" title="No sound list for this game" text="This game has not listed its sounds yet. Old EE Hub games are scanned by scripts/gen-sound-inventory.ts; a new game adds src/games/sounds/inventory/<slug>.json." />
+    ) : (
+      <>
+        <div class="hub-toolbar">
+          <input class="input snd-search" type="search" placeholder="Find a sound (name, id or where it is used)" aria-label="Find a sound" data-snd-search />
+          <nav class="hub-tabs" aria-label="Groups">
+            {groups.map((g) => (
+              <a href={`#g-${g.id}`}>
+                {g.label} <span class="hub-tabs__n">{g.rows.length}</span>
+              </a>
+            ))}
+          </nav>
+        </div>
+        <p class="hub-muted snd-status" role="status" aria-live="polite" data-snd-status />
+        {groups.map((g) => (
+          <section class="hub-card hub-card--flush snd-group" id={`g-${g.id}`} data-snd-group>
+            <div class="hub-card__head">
+              <h2 class="hub-card__title">{g.label}</h2>
+              <span class="hub-pill hub-pill--plain">{g.rows.length}</span>
+            </div>
+            <ul class="hub-list snd-list">
+              {g.rows.map((r) => (
+                <li class="snd-row" data-snd-row data-q={`${r.name} ${r.id} ${r.usage.join(" ")}`.toLowerCase()}>
+                  <span class:list={["hub-list__icon", r.status === "custom" ? "hub-list__icon--gold" : "hub-list__icon--volt"]}>
+                    <AIcon name="wave" size={18} />
+                  </span>
+                  <span class="hub-list__body">
+                    <span class="hub-list__title">
+                      <a href={href(r.id)}>{r.name}</a> <span class="hub-code">{r.id}</span>
+                    </span>
+                    <span class="hub-list__meta">{r.usage.join(" · ")}</span>
+                    <span class="snd-tags">
+                      <span class="hub-pill hub-pill--plain">{SOURCE[r.source] ?? r.source}</span>
+                      {r.status === "custom" ? <span class="hub-pill hub-pill--gold">Custom v{r.override?.v}</span> : <span class="hub-pill hub-pill--green">Original</span>}
+                      {r.volume !== 1 && <span class="hub-pill hub-pill--blue">Volume {pctOf(r.volume)}</span>}
+                      {r.versions > 0 && <span class="hub-pill hub-pill--plain">{r.versions} saved</span>}
+                    </span>
+                  </span>
+                  <span class="snd-actions">
+                    <button
+                      class="btn btn--sm"
+                      type="button"
+                      data-play-original={JSON.stringify({ id: r.id, preview: r.preview, files: r.files, song: r.song })}
+                      disabled={r.preview === "none"}
+                      title={r.preview === "none" ? "Made by the game while you play: hear it in the game" : "Play the game's own sound"}
+                      aria-label={`Play the original ${r.name}`}
+                    >
+                      <AIcon name="play" size={14} /> Original
+                    </button>
+                    {r.override && live.get(r.id) && (
+                      <button class="btn btn--sm btn--accent" type="button" data-play-url={`/api/admin/sound/${live.get(r.id)}?v=${r.override.v}`} data-gain={r.volume} aria-label={`Play the custom ${r.name}`}>
+                        <AIcon name="play" size={14} /> Custom
+                      </button>
+                    )}
+                    <a class="btn btn--sm btn--ghost" href={href(r.id)} aria-label={`Manage ${r.name}`}>
+                      <AIcon name="sliders" size={14} /> Manage
+                    </a>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </>
+    )
+  }
+  <SoundRuntime slug={slug} />
+</AppLayout>
+
+<style>
+  .snd-stats { margin-bottom: var(--space-5); }
+  .snd-group { margin-bottom: var(--space-5); scroll-margin-top: 80px; }
+  .snd-list { padding: 0 var(--space-5); }
+  .snd-row { flex-wrap: wrap; }
+  .snd-row[hidden], .snd-group[hidden] { display: none; }
+  .snd-row .hub-list__body { flex: 1 1 260px; }
+  .snd-row .hub-list__title a { color: inherit; }
+  .snd-row .hub-list__meta, .snd-vlist .hub-list__meta { white-space: normal; overflow: visible; text-overflow: clip; }
+  .snd-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .snd-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+  .snd-search { flex: 1 1 100%; }
+  .snd-status { min-height: 1.4em; margin: 0 0 var(--space-3); }
+  @media (max-width: 640px) { .snd-actions { margin-left: 0; width: 100%; } }
+</style>
+
+<script>
+  import { decodeUrl, playBuffer, playOriginal, type PreviewEntry } from "../../../../components/admin/sound-kit.ts";
+
+  const status = document.querySelector<HTMLElement>("[data-snd-status]");
+  const say = (t: string) => {
+    if (status) status.textContent = t;
+  };
+  document.addEventListener("click", (ev) => {
+    const t = ev.target as HTMLElement;
+    const orig = t.closest<HTMLButtonElement>("[data-play-original]");
+    if (orig) {
+      const e = JSON.parse(orig.dataset.playOriginal ?? "{}") as PreviewEntry;
+      say("Loading…");
+      playOriginal(e).then(
+        (note) => say(`Playing the original ${e.id}: ${note}.`),
+        (err: Error) => say(err.message),
+      );
+      return;
+    }
+    const custom = t.closest<HTMLButtonElement>("[data-play-url]");
+    if (custom) {
+      say("Loading…");
+      decodeUrl(custom.dataset.playUrl ?? "").then(
+        (buf) => {
+          playBuffer(buf, Number(custom.dataset.gain ?? 1));
+          say("Playing the custom sound every player hears.");
+        },
+        (err: Error) => say(err.message),
+      );
+    }
+  });
+  const search = document.querySelector<HTMLInputElement>("[data-snd-search]");
+  search?.addEventListener("input", () => {
+    const q = search.value.trim().toLowerCase();
+    document.querySelectorAll<HTMLElement>("[data-snd-group]").forEach((g) => {
+      let any = false;
+      g.querySelectorAll<HTMLElement>("[data-snd-row]").forEach((r) => {
+        const show = !q || (r.dataset.q ?? "").includes(q);
+        r.hidden = !show;
+        any ||= show;
+      });
+      g.hidden = !any;
+    });
+  });
+</script>

@@ -50,6 +50,7 @@ BOOKS = {  # key: (sources relative to docs/plan, title). The PDF is written to 
     "STORY_AUDIT": (["STORY_AUDIT.md"], "Story Audit"),
     "ASSET_AND_MOTION_PLAN": (["ASSET_AND_MOTION_PLAN.md"], "Asset, Animation and Physics Plan"),
     "HOW_TO_RUN": (["../HOW_TO_RUN.md"], "How to Run MIB-Hub", "docs"),
+    "DEPLOY_CLOUDFLARE": (["../DEPLOY_CLOUDFLARE.md"], "Deploying MIB-Hub to Cloudflare", "docs"),
     "JIYA_STORY_PACK": (["people/JIYA_STORY_PACK.md"], "Jiya's Story Pack", "docs/plan/people"),
     "TATY_STORY_PACK": (["people/TATY_STORY_PACK.md"], "Taty's Story Pack", "docs/plan/people"),
 }
@@ -291,7 +292,7 @@ def flow(md, width):
 
 
 # Owner-only planning documents. Everything else (story packs, voice scripts) is made to be sent to the person.
-OWNER_ONLY = {"STORY_BIBLE_V2", "MISSION_SCRIPTS", "STORY_AUDIT", "ASSET_AND_MOTION_PLAN", "HOW_TO_RUN"}
+OWNER_ONLY = {"STORY_BIBLE_V2", "MISSION_SCRIPTS", "STORY_AUDIT", "ASSET_AND_MOTION_PLAN", "HOW_TO_RUN", "DEPLOY_CLOUDFLARE"}
 
 
 # Opt-in, per document: a first line of "<!-- pack-style: roomy -->" sets bigger, airier reading type for that

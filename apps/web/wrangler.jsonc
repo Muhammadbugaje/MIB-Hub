@@ -1,0 +1,47 @@
+// Cloudflare Workers settings for the MIB-Hub website.
+// How to deploy: docs/DEPLOY_CLOUDFLARE.md (and .pdf).
+//
+// Two values below are yours to paste in once (search for "PASTE"):
+//   1. database_id  from `npx wrangler d1 create mib-hub`
+//   2. SITE_URL     the address the site is served at
+// Secrets (BETTER_AUTH_SECRET...) never go in this file: use `npx wrangler secret put`.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mib-hub",
+  // The Worker that `npm run build` makes.
+  "main": "./dist/_worker.js/index.js",
+  "compatibility_date": "2026-01-01",
+  // Node.js APIs on Workers (node:crypto for password hashing, Buffer...).
+  "compatibility_flags": ["nodejs_compat"],
+  // Pictures, scripts, styles and the games' files, served straight from Cloudflare.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+  },
+  // The database (Cloudflare D1, hosted SQLite). Tables come from packages/db/migrations.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "mib-hub",
+      "database_id": "PASTE-YOUR-D1-DATABASE-ID-HERE",
+      "migrations_dir": "../../packages/db/migrations",
+    },
+  ],
+  // Uploaded images and sounds (Cloudflare R2).
+  "r2_buckets": [
+    {
+      "binding": "UPLOADS",
+      "bucket_name": "mib-hub-uploads",
+    },
+  ],
+  // Plain settings (not secret).
+  "vars": {
+    "SITE_URL": "https://PASTE-YOUR-SITE-ADDRESS-HERE",
+    "MAIL_DRIVER": "console",
+    "MAIL_FROM": "MIB-Hub <no-reply@example.com>",
+  },
+  // Keeps the Worker's logs in the Cloudflare dashboard (Workers > mib-hub > Logs).
+  "observability": {
+    "enabled": true,
+  },
+}

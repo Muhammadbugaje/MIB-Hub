@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <title>Work in Progress</title>
+    <meta name="description" content="An early look at the new campus game on MIB-Hub." />
+    <style>
+      :root { --ink: #fffaf0; --ink-2: rgba(255, 250, 240, 0.78); --glass: rgba(18, 22, 28, 0.55); --accent: #f2b33d; --accent-2: #e8742c; }
+      html, body { margin: 0; height: 100%; background: #0d1014; overflow: hidden; color: var(--ink); font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-user-select: none; user-select: none; touch-action: none; }
+      #app { position: fixed; inset: 0; }
+      .wip-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; outline: none; }
+      .wip-ui { position: absolute; inset: 0; pointer-events: none; }
+      .wip-ui button, .wip-ui label, .wip-ui input, .wip-menu { pointer-events: auto; }
+      .wip-title { margin: 0; font-size: clamp(30px, 6vw, 54px); font-weight: 900; letter-spacing: -0.02em; line-height: 1; background: linear-gradient(100deg, #fff4d6, #f2b33d 45%, #e8742c); -webkit-background-clip: text; background-clip: text; color: transparent; }
+      .wip-tag { margin: 8px 0 0; color: var(--ink-2); }
+      .wip-loading { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(120% 90% at 50% 20%, #2a3b4f 0%, #121821 60%, #0b0e12 100%); transition: opacity 0.6s ease; pointer-events: auto; }
+      .wip-loading.is-gone { opacity: 0; pointer-events: none; }
+      .wip-loading__card { width: min(420px, 86vw); text-align: center; }
+      .wip-progress { margin: 26px 0 10px; height: 6px; border-radius: 99px; background: rgba(255, 255, 255, 0.12); overflow: hidden; }
+      .wip-progress__bar { height: 100%; width: 3%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.35s ease; }
+      .wip-loading__msg { margin: 0; color: var(--ink-2); font-size: 13px; }
+      .wip-hud[hidden], .wip-sub[hidden], .wip-skip[hidden] { display: none !important; }
+      .wip-brand { position: absolute; left: 16px; top: 14px; display: flex; gap: 8px; align-items: center; padding: 7px 12px; border-radius: 12px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-weight: 800; letter-spacing: 0.01em; }
+      .wip-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 99px; background: var(--accent); color: #1b1408; text-transform: uppercase; letter-spacing: 0.06em; }
+      .wip-clock { position: absolute; right: 16px; top: 14px; padding: 7px 12px; border-radius: 12px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-weight: 800; font-variant-numeric: tabular-nums; font-size: 18px; }
+      .wip-mode { position: absolute; left: 50%; top: 16px; transform: translateX(-50%); font-weight: 700; color: var(--accent); text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6); }
+      .wip-hint { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); max-width: calc(100% - 32px); padding: 7px 14px; border-radius: 12px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; color: var(--ink-2); text-align: center; }
+      .wip-hint b { color: var(--ink); }
+      .wip-stats { position: absolute; right: 16px; top: 56px; font-size: 11px; color: var(--ink-2); text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7); }
+      .wip-bar { position: absolute; left: 0; right: 0; height: 0; background: #000; transition: height 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+      .wip-bar--top { top: 0; } .wip-bar--bottom { bottom: 0; }
+      .wip-bar.on { height: 11vh; }
+      .wip-sub { position: absolute; left: 50%; bottom: calc(11vh + 18px); transform: translateX(-50%); max-width: min(760px, 90vw); text-align: center; font-size: clamp(16px, 2.2vw, 22px); text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85); }
+      .wip-sub b { display: block; font-size: 0.72em; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 2px; }
+      .wip-fade { position: absolute; inset: 0; background: #000; opacity: 0; }
+      .wip-skip { position: absolute; right: 18px; bottom: calc(11vh + 14px); border: 1px solid rgba(255, 255, 255, 0.35); background: rgba(0, 0, 0, 0.35); color: var(--ink); padding: 8px 14px; border-radius: 99px; font: inherit; font-weight: 700; cursor: pointer; }
+      .wip-toast { position: absolute; left: 50%; top: 64px; transform: translate(-50%, -6px); padding: 6px 14px; border-radius: 99px; background: var(--glass); font-weight: 700; opacity: 0; transition: opacity 0.25s, transform 0.25s; }
+      .wip-toast.on { opacity: 1; transform: translate(-50%, 0); }
+      .wip-menu { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, rgba(8, 12, 18, 0.15), rgba(8, 12, 18, 0.65)); overflow: auto; }
+      .wip-menu__card { width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow: auto; padding: 22px 22px 18px; border-radius: 20px; background: rgba(16, 20, 26, 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45); box-sizing: border-box; }
+      .wip-pick h2 { margin: 14px 0 6px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); }
+      .wip-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+      .wip-chips + .wip-chips { margin-top: 8px; }
+      .wip-chip { width: 30px; height: 30px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.25); cursor: pointer; padding: 0; }
+      .wip-chip--text { width: auto; height: auto; border-radius: 99px; padding: 6px 12px; background: rgba(255, 255, 255, 0.08); color: var(--ink); font: inherit; font-size: 13px; }
+      .wip-chip[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent); }
+      .wip-chip--text[aria-pressed="true"] { background: var(--accent); color: #1b1408; font-weight: 700; }
+      .wip-opts { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 16px; font-size: 13px; color: var(--ink-2); }
+      .wip-check { display: flex; gap: 6px; align-items: center; cursor: pointer; }
+      .wip-play { margin-top: 16px; width: 100%; padding: 14px; border: 0; border-radius: 14px; background: linear-gradient(100deg, var(--accent), var(--accent-2)); color: #1b1408; font: inherit; font-size: 18px; font-weight: 900; cursor: pointer; }
+      .wip-small { margin: 10px 0 0; font-size: 12px; color: var(--ink-2); text-align: center; }
+      .wip-stick { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: rgba(255, 255, 255, 0.12); border: 2px solid rgba(255, 255, 255, 0.25); opacity: 0; transition: opacity 0.15s; left: 30px; bottom: 30px; }
+      .wip-stick.on { opacity: 1; }
+      .wip-knob { position: absolute; left: 35px; top: 35px; width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.55); }
+      .wip-run { position: absolute; right: 24px; bottom: 90px; width: 74px; height: 74px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.4); background: rgba(0, 0, 0, 0.35); color: #fff; font-weight: 900; }
+      .wip-run.on { background: var(--accent); color: #1b1408; }
+      .wip-error { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; padding: 24px; background: #111; }
+      .wip-play { position: sticky; bottom: 0; box-shadow: 0 -10px 24px rgba(16, 20, 26, 0.9); }
+      @media (max-height: 820px) {
+        .wip-menu__card { padding: 16px 18px 12px; }
+        .wip-menu__card .wip-title { font-size: 34px; }
+        .wip-pick h2 { margin: 8px 0 4px; }
+        .wip-chip { width: 24px; height: 24px; }
+        .wip-chip--text { padding: 4px 10px; font-size: 12px; }
+        .wip-play { padding: 10px; font-size: 16px; margin-top: 10px; }
+      }
+      @media (max-width: 640px) { .wip-hint { display: none; } .wip-brand { font-size: 13px; } }
+      @media (prefers-reduced-motion: reduce) { .wip-bar, .wip-loading, .wip-toast { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      // Keep a copy of any errors and warnings (the screenshot tool and tests read it).
+      window.__wipErrors = [];
+      ["error", "warn"].forEach(function (k) {
+        var orig = console[k];
+        console[k] = function () { try { window.__wipErrors.push(k + ": " + Array.prototype.join.call(arguments, " ").slice(0, 400)); } catch (e) {} return orig.apply(console, arguments); };
+      });
+      window.addEventListener("error", function (e) { window.__wipErrors.push("uncaught: " + e.message); });
+    </script>
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

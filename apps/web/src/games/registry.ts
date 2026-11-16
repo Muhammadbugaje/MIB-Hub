@@ -16,6 +16,8 @@ import type { GameLoader } from "./contract.ts";
 export const gameRegistry: Record<string, GameLoader> = {
   // Example of the shape (a tiny demo that proves the contract end to end):
   "demo-hello": () => import("./demo-hello.ts"),
+  // The new open-world campus game (PlayCanvas, built from games/work-in-progress).
+  "work-in-progress": () => import("./work-in-progress.ts"),
 };
 
 export function hasGame(entry: string): boolean {

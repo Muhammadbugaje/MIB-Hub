@@ -32,7 +32,8 @@
     if (!f || f === "global") { b = X.ov.global[name]; if (b && b !== 1) return { how: "global", buf: b }; }
     return { how: has0(name) ? "file" : "synth" };
   };
-  X.vol = function (name) { var p = X.prefs[name]; return p && p.vol != null && isFinite(p.vol) ? Math.max(0, Math.min(2, +p.vol)) : 1; };
+  X.gvol = {}; // MIB-Hub: per-sound volume staff set for everyone (admin sound manager; filled by arcade-sounds.js)
+  X.vol = function (name) { var p = X.prefs[name], g = X.gvol[name]; g = g != null && isFinite(g) ? Math.max(0, Math.min(2, +g)) : 1; return (p && p.vol != null && isFinite(p.vol) ? Math.max(0, Math.min(2, +p.vol)) : 1) * g; };
   X.has = function (name) { return X.route(name).how !== "synth"; };
   function decodeOv(layer, name) {
     var ab = X.raw[layer][name]; if (!ab || !S.ac || X.ov[layer][name] === 1) return; X.ov[layer][name] = 1;

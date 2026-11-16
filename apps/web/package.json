@@ -4,20 +4,38 @@
   "private": true,
   "description": "The MIB-Hub website: public pages, sign-in, play pages and the admin area.",
   "type": "module",
+  "imports": {
+    "#platform": {
+      "workerd": "./src/platform/workers.ts",
+      "default": "./src/platform/node.ts"
+    }
+  },
   "scripts": {
+    "predev": "tsx scripts/offline-manifest.ts",
     "dev": "astro dev",
+    "prebuild": "tsx scripts/offline-manifest.ts",
     "build": "astro build",
-    "preview": "astro preview",
+    "offline:manifest": "tsx scripts/offline-manifest.ts --table",
+    "preview": "wrangler dev",
     "typecheck": "astro check",
-    "db:seed": "tsx scripts/seed.ts"
+    "db:seed": "tsx scripts/seed.ts",
+    "deploy": "wrangler deploy",
+    "d1:migrate": "wrangler d1 migrations apply mib-hub --remote",
+    "d1:seed-sql": "tsx scripts/export-seed-sql.ts"
   },
   "dependencies": {
+    "@astrojs/cloudflare": "12.6.13",
     "@astrojs/node": "9.5.5",
     "@astrojs/react": "4.4.2",
+    "@mib/db": "0.1.0",
+    "@mib/ui": "0.1.0",
     "astro": "5.18.2",
     "better-auth": "1.7.25",
     "drizzle-orm": "0.45.4",
     "react": "19.3.1",
     "react-dom": "19.3.1"
+  },
+  "devDependencies": {
+    "wrangler": "4.59.2"
   }
 }

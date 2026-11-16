@@ -14,12 +14,15 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { GameMeta, GameStatus } from "@mib/db";
-import { migrateSqlite } from "@mib/db/sqlite";
+import { migrateSqlite, type SqliteDb } from "@mib/db/sqlite";
 import { auth } from "../src/lib/auth.ts";
-import { db, repos } from "../src/lib/db.ts";
+import { db as appDb, repos } from "../src/lib/db.ts";
 import { REPO_ROOT, env } from "../src/lib/env.ts";
 import { ROLES, ROLE_INFO } from "../src/lib/permissions.ts";
 import { siteConfig } from "../src/site.config.ts";
+
+/** Scripts always run on Node, so the database is the local SQLite file. */
+const db = appDb as SqliteDb;
 import { seedContent } from "./seed-content.ts";
 
 interface CatalogueEntry {

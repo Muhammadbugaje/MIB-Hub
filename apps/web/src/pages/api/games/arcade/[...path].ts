@@ -5,31 +5,23 @@
  *   GET  me/  ·  POST result/ sync/ buy/ equip/ privacy/ hero/  ·  GET sounds/<slug>/
  *   GET  sounds/<slug>/file/<name>   a replacement sound file
  */
-import { readFile } from "node:fs/promises";
-import { join, normalize } from "node:path";
 import type { APIRoute } from "astro";
 import { arcadeCall } from "../../../../games/arcade-api.ts";
 import { jsonBody, playCtx, send } from "../../../../games/server.ts";
 import { repos } from "../../../../lib/db.ts";
 import { fail } from "../../../../lib/http.ts";
-import { UPLOAD_DIR } from "../../../../lib/uploads.ts";
+import { readSound } from "../../../../lib/admin-sounds.ts";
 
 /** Biggest request body: one result is tiny; a batch of offline results is bigger. */
 const MAX_BODY = 96 * 1024;
 
 async function soundFile(slug: string, name: string): Promise<Response> {
   const row = await repos.sounds.get(slug, name);
-  if (!row) return new Response("Not found", { status: 404 });
-  const full = normalize(join(UPLOAD_DIR, row.fileKey));
-  if (!full.startsWith(UPLOAD_DIR + "/")) return new Response("Not found", { status: 404 });
-  try {
-    const bytes = await readFile(full);
-    return new Response(new Uint8Array(bytes), {
-      headers: { "content-type": row.contentType, "cache-control": "public, max-age=86400", "x-content-type-options": "nosniff" },
-    });
-  } catch {
-    return new Response("Not found", { status: 404 });
-  }
+  const bytes = row ? await readSound(row.fileKey) : null;
+  if (!row || !bytes) return new Response("Not found", { status: 404 });
+  return new Response(bytes.buffer as ArrayBuffer, {
+    headers: { "content-type": row.contentType, "cache-control": "public, max-age=86400", "x-content-type-options": "nosniff" },
+  });
 }
 
 export const GET: APIRoute = async (c) => {

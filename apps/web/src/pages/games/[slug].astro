@@ -11,6 +11,7 @@ import "../../styles/pages/games.css";
 import { leaderboardName } from "@mib/db";
 import GameCard from "../../components/GameCard.astro";
 import Icon from "../../components/Icon.astro";
+import OfflineButton from "../../components/games/OfflineButton.astro";
 import CharAvatar from "../../components/public/CharAvatar.astro";
 import Empty from "../../components/public/Empty.astro";
 import PageHero from "../../components/public/PageHero.astro";
@@ -113,6 +114,11 @@ const numbers = [
       }
       <a class="pp-hero-link" href="#how">How to play<Icon name="arrow-right" size={14} /></a>
     </div>
+    {
+      playable && (
+        <OfflineButton slug={game.slug} title={game.title} owner={viewer.user ? `u${viewer.user.id}` : "guest"} look="public" />
+      )
+    }
 
     <div class="pp-glass pp-gstats" slot="aside">
       <div class="pp-gstats__top">

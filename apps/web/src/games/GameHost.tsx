@@ -33,22 +33,66 @@ async function call(url: string, body?: unknown): Promise<Record<string, unknown
 }
 
 /**
+ * The offline outbox (public/offline/mib-sync.js, on the play page as
+ * window.MIBSync). Saves and scores that cannot reach the server wait there
+ * and are sent later (Background Sync, or when the connection returns), with
+ * an id so a score is counted once. Absent: offline calls simply fail.
+ */
+interface OfflineOutbox {
+  outbox(): { put(item: unknown): Promise<void>; all(): Promise<Array<Record<string, unknown>>> };
+  saveItem(o: Record<string, unknown>): { id: string; body: { data: unknown; saveVersion: number } };
+  scoreItem(o: Record<string, unknown>): unknown;
+}
+const offline = (): OfflineOutbox | null => (typeof window !== "undefined" ? ((window as { MIBSync?: OfflineOutbox }).MIBSync ?? null) : null);
+/** True when a request failed because there is no network (not because the server said no). */
+const isNetworkError = (e: unknown) => e instanceof TypeError || (typeof navigator !== "undefined" && navigator.onLine === false);
+async function queue(item: unknown): Promise<void> {
+  await offline()!.outbox().put(item);
+  const reg = await navigator.serviceWorker?.getRegistration?.().catch(() => undefined);
+  await (reg as { sync?: { register(tag: string): Promise<void> } } | undefined)?.sync?.register("mib-outbox").catch(() => undefined);
+}
+
+/**
  * The browser side of the platform services, backed by the API routes in
  * src/pages/api/games/ (save, score, cheat) and /api/games/arcade/hero/.
+ * With no network, saves and scores go to the offline outbox (see above).
  */
-function browserPlatform(slug: string): GamePlatform {
+function browserPlatform(slug: string, owner: string): GamePlatform {
   const base = `/api/games/${encodeURIComponent(slug)}`;
+  const versions = new Map<string, number>(); // slot -> the cloud version last seen (sent as `base`)
   return {
     async saveProgress(slot, data, opts) {
-      await call(`${base}/save`, { slot, data, saveVersion: opts?.saveVersion, summary: opts?.summary });
+      const body = { slot, data, saveVersion: opts?.saveVersion, summary: opts?.summary };
+      try {
+        const r = await call(`${base}/save`, body);
+        if (typeof r.version === "number") versions.set(slot, r.version);
+      } catch (e) {
+        if (!offline() || owner === "guest" || !isNetworkError(e)) throw e;
+        await queue(offline()!.saveItem({ slug, owner, slot, data, summary: opts?.summary, saveVersion: opts?.saveVersion, base: versions.get(slot) ?? 0, at: Date.now() }));
+      }
     },
     async loadProgress(slot) {
-      const r = await call(`${base}/save?slot=${encodeURIComponent(slot)}`);
-      const save = r.save as { data: unknown; saveVersion: number } | null;
-      return save ? { data: save.data, saveVersion: save.saveVersion } : null;
+      try {
+        const r = await call(`${base}/save?slot=${encodeURIComponent(slot)}`);
+        const save = r.save as { data: unknown; saveVersion: number; version?: number } | null;
+        if (save?.version) versions.set(slot, save.version);
+        return save ? { data: save.data, saveVersion: save.saveVersion } : null;
+      } catch (e) {
+        if (!offline() || !isNetworkError(e)) throw e;
+        // Offline: the newest save still waiting to be sent, if any.
+        const id = offline()!.saveItem({ slug, owner, slot }).id;
+        const waiting = (await offline()!.outbox().all()).find((i) => i.id === id) as { body?: { data: unknown; saveVersion: number } } | undefined;
+        return waiting?.body ? { data: waiting.body.data, saveVersion: waiting.body.saveVersion } : null;
+      }
     },
     async submitScore(score, opts) {
-      await call(`${base}/score`, { score, cheated: opts?.cheated ?? false, details: opts?.details ?? {} });
+      const body = { score, cheated: opts?.cheated ?? false, details: opts?.details ?? {} };
+      try {
+        await call(`${base}/score`, body);
+      } catch (e) {
+        if (!offline() || owner === "guest" || !isNetworkError(e)) throw e;
+        await queue(offline()!.scoreItem({ slug, owner, ...body, at: Date.now() }));
+      }
     },
     async checkCheat(code, channel) {
       const r = await call(`${base}/cheat`, { code, channel });
@@ -70,7 +114,8 @@ export default function GameHost({ slug, entry, assetsPath, settings, player }: 
     if (!box.current || !hasGame(entry)) return;
     const controller = new AbortController();
     let handle: GameHandle | null = null;
-    const ctx: GameContext = { slug, assetsPath, settings, player, platform: browserPlatform(slug), signal: controller.signal };
+    const owner = player ? `u${player.id}` : "guest";
+    const ctx: GameContext = { slug, assetsPath, settings, player, platform: browserPlatform(slug, owner), signal: controller.signal };
 
     gameRegistry[entry]!()
       .then((mod) => mod.mount(box.current!, ctx))

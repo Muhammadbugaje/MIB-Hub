@@ -6,8 +6,8 @@
  *   npx wrangler d1 migrations apply <DB_NAME> --remote
  * using the same SQL files in packages/db/migrations (see docs/DATABASE.md).
  *
- * Not used yet: apps/web currently builds for Node. When the site moves to
- * Cloudflare, apps/web/src/lib/db.ts switches to this function.
+ * Used by apps/web/src/platform/workers.ts (the Cloudflare build).
+ * See docs/DEPLOY_CLOUDFLARE.md.
  */
 import { drizzle } from "drizzle-orm/d1";
 import * as schema from "./schema/index.ts";

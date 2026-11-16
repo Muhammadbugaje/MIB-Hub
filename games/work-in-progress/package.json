@@ -1,0 +1,19 @@
+{
+  "name": "@mib/game-work-in-progress",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Work in Progress: the new open-world campus game (PlayCanvas). Builds to apps/web/public/play/work-in-progress/.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc -p . --noEmit",
+    "pack:people": "tsx tools/pack-character.ts"
+  },
+  "dependencies": {
+    "playcanvas": "2.23.3"
+  },
+  "devDependencies": {
+    "vite": "6.4.6"
+  }
+}

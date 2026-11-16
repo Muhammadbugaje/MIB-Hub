@@ -1,0 +1,14 @@
+---
+/**
+ * Loads the games' shared sound engine (arcade.js) on an admin page, so the
+ * sound manager can play a game's synthesised sounds exactly as the game does
+ * (see sound-kit.ts). The hidden stage tells arcade.js which game this is.
+ */
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+---
+
+<div data-gm-stage data-gm-slug={slug} hidden></div>
+<script is:inline src="/play/_shared/js/games/arcade.js"></script>

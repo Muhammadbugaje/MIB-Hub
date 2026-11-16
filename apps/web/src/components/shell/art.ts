@@ -5,16 +5,7 @@
  * Pages ask here which files exist, so a card can fall back to the accent
  * gradient + icon when a cover has not been made yet.
  */
-import { existsSync } from "node:fs";
-import { join } from "node:path";
-
-/** Where the public folder can be, in dev (`apps/web`, repo root) and in a build. */
-const ROOTS = [
-  join(process.cwd(), "public"),
-  join(process.cwd(), "apps", "web", "public"),
-  join(process.cwd(), "dist", "client"),
-  join(process.cwd(), "apps", "web", "dist", "client"),
-];
+import { hasPublicFile } from "#platform";
 
 const cache = new Map<string, { at: number; found: boolean }>();
 const CACHE_MS = 15_000;
@@ -26,7 +17,7 @@ export function hasGameFile(slug: string, file: string): boolean {
   const hit = cache.get(key);
   const now = Date.now();
   if (hit && now - hit.at < CACHE_MS) return hit.found;
-  const found = ROOTS.some((root) => existsSync(join(root, "games", slug, file)));
+  const found = hasPublicFile(`games/${slug}/${file}`);
   cache.set(key, { at: now, found });
   return found;
 }

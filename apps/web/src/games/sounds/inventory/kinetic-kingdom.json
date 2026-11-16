@@ -1,0 +1,732 @@
+{
+ "slug": "kinetic-kingdom",
+ "title": "Kinetic Kingdom",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Kinetic Kingdom → world map buttons",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 334,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 1233,
+     "fn": "mapGo"
+    },
+    {
+     "file": "platformer.js",
+     "line": 1239,
+     "fn": "mapAct"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → head-bump a block"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 226,
+     "fn": "bumpBlock"
+    },
+    {
+     "file": "platformer.js",
+     "line": 227,
+     "fn": "bumpBlock"
+    },
+    {
+     "file": "platformer.js",
+     "line": 234,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 1362,
+     "fn": "click"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "bounce",
+   "name": "Bounce",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → spring and enemy bounce"
+   ],
+   "source": "sample",
+   "files": [
+    "core/spring_1",
+    "core/spring_2",
+    "core/spring_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 329,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 391,
+     "fn": "enemies"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → dash and boss charge"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 310,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 316,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 600,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 610,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → explosion and fire arc"
+   ],
+   "source": "sample",
+   "files": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 321,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 437,
+     "fn": "fireArc"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy hit",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → ground pound and boss slam"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 237,
+     "fn": "poundHit"
+    },
+    {
+     "file": "platformer.js",
+     "line": 411,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 580,
+     "fn": "bossStep"
+    },
+    {
+     "file": "platformer.js",
+     "line": 590,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → you are hurt"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 194,
+     "fn": "hurt"
+    },
+    {
+     "file": "platformer.js",
+     "line": 195,
+     "fn": "hurt"
+    },
+    {
+     "file": "platformer.js",
+     "line": 196,
+     "fn": "hurt"
+    },
+    {
+     "file": "platformer.js",
+     "line": 546,
+     "fn": "bossHit"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → jump"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 302,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 309,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "kick",
+   "name": "Kick",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → enemy kicked"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 210,
+     "fn": "kill"
+    },
+    {
+     "file": "platformer.js",
+     "line": 445,
+     "fn": "heroVsEnemy"
+    },
+    {
+     "file": "platformer.js",
+     "line": 587,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "land",
+   "name": "Landing",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → landing after a jump"
+   ],
+   "source": "file",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → shot fired"
+   ],
+   "source": "sample",
+   "files": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 286,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → power-up appears"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 177,
+     "fn": "powerUp"
+    },
+    {
+     "file": "platformer.js",
+     "line": 233,
+     "fn": "bumpBlock"
+    },
+    {
+     "file": "platformer.js",
+     "line": 595,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 609,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → stomp an enemy"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 455,
+     "fn": "heroVsEnemy"
+    },
+    {
+     "file": "platformer.js",
+     "line": 491,
+     "fn": "shots"
+    },
+    {
+     "file": "platformer.js",
+     "line": 621,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → level start, boss arena locks"
+   ],
+   "source": "sample",
+   "files": [
+    "core/whistle"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 275,
+     "fn": "play"
+    },
+    {
+     "file": "platformer.js",
+     "line": 371,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 526,
+     "fn": "lockArena"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Kinetic Kingdom → electric hazard"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 285,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 607,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → coin pickup",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 151,
+     "fn": "coin"
+    },
+    {
+     "file": "platformer.js",
+     "line": 184,
+     "fn": "powerUp"
+    },
+    {
+     "file": "platformer.js",
+     "line": 366,
+     "fn": "pickups"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → flag reached, time attack cleared"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 364,
+     "fn": "pickups"
+    },
+    {
+     "file": "platformer.js",
+     "line": 635,
+     "fn": "attackClear"
+    },
+    {
+     "file": "platformer.js",
+     "line": 657,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "lose",
+   "name": "Lose jingle",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → you die"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 201,
+     "fn": "die"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → game over"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 687,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 701,
+     "fn": "afterDeath"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → power-up and 1-up collected",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 59,
+     "fn": "skipLevel"
+    },
+    {
+     "file": "platformer.js",
+     "line": 152,
+     "fn": "oneUp"
+    },
+    {
+     "file": "platformer.js",
+     "line": 180,
+     "fn": "powerUp"
+    },
+    {
+     "file": "platformer.js",
+     "line": 189,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 233,
+     "fn": "bumpBlock"
+    },
+    {
+     "file": "platformer.js",
+     "line": 369,
+     "fn": "pickups"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → level cleared or new best"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 666,
+     "fn": "attackTally"
+    },
+    {
+     "file": "platformer.js",
+     "line": 666,
+     "fn": "attackTally"
+    },
+    {
+     "file": "platformer.js",
+     "line": 687,
+     "fn": ""
+    },
+    {
+     "file": "platformer.js",
+     "line": 701,
+     "fn": "afterDeath"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Kinetic Kingdom → boss defeated",
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 565,
+     "fn": "bossDown"
+    },
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Kinetic Kingdom → level cleared"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "platformer.js",
+     "line": 1265,
+     "fn": "run"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Kinetic Kingdom → each world's music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "none"
+  }
+ ]
+}

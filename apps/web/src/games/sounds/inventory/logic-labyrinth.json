@@ -1,0 +1,337 @@
+{
+ "slug": "logic-labyrinth",
+ "title": "Logic Labyrinth",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Logic Labyrinth → editing a gate, sequencer ticks, sockets",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/snap_1",
+    "puzzle/snap_2",
+    "puzzle/snap_3"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 97,
+     "fn": "edit"
+    },
+    {
+     "file": "logic.js",
+     "line": 262,
+     "fn": "seqTick"
+    },
+    {
+     "file": "logic.js",
+     "line": 674,
+     "fn": "tapSock"
+    },
+    {
+     "file": "logic.js",
+     "line": 726,
+     "fn": "update"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Logic Labyrinth → a change that is not allowed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 54,
+     "fn": "start"
+    },
+    {
+     "file": "logic.js",
+     "line": 88,
+     "fn": "refresh"
+    },
+    {
+     "file": "logic.js",
+     "line": 95,
+     "fn": "edit"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Logic Labyrinth → walking into a laser"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 234,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Logic Labyrinth → jump"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 214,
+     "fn": "physics"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Logic Labyrinth → a switch flipped"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 110,
+     "fn": "flip"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Logic Labyrinth → a laser fires"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/spark_1",
+    "puzzle/spark_2"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 230,
+     "fn": ""
+    },
+    {
+     "file": "logic.js",
+     "line": 253,
+     "fn": "seqTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Logic Labyrinth → a tile placed",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/drop_1",
+    "puzzle/drop_2",
+    "puzzle/drop_3"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 97,
+     "fn": "edit"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Logic Labyrinth → level failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 152,
+     "fn": "results"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Logic Labyrinth → door opens, level won",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/confirm_1",
+    "core/confirm_2"
+   ],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 85,
+     "fn": "refresh"
+    },
+    {
+     "file": "logic.js",
+     "line": 145,
+     "fn": "win"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Logic Labyrinth → level solved"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 152,
+     "fn": "results"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Logic Labyrinth → level solved"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "logic.js",
+     "line": 127,
+     "fn": "run"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Logic Labyrinth → puzzle music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    300,
+    "synthwave",
+    {
+     "bpm": 112
+    }
+   ]
+  }
+ ]
+}

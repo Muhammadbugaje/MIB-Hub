@@ -1,0 +1,41 @@
+// The platform layer (src/platform/): upload keys and the on-disk blob store
+// used by `npm run dev`. The Cloudflare (R2/D1) side is checked with `npm run preview`.
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { afterAll, describe, expect, it } from "vitest";
+import { folderBlobStore } from "../src/platform/node.ts";
+import { isSafeKey } from "../src/platform/types.ts";
+
+describe("isSafeKey", () => {
+  it("accepts folder/name.ext keys", () => {
+    expect(isSafeKey("people/5b3bd67d-c9a7-4ee8-9c14-71dcdb29d87f.png")).toBe(true);
+    expect(isSafeKey("sounds/abc-123.mp3")).toBe(true);
+  });
+  it("rejects paths that could escape the folder or bucket", () => {
+    for (const bad of ["../x.png", "people/../../x.png", "/people/x.png", "people/x", "a/b/c.png", "People/x.png", "people\\x.png", ""]) {
+      expect(isSafeKey(bad), bad).toBe(false);
+    }
+  });
+});
+
+describe("folderBlobStore", () => {
+  const root = mkdtempSync(join(tmpdir(), "mib-blobs-"));
+  const store = folderBlobStore(root);
+  afterAll(() => rmSync(root, { recursive: true, force: true }));
+
+  it("stores, reads back and deletes a file", async () => {
+    const bytes = new Uint8Array([1, 2, 3, 4]);
+    await store.put("people/a-1.png", bytes, "image/png");
+    const got = await store.get("people/a-1.png");
+    expect(got?.contentType).toBe("image/png");
+    expect([...(got?.bytes ?? [])]).toEqual([1, 2, 3, 4]);
+    await store.delete("people/a-1.png");
+    expect(await store.get("people/a-1.png")).toBeNull();
+  });
+
+  it("refuses unsafe keys", async () => {
+    await expect(store.put("../evil.png", new Uint8Array([1]), "image/png")).rejects.toThrow();
+    expect(await store.get("../../etc/passwd.png")).toBeNull();
+  });
+});

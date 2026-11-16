@@ -1,43 +1,18 @@
 /**
- * Server settings read from environment variables (and the repo-root .env
- * file in development). Server-only: never import this from a React island.
+ * Server settings read from environment variables. Server-only: never
+ * import this from a React island.
  *
- * Every variable is listed in /.env.example with an explanation.
+ * Locally they come from the repo-root .env file (see /.env.example).
+ * On Cloudflare they come from wrangler.jsonc `vars` and from secrets
+ * (`wrangler secret put`); see docs/DEPLOY_CLOUDFLARE.md.
  */
-import { existsSync } from "node:fs";
-import { dirname, isAbsolute, resolve } from "node:path";
+import { databaseFile, isProd, readVar, REPO_ROOT } from "#platform";
 import { siteConfig } from "../site.config.ts";
 
-/** Walk up from the current folder to the repo root (the folder with package-lock.json). */
-function findRepoRoot(start: string): string {
-  let dir = start;
-  for (let i = 0; i < 6; i++) {
-    if (existsSync(resolve(dir, "package-lock.json"))) return dir;
-    const parent = dirname(dir);
-    if (parent === dir) break;
-    dir = parent;
-  }
-  return start;
-}
-
-export const REPO_ROOT = findRepoRoot(process.cwd());
-
-try {
-  // Node 21.7+ built-in .env loader. Values already in the environment win.
-  process.loadEnvFile(resolve(REPO_ROOT, ".env"));
-} catch {
-  /* no .env file: defaults below apply */
-}
-
-const isProd = process.env.NODE_ENV === "production";
-
-function databaseFile(): string {
-  const file = process.env.DATABASE_FILE || "apps/web/.data/dev.sqlite";
-  return isAbsolute(file) ? file : resolve(REPO_ROOT, file);
-}
+export { REPO_ROOT };
 
 function authSecret(): string {
-  const secret = process.env.BETTER_AUTH_SECRET;
+  const secret = readVar("BETTER_AUTH_SECRET");
   if (secret && secret.length >= 32) return secret;
   if (isProd) throw new Error("BETTER_AUTH_SECRET must be set (32+ characters) in production.");
   console.warn("[env] BETTER_AUTH_SECRET is not set: using an insecure development secret.");
@@ -46,12 +21,11 @@ function authSecret(): string {
 
 export const env = {
   isProd,
-  /** "sqlite" (local file) or "d1" (Cloudflare). See docs/DATABASE.md. */
-  databaseDriver: (process.env.DATABASE_DRIVER || "sqlite") as "sqlite" | "d1",
-  databaseFile: databaseFile(),
-  siteUrl: process.env.SITE_URL || siteConfig.url,
+  /** The SQLite file locally; a label on Cloudflare (which uses D1). See docs/DATABASE.md. */
+  databaseFile,
+  siteUrl: readVar("SITE_URL") || siteConfig.url,
   authSecret: authSecret(),
-  /** "console" prints emails to the terminal. See src/lib/mailer.ts. */
-  mailDriver: process.env.MAIL_DRIVER || "console",
-  mailFrom: process.env.MAIL_FROM || `${siteConfig.name} <no-reply@localhost>`,
+  /** "console" prints emails to the terminal / the Worker log. See src/lib/mailer.ts. */
+  mailDriver: readVar("MAIL_DRIVER") || "console",
+  mailFrom: readVar("MAIL_FROM") || `${siteConfig.name} <no-reply@localhost>`,
 };

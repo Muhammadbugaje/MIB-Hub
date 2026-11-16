@@ -1,0 +1,648 @@
+{
+ "slug": "impulse-arena",
+ "title": "Impulse Arena",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Impulse Arena → fighter select",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 198,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 211,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → a hit is blocked"
+   ],
+   "source": "sample",
+   "files": [
+    "core/guard_1",
+    "core/guard_2",
+    "core/guard_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 160,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 183,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 184,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 185,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 198,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 210,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → fighter dashes"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 142,
+     "fn": "say"
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → explosive special lands"
+   ],
+   "source": "sample",
+   "files": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 192,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy hit",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → heavy attack lands"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 146,
+     "fn": "say"
+    },
+    {
+     "file": "clash.js",
+     "line": 183,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → light attack lands"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 146,
+     "fn": "say"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → fighter jumps"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 141,
+     "fn": "say"
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "kick",
+   "name": "Kick",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → kick lands"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 195,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "ko",
+   "name": "Knockout",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → knockout"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 216,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 223,
+     "fn": "fn"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → beam special"
+   ],
+   "source": "sample",
+   "files": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 187,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → special move"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 202,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 221,
+     "fn": "fn"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → ground slam and landings"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 189,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 190,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 196,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → round starts"
+   ],
+   "source": "sample",
+   "files": [
+    "core/bell_1",
+    "core/bell_2"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 140,
+     "fn": "say"
+    },
+    {
+     "file": "clash.js",
+     "line": 207,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Impulse Arena → shock special"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 181,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Impulse Arena → trial goal ticked, tutorial step done",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 155,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 208,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 471,
+     "fn": "trialEvent"
+    },
+    {
+     "file": "clash.js",
+     "line": 619,
+     "fn": "tutCheck"
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Impulse Arena → fight lost"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 290,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Impulse Arena → power meter full, super move",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 169,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 202,
+     "fn": ""
+    },
+    {
+     "file": "clash.js",
+     "line": 204,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Impulse Arena → fight won"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 290,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Impulse Arena → crowd roars at a KO"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "clash.js",
+     "line": 63,
+     "fn": "run"
+    },
+    {
+     "file": "clash.js",
+     "line": 221,
+     "fn": "fn"
+    },
+    {
+     "file": "clash.js",
+     "line": 223,
+     "fn": "fn"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Impulse Arena → fight music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    4100,
+    "synthwave",
+    {
+     "bpm": 118
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<!-- Shown by the service worker (public/sw.js) for any page that was not downloaded while there is no
+     internet. Self-contained (no site CSS: that may not be on this device). Lists the games that were
+     downloaded for offline play, from Cache Storage, through /offline/mib-sync.js. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex" />
+    <title>You're offline · MIB-Hub</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <style>
+      :root { --bg: #f4f6fb; --card: #fff; --ink: #14213d; --muted: #5b6478; --line: rgba(20, 33, 61, .12); --accent: #0fb5c9; --ok: #16a34a; }
+      @media (prefers-color-scheme: dark) { :root { --bg: #0b1020; --card: #141b2e; --ink: #eef2f8; --muted: #a5adc0; --line: rgba(255, 255, 255, .1); --accent: #38e1f5; } }
+      * { box-sizing: border-box; }
+      body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--ink); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+      main { max-width: 760px; margin: 0 auto; padding: 48px 16px; }
+      h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.2; margin: 0 0 8px; letter-spacing: -.01em; }
+      p { margin: 0 0 12px; color: var(--muted); }
+      .status { display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; border-radius: 999px; border: 1px solid var(--line); font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+      .status i { width: 8px; height: 8px; border-radius: 50%; background: #f59e0b; }
+      .status.is-on i { background: var(--ok); }
+      ul { list-style: none; padding: 0; margin: 24px 0; display: grid; gap: 12px; }
+      li { display: flex; align-items: center; gap: 14px; padding: 12px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+      li img { width: 52px; height: 52px; border-radius: 12px; flex: none; background: var(--line); }
+      li div { flex: 1; min-width: 0; }
+      li b { display: block; color: var(--ink); }
+      li small { color: var(--muted); }
+      a.play, button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border-radius: 12px; font-family: inherit; font-size: 15px; font-weight: 600; line-height: 1; cursor: pointer; text-decoration: none; }
+      a.play { background: var(--accent); color: #04232a; border: 0; }
+      button { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+      .empty { padding: 20px; border-radius: 16px; border: 1px dashed var(--line); }
+      .row { display: flex; gap: 10px; flex-wrap: wrap; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="status" data-net><i></i><span>You're offline</span></span>
+      <h1>This page needs the internet</h1>
+      <p>But the games you downloaded still play here, right now. Your progress is kept on this device and syncs to your account when you're back online.</p>
+      <ul data-list hidden></ul>
+      <div class="empty" data-empty hidden>
+        <p>No games are downloaded on this device yet. When you're online, open a game and choose <b>Download for offline</b>.</p>
+      </div>
+      <div class="row">
+        <button type="button" data-retry>Try again</button>
+        <a class="play" href="/games" data-games hidden>All games</a>
+      </div>
+    </main>
+    <script src="/offline/mib-sync.js"></script>
+    <script>
+      (function () {
+        "use strict";
+        var S = window.MIBSync, list = document.querySelector("[data-list]"), empty = document.querySelector("[data-empty]");
+        function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+        function net() {
+          var on = navigator.onLine !== false, el = document.querySelector("[data-net]");
+          el.classList.toggle("is-on", on);
+          // "online" can still mean the site is unreachable (Wi-Fi without internet, the server is down)
+          el.querySelector("span").textContent = on ? "Can't reach MIB-Hub right now" : "You're offline";
+          document.querySelector("[data-games]").hidden = !on;
+        }
+        function draw() {
+          if (!S || !window.caches) { empty.hidden = false; return; }
+          S.listDownloads(caches).then(function (games) {
+            empty.hidden = games.length > 0;
+            list.hidden = games.length === 0;
+            list.innerHTML = games.map(function (g) {
+              return "<li><img src='" + esc(g.icon) + "' alt='' width='52' height='52'><div><b>" + esc(g.title) + "</b><small>" + S.size(g.bytes) +
+                " · downloaded " + new Date(g.at).toLocaleDateString() + "</small></div><a class='play' href='/play/" + esc(g.slug) + "'>Play</a></li>";
+            }).join("");
+          }, function () { empty.hidden = false; });
+        }
+        document.querySelector("[data-retry]").addEventListener("click", function () { location.reload(); });
+        window.addEventListener("online", net);
+        window.addEventListener("offline", net);
+        net();
+        draw();
+      })();
+    </script>
+  </body>
+</html>

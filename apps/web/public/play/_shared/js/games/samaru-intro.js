@@ -55,6 +55,9 @@
   function ext() { if (A.ext) return A.ext; var e = "m4a"; try { var a = document.createElement("audio"); if (a.canPlayType && a.canPlayType('audio/ogg; codecs="opus"')) e = "ogg"; } catch (er) {} return (A.ext = e); }
   function load(path) {
     var s = snd(); if (!s || !base || typeof fetch !== "function") return null; if (A.buf[path]) return A.buf[path];
+    // MIB-Hub: a replacement staff uploaded for an intro cue (sound id "intro_<name>", admin sound manager) plays instead.
+    var X = window.Arcade && Arcade.Audio, cue = /^fslg-intro\//.test(path) ? "intro_" + path.slice(11) : "", ov = cue && X && X.ov && X.ov.global[cue];
+    if (ov && ov !== 1) return (A.buf[path] = Promise.resolve(ov));
     A.buf[path] = fetch(base + path + "." + ext()).then(function (r) { if (!r.ok) throw new Error("missing"); return r.arrayBuffer(); }).then(function (ab) { return new Promise(function (ok, no) { var q = s.ac.decodeAudioData(ab, ok, no); if (q && q.then) q.then(ok, no); }); });
     A.buf[path].catch(function () {}); return A.buf[path];
   }

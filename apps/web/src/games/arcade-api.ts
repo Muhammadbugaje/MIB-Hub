@@ -19,10 +19,11 @@
  *   POST <slug>/score        a score from a contract (TypeScript) game
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
-import type { CheatInfo, Game, HeroInfo, PlayerProfile, Repos } from "@mib/db";
+import { OFFLINE_CID_RE, type CheatInfo, type Game, type HeroInfo, type PlayerProfile, type Progress, type Repos } from "@mib/db";
 import type { Viewer } from "../lib/guard.ts";
 import type { Switches } from "../lib/site.ts";
 import { isLegacyGame, isSaveKey } from "./legacy.ts";
+import { loadOverrideMap } from "./sounds/load.ts";
 import {
   Rejected,
   applyResult,
@@ -232,6 +233,7 @@ export async function arcadeCall(ctx: PlayCtx, method: string, path: string, bod
         if (ctx.limited(`result:${prof.id}`, 30, 60_000)) return err("Too many results. Slow down a little.", 429);
         return ok(await recordResult(ctx, prof, body, Math.floor(ctx.now / 1000)));
       case "sync":
+        if (wrongOwner(ctx, body)) return err(WRONG_OWNER, 409);
         return ok(await sync(ctx, prof, body));
       case "buy": {
         const { state, price } = buyItem(readState(prof.stats), prof.coins, String(body.item ?? ""));
@@ -256,7 +258,29 @@ export async function arcadeCall(ctx: PlayCtx, method: string, path: string, bod
   }
 }
 
-/** Results played offline: { items: [{ cid, kind: "result", at, data }] }. Each item is counted once. */
+/**
+ * The device that queued offline items says whose they are ("u<user id>", or
+ * "guest"). If someone else is signed in now, nothing is counted: the device
+ * keeps the items and asks the player (see public/offline/mib-offline.js).
+ */
+export const WRONG_OWNER = "These were played on another account. Sign in to that account to sync them.";
+function wrongOwner(ctx: PlayCtx, body: Record<string, unknown>): boolean {
+  const owner = typeof body.owner === "string" ? body.owner : "";
+  return !!owner && owner !== `u${ctx.viewer.user?.id ?? ""}`;
+}
+
+/** A device-made id for an offline item, or "" if it is missing or malformed. */
+function cleanCid(v: unknown): string {
+  const cid = String(v ?? "");
+  return OFFLINE_CID_RE.test(cid) ? cid : "";
+}
+
+/**
+ * Results played offline: { owner?, items: [{ cid, kind: "result", at, data }] }.
+ * Each item is counted once, ever: its id is claimed in the database
+ * (repos.offline) before the rewards are given, so a retry, a second tab or
+ * Background Sync sending the same item again changes nothing.
+ */
 async function sync(ctx: PlayCtx, prof: PlayerProfile, body: Record<string, unknown>) {
   const items = Array.isArray(body.items) ? body.items.slice(0, SYNC_MAX_ITEMS) : null;
   if (!items) throw new Rejected("Bad JSON.");
@@ -266,27 +290,38 @@ async function sync(ctx: PlayCtx, prof: PlayerProfile, body: Record<string, unkn
   const clean = items
     .filter((it): it is Record<string, unknown> => !!it && typeof it === "object")
     .map((it) => {
-      const cid = String(it.cid ?? "").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 40);
+      const cid = cleanCid(it.cid);
       const at = Number(it.at) / 1000;
       const when = Number.isFinite(at) && at >= nowS - 14 * 86400 && at <= nowS + 60 ? Math.min(at, nowS) : nowS;
       return { cid, at: Math.floor(when), it };
     })
-    .filter((x) => x.cid.length >= 8)
+    .filter((x) => x.cid !== "")
     .sort((a, b) => a.at - b.at);
   let current = prof;
   for (const { cid, at, it } of clean) {
-    if (ctx.limited(`sync-seen:${prof.id}:${cid}`, 1, 30 * 86400_000)) {
+    const data = it.data && typeof it.data === "object" ? (it.data as Record<string, unknown>) : {};
+    const fresh = await ctx.repos.offline.claim({
+      profileId: prof.id,
+      cid,
+      gameSlug: String(data.game ?? ""),
+      playedAt: new Date(at * 1000),
+    });
+    if (!fresh) {
       done.push(cid); // already counted
       continue;
     }
     try {
       if (it.kind !== "result") throw new Rejected("Unknown item.");
-      const data = it.data && typeof it.data === "object" ? (it.data as Record<string, unknown>) : {};
       await recordResult(ctx, current, data, at);
+      await ctx.repos.offline.settle(prof.id, cid, { ok: true });
       current = (await ctx.repos.profiles.getForUser(ctx.viewer.user!.id)) ?? current;
       done.push(cid);
     } catch (e) {
-      if (!(e instanceof Rejected)) throw e;
+      if (!(e instanceof Rejected)) {
+        await ctx.repos.offline.release(prof.id, cid); // not the item's fault: let a retry count it
+        throw e;
+      }
+      await ctx.repos.offline.settle(prof.id, cid, { ok: false, note: e.message });
       rejected.push({ cid, error: e.message });
     }
   }
@@ -372,13 +407,23 @@ export async function loadSave(ctx: PlayCtx, slug: string, slot = "auto"): Promi
   const prof = await profileOf(ctx);
   if (!prof) return err(SIGN_IN_TO_SAVE, 401);
   const row = await ctx.repos.progress.load(prof.id, slug, slot as "auto");
-  return ok({
-    ok: true,
-    save: row ? { data: row.data, saveVersion: row.saveVersion, summary: row.summary, updatedAt: row.updatedAt } : null,
-  });
+  return ok({ ok: true, save: row ? saveView(row) : null });
 }
 
-/** POST <slug>/save { slot?, data, saveVersion?, summary? } */
+/** A save as the API returns it. `version` (updatedAt in ms) is what a device sends back as `base`. */
+function saveView(row: Progress) {
+  return { data: row.data, saveVersion: row.saveVersion, summary: row.summary, updatedAt: row.updatedAt, version: row.updatedAt.getTime() };
+}
+
+/**
+ * POST <slug>/save { slot?, data, saveVersion?, summary?, base?, owner? }
+ *
+ * `base` (optional): the save version this device last saw (0: none). With
+ * it, the save is only written if nobody saved since; otherwise the reply is
+ * 409 { conflict: true, save } and the device merges and tries again, so
+ * progress made elsewhere is never overwritten. Without it, the save simply
+ * replaces the cloud copy (the original behaviour).
+ */
 export async function storeSave(ctx: PlayCtx, slug: string, body: Record<string, unknown>, rawBytes: number): Promise<Reply> {
   const gate = playGate(await ctx.repos.games.getBySlug(slug), ctx.viewer, ctx.switches);
   if (!gate.ok) return err(gate.error, gate.status);
@@ -386,6 +431,7 @@ export async function storeSave(ctx: PlayCtx, slug: string, body: Record<string,
   const prof = await profileOf(ctx);
   if (!prof) return err(SIGN_IN_TO_SAVE, 401);
   if (!ctx.viewer.permissions.has("progress.save")) return err("Your account cannot save progress.", 403);
+  if (wrongOwner(ctx, body)) return err(WRONG_OWNER, 409);
   if (ctx.limited(`save:${prof.id}`, 30, 60_000)) return err("Saving too often. Wait a moment.", 429);
   const slot = String(body.slot ?? "auto");
   if (!SLOT_RE.test(slot)) return err("Unknown save slot.");
@@ -394,20 +440,32 @@ export async function storeSave(ctx: PlayCtx, slug: string, body: Record<string,
   else if (body.data && typeof body.data === "object" && !Array.isArray(body.data)) data = body.data as Record<string, unknown>;
   else return err("Nothing to save.");
   const sv = Number(body.saveVersion);
-  const row = await ctx.repos.progress.save({
+  const input = {
     profileId: prof.id,
     gameSlug: slug,
     slot: slot as "auto",
     data,
     saveVersion: Number.isInteger(sv) && sv > 0 ? sv : 1,
     summary: String(body.summary ?? "").slice(0, 120),
-  });
-  return ok({ ok: true, updatedAt: row.updatedAt });
+  };
+  const base = body.base === undefined || body.base === null ? null : Number(body.base);
+  if (base !== null && Number.isFinite(base) && base >= 0) {
+    const r = await ctx.repos.offline.saveIfUnchanged({ ...input, base });
+    if (!r.ok) {
+      return { status: 409, body: { ok: false, conflict: true, error: "This save changed on another device.", save: saveView(r.current) } };
+    }
+    return ok({ ok: true, updatedAt: r.row.updatedAt, version: r.row.updatedAt.getTime() });
+  }
+  const row = await ctx.repos.progress.save(input);
+  return ok({ ok: true, updatedAt: row.updatedAt, version: row.updatedAt.getTime() });
 }
 
 /* ------------------------------------------------------------- scores */
 
-/** POST <slug>/score { score, cheated?, details? } (contract games; legacy games use result/). */
+/**
+ * POST <slug>/score { score, cheated?, details?, cid? } (contract games; legacy games use result/).
+ * `cid`: a device-made id for a score played offline; sending it again is not counted again.
+ */
 export async function submitScore(ctx: PlayCtx, slug: string, body: Record<string, unknown>): Promise<Reply> {
   const gate = playGate(await ctx.repos.games.getBySlug(slug), ctx.viewer, ctx.switches);
   if (!gate.ok) return err(gate.error, gate.status);
@@ -418,31 +476,36 @@ export async function submitScore(ctx: PlayCtx, slug: string, body: Record<strin
   const score = Number(body.score);
   if (!Number.isFinite(score) || score < 0) return err("A score must be a number of 0 or more.");
   const details = body.details && typeof body.details === "object" ? (body.details as Record<string, unknown>) : {};
-  const row = await ctx.repos.scores.submit({
-    profileId: prof.id,
-    gameSlug: slug,
-    score: Math.min(1_000_000_000, score),
-    cheated: Boolean(body.cheated),
-    details,
-  });
+  const cid = body.cid === undefined ? "" : cleanCid(body.cid);
+  if (body.cid !== undefined && !cid) return err("Bad offline id.");
+  if (cid && !(await ctx.repos.offline.claim({ profileId: prof.id, cid, gameSlug: slug }))) {
+    return ok({ ok: true, duplicate: true, best: await ctx.repos.scores.bestFor(prof.id, slug) });
+  }
+  let row: Awaited<ReturnType<Repos["scores"]["submit"]>>;
+  try {
+    row = await ctx.repos.scores.submit({
+      profileId: prof.id,
+      gameSlug: slug,
+      score: Math.min(1_000_000_000, score),
+      cheated: Boolean(body.cheated),
+      details,
+    });
+  } catch (e) {
+    if (cid) await ctx.repos.offline.release(prof.id, cid); // let a retry count it
+    throw e;
+  }
   return ok({ ok: true, id: row.id, best: await ctx.repos.scores.bestFor(prof.id, slug) });
 }
 
 /* ------------------------------------------------------------- sounds */
 
-/** GET sounds/<slug>/: staff-uploaded replacement sounds every player hears. */
+/**
+ * GET sounds/<slug>/: staff-uploaded replacement sounds every player hears,
+ * plus the per-sound volume (`vols`, also for sounds without a file) and the
+ * file list for offline precaching. arcade-sounds.js loads this in every game.
+ */
 async function sounds(ctx: PlayCtx, slug: string): Promise<Reply> {
   if (!slug) return err("Not found.", 404);
-  const rows = await ctx.repos.sounds.list(slug);
-  return ok({
-    can_global: false,
-    sounds: rows.map((s) => ({
-      name: s.name,
-      v: s.version,
-      type: s.contentType,
-      size: s.size,
-      at: s.updatedAt,
-      url: `/api/games/arcade/sounds/${encodeURIComponent(slug)}/file/${encodeURIComponent(s.name)}?v=${s.version}`,
-    })),
-  });
+  const map = await loadOverrideMap(ctx.repos, slug);
+  return ok({ can_global: false, ...map });
 }

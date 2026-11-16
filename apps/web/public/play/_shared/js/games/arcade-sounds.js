@@ -165,11 +165,11 @@
     }).then(refresh, refresh);
   }
   function syncGlobal() {
-    if (!S.api || typeof fetch !== "function") return idb.get("m|" + S.slug).then(function (m) { return applyGlobalList(m && m.sounds, false); });
+    if (!S.api || typeof fetch !== "function") return idb.get("m|" + S.slug).then(function (m) { S.X.gvol = (m && m.vols) || {}; return applyGlobalList(m && m.sounds, false); });
     return fetch(S.api + "sounds/" + S.slug + "/", { credentials: "same-origin", headers: { Accept: "application/json" } })
       .then(function (r) { if (!r.ok) throw new Error("list"); return r.json(); })
-      .then(function (j) { S.can = !!j.can_global; S.limits = j; idb.put("m|" + S.slug, { sounds: j.sounds || [], at: Date.now() }); return applyGlobalList(j.sounds || [], true); })
-      .catch(function () { return idb.get("m|" + S.slug).then(function (m) { return applyGlobalList(m && m.sounds, false); }); });
+      .then(function (j) { S.can = !!j.can_global; S.limits = j; S.X.gvol = j.vols || {}; idb.put("m|" + S.slug, { sounds: j.sounds || [], vols: j.vols || {}, at: Date.now() }); return applyGlobalList(j.sounds || [], true); })
+      .catch(function () { return idb.get("m|" + S.slug).then(function (m) { S.X.gvol = (m && m.vols) || {}; return applyGlobalList(m && m.sounds, false); }); }); // MIB-Hub: vols = staff per-sound volume
   }
 
   /* ---------- the panel ---------- */

@@ -1,0 +1,260 @@
+{
+ "slug": "light-bender",
+ "title": "Light Bender",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Light Bender → turning a mirror, hints, optics lab",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/snap_1",
+    "puzzle/snap_2",
+    "puzzle/snap_3"
+   ],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 55,
+     "fn": "turn"
+    },
+    {
+     "file": "bender.js",
+     "line": 57,
+     "fn": "turn"
+    },
+    {
+     "file": "bender.js",
+     "line": 64,
+     "fn": "hint"
+    },
+    {
+     "file": "bender.js",
+     "line": 72,
+     "fn": "hint"
+    },
+    {
+     "file": "bender.js",
+     "line": 144,
+     "fn": "labAdd"
+    },
+    {
+     "file": "bender.js",
+     "line": 152,
+     "fn": "labClick"
+    },
+    {
+     "file": "bender.js",
+     "line": 218,
+     "fn": "click"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Light Bender → level or daily beam starts"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 26,
+     "fn": "start"
+    },
+    {
+     "file": "bender.js",
+     "line": 34,
+     "fn": "startDaily"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Light Bender → an electric zap or an enemy defeated"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/spark_1",
+    "puzzle/spark_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Light Bender → picking up money or a reward",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/pluck_1",
+    "core/pluck_2"
+   ],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Light Bender → puzzle failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 95,
+     "fn": "has"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Light Bender → receiver lit",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/confirm_1",
+    "core/confirm_2"
+   ],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 89,
+     "fn": "win"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Light Bender → puzzle solved"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 95,
+     "fn": "has"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Light Bender → puzzle solved"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "bender.js",
+     "line": 49,
+     "fn": "run"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Light Bender → puzzle music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    499,
+    "calm",
+    {}
+   ]
+  }
+ ]
+}

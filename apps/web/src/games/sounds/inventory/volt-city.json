@@ -1,0 +1,761 @@
+{
+ "slug": "volt-city",
+ "title": "Volt City",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Volt City → talking to people, probe and puzzle steps, buttons",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/snap_1",
+    "puzzle/snap_2",
+    "puzzle/snap_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 358,
+     "fn": "interact"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 426,
+     "fn": "probeCycle"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 507,
+     "fn": "capStep"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 573,
+     "fn": "eqStep"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 579,
+     "fn": "eqTry"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 623,
+     "fn": "scDo"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 744,
+     "fn": ""
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 831,
+     "fn": "clickBtn"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 1252,
+     "fn": "click"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → a puzzle move that is not allowed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 358,
+     "fn": "interact"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 365,
+     "fn": "interact"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 422,
+     "fn": "probeCycle"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 424,
+     "fn": "probeCycle"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 507,
+     "fn": "capStep"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 577,
+     "fn": "eqTry"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 621,
+     "fn": "scDo"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 637,
+     "fn": "scCheck"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "bounce",
+   "name": "Bounce",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → charge bounces off a wall"
+   ],
+   "source": "sample",
+   "files": [
+    "core/spring_1",
+    "core/spring_2",
+    "core/spring_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 257,
+     "fn": "wallHit"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 863,
+     "fn": "worldStep"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → field flip and boss charge"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 186,
+     "fn": "flip"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 276,
+     "fn": "bossStep"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 623,
+     "fn": "scDo"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 857,
+     "fn": "worldStep"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → tower defence: a blast"
+   ],
+   "source": "sample",
+   "files": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 907,
+     "fn": "tdWorld"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy hit",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → boss is hit hard"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 291,
+     "fn": "bossHit"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 864,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → you are hurt"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 189,
+     "fn": "hurt"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 905,
+     "fn": "tdWorld"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "ko",
+   "name": "Knockout",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → knocked out"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 212,
+     "fn": "knockout"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → beam fired"
+   ],
+   "source": "sample",
+   "files": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 243,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → boss special"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 279,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → enemy popped"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 225,
+     "fn": "pop"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → a warning whistle"
+   ],
+   "source": "sample",
+   "files": [
+    "core/whistle"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 366,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Volt City → field flip, lightning rod, probe released"
+   ],
+   "source": "sample",
+   "files": [
+    "puzzle/spark_1",
+    "puzzle/spark_2"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 185,
+     "fn": "flip"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 225,
+     "fn": "pop"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 280,
+     "fn": ""
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 438,
+     "fn": "probeRelease"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 623,
+     "fn": "scDo"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 906,
+     "fn": "tdWorld"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_champion",
+   "name": "Champion fanfare",
+   "group": "rewards",
+   "usage": [
+    "Volt City → the whole city restored"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 776,
+     "fn": "restoreRing"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Volt City → money earned",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/pluck_1",
+    "core/pluck_2"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 687,
+     "fn": "earn"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 881,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Volt City → capacitor fired, equation solved, short-circuit fixed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 518,
+     "fn": "capFire"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 581,
+     "fn": "eqTry"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 642,
+     "fn": "scWin"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "lose",
+   "name": "Lose jingle",
+   "group": "rewards",
+   "usage": [
+    "Volt City → a puzzle or board failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 445,
+     "fn": "probeFinish"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 517,
+     "fn": "capFire"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 636,
+     "fn": "scCheck"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 639,
+     "fn": "scCheck"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 724,
+     "fn": "boardDone"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 747,
+     "fn": ""
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 910,
+     "fn": "tdWorld"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Volt City → restore failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 328,
+     "fn": "afterRestore"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Volt City → district restored, upgrade bought",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/confirm_1",
+    "core/confirm_2"
+   ],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 311,
+     "fn": "restore"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 441,
+     "fn": "probeFinish"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 722,
+     "fn": "boardDone"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 746,
+     "fn": ""
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 774,
+     "fn": "restoreRing"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 791,
+     "fn": "openUpgrades"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 867,
+     "fn": ""
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 883,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Volt City → district solved"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 328,
+     "fn": "afterRestore"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 768,
+     "fn": "solved"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 776,
+     "fn": "restoreRing"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_groan",
+   "name": "Crowd groan",
+   "group": "ambience",
+   "usage": [
+    "Volt City → you are knocked out"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 212,
+     "fn": "knockout"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Volt City → district lights back on"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fieldbound.js",
+     "line": 206,
+     "fn": "run"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 315,
+     "fn": "cineStep"
+    },
+    {
+     "file": "fieldbound.js",
+     "line": 774,
+     "fn": "restoreRing"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Volt City → district music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    806,
+    "boss",
+    {
+     "bpm": 138
+    }
+   ]
+  }
+ ]
+}

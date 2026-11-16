@@ -1,0 +1,2144 @@
+{
+ "slug": "samaru-days",
+ "title": "Freshers School Life (Classic)",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Freshers School Life (Classic) → menus, map, phone contacts and travel",
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "fslg-story-coop.js",
+     "line": 630,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 246,
+     "fn": "enter"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 375,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 526,
+     "fn": "takeJob"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 534,
+     "fn": "jobStep"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 551,
+     "fn": "raceStep"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 821,
+     "fn": "click"
+    },
+    {
+     "file": "samaru-guide.js",
+     "line": 236,
+     "fn": ""
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 191,
+     "fn": "contacts"
+    },
+    {
+     "file": "samaru-travel.js",
+     "line": 83,
+     "fn": ""
+    },
+    {
+     "file": "samaru-travel.js",
+     "line": 108,
+     "fn": "finish"
+    },
+    {
+     "file": "samaru-map.js",
+     "line": 171,
+     "fn": "tap"
+    },
+    {
+     "file": "samaru-map.js",
+     "line": 173,
+     "fn": "tap"
+    },
+    {
+     "file": "samaru-map.js",
+     "line": 174,
+     "fn": "tap"
+    },
+    {
+     "file": "samaru-map.js",
+     "line": 179,
+     "fn": "act"
+    },
+    {
+     "file": "samaru-map.js",
+     "line": 183,
+     "fn": "act"
+    },
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "phone_close",
+   "name": "Phone away",
+   "group": "menus",
+   "usage": [
+    "Freshers School Life (Classic) → phone put away"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/phone_close_1",
+    "fslg/phone_close_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "dial",
+   "name": "Phone keypad",
+   "group": "menus",
+   "usage": [
+    "Freshers School Life (Classic) → dialling on the phone"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/dial_1",
+    "fslg/dial_2",
+    "fslg/dial_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "phone_open",
+   "name": "Phone out",
+   "group": "menus",
+   "usage": [
+    "Freshers School Life (Classic) → phone taken out"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/phone_open_1",
+    "fslg/phone_open_2"
+   ],
+   "calls": [
+    {
+     "file": "samaru-audio.js",
+     "line": 124,
+     "fn": "set"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "bike_tick",
+   "name": "Bike tick",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → bicycle wheel ticking"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/bike_tick"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → not enough money, locked door, refused"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 243,
+     "fn": "enter"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 244,
+     "fn": "enter"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 245,
+     "fn": "enter"
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 451,
+     "fn": ""
+    },
+    {
+     "file": "samaru-wardrobe.js",
+     "line": 125,
+     "fn": "buy"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 107,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 198,
+     "fn": "dial"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 232,
+     "fn": "heroAsk"
+    },
+    {
+     "file": "samaru-texts.js",
+     "line": 198,
+     "fn": "bank"
+    },
+    {
+     "file": "samaru-travel.js",
+     "line": 70,
+     "fn": "go"
+    },
+    {
+     "file": "samaru-wild.js",
+     "line": 132,
+     "fn": "caught"
+    },
+    {
+     "file": "samaru-switch.js",
+     "line": 143,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "book",
+   "name": "Book",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a book opened or put down"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/book_1",
+    "fslg/book_2",
+    "fslg/book_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "bounce",
+   "name": "Bounce",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → bouncing objects"
+   ],
+   "source": "sample",
+   "files": [
+    "core/spring_1",
+    "core/spring_2",
+    "core/spring_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 412,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "brake",
+   "name": "Brake",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → brakes squeal"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [],
+   "preview": "none"
+  },
+  {
+   "id": "bubbles",
+   "name": "Bubbles",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → bubbles under water"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/bubbles_1",
+    "fslg_water/bubbles_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "car_door_close",
+   "name": "Car door close",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a car door closing"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/car_door_close"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "car_door_open",
+   "name": "Car door open",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a car door opening"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/car_door_open"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "car_off",
+   "name": "Car off",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → engine switched off"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/car_off"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "car_start",
+   "name": "Car start",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → engine starting"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/car_start"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "class_bell",
+   "name": "Class bell",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → the class bell"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/class_bell_1",
+    "fslg/class_bell_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_heavy",
+   "name": "Crash heavy",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a heavy crash"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/crash"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_light",
+   "name": "Crash light",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a light bump"
+   ],
+   "source": "file",
+   "files": [
+    "core/metal_1",
+    "core/metal_2",
+    "core/metal_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_metal",
+   "name": "Crash metal",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a metal crash"
+   ],
+   "source": "file",
+   "files": [
+    "core/metal_heavy_1",
+    "core/metal_heavy_2",
+    "core/metal_heavy_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_bicycle",
+   "name": "Crash: bicycle",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → crashing a bicycle"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_bicycle_1",
+    "fslg3/crash_bicycle_2",
+    "fslg3/crash_bicycle_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_bus",
+   "name": "Crash: bus",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a bus crash"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_bus_1",
+    "fslg3/crash_bus_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_car",
+   "name": "Crash: car",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a car crash"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_car_1",
+    "fslg3/crash_car_2",
+    "fslg3/crash_car_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_car_light",
+   "name": "Crash: car (light)",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a light car bump"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_car_light_1",
+    "fslg3/crash_car_light_2",
+    "fslg3/crash_car_light_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_moto",
+   "name": "Crash: okada",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → crashing an okada or scooter"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_moto_1",
+    "fslg3/crash_moto_2",
+    "fslg3/crash_moto_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_pole",
+   "name": "Crash: pole",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → hitting a pole or a post"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_pole_1",
+    "fslg3/crash_pole_2",
+    "fslg3/crash_pole_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_skate",
+   "name": "Crash: skateboard",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → falling off a skateboard"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_skate_1",
+    "fslg3/crash_skate_2",
+    "fslg3/crash_skate_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crash_wall",
+   "name": "Crash: wall",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → driving into a wall"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crash_wall_1",
+    "fslg3/crash_wall_2",
+    "fslg3/crash_wall_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "crops",
+   "name": "Crops",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → working the farm plots"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/crops_1",
+    "fslg3/crops_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → sprint and dodge"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 298,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 360,
+     "fn": "walk"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 374,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 414,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "door_close",
+   "name": "Door close",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a door closing"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/door_close_1",
+    "fslg/door_close_2",
+    "fslg/door_close_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "door_open",
+   "name": "Door open",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a door opening"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/door_open_1",
+    "fslg/door_open_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_car",
+   "name": "Eng car",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → car engine (loops while you drive)"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_car"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_keke",
+   "name": "Eng keke",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → keke (tricycle) engine"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_moto"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_okada",
+   "name": "Eng okada",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → okada (motorbike) engine"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_moto"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_plane",
+   "name": "Eng plane",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → plane engine"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_plane"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_scooter",
+   "name": "Eng scooter",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → scooter engine"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_moto"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "eng_sport",
+   "name": "Eng sport",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → sports car engine"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/eng_sport"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a blast in a fight"
+   ],
+   "source": "sample",
+   "files": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 259,
+     "fn": "spawnFoe"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 406,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fall",
+   "name": "Fall",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → falling over"
+   ],
+   "source": "file",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-audio.js",
+     "line": 111,
+     "fn": "feet"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "gasp",
+   "name": "Gasp",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → someone gasps"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/gasp_1"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "getup",
+   "name": "Getup",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → getting back up"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/cloth_1",
+    "fslg/cloth_2",
+    "fslg/cloth_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-audio.js",
+     "line": 111,
+     "fn": "feet"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "glass",
+   "name": "Glass",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → glass breaking"
+   ],
+   "source": "file",
+   "files": [
+    "core/glass_1",
+    "core/glass_2",
+    "core/glass_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "guard",
+   "name": "Guard",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → guarding against an attack"
+   ],
+   "source": "file",
+   "files": [
+    "core/guard_1",
+    "core/guard_2",
+    "core/guard_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "handbrake",
+   "name": "Handbrake",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → handbrake pulled"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/handbrake"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "heavy",
+   "name": "Heavy hit",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a hard hit"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 405,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 411,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 504,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → you are hurt"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 231,
+     "fn": "hurt"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 655,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "hit_person",
+   "name": "Hit person",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a vehicle hitting someone"
+   ],
+   "source": "file",
+   "files": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_bike",
+   "name": "Horn bike",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → bicycle bell"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_bike"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_bus",
+   "name": "Horn bus",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → bus horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_car_1",
+    "fslg/horn_car_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_car",
+   "name": "Horn car",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → car horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_car_1",
+    "fslg/horn_car_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_keke",
+   "name": "Horn keke",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → keke horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_car_1",
+    "fslg/horn_car_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_okada",
+   "name": "Horn okada",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → okada horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_car_1",
+    "fslg/horn_car_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_scooter",
+   "name": "Horn scooter",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → scooter horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_squeeze"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_skate",
+   "name": "Horn skate",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → skateboard: a whistle to clear the way"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_squeeze"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "horn_sport",
+   "name": "Horn sport",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → sports car horn"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/horn_car_1",
+    "fslg/horn_car_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → jump"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 371,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 391,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "kerb",
+   "name": "Kerb",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → wheels hitting the kerb"
+   ],
+   "source": "file",
+   "files": [
+    "core/wood_1",
+    "core/wood_2",
+    "core/wood_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "kick",
+   "name": "Kick",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → kick attack"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 311,
+     "fn": "attack"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "ko",
+   "name": "Knockout",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a foe is knocked out"
+   ],
+   "source": "sample",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 264,
+     "fn": "hitFoe"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "land",
+   "name": "Landing",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → landing after a jump"
+   ],
+   "source": "file",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-audio.js",
+     "line": 110,
+     "fn": "feet"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "laser",
+   "name": "Laser",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a laser in a mission"
+   ],
+   "source": "sample",
+   "files": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 295,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "water_out",
+   "name": "Out of the water",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → climbing out of the water"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/water_out_1",
+    "fslg_water/water_out_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "pickup",
+   "name": "Pickup",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → picking something up"
+   ],
+   "source": "file",
+   "files": [
+    "core/pluck_1",
+    "core/pluck_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "punch",
+   "name": "Punch",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a punch"
+   ],
+   "source": "file",
+   "files": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "punch_heavy",
+   "name": "Punch heavy",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a heavy punch"
+   ],
+   "source": "file",
+   "files": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "rustle",
+   "name": "Rustle",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → walking through bushes"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/rustle_1",
+    "fslg3/rustle_2",
+    "fslg3/rustle_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "rustle_big",
+   "name": "Rustle (big)",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → pushing through thick bushes"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/rustle_big_1",
+    "fslg3/rustle_big_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "scrape",
+   "name": "Scrape",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → metal scraping along a wall"
+   ],
+   "source": "file",
+   "files": [
+    "fslg3/scrape_1",
+    "fslg3/scrape_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "screech",
+   "name": "Screech",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → tyres screeching"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [],
+   "preview": "none"
+  },
+  {
+   "id": "shove",
+   "name": "Shove",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → shoving someone"
+   ],
+   "source": "file",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "siren",
+   "name": "Siren",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a siren"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/siren"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "skate_roll",
+   "name": "Skate roll",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → skateboard wheels rolling"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/roll"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "skid_dirt",
+   "name": "Skid dirt",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → skidding on dirt"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [],
+   "preview": "none"
+  },
+  {
+   "id": "slap",
+   "name": "Slap",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a slap"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/slap_1",
+    "fslg/slap_2",
+    "fslg/slap_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "special",
+   "name": "Special move",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → cheats, emotes, mission cues"
+   ],
+   "source": "sample",
+   "files": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 209,
+     "fn": "cheat"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 210,
+     "fn": "cheat"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 226,
+     "fn": "emote"
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 287,
+     "fn": "start"
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 518,
+     "fn": "cue"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 223,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "splash",
+   "name": "Splash",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → jumping into water"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/splash_1",
+    "fslg_water/splash_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "splash_small",
+   "name": "Splash (small)",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a small splash"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/splash_small_1",
+    "fslg_water/splash_small_2",
+    "fslg_water/splash_small_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "step_floor",
+   "name": "Step floor",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → footsteps indoors"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/step_floor_1",
+    "fslg/step_floor_2",
+    "fslg/step_floor_3",
+    "fslg/step_floor_4",
+    "fslg/step_floor_5"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "step_grass",
+   "name": "Step grass",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → footsteps on grass"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/step_grass_1",
+    "fslg/step_grass_2",
+    "fslg/step_grass_3",
+    "fslg/step_grass_4",
+    "fslg/step_grass_5"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "step_road",
+   "name": "Step road",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → footsteps on the road"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/step_road_1",
+    "fslg/step_road_2",
+    "fslg/step_road_3",
+    "fslg/step_road_4",
+    "fslg/step_road_5"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "step_wood",
+   "name": "Step wood",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → footsteps on wood"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/step_wood_1",
+    "fslg/step_wood_2",
+    "fslg/step_wood_3",
+    "fslg/step_wood_4",
+    "fslg/step_wood_5"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "stomp",
+   "name": "Stomp",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → heavy landing"
+   ],
+   "source": "sample",
+   "files": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 392,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 404,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 406,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 516,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "swim_stroke",
+   "name": "Swim stroke",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → swimming"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/swim_stroke_1",
+    "fslg_water/swim_stroke_2",
+    "fslg_water/swim_stroke_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "till",
+   "name": "Till",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a shop till"
+   ],
+   "source": "file",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "swim_under",
+   "name": "Under water",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → swimming under water"
+   ],
+   "source": "file",
+   "files": [
+    "fslg_water/swim_under_1",
+    "fslg_water/swim_under_2"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "whistle",
+   "name": "Whistle",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → race start, security whistle"
+   ],
+   "source": "sample",
+   "files": [
+    "core/whistle"
+   ],
+   "calls": [
+    {
+     "file": "fslg-story-coop.js",
+     "line": 612,
+     "fn": "tick"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 551,
+     "fn": "raceStep"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 578,
+     "fn": "offend"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 579,
+     "fn": "offend"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 580,
+     "fn": "offend"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 611,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 652,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "whoosh",
+   "name": "Whoosh",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a swing through the air"
+   ],
+   "source": "file",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-audio.js",
+     "line": 112,
+     "fn": "feet"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Freshers School Life (Classic) → a zap in a fight"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 264,
+     "fn": "hitFoe"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 302,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Freshers School Life (Classic) → money paid or received, selling items",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 95,
+     "fn": "money"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 512,
+     "fn": "things"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 555,
+     "fn": "veh"
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 373,
+     "fn": ""
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 451,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-story.js",
+     "line": 458,
+     "fn": "sell"
+    },
+    {
+     "file": "samaru-guide.js",
+     "line": 194,
+     "fn": "complete"
+    },
+    {
+     "file": "samaru-life.js",
+     "line": 190,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 83,
+     "fn": ""
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 107,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-texts.js",
+     "line": 198,
+     "fn": "bank"
+    },
+    {
+     "file": "samaru-switch.js",
+     "line": 176,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Freshers School Life (Classic) → job or race finished"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "fslg-story-coop.js",
+     "line": 641,
+     "fn": "say"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 518,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 535,
+     "fn": "done"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "lose",
+   "name": "Lose jingle",
+   "group": "rewards",
+   "usage": [
+    "Freshers School Life (Classic) → caught, refused, mission failed"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "samaru-story.js",
+     "line": 518,
+     "fn": "cue"
+    },
+    {
+     "file": "samaru-life.js",
+     "line": 190,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 107,
+     "fn": "ask"
+    },
+    {
+     "file": "samaru-wild.js",
+     "line": 132,
+     "fn": "caught"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Freshers School Life (Classic) → secrets found, food eaten, switch announced",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "samaru-core.js",
+     "line": 94,
+     "fn": "egg"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 181,
+     "fn": "emit"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 254,
+     "fn": "eat"
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 394,
+     "fn": ""
+    },
+    {
+     "file": "samaru-core.js",
+     "line": 513,
+     "fn": "things"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 153,
+     "fn": ""
+    },
+    {
+     "file": "samaru-switch.js",
+     "line": 94,
+     "fn": "announce"
+    },
+    {
+     "file": "samaru-switch.js",
+     "line": 143,
+     "fn": ""
+    },
+    {
+     "file": "samaru-romance.js",
+     "line": 149,
+     "fn": "finish"
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Freshers School Life (Classic) → guide goal done, relationship tier up",
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "samaru-guide.js",
+     "line": 195,
+     "fn": "finish"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 95,
+     "fn": "hall"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 132,
+     "fn": "garage"
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 157,
+     "fn": ""
+    },
+    {
+     "file": "samaru-ui.js",
+     "line": 232,
+     "fn": "heroAsk"
+    },
+    {
+     "file": "samaru-romance.js",
+     "line": 64,
+     "fn": "tierWatch"
+    },
+    {
+     "file": "samaru-romance.js",
+     "line": 166,
+     "fn": "steady"
+    },
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "amb_birds",
+   "name": "Amb birds",
+   "group": "ambience",
+   "usage": [
+    "Freshers School Life (Classic) → birds in the trees by day"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/amb_birds"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "amb_crickets",
+   "name": "Amb crickets",
+   "group": "ambience",
+   "usage": [
+    "Freshers School Life (Classic) → crickets at night"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/amb_crickets"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "amb_crowd",
+   "name": "Amb crowd",
+   "group": "ambience",
+   "usage": [
+    "Freshers School Life (Classic) → people talking nearby"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/amb_crowd"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "amb_water",
+   "name": "Amb water",
+   "group": "ambience",
+   "usage": [
+    "Freshers School Life (Classic) → water: the dam and the river"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/amb_water"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "wind",
+   "name": "Wind",
+   "group": "ambience",
+   "usage": [
+    "Freshers School Life (Classic) → wind in the open"
+   ],
+   "source": "file",
+   "files": [
+    "fslg/wind"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Freshers School Life (Classic) → area music, changing with time of day"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    500,
+    "afro",
+    {
+     "bpm": 100
+    }
+   ]
+  },
+  {
+   "id": "intro_brief",
+   "name": "Intro: briefing cue",
+   "group": "music",
+   "usage": [
+    "Freshers School Life (Classic) → opening film: the briefing"
+   ],
+   "source": "file",
+   "files": [
+    "fslg-intro/brief"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "intro_logo",
+   "name": "Intro: logo sting",
+   "group": "music",
+   "usage": [
+    "Freshers School Life (Classic) → opening film: logo sting"
+   ],
+   "source": "file",
+   "files": [
+    "fslg-intro/logo"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "intro_bed",
+   "name": "Intro: music bed",
+   "group": "music",
+   "usage": [
+    "Freshers School Life (Classic) → opening film: music bed"
+   ],
+   "source": "file",
+   "files": [
+    "fslg-intro/bed"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "intro_title",
+   "name": "Intro: title music",
+   "group": "music",
+   "usage": [
+    "Freshers School Life (Classic) → opening film: title music"
+   ],
+   "source": "file",
+   "files": [
+    "fslg-intro/title"
+   ],
+   "calls": [],
+   "preview": "file"
+  }
+ ]
+}

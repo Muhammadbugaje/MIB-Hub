@@ -1,0 +1,348 @@
+{
+ "slug": "induction-dash",
+ "title": "Induction Dash",
+ "kind": "legacy",
+ "sounds": [
+  {
+   "id": "click",
+   "name": "Button click",
+   "group": "menus",
+   "usage": [
+    "Every menu and dialog button, and the sound on/off button"
+   ],
+   "source": "sample",
+   "files": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 363,
+     "fn": "onclick"
+    },
+    {
+     "file": "arcade.js",
+     "line": 486,
+     "fn": "paintMute"
+    },
+    {
+     "file": "arcade-settings.js",
+     "line": 170,
+     "fn": "wire"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "block",
+   "name": "Block / refused",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → cart hits an obstacle"
+   ],
+   "source": "sample",
+   "files": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 142,
+     "fn": "hurtCart"
+    },
+    {
+     "file": "dash.js",
+     "line": 172,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "dash",
+   "name": "Dash",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → a quick dash or a skid"
+   ],
+   "source": "sample",
+   "files": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "boom",
+   "name": "Explosion",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → an explosion"
+   ],
+   "source": "sample",
+   "files": [
+    "core/metal_heavy_1",
+    "core/metal_heavy_2",
+    "core/metal_heavy_3"
+   ],
+   "calls": [],
+   "preview": "file"
+  },
+  {
+   "id": "hit",
+   "name": "Hit",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → cart is hurt"
+   ],
+   "source": "sample",
+   "files": [
+    "core/metal_1",
+    "core/metal_2",
+    "core/metal_3"
+   ],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 144,
+     "fn": "hurtCart"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "jump",
+   "name": "Jump",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → cart jumps"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 140,
+     "fn": "jump"
+    },
+    {
+     "file": "dash.js",
+     "line": 169,
+     "fn": ""
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "zap",
+   "name": "Zap",
+   "group": "gameplay",
+   "usage": [
+    "Induction Dash → passing through a coil"
+   ],
+   "source": "sample",
+   "files": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 166,
+     "fn": ""
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "coin",
+   "name": "Coin / reward",
+   "group": "rewards",
+   "usage": [
+    "Induction Dash → picking up money or a reward",
+    "Each star appearing on the result screen"
+   ],
+   "source": "sample",
+   "files": [
+    "core/pluck_1",
+    "core/pluck_2"
+   ],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 687,
+     "fn": "cerTick"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "goal",
+   "name": "Goal / target reached",
+   "group": "rewards",
+   "usage": [
+    "Induction Dash → new cart unlocked"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 17,
+     "fn": "refreshCarts"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "fanfare_lose",
+   "name": "Lose sting",
+   "group": "rewards",
+   "usage": [
+    "Induction Dash → endless run over"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 83,
+     "fn": "finish"
+    },
+    {
+     "file": "dash.js",
+     "line": 101,
+     "fn": "endlessOver"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "power",
+   "name": "Power-up",
+   "group": "rewards",
+   "usage": [
+    "Induction Dash → energy collected",
+    "A cheat switched on, or the hidden player revealed"
+   ],
+   "source": "sample",
+   "files": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 168,
+     "fn": ""
+    },
+    {
+     "file": "dash.js",
+     "line": 170,
+     "fn": ""
+    },
+    {
+     "file": "dash.js",
+     "line": 171,
+     "fn": ""
+    },
+    {
+     "file": "arcade.js",
+     "line": 588,
+     "fn": "cheatRun"
+    },
+    {
+     "file": "arcade.js",
+     "line": 616,
+     "fn": "heroReveal"
+    }
+   ],
+   "preview": "file"
+  },
+  {
+   "id": "fanfare_win",
+   "name": "Win fanfare",
+   "group": "rewards",
+   "usage": [
+    "Induction Dash → run finished"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 83,
+     "fn": "finish"
+    },
+    {
+     "file": "dash.js",
+     "line": 101,
+     "fn": "endlessOver"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "win",
+   "name": "Win jingle",
+   "group": "rewards",
+   "usage": [
+    "Level up on the result screen"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "arcade.js",
+     "line": 788,
+     "fn": "report"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "crowd_cheer",
+   "name": "Crowd roar",
+   "group": "ambience",
+   "usage": [
+    "Induction Dash → run finished"
+   ],
+   "source": "synth",
+   "files": [],
+   "calls": [
+    {
+     "file": "dash.js",
+     "line": 64,
+     "fn": "run"
+    }
+   ],
+   "preview": "synth"
+  },
+  {
+   "id": "music",
+   "name": "Background music",
+   "group": "music",
+   "usage": [
+    "Induction Dash → track music"
+   ],
+   "source": "composed",
+   "files": [],
+   "calls": [],
+   "preview": "song",
+   "song": [
+    399,
+    "funk",
+    {}
+   ]
+  }
+ ]
+}

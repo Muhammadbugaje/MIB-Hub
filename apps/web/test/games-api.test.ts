@@ -192,6 +192,33 @@ describe("arcade API: me and result", () => {
     expect(await repos.scores.top("light-bender", { limit: 10 })).toHaveLength(2);
   });
 
+  it("counts an offline result once even across server restarts (the ids are in the database)", async () => {
+    const now = 1_800_000_000_000;
+    const items = [{ cid: "6f1c2b9a-0d3e-4c55-9f00-aa11bb22cc33", kind: "result", at: now - 90_000, data: { game: "light-bender", result: "win", score: 30 } }];
+    await arcadeCall(ctx(viewer("player"), { now }), "POST", "sync", { items });
+    calls = new Map(); // a fresh server process: in-memory rate-limit state is gone
+    const again = await arcadeCall(ctx(viewer("player"), { now: now + 5_000 }), "POST", "sync", { items });
+    expect(again.body).toMatchObject({ done: [items[0]!.cid], rejected: [] });
+    expect(await repos.scores.top("light-bender", { limit: 10 })).toHaveLength(1);
+    const prof = await repos.profiles.getForUser("u1");
+    expect((await repos.offline.listForProfile(prof!.id)).map((r) => r.ok)).toEqual([true]);
+  });
+
+  it("refuses offline results that belong to another account, and records refused items", async () => {
+    const now = 1_800_000_000_000;
+    const c = ctx(viewer("player"), { now });
+    const wrong = await arcadeCall(c, "POST", "sync", { owner: "uu2", items: [{ cid: "zzzzzzzz1", kind: "result", at: now, data: { game: "light-bender", result: "win" } }] });
+    expect(wrong.status).toBe(409);
+    const guest = await arcadeCall(c, "POST", "sync", { owner: "guest", items: [] });
+    expect(guest.status).toBe(409);
+    const r = await arcadeCall(c, "POST", "sync", { owner: "uu1", items: [{ cid: "yyyyyyyy1", kind: "nonsense", at: now, data: { game: "light-bender" } }] });
+    expect(r.body).toMatchObject({ done: [], rejected: [{ cid: "yyyyyyyy1" }] });
+    // A refused item is not retried into a different outcome later.
+    const again = await arcadeCall(c, "POST", "sync", { owner: "uu1", items: [{ cid: "yyyyyyyy1", kind: "result", at: now, data: { game: "light-bender", result: "win" } }] });
+    expect(again.body).toMatchObject({ done: ["yyyyyyyy1"] });
+    expect(await repos.scores.top("light-bender", { limit: 10 })).toHaveLength(0);
+  });
+
   it("runs the shop through the profile", async () => {
     const c = ctx(viewer("player"));
     const poor = await arcadeCall(c, "POST", "buy", { item: "kit-volt" });
@@ -223,6 +250,33 @@ describe("cloud saves", () => {
     expect((await loadSave(ctx(viewer("player")), "light-bender", "9")).status).toBe(400);
     expect((await storeSave(ctx(viewer("player")), "light-bender", { data: {} }, 5_000_000)).status).toBe(413);
     expect((await storeSave(ctx(viewer("player")), "nope", { data: {} }, 10)).status).toBe(404);
+  });
+
+  it("with a base version, never overwrites progress saved elsewhere (409 + the current save)", async () => {
+    const c = ctx(viewer("player"));
+    const first = await storeSave(c, "light-bender", { data: { at: 1, keys: { "ee-arcade-bender": "A" } }, base: 0 }, 100);
+    expect(first.status).toBe(200);
+    const v1 = (first.body as { version: number }).version;
+    expect(((await loadSave(c, "light-bender")).body as { save: { version: number } }).save.version).toBe(v1);
+
+    // A device that was offline and never saw v1:
+    const stale = await storeSave(c, "light-bender", { data: { at: 2, keys: { "ee-arcade-bender": "B" } }, base: 0 }, 100);
+    expect(stale.status).toBe(409);
+    expect(stale.body).toMatchObject({ conflict: true, save: { version: v1, data: { keys: { "ee-arcade-bender": "A" } } } });
+
+    // After merging, it sends again with the version it now knows.
+    const merged = await storeSave(c, "light-bender", { data: { at: 3, keys: { "ee-arcade-bender": "AB" } }, base: v1 }, 100);
+    expect(merged.status).toBe(200);
+    expect((merged.body as { version: number }).version).toBeGreaterThan(v1);
+
+    // No base: the old "last write wins" behaviour, for pages that are already open.
+    expect((await storeSave(c, "light-bender", { data: { at: 4, keys: {} } }, 100)).status).toBe(200);
+  });
+
+  it("refuses a save queued by another account", async () => {
+    const r = await storeSave(ctx(viewer("player")), "light-bender", { data: { at: 1, keys: {} }, owner: "u9", base: 0 }, 10);
+    expect(r.status).toBe(409);
+    expect(r.body).toMatchObject({ ok: false });
   });
 });
 
@@ -279,5 +333,14 @@ describe("scores from contract games", () => {
     expect(r.body).toMatchObject({ ok: true, best: 77 });
     expect((await submitScore(ctx(viewer("player")), "light-bender", { score: -1 })).status).toBe(400);
     expect((await submitScore(ctx(viewer(null)), "light-bender", { score: 5 })).status).toBe(401);
+  });
+
+  it("counts a score sent with an offline id once", async () => {
+    const c = ctx(viewer("player"));
+    const cid = "a1b2c3d4-e5f6-4711-8899-aabbccddeeff";
+    expect((await submitScore(c, "light-bender", { score: 50, cid })).body).toMatchObject({ ok: true, best: 50 });
+    expect((await submitScore(c, "light-bender", { score: 50, cid })).body).toMatchObject({ ok: true, duplicate: true, best: 50 });
+    expect(await repos.scores.top("light-bender", { limit: 10 })).toHaveLength(1);
+    expect((await submitScore(c, "light-bender", { score: 1, cid: "no" })).status).toBe(400);
   });
 });

@@ -10,17 +10,13 @@ All data access goes through the repository layer (`packages/db/src/repos`, used
 - `npm run db:seed` loads the roles, the game catalogue, the site settings and the owner account. It is safe to run again.
 - `npm run db:reset` deletes the file, then migrates and seeds again. It is for development only and refuses to run in production.
 
-## 2. Production on Cloudflare: D1 (recommended)
+## 2. Production on Cloudflare: D1 (in use)
 
-D1 is SQLite, so the **same schema and the same migration files** are used.
+D1 is SQLite, so the **same schema and the same migration files** are used. This is wired up: the Cloudflare build opens D1 through `createD1Db()` (`packages/db/src/d1.ts`) in `apps/web/src/platform/workers.ts`, and Better Auth uses the same Drizzle instance. Local dev, tests and scripts keep using the SQLite file (`apps/web/src/platform/node.ts`).
 
-1. Install the adapter: `npm i -E -w @mib/web @astrojs/cloudflare@<version for Astro 5>`. Swap `node()` for `cloudflare()` in `apps/web/astro.config.mjs`.
-2. Create the database: `npx wrangler d1 create mib-hub`. Add the binding (`DB`) to `wrangler.toml` with `migrations_dir = "packages/db/migrations"`.
-3. Apply the migrations: `npx wrangler d1 migrations apply mib-hub --remote`.
-4. In `apps/web/src/lib/db.ts`, when `DATABASE_DRIVER=d1`, build the repos per request from `createD1Db(Astro.locals.runtime.env.DB)` (from `@mib/db/d1`). Move the `repos` creation into the middleware (`context.locals.repos`), because D1 bindings exist only inside a request.
-5. Better Auth: pass the same D1 Drizzle instance to `drizzleAdapter(db, { provider: "sqlite" })`.
-6. `src/lib/env.ts` reads `process.env`. On Cloudflare, read secrets from the runtime env instead (`BETTER_AUTH_SECRET`, `SITE_URL`) and set them with `wrangler secret put`.
-7. Seed once from your machine against D1, or export the local seed to SQL and apply it with `wrangler d1 execute`.
+- Apply migrations to D1: `npm run d1:migrate -w @mib/web` (runs `wrangler d1 migrations apply mib-hub --remote`).
+- Load the starting data: `npm run d1:seed-sql -w @mib/web`, then `npx wrangler d1 execute mib-hub --remote --file=.data/d1-seed.sql` from `apps/web`.
+- Full steps, settings and secrets: `docs/DEPLOY_CLOUDFLARE.md`.
 
 **Verify on the day:** D1's free-tier limits (database size, rows read and written per day) and the Workers CPU limits change over time. Record the date checked in `docs/DECISIONS.md` (V2 rule 16).
 

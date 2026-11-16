@@ -9,7 +9,8 @@
   },
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "games/*"
   ],
   "scripts": {
     "dev": "npm run dev -w @mib/web",
@@ -22,10 +23,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint .",
-    "typecheck": "tsc -p packages/db --noEmit && tsc -p packages/ui --noEmit && npm run typecheck -w @mib/web",
+    "typecheck": "tsc -p packages/db --noEmit && tsc -p packages/ui --noEmit && tsc -p games/work-in-progress --noEmit && npm run typecheck -w @mib/web",
     "format": "prettier --write .",
     "check": "npm run lint && npm run typecheck && npm test",
-    "db:studio": "npm run db:studio -w @mib/db"
+    "db:studio": "npm run db:studio -w @mib/db",
+    "build:wip": "npm run build -w @mib/game-work-in-progress"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",

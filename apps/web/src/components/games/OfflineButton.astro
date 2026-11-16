@@ -1,0 +1,51 @@
+---
+/**
+ * "Download for offline": keeps one game on this device so it plays with no
+ * internet. Used on /games/<slug> and /play/<slug>.
+ *
+ *   <OfflineButton slug={game.slug} title={game.title} look="play" />
+ *
+ * The box is drawn by public/offline/mib-offline.js (it needs the browser's
+ * Cache Storage, so there is nothing useful to render on the server). It also
+ * loads public/offline/mib-sync.js, which the play bridge (mib-play.js) uses
+ * for its offline saves, so on /play/<slug> this component must come before
+ * the bridge's <script> tag (it does: it is in the page body above it).
+ *
+ * `owner` tells the offline client whose progress this device is saving:
+ * "u<user id>" when signed in, else "guest" (same value as data-gm-user).
+ */
+interface Props {
+  slug: string;
+  title: string;
+  owner: string;
+  /** "play": the play page's small buttons; "public": the public site's buttons. */
+  look?: "play" | "public";
+}
+const { slug, title, owner, look = "play" } = Astro.props;
+const btn = look === "public" ? "pub-btn pub-btn--glass" : "btn btn--ghost btn--sm";
+const btn1 = look === "public" ? "pub-btn pub-btn--glass" : "btn btn--primary btn--sm";
+---
+
+<meta name="ee-user" content={owner} />
+<div class={`mo mo--${look}`} data-mib-offline data-slug={slug} data-title={title} data-btn={btn} data-btn-primary={btn1} aria-live="polite">
+  <noscript><p class="mo-note">Offline play needs JavaScript turned on.</p></noscript>
+</div>
+<script is:inline src="/offline/mib-sync.js" defer></script>
+<script is:inline src="/offline/mib-offline.js" defer></script>
+
+<style is:global>
+  .mo { display: grid; gap: 6px; min-height: 44px; font-size: 14px; }
+  .mo p { margin: 0; }
+  .mo-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .mo-line { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; }
+  .mo-note { font-size: 13px; opacity: 0.8; }
+  .mo-msg { opacity: 1; font-weight: 600; }
+  .mo-ok { color: var(--success, #16a34a); font-weight: 700; }
+  .mo-bar { height: 8px; max-width: 360px; border-radius: 999px; background: rgba(127, 127, 127, 0.25); overflow: hidden; }
+  .mo-bar i { display: block; height: 100%; width: 0; background: var(--gm-a, var(--accent, #0fb5c9)); transition: width 0.2s; }
+  .mo--public { color: var(--pub-ink-on-dark, #eef6ff); margin-top: 14px; }
+  .mo--public a { color: inherit; text-decoration: underline; }
+  @media (prefers-reduced-motion: reduce) {
+    .mo-bar i { transition: none; }
+  }
+</style>
