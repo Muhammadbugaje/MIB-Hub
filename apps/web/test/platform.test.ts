@@ -1,5 +1,6 @@
 // The platform layer (src/platform/): upload keys and the on-disk blob store
-// used by `npm run dev`. The Cloudflare (R2/D1) side is checked with `npm run preview`.
+// used by `npm run dev`. The Cloudflare side (uploads in D1) is tested in
+// packages/db/test/blob-store.test.ts and checked by hand with `npm run preview`.
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -30,6 +31,9 @@ describe("folderBlobStore", () => {
     const got = await store.get("people/a-1.png");
     expect(got?.contentType).toBe("image/png");
     expect([...(got?.bytes ?? [])]).toEqual([1, 2, 3, 4]);
+    const info = await store.stat("people/a-1.png");
+    expect(info).toMatchObject({ contentType: "image/png", size: 4 });
+    expect(info?.etag).toBe(got?.etag);
     await store.delete("people/a-1.png");
     expect(await store.get("people/a-1.png")).toBeNull();
   });
@@ -37,5 +41,16 @@ describe("folderBlobStore", () => {
   it("refuses unsafe keys", async () => {
     await expect(store.put("../evil.png", new Uint8Array([1]), "image/png")).rejects.toThrow();
     expect(await store.get("../../etc/passwd.png")).toBeNull();
+  });
+});
+
+describe("etagMatches (GET /uploads/*)", () => {
+  it("matches a listed or weak ETag and *, nothing else", async () => {
+    const { etagMatches } = await import("../src/lib/uploads.ts");
+    expect(etagMatches('"abc"', '"abc"')).toBe(true);
+    expect(etagMatches('"x", W/"abc"', '"abc"')).toBe(true);
+    expect(etagMatches("*", '"abc"')).toBe(true);
+    expect(etagMatches('"abd"', '"abc"')).toBe(false);
+    expect(etagMatches(null, '"abc"')).toBe(false);
   });
 });

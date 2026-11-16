@@ -41,7 +41,7 @@ Use this if we outgrow D1 or need row-level security in the database itself.
 
 | Secret | Stored as | Where |
 |---|---|---|
-| Account passwords | scrypt (Better Auth) | `account.password` |
-| Hero (secret character) codes | scrypt (Better Auth's hasher, injected) | `hero.password_hash` |
+| Account passwords | PBKDF2-SHA256, 20,000 rounds, `pbkdf2-sha256$<rounds>$<salt>$<hash>` (Web Crypto; `apps/web/src/lib/passwords.ts`). Older scrypt rows are upgraded at the next sign-in. | `account.password` |
+| Hero (secret character) codes | the same PBKDF2 hasher (injected). Imported Django hashes (1.2 M rounds) only check on Node, then upgrade. | `hero.password_hash` |
 | Cheat codes | SHA-256 of `salt:gameSlug:normalisedCode`, a random salt for each row | `cheat.code_hash`, `cheat.code_salt` |
 | Guest PINs | to be decided by the games port (use the injected hasher) | `guest_player.pin_hash` |

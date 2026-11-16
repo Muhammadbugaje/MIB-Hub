@@ -9,15 +9,12 @@
  *   Cloudflare Workers           the D1 database bound as DB in wrangler.jsonc
  */
 import { createRepos } from "@mib/db";
-import { hashPassword, verifyPassword } from "better-auth/crypto";
 import { openDb } from "#platform";
+import { passwordHasher } from "./passwords.ts";
 
 export const db = openDb();
 
-/** Better Auth's scrypt password hasher, reused for hero codes. */
-export const passwordHasher = {
-  hash: (plain: string) => hashPassword(plain),
-  verify: (hash: string, plain: string) => verifyPassword({ hash, password: plain }),
-};
+/** The PBKDF2 password hasher (src/lib/passwords.ts), also used for hero codes. */
+export { passwordHasher };
 
 export const repos = createRepos(db, { hasher: passwordHasher });

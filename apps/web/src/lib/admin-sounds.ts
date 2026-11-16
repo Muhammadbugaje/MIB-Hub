@@ -6,8 +6,8 @@
  *
  * STORAGE: the three functions under "storage" are the only place that touches
  * where files live. They go through the platform's blob store (src/platform/):
- * apps/web/.data/uploads/ on disk locally (git-ignored), the R2 bucket on
- * Cloudflare, as for every other upload.
+ * apps/web/.data/uploads/ on disk locally (git-ignored), the D1 database on
+ * Cloudflare (`blob` table), as for every other upload.
  */
 import { blobs } from "#platform";
 import { checkSoundFile, SOUND_EXT_TYPES, type SoundCheck } from "../games/sounds/audio-file.ts";

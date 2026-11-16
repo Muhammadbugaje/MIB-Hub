@@ -242,13 +242,19 @@ export function heroesRepo(db: AppDb, hasher: PasswordHasher) {
       for (const row of rows) {
         if (isDjangoHash(row.passwordHash)) {
           if (await verifyDjangoPbkdf2(row.passwordHash, norm)) {
-            // First correct use of an imported Django hash: re-hash with scrypt.
+            // First correct use of an imported Django hash: re-hash with the site's hasher.
             await db.update(hero).set({ passwordHash: await hasher.hash(norm), updatedAt: new Date() }).where(eq(hero.id, row.id));
             return hide(row);
           }
           continue;
         }
-        if (await hasher.verify(row.passwordHash, norm)) return hide(row);
+        if (await hasher.verify(row.passwordHash, norm)) {
+          // An older format (e.g. scrypt) that matched: store a fresh hash.
+          if (hasher.needsRehash?.(row.passwordHash)) {
+            await db.update(hero).set({ passwordHash: await hasher.hash(norm), updatedAt: new Date() }).where(eq(hero.id, row.id));
+          }
+          return hide(row);
+        }
       }
       return null;
     },

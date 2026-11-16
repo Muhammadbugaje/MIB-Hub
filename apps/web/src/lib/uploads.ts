@@ -1,7 +1,7 @@
 /**
  * Image uploads (people's photos, covers, ad images). Stored through the
  * platform's blob store: apps/web/.data/uploads/ locally (git-ignored, so
- * real photos never reach git), the R2 bucket on Cloudflare. Served by
+ * real photos never reach git), the D1 database on Cloudflare (`blob` table). Served by
  * src/pages/uploads/[...path].ts.
  */
 import { blobs } from "#platform";
@@ -38,8 +38,23 @@ export async function saveImage(file: File, folder: string): Promise<string> {
 }
 
 /** Read an uploaded image for serving; null when missing or not an image key. */
-export async function readUpload(path: string): Promise<{ bytes: Uint8Array; type: string } | null> {
+export async function readUpload(path: string): Promise<{ bytes: Uint8Array; type: string; etag: string } | null> {
   const file = await blobs.get(path);
   if (!file || !IMAGE_TYPES[file.contentType]) return null;
-  return { bytes: file.bytes, type: file.contentType };
+  return { bytes: file.bytes, type: file.contentType, etag: file.etag };
+}
+
+/** An uploaded image's ETag without reading the file; null when missing or not an image. */
+export async function uploadEtag(path: string): Promise<string | null> {
+  const info = await blobs.stat(path);
+  return info && IMAGE_TYPES[info.contentType] ? info.etag : null;
+}
+
+/** Does an If-None-Match header list this ETag (or "*")? */
+export function etagMatches(header: string | null, etag: string): boolean {
+  if (!header) return false;
+  return header.split(",").some((t) => {
+    const v = t.trim().replace(/^W\//, "");
+    return v === "*" || v === etag;
+  });
 }

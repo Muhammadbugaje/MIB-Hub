@@ -377,7 +377,7 @@ async function seedWorkInProgress(repos: Repos) {
     enabled: true,
     entry: "work-in-progress",
     sort: 59,
-    assetsPath: "/play/work-in-progress/",
+    assetsPath: "/play-files/work-in-progress/",
     meta: {
       genre: "3D open world (early build)",
       howToPlay: "Choose your look, watch the arrival at the campus gate (or skip it), then explore: the campus quad, the clock that stopped at 6:06, the shops, the market and the roads. Press C for the showcase camera and T to speed up time.",

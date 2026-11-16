@@ -105,7 +105,8 @@ You have two good choices. **Cloudflare is recommended:** the website, database 
 |---|---|
 | Website | Cloudflare Pages / Workers |
 | Database | **D1**. It is SQLite, so the same tables and migrations as on your Mac. |
-| Files: videos, game assets | **R2** storage |
+| Game files, pictures, scripts | Static assets (part of Workers, free) |
+| Uploaded images and sounds | Stored inside **D1** (no R2, no payment card). Full guide: `docs/DEPLOY_CLOUDFLARE.md`. |
 
 **Steps:**
 1. Make a free Cloudflare account. Buy or connect your domain there.

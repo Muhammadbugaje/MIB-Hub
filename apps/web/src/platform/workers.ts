@@ -3,13 +3,13 @@
  * uses this file (see ./types.ts). Bindings come from apps/web/wrangler.jsonc:
  *
  *   DB       the D1 database (hosted SQLite)
- *   UPLOADS  the R2 bucket for uploaded images and sounds
+ *            (also holds uploaded images and sounds: the `blob` table)
  *   vars and secrets (SITE_URL, BETTER_AUTH_SECRET...) also arrive on `env`.
  *
  * No Node file system here: everything goes through the bindings.
  */
 import { env as cf } from "cloudflare:workers";
-import type { AppDb } from "@mib/db";
+import { dbBlobStore, type AppDb, type DbBlobStore } from "@mib/db";
 import { createD1Db, type D1Binding } from "@mib/db/d1";
 import publicFiles from "virtual:mib-public-files";
 import { isSafeKey, type BlobStore } from "./types.ts";
@@ -40,33 +40,32 @@ export function openDb(): AppDb {
   return createD1Db(binding) as unknown as AppDb;
 }
 
-/** The parts of an R2 bucket binding we use. */
-interface R2Bucket {
-  put(key: string, value: Uint8Array, options?: { httpMetadata?: { contentType?: string } }): Promise<unknown>;
-  get(key: string): Promise<{ arrayBuffer(): Promise<ArrayBuffer>; httpMetadata?: { contentType?: string } } | null>;
-  delete(key: string): Promise<void>;
-}
-
-function bucket(): R2Bucket {
-  const b = bindings.UPLOADS as R2Bucket | undefined;
-  if (!b) throw new Error('The R2 binding "UPLOADS" is missing. Check r2_buckets in apps/web/wrangler.jsonc.');
-  return b;
-}
+/**
+ * Uploads live in the D1 database itself (the `blob` table), cut into parts
+ * of up to 1 MB. No R2 bucket: R2 needs a payment card, and this site's
+ * uploads are few and small (images up to 4 MB, sounds up to 2 MB).
+ */
+let store: DbBlobStore | undefined;
+const d1Blobs = (): DbBlobStore => (store ??= dbBlobStore(openDb()));
 
 export const blobs: BlobStore = {
   async put(key, bytes, contentType) {
     if (!isSafeKey(key)) throw new Error(`Bad upload key: ${key}`);
-    await bucket().put(key, bytes, { httpMetadata: { contentType } });
+    await d1Blobs().put(key, bytes, contentType);
   },
   async get(key) {
     if (!isSafeKey(key)) return null;
-    const obj = await bucket().get(key);
-    if (!obj) return null;
-    return { bytes: new Uint8Array(await obj.arrayBuffer()), contentType: obj.httpMetadata?.contentType ?? "application/octet-stream" };
+    const file = await d1Blobs().get(key);
+    return file ? { bytes: file.bytes, contentType: file.contentType, etag: `"${file.sha256}"` } : null;
+  },
+  async stat(key) {
+    if (!isSafeKey(key)) return null;
+    const info = await d1Blobs().stat(key);
+    return info ? { contentType: info.contentType, size: info.size, etag: `"${info.sha256}"` } : null;
   },
   async delete(key) {
     if (!isSafeKey(key)) return;
-    await bucket().delete(key);
+    await d1Blobs().delete(key);
   },
 };
 

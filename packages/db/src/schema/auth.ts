@@ -57,7 +57,7 @@ export const account = sqliteTable(
     accessTokenExpiresAt: timestamp("access_token_expires_at"),
     refreshTokenExpiresAt: timestamp("refresh_token_expires_at"),
     scope: text("scope"),
-    /** Password hash (scrypt) for email + password sign-in. */
+    /** Password hash for email + password sign-in: "pbkdf2-sha256$..." (older rows: scrypt, upgraded at sign-in). */
     password: text("password"),
     ...timestamps(),
   },

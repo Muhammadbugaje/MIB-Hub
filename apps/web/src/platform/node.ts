@@ -7,7 +7,7 @@
  *   settings  process.env, plus the repo-root .env file
  */
 import { existsSync } from "node:fs";
-import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
+import { mkdir, readFile, stat, unlink, writeFile } from "node:fs/promises";
 import { dirname, isAbsolute, join, resolve } from "node:path";
 import type { AppDb } from "@mib/db";
 import { createSqliteDb, migrateSqlite } from "@mib/db/sqlite";
@@ -74,6 +74,11 @@ const TYPES: Record<string, string> = {
   m4a: "audio/mp4",
 };
 
+/** An ETag for a file on disk: its size and last-changed time. */
+function fileEtag(size: number, mtimeMs: number): string {
+  return `"${size.toString(36)}-${Math.floor(mtimeMs).toString(36)}"`;
+}
+
 /** Uploads as plain files in a folder. */
 export function folderBlobStore(root: string): BlobStore {
   return {
@@ -87,7 +92,19 @@ export function folderBlobStore(root: string): BlobStore {
       const contentType = TYPES[key.split(".").pop() ?? ""];
       if (!contentType) return null;
       try {
-        return { bytes: new Uint8Array(await readFile(join(root, key))), contentType };
+        const [info, bytes] = await Promise.all([stat(join(root, key)), readFile(join(root, key))]);
+        return { bytes: new Uint8Array(bytes), contentType, etag: fileEtag(info.size, info.mtimeMs) };
+      } catch {
+        return null;
+      }
+    },
+    async stat(key) {
+      if (!isSafeKey(key)) return null;
+      const contentType = TYPES[key.split(".").pop() ?? ""];
+      if (!contentType) return null;
+      try {
+        const info = await stat(join(root, key));
+        return { contentType, size: info.size, etag: fileEtag(info.size, info.mtimeMs) };
       } catch {
         return null;
       }

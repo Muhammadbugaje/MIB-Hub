@@ -10,10 +10,28 @@
 import * as schema from "@mib/db/schema";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { eq } from "drizzle-orm";
 import { siteConfig } from "../site.config.ts";
 import { db } from "./db.ts";
 import { env } from "./env.ts";
 import { getMailer } from "./mailer.ts";
+import { hashPassword, needsRehash, verifyPassword } from "./passwords.ts";
+
+/**
+ * After a correct password matched an older hash (scrypt), store a fresh
+ * PBKDF2 hash in its place. The old hash is unique (random salt), so it
+ * identifies the one account row. A failure here never blocks the sign-in.
+ */
+async function upgradeStoredHash(oldHash: string, password: string): Promise<void> {
+  try {
+    await db
+      .update(schema.account)
+      .set({ password: await hashPassword(password), updatedAt: new Date() })
+      .where(eq(schema.account.password, oldHash));
+  } catch (err) {
+    console.warn("[auth] could not upgrade a password hash:", (err as Error).message);
+  }
+}
 
 export const MIN_PASSWORD_LENGTH = 8;
 
@@ -42,6 +60,16 @@ export const auth = betterAuth({
     minPasswordLength: MIN_PASSWORD_LENGTH,
     maxPasswordLength: 128,
     autoSignIn: true, // sign the new user in straight after registering
+    // PBKDF2 via Web Crypto instead of Better Auth's scrypt: scrypt needs far
+    // more than the 10 ms of CPU the Cloudflare Workers Free plan allows.
+    password: {
+      hash: hashPassword,
+      async verify({ hash, password }) {
+        const ok = await verifyPassword(hash, password);
+        if (ok && needsRehash(hash)) await upgradeStoredHash(hash, password);
+        return ok;
+      },
+    },
     revokeSessionsOnPasswordReset: true,
     resetPasswordTokenExpiresIn: 60 * 60, // 1 hour
     async sendResetPassword({ user, url }) {

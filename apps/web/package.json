@@ -21,7 +21,8 @@
     "db:seed": "tsx scripts/seed.ts",
     "deploy": "wrangler deploy",
     "d1:migrate": "wrangler d1 migrations apply mib-hub --remote",
-    "d1:seed-sql": "tsx scripts/export-seed-sql.ts"
+    "d1:seed-sql": "tsx scripts/export-seed-sql.ts",
+    "d1:owner-password": "tsx scripts/owner-password-sql.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "12.6.13",

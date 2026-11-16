@@ -11,7 +11,8 @@
   // The Worker that `npm run build` makes.
   "main": "./dist/_worker.js/index.js",
   "compatibility_date": "2026-01-01",
-  // Node.js APIs on Workers (node:crypto for password hashing, Buffer...).
+  // Node.js APIs on Workers (AsyncLocalStorage, Buffer... used by libraries).
+  // Password hashing does NOT use them: it is Web Crypto PBKDF2 (src/lib/passwords.ts).
   "compatibility_flags": ["nodejs_compat"],
   // Pictures, scripts, styles and the games' files, served straight from Cloudflare.
   "assets": {
@@ -19,19 +20,14 @@
     "binding": "ASSETS",
   },
   // The database (Cloudflare D1, hosted SQLite). Tables come from packages/db/migrations.
+  // Uploaded images and sounds live in it too (the `blob` table): no R2 bucket,
+  // so the site runs on the Workers Free plan with no payment card.
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "mib-hub",
       "database_id": "fa599c3d-a84e-4184-9b56-d9e19c7974b1",
       "migrations_dir": "../../packages/db/migrations",
-    },
-  ],
-  // Uploaded images and sounds (Cloudflare R2).
-  "r2_buckets": [
-    {
-      "binding": "UPLOADS",
-      "bucket_name": "mib-hub-uploads",
     },
   ],
   // Plain settings (not secret).

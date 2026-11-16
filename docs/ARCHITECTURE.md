@@ -92,7 +92,7 @@ Tables (see the comments in `src/schema/*.ts`):
 |---|---|
 | Accounts (Better Auth) | `user` (+ `role`, `banned`), `session`, `account` (password hash), `verification` |
 | Platform | `role`, `user_permission_override`, `audit_log`, `site_setting` |
-| Games | `game`, `game_setting` (slug `*` = site-wide), `cheat` (salted hash), `hero` (scrypt), `game_content` + `game_content_version`, `guest_player`, `player_profile`, `score`, `progress` (save slots), `offline_submission`, `game_sound` |
+| Games | `game`, `game_setting` (slug `*` = site-wide), `cheat` (salted hash), `hero` (PBKDF2), `game_content` + `game_content_version`, `guest_player`, `player_profile`, `score`, `progress` (save slots), `offline_submission`, `game_sound` |
 
 **Repositories** (`repos.*`): `users`, `roles`, `permissionOverrides`, `audit` (redacts secrets), `siteSettings`, `games`, `gameSettings` (`effective()` merges defaults → `*` → game), `cheats` (`match()`), `heroes` (`verify()`), `profiles`, `scores` (`top()` skips cheated runs and opted-out players), `progress` (slots `auto`, `1`–`5`).
 
