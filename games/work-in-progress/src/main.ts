@@ -45,7 +45,7 @@ import { Crowd } from "./world/crowd-view.ts";
 import { buildInteriors, INTERIOR_SIGNS } from "./world/interiors.ts";
 import { GENERATORS, SHOP_NAMES, SUYA, VIEWPOINTS, buildings } from "./world/layout.ts";
 import { buildNature } from "./world/nature.ts";
-import { type Look, Person, loadPeople } from "./world/people.ts";
+import { type Look, Person, loadPeople, tickPeople } from "./world/people.ts";
 import { buildProps, type LightSpot } from "./world/props.ts";
 import { buildGround, buildRoads } from "./world/roads.ts";
 import { Birds, FallingLeaves, Sky, Smoke } from "./world/sky.ts";
@@ -391,6 +391,8 @@ async function boot(): Promise<void> {
     if (out) leaves.update(dt, simTime, camPos.x, camPos.z);
     smoke.update(dt, cam);
     ambientBarks(dt);
+    // Characters: every person's animation, after everything above has placed them (src/anim, crowd LOD).
+    tickPeople(app, dt);
     fpsT += rawDt;
     fpsN++;
     if (fpsT > 1) {

@@ -20,8 +20,8 @@ import type { Person } from "../world/people.ts";
 import { surfaceHeight } from "../world/surface.ts";
 import type { InputState } from "./input.ts";
 
-export const WALK = 1.55;
-export const RUN = 4.6;
+export const WALK = 2.4;
+export const RUN = 6.2;
 const RADIUS = 0.33;
 
 export class Player {

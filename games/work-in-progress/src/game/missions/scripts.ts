@@ -130,7 +130,7 @@ const m001: MissionDef = {
         const r = g.npc(ROOMIE)!;
         g.bark(ROOMIE, "wip_m001_walk_01", "Come. Breakfast. You're paying. Don't argue, I've decided.", "amused");
         // Down the corridor to the stairs; outside, the roommate leads you to the Spot (waits if you fall behind).
-        await g.walk(r, [{ pos: g.at("corridor_west", "hostel"), where: "hostel" }], { speed: 1.5 });
+        await g.walk(r, [{ pos: g.at("corridor_west", "hostel"), where: "hostel" }], { speed: 2.1 });
         r.visible = false;
         const h = hall(g.ctx.female);
         const outside = W(frontOf(h, 3.4, 1.2));
@@ -139,7 +139,7 @@ const m001: MissionDef = {
         g.put(ROOMIE, outside, outYaw(h));
         g.bark(ROOMIE, "wip_m001_walk_02", "Lecture-day rule: at eight this place is empty. A crowd after eight means something free.", "neutral");
         const route = spotRoute(g.ctx.female).map((p) => W(p));
-        await g.walk(r, route, { lead: 12, speed: 1.45 });
+        await g.walk(r, route, { lead: 12, speed: 2.1 });
         obj(g, "m001", 2);
         const counter = W(g.at("spot_counter"), "the Spot");
         aim(g, counter);

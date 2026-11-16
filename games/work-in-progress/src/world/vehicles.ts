@@ -165,7 +165,7 @@ export class Traffic {
     // Pre-built okada and keke meshes per colour (shared by every vehicle of that colour).
     const okadas = OKADA_COLOURS.map((c) => builtMesh(device, (b) => okadaMesh(b, hex(c))));
     const kekes = KEKE_COLOURS.map(([a, s]) => builtMesh(device, (b) => kekeMesh(b, hex(a), hex(s))));
-    const riders = people.filter((p) => MALE_MODELS.includes(p.key) && p.tracks.has("sit"));
+    const riders = people.filter((p) => MALE_MODELS.includes(p.key));
 
     const spawn = (kind: Vehicle["kind"], lane: number, s: number) => {
       const isCar = kind === "car";
@@ -197,14 +197,17 @@ export class Traffic {
         const mis = [...meshes].map(([mat, mesh]) => new pc.MeshInstance(mesh, this.mats.get(mat)));
         body.addComponent("render", { meshInstances: mis, castShadows: true });
         if (riders.length) {
-          const seats = kind === "okada" ? [OKADA_SEATS.rider, ...(rng.chance(0.5) ? [OKADA_SEATS.passenger] : [])] : [KEKE_SEATS.driver];
+          // Riders on mib_rig ride clips (tools/anim/made.ts): the clips put hips on the seat, hands on the
+          // grips and feet on the pegs with the Root at the vehicle's origin.
+          const seats: ("okada_ride" | "okada_pillion" | "keke_drive")[] = kind === "okada" ? ["okada_ride", ...(rng.chance(0.5) ? ["okada_pillion" as const] : [])] : ["keke_drive"];
           for (const seat of seats) {
             const p = new Person(app, rng.pick(riders), randomLook(rng, riders, false), body, { shadows: true });
-            p.pose("sit");
-            // The sit clip's hips are ~0.47 m above the floor at our scale: lift so they rest on the seat.
-            p.place(0, seat.y - 0.47, seat.z - 0.12, 0);
+            p.ride(seat);
+            p.place(0, 0, 0, 0);
             vis.riders.push(p);
           }
+          void OKADA_SEATS;
+          void KEKE_SEATS;
         }
       }
       root.setLocalPosition(v.x, surfaceHeight(v.x, v.z), v.z);

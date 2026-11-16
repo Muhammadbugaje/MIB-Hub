@@ -27,7 +27,7 @@ export class Crowd {
       const cm = models.find((m) => m.key === look.model)!;
       const p = new Person(app, cm, look, parent, { shadows });
       // Walk a touch slower than the clip's stride for strollers, faster for the hurried.
-      w.speed = cm.walkSpeed * rng.range(0.82, 1.08);
+      w.speed = cm.walkSpeed * 1.2 * rng.range(0.9, 1.1); // owner: "everything faster" (16 Nov)
       const y = surfaceHeight(w.x, w.z);
       this.npcs.push({ w, p, px: w.x, pz: w.z, py: y, pyaw: w.yaw, y, yaw: w.yaw, speed: 0 });
     }

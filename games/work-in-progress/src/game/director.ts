@@ -342,7 +342,7 @@ export class Director {
         l.path = makePath(pts);
         l.s = 0;
         l.liftTo = l.a.kind === "goat" && end[1] > 0.2 ? end[1] : 0;
-        l.speed = e.key === "actor.run" ? (l.a.kind === "goat" ? 4.2 : 3.6) : 1.35;
+        l.speed = e.key === "actor.run" ? (l.a.kind === "goat" ? 5.2 : 5.0) : 2.0;
         l.a.person?.act("stand");
         break;
       }

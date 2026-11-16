@@ -1,41 +1,63 @@
 /**
- * People: skinned characters (CC0 Quaternius bases, packed by
- * tools/pack-character.ts into one mesh each), recoloured per person with a
- * tiny palette texture (skin, hair, clothes), plus hijabs and caps attached
- * to the head bone.
+ * People: every human in the game on ONE skeleton (mib_rig, Mixamo bone
+ * names) and ONE clip set (assets/anim/*.glb, converted from the owner's
+ * Mixamo downloads by tools/anim/build-anims.ts).
+ *
+ * Bodies are the CC0 Quaternius bases, re-posed into the Mixamo T-pose and
+ * re-bound to mib_rig by tools/anim/rebind-character.ts, 1.74 m tall, with
+ * smooth welded normals and a subdivided close-up LOD (no flat facets, no
+ * "boxy sand"). They are recoloured per person with a tiny palette texture
+ * (skin, hair, clothes); hijabs and caps ride on the head bone.
+ *
+ * Animation is ours, not the engine's: each Person has an Animator
+ * (src/anim/animator.ts) that writes bone rotations every frame. One ticker
+ * runs them all after the game's update, with crowd LOD (plan §4.7): full
+ * IK and reactions near the camera, plain clips further out at a lower
+ * rate, frozen far away.
  *
  * Rules this follows (plan §1.2, §1.3):
- *  - one scale for every human (1.74 m), from the skeleton's measured rest height;
- *  - feet never slide: walk/run play rate = ground speed / the clip's measured
- *    stride speed (tools/pack-character.ts measures it from the planted foot);
- *  - blends between idle, walk and run take 0.2 s (no snapping);
+ *  - one scale for every human; height varies only within ±6 %;
+ *  - feet never slide: the gait's play rate comes from the measured ground
+ *    speed of the body (not the requested speed) and the clips' measured
+ *    stride speeds;
+ *  - every change of animation blends (no pops);
  *  - skin and hair are never glossy (roughness >= 0.55).
  */
 import * as pc from "playcanvas";
+import { Animator } from "../anim/animator.ts";
+import { FEEL } from "../anim/feel.ts";
+import { AnimLibrary, type AnimIndex } from "../anim/library.ts";
+import { B, BONE_COUNT, MIB_BONES, Skeleton } from "../anim/skeleton.ts";
+import type { V3 } from "../anim/math.ts";
 import { Builder, MeshData, type RGBA } from "../gfx/builder.ts";
 import { SH } from "../gfx/materials.ts";
 import type { Rng } from "../sim/rng.ts";
-import { Rig, type GestureName } from "./rig.ts";
+import { type GestureName } from "./rig.ts";
+import { surfaceHeight } from "./surface.ts";
+import { HIJAB_STYLES, buildHeadwear, type HijabStyle } from "./headwear.ts";
 
 export const HUMAN_HEIGHT = 1.74;
 
 export interface ModelInfo {
   file: string;
-  clips: string[];
   slots: { name: string; color: number[] }[];
   height: number;
-  footY: number;
-  stride: Record<string, { speed: number; facing: number }>;
+  hipHeight: number;
+  rig: string;
+  /** Head, neck and chest measurements for headwear (tools/anim/rebind-character.ts). */
+  fit?: unknown;
 }
 
 export interface CharModel {
   key: string;
   info: ModelInfo;
   container: pc.ContainerResource;
-  tracks: Map<string, pc.AnimTrack>;
   female: boolean;
+  /** Model scale (1: bodies are built at 1.74 m). */
   scale: number;
-  /** Ground speed (m/s at our scale) at which the clip's feet do not slide. */
+  /** mib_rig proportions of this body. */
+  skeleton: Skeleton;
+  /** Ground speed (m/s) of a natural walk and run on this body (stride-matched). */
   walkSpeed: number;
   runSpeed: number;
 }
@@ -49,6 +71,8 @@ export interface Look {
   outfit: string[];
   headwear: "none" | "hijab" | "cap";
   headwearColor: string;
+  /** Hijab style (default "wrap"); see world/headwear.ts. */
+  hijabStyle?: HijabStyle;
 }
 
 export const FEMALE_MODELS = ["animwoman", "womandress", "womancasual"];
@@ -64,13 +88,13 @@ export const CLOTH = [
 const hexToRgb = (h: string): [number, number, number] => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
 
 /** What each slot of a model is for (skin, hair, eyes, or the n-th clothing colour). */
-export function slotRoles(info: ModelInfo): ("skin" | "skinDark" | "hair" | "brow" | "eye" | "detail" | number)[] {
+export function slotRoles(info: Pick<ModelInfo, "file" | "slots">): ("skin" | "skinDark" | "hair" | "brow" | "eye" | "detail" | number)[] {
   let cloth = 0;
-  // The long-dress model's "Red" material is its hair (its bun), not cloth; "Brown" is the dress (checked in screenshots).
+  // The long-dress model's dark "Brown" material is its hair (its bun), not cloth.
   const dressHair = info.file.startsWith("womandress");
   return info.slots.map((s) => {
     const n = s.name.toLowerCase();
-    if (dressHair && n === "red") return "hair";
+    if (dressHair && n === "brown") return "hair";
     if (n === "skin") return "skin";
     if (n.startsWith("skin")) return "skinDark";
     if (n.startsWith("hair")) return "hair";
@@ -81,7 +105,7 @@ export function slotRoles(info: ModelInfo): ("skin" | "skinDark" | "hair" | "bro
   });
 }
 
-export function clothingSlots(info: ModelInfo): number {
+export function clothingSlots(info: Pick<ModelInfo, "file" | "slots">): number {
   return slotRoles(info).filter((r) => typeof r === "number").length;
 }
 
@@ -93,7 +117,7 @@ export function randomLook(rng: Rng, models: CharModel[], female?: boolean): Loo
   // A long kaftan look sometimes: top and bottom the same colour.
   if (n >= 2 && rng.chance(0.25)) outfit[1] = outfit[0]!;
   const head = m.female ? (rng.chance(0.55) ? "hijab" : "none") : rng.chance(0.3) ? "cap" : "none";
-  return {
+  const look: Look = {
     model: m.key,
     skin: rng.pick(SKIN_TONES.slice(0, 9)),
     hair: rng.pick(HAIR),
@@ -101,33 +125,55 @@ export function randomLook(rng: Rng, models: CharModel[], female?: boolean): Loo
     headwear: head,
     headwearColor: head === "cap" ? rng.pick(["#f4f1ea", "#2a5fa8", "#7a2e3b", "#2b2b2b", "#1f6b52"]) : rng.pick(CLOTH),
   };
+  if (head === "hijab") look.hijabStyle = rng.pick(HIJAB_STYLES);
+  return look;
 }
 
-/** The 16 x 1 palette texture for a look (one texel per material slot). */
-export function paletteFor(device: pc.GraphicsDevice, model: CharModel, look: Look): pc.Texture {
+/**
+ * The 16 x 1 palette texture for a look (one texel per material slot).
+ * Alpha 0 hides a slot (hair under a hijab: rule "hair hidden completely").
+ */
+export function paletteFor(device: pc.GraphicsDevice, model: Pick<CharModel, "info">, look: Look): pc.Texture {
   const roles = slotRoles(model.info);
   const data = new Uint8Array(16 * 4);
   const skin = hexToRgb(look.skin), hair = hexToRgb(look.hair);
+  const hideHair = look.headwear === "hijab";
   roles.forEach((r, i) => {
     let c: [number, number, number];
+    let a = 255;
     if (r === "skin") c = skin;
-    else if (r === "skinDark") c = [skin[0] * 0.85, skin[1] * 0.82, skin[2] * 0.8];
-    else if (r === "hair" || r === "brow") c = hair;
-    else if (r === "eye") c = [24, 20, 18];
+    else if (r === "skinDark") c = [skin[0] * 0.88, skin[1] * 0.85, skin[2] * 0.83];
+    else if (r === "hair" || r === "brow") {
+      c = hair;
+      if (r === "hair" && hideHair) a = 0;
+    } else if (r === "eye") c = [24, 20, 18];
     else if (r === "detail") c = model.info.slots[i]!.color.map((v) => Math.round(Math.pow(v, 1 / 2.2) * 255)) as [number, number, number];
     else c = hexToRgb(look.outfit[r] ?? "#888888");
-    data.set([c[0], c[1], c[2], 255], i * 4);
+    data.set([c[0], c[1], c[2], a], i * 4);
   });
-  const tex = new pc.Texture(device, {
+  return new pc.Texture(device, {
     width: 16, height: 1, format: pc.PIXELFORMAT_SRGBA8, mipmaps: false,
     minFilter: pc.FILTER_NEAREST, magFilter: pc.FILTER_NEAREST, addressU: pc.ADDRESS_CLAMP_TO_EDGE, addressV: pc.ADDRESS_CLAMP_TO_EDGE,
     levels: [data],
   });
-  return tex;
 }
 
+/* ------------------------------------------------------------------ loading */
+
+/** The game's one clip library (set by loadPeople). */
+export let ANIM: AnimLibrary = new AnimLibrary();
+
 export async function loadPeople(app: pc.AppBase, base: string, onProgress: (f: number) => void): Promise<CharModel[]> {
-  const index = (await (await fetch(`${base}people/index.json`)).json()) as Record<string, ModelInfo>;
+  const [index, animIndex] = await Promise.all([
+    fetch(`${base}people/index.json`).then((r) => r.json() as Promise<Record<string, ModelInfo>>),
+    fetch(`${base}anim/index.json`).then((r) => r.json() as Promise<AnimIndex>),
+  ]);
+  ANIM = new AnimLibrary(animIndex, (file) => fetch(`${base}anim/${file}`).then((r) => {
+    if (!r.ok) throw new Error(`anim pack ${file}: ${r.status}`);
+    return r.arrayBuffer();
+  }));
+  // The core pack before anyone moves; the social pack right after (cutscenes need it soon).
+  const loco = ANIM.loadPack("locomotion");
   const keys = Object.keys(index);
   let done = 0;
   const models = await Promise.all(
@@ -137,26 +183,97 @@ export async function loadPeople(app: pc.AppBase, base: string, onProgress: (f: 
           app.assets.loadFromUrl(`${base}people/${index[key]!.file}`, "container", (err, asset) => {
             if (err || !asset) return reject(new Error(String(err)));
             const container = asset.resource as pc.ContainerResource;
-            const tracks = new Map<string, pc.AnimTrack>();
-            for (const a of container.animations) tracks.set(a.name.replace(/^.*\|/, ""), a.resource as pc.AnimTrack);
             const info = index[key]!;
-            const scale = HUMAN_HEIGHT / info.height;
-            onProgress(++done / keys.length);
-            resolve({
-              key, info, container, tracks, female: FEMALE_MODELS.includes(key), scale,
-              walkSpeed: (info.stride.walk?.speed ?? 1.3) * scale,
-              runSpeed: (info.stride.run?.speed ?? 3) * scale,
-            });
+            onProgress(++done / (keys.length + 1));
+            resolve({ key, info, container, female: FEMALE_MODELS.includes(key), scale: 1, skeleton: skeletonOf(container), walkSpeed: 1.9, runSpeed: 5.2 });
           });
         }),
     ),
   );
+  await loco;
+  onProgress(1);
+  void ANIM.loadPack("social");
+  const walk = ANIM.get("walk_fwd"), run = ANIM.get("run_fwd");
+  for (const m of models) {
+    const hs = m.skeleton.hipHeight / ANIM.refHipHeight;
+    if (walk?.meta.speed) m.walkSpeed = walk.meta.speed * hs;
+    if (run?.meta.speed) m.runSpeed = run.meta.speed * hs;
+  }
+  startTicker(app);
   return models;
 }
 
-/* ------------------------------------------------------------ headwear */
+/** Read a body's mib_rig rest pose from its GLB nodes. */
+function skeletonOf(container: pc.ContainerResource): Skeleton {
+  const e = container.instantiateRenderEntity();
+  const rot = new Float32Array(BONE_COUNT * 4), pos = new Float32Array(BONE_COUNT * 3);
+  MIB_BONES.forEach(([n], i) => {
+    const node = e.findByName(n);
+    const q = node?.getLocalRotation() ?? new pc.Quat();
+    const p = node?.getLocalPosition() ?? new pc.Vec3();
+    rot.set([q.x, q.y, q.z, q.w], i * 4);
+    pos.set([p.x, p.y, p.z], i * 3);
+  });
+  e.destroy();
+  return new Skeleton(rot, pos, ANIM.refHipHeight);
+}
 
-let hijabMesh: pc.Mesh | null = null;
+/* ------------------------------------------------------------------ the ticker (crowd LOD) */
+
+const LIVE = new Set<Person>();
+let tickerApp: pc.AppBase | null = null;
+const camPos = new pc.Vec3();
+/** Frame cost of the last tick (ms) and how many people were at each LOD (perf HUD and tests). */
+export const ANIM_STATS = { ms: 0, lod: [0, 0, 0, 0], count: 0 };
+
+function startTicker(app: pc.AppBase): void {
+  tickerApp = app;
+}
+
+/**
+ * Animate everyone once per frame. main.ts calls this at the end of its
+ * update (after the crowd, traffic, story and cutscenes have placed people),
+ * so poses always match this frame's positions.
+ */
+export function tickPeople(app: pc.AppBase, dt: number): void {
+  tickAll(app, Math.min(dt, 0.1));
+}
+
+function tickAll(app: pc.AppBase, dt: number): void {
+  const t0 = performance.now();
+  const cams = app.root.findComponents("camera") as pc.CameraComponent[];
+  const cam = cams.find((c) => c.enabled && c.entity.enabled);
+  if (cam) camPos.copy(cam.entity.getPosition());
+  const near: { p: Person; d: number }[] = [];
+  ANIM_STATS.lod = [0, 0, 0, 0];
+  for (const p of LIVE) {
+    if (!p.root.enabled || !p.alive) continue;
+    const wp = p.root.getPosition();
+    const d = Math.hypot(wp.x - camPos.x, wp.y - camPos.y, wp.z - camPos.z);
+    near.push({ p, d });
+  }
+  near.sort((a, b) => a.d - b.d);
+  const L = FEEL.lod;
+  let reactive = 0;
+  for (const { p, d } of near) {
+    let lod: 0 | 1 | 2 | 3;
+    if (p.forceLod !== null) lod = p.forceLod;
+    else if (!p.animOn) lod = 3;
+    else if (d < L.full && reactive < L.reactive) {
+      lod = 0;
+      reactive++;
+    } else if (d < L.mid) lod = 1;
+    else if (d < L.far) lod = 2;
+    else lod = 3;
+    ANIM_STATS.lod[lod]!++;
+    p.tick(dt, lod);
+  }
+  ANIM_STATS.count = near.length;
+  ANIM_STATS.ms = ANIM_STATS.ms * 0.9 + (performance.now() - t0) * 0.1;
+}
+
+/* ------------------------------------------------------------ headwear (legacy caps) */
+
 let capMesh: pc.Mesh | null = null;
 
 function meshFrom(device: pc.GraphicsDevice, build: (b: Builder) => void): pc.Mesh {
@@ -174,90 +291,150 @@ function meshFrom(device: pc.GraphicsDevice, build: (b: Builder) => void): pc.Me
   return mesh;
 }
 
-/** Hijab and cap meshes in "head units": the head is a unit-radius ball centred at the origin, face towards +z. */
-function headwearMeshes(device: pc.GraphicsDevice): { hijab: pc.Mesh; cap: pc.Mesh } {
-  if (!hijabMesh) {
+function capMeshFor(device: pc.GraphicsDevice): pc.Mesh {
+  if (!capMesh) {
     const W: RGBA = [255, 255, 255, 255];
-    hijabMesh = meshFrom(device, (b) => {
-      b.tint(W);
-      // Head covering: a slightly enlarged ball, open at the face (the face is covered by a skin-coloured head anyway).
-      b.blob("x", [0, 0.08, -0.08], 1.18, 3, W, [215, 215, 215, 255], 1.05, 14, 9, 0.02);
-      // The drape over the shoulders and chest: a wide flared cone below the chin.
-      b.cylinder("x", 0, -1.85, -0.05, 1.75, 1.0, 1.15, 16, false, true);
-    });
     capMesh = meshFrom(device, (b) => {
       b.tint(W);
       b.cylinder("x", 0, 0.32, 0, 1.06, 1.0, 0.62, 16, true, true);
     });
   }
-  return { hijab: hijabMesh, cap: capMesh! };
+  return capMesh;
 }
 
 /* ---------------------------------------------------------------- person */
 
-/** Clips that play once and then return to the body's state (idle, walk...). */
-const ONE_SHOT = new Set(["wave", "interact", "hit", "punch", "fall", "jump", "stand", "clap"]);
-
-/** The FORMAT.md `actor.anim` names. */
+/** The FORMAT.md `actor.anim` names (and a few more the scripts use). */
 export type AnimName =
   | "sit" | "stand" | "hug" | "wave" | "phone" | "eat" | "look" | "gesture" | "laugh" | "shock" | "point" | "nod" | "shake_head"
   | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "fall" | "hit" | "idle" | "talk" | "sit_floor";
 
-/** Names the missions use that have no real clip yet on any model (procedural fallback today). */
-export const ANIM_FALLBACKS: AnimName[] = ["point", "phone", "write", "eat", "hug", "nod", "shake_head", "gesture", "talk", "shock", "laugh", "facepalm", "cheer", "carry", "kneel", "sleep", "hold_torch", "oath", "horns"];
+/**
+ * Names the missions use and how each plays now. Every one has a real clip
+ * (Mixamo or made by us); the procedural fallbacks below only run while a
+ * clip's pack is still loading or if a clip goes missing.
+ */
+export const ACT_CLIPS: Record<AnimName, { clip: string; layer: "full" | "upper"; hold?: boolean; then?: string; dur?: number }> = {
+  sit: { clip: "sit_down", layer: "full", then: "sit_idle", hold: true },
+  sit_floor: { clip: "sit_floor", layer: "full", hold: true },
+  stand: { clip: "stand_up", layer: "full" },
+  idle: { clip: "idle_breathe", layer: "full" },
+  hug: { clip: "hug_a", layer: "full" },
+  wave: { clip: "wave", layer: "upper", dur: 2.4 },
+  phone: { clip: "phone_call", layer: "upper", hold: true },
+  eat: { clip: "eat_stand", layer: "upper", dur: 4.2 },
+  look: { clip: "idle_look_around", layer: "upper", dur: 3 },
+  gesture: { clip: "talk_1", layer: "upper", dur: 2.8 },
+  talk: { clip: "talk_2", layer: "upper", dur: 2.8 },
+  laugh: { clip: "laugh", layer: "upper", dur: 2.6 },
+  shock: { clip: "shock", layer: "full" },
+  point: { clip: "point", layer: "upper" },
+  nod: { clip: "nod", layer: "upper", dur: 1.6 },
+  shake_head: { clip: "shake_head", layer: "upper" },
+  carry: { clip: "carry_idle", layer: "upper", hold: true },
+  write: { clip: "write", layer: "upper", dur: 3 },
+  kneel: { clip: "kneel_down", layer: "full", then: "kneel", hold: true },
+  sleep: { clip: "sleep", layer: "full", hold: true },
+  cheer: { clip: "cheer", layer: "full" },
+  facepalm: { clip: "facepalm", layer: "upper", dur: 2.4 },
+  horns: { clip: "horns", layer: "upper" },
+  clap: { clip: "clap", layer: "upper", dur: 2.4 },
+  hold_torch: { clip: "point", layer: "upper", hold: true },
+  oath: { clip: "raise_hand", layer: "upper", hold: true },
+  punch: { clip: "shove", layer: "full" },
+  fall: { clip: "knock_down", layer: "full" },
+  hit: { clip: "flinch", layer: "upper" },
+};
+
+/** Names that have no clip at all today and play a procedural pose (kept for the coverage report). */
+export const ANIM_FALLBACKS: AnimName[] = [];
 
 export class Person {
   readonly root: pc.Entity;
   private model: pc.Entity;
-  private anim: pc.AnimComponent;
-  private state = "idle";
+  private nodes: (pc.GraphNode | null)[] = [];
   readonly cm: CharModel;
-  readonly rig: Rig;
+  readonly anim: Animator;
+  /** Missions and the director: look-at, fixed head turn, pedals (the old rig API). */
+  readonly rig: PersonRig;
   material: pc.StandardMaterial;
-  /** A one-shot clip in progress: seconds left. */
-  private shotLeft = 0;
   /** Held pose (sit, kneel...) that walking must not cancel. */
   held: AnimName | null = null;
-  private moving = 0;
+  /** Called on footsteps ("fs_L", "fs_R") and other clip events. */
+  onEvent: ((name: string) => void) | null = null;
+  alive = true;
+  animOn = true;
+  forceLod: 0 | 1 | 2 | 3 | null = null;
+  private lods: pc.Entity[] = [];
+  private lodShown = -1;
+  private acc = 0;
+  private last = { x: 0, y: 0, z: 0, yaw: 0, set: false };
+  private measured = { speed: 0, turn: 0, accel: 0 };
+  private wanted = 0;
+  private placed = { x: 0, y: 0, z: 0, yaw: 0 };
+  private tmpQ = new pc.Quat();
+  private tmpV = new pc.Vec3();
+  /** Player-driven: the controller sets the animator's inputs itself. */
+  driven = false;
+  /** Feet follow the town's ground (off for riders on vehicles and people in interiors' props). */
+  footIK = true;
 
   constructor(app: pc.AppBase, cm: CharModel, look: Look, parent: pc.Entity, opts: { shadows?: boolean } = {}) {
     this.cm = cm;
     this.root = new pc.Entity("person");
     this.model = cm.container.instantiateRenderEntity();
-    this.model.setLocalScale(cm.scale, cm.scale, cm.scale);
-    this.model.setLocalPosition(0, 0, 0);
     this.root.addChild(this.model);
     parent.addChild(this.root);
+    this.nodes = MIB_BONES.map(([n]) => this.model.findByName(n));
 
     const mat = new pc.StandardMaterial();
     mat.useMetalness = true;
     mat.metalness = 0;
-    mat.gloss = 0.32; // roughness 0.68: never glossy (rule C2)
-    mat.specularityFactor = 0.35;
+    // Soft skin and cloth: roughness 0.68 (never glossy, rule C2), low specular, a warm soft sheen at
+    // grazing angles (cheap stand-in for light scattering in skin and fabric fuzz).
+    mat.gloss = 0.32;
+    mat.specularityFactor = 0.28;
+    mat.useSheen = true;
+    mat.sheen = new pc.Color(0.16, 0.11, 0.09);
+    mat.sheenGloss = 0.35;
     mat.diffuseMap = paletteFor(app.graphicsDevice, cm, look);
+    mat.opacityMap = mat.diffuseMap;
+    mat.opacityMapChannel = "a";
+    mat.alphaTest = 0.5;
     (mat as unknown as { ambientSH: Float32Array }).ambientSH = SH;
     mat.update();
     this.material = mat;
-    for (const r of this.model.findComponents("render") as pc.RenderComponent[]) {
+    const renders = this.model.findComponents("render") as pc.RenderComponent[];
+    for (const r of renders) {
       for (const mi of r.meshInstances) mi.material = mat;
       r.castShadows = opts.shadows ?? true;
       r.receiveShadows = true;
+      this.lods.push(r.entity);
     }
-
-    this.model.addComponent("anim", { activate: true });
-    this.anim = this.model.anim!;
-    for (const [name, t] of cm.tracks) this.anim.assignAnimation(name, t, undefined, 1, !ONE_SHOT.has(name));
-    this.anim.baseLayer?.transition("idle", 0);
-    this.rig = new Rig(this.root, this.model, cm.scale);
-
+    this.lods.sort((a, b) => a.name.localeCompare(b.name));
+    this.anim = new Animator(ANIM, cm.skeleton);
+    this.anim.groundAt = (x, z) => this.groundAt(x, z);
+    this.anim.onEvent = (n) => this.onEvent?.(n);
+    this.rig = new PersonRig(this);
     if (look.headwear !== "none") this.addHeadwear(app, look);
+    this.showLod(1);
+    LIVE.add(this);
+    // Start in a natural idle (not the T-pose) even before the first tick.
+    this.tick(0, 1);
   }
 
   private addHeadwear(app: pc.AppBase, look: Look): void {
     const head = this.model.findByName("Head");
-    const top = this.model.findByName("Head_end");
-    if (!head || !top) return;
-    const meshes = headwearMeshes(app.graphicsDevice);
+    if (!head) return;
+    const top = this.model.findByName("HeadTop_End");
+    this.root.syncHierarchy();
+    if (look.headwear === "hijab") {
+      buildHeadwear(app.graphicsDevice, this.cm.skeleton, look, this.model, this.cm);
+      return;
+    }
+    // Cap: a short cylinder on the crown, sized from the skeleton (head bone to the top of the head).
+    const hp = head.getPosition(), tp = top?.getPosition() ?? hp.clone().add(new pc.Vec3(0, 0.2, 0));
+    const r = hp.distance(tp) * 0.5;
     const mat = new pc.StandardMaterial();
     mat.diffuse = new pc.Color().fromString(look.headwearColor);
     mat.diffuseVertexColor = true;
@@ -267,157 +444,136 @@ export class Person {
     mat.specularityFactor = 0.3;
     (mat as unknown as { ambientSH: Float32Array }).ambientSH = SH;
     mat.update();
-    // Size from the skeleton: head bone to the top of the head.
-    this.root.syncHierarchy();
-    const hp = head.getPosition(), tp = top.getPosition();
-    const headLen = hp.distance(tp);
-    const r = headLen * 0.5;
     const holder = new pc.Entity("headwear");
     head.addChild(holder);
-    // Place in world space relative to the person, then the bone carries it.
     const centre = new pc.Vec3().lerp(hp, tp, 0.55);
-    const fwd = new pc.Vec3();
-    this.root.getWorldTransform().transformVector(pc.Vec3.FORWARD, fwd).mulScalar(-1); // +z of the root
-    centre.add(fwd.clone().mulScalar(-r * 0.12));
     holder.setPosition(centre);
     holder.setRotation(this.root.getRotation());
     const hs = head.getScale();
     holder.setLocalScale(r / hs.x, r / hs.y, r / hs.z);
-    holder.addComponent("render", { meshInstances: [new pc.MeshInstance(look.headwear === "hijab" ? meshes.hijab : meshes.cap, mat)], castShadows: true });
+    holder.addComponent("render", { meshInstances: [new pc.MeshInstance(capMeshFor(app.graphicsDevice), mat)], castShadows: true });
   }
 
   /** Place the person; yaw in radians (0 = facing +z). */
   place(x: number, y: number, z: number, yaw: number): void {
     this.root.setLocalPosition(x, y, z);
     this.root.setLocalEulerAngles(0, (yaw * 180) / Math.PI, 0);
+    this.placed.x = x;
+    this.placed.y = y;
+    this.placed.z = z;
+    this.placed.yaw = yaw;
   }
 
-  /** Models whose sit clip reads as sitting on a chair (the "man" base's clip does not, so it uses the rig pose). */
+  /** Every model has a real seated loop now. */
   get hasSit(): boolean {
-    return this.cm.tracks.has("sit") && this.cm.key !== "man";
+    return true;
   }
 
-  private go(state: string, blend: number): void {
-    if (state !== this.state && this.anim.baseLayer && (this.cm.tracks.has(state) || state === "idle")) {
-      this.anim.baseLayer.transition(state, blend);
-      this.state = state;
-    }
-  }
-
-  /** Pick idle / walk / run from the ground speed and set the play rate so feet do not slide. */
-  gait(speed: number, blend = 0.2): void {
-    this.moving = speed;
-    if (this.shotLeft > 0) return;
-    // Walking off releases a held pose (sitting people stand up first).
+  /**
+   * Requested ground speed. The gait is matched to the body's MEASURED
+   * speed (what the feet actually cover), so a person pushed aside or slowed
+   * by the crowd never moonwalks; this value only says "I mean to move".
+   */
+  gait(speed: number, _blend = 0.2): void {
+    this.wanted = speed;
     if (this.held && speed > 0.15) this.act("stand");
-    if (this.held) return;
-    const cm = this.cm;
-    let want = "idle";
-    if (speed > 0.15) want = speed > (cm.walkSpeed + cm.runSpeed) / 2 ? "run" : "walk";
-    this.go(want, blend);
-    this.anim.speed = want === "walk" ? speed / cm.walkSpeed : want === "run" ? speed / cm.runSpeed : 1;
   }
 
-  /** Riders on okadas and kekes: the sit clip (straddling), or the rig's seated pose for rigs without one. */
+  /** Riders: seated on a vehicle (Root at the vehicle's origin). */
+  ride(kind: "okada_ride" | "okada_pillion" | "keke_drive" | "keke_passenger" | "car_drive" | "car_passenger_idle" | "cycle_freewheel"): void {
+    this.held = "sit";
+    this.footIK = false;
+    if (!this.anim.play(kind, { hold: true, blend: 0.1 })) ANIM.request(kind);
+  }
+
+  /** Riders on okadas and kekes (old API). */
   pose(name: "sit" | "idle"): void {
-    if (name === "sit" && this.cm.tracks.has("sit")) {
-      this.held = "sit";
-      this.go("sit", 0.3);
-      return;
-    }
     if (name === "sit") this.act("sit");
     else this.act("stand");
   }
 
   /**
-   * THE ANIMATION INTERFACE for missions and cutscenes. Play a FORMAT.md
-   * `actor.anim` by name: a real clip where the model has one (wave, clap,
-   * sit, punch...), otherwise the procedural fallback on the rig layer
-   * (point, phone, nod, talk...). When the animation engine brings real
-   * clips for more names, they drop in here (`has(name)` picks the clip)
-   * and no mission changes. ANIM_FALLBACKS lists which names are procedural today.
+   * THE NAMED-CLIP INTERFACE for missions and cutscenes: play any clip id
+   * from the packs (assets/anim/index.json, or docs/ANIM_INVENTORY.md), on
+   * the full body or the upper body. Returns false while its pack loads (it
+   * then plays as soon as it arrives).
    */
+  play(clip: string, o: { upper?: boolean; hold?: boolean; then?: string; duration?: number; blend?: number; noRoot?: boolean; offset?: [number, number, number] } = {}): boolean {
+    const go = () => (o.upper ? this.anim.upperPlay(clip, { duration: o.duration }) : this.anim.play(clip, { hold: o.hold, then: o.then, blend: o.blend, noRoot: o.noRoot, offset: o.offset }));
+    if (go()) return true;
+    void ANIM.ensure([clip, ...(o.then ? [o.then] : [])]).then(() => {
+      if (this.alive) go();
+    });
+    return false;
+  }
+
+  /** The FORMAT.md `actor.anim` names (missions call this). */
   act(name: AnimName): void {
-    const has = (c: string) => this.cm.tracks.has(c);
-    this.anim.speed = 1;
+    const spec = ACT_CLIPS[name];
     switch (name) {
-      case "sit":
-      case "sit_floor":
-        // Story sitting uses the rig pose for every model, so a seat mark means the same thing for everyone:
-        // the root (feet) stands just in front of the seat, the hips go back over it.
-        this.held = "sit";
-        this.rig.seatHeight = name === "sit_floor" ? 0.06 : 0.46;
-        this.go("idle", 0.3);
-        this.rig.play("sit");
+      case "stand":
+      case "idle": {
+        const was = this.held;
+        this.held = null;
+        this.anim.upperStop();
+        this.anim.hands.w = 0;
+        if (was === "sit") this.play("stand_up", { noRoot: true, blend: 0.2 });
+        else this.anim.stopAction(0.35);
         return;
+      }
+      case "sit":
+      case "sit_floor": {
+        this.held = "sit";
+        const seatY = name === "sit_floor" ? 0.06 : this.rig.seatHeight;
+        // Hips over the seat: 0.2 m behind the root (the mission seat marks put the feet in front of the seat).
+        const loop = ANIM.get(name === "sit" ? "sit_idle" : "sit_floor");
+        const hs = this.anim.hipScale;
+        const hy = loop ? loop.hips[1]! * hs : 0.55;
+        const hz = loop ? loop.hips[2]! * hs : 0;
+        const off: [number, number, number] = [0, Math.max(-0.2, Math.min(0.2, seatY + 0.09 - hy)), -0.2 - hz];
+        if (name === "sit") this.play("sit_down", { then: "sit_idle", hold: true, noRoot: true, offset: off });
+        else this.play("sit_floor", { hold: true, offset: [0, Math.max(-0.1, Math.min(0.1, seatY + 0.08 - hy)), 0] });
+        return;
+      }
       case "kneel":
       case "sleep":
-      case "carry":
+        this.held = name;
+        this.play(spec.clip, { then: spec.then, hold: true, noRoot: true });
+        return;
+      case "fall":
+        this.play("knock_down", { noRoot: false });
+        return;
+      case "hit":
+        this.anim.bump([0, 0, -1], 3);
+        this.play("flinch", { upper: true, duration: 1.2 });
+        return;
+      case "eat":
+        this.play(this.held === "sit" ? "eat_seated" : "eat_stand", { upper: true, duration: spec.dur });
+        return;
       case "phone":
+      case "carry":
       case "hold_torch":
       case "oath":
-        if (name === "kneel" || name === "sleep") this.held = name;
-        this.go("idle", 0.25);
-        this.rig.play(name);
-        return;
-      case "stand":
-      case "idle":
-        if (this.held || this.rig.gesture || this.rig.bodyPose) {
-          this.held = null;
-          this.rig.play(null);
-          this.go(this.moving > 0.15 ? "walk" : "idle", 0.35);
-        }
-        return;
-      case "wave":
-      case "clap":
-      case "punch":
-      case "fall":
-      case "hit":
-        if (has(name)) return this.oneShot(name);
-        if (name === "hit" && has("interact")) return this.oneShot("interact");
-        this.rig.play(name === "fall" || name === "hit" ? "shock" : name === "punch" ? "gesture" : name);
-        return;
-      case "shock":
-        if (has("hit")) return this.oneShot("hit");
-        this.rig.play("shock");
-        return;
-      case "horns":
-        this.rig.play("cheer");
-        return;
-      case "talk":
-        this.rig.play("gesture");
-        return;
-      case "look":
+        this.play(spec.clip, { upper: true });
         return;
       default:
-        this.rig.play(name as GestureName);
+        if (spec.layer === "upper" || this.held) this.play(spec.clip, { upper: true, duration: spec.dur });
+        else this.play(spec.clip, { blend: 0.2 });
     }
   }
 
-  private oneShot(clip: string): void {
-    const t = this.cm.tracks.get(clip);
-    if (!t || !this.anim.baseLayer) return;
-    this.anim.baseLayer.transition(clip, 0.15);
-    this.state = clip;
-    this.shotLeft = Math.max(0.4, t.duration - 0.12);
-  }
-
-  /** Per-frame: one-shot clips return to the body's state; the rig layer applies poses after the clips. */
-  update(dt: number): void {
-    if (this.shotLeft > 0) {
-      this.shotLeft -= dt;
-      if (this.shotLeft <= 0) {
-        this.state = "";
-        if (this.held === "sit" && !this.rig.bodyPose && this.cm.tracks.has("sit")) this.go("sit", 0.25);
-        else this.go(this.moving > 0.15 ? "walk" : "idle", 0.25);
-      }
-    }
-    if (this.anim.enabled && this.root.enabled) this.rig.update(dt);
+  /** Ground under a model-space point, relative to the person's root (foot IK on kerbs and steps). */
+  private groundAt(x: number, z: number): number {
+    if (!this.footIK) return 0;
+    const s = this.root.getLocalScale().y || 1;
+    const c = Math.cos(this.placed.yaw), sn = Math.sin(this.placed.yaw);
+    const wx = this.placed.x + (x * c + z * sn) * s, wz = this.placed.z + (-x * sn + z * c) * s;
+    return (surfaceHeight(wx, wz) - this.placed.y) / s;
   }
 
   /** Turn animation evaluation off for far-away people (they keep their last pose). */
   set animating(on: boolean) {
-    this.anim.enabled = on;
+    this.animOn = on;
   }
 
   set visible(on: boolean) {
@@ -428,7 +584,155 @@ export class Person {
     return this.root.enabled;
   }
 
+  /** Kept for callers that tick people themselves: the shared ticker does the work once per frame. */
+  update(_dt: number): void {}
+
+  /** Advance the animation and write the bones (called by the ticker). */
+  tick(dt: number, lod: 0 | 1 | 2 | 3): void {
+    const a = this.anim;
+    // Measured motion (ground speed, turn rate, acceleration) from where the person was placed.
+    if (dt > 0) {
+      const L = this.last;
+      if (L.set) {
+        const s = this.root.getLocalScale().y || 1;
+        const d = Math.hypot(this.placed.x - L.x, this.placed.z - L.z);
+        const sp = d > 3 ? 0 : d / dt / s;
+        let dy = this.placed.yaw - L.yaw;
+        while (dy > Math.PI) dy -= 2 * Math.PI;
+        while (dy < -Math.PI) dy += 2 * Math.PI;
+        const k = 1 - Math.exp(-dt / 0.08);
+        const prev = this.measured.speed;
+        this.measured.speed += (sp - this.measured.speed) * k;
+        this.measured.turn += (dy / dt - this.measured.turn) * k;
+        this.measured.accel += ((this.measured.speed - prev) / dt - this.measured.accel) * k * 0.5;
+      }
+      L.x = this.placed.x;
+      L.z = this.placed.z;
+      L.yaw = this.placed.yaw;
+      L.set = true;
+    }
+    if (!this.driven) {
+      a.input.speed = this.held ? 0 : this.measured.speed < 0.08 && this.wanted < 0.1 ? 0 : this.measured.speed;
+      a.input.turnRate = this.measured.turn;
+      a.input.accel = this.measured.accel;
+    }
+    // Rate by LOD: mid-distance people at 30 Hz, far at 10 Hz (plan §4.7).
+    a.lod = lod;
+    if (lod === 3 && this.lodShown >= 0) return;
+    this.acc += dt;
+    const step = lod === 2 ? 1 / 10 : lod === 1 ? 1 / 30 : 0;
+    if (this.acc < step && this.lodShown >= 0) return;
+    const adt = this.acc;
+    this.acc = 0;
+    this.rig.sync(adt);
+    a.update(adt);
+    this.applyPose();
+    this.showLod(lod === 0 ? 0 : 1);
+  }
+
+  private showLod(i: number): void {
+    if (this.lods.length < 2 || i === this.lodShown) {
+      this.lodShown = i;
+      return;
+    }
+    this.lodShown = i;
+    this.lods.forEach((e, k) => (e.enabled = k === i));
+  }
+
+  /** Bone rotations (and the hips' translation) onto the engine's nodes. */
+  private applyPose(): void {
+    const p = this.anim.pose, q = this.tmpQ;
+    for (let b = 0; b < BONE_COUNT; b++) {
+      const n = this.nodes[b];
+      if (!n) continue;
+      q.set(p.rot[b * 4]!, p.rot[b * 4 + 1]!, p.rot[b * 4 + 2]!, p.rot[b * 4 + 3]!);
+      n.setLocalRotation(q);
+    }
+    const h = this.nodes[B.Hips];
+    if (h) {
+      const s = this.anim.hipScale;
+      h.setLocalPosition(this.tmpV.set(p.hips[0]! * s, p.hips[1]! * s, p.hips[2]! * s));
+    }
+  }
+
+  /** A bump from a world-space direction (someone brushed past). */
+  bump(worldDir: V3, strength: number): void {
+    const c = Math.cos(-this.placed.yaw), s = Math.sin(-this.placed.yaw);
+    this.anim.bump([worldDir[0] * c + worldDir[2] * s, 0, -worldDir[0] * s + worldDir[2] * c], strength);
+  }
+
   destroy(): void {
+    this.alive = false;
+    LIVE.delete(this);
     this.root.destroy();
+  }
+}
+
+/**
+ * The old rig API the missions and the director use (lookAt, headTurn,
+ * pedal, seatHeight, play), mapped onto the Animator.
+ */
+export class PersonRig {
+  /** Look-at target (world); null = none. */
+  lookAt: pc.Vec3 | null = null;
+  /** Fixed head turn (degrees). */
+  headTurn = { yaw: 0, pitch: 0 };
+  /** Pedalling (bicycle): phase in radians from distance travelled (rule A3); null when not riding. */
+  pedal: { phase: number; seatY: number; crankY: number; crankZ: number; crankR: number; handZ: number; handY: number } | null = null;
+  /** Seat height for "sit" (metres above the root). */
+  seatHeight = 0.46;
+  private inv = new pc.Mat4();
+  private v = new pc.Vec3();
+  private cycling = false;
+
+  constructor(private p: Person) {}
+
+  get gesture(): string | null {
+    return this.p.anim.upperClip;
+  }
+
+  get bodyPose(): string | null {
+    return this.p.held;
+  }
+
+  get busy(): boolean {
+    return !!this.p.anim.upperClip || !!this.p.held;
+  }
+
+  /** Debug (castState): 1 while a held pose plays. */
+  get debugPoseW(): number {
+    return this.p.held ? 1 : 0;
+  }
+
+  play(g: GestureName | null): void {
+    if (g === null) this.p.act("stand");
+    else this.p.act(g as AnimName);
+  }
+
+  /** Per tick: world look target -> model space; pedals. */
+  sync(_dt: number): void {
+    const a = this.p.anim;
+    if (this.lookAt) {
+      this.inv.copy(this.p.root.getWorldTransform()).invert();
+      this.inv.transformPoint(this.lookAt, this.v);
+      a.lookTarget = [this.v.x, this.v.y, this.v.z];
+    } else a.lookTarget = null;
+    a.headTurn.yaw = this.headTurn.yaw;
+    a.headTurn.pitch = this.headTurn.pitch;
+    if (this.pedal) {
+      const pd = this.pedal;
+      a.pedals = { phase: pd.phase, y: pd.crankY, z: pd.crankZ, r: pd.crankR, x: 0.13 };
+      a.hands = { L: [0.22, pd.handY + 0.02, pd.handZ - 0.03], R: [-0.22, pd.handY + 0.02, pd.handZ - 0.03], w: 1, grip: true };
+      if (!this.cycling) {
+        this.cycling = true;
+        if (!ANIM.get("cycle")) ANIM.request("cycle");
+        a.cycle(true);
+      }
+    } else if (this.cycling) {
+      this.cycling = false;
+      a.pedals = null;
+      a.hands.w = 0;
+      a.cycle(false);
+    }
   }
 }
