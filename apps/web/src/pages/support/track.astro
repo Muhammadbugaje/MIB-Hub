@@ -1,0 +1,149 @@
+---
+/**
+ * /support/track: look up a support message by its reference.
+ * POST ref + email (signed-in owners need only the reference). The email
+ * must match the one on the message, so a reference alone reveals nothing.
+ * Shows the status, the original message and the team's public replies.
+ * Rate-limited; a plain GET shows the form.
+ */
+import "../../styles/pages/support.css";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { TICKET_KIND, TICKET_STATUS, cleanRef } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { clientKey, rateLimited, readBody, str } from "../../lib/http.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const user = Astro.locals.viewer.user;
+let problem = "";
+let refInput = "";
+let found: Awaited<ReturnType<typeof repos.tickets.getByRef>> | undefined;
+let replies: Awaited<ReturnType<typeof repos.tickets.messages>> = [];
+
+if (Astro.request.method === "POST") {
+  const body = await readBody(Astro.request);
+  refInput = str(body.ref, 20);
+  const ref = cleanRef(refInput, "MIB");
+  const email = (user?.email ?? str(body.email, 200)).toLowerCase();
+  if (rateLimited(`track:${clientKey(Astro.request, Astro.clientAddress)}`, 20, 10 * 60_000)) {
+    problem = "Too many lookups. Please wait a few minutes and try again.";
+  } else if (!ref) {
+    problem = "That reference does not look right. It starts with MIB- and then five letters or numbers.";
+  } else {
+    const t = await repos.tickets.getByRef(ref);
+    const owns = t && ((user && t.userId === user.id) || (email && t.email.toLowerCase() === email));
+    if (!t || !owns) problem = "We could not find a message with that reference and email. Check both and try again.";
+    else {
+      found = t;
+      replies = await repos.tickets.messages(t.id);
+    }
+  }
+  if (problem) Astro.response.status = 404;
+}
+const status = found ? (TICKET_STATUS[found.status] ?? TICKET_STATUS.open!) : undefined;
+const STEPS = ["open", "pending", "resolved"] as const;
+const stepIndex = found ? Math.max(0, STEPS.indexOf(found.status === "closed" ? "resolved" : (found.status as (typeof STEPS)[number]))) : 0;
+---
+
+<PublicLayout title="Track a message" description="Check the status of a message you sent to the MIB-Hub team.">
+  <PageHero
+    eyebrow="Support"
+    pre="Track"
+    hl="a message"
+    sub="Your reference and email bring up the status of your message and every reply from the team."
+    icon="ticket"
+    fx="waves"
+    crumbs={[
+      { href: "/support", label: "Support" },
+      { href: "/support/track", label: "Track" },
+    ]}
+  />
+
+  <section class="pub-sec pp-sec-first" aria-label="Your message">
+    <div class="pub-wrap pp-trackpage">
+      {
+        found && status ? (
+          <article class="pp-card pp-ticket" data-fx-item>
+            <header>
+              <span class:list={["pub-badge", status.tone]}>{status.label}</span>
+              <span class="pp-mono pp-muted">{found.ref}</span>
+            </header>
+            <h2>{found.subject}</h2>
+            <p class="pp-muted pp-ticket__meta">
+              {TICKET_KIND[found.kind]?.label ?? found.kind} · sent {formatDate(found.createdAt, { time: true })}
+            </p>
+            <ol class="pp-ticket__steps" aria-label="Progress">
+              {["Received", "Answered", "Resolved"].map((label, i) => (
+                <li class:list={[i <= stepIndex && "is-done"]}>
+                  <span>{i < stepIndex || (i === stepIndex && i === 2) ? <Icon name="check" size={13} /> : i + 1}</span>
+                  {label}
+                </li>
+              ))}
+            </ol>
+            <p class="pp-note">
+              <Icon name="info" size={16} />
+              {status.note}
+            </p>
+            <div class="pp-thread">
+              <div class="pp-msg pp-msg--you">
+                <b>You</b>
+                <p>{found.body}</p>
+                <small>{formatDate(found.createdAt, { time: true })}</small>
+              </div>
+              {replies.map((m) => (
+                <div class:list={["pp-msg", m.fromStaff ? "pp-msg--team" : "pp-msg--you"]}>
+                  <b>{m.fromStaff ? "The team" : "You"}</b>
+                  <p>{m.body}</p>
+                  <small>{formatDate(m.createdAt, { time: true })}</small>
+                </div>
+              ))}
+              {replies.length === 0 && <p class="pp-thread__wait">No reply yet. It is in the queue and a person will get to it.</p>}
+            </div>
+            <div class="pp-hero__ctas">
+              {user && (
+                <a class="pub-btn pub-btn--primary" href={`/account/tickets/${found.ref}`}>
+                  Open in my account
+                </a>
+              )}
+              <a class="pub-btn pub-btn--ghost" href="/support#contact">
+                Send a new message
+              </a>
+            </div>
+          </article>
+        ) : (
+          <div class="pp-card pp-track pp-trackpage__form">
+            {problem ? (
+              <p class="pp-note pp-note--bad" role="alert">
+                <Icon name="info" size={16} />
+                {problem}
+              </p>
+            ) : (
+              <Empty compact icon="ticket" title="Find your message" text="Enter the reference from your confirmation page or email." />
+            )}
+            <form class="pp-form" method="post" action="/support/track">
+              <label class="pp-field">
+                <span>Reference</span>
+                <input name="ref" required value={refInput} placeholder="MIB-XXXXX" autocapitalize="characters" class="pp-mono" />
+              </label>
+              {!user && (
+                <label class="pp-field">
+                  <span>The email you wrote from</span>
+                  <input name="email" type="email" required autocomplete="email" />
+                </label>
+              )}
+              <button class="pub-btn pub-btn--gold" type="submit">
+                <Icon name="search" size={16} />
+                Find it
+              </button>
+            </form>
+            <p class="pp-muted pp-trackpage__help">
+              Lost the reference? <a href="/support#contact">Write to us</a> from the same email and we will find it.
+            </p>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</PublicLayout>

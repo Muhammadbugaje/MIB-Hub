@@ -1,0 +1,71 @@
+---
+/**
+ * The dark "stage" that opens every inner public page: an animated canvas
+ * scene (or a still gradient), a giant faint line icon, breadcrumbs, an
+ * eyebrow, a big headline whose last words take the gold-to-cyan gradient,
+ * a lead line, then whatever the page puts in the slot (buttons, counters).
+ * Dark in both themes, like the home hero.
+ *
+ *   <PageHero eyebrow="The arcade" pre="Every game," hl="one tap away" sub="…" icon="gamepad" fx="electric_field"
+ *     crumbs={[{ href: "/games", label: "Games" }]}>
+ *     <div class="pp-hero__ctas">…</div>
+ *     <Fragment slot="aside">…a card on the right…</Fragment>
+ *   </PageHero>
+ */
+import "../../styles/pages/common.css";
+import FxScene from "../FxScene.astro";
+import Icon from "../Icon.astro";
+
+interface Props {
+  eyebrow: string;
+  pre: string;
+  hl?: string;
+  sub?: string;
+  icon?: string;
+  fx?: "arcade" | "galaxy" | "waves" | "electric_field";
+  palette?: "brand" | "electric" | "ember" | "campus";
+  crumbs?: { href: string; label: string }[];
+  /** An accent colour for the glow (a game's colour). */
+  accent?: string;
+  /** A background photo (a game's cover), darkened. */
+  image?: string | null;
+  /** Taller hero with the art on the right (game pages). */
+  tall?: boolean;
+}
+const { eyebrow, pre, hl, sub, icon = "sparkles", fx, palette, crumbs = [], accent, image, tall = false } = Astro.props;
+const hasAside = Astro.slots.has("aside");
+---
+
+<section class:list={["pp-hero", tall && "pp-hero--tall", hasAside && "pp-hero--aside", image && "pp-hero--photo"]} style={accent ? `--pp-a: ${accent}` : undefined}>
+  <div class="pp-hero__stage">
+    {image && <img class="pp-hero__img" src={image} alt="" decoding="async" data-art />}
+    {fx && !image && <div class="pp-hero__fx"><FxScene kind={fx} palette={palette} /></div>}
+    <span class="pp-hero__grid" aria-hidden="true"></span>
+    <span class="pp-hero__orb pp-hero__orb--a" aria-hidden="true"></span>
+    <span class="pp-hero__orb pp-hero__orb--b" aria-hidden="true"></span>
+    {!image && <Icon name={icon} size={340} strokeWidth={0.7} class="pp-hero__glyph" />}
+
+    <div class="pp-hero__inner">
+      <div class="pp-hero__copy">
+        {
+          crumbs.length > 0 && (
+            <nav class="pp-crumbs" aria-label="Breadcrumb">
+              <a href="/">Home</a>
+              {crumbs.map((c) => (
+                <>
+                  <Icon name="chevron-right" size={12} />
+                  <a href={c.href}>{c.label}</a>
+                </>
+              ))}
+            </nav>
+          )
+        }
+        <p class="pub-eyebrow pub-eyebrow--light">{eyebrow}</p>
+        <h1>{pre}{hl && " "}{hl && <span class="pub-grad">{hl}</span>}</h1>
+        {sub && <p class="pp-hero__sub">{sub}</p>}
+        <slot />
+      </div>
+      {hasAside && <div class="pp-hero__aside"><slot name="aside" /></div>}
+    </div>
+  </div>
+</section>

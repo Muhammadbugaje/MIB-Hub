@@ -1,0 +1,72 @@
+---
+/**
+ * A generated portrait badge for a character: a two-colour disc picked from
+ * the name, an orbit pattern turned by the name, the initials, and a ring
+ * whose style says the group (gold for leads, prism for guest stars).
+ * Uses the uploaded portrait instead when the admin has added one.
+ *
+ *   <CharAvatar name="Jega" kind="lead" size={96} />
+ */
+import { initials } from "../shell/art.ts";
+
+interface Props {
+  name: string;
+  kind: string;
+  portrait?: string;
+  size?: number;
+  class?: string;
+}
+const { name, kind, portrait, size = 96, class: className } = Astro.props;
+
+const PAIRS: [string, string][] = [
+  ["#f59e0b", "#7c2d12"],
+  ["#38e1f5", "#0b3a4a"],
+  ["#a78bfa", "#312e81"],
+  ["#4ade80", "#0f3d2e"],
+  ["#fb7185", "#4c0519"],
+  ["#f6c445", "#5b3d09"],
+  ["#60a5fa", "#172554"],
+  ["#2dd4bf", "#134e4a"],
+  ["#f472b6", "#500724"],
+  ["#c4b5fd", "#4c1d95"],
+];
+let h = 0;
+for (const ch of name) h = (h * 31 + ch.codePointAt(0)!) >>> 0;
+const [c1, c2] = PAIRS[h % PAIRS.length]!;
+const turn = h % 360;
+const dash = 6 + (h % 9);
+const uid = `ca${h.toString(36)}${kind.length}`;
+const ring = kind === "lead" ? "gold" : kind === "special" ? "prism" : kind === "mystery" ? "ghost" : "plain";
+const letters = initials(name.replace(/^(Dr|Engr|Sgt|Coach|DJ|Malam|Hajiya|Mrs|Mr|Nurse|Pastor|Ustaz|Ranger|Chief|Baba|Mama)\.?\s+/i, ""), 2);
+---
+
+<span class:list={["pp-cav", `pp-cav--${ring}`, className]} style={`--s: ${size}px`} aria-hidden="true">
+  {
+    portrait ? (
+      <img src={portrait} alt="" loading="lazy" width={size} height={size} />
+    ) : (
+      <svg viewBox="0 0 120 120" width={size} height={size}>
+        <defs>
+          <linearGradient id={`${uid}g`} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color={c1} />
+            <stop offset="1" stop-color={c2} />
+          </linearGradient>
+          <radialGradient id={`${uid}l`} cx="30%" cy="22%" r="70%">
+            <stop offset="0" stop-color="#fff" stop-opacity=".45" />
+            <stop offset=".6" stop-color="#fff" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="56" fill={`url(#${uid}g)`} />
+        <g transform={`rotate(${turn} 60 60)`} fill="none" stroke="#fff" stroke-linecap="round">
+          <circle cx="60" cy="60" r="44" stroke-opacity=".22" stroke-width="1.2" stroke-dasharray={`${dash} ${dash + 4}`} />
+          <circle cx="60" cy="60" r="34" stroke-opacity=".14" stroke-width="8" stroke-dasharray={`40 ${30 + dash}`} />
+          <circle cx="104" cy="60" r="3" fill="#fff" fill-opacity=".8" stroke="none" />
+        </g>
+        <circle cx="60" cy="60" r="56" fill={`url(#${uid}l)`} />
+        <text x="60" y="61" text-anchor="middle" dominant-baseline="central" fill="#fff" font-size={letters.length > 1 ? 38 : 46} font-weight="700"
+          >{kind === "mystery" ? "?" : letters}</text
+        >
+      </svg>
+    )
+  }
+</span>

@@ -1,0 +1,195 @@
+---
+/**
+ * /about: the story of MIB-Hub. What it is, what it believes, the whole
+ * timeline (history table), the hub in numbers, and the people.
+ */
+import "../styles/pages/community.css";
+import Icon from "../components/Icon.astro";
+import PageHero from "../components/public/PageHero.astro";
+import { publicCast } from "../components/public/cast.ts";
+import { fmt } from "../components/public/kinds.ts";
+import { categoryLabel, initials, specialAllowed } from "../components/shell/art.ts";
+import PublicLayout from "../layouts/PublicLayout.astro";
+import { repos } from "../lib/db.ts";
+import { siteSwitches, specialSwitches } from "../lib/site.ts";
+import { siteConfig } from "../site.config.ts";
+
+const [history, games, chars, founders, switches, specials] = await Promise.all([
+  repos.history.listVisible(),
+  repos.games.listPublic(),
+  repos.characters.listPublic(),
+  repos.people.listVisible("founder"),
+  siteSwitches(),
+  specialSwitches(),
+]);
+const timeline = [...history].sort((a, b) => a.date.getTime() - b.date.getTime());
+const founder = founders.find((p) => p.consent && specialAllowed(p.name, specials));
+const cast = publicCast(chars, specials);
+const lines = cast.reduce((n, c) => n + c.lineCount, 0);
+const modes = games.reduce((n, g) => n + (g.meta.modes?.length ?? 0), 0);
+const categories = [...new Set(games.map((g) => g.category))].map(categoryLabel);
+const photo = (url: string) => (url.startsWith("/uploads/") || url.startsWith("https://") ? url : "");
+const facts = [
+  { icon: "gamepad", value: fmt(games.length), label: "Games", note: categories.join(", ").toLowerCase() },
+  { icon: "layers", value: fmt(modes), label: "Game modes", note: "career, versus, story and more" },
+  { icon: "users", value: fmt(cast.length), label: "Characters", note: "in the open-world cast" },
+  { icon: "mic", value: fmt(lines), label: "Written lines", note: "for the voice cast" },
+];
+const COLOURS = ["#e6c867", "#38e1f5", "#a78bfa", "#4ade80"];
+---
+
+<PublicLayout title="About and history" description={`The story of ${siteConfig.name}: ${siteConfig.description}`}>
+  <PageHero
+    eyebrow={`About ${siteConfig.name}`}
+    pre="Original games,"
+    hl="made with care"
+    sub={siteConfig.description}
+    icon="milestone"
+    fx="waves"
+    crumbs={[{ href: "/about", label: "About" }]}
+  >
+    <div class="pp-hero__ctas">
+      <a class="pub-btn pub-btn--gold pub-btn--lg" href="/games">
+        <Icon name="play" size={18} />
+        Play the games
+      </a>
+      <a class="pub-btn pub-btn--glass pub-btn--lg" href="#story">Read the story</a>
+    </div>
+  </PageHero>
+
+  <!-- The short version ------------------------------------------------------- -->
+  <section class="pub-sec pp-sec-first" aria-labelledby="what-h">
+    <div class="pub-wrap pp-about">
+      <div class="pp-about__copy">
+        <p class="pub-eyebrow">What it is</p>
+        <h2 id="what-h">A home for <span class="pub-hl">every game we make</span></h2>
+        <p class="pp-about__big">
+          {siteConfig.name} is one place for quick arcade rounds, head-to-head duels, puzzles that teach you something, and a whole campus to explore. Everything runs in the browser, on
+          a phone or a laptop, with nothing to install.
+        </p>
+        <p>
+          It began as a handful of small physics and engineering games for students. They grew music, characters, careers and leaderboards, and outgrew the place they lived. So they
+          moved here, to a hub of their own, with room for a community around them.
+        </p>
+        <p>
+          The biggest project is the open-world game: five years of campus life, {fmt(cast.length)} characters and a mystery that runs through all of it. The arcade keeps growing
+          beside it.
+        </p>
+      </div>
+      <ul class="pp-facts" aria-label="The hub in numbers">
+        {
+          facts.map((f, i) => (
+            <li style={`--c: ${COLOURS[i]}`} data-fx-item>
+              <span>
+                <Icon name={f.icon} size={20} />
+              </span>
+              <b>{f.value}</b>
+              <em>{f.label}</em>
+              <small>{f.note}</small>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Principles ---------------------------------------------------------------- -->
+  <section class="pub-sec pub-sec--tint" aria-labelledby="believe-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">What we believe</p>
+          <h2 id="believe-h">Four promises <span class="pub-hl">to players</span></h2>
+        </div>
+      </div>
+      <div class="pp-promises">
+        <article data-fx-item>
+          <span class="pp-ic"><Icon name="gift" size={20} /></span>
+          <h3>Free to play</h3>
+          <p>Every game is free. {switches.guestPlay ? "You can play as a guest; " : ""}an account only keeps your saves and puts you on the boards.</p>
+        </article>
+        <article data-fx-item>
+          <span class="pp-ic k-volt"><Icon name="shield" size={20} /></span>
+          <h3>Fair play</h3>
+          <p>Supporter tiers say thank you and nothing more. In-game boosts are bought with in-game money. Story is never for sale.</p>
+        </article>
+        <article data-fx-item>
+          <span class="pp-ic k-green"><Icon name="lock" size={20} /></span>
+          <h3>Your data stays yours</h3>
+          <p>We record which games and levels people play so we can fix the hard bits. We never sell data or follow you to other sites.</p>
+        </article>
+        <article data-fx-item>
+          <span class="pp-ic k-plum"><Icon name="heart" size={20} /></span>
+          <h3>Real people, with consent</h3>
+          <p>Characters inspired by real friends exist because those friends said yes. They approve their look and lines, and can step back any time.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline ------------------------------------------------------------------- -->
+  {
+    timeline.length > 0 && (
+      <section class="pub-sec" id="story" aria-labelledby="story-h">
+        <div class="pub-wrap pp-vtl-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">The story so far</p>
+              <h2 id="story-h">
+                From a learning arcade <span class="pub-hl">to a hub of its own</span>
+              </h2>
+            </div>
+          </div>
+          <ol class="pp-vtl">
+            {timeline.map((h, i) => (
+              <li class:list={[i === timeline.length - 1 && "is-now"]} data-fx-item>
+                <span class="pp-vtl__dot" aria-hidden="true" />
+                <span class="pp-vtl__when">{h.dateLabel}</span>
+                <div class="pp-vtl__card">
+                  {h.imageUrl && photo(h.imageUrl) && <img src={photo(h.imageUrl)} alt="" loading="lazy" />}
+                  <h3>{h.title}</h3>
+                  {h.body && <p>{h.body}</p>}
+                </div>
+              </li>
+            ))}
+            <li class="pp-vtl__next" data-fx-item>
+              <span class="pp-vtl__dot" aria-hidden="true" />
+              <span class="pp-vtl__when">Next</span>
+              <div class="pp-vtl__card">
+                <h3>You are here</h3>
+                <p>
+                  New chapters are announced in the <a href="/news">news</a> first.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- The maker ---------------------------------------------------------------------- -->
+  {
+    founder && (
+      <section class="pub-band" aria-labelledby="maker-h">
+        <div class="pub-wrap pp-maker">
+          <span class="pp-maker__av">{photo(founder.photoUrl) ? <img src={photo(founder.photoUrl)} alt={founder.name} loading="lazy" /> : initials(founder.name, 3)}</span>
+          <div>
+            <p class="pub-eyebrow">{founder.title || "Founder"}</p>
+            <h2 id="maker-h">{founder.name}</h2>
+            {founder.bio && <p class="pp-maker__bio">{founder.bio}</p>}
+            <div class="pp-hero__ctas">
+              <a class="pub-btn pub-btn--gold" href="/community">
+                Everyone in the credits
+                <Icon name="arrow-right" size={16} />
+              </a>
+              <a class="pub-btn pub-btn--ghost" href="/support">
+                Get in touch
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+</PublicLayout>

@@ -1,0 +1,220 @@
+---
+/**
+ * /events/<slug> (or /events/<id>): one event. A countdown until it starts,
+ * a "live now" state while it runs, the details, the write-up (Markdown),
+ * a calendar file, and what else is on. Drafts are 404 except for staff
+ * with content.manage.
+ */
+import "../../styles/pages/events.css";
+import GameCard from "../../components/GameCard.astro";
+import Icon from "../../components/Icon.astro";
+import Countdown from "../../components/public/Countdown.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { durationLabel, eventKind, eventParts, eventState } from "../../components/public/kinds.ts";
+import { renderMarkdown } from "../../components/public/markdown.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+
+const key = Astro.params.slug ?? "";
+const event = /^[a-zA-Z0-9-]{1,120}$/.test(key) ? ((await repos.events.getBySlug(key)) ?? (await repos.events.getById(key))) : undefined;
+const staff = Astro.locals.viewer.permissions.has("content.manage");
+if (!event || (event.status !== "published" && !staff)) return Astro.rewrite("/404");
+
+const [games, upcoming] = await Promise.all([repos.games.listPublic(), repos.events.upcoming(8)]);
+const game = event.gameSlug ? games.find((g) => g.slug === event.gameSlug) : undefined;
+const state = eventState(event);
+const k = eventKind(event.kind);
+const start = eventParts(event.startsAt);
+const end = event.endsAt ? eventParts(event.endsAt) : null;
+const others = upcoming.filter((e) => e.id !== event.id).slice(0, 4);
+const html = event.body ? renderMarkdown(event.body) : "";
+const length = durationLabel(event.startsAt, event.endsAt);
+---
+
+<PublicLayout title={event.title} description={event.summary || `${k.label} on MIB-Hub, ${start.full}.`}>
+  <PageHero
+    eyebrow={k.label}
+    pre={event.title}
+    sub={event.summary}
+    icon={k.icon}
+    fx="galaxy"
+    image={event.coverUrl || null}
+    accent={game?.accent}
+    crumbs={[
+      { href: "/events", label: "Events" },
+      { href: `/events/${event.slug}`, label: event.title },
+    ]}
+  >
+    <p class="pp-artmeta">
+      <span><Icon name="calendar" size={14} />{start.full}</span>
+      {event.location && <span><Icon name="map-pin" size={14} />{event.location}</span>}
+      {event.prize && <span><Icon name="award" size={14} />{event.prize}</span>}
+    </p>
+    <div class="pp-hero__ctas">
+      {
+        state !== "ended" && (
+          <a class="pub-btn pub-btn--gold pub-btn--lg" href={`/events/${event.slug}.ics`} download>
+            <Icon name="calendar" size={18} />
+            Add to calendar
+          </a>
+        )
+      }
+      {
+        game && (
+          <a class:list={["pub-btn", "pub-btn--lg", state === "ended" ? "pub-btn--gold" : "pub-btn--glass"]} href={`/play/${game.slug}`}>
+            <Icon name="play" size={18} />
+            {state === "upcoming" ? `Practise ${game.title}` : `Play ${game.title}`}
+          </a>
+        )
+      }
+    </div>
+
+    <div class="pp-glass pp-evstate" slot="aside">
+      {
+        state === "upcoming" ? (
+          <>
+            <p class="pp-glass__lab">
+              <Icon name="timer" size={14} />
+              Starts in
+            </p>
+            <Countdown to={event.startsAt} />
+            <p>{start.date}</p>
+          </>
+        ) : state === "live" ? (
+          <>
+            <p class="pp-glass__lab pp-evstate__live">
+              <i aria-hidden="true" />
+              Live now
+            </p>
+            <h3>It has started. Jump in.</h3>
+            {event.endsAt && (
+              <>
+                <p>Ends in</p>
+                <Countdown to={event.endsAt} label="Time until it ends" />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <p class="pp-glass__lab">
+              <Icon name="check" size={14} />
+              Finished
+            </p>
+            <h3>This event has ended.</h3>
+            <p>Thanks to everyone who took part. Upcoming events are below.</p>
+          </>
+        )
+      }
+    </div>
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="Details">
+    <div class="pub-wrap pp-evdetail">
+      <article>
+        {
+          event.status !== "published" && (
+            <p class="pp-note pp-note--gold" style="margin-bottom: 22px;">
+              <Icon name="eye" size={16} />
+              <span>
+                Staff preview: this event is a <b>{event.status}</b>, so players cannot see it.
+              </span>
+            </p>
+          )
+        }
+        {
+          html ? (
+            <div class="pp-prose" set:html={html} />
+          ) : (
+            <div class="pp-howjoin">
+              <h2>How to take part</h2>
+              <ol>
+                <li>
+                  <span>1</span>
+                  <b>Save the date</b>
+                  <small>{state === "ended" ? "This one is over, but the next is below." : "Add it to your calendar so the start time lands in your own time zone."}</small>
+                </li>
+                <li>
+                  <span>2</span>
+                  <b>Sign in</b>
+                  <small>So your name can appear{event.prize ? " and you can win the prize" : ""}. Accounts are free.</small>
+                </li>
+                <li>
+                  <span>3</span>
+                  <b>{game ? `Warm up in ${game.title}` : "Join in"}</b>
+                  <small>{event.location && event.location !== "Online" ? `It happens at: ${event.location}.` : "It all happens online, here on the site."}</small>
+                </li>
+              </ol>
+            </div>
+          )
+        }
+      </article>
+      <aside class="pp-evfacts">
+        <div class="pp-card">
+          <h3 class="pp-h3"><span class="pp-ic"><Icon name="info" size={16} /></span>The details</h3>
+          <dl>
+            <div><dt>Starts</dt><dd>{start.full}</dd></div>
+            {end && <div><dt>Ends</dt><dd>{end.full}</dd></div>}
+            {length && <div><dt>Length</dt><dd>{length}</dd></div>}
+            <div><dt>Where</dt><dd>{event.location || "Online"}</dd></div>
+            {event.prize && <div><dt>Prize</dt><dd>{event.prize}</dd></div>}
+            <div><dt>Entry</dt><dd>Free</dd></div>
+          </dl>
+          <div class="pp-evfacts__btns">
+            {state !== "ended" && (
+              <a class="pub-btn pub-btn--primary pub-btn--sm" href={`/events/${event.slug}.ics`} download>
+                <Icon name="calendar" size={14} />
+                Calendar file
+              </a>
+            )}
+            <button class="pp-copy" type="button" data-copy="url">
+              <Icon name="file" size={14} />
+              <span data-copy-label>Copy link</span>
+            </button>
+          </div>
+        </div>
+        {game && <GameCard game={game} />}
+      </aside>
+    </div>
+  </section>
+
+  {
+    others.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="others-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Also on</p>
+              <h2 id="others-h">
+                More <span class="pub-hl">events</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href="/events">
+              All events
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="pub-nlist pp-past">
+            {others.map((e) => (
+              <a class="pub-ni" href={`/events/${e.slug}`}>
+                <span class:list={["pub-ni__dt", eventKind(e.kind).tone]}>
+                  <b>{eventParts(e.startsAt).day}</b>
+                  <small>{eventParts(e.startsAt).mon}</small>
+                </span>
+                <span class="pub-ni__body">
+                  <span class:list={["pub-badge", eventKind(e.kind).tone]}>{eventKind(e.kind).label}</span>
+                  <h3>{e.title}</h3>
+                  <p>{[`${eventParts(e.startsAt).time} WAT`, e.location, e.prize].filter(Boolean).join(" · ")}</p>
+                </span>
+                <Icon name="chevron-right" size={18} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

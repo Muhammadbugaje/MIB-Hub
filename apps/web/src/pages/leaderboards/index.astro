@@ -1,0 +1,154 @@
+---
+/**
+ * /leaderboards: the top three of every game, and the overall champions.
+ * Follows the "leaderboards" switch: when it is off, the page says so and
+ * shows no names.
+ */
+import "../../styles/pages/games.css";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { fmt } from "../../components/public/kinds.ts";
+import { categoryLabel, initials, toneFor } from "../../components/shell/art.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { siteSwitches, timeAgo } from "../../lib/site.ts";
+
+const [switches, games] = await Promise.all([siteSwitches(), repos.games.listPublic()]);
+const boards = switches.leaderboards ? await Promise.all(games.map(async (g) => ({ game: g, top: await repos.scores.top(g.slug, { limit: 3 }) }))) : [];
+const champions = boards
+  .filter((b) => b.top[0])
+  .map((b) => ({ game: b.game, row: b.top[0]! }))
+  .sort((a, b) => b.row.createdAt.getTime() - a.row.createdAt.getTime());
+const withScores = boards.filter((b) => b.top.length > 0).length;
+const ordered = [...boards].sort((a, b) => b.top.length - a.top.length);
+---
+
+<PublicLayout title="Leaderboards" description="Top scores for every MIB-Hub game. Clean runs only.">
+  <PageHero
+    eyebrow="Leaderboards"
+    pre="Top scores,"
+    hl="every game"
+    sub="Every board ranks clean runs only. Sign in, play, and your best scores land here for everyone to see."
+    icon="trophy"
+    fx="galaxy"
+    crumbs={[{ href: "/leaderboards", label: "Leaderboards" }]}
+  >
+    {
+      switches.leaderboards && (
+        <ul class="pub-counters" aria-label="The boards">
+          <li class="pub-counter" style="--c: #e6c867">
+            <span class="pub-counter__ic"><Icon name="trophy" size={18} /></span>
+            <b>{games.length}</b>
+            <span>Boards</span>
+          </li>
+          <li class="pub-counter" style="--c: #38e1f5">
+            <span class="pub-counter__ic"><Icon name="crown" size={18} /></span>
+            <b>{withScores}</b>
+            <span>With a champion</span>
+          </li>
+          <li class="pub-counter" style="--c: #a78bfa">
+            <span class="pub-counter__ic"><Icon name="flame" size={18} /></span>
+            <b>{games.length - withScores}</b>
+            <span>Still wide open</span>
+          </li>
+        </ul>
+      )
+    }
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="Boards">
+    <div class="pub-wrap">
+      {
+        !switches.leaderboards ? (
+          <Empty icon="trophy" title="Leaderboards are resting" text="The public boards are switched off for now. Your scores are still saved and will show again when they return.">
+            <a class="pub-btn pub-btn--gold" href="/games">
+              <Icon name="gamepad" size={16} />
+              Play a game
+            </a>
+            {Astro.locals.viewer.user && (
+              <a class="pub-btn pub-btn--ghost" href="/account">
+                My scores
+              </a>
+            )}
+          </Empty>
+        ) : (
+          <>
+            {champions.length > 0 && (
+              <div class="pp-champs" data-fx-item>
+                <p class="pub-eyebrow">Latest champions</p>
+                <div>
+                  {champions.slice(0, 6).map((c) => (
+                    <a href={`/leaderboards/${c.game.slug}`}>
+                      <span class="pp-pod__av" style={`--tone: ${toneFor(c.row.name)}`}>{initials(c.row.name)}</span>
+                      <span>
+                        <b>{c.row.name}</b>
+                        <small>
+                          {c.game.title} · {fmt(c.row.score)} · {timeAgo(c.row.createdAt)}
+                        </small>
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div class="pp-boards">
+              {ordered.map(({ game, top }) => (
+                <article class="pp-lb" style={`--g: ${game.accent}`} data-fx-item>
+                  <header class="pp-lb__head">
+                    <img src={`/games/${game.slug}/icon.png`} alt="" width="44" height="44" loading="lazy" />
+                    <span>
+                      <b>
+                        <a href={`/leaderboards/${game.slug}`}>{game.title}</a>
+                      </b>
+                      <small>{game.meta.genre ?? categoryLabel(game.category)}</small>
+                    </span>
+                  </header>
+                  {top.length > 0 ? (
+                    <ol>
+                      {top.map((r, i) => (
+                        <li>
+                          <span class:list={["pp-board__rank", `is-r${i + 1}`]}>{i + 1}</span>
+                          {r.name}
+                          <b>{fmt(r.score)}</b>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <div class="pp-lb__open">
+                      <Icon name="crown" size={22} />
+                      <b>No champion yet</b>
+                      <span>The first clean score takes the crown.</span>
+                    </div>
+                  )}
+                  <div class="pp-lb__foot">
+                    <span>{top.length ? `Top ${top.length}` : "Open board"}</span>
+                    <a href={top.length ? `/leaderboards/${game.slug}` : `/play/${game.slug}`}>
+                      {top.length ? "Full board" : "Play now"}
+                      <Icon name="arrow-right" size={13} />
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {!Astro.locals.viewer.user && (
+              <p class="pp-note pp-note--gold pp-lb-signin">
+                <Icon name="info" size={16} />
+                <span>
+                  Guests can play every game, but only signed-in players appear on the boards. <a href="/auth/sign-in?next=/leaderboards">Sign in</a>
+                  {switches.registration && (
+                    <>
+                      {" "}
+                      or <a href="/auth/register">create a free account</a>
+                    </>
+                  )}
+                  .
+                </span>
+              </p>
+            )}
+          </>
+        )
+      }
+    </div>
+  </section>
+</PublicLayout>

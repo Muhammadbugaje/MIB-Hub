@@ -1,0 +1,83 @@
+---
+/**
+ * /support/thanks?ref=MIB-XXXXX: the page after the contact form. Shows the
+ * reference to keep and what happens next. It shows nothing private: only
+ * the reference from the address bar and the kind of message.
+ */
+import "../../styles/pages/support.css";
+import Icon from "../../components/Icon.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { TICKET_KIND, cleanRef } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+
+const ref = cleanRef(Astro.url.searchParams.get("ref"), "MIB");
+const ticket = ref ? await repos.tickets.getByRef(ref) : undefined;
+const kind = ticket ? (TICKET_KIND[ticket.kind]?.label ?? "Message") : "Message";
+const user = Astro.locals.viewer.user;
+---
+
+<PublicLayout title="Message sent" description="Your message reached the MIB-Hub team.">
+  <PageHero eyebrow="Support" pre="Got it." hl="Thank you." sub="Your message is with the team. A real person will read it and reply by email." icon="mail" fx="waves" crumbs={[{ href: "/support", label: "Support" }]} />
+
+  <section class="pub-sec pp-sec-first" aria-label="Your reference">
+    <div class="pub-wrap pp-done">
+      <div class="pp-card pp-done__card" data-fx-item>
+        <span class="pp-done__tick" aria-hidden="true"><Icon name="check" size={34} strokeWidth={2.4} /></span>
+        {
+          ticket ? (
+            <>
+              <p class="pp-done__lab">{kind} · your reference</p>
+              <p class="pp-done__ref pp-mono">{ticket.ref}</p>
+              <button class="pp-copy" type="button" data-copy={ticket.ref}>
+                <Icon name="file" size={14} />
+                <span data-copy-label>Copy the reference</span>
+              </button>
+              <p class="pp-done__text">Keep it to track your message. Quote it if you write to us again about the same thing.</p>
+            </>
+          ) : (
+            <>
+              <p class="pp-done__lab">Message received</p>
+              <p class="pp-done__text">Thanks for writing. If you asked a question, the reply comes by email.</p>
+            </>
+          )
+        }
+        <div class="pp-hero__ctas pp-done__ctas">
+          {
+            ticket && (
+              <a class="pub-btn pub-btn--primary" href={user ? `/account/tickets/${ticket.ref}` : "/support#contact"}>
+                <Icon name="ticket" size={16} />
+                {user ? "See it in my account" : "Track it"}
+              </a>
+            )
+          }
+          <a class="pub-btn pub-btn--gold" href="/games">
+            <Icon name="gamepad" size={16} />
+            Back to the games
+          </a>
+        </div>
+      </div>
+      <ol class="pp-done__steps">
+        <li class="is-done">
+          <span><Icon name="check" size={16} /></span>
+          <b>Sent</b>
+          <small>It is in the queue now.</small>
+        </li>
+        <li>
+          <span>2</span>
+          <b>Read by a person</b>
+          <small>As soon as we can, in order.</small>
+        </li>
+        <li>
+          <span>3</span>
+          <b>Reply by email</b>
+          <small>It also shows when you track it.</small>
+        </li>
+      </ol>
+    </div>
+  </section>
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

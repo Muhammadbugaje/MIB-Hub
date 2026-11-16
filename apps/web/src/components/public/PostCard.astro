@@ -1,0 +1,46 @@
+---
+/**
+ * One news post as a card (the home page's .pub-post look): kind-coloured art
+ * with a big faint icon or the cover image, the stamp, title, excerpt and
+ * the game it is about.
+ *
+ *   <PostCard post={p} gameTitle="Momentum Cup" lead />
+ */
+import type { Post } from "@mib/db";
+import Icon from "../Icon.astro";
+import { siteConfig } from "../../site.config.ts";
+import { postKind } from "./kinds.ts";
+
+interface Props {
+  post: Post;
+  gameTitle?: string;
+  lead?: boolean;
+}
+const { post: p, gameTitle, lead = false } = Astro.props;
+const k = postKind(p.kind);
+const stamp = p.publishedAt ? p.publishedAt.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" }) : "";
+---
+
+<a class:list={["pub-post", `pub-post--${p.kind}`, lead && "pub-post--lead", "pp-post"]} href={`/news/${p.slug}`} data-fx-item>
+  <div class="pub-post__art">
+    <Icon name={k.icon} size={lead ? 240 : 120} strokeWidth={1} />
+    {p.coverUrl && <img src={p.coverUrl} alt="" loading="lazy" decoding="async" data-art />}
+    {
+      p.pinned && (
+        <span class="pub-badge pub-badge--glassgold pub-post__pin">
+          <Icon name="star" size={12} />
+          Pinned
+        </span>
+      )
+    }
+    <span class="pub-post__stamp">{k.label} · {stamp}</span>
+  </div>
+  <div class="pub-post__body">
+    <h3>{p.title}</h3>
+    <p>{p.excerpt}</p>
+    <div class="pub-post__foot">
+      <span>{gameTitle ?? siteConfig.name}</span>
+      <span>Read<Icon name="arrow-right" size={14} /></span>
+    </div>
+  </div>
+</a>

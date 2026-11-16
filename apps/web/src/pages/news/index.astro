@@ -1,0 +1,153 @@
+---
+/**
+ * /news: every published post, newest first (pinned first). Tabs filter by
+ * kind (?kind=devlog). A house promotion (news_inline) sits in the grid.
+ */
+import "../../styles/pages/news.css";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import PostCard from "../../components/public/PostCard.astro";
+import { POST_KIND, postKind, readingMinutes } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate, siteSwitches } from "../../lib/site.ts";
+import { siteConfig } from "../../site.config.ts";
+
+const [all, games, switches] = await Promise.all([repos.posts.listPublished({ limit: 200 }), repos.games.listPublic(), siteSwitches()]);
+const ad = switches.ads ? await repos.ads.pick("news_inline") : undefined;
+const titleOf = new Map(games.map((g) => [g.slug, g.title]));
+
+const kinds = Object.keys(POST_KIND)
+  .map((k) => ({ key: k, ...postKind(k), count: all.filter((p) => p.kind === k).length }))
+  .filter((k) => k.count > 0);
+const kindParam = Astro.url.searchParams.get("kind") ?? "";
+const kind = kinds.some((k) => k.key === kindParam) ? kindParam : "";
+const posts = kind ? all.filter((p) => p.kind === kind) : all;
+const [lead, ...rest] = posts;
+const adAt = Math.min(3, rest.length);
+const latestDate = all[0]?.publishedAt;
+---
+
+<PublicLayout title={kind ? `${postKind(kind).plural}` : "News"} description="News, devlogs, updates and store news from the people making the MIB-Hub games.">
+  <PageHero
+    eyebrow="News and devlog"
+    pre="What we are"
+    hl="building"
+    sub="Launch notes, devlogs and store news, written by the people making the games. No press-release voice, just what changed and why."
+    icon="newspaper"
+    fx="waves"
+    crumbs={[{ href: "/news", label: "News" }]}
+  >
+    <ul class="pub-counters" aria-label="The newsroom">
+      <li class="pub-counter" style="--c: #e6c867">
+        <span class="pub-counter__ic"><Icon name="newspaper" size={18} /></span>
+        <b>{all.length}</b>
+        <span>{all.length === 1 ? "Post" : "Posts"}</span>
+      </li>
+      {
+        latestDate && (
+          <li class="pub-counter" style="--c: #38e1f5">
+            <span class="pub-counter__ic"><Icon name="clock" size={18} /></span>
+            <b>{formatDate(latestDate)}</b>
+            <span>Latest post</span>
+          </li>
+        )
+      }
+      <li class="pub-counter" style="--c: #a78bfa">
+        <span class="pub-counter__ic"><Icon name="layers" size={18} /></span>
+        <b>{kinds.length}</b>
+        <span>Kinds of post</span>
+      </li>
+    </ul>
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="Posts">
+    <div class="pub-wrap">
+      {
+        kinds.length > 1 && (
+          <nav class="pp-bar" aria-label="Kinds of post">
+            <div class="pp-chips">
+              <a class="pp-chip" href="/news" aria-current={(!kind) ? "true" : "false"}>
+                <Icon name="layers" size={15} />
+                Everything <b>{all.length}</b>
+              </a>
+              {kinds.map((k) => (
+                <a class="pp-chip" href={`/news?kind=${k.key}`} aria-current={(kind === k.key) ? "true" : "false"}>
+                  <Icon name={k.icon} size={15} />
+                  {k.plural} <b>{k.count}</b>
+                </a>
+              ))}
+            </div>
+          </nav>
+        )
+      }
+
+      {
+        lead ? (
+          <>
+            <a class:list={["pp-lead", `pp-lead--${lead.kind}`]} href={`/news/${lead.slug}`} data-fx-item>
+              <div class="pp-lead__art">
+                <Icon name={postKind(lead.kind).icon} size={300} strokeWidth={0.8} />
+                {lead.coverUrl && <img src={lead.coverUrl} alt="" decoding="async" data-art />}
+                <span class="pub-badge pub-badge--glassgold">
+                  <Icon name={lead.pinned ? "star" : "flame"} size={12} />
+                  {lead.pinned ? "Pinned" : "Latest"}
+                </span>
+              </div>
+              <div class="pp-lead__body">
+                <p class="pp-lead__meta">
+                  <span class:list={["pub-badge", "pub-badge--news"]}>{postKind(lead.kind).label}</span>
+                  {formatDate(lead.publishedAt)} · {readingMinutes(lead.body)} min read
+                </p>
+                <h2>{lead.title}</h2>
+                <p>{lead.excerpt}</p>
+                <span class="pp-lead__go">
+                  {lead.gameSlug && titleOf.get(lead.gameSlug) ? `About ${titleOf.get(lead.gameSlug)}` : `From ${siteConfig.name}`}
+                  <span>
+                    Read the post
+                    <Icon name="arrow-right" size={15} />
+                  </span>
+                </span>
+              </div>
+            </a>
+            {rest.length > 0 && (
+              <div class="pp-posts">
+                {rest.slice(0, adAt).map((p) => (
+                  <PostCard post={p} gameTitle={p.gameSlug ? titleOf.get(p.gameSlug) : undefined} />
+                ))}
+                {ad && (
+                  <a class="pp-inline-ad" href={`/go/ad/${ad.id}`} rel={ad.source === "house" ? undefined : "sponsored noopener"} data-fx-item>
+                    <span class="pp-inline-ad__lab">{ad.source === "house" ? "From the hub" : "Sponsored"}</span>
+                    <Icon name="megaphone" size={30} />
+                    <b>{ad.title}</b>
+                    {ad.body && <span>{ad.body}</span>}
+                    <span class="pub-btn pub-btn--gold pub-btn--sm">
+                      {ad.ctaLabel || "Take a look"}
+                      <Icon name="arrow-right" size={14} />
+                    </span>
+                  </a>
+                )}
+                {rest.slice(adAt).map((p) => (
+                  <PostCard post={p} gameTitle={p.gameSlug ? titleOf.get(p.gameSlug) : undefined} />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <Empty icon="newspaper" title={kind ? `No ${postKind(kind).plural.toLowerCase()} yet` : "Nothing published yet"} text="The first posts are on their way. Meanwhile, the games are ready to play.">
+            <a class="pub-btn pub-btn--gold" href="/games">
+              <Icon name="gamepad" size={16} />
+              Play a game
+            </a>
+            {kind && (
+              <a class="pub-btn pub-btn--ghost" href="/news">
+                All news
+              </a>
+            )}
+          </Empty>
+        )
+      }
+    </div>
+  </section>
+</PublicLayout>

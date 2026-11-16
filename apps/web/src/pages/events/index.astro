@@ -1,0 +1,241 @@
+---
+/**
+ * /events: what is on now, what is coming (with live countdowns) and what
+ * has finished. Every event links to its own page and calendar file.
+ */
+import "../../styles/pages/events.css";
+import Icon from "../../components/Icon.astro";
+import Countdown from "../../components/public/Countdown.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { durationLabel, eventKind, eventParts, eventState } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const [upcomingAll, past, games] = await Promise.all([repos.events.upcoming(60), repos.events.past(24), repos.games.listPublic()]);
+const now = new Date();
+const live = upcomingAll.filter((e) => eventState(e, now) === "live");
+const upcoming = upcomingAll.filter((e) => eventState(e, now) === "upcoming");
+const next = upcoming[0];
+const titleOf = new Map(games.map((g) => [g.slug, g.title]));
+const day = (d: Date) => eventParts(d).day;
+const mon = (d: Date) => eventParts(d).mon;
+const wkd = (d: Date) => eventParts(d).wkd;
+const time = (d: Date) => `${eventParts(d).time} WAT`;
+---
+
+<PublicLayout title="Events" description="Tournaments, launches, live streams and community nights on MIB-Hub. Free to join.">
+  <PageHero
+    eyebrow="Events"
+    pre="Tournaments, streams and"
+    hl="things to win"
+    sub="Put a date in your diary. Every event is free to join, and each one has a calendar file so you never miss the start."
+    icon="calendar"
+    fx="galaxy"
+    crumbs={[{ href: "/events", label: "Events" }]}
+  >
+    <ul class="pub-counters" aria-label="The calendar">
+      <li class="pub-counter" style="--c: #4ade80">
+        <span class="pub-counter__ic"><Icon name="zap" size={18} /></span>
+        <b>{live.length}</b>
+        <span>On now</span>
+      </li>
+      <li class="pub-counter" style="--c: #e6c867">
+        <span class="pub-counter__ic"><Icon name="calendar" size={18} /></span>
+        <b>{upcoming.length}</b>
+        <span>Coming up</span>
+      </li>
+      <li class="pub-counter" style="--c: #a78bfa">
+        <span class="pub-counter__ic"><Icon name="milestone" size={18} /></span>
+        <b>{past.length}</b>
+        <span>Finished</span>
+      </li>
+    </ul>
+    {
+      next && (
+        <div class="pp-glass pp-next" slot="aside">
+          <p class="pp-glass__lab">
+            <Icon name={eventKind(next.kind).icon} size={14} />
+            Next up · {eventKind(next.kind).label}
+          </p>
+          <h2>
+            <a href={`/events/${next.slug}`}>{next.title}</a>
+          </h2>
+          <p>
+            {eventParts(next.startsAt).full}
+            {next.location && ` · ${next.location}`}
+          </p>
+          <Countdown to={next.startsAt} />
+          <a class="pub-btn pub-btn--gold pub-btn--block pp-next__cta" href={`/events/${next.slug}`}>
+            Event details
+            <Icon name="arrow-right" size={16} />
+          </a>
+        </div>
+      )
+    }
+  </PageHero>
+
+  {
+    live.length > 0 && (
+      <section class="pub-sec pp-sec-first" aria-labelledby="live-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Happening now</p>
+              <h2 id="live-h">
+                On <span class="pub-hl">right now</span>
+              </h2>
+            </div>
+          </div>
+          <div class="pp-evs">
+            {live.map((e) => (
+              <a class="pp-ev pp-ev--live" href={`/events/${e.slug}`} data-fx-item>
+                <span class="pp-ev__live">
+                  <i aria-hidden="true" />
+                  Live now
+                </span>
+                <h3>{e.title}</h3>
+                <p>{e.summary}</p>
+                <span class="pp-ev__meta">
+                  {e.endsAt && (
+                    <span>
+                      <Icon name="clock" size={13} />
+                      Ends {eventParts(e.endsAt).full}
+                    </span>
+                  )}
+                  {e.location && (
+                    <span>
+                      <Icon name="map-pin" size={13} />
+                      {e.location}
+                    </span>
+                  )}
+                  {e.prize && (
+                    <span>
+                      <Icon name="award" size={13} />
+                      {e.prize}
+                    </span>
+                  )}
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class:list={["pub-sec", !live.length && "pp-sec-first"]} aria-labelledby="up-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">Coming up</p>
+          <h2 id="up-h">
+            On the <span class="pub-hl">calendar</span>
+          </h2>
+          <p>Times are West Africa Time (WAT). The calendar file puts each event in your own time zone.</p>
+        </div>
+      </div>
+      {
+        upcoming.length > 0 ? (
+          <div class="pp-evlist">
+            {upcoming.map((e) => (
+              <article class="pp-evrow" data-fx-item>
+                <span class:list={["pp-evrow__dt", eventKind(e.kind).tone]}>
+                  <small>{wkd(e.startsAt)}</small>
+                  <b>{day(e.startsAt)}</b>
+                  <small>{mon(e.startsAt)}</small>
+                </span>
+                <div class="pp-evrow__body">
+                  <span class:list={["pub-badge", eventKind(e.kind).tone]}>
+                    <Icon name={eventKind(e.kind).icon} size={12} />
+                    {eventKind(e.kind).label}
+                  </span>
+                  <h3>
+                    <a href={`/events/${e.slug}`}>{e.title}</a>
+                  </h3>
+                  {e.summary && <p>{e.summary}</p>}
+                  <span class="pp-ev__meta">
+                    <span>
+                      <Icon name="clock" size={13} />
+                      {time(e.startsAt)}
+                      {durationLabel(e.startsAt, e.endsAt) && ` · ${durationLabel(e.startsAt, e.endsAt)}`}
+                    </span>
+                    {e.location && (
+                      <span>
+                        <Icon name="map-pin" size={13} />
+                        {e.location}
+                      </span>
+                    )}
+                    {e.gameSlug && titleOf.get(e.gameSlug) && (
+                      <span>
+                        <Icon name="gamepad" size={13} />
+                        {titleOf.get(e.gameSlug)}
+                      </span>
+                    )}
+                    {e.prize && (
+                      <span class="pp-ev__prize">
+                        <Icon name="award" size={13} />
+                        {e.prize}
+                      </span>
+                    )}
+                  </span>
+                </div>
+                <div class="pp-evrow__side">
+                  <Countdown to={e.startsAt} light small />
+                  <a class="pub-btn pub-btn--ghost pub-btn--sm" href={`/events/${e.slug}.ics`} download>
+                    <Icon name="calendar" size={14} />
+                    Add to calendar
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <Empty icon="calendar" title="Nothing on the calendar right now" text="New tournaments and streams are announced in the news first. The arcade is always open in the meantime.">
+            <a class="pub-btn pub-btn--gold" href="/games">
+              <Icon name="gamepad" size={16} />
+              Play a game
+            </a>
+            <a class="pub-btn pub-btn--ghost" href="/news">
+              Read the news
+            </a>
+          </Empty>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    past.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="past-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Finished</p>
+              <h2 id="past-h">
+                Past <span class="pub-hl">events</span>
+              </h2>
+            </div>
+          </div>
+          <div class="pub-nlist pp-past">
+            {past.map((e) => (
+              <a class="pub-ni" href={`/events/${e.slug}`}>
+                <span class="pub-ni__dt k-plum">
+                  <b>{day(e.startsAt)}</b>
+                  <small>{mon(e.startsAt)}</small>
+                </span>
+                <span class="pub-ni__body">
+                  <span class="pub-badge">{eventKind(e.kind).label}</span>
+                  <h3>{e.title}</h3>
+                  <p>{[formatDate(e.startsAt), e.prize].filter(Boolean).join(" · ")}</p>
+                </span>
+                <Icon name="chevron-right" size={18} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</PublicLayout>

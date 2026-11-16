@@ -1,0 +1,147 @@
+---
+/**
+ * /leaderboards/<slug>: one game's board. A podium for the top three, then
+ * the top 50 as a table. Follows the "leaderboards" switch.
+ */
+import "../../styles/pages/games.css";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { fmt } from "../../components/public/kinds.ts";
+import { categoryIcon, initials, toneFor } from "../../components/shell/art.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate, siteSwitches } from "../../lib/site.ts";
+
+const slug = Astro.params.slug ?? "";
+const [games, switches] = await Promise.all([repos.games.listPublic(), siteSwitches()]);
+const game = games.find((g) => g.slug === slug);
+if (!game) return Astro.rewrite("/404");
+const rows = switches.leaderboards ? await repos.scores.top(game.slug, { limit: 50 }) : [];
+const podium = [rows[1], rows[0], rows[2]]; // 2nd, 1st, 3rd on screen
+const places = [2, 1, 3];
+const players = new Set(rows.map((r) => r.profileId)).size;
+---
+
+<PublicLayout title={`${game.title} leaderboard`} description={`Top scores in ${game.title} on MIB-Hub.`}>
+  <PageHero
+    eyebrow="Leaderboard"
+    pre={game.title}
+    sub={rows[0] ? `${rows[0].name} holds the record with ${fmt(rows[0].score)}. Clean runs only.` : "Nobody has set a score here yet. The first clean run takes the crown."}
+    icon={categoryIcon(game.category)}
+    fx="galaxy"
+    accent={game.accent}
+    crumbs={[
+      { href: "/leaderboards", label: "Leaderboards" },
+      { href: `/leaderboards/${game.slug}`, label: game.title },
+    ]}
+  >
+    <div class="pp-hero__ctas">
+      <a class="pub-btn pub-btn--gold pub-btn--lg" href={`/play/${game.slug}`}>
+        <Icon name="play" size={18} />
+        Play {game.title}
+      </a>
+      <a class="pub-btn pub-btn--glass pub-btn--lg" href={`/games/${game.slug}`}>About the game</a>
+    </div>
+    {
+      rows.length > 0 && (
+        <ul class="pub-counters" aria-label="This board">
+          <li class="pub-counter" style="--c: #e6c867">
+            <span class="pub-counter__ic"><Icon name="crown" size={18} /></span>
+            <b>{fmt(rows[0]!.score)}</b>
+            <span>Record</span>
+          </li>
+          <li class="pub-counter" style="--c: #38e1f5">
+            <span class="pub-counter__ic"><Icon name="users" size={18} /></span>
+            <b>{players}</b>
+            <span>Players ranked</span>
+          </li>
+          <li class="pub-counter" style="--c: #a78bfa">
+            <span class="pub-counter__ic"><Icon name="list" size={18} /></span>
+            <b>{rows.length}</b>
+            <span>Runs shown</span>
+          </li>
+        </ul>
+      )
+    }
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="Scores">
+    <div class="pub-wrap">
+      <nav class="pp-switcher" aria-label="Other boards">
+        {
+          games.map((g) => (
+            <a href={`/leaderboards/${g.slug}`} aria-current={g.slug === game.slug ? "page" : undefined}>
+              <img src={`/games/${g.slug}/icon.png`} alt="" width="26" height="26" loading="lazy" />
+              {g.title}
+            </a>
+          ))
+        }
+      </nav>
+
+      {
+        !switches.leaderboards ? (
+          <Empty icon="trophy" title="Leaderboards are resting" text="The public boards are switched off for now. Your scores are still saved.">
+            <a class="pub-btn pub-btn--gold" href={`/play/${game.slug}`}>
+              Play {game.title}
+            </a>
+          </Empty>
+        ) : (
+          <>
+            <div class="pp-podium" aria-label="Top three">
+              {podium.map((r, i) => (
+                <div class:list={["pp-pod", `pp-pod--${places[i]}`, !r && "is-open"]} data-fx-item>
+                  <span class="pp-pod__av" style={r ? `--tone: ${toneFor(r.name)}` : undefined}>
+                    {r ? initials(r.name) : <Icon name="user-plus" size={22} />}
+                  </span>
+                  <b>{r ? r.name : "Your name here"}</b>
+                  <small>{r ? fmt(r.score) : "—"}</small>
+                  <span class="pp-pod__step">{places[i]}</span>
+                </div>
+              ))}
+            </div>
+            {rows.length > 3 ? (
+              <div class="pp-card pp-board" data-fx-item>
+                <table class="pp-table">
+                  <caption class="sr-only">Top {rows.length} scores in {game.title}</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Player</th>
+                      <th scope="col" class="pub-hide-sm">When</th>
+                      <th scope="col">Score</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {rows.slice(3).map((r, i) => (
+                      <tr>
+                        <td>
+                          <span class="pp-board__rank">{i + 4}</span>
+                        </td>
+                        <td>{r.name}</td>
+                        <td class="pub-hide-sm pp-muted">{formatDate(r.createdAt)}</td>
+                        <td class="pp-num">{fmt(r.score)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <Empty
+                compact
+                icon="trophy"
+                title={rows.length ? "Room on the board" : "The board is wide open"}
+                text={rows.length ? "Only a few runs so far. A good round puts you in the top ten." : "Sign in, play a round, and your score is the first one here."}
+              >
+                <a class="pub-btn pub-btn--gold pub-btn--sm" href={`/play/${game.slug}`}>
+                  <Icon name="play" size={14} />
+                  Play now
+                </a>
+              </Empty>
+            )}
+          </>
+        )
+      }
+    </div>
+  </section>
+</PublicLayout>

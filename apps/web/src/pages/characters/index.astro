@@ -1,0 +1,166 @@
+---
+/**
+ * /characters: the open-world cast, grouped (leads, friends, staff, …), with
+ * chips and a search box. Shows public taglines only, never the casting
+ * notes in the database (see components/public/cast.ts). Special characters
+ * appear only once approved and while their switch is on.
+ */
+import "../../styles/pages/characters.css";
+import Icon from "../../components/Icon.astro";
+import CharAvatar from "../../components/public/CharAvatar.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { GROUPS, castProfile, charSlug, publicCast } from "../../components/public/cast.ts";
+import { fmt } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { specialSwitches } from "../../lib/site.ts";
+
+const [all, specials, games] = await Promise.all([repos.characters.listPublic(), specialSwitches(), repos.games.listAll()]);
+const cast = publicCast(all, specials);
+const gameTitles = new Map(games.map((g) => [g.slug, g.title]));
+const mainGame = cast[0] ? gameTitles.get(cast[0].gameSlug) : undefined;
+const groups = GROUPS.map((g) => ({ ...g, members: cast.filter((c) => c.kind === g.kind) })).filter((g) => g.members.length > 0);
+const lines = cast.reduce((n, c) => n + c.lineCount, 0);
+const playable = cast.filter((c) => c.playable).length;
+
+const params = Astro.url.searchParams;
+const groupParam = params.get("group") ?? "";
+const group = groups.some((g) => g.kind === groupParam) ? groupParam : "";
+const q = (params.get("q") ?? "").trim().slice(0, 40);
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const textOf = (c: (typeof cast)[number]) => {
+  const p = castProfile(c);
+  return norm([c.name, p.role, p.where, p.line, c.power].filter(Boolean).join(" "));
+};
+const terms = norm(q).split(" ").filter(Boolean);
+const matches = (c: (typeof cast)[number]) => (!group || c.kind === group) && terms.every((t) => textOf(c).includes(t));
+const shown = cast.filter(matches).length;
+---
+
+<PublicLayout title="Characters" description={`Meet the ${cast.length} characters of ${mainGame ?? "the open-world game"}: roommates, rivals, lecturers and the people who really run the campus.`}>
+  <div data-filter-root data-filter-param="group">
+    <PageHero
+      eyebrow={mainGame ?? "The cast"}
+      pre={`${cast.length} characters,`}
+      hl="one campus"
+      sub="Roommates, rivals, lecturers and the people who really run the place. Every one of them has a voice and something to say about you."
+      icon="users"
+      fx="galaxy"
+      crumbs={[{ href: "/characters", label: "Characters" }]}
+    >
+      <ul class="pub-counters" aria-label="The cast">
+        <li class="pub-counter" style="--c: #e6c867">
+          <span class="pub-counter__ic"><Icon name="users" size={18} /></span>
+          <b>{cast.length}</b>
+          <span>Characters</span>
+        </li>
+        <li class="pub-counter" style="--c: #38e1f5">
+          <span class="pub-counter__ic"><Icon name="mic" size={18} /></span>
+          <b>{fmt(lines)}</b>
+          <span>Written lines</span>
+        </li>
+        <li class="pub-counter" style="--c: #a78bfa">
+          <span class="pub-counter__ic"><Icon name="gamepad" size={18} /></span>
+          <b>{playable}</b>
+          <span>Playable</span>
+        </li>
+      </ul>
+    </PageHero>
+
+    <section class="pub-sec pp-sec-first" aria-label="The cast">
+      <div class="pub-wrap">
+        {
+          cast.length === 0 ? (
+            <Empty icon="users" title="The cast is getting ready" text="Characters appear here as they are cast and approved. The games are ready to play now.">
+              <a class="pub-btn pub-btn--gold" href="/games">
+                Play a game
+              </a>
+            </Empty>
+          ) : (
+            <>
+              <form class="pp-bar" action="/characters" method="get" role="search">
+                <nav class="pp-chips" aria-label="Groups">
+                  <a class="pp-chip" href="/characters" data-filter-chip="" aria-current={(!group) ? "true" : "false"}>
+                    <Icon name="users" size={15} />
+                    Everyone <b>{cast.length}</b>
+                  </a>
+                  {groups.map((g) => (
+                    <a class="pp-chip" href={`/characters?group=${g.kind}`} data-filter-chip={g.kind} aria-current={(group === g.kind) ? "true" : "false"}>
+                      <Icon name={g.icon} size={15} />
+                      {g.label} <b>{g.members.length}</b>
+                    </a>
+                  ))}
+                </nav>
+                {group && <input type="hidden" name="group" value={group} />}
+                <label class="pp-find">
+                  <Icon name="search" size={16} />
+                  <span class="sr-only">Find a character</span>
+                  <input type="search" name="q" value={q} placeholder="Name, role or place…" autocomplete="off" data-filter-q />
+                </label>
+              </form>
+              <p class="pp-tally" aria-live="polite">
+                <b data-filter-count>{shown}</b> of {cast.length} characters
+              </p>
+
+              {groups.map((g) => (
+                <section class="pp-cgroup" data-filter-group hidden={!g.members.some(matches)} aria-labelledby={`g-${g.kind}`}>
+                  <header class="pp-shelf__head">
+                    <span class="pp-ic">
+                      <Icon name={g.icon} size={20} />
+                    </span>
+                    <div>
+                      <h2 id={`g-${g.kind}`}>{g.label}</h2>
+                    </div>
+                    <span class="pp-shelf__n">{String(g.members.length).padStart(2, "0")}</span>
+                  </header>
+                  <div class:list={["pp-cast", g.kind === "lead" && "pp-cast--lead"]}>
+                    {g.members.map((c) => {
+                      const p = castProfile(c);
+                      return (
+                        <a class:list={["pp-ccard", `pp-ccard--${c.kind}`]} href={`/characters/${charSlug(c.key)}`} data-filter-item data-cat={c.kind} data-text={textOf(c)} hidden={!matches(c)}>
+                          <CharAvatar name={c.name} kind={c.kind} portrait={c.portraitUrl} size={g.kind === "lead" ? 92 : 72} />
+                          <span class="pp-ccard__tx">
+                            <b>{c.name}</b>
+                            <small>{p.role}</small>
+                            {p.line && <q>{p.line}</q>}
+                          </span>
+                          <span class="pp-ccard__tags">
+                            {c.playable && (
+                              <span class="pp-tag pp-tag--gold">
+                                <Icon name="gamepad" size={12} />
+                                Playable
+                              </span>
+                            )}
+                            {c.lineCount > 0 && (
+                              <span class="pp-tag">
+                                <Icon name="mic" size={12} />
+                                {fmt(c.lineCount)} lines
+                              </span>
+                            )}
+                          </span>
+                        </a>
+                      );
+                    })}
+                  </div>
+                </section>
+              ))}
+
+              <div data-filter-empty hidden={shown > 0}>
+                <Empty icon="search" title="Nobody by that name" text="Try a first name, a role like “coach”, or a place like “market”.">
+                  <a class="pub-btn pub-btn--primary" href="/characters">
+                    Show everyone
+                  </a>
+                </Empty>
+              </div>
+            </>
+          )
+        }
+      </div>
+    </section>
+  </div>
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

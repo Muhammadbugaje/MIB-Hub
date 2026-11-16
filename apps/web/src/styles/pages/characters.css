@@ -1,0 +1,64 @@
+/* ==========================================================================
+   /characters and /characters/<slug>. Prefix .pp-. Shelf heads and the mini
+   cast grid come from games.css.
+   ========================================================================== */
+@import "./games.css";
+
+.pp-cgroup + .pp-cgroup { margin-top: clamp(40px, 5vw, 60px); }
+.pp-cast { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.pp-cast--lead { grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); }
+.pp-ccard { position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; padding: 24px 18px 18px; border-radius: 24px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); color: var(--text); isolation: isolate;
+  transition: transform .25s var(--ease-standard, ease), box-shadow .25s, border-color .25s; }
+.pp-ccard::before { content: ""; position: absolute; left: -20%; right: -20%; top: -60px; height: 150px; z-index: -1; border-radius: 50%;
+  background: radial-gradient(closest-side, var(--accent-subtle), transparent); opacity: 0; transition: opacity .3s; }
+.pp-ccard:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); border-color: var(--border-strong); text-decoration: none; color: var(--text); }
+.pp-ccard:hover::before { opacity: 1; }
+.pp-ccard .pp-cav { transition: transform .4s var(--ease-emphasized, ease); }
+.pp-ccard:hover .pp-cav { transform: scale(1.06) rotate(-3deg); }
+.pp-ccard--lead { background: linear-gradient(180deg, var(--accent-subtle), var(--surface) 46%); }
+.pp-ccard--special { background: linear-gradient(180deg, var(--plum-subtle), var(--surface) 46%); }
+.pp-ccard__tx { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
+.pp-ccard__tx b { font-family: var(--font-display); font-size: 17px; font-weight: 650; letter-spacing: -.01em; }
+.pp-ccard__tx small { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-fg); line-height: 1.4; }
+.pp-ccard__tx q { margin-top: 6px; font-size: 13.5px; font-style: italic; color: var(--text-muted); line-height: 1.45; }
+.pp-ccard__tx q::before { content: "“"; }
+.pp-ccard__tx q::after { content: "”"; }
+.pp-ccard__tags { margin-top: auto; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
+.pp-tag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 11.5px; background: var(--surface-2);
+  border: 1px solid var(--border); color: var(--text-muted); }
+.pp-tag--gold { font-family: var(--font-sans); font-weight: 700; background: var(--accent-subtle); border-color: var(--accent-line); color: var(--accent-fg); }
+@media (max-width: 520px) {
+  .pp-cast, .pp-cast--lead { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pp-ccard { padding: 18px 10px 14px; }
+  .pp-ccard .pp-cav { --s: 64px !important; }
+  .pp-ccard__tx q { display: none; }
+}
+
+/* ---- One character ----------------------------------------------------------- */
+.pp-sigline { display: flex; align-items: flex-start; gap: 12px; margin: 22px 0 0; padding: 14px 18px; max-width: 520px; border-radius: 16px; font-family: var(--font-display);
+  font-size: clamp(17px, 1rem + .5vw, 22px); font-style: italic; color: #fff; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12); }
+.pp-sigline svg { flex: none; color: var(--gold-300); margin-top: 3px; }
+.pp-cportrait { position: relative; display: grid; place-items: center; padding: 10px; }
+.pp-cportrait::before { content: ""; position: absolute; width: 300px; height: 300px; border-radius: 50%; border: 1px dashed rgba(230, 211, 154, .35); animation: pp-spin 40s linear infinite; }
+.pp-cportrait::after { content: ""; position: absolute; width: 250px; height: 250px; border-radius: 50%; background: radial-gradient(circle, rgba(56, 225, 245, .25), transparent 70%); z-index: -1; }
+@keyframes pp-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pp-cportrait::before { animation: none; } }
+.pp-cportrait__no { position: absolute; right: 12%; top: 6%; padding: 5px 10px; border-radius: 999px; font-family: var(--font-mono); font-size: 12px; color: #fff; background: rgba(255, 255, 255, .1); border: 1px solid rgba(255, 255, 255, .18); }
+@media (max-width: 960px) { .pp-cportrait { order: -1; justify-content: start; } .pp-cportrait .pp-cav { --s: 140px !important; } .pp-cportrait::before, .pp-cportrait::after { display: none; } .pp-cportrait__no { display: none; } }
+.pp-cdetail { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+.pp-cfacts { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.pp-cfact { display: flex; flex-direction: column; gap: 4px; padding: 22px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.pp-cfact small { margin-top: 12px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-subtle); }
+.pp-cfact b { font-family: var(--font-display); font-size: 19px; font-weight: 650; line-height: 1.3; }
+.pp-cfact em { font-style: normal; font-size: 13px; color: var(--text-muted); }
+.pp-cfact--play { border-color: var(--accent-line); background: linear-gradient(160deg, var(--accent-subtle), var(--surface) 60%); }
+.pp-cgame .pub-eyebrow { margin-bottom: 12px; }
+.pp-cnav { display: flex; justify-content: space-between; gap: 14px; padding: 30px 0 clamp(50px, 6vw, 80px); }
+.pp-cnav a { display: inline-flex; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 18px; background: var(--surface); border: 1px solid var(--border); color: var(--text); min-width: 0; }
+.pp-cnav a:hover { border-color: var(--gold-500); text-decoration: none; color: var(--text); }
+.pp-cnav a:last-child { text-align: right; }
+.pp-cnav small { display: block; font-size: 11.5px; color: var(--text-subtle); }
+.pp-cnav b { display: block; font-size: 15px; }
+@media (max-width: 860px) { .pp-cdetail { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .pp-cfacts { grid-template-columns: 1fr; } }

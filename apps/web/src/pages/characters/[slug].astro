@@ -1,0 +1,163 @@
+---
+/**
+ * /characters/<slug>: one character ("jega", "mai-shayi", "jiya").
+ * The public tagline and signature line, their group, how many lines they
+ * have, whether you can play as them (power and how they unlock), where to
+ * find them, the game they live in, and the rest of their group.
+ * 404 when hidden (switched off, or a special character not approved/allowed).
+ */
+import "../../styles/pages/characters.css";
+import GameCard from "../../components/GameCard.astro";
+import Icon from "../../components/Icon.astro";
+import CharAvatar from "../../components/public/CharAvatar.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { castProfile, charSlug, groupOf, keysForSlug, publicCast } from "../../components/public/cast.ts";
+import { fmt } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { specialSwitches } from "../../lib/site.ts";
+
+const slug = Astro.params.slug ?? "";
+const keys = keysForSlug(slug);
+if (!keys.length) return Astro.rewrite("/404");
+const [all, specials] = await Promise.all([repos.characters.listPublic(), specialSwitches()]);
+const cast = publicCast(all, specials);
+const c = keys.map((k) => cast.find((x) => x.key === k)).find(Boolean);
+if (!c) return Astro.rewrite("/404");
+
+const game = await repos.games.getBySlug(c.gameSlug);
+const showGame = game && game.enabled && game.status !== "hidden" ? game : undefined;
+const p = castProfile(c);
+const g = groupOf(c.kind);
+const group = cast.filter((x) => x.kind === c.kind && x.key !== c.key).slice(0, 8);
+const i = cast.indexOf(c);
+const prev = cast[(i - 1 + cast.length) % cast.length]!;
+const next = cast[(i + 1) % cast.length]!;
+const rank = [...cast].sort((a, b) => b.lineCount - a.lineCount).indexOf(c) + 1;
+---
+
+<PublicLayout title={c.name} description={`${c.name}, ${p.role.toLowerCase()}${showGame ? ` in ${showGame.title}` : ""}.`}>
+  <PageHero
+    eyebrow={`${g.short}${showGame ? ` · ${showGame.title}` : ""}`}
+    pre={c.name}
+    sub={p.role}
+    icon={g.icon}
+    fx="galaxy"
+    crumbs={[
+      { href: "/characters", label: "Characters" },
+      { href: `/characters/${charSlug(c.key)}`, label: c.name },
+    ]}
+  >
+    {
+      p.line && (
+        <blockquote class="pp-sigline">
+          <Icon name="quote" size={20} />
+          <span>{p.line}</span>
+        </blockquote>
+      )
+    }
+    <div class="pp-hero__ctas">
+      {
+        showGame && (
+          <a class="pub-btn pub-btn--gold pub-btn--lg" href={`/play/${showGame.slug}`}>
+            <Icon name="play" size={18} />
+            Meet {c.name.split(" ")[0]} in the game
+          </a>
+        )
+      }
+      <a class="pub-btn pub-btn--glass pub-btn--lg" href="/characters">All characters</a>
+    </div>
+    <div class="pp-cportrait" slot="aside">
+      <CharAvatar name={c.name} kind={c.kind} portrait={c.portraitUrl} size={200} />
+      <span class="pp-cportrait__no">#{String(i + 1).padStart(2, "0")}</span>
+    </div>
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="About this character">
+    <div class="pub-wrap pp-cdetail">
+      <div class="pp-cfacts">
+        <div class="pp-cfact" data-fx-item>
+          <span class="pp-ic"><Icon name={g.icon} size={20} /></span>
+          <small>Group</small>
+          <b>{g.label}</b>
+        </div>
+        <div class="pp-cfact" data-fx-item>
+          <span class="pp-ic k-volt"><Icon name="mic" size={20} /></span>
+          <small>Voice lines</small>
+          <b>{c.lineCount > 0 ? fmt(c.lineCount) : "A few, carefully"}</b>
+          {c.lineCount > 0 && <em>#{rank} in the cast</em>}
+        </div>
+        {
+          p.where && (
+            <div class="pp-cfact" data-fx-item>
+              <span class="pp-ic k-green"><Icon name="map-pin" size={20} /></span>
+              <small>Where to find them</small>
+              <b>{p.where}</b>
+            </div>
+          )
+        }
+        <div class:list={["pp-cfact", c.playable && "pp-cfact--play"]} data-fx-item>
+          <span class="pp-ic k-plum"><Icon name="gamepad" size={20} /></span>
+          <small>Playable</small>
+          {
+            c.playable ? (
+              <>
+                <b>{c.power ? `Power: ${c.power}` : "Yes"}</b>
+                {c.unlock && <em>Unlock: {c.unlock}</em>}
+              </>
+            ) : (
+              <b>Not as a player character</b>
+            )
+          }
+        </div>
+      </div>
+      {showGame && (
+        <aside class="pp-cgame">
+          <p class="pub-eyebrow">Lives in</p>
+          <GameCard game={showGame} />
+        </aside>
+      )}
+    </div>
+  </section>
+
+  {
+    group.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="group-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">{g.label}</p>
+              <h2 id="group-h">
+                Also in <span class="pub-hl">{g.label.toLowerCase()}</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href={`/characters?group=${c.kind}`}>
+              The whole group
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="pp-mini-cast">
+            {group.map((x) => (
+              <a href={`/characters/${charSlug(x.key)}`} data-fx-item>
+                <CharAvatar name={x.name} kind={x.kind} portrait={x.portraitUrl} size={64} />
+                <b>{x.name}</b>
+                <small>{castProfile(x).role}</small>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <nav class="pub-wrap pp-cnav" aria-label="Next and previous character">
+    <a href={`/characters/${charSlug(prev.key)}`}>
+      <Icon name="arrow-left" size={16} />
+      <span><small>Previous</small><b>{prev.name}</b></span>
+    </a>
+    <a href={`/characters/${charSlug(next.key)}`}>
+      <span><small>Next</small><b>{next.name}</b></span>
+      <Icon name="arrow-right" size={16} />
+    </a>
+  </nav>
+</PublicLayout>

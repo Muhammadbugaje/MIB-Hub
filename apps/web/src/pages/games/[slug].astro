@@ -1,0 +1,523 @@
+---
+/**
+ * /games/<slug>: one game's page. The cover as the stage, Play and Like,
+ * this month's numbers, how to play (the loop, the controls, the modes),
+ * screenshots, top scores, the hardest and best-loved levels, its cast,
+ * its news and events, its boosts, and games like it.
+ *
+ * Hidden games are 404 for the public (staff with games.manage see a preview).
+ */
+import "../../styles/pages/games.css";
+import { leaderboardName } from "@mib/db";
+import GameCard from "../../components/GameCard.astro";
+import Icon from "../../components/Icon.astro";
+import CharAvatar from "../../components/public/CharAvatar.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import PostCard from "../../components/public/PostCard.astro";
+import { castProfile, charSlug, publicCast } from "../../components/public/cast.ts";
+import { controlList, eventKind, fmt, levelLabel, loopSteps, pct } from "../../components/public/kinds.ts";
+import { categoryIcon, categoryLabel, gameArt, hasGameFile } from "../../components/shell/art.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate, formatPrice, siteSwitches, specialSwitches, timeAgo } from "../../lib/site.ts";
+
+const slug = Astro.params.slug ?? "";
+const game = /^[a-z0-9-]{1,80}$/.test(slug) ? await repos.games.getBySlug(slug) : undefined;
+const { viewer } = Astro.locals;
+const staff = viewer.permissions.has("games.manage");
+if (!game || ((game.status === "hidden" || game.slug === "demo-hello") && !staff)) return Astro.rewrite("/404");
+
+const [switches, specials, all, perGame, likeTotal, posts, events, chars, products] = await Promise.all([
+  siteSwitches(),
+  specialSwitches(),
+  repos.games.listPublic(),
+  repos.analytics.perGame(30),
+  repos.likes.count(game.slug),
+  repos.posts.listPublished({ gameSlug: game.slug, limit: 3 }),
+  repos.events.upcoming(30),
+  repos.characters.listPublic(game.slug),
+  repos.products.listActive(game.slug),
+]);
+const voter = viewer.user?.id ?? (Astro.cookies.get("mib_gid")?.value ? `guest:${Astro.cookies.get("mib_gid")!.value}` : "");
+const [liked, top, hardest, lovedAll] = await Promise.all([
+  voter ? repos.likes.hasLiked(game.slug, voter) : Promise.resolve(false),
+  switches.leaderboards ? repos.scores.top(game.slug, { limit: 10 }) : Promise.resolve([]),
+  repos.analytics.hardestLevels({ gameSlug: game.slug, minAttempts: 3, limit: 5 }),
+  repos.analytics.mostLikedLevels(60),
+]);
+const ad = switches.ads ? await repos.ads.pick("game_side") : undefined;
+
+const art = gameArt(game.slug);
+const shots = ["shot-1.jpg", "shot-2.jpg"].filter((f) => hasGameFile(game.slug, f)).map((f) => `/games/${game.slug}/${f}`);
+const stat = perGame.find((s) => s.gameSlug === game.slug);
+const loved = lovedAll.filter((l) => l.gameSlug === game.slug).slice(0, 5);
+const gameEvents = events.filter((e) => e.gameSlug === game.slug).slice(0, 3);
+const cast = publicCast(chars, specials).slice(0, 10);
+const boosts = switches.store ? products.filter((p) => p.kind === "boost").slice(0, 4) : [];
+const steps = loopSteps(game.meta.howToPlay);
+const controls = controlList(game.meta.controls);
+const modes = game.meta.modes ?? [];
+const topics = game.meta.topics ?? [];
+const playable = game.enabled && game.status !== "hidden";
+const related = [...all.filter((g) => g.slug !== game.slug && g.category === game.category), ...all.filter((g) => g.slug !== game.slug && g.category !== game.category)].slice(0, 4);
+const champion = top[0];
+
+const numbers = [
+  { icon: "play", label: "Plays", value: stat?.plays ?? 0, note: "last 30 days" },
+  { icon: "users", label: "Players", value: stat?.players ?? 0, note: "last 30 days" },
+  { icon: "timer", label: "Average session", value: stat?.avgMinutes ?? 0, note: "minutes", decimals: true },
+  { icon: "heart", label: "Likes", value: likeTotal, note: "all time" },
+];
+---
+
+<PublicLayout title={game.title} description={`${game.title}: ${game.description}`.slice(0, 300)}>
+  <PageHero
+    eyebrow={game.meta.genre ?? categoryLabel(game.category)}
+    pre={game.title}
+    sub={game.description}
+    icon={categoryIcon(game.category)}
+    fx="arcade"
+    image={art.cover}
+    accent={game.accent}
+    tall
+    crumbs={[
+      { href: "/games", label: "Games" },
+      { href: `/games/${game.slug}`, label: game.title },
+    ]}
+  >
+    {
+      !playable && (
+        <p class="pp-note pp-note--gold pp-gnote">
+          <Icon name="info" size={16} />
+          {staff ? "Staff preview: this game is hidden or switched off for players." : "This game is paused for maintenance. It will be back soon."}
+        </p>
+      )
+    }
+    <div class="pp-hero__ctas">
+      {
+        playable || staff ? (
+          <a class="pub-btn pub-btn--gold pub-btn--lg" href={`/play/${game.slug}`}>
+            <Icon name="play" size={18} />
+            Play now
+          </a>
+        ) : null
+      }
+      {
+        switches.likes && (
+          <button class="pub-btn pub-btn--glass pub-btn--lg pp-like" type="button" data-like={game.slug} aria-pressed={(liked) ? "true" : "false"} aria-label={`Like ${game.title}`}>
+            <Icon name="heart" size={18} />
+            <span data-like-count>{fmt(likeTotal)}</span>
+          </button>
+        )
+      }
+      <a class="pp-hero-link" href="#how">How to play<Icon name="arrow-right" size={14} /></a>
+    </div>
+
+    <div class="pp-glass pp-gstats" slot="aside">
+      <div class="pp-gstats__top">
+        <img src={art.icon} alt="" width="58" height="58" />
+        <span>
+          <b>{game.title}</b>
+          <small>
+            {categoryLabel(game.category)}
+            {game.meta.sessionLength && ` · ${game.meta.sessionLength}`}
+          </small>
+        </span>
+      </div>
+      <ul>
+        {
+          numbers.map((n) => (
+            <li>
+              <Icon name={n.icon} size={15} />
+              <b>{n.decimals ? (n.value > 0 && n.value < 1 ? "<1" : n.value.toLocaleString("en-NG", { maximumFractionDigits: 1 })) : fmt(n.value)}</b>
+              <span>
+                {n.label}
+                <small>{n.note}</small>
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+      {
+        champion ? (
+          <p class="pp-gstats__champ">
+            <Icon name="crown" size={14} />
+            Record: <b>{fmt(champion.score)}</b> by {champion.name}
+          </p>
+        ) : (
+          switches.leaderboards && (
+            <p class="pp-gstats__champ">
+              <Icon name="crown" size={14} />
+              No record yet. The first score takes the crown.
+            </p>
+          )
+        )
+      }
+    </div>
+  </PageHero>
+
+  <!-- How to play ---------------------------------------------------------- -->
+  <section class="pub-sec pp-sec-first" id="how" aria-labelledby="how-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">How to play</p>
+          <h2 id="how-h">Learn it in a minute, <span class="pub-hl">master it in a season</span></h2>
+        </div>
+      </div>
+      <div class="pp-how">
+        {
+          steps.length > 0 && (
+            <div class="pp-card pp-loop" data-fx-item>
+              <h3 class="pp-h3">
+                <span class="pp-ic"><Icon name="zap" size={18} /></span>The loop
+              </h3>
+              <ol>
+                {steps.map((s, i) => (
+                  <li style={`--g: ${game.accent}`}>
+                    <span>{String(i + 1).padStart(2, "0")}</span>
+                    {s}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )
+        }
+        <div class="pp-how__side">
+          {
+            controls.length > 0 && (
+              <div class="pp-card" data-fx-item>
+                <h3 class="pp-h3">
+                  <span class="pp-ic"><Icon name="gamepad" size={18} /></span>Controls
+                </h3>
+                <ul class="pp-keys">
+                  {controls.map((c) => (
+                    <li>
+                      {c.keys && <kbd class="pp-kbd">{c.keys}</kbd>}
+                      <span>{c.action}</span>
+                    </li>
+                  ))}
+                </ul>
+                <p class="pp-keys__note">
+                  <Icon name="device" size={14} />
+                  On a phone, the game shows touch buttons.
+                </p>
+              </div>
+            )
+          }
+          {
+            modes.length > 0 && (
+              <div class="pp-card" data-fx-item>
+                <h3 class="pp-h3">
+                  <span class="pp-ic"><Icon name="layers" size={18} /></span>
+                  {modes.length === 1 ? "Mode" : `${modes.length} modes`}
+                </h3>
+                <ul class="pp-modes">
+                  {modes.map((m) => (
+                    <li>
+                      <Icon name="check" size={14} />
+                      {m}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+        {
+          topics.length > 0 && (
+            <div class="pp-card pp-topics" data-fx-item>
+              <h3 class="pp-h3">
+                <span class="pp-ic"><Icon name="book" size={18} /></span>The science inside
+              </h3>
+              <p>Every level runs on real physics. Play it and you will get a feel for:</p>
+              <ul>
+                {topics.map((t) => (
+                  <li>{t}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots -------------------------------------------------------------- -->
+  {
+    shots.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="shots-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">In play</p>
+              <h2 id="shots-h">
+                Straight from <span class="pub-hl">the game</span>
+              </h2>
+            </div>
+          </div>
+          <div class:list={["pp-shots", shots.length === 1 && "is-one"]}>
+            {shots.map((src, i) => (
+              <a class="pp-shot" href={src} target="_blank" rel="noopener" data-fx-item>
+                <img src={src} alt={`${game.title}, screenshot ${i + 1}`} loading="lazy" decoding="async" />
+                <span>
+                  <Icon name="eye" size={14} />
+                  Full size
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Scores and levels ------------------------------------------------------------ -->
+  {
+    (switches.leaderboards || hardest.length > 0 || loved.length > 0) && (
+      <section class="pub-sec" aria-labelledby="board-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Leaderboard</p>
+              <h2 id="board-h">
+                The names to <span class="pub-hl">beat</span>
+              </h2>
+              <p>Clean runs only: a run flagged as cheated stays off the board.</p>
+            </div>
+            {switches.leaderboards && (
+              <a class="pub-btn pub-btn--ghost pub-sh__more" href={`/leaderboards/${game.slug}`}>
+                Full leaderboard
+                <Icon name="arrow-right" size={16} />
+              </a>
+            )}
+          </div>
+          <div class="pp-split">
+            {switches.leaderboards && (
+              <div class="pp-card pp-board" data-fx-item>
+                {top.length > 0 ? (
+                  <ol>
+                    {top.map((r, i) => (
+                      <li class:list={[i < 3 && `is-top is-${i + 1}`]}>
+                        <span class="pp-board__rank">{i + 1}</span>
+                        <span class="pp-board__name">
+                          {leaderboardName(r.name)}
+                          <small>{timeAgo(r.createdAt)}</small>
+                        </span>
+                        <b>{fmt(r.score)}</b>
+                      </li>
+                    ))}
+                  </ol>
+                ) : (
+                  <Empty compact icon="trophy" title="The board is wide open" text={`Nobody has set a score in ${game.title} yet. Play a round and your name goes straight to the top.`}>
+                    {playable && (
+                      <a class="pub-btn pub-btn--gold pub-btn--sm" href={`/play/${game.slug}`}>
+                        <Icon name="play" size={14} />
+                        Set the first score
+                      </a>
+                    )}
+                  </Empty>
+                )}
+              </div>
+            )}
+            {(hardest.length > 0 || loved.length > 0) && (
+              <div class="pp-levels">
+                {hardest.length > 0 && (
+                  <div class="pp-card" data-fx-item>
+                    <h3 class="pp-h3">
+                      <span class="pp-ic"><Icon name="flame" size={18} /></span>Hardest levels
+                    </h3>
+                    <ul class="pp-lvl">
+                      {hardest.map((l) => (
+                        <li>
+                          <span>{levelLabel(l.level)}</span>
+                          <i style={`--w: ${Math.round(l.failRate * 100)}%`} aria-hidden="true" />
+                          <b>{pct(l.failRate)}</b>
+                          <small>fail · {fmt(l.attempts)} tries</small>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {loved.length > 0 && (
+                  <div class="pp-card" data-fx-item>
+                    <h3 class="pp-h3">
+                      <span class="pp-ic"><Icon name="heart" size={18} /></span>Most-loved levels
+                    </h3>
+                    <ul class="pp-lvl pp-lvl--love">
+                      {loved.map((l) => (
+                        <li>
+                          <span>{levelLabel(l.level)}</span>
+                          <b>{fmt(l.likes)}</b>
+                          <small>{l.likes === 1 ? "like" : "likes"}</small>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            )}
+            {switches.leaderboards && hardest.length === 0 && loved.length === 0 && (
+              <div class="pp-card pp-tips" data-fx-item>
+                <h3 class="pp-h3">
+                  <span class="pp-ic"><Icon name="chart" size={18} /></span>How the board works
+                </h3>
+                <ul class="pp-modes">
+                  <li><Icon name="check" size={14} />Every clean run is ranked; the top ten show here.</li>
+                  <li><Icon name="check" size={14} />Sign in to put your name on it; guests play freely.</li>
+                  <li><Icon name="check" size={14} />Rather stay off it? Switch it off in your profile.</li>
+                  <li><Icon name="check" size={14} />Level stats (hardest, most loved) appear as people play.</li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Cast --------------------------------------------------------------------------- -->
+  {
+    cast.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="cast-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">The cast</p>
+              <h2 id="cast-h">
+                People you will <span class="pub-hl">meet</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href="/characters">
+              All characters
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="pp-mini-cast">
+            {cast.map((c) => (
+              <a href={`/characters/${charSlug(c.key)}`} data-fx-item>
+                <CharAvatar name={c.name} kind={c.kind} portrait={c.portraitUrl} size={64} />
+                <b>{c.name}</b>
+                <small>{castProfile(c).role}</small>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- News, events, boosts ---------------------------------------------------------------- -->
+  {
+    (posts.length > 0 || gameEvents.length > 0 || boosts.length > 0) && (
+      <section class="pub-sec" aria-labelledby="more-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">What's new</p>
+              <h2 id="more-h">
+                News, events <span class="pub-hl">and extras</span>
+              </h2>
+            </div>
+          </div>
+          {posts.length > 0 && (
+            <div class="pp-gposts">
+              {posts.map((p) => (
+                <PostCard post={p} gameTitle={game.title} />
+              ))}
+            </div>
+          )}
+          {gameEvents.length > 0 && (
+            <div class="pub-nlist pp-gevents">
+              {gameEvents.map((e) => (
+                <a class="pub-ni" href={`/events/${e.slug}`}>
+                  <span class:list={["pub-ni__dt", eventKind(e.kind).tone]}>
+                    <b>{e.startsAt.toLocaleDateString("en-GB", { day: "numeric" })}</b>
+                    <small>{e.startsAt.toLocaleDateString("en-GB", { month: "short" }).toUpperCase()}</small>
+                  </span>
+                  <span class="pub-ni__body">
+                    <span class:list={["pub-badge", eventKind(e.kind).tone]}>{eventKind(e.kind).label}</span>
+                    <h3>{e.title}</h3>
+                    <p>{[formatDate(e.startsAt, { time: true }), e.location, e.prize].filter(Boolean).join(" · ")}</p>
+                  </span>
+                  <Icon name="chevron-right" size={18} />
+                </a>
+              ))}
+            </div>
+          )}
+          {boosts.length > 0 && (
+            <div class="pp-gboosts">
+              <div class="pp-gboosts__head">
+                <span class="pp-ic"><Icon name="bag" size={20} /></span>
+                <div>
+                  <b>Boosts at the Plug</b>
+                  <small>Bought with the money you earn in the game. Never with real money.</small>
+                </div>
+                <a class="pub-btn pub-btn--ghost pub-btn--sm" href="/store#boosts">
+                  See all
+                  <Icon name="arrow-right" size={14} />
+                </a>
+              </div>
+              <ul>
+                {boosts.map((b) => (
+                  <li>
+                    <b>{b.title}</b>
+                    <span>{formatPrice(b.priceKobo, b.currency)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Related ------------------------------------------------------------------------------ -->
+  {
+    related.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="rel-h">
+        <div class="pub-wrap">
+          {ad && (
+            <a class="pub-promo pp-promo-top" href={`/go/ad/${ad.id}`} rel={ad.source === "house" ? undefined : "sponsored noopener"}>
+              <span class="pub-promo__ic">
+                <Icon name="megaphone" size={24} />
+              </span>
+              <span class="pub-promo__tx">
+                <small>{ad.source === "house" ? "From the hub" : "Sponsored"}</small>
+                <b>{ad.title}</b>
+                {ad.body && <span>{ad.body}</span>}
+              </span>
+              <span class="pub-btn pub-btn--gold">
+                {ad.ctaLabel || "Take a look"}
+                <Icon name="arrow-right" size={16} />
+              </span>
+            </a>
+          )}
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Keep playing</p>
+              <h2 id="rel-h">
+                If you like {game.title}, <span class="pub-hl">try these</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href="/games">
+              All games
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="pub-games">
+            {related.map((g) => (
+              <GameCard game={g} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

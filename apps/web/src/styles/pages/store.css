@@ -1,0 +1,54 @@
+/* ==========================================================================
+   /store. Prefix .pp-. Deal tickets reuse the shell's .pub-deal.
+   ========================================================================== */
+
+.pp-paynote h3 { font-size: 19px; margin-top: 2px !important; }
+
+/* ---- Supporter tiers ------------------------------------------------------------ */
+.pp-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; align-items: stretch; }
+.pp-tier { position: relative; display: flex; flex-direction: column; padding: 28px 24px 24px; border-radius: 26px; background: var(--surface); border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm); transition: transform .25s var(--ease-standard, ease), box-shadow .25s; }
+.pp-tier:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.pp-tier.is-feature { color: var(--pub-ink-on-dark); background: var(--grad-band-dark); border-color: transparent; box-shadow: 0 30px 60px -30px rgba(4, 16, 12, .8); isolation: isolate; overflow: hidden; }
+.pp-tier.is-feature::before { content: ""; position: absolute; inset: 0; z-index: -1; background-image: linear-gradient(rgba(126, 240, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(126, 240, 255, .06) 1px, transparent 1px); background-size: 28px 28px; }
+.pp-tier__flag { position: absolute; right: 18px; top: 18px; padding: 5px 11px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  background: var(--grad-gold); color: var(--grad-gold-ink); }
+.pp-tier__ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: var(--accent-subtle); color: var(--accent-fg); }
+.pp-tier.is-feature .pp-tier__ic { background: rgba(200, 169, 81, .2); color: var(--gold-300); }
+.pp-tier h3 { font-family: var(--font-display); font-size: 20px; font-weight: 650; margin: 18px 0 0; letter-spacing: -.01em; }
+.pp-tier.is-feature h3 { color: #fff; }
+.pp-tier__price { display: flex; align-items: baseline; gap: 8px; margin: 10px 0 0; }
+.pp-tier__price b { font-family: var(--font-display); font-size: 40px; font-weight: 800; letter-spacing: -.035em; line-height: 1; }
+.pp-tier.is-feature .pp-tier__price b { background: var(--grad-display); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pp-tier__price small { font-size: 13px; color: var(--text-subtle); }
+.pp-tier.is-feature .pp-tier__price small { color: var(--pub-muted-on-dark); }
+.pp-tier__desc { margin: 14px 0 20px; font-size: 14.5px; line-height: 1.6; color: var(--text-muted); }
+.pp-tier.is-feature .pp-tier__desc { color: var(--pub-muted-on-dark); }
+.pp-tier__form { margin-top: auto; gap: 12px; }
+.pp-tier.is-feature .pp-field > span { color: #fff; }
+.pp-tier.is-feature .pp-field input { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .2); color: #fff; }
+.pp-tier.is-feature .pp-field input::placeholder { color: rgba(255, 255, 255, .45); }
+.pp-tier__code summary { cursor: pointer; font-size: 13px; font-weight: 650; color: var(--link); list-style: none; }
+.pp-tier__code summary::-webkit-details-marker { display: none; }
+.pp-tier.is-feature .pp-tier__code summary { color: var(--gold-300); }
+.pp-tier__code .pp-field { margin-top: 8px; }
+.pp-tiers__note { margin-top: 22px; }
+
+/* ---- Boosts ------------------------------------------------------------------------ */
+.pp-boosts { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.pp-boost { position: relative; display: flex; flex-direction: column; padding: 20px; border-radius: 22px; background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-xs);
+  transition: transform .2s, box-shadow .2s, border-color .2s; overflow: hidden; }
+.pp-boost:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--border-strong); }
+.pp-boost::after { content: ""; position: absolute; right: -40px; top: -40px; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, var(--volt-subtle), transparent 70%); pointer-events: none; }
+.pp-boost.is-rare { border-color: var(--accent-line); background: linear-gradient(160deg, var(--accent-subtle), var(--surface) 55%); }
+.pp-boost__rare { position: absolute; right: 14px; top: 14px; padding: 4px 9px; border-radius: 999px; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--grad-gold); color: var(--grad-gold-ink); }
+.pp-boost__ic { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; color: #fff; background: var(--tile-volt); box-shadow: 0 10px 20px -10px rgba(11, 147, 169, .8); }
+.pp-boost.is-rare .pp-boost__ic { background: var(--tile-gold); box-shadow: 0 10px 20px -10px rgba(176, 134, 34, .8); }
+.pp-boost h3 { font-family: var(--font-display); font-size: 16.5px; font-weight: 650; margin: 14px 0 0; }
+.pp-boost p { margin: 4px 0 14px; font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+.pp-boost__foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); }
+.pp-boost__price { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--accent-fg); }
+.pp-boost__time { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text-subtle); }
+.pp-boosts__legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 18px 0 0; font-size: 13px; color: var(--text-muted); }
+.pp-boosts__legend a { display: inline-flex; align-items: center; gap: 5px; font-weight: 650; margin-left: auto; }

@@ -469,7 +469,6 @@ body.pub { background: var(--bg); color: var(--text); overflow-x: hidden; }
   background: linear-gradient(90deg, var(--gold-500), var(--volt-400) 60%, #a78bfa); box-shadow: 0 0 10px rgba(56, 225, 245, .5); }
 
 /* ---------------------------------------------------------------- discipline marquee */
-}
 /* Fluid ink is vivid: keep it behind the copy as an accent, not a wall of colour */
 /* A soft dark pool behind the text column (as in the Flowstate original): the headline,
    lead and buttons keep their contrast whatever the scene draws. The hero is dark in

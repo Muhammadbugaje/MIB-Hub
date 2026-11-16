@@ -1,0 +1,127 @@
+---
+/**
+ * /store/thanks?ref=ORD-XXXXX: after a supporter order. Shows the order
+ * reference, what was ordered, its status and what happens next (a manual
+ * confirmation by email while online payments are off). Shows no email or
+ * other personal details.
+ */
+import "../../styles/pages/support.css";
+import Icon from "../../components/Icon.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { ORDER_STATUS, cleanRef } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate, formatPrice, siteSwitches } from "../../lib/site.ts";
+
+const ref = cleanRef(Astro.url.searchParams.get("ref"), "ORD");
+const order = ref ? await repos.orders.getByRef(ref) : undefined;
+const [product, switches] = await Promise.all([order ? repos.products.getBySku(order.productSku) : Promise.resolve(undefined), siteSwitches()]);
+const status = order ? (ORDER_STATUS[order.status] ?? ORDER_STATUS.pending!) : undefined;
+const manual = !order || order.provider === "manual";
+const user = Astro.locals.viewer.user;
+---
+
+<PublicLayout title="Thank you" description="Your MIB-Hub supporter order.">
+  <PageHero
+    eyebrow="Store"
+    pre={order ? "Thank you" : "Thank you for"}
+    hl={order ? "for backing the hub." : "backing the hub."}
+    sub={manual ? "Your order is recorded. We will email you to confirm it and arrange payment. Nothing has been charged." : "Your order is recorded. The receipt follows by email."}
+    icon="heart"
+    fx="arcade"
+    crumbs={[{ href: "/store", label: "Store" }]}
+  />
+
+  <section class="pub-sec pp-sec-first" aria-label="Your order">
+    <div class="pub-wrap pp-done">
+      <div class="pp-card pp-done__card" data-fx-item>
+        <span class="pp-done__tick" aria-hidden="true"><Icon name="check" size={34} strokeWidth={2.4} /></span>
+        {
+          order && status ? (
+            <>
+              <p class="pp-done__lab">Your order reference</p>
+              <p class="pp-done__ref pp-mono">{order.ref}</p>
+              <button class="pp-copy" type="button" data-copy={order.ref}>
+                <Icon name="file" size={14} />
+                <span data-copy-label>Copy the reference</span>
+              </button>
+              <dl class="pp-done__summary">
+                <div>
+                  <dt>Tier</dt>
+                  <dd>{product?.title ?? order.productSku}</dd>
+                </div>
+                <div>
+                  <dt>Amount</dt>
+                  <dd>{formatPrice(order.amountKobo, order.currency)}</dd>
+                </div>
+                {order.dealCode && (
+                  <div>
+                    <dt>Code</dt>
+                    <dd class="pp-mono">{order.dealCode}</dd>
+                  </div>
+                )}
+                <div>
+                  <dt>Placed</dt>
+                  <dd>{formatDate(order.createdAt, { time: true })}</dd>
+                </div>
+                <div>
+                  <dt>Status</dt>
+                  <dd>
+                    <span class:list={["pub-badge", status.tone]}>{status.label}</span>
+                  </dd>
+                </div>
+              </dl>
+            </>
+          ) : (
+            <>
+              <p class="pp-done__lab">Order received</p>
+              <p class="pp-done__text">We will email you about it. If you do not hear from us, write to us from Support.</p>
+            </>
+          )
+        }
+        <div class="pp-hero__ctas pp-done__ctas">
+          {
+            user && (
+              <a class="pub-btn pub-btn--primary" href="/account/orders">
+                <Icon name="bag" size={16} />
+                My orders
+              </a>
+            )
+          }
+          <a class="pub-btn pub-btn--gold" href="/games">
+            <Icon name="gamepad" size={16} />
+            Back to the games
+          </a>
+        </div>
+      </div>
+      <ol class="pp-done__steps">
+        <li class="is-done">
+          <span><Icon name="check" size={16} /></span>
+          <b>Order recorded</b>
+          <small>Keep the reference above.</small>
+        </li>
+        <li>
+          <span>2</span>
+          <b>{manual ? "We email you" : "Payment clears"}</b>
+          <small>{manual ? "To confirm the tier and how to pay." : "Your receipt arrives by email."}</small>
+        </li>
+        <li>
+          <span>3</span>
+          <b>Your thank-you</b>
+          <small>{switches.store ? "Badge and credits, as the tier says." : "As the tier says."}</small>
+        </li>
+        <li>
+          <span><Icon name="life-buoy" size={15} /></span>
+          <b>Questions?</b>
+          <small>
+            <a href="/support?kind=payment#contact">Ask us</a> and quote the reference.
+          </small>
+        </li>
+      </ol>
+    </div>
+  </section>
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

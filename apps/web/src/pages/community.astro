@@ -1,0 +1,423 @@
+---
+/**
+ * /community: the people behind the hub. Founders and team, the voice cast,
+ * supporters, contributors and testers, the timeline, the credits, and the
+ * ways to join in. A person appears only when they have agreed to
+ * (consent) and, for the special characters' real people, while their
+ * switch is on. Photos come only from the admin upload.
+ */
+import "../styles/pages/community.css";
+import Icon from "../components/Icon.astro";
+import Empty from "../components/public/Empty.astro";
+import PageHero from "../components/public/PageHero.astro";
+import { publicCast } from "../components/public/cast.ts";
+import { fmt } from "../components/public/kinds.ts";
+import { initials, specialAllowed, toneFor } from "../components/shell/art.ts";
+import PublicLayout from "../layouts/PublicLayout.astro";
+import { repos } from "../lib/db.ts";
+import { siteSwitches, specialSwitches } from "../lib/site.ts";
+import { siteConfig } from "../site.config.ts";
+
+const [people, history, games, chars, switches, specials, casting] = await Promise.all([
+  repos.people.listVisible(),
+  repos.history.listVisible(),
+  repos.games.listPublic(),
+  repos.characters.listPublic(),
+  siteSwitches(),
+  specialSwitches(),
+  repos.posts.getBySlug("casting-call-voices"),
+]);
+const shown = people.filter((p) => p.consent && specialAllowed(p.name, specials));
+const group = (g: string) => shown.filter((p) => p.group === g);
+const founders = group("founder");
+const team = group("team");
+const voices = group("voice");
+const supporters = group("supporter");
+const helpers = [...group("contributor"), ...group("tester"), ...group("partner")];
+const cast = publicCast(chars, specials);
+const lines = cast.reduce((n, c) => n + c.lineCount, 0);
+const photo = (url: string) => (url.startsWith("/uploads/") || url.startsWith("https://") ? url : "");
+const castingLive = casting && casting.status === "published" ? casting : undefined;
+const HELPER_LABEL: Record<string, string> = { contributor: "Contributor", tester: "Tester", partner: "Partner" };
+---
+
+<PublicLayout title="Community and credits" description={`The people behind ${siteConfig.name}: the founder, the voice cast, supporters and everyone who helped.`}>
+  <PageHero
+    eyebrow="Community"
+    pre="Made by people,"
+    hl="not a studio"
+    sub={`${siteConfig.name} is built in the open by a very small team, the friends who lend the characters their voices, and the players who back it.`}
+    icon="heart"
+    fx="galaxy"
+    crumbs={[{ href: "/community", label: "Community" }]}
+  >
+    <ul class="pub-counters" aria-label="The community">
+      <li class="pub-counter" style="--c: #e6c867">
+        <span class="pub-counter__ic"><Icon name="users" size={18} /></span>
+        <b>{shown.length}</b>
+        <span>People credited</span>
+      </li>
+      <li class="pub-counter" style="--c: #38e1f5">
+        <span class="pub-counter__ic"><Icon name="mic" size={18} /></span>
+        <b>{fmt(lines)}</b>
+        <span>Lines to voice</span>
+      </li>
+      <li class="pub-counter" style="--c: #a78bfa">
+        <span class="pub-counter__ic"><Icon name="gamepad" size={18} /></span>
+        <b>{games.length}</b>
+        <span>Games made</span>
+      </li>
+    </ul>
+  </PageHero>
+
+  <!-- Founders and team ------------------------------------------------------- -->
+  {
+    (founders.length > 0 || team.length > 0) && (
+      <section class="pub-sec pp-sec-first" aria-labelledby="team-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">The team</p>
+              <h2 id="team-h">
+                Who makes <span class="pub-hl">the games</span>
+              </h2>
+              <p>Design, code, story, music and a lot of play-testing, mostly by one person and a few good friends.</p>
+            </div>
+          </div>
+          <div class="pub-people">
+            {founders.map((p) => (
+              <article class="pub-founder" data-fx-item>
+                <span class="pub-founder__av">{photo(p.photoUrl) ? <img src={photo(p.photoUrl)} alt={p.name} loading="lazy" /> : initials(p.name, 3)}</span>
+                <small>{p.title || "Founder"}</small>
+                <h3>{p.name}</h3>
+                {p.bio && <p>{p.bio}</p>}
+                <div class="pub-founder__sig">
+                  <i>{siteConfig.initials}</i>
+                  {p.since && <span>making games here since {p.since}</span>}
+                </div>
+              </article>
+            ))}
+            {team.map((p) => (
+              <article class="pub-voice" data-fx-item>
+                <span class="pub-voice__av" style={`--tone: ${toneFor(p.name)}`}>
+                  {photo(p.photoUrl) ? <img src={photo(p.photoUrl)} alt={p.name} loading="lazy" /> : initials(p.name, 1)}
+                </span>
+                <div>
+                  <b>{p.name}</b>
+                  <small>{p.title || "Team"}</small>
+                  {p.bio && <p>{p.bio}</p>}
+                </div>
+              </article>
+            ))}
+            {team.length === 0 && (
+              <article class="pp-join-card" data-fx-item>
+                <span class="pp-ic"><Icon name="user-plus" size={20} /></span>
+                <b>The team is small on purpose</b>
+                <p>Artists, musicians, testers and writers who want to help are welcome. Say hello through Support and tell us what you like making.</p>
+                <a class="pub-btn pub-btn--ghost pub-btn--sm" href="/support?kind=idea#contact">
+                  Say hello
+                  <Icon name="arrow-right" size={14} />
+                </a>
+              </article>
+            )}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Voices ----------------------------------------------------------------- -->
+  <section class="pub-sec pub-sec--tint" aria-labelledby="voices-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">The voices</p>
+          <h2 id="voices-h">
+            Real friends, <span class="pub-hl">real voices</span>
+          </h2>
+          <p>Some characters are inspired by real people who agreed to it. They record their own lines, approve their own look, and can step back at any time.</p>
+        </div>
+        {
+          castingLive && (
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href={`/news/${castingLive.slug}`}>
+              Casting call
+              <Icon name="arrow-right" size={16} />
+            </a>
+          )
+        }
+      </div>
+      {
+        voices.length > 0 ? (
+          <div class="pp-voices">
+            {voices.map((p) => (
+              <article class="pp-vcard" data-fx-item>
+                <span class="pp-vcard__av" style={`--tone: ${toneFor(p.name)}`}>
+                  {photo(p.photoUrl) ? <img src={photo(p.photoUrl)} alt={p.name} loading="lazy" /> : initials(p.name, 1)}
+                  <i aria-hidden="true">
+                    <Icon name="mic" size={13} />
+                  </i>
+                </span>
+                <b>{p.name}</b>
+                <small>{p.title.replace(/^Voice and character:\s*/i, "Voice of ") || "Voice cast"}</small>
+                {p.bio && <p>{p.bio}</p>}
+                <span class="pp-vcard__wave" aria-hidden="true">
+                  {Array.from({ length: 22 }, (_, i) => (
+                    <i style={`--h: ${20 + ((p.name.charCodeAt(i % p.name.length) * (i + 3)) % 80)}%`} />
+                  ))}
+                </span>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <Empty icon="mic" title="The voice cast is being recorded" text={`Over ${fmt(lines)} lines are written and waiting for voices. Read the casting call to take a part.`}>
+            {castingLive && (
+              <a class="pub-btn pub-btn--gold" href={`/news/${castingLive.slug}`}>
+                Read the casting call
+              </a>
+            )}
+          </Empty>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- Supporters --------------------------------------------------------------- -->
+  <section class="pub-sec" aria-labelledby="sup-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">Supporters</p>
+          <h2 id="sup-h">
+            The people who <span class="pub-hl">keep the lights on</span>
+          </h2>
+          <p>Supporter tiers say thank you. They never make anyone stronger in a game.</p>
+        </div>
+        {
+          switches.store && (
+            <a class="pub-btn pub-btn--gold pub-sh__more" href="/store#support">
+              <Icon name="crown" size={16} />
+              Become a supporter
+            </a>
+          )
+        }
+      </div>
+      {
+        supporters.length > 0 ? (
+          <div class="pp-sups">
+            {supporters.map((p, i) => (
+              <article class:list={["pp-sup", i < 3 && "is-top"]} data-fx-item>
+                <span class="pp-sup__av" style={`--tone: ${toneFor(p.name)}`}>
+                  {photo(p.photoUrl) ? <img src={photo(p.photoUrl)} alt={p.name} loading="lazy" /> : initials(p.name)}
+                </span>
+                <span>
+                  <b>{p.name}</b>
+                  <small>{[p.tier && `${p.tier} supporter`, p.since && `since ${p.since}`].filter(Boolean).join(" · ") || "Supporter"}</small>
+                </span>
+                {i < 3 && <Icon name="crown" size={16} />}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="pp-sup-empty" data-fx-item>
+            <div class="pp-sup-empty__slots" aria-hidden="true">
+              {Array.from({ length: 5 }, () => (
+                <span>
+                  <Icon name="user-plus" size={18} />
+                </span>
+              ))}
+            </div>
+            <div>
+              <b>The first names go here</b>
+              <p>
+                Founding supporters are listed on this page for good, with a badge on their profile.
+                {switches.store ? " Every naira goes into the games." : ""}
+              </p>
+            </div>
+            {switches.store && (
+              <a class="pub-btn pub-btn--primary" href="/store#support">
+                See the tiers
+                <Icon name="arrow-right" size={16} />
+              </a>
+            )}
+          </div>
+        )
+      }
+      {
+        helpers.length > 0 && (
+          <div class="pp-helpers">
+            <h3 class="pp-h3">
+              <span class="pp-ic"><Icon name="sparkles" size={16} /></span>
+              Contributors, testers and partners
+            </h3>
+            <ul>
+              {helpers.map((p) => (
+                <li>
+                  <b>{p.name}</b>
+                  <small>{p.title || HELPER_LABEL[p.group]}</small>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+    </div>
+  </section>
+
+  <!-- History -------------------------------------------------------------------- -->
+  {
+    history.length > 0 && (
+      <section class="pub-band" aria-labelledby="story-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Our story</p>
+              <h2 id="story-h">
+                How we <span class="pub-hl">got here</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href="/about">
+              The full story
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+        </div>
+        <ol class="pub-tl pub-scroll-pad" data-scroller tabindex="0" aria-label="Timeline" style="list-style: none; margin: 0;">
+          {history.map((h, i) => (
+            <li class:list={["pub-tl__item", i === history.length - 1 && "is-current"]}>
+              <span class="pub-tl__dot" aria-hidden="true" />
+              <div class="pub-tl__card">
+                <span class="pub-tl__when">{h.dateLabel}</span>
+                <h3>{h.title}</h3>
+                <p>{h.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  <!-- Credits ---------------------------------------------------------------------- -->
+  <section class="pub-sec" aria-labelledby="credits-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">Credits</p>
+          <h2 id="credits-h">
+            Roll <span class="pub-hl">the credits</span>
+          </h2>
+        </div>
+      </div>
+      <div class="pp-credits" data-fx-item>
+        <dl>
+          <div>
+            <dt>Created, written and built by</dt>
+            <dd>{siteConfig.creator}</dd>
+          </div>
+          {
+            voices.length > 0 && (
+              <div>
+                <dt>Voices</dt>
+                <dd>{voices.map((v) => v.name).join(", ")}</dd>
+              </div>
+            )
+          }
+          {
+            team.length > 0 && (
+              <div>
+                <dt>Team</dt>
+                <dd>{team.map((v) => v.name).join(", ")}</dd>
+              </div>
+            )
+          }
+          {
+            helpers.length > 0 && (
+              <div>
+                <dt>With help from</dt>
+                <dd>{helpers.map((v) => v.name).join(", ")}</dd>
+              </div>
+            )
+          }
+          <div>
+            <dt>Games</dt>
+            <dd>{games.map((g) => g.title).join(" · ")}</dd>
+          </div>
+          <div>
+            <dt>Cast</dt>
+            <dd>
+              {cast.length} characters, {fmt(lines)} written lines. <a href="/characters">Meet them</a>
+            </dd>
+          </div>
+          <div>
+            <dt>Icons</dt>
+            <dd>Lucide (ISC licence)</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>Poppins and Inter (SIL Open Font Licence)</dd>
+          </div>
+          <div>
+            <dt>Built with</dt>
+            <dd>Astro, React, Drizzle and Better Auth</dd>
+          </div>
+          <div>
+            <dt>Players</dt>
+            <dd>Everyone who pressed play, reported a bug or asked for more. Thank you.</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join in ----------------------------------------------------------------------- -->
+  <section class="pub-sec pub-sec--tint" aria-labelledby="join-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">Join in</p>
+          <h2 id="join-h">
+            Put your name <span class="pub-hl">in the credits</span>
+          </h2>
+        </div>
+      </div>
+      <div class="pp-joins">
+        {
+          castingLive && (
+            <a class="pp-join" href={`/news/${castingLive.slug}`} data-fx-item>
+              <span class="pp-ic k-plum"><Icon name="mic" size={20} /></span>
+              <b>Voice a character</b>
+              <small>Get a script with a recording guide. Record at home.</small>
+            </a>
+          )
+        }
+        {
+          switches.store && (
+            <a class="pp-join" href="/store#support" data-fx-item>
+              <span class="pp-ic"><Icon name="crown" size={20} /></span>
+              <b>Become a supporter</b>
+              <small>Your name on this page, and our thanks for good.</small>
+            </a>
+          )
+        }
+        {
+          switches.tickets && (
+            <a class="pp-join" href="/support?kind=bug#contact" data-fx-item>
+              <span class="pp-ic k-volt"><Icon name="shield-alert" size={20} /></span>
+              <b>Report a bug</b>
+              <small>Found something broken? A real person reads every report.</small>
+            </a>
+          )
+        }
+        {
+          switches.tickets && (
+            <a class="pp-join" href="/support?kind=idea#contact" data-fx-item>
+              <span class="pp-ic k-green"><Icon name="sparkles" size={20} /></span>
+              <b>Suggest an idea</b>
+              <small>A game, a level, a character. The best ones get made.</small>
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </section>
+</PublicLayout>

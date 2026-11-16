@@ -1,0 +1,29 @@
+---
+/**
+ * Days : hours : minutes until a date, ticking (public/js/public.js runs every
+ * [data-countdown]). The numbers are right in the HTML too, for no-JS.
+ *
+ *   <Countdown to={event.startsAt} />            glass boxes on a dark stage
+ *   <Countdown to={event.startsAt} light small />  on a light card
+ */
+import { untilParts } from "./kinds.ts";
+
+interface Props {
+  to: Date;
+  light?: boolean;
+  small?: boolean;
+  label?: string;
+}
+const { to, light = false, small = false, label = "Time until it starts" } = Astro.props;
+const p = untilParts(to);
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<div class:list={["pub-cd", "pp-cd", light && "pp-cd--light", small && "pp-cd--small"]} data-countdown={to.toISOString()} role="timer" aria-label={label}>
+  <div><b data-cd="d">{p.d}</b><small>days</small></div>
+  <span class="pub-cd__sep" aria-hidden="true">:</span>
+  <div><b data-cd="h">{pad(p.h)}</b><small>hours</small></div>
+  <span class="pub-cd__sep" aria-hidden="true">:</span>
+  <div><b data-cd="m">{pad(p.m)}</b><small>min</small></div>
+  <slot />
+</div>

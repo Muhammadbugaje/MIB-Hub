@@ -1,0 +1,350 @@
+---
+/**
+ * /store: live deals, the in-game boosts (sold for in-game money inside the
+ * game, never online) and the supporter tiers (naira). A supporter order
+ * posts to POST /api/orders and lands on /store/thanks?ref=…
+ *
+ * Switches: "store" off -> the store is closed (no prices, no forms).
+ * "payments" off -> the order is recorded and confirmed by hand by email;
+ * nothing is charged here and no checkout is pretended.
+ */
+import "../../styles/pages/store.css";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { boostDuration } from "../../components/public/kinds.ts";
+import { categoryLabel } from "../../components/shell/art.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate, formatPrice, siteSwitches } from "../../lib/site.ts";
+
+const switches = await siteSwitches();
+const [products, deals, games, faqs] = switches.store
+  ? await Promise.all([repos.products.listActive(), repos.deals.listLive(), repos.games.listPublic(), repos.faqs.listPublished()])
+  : [[], [], [], []];
+const user = Astro.locals.viewer.user;
+const titleOf = new Map(games.map((g) => [g.slug, g.title]));
+const boosts = products.filter((p) => p.currency === "GAME");
+const tiers = products.filter((p) => p.currency !== "GAME");
+const boostGames = [...new Set(boosts.map((b) => b.gameSlug).filter((s): s is string => !!s && titleOf.has(s)))];
+const storeFaqs = faqs.filter((f) => /store|support|refund|payment/i.test(`${f.category} ${f.question}`)).slice(0, 4);
+const codeDeals = deals.filter((d) => d.code && d.percentOff > 0);
+
+const BOOST_ICON: [RegExp, string][] = [
+  [/sneaker|nitro|speed/i, "zap"],
+  [/tea|brain/i, "book"],
+  [/watch|time/i, "timer"],
+  [/hoodie|ghost/i, "ghost"],
+  [/card|lawyer/i, "shield"],
+  [/charm|spray/i, "sparkles"],
+  [/kola|lucky/i, "star"],
+  [/tank|fuel/i, "rocket"],
+  [/zobo|gum|lungs/i, "flame"],
+];
+const boostIcon = (title: string) => BOOST_ICON.find(([re]) => re.test(title))?.[1] ?? "gift";
+const rare = (b: (typeof boosts)[number]) => /rare/i.test(b.description) || b.priceKobo >= 500000;
+const TIER_ICON = ["heart", "crown", "award"];
+const featured = (t: { sku: string; title: string }) => /founder|founding/i.test(`${t.sku} ${t.title}`);
+const dealWindow = (d: { startsAt: Date | null; endsAt: Date | null }) =>
+  d.startsAt && d.endsAt ? `${formatDate(d.startsAt)} to ${formatDate(d.endsAt)}` : d.endsAt ? `Until ${formatDate(d.endsAt)}` : d.startsAt ? `From ${formatDate(d.startsAt)}` : "Open now";
+---
+
+<PublicLayout title="Store" description="Boosts for the open-world game and supporter tiers that keep MIB-Hub free. Nothing here makes you stronger against other players.">
+  <PageHero
+    eyebrow="Store"
+    pre="Back the hub,"
+    hl="boost your run"
+    sub="Supporter tiers keep every game free. Boosts are bought with the money you earn inside the game. Nothing here buys story or beats another player."
+    icon="bag"
+    fx="arcade"
+    crumbs={[{ href: "/store", label: "Store" }]}
+  >
+    {
+      switches.store && (
+        <div class="pp-hero__ctas">
+          {tiers.length > 0 && (
+            <a class="pub-btn pub-btn--gold pub-btn--lg" href="#support">
+              <Icon name="crown" size={18} />
+              Become a supporter
+            </a>
+          )}
+          {boosts.length > 0 && (
+            <a class="pub-btn pub-btn--glass pub-btn--lg" href="#boosts">
+              See the boosts
+            </a>
+          )}
+        </div>
+      )
+    }
+    {
+      switches.store && (
+        <div class="pp-glass pp-paynote" slot="aside">
+          <p class="pp-glass__lab">
+            <Icon name={switches.payments ? "lock" : "mail"} size={14} />
+            {switches.payments ? "Paying online" : "How supporting works right now"}
+          </p>
+          {switches.payments ? (
+            <>
+              <h3>Secure payment, then a receipt</h3>
+              <p>Choose a tier, give your email, and we send the receipt and your thank-you as soon as the payment clears.</p>
+            </>
+          ) : (
+            <>
+              <h3>Confirmed by hand, by email</h3>
+              <p>Online payment is not switched on yet. Choose a tier and we record your order, then email you to confirm and arrange payment. Nothing is charged on this page.</p>
+            </>
+          )}
+        </div>
+      )
+    }
+  </PageHero>
+
+  {
+    !switches.store ? (
+      <section class="pub-sec pp-sec-first" aria-label="Store closed">
+        <div class="pub-wrap">
+          <Empty icon="bag" title="The store is closed for now" text="Every game stays free to play. Supporter tiers will be back here when the store reopens.">
+            <a class="pub-btn pub-btn--gold" href="/games">
+              <Icon name="gamepad" size={16} />
+              Play a game
+            </a>
+            <a class="pub-btn pub-btn--ghost" href="/support">
+              Questions about an order
+            </a>
+          </Empty>
+        </div>
+      </section>
+    ) : (
+      <>
+        {deals.length > 0 && (
+          <section class="pub-sec pp-sec-first" aria-labelledby="deals-h">
+            <div class="pub-wrap">
+              <div class="pub-sh">
+                <div>
+                  <p class="pub-eyebrow">On now</p>
+                  <h2 id="deals-h">
+                    Deals and <span class="pub-hl">free things</span>
+                  </h2>
+                </div>
+              </div>
+              <div class="pub-deals">
+                {deals.map((d) => (
+                  <article class:list={["pub-deal", `pub-deal--${d.kind}`]} data-fx-item>
+                    <div class="pub-deal__stub">
+                      {d.percentOff > 0 ? (
+                        <>
+                          <b>{d.percentOff}%</b>
+                          <small>off</small>
+                        </>
+                      ) : d.kind === "free" ? (
+                        <>
+                          <Icon name="gift" size={30} />
+                          <small>Free</small>
+                        </>
+                      ) : (
+                        <>
+                          <Icon name={d.kind === "bundle" ? "crown" : "tag"} size={30} />
+                          <small>{d.kind === "bundle" ? "Supporter" : categoryLabel(d.kind)}</small>
+                        </>
+                      )}
+                    </div>
+                    <div class="pub-deal__body">
+                      <h3>{d.title}</h3>
+                      <p>{d.description}</p>
+                      <div class="pub-deal__row">
+                        {d.code && <span class="pub-deal__code">{d.code}</span>}
+                        <span class="pub-deal__when">
+                          <Icon name="clock" size={13} />
+                          {dealWindow(d)}
+                        </span>
+                        {d.ctaUrl && (
+                          <a href={d.ctaUrl}>
+                            {d.ctaLabel || "See the offer"}
+                            <Icon name="arrow-right" size={14} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {tiers.length > 0 && (
+          <section class:list={["pub-sec", "pub-sec--tint", !deals.length && "pp-sec-first"]} id="support" aria-labelledby="tiers-h">
+            <div class="pub-wrap">
+              <div class="pub-sh">
+                <div>
+                  <p class="pub-eyebrow">Supporter tiers</p>
+                  <h2 id="tiers-h">
+                    Keep every game <span class="pub-hl">free for everyone</span>
+                  </h2>
+                  <p>A one-off thank-you in naira. Every tier goes straight into new games, music and voices.</p>
+                </div>
+              </div>
+              <div class="pp-tiers">
+                {tiers.map((t, i) => (
+                  <article class:list={["pp-tier", featured(t) && "is-feature"]} data-fx-item>
+                    {featured(t) && <span class="pp-tier__flag">Founders</span>}
+                    <span class="pp-tier__ic">
+                      <Icon name={TIER_ICON[i % TIER_ICON.length]!} size={24} />
+                    </span>
+                    <h3>{t.title}</h3>
+                    <p class="pp-tier__price">
+                      <b>{formatPrice(t.priceKobo, t.currency)}</b>
+                      <small>one-off</small>
+                    </p>
+                    <p class="pp-tier__desc">{t.description}</p>
+                    <form class="pp-form pp-tier__form" method="post" action="/api/orders" data-json-form data-thanks="/store/thanks">
+                      <input type="hidden" name="sku" value={t.sku} />
+                      {!user && (
+                        <label class="pp-field">
+                          <span>Email for the receipt</span>
+                          <input name="email" type="email" required autocomplete="email" placeholder="you@example.com" />
+                        </label>
+                      )}
+                      {codeDeals.length > 0 && (
+                        <details class="pp-tier__code">
+                          <summary>Have a code?</summary>
+                          <label class="pp-field">
+                            <span class="sr-only">Deal code</span>
+                            <input name="dealCode" maxlength="40" autocapitalize="characters" class="pp-mono" placeholder="CODE" />
+                          </label>
+                        </details>
+                      )}
+                      <p class="pp-note pp-note--bad" data-form-error hidden role="alert" />
+                      <button class:list={["pub-btn", "pub-btn--block", featured(t) ? "pub-btn--gold" : "pub-btn--primary"]} type="submit">
+                        {switches.payments ? `Support with ${formatPrice(t.priceKobo, t.currency)}` : "Request this tier"}
+                        <Icon name="arrow-right" size={16} />
+                      </button>
+                    </form>
+                  </article>
+                ))}
+              </div>
+              {!switches.payments && (
+                <p class="pp-note pp-note--gold pp-tiers__note">
+                  <Icon name="info" size={16} />
+                  <span>
+                    <b>No card details here.</b> Online payment is not live yet, so a request records your order and we email you to confirm it. Refunds within 14 days, with your
+                    order reference.
+                  </span>
+                </p>
+              )}
+            </div>
+          </section>
+        )}
+
+        {boosts.length > 0 && (
+          <section class:list={["pub-sec", !deals.length && !tiers.length && "pp-sec-first"]} id="boosts" aria-labelledby="boosts-h">
+            <div class="pub-wrap">
+              <div class="pub-sh">
+                <div>
+                  <p class="pub-eyebrow">{boostGames.length === 1 ? `The Plug · ${titleOf.get(boostGames[0]!)}` : "The Plug"}</p>
+                  <h2 id="boosts-h">
+                    Timed boosts, <span class="pub-hl">earned in game</span>
+                  </h2>
+                  <p>Buy them at the Plug inside the game with the money you earn by playing. They never cost real money and never unlock story.</p>
+                </div>
+                {boostGames[0] && (
+                  <a class="pub-btn pub-btn--ghost pub-sh__more" href={`/games/${boostGames[0]}`}>
+                    About the game
+                    <Icon name="arrow-right" size={16} />
+                  </a>
+                )}
+              </div>
+              <div class="pp-boosts">
+                {boosts.map((b) => (
+                  <article class:list={["pp-boost", rare(b) && "is-rare"]} data-fx-item>
+                    {rare(b) && <span class="pp-boost__rare">Rare</span>}
+                    <span class="pp-boost__ic">
+                      <Icon name={boostIcon(b.title)} size={22} />
+                    </span>
+                    <h3>{b.title}</h3>
+                    <p>{b.description}</p>
+                    <div class="pp-boost__foot">
+                      <span class="pp-boost__price">{formatPrice(b.priceKobo, b.currency).replace(" in game", "")}</span>
+                      <span class="pp-boost__time">
+                        <Icon name="timer" size={13} />
+                        {boostDuration(b.durationMin)}
+                      </span>
+                    </div>
+                  </article>
+                ))}
+              </div>
+              <p class="pp-boosts__legend">
+                <Icon name="coins" size={14} />
+                Prices are in in-game naira, earned by playing.
+                {boostGames[0] && (
+                  <a href={`/play/${boostGames[0]}`}>
+                    Play {titleOf.get(boostGames[0])}
+                    <Icon name="arrow-right" size={13} />
+                  </a>
+                )}
+              </p>
+            </div>
+          </section>
+        )}
+
+        {tiers.length === 0 && boosts.length === 0 && deals.length === 0 && (
+          <section class="pub-sec pp-sec-first">
+            <div class="pub-wrap">
+              <Empty icon="bag" title="The shelves are being stocked" text="Supporter tiers and boosts are added from the admin panel. Every game is free to play meanwhile.">
+                <a class="pub-btn pub-btn--gold" href="/games">
+                  Play a game
+                </a>
+              </Empty>
+            </div>
+          </section>
+        )}
+
+        {storeFaqs.length > 0 && (
+          <section class="pub-sec pub-sec--tint" aria-labelledby="sfaq-h">
+            <div class="pub-wrap pub-faq">
+              <div>
+                <div class="pub-sh">
+                  <div>
+                    <p class="pub-eyebrow">Good to know</p>
+                    <h2 id="sfaq-h">
+                      Store <span class="pub-hl">questions</span>
+                    </h2>
+                  </div>
+                </div>
+                <div class="pub-help">
+                  <span class="pub-help__ic k-gold">
+                    <Icon name="coins" size={22} />
+                  </span>
+                  <span class="pub-help__tx">
+                    <b>A question about an order?</b>
+                    <span>Quote your order reference.</span>
+                  </span>
+                  <a class="pub-btn pub-btn--primary" href="/support?kind=payment#contact">
+                    Ask us
+                  </a>
+                </div>
+              </div>
+              <div class="pub-qa">
+                {storeFaqs.map((f, i) => (
+                  <details class="pub-q" open={i === 0}>
+                    <summary>
+                      {f.question}
+                      <i aria-hidden="true">
+                        <Icon name="plus" size={16} />
+                      </i>
+                    </summary>
+                    <p>{f.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </>
+    )
+  }
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

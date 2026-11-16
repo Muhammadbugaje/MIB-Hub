@@ -1,0 +1,129 @@
+---
+/**
+ * /news/<slug>: one post. The body is Markdown, rendered by a small safe
+ * renderer (everything escaped; links only http(s), mailto or same-site).
+ * Drafts and scheduled posts are 404 for the public; staff with
+ * content.manage see them with a "preview" note. Each public view is counted.
+ */
+import "../../styles/pages/news.css";
+import GameCard from "../../components/GameCard.astro";
+import Icon from "../../components/Icon.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import PostCard from "../../components/public/PostCard.astro";
+import { fmt, postKind, readingMinutes } from "../../components/public/kinds.ts";
+import { renderMarkdown } from "../../components/public/markdown.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const slug = Astro.params.slug ?? "";
+const post = /^[a-z0-9-]{1,120}$/.test(slug) ? await repos.posts.getBySlug(slug) : undefined;
+const staff = Astro.locals.viewer.permissions.has("content.manage");
+const live = !!post && post.status === "published" && !!post.publishedAt && post.publishedAt <= new Date();
+if (!post || (!live && !staff)) return Astro.rewrite("/404");
+if (live) await repos.posts.addView(post.id);
+
+const [games, others] = await Promise.all([repos.games.listPublic(), repos.posts.listPublished({ limit: 8 })]);
+const game = post.gameSlug ? games.find((g) => g.slug === post.gameSlug) : undefined;
+const titleOf = new Map(games.map((g) => [g.slug, g.title]));
+const more = others.filter((p) => p.id !== post.id).slice(0, 3);
+const k = postKind(post.kind);
+const html = renderMarkdown(post.body);
+const views = post.views + (live ? 1 : 0);
+---
+
+<PublicLayout title={post.title} description={post.excerpt || post.title}>
+  <PageHero
+    eyebrow={k.label}
+    pre={post.title}
+    sub={post.excerpt}
+    icon={k.icon}
+    fx="waves"
+    image={post.coverUrl || null}
+    crumbs={[
+      { href: "/news", label: "News" },
+      { href: `/news?kind=${post.kind}`, label: k.plural },
+    ]}
+  >
+    <p class="pp-artmeta">
+      <span><Icon name="calendar" size={14} />{post.publishedAt ? formatDate(post.publishedAt) : "Not published"}</span>
+      <span><Icon name="clock" size={14} />{readingMinutes(post.body)} min read</span>
+      {views > 0 && <span><Icon name="eye" size={14} />{fmt(views)} {views === 1 ? "view" : "views"}</span>}
+      {game && <a href={`/games/${game.slug}`}><Icon name="gamepad" size={14} />{game.title}</a>}
+    </p>
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="The post">
+    <div class="pub-wrap pp-article">
+      <article>
+        {
+          !live && (
+            <p class="pp-note pp-note--gold pp-article__preview">
+              <Icon name="eye" size={16} />
+              <span>
+                Staff preview: this post is <b>{post.status === "published" ? "scheduled" : post.status}</b>, so players cannot see it yet.
+              </span>
+            </p>
+          )
+        }
+        <div class="pp-prose" set:html={html} />
+        {
+          post.tags.length > 0 && (
+            <div class="pub-tags pp-article__tags">
+              {post.tags.map((t) => (
+                <a href={`/search?q=${encodeURIComponent(t)}`}>
+                  <Icon name="tag" size={13} />
+                  {t}
+                </a>
+              ))}
+            </div>
+          )
+        }
+      </article>
+      <aside class="pp-article__aside">
+        {game && <GameCard game={game} />}
+        <div class="pp-card pp-share">
+          <h3 class="pp-h3"><span class="pp-ic"><Icon name="external" size={16} /></span>Share this post</h3>
+          <button class="pp-copy" type="button" data-copy="url">
+            <Icon name="file" size={14} />
+            <span data-copy-label>Copy the link</span>
+          </button>
+        </div>
+        <a class="pp-card pp-backlink" href="/news">
+          <Icon name="arrow-left" size={16} />
+          <span><b>All news</b><small>Devlogs, updates and launches</small></span>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  {
+    more.length > 0 && (
+      <section class="pub-sec pub-sec--tint" aria-labelledby="more-h">
+        <div class="pub-wrap">
+          <div class="pub-sh">
+            <div>
+              <p class="pub-eyebrow">Keep reading</p>
+              <h2 id="more-h">
+                More from <span class="pub-hl">the newsroom</span>
+              </h2>
+            </div>
+            <a class="pub-btn pub-btn--ghost pub-sh__more" href="/news">
+              All news
+              <Icon name="arrow-right" size={16} />
+            </a>
+          </div>
+          <div class="pp-posts">
+            {more.map((p) => (
+              <PostCard post={p} gameTitle={p.gameSlug ? titleOf.get(p.gameSlug) : undefined} />
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

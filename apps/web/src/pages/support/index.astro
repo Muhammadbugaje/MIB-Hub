@@ -1,0 +1,324 @@
+---
+/**
+ * /support: the help centre. Searchable answers (faqs table), shortcuts by
+ * topic, the contact form (POST /api/tickets, with a "website" honeypot) and
+ * the "track my ticket" box. ?kind=bug#contact preselects the form; the API
+ * sends ?error=… back here when something is missing.
+ * Follows the "tickets" switch: when it is off, the answers stay and the form goes.
+ */
+import "../../styles/pages/support.css";
+import { TICKET_KINDS } from "@mib/db";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { SUPPORT_ERRORS, TICKET_KIND } from "../../components/public/kinds.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { siteSwitches } from "../../lib/site.ts";
+import { siteConfig } from "../../site.config.ts";
+
+const [faqs, games, switches] = await Promise.all([repos.faqs.listPublished(), repos.games.listPublic(), siteSwitches()]);
+const user = Astro.locals.viewer.user;
+const params = Astro.url.searchParams;
+const kindParam = params.get("kind") ?? "";
+const kind = (TICKET_KINDS as readonly string[]).includes(kindParam) ? kindParam : "help";
+const errorKey = params.get("error") ?? "";
+const error = SUPPORT_ERRORS[errorKey];
+const gameParam = params.get("game") ?? "";
+const q = (params.get("q") ?? "").slice(0, 60);
+
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const topics = [...new Set(faqs.map((f) => f.category))].map((c) => ({ key: slug(c), label: c, count: faqs.filter((f) => f.category === c).length }));
+const TOPIC_ICON: Record<string, string> = {
+  "getting-started": "rocket",
+  accounts: "user-circle",
+  games: "gamepad",
+  "store-and-supporters": "bag",
+  community: "heart",
+  privacy: "lock",
+};
+const topicParam = params.get("topic") ?? "";
+const topic = topics.some((t) => t.key === topicParam) ? topicParam : "";
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const terms = norm(q).split(" ").filter(Boolean);
+const faqShown = (f: (typeof faqs)[number]) => (!topic || slug(f.category) === topic) && terms.every((t) => norm(`${f.question} ${f.answer} ${f.category}`).includes(t));
+const shownCount = faqs.filter(faqShown).length;
+const kinds = TICKET_KINDS.map((k) => ({ key: k, ...(TICKET_KIND[k] ?? { label: k, icon: "help", hint: "" }) }));
+const shortcuts = ["bug", "help", "account", "feedback", "payment", "complaint"].filter((k) => kinds.some((x) => x.key === k));
+---
+
+<PublicLayout title="Support" description="Answers to common questions, and a way to reach a real person about anything on MIB-Hub.">
+  <div data-filter-root data-filter-param="topic">
+    <PageHero
+      eyebrow="Help centre"
+      pre="How can we"
+      hl="help?"
+      sub="Search the answers below. If yours is not there, write to us: a real person reads every message and replies by email."
+      icon="life-buoy"
+      fx="waves"
+      crumbs={[{ href: "/support", label: "Support" }]}
+    >
+      <form class="pp-hsearch" action="/support" method="get" role="search">
+        <Icon name="search" size={20} />
+        <label class="sr-only" for="faq-q">Search the answers</label>
+        <input id="faq-q" type="search" name="q" value={q} placeholder="Try “password”, “refund” or “progress”" autocomplete="off" data-filter-q />
+        <button class="pub-btn pub-btn--gold" type="submit">Search</button>
+      </form>
+      <p class="pp-hsearch__hint">
+        Popular:
+        {
+          ["password", "progress", "refund", "voice"].map((w) => (
+            <a href={`/support?q=${w}#answers`}>{w}</a>
+          ))
+        }
+      </p>
+    </PageHero>
+
+    <!-- Shortcuts ------------------------------------------------------------- -->
+    {
+      switches.tickets && (
+        <section class="pub-sec pp-sec-first pp-shortcuts-sec" aria-label="Quick contact">
+          <div class="pub-wrap">
+            <div class="pp-shortcuts">
+              {shortcuts.map((k) => {
+                const info = kinds.find((x) => x.key === k)!;
+                return (
+                  <a href={`/support?kind=${k}#contact`} data-fx-item>
+                    <span class="pp-ic">
+                      <Icon name={info.icon} size={20} />
+                    </span>
+                    <b>{info.label}</b>
+                    <small>{info.hint}</small>
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Answers ------------------------------------------------------------- -->
+    <section class:list={["pub-sec", !switches.tickets && "pp-sec-first"]} id="answers" aria-labelledby="faq-h">
+      <div class="pub-wrap">
+        <div class="pub-sh">
+          <div>
+            <p class="pub-eyebrow">Answers</p>
+            <h2 id="faq-h">Questions, <span class="pub-hl">answered</span></h2>
+          </div>
+        </div>
+        {
+          faqs.length > 0 ? (
+            <div class="pp-faq">
+              <nav class="pp-faq__topics" aria-label="Topics">
+                <a class="pp-chip" href="/support#answers" data-filter-chip="" aria-current={(!topic) ? "true" : "false"}>
+                  <Icon name="layers" size={15} />
+                  All topics <b>{faqs.length}</b>
+                </a>
+                {topics.map((t) => (
+                  <a class="pp-chip" href={`/support?topic=${t.key}#answers`} data-filter-chip={t.key} aria-current={(topic === t.key) ? "true" : "false"}>
+                    <Icon name={TOPIC_ICON[t.key] ?? "help"} size={15} />
+                    {t.label} <b>{t.count}</b>
+                  </a>
+                ))}
+              </nav>
+              <div class="pp-faq__list">
+                {topics.map((t) => (
+                  <div class="pp-faq__group" data-filter-group hidden={!faqs.some((f) => slug(f.category) === t.key && faqShown(f))}>
+                    <h3>{t.label}</h3>
+                    <div class="pub-qa">
+                      {faqs
+                        .filter((f) => slug(f.category) === t.key)
+                        .map((f) => (
+                          <details class="pub-q" data-filter-item data-cat={t.key} data-text={`${f.question} ${f.answer} ${f.category}`} hidden={!faqShown(f)} open={terms.length > 0 && faqShown(f)}>
+                            <summary>
+                              {f.question}
+                              <i aria-hidden="true">
+                                <Icon name="plus" size={16} />
+                              </i>
+                            </summary>
+                            <p>{f.answer}</p>
+                          </details>
+                        ))}
+                    </div>
+                  </div>
+                ))}
+                <div data-filter-empty hidden={shownCount > 0}>
+                  <Empty compact icon="help" title="No answer matches that" text="Try another word, or ask us directly below. We reply by email.">
+                    {switches.tickets && (
+                      <a class="pub-btn pub-btn--primary pub-btn--sm" href="#contact">
+                        Ask a person
+                      </a>
+                    )}
+                  </Empty>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <Empty icon="help" title="The answers are being written" text="Ask us anything with the form below and we will reply by email." />
+          )
+        }
+      </div>
+    </section>
+  </div>
+
+  <!-- Contact ------------------------------------------------------------------ -->
+  <section class="pub-sec pub-sec--tint" id="contact" aria-labelledby="contact-h">
+    <div class="pub-wrap">
+      <div class="pub-sh">
+        <div>
+          <p class="pub-eyebrow">Contact</p>
+          <h2 id="contact-h">Talk to <span class="pub-hl">a person</span></h2>
+          <p>Bugs, ideas, complaints, account and payment questions. You get a reference straight away and a reply by email.</p>
+        </div>
+      </div>
+      <div class="pp-split">
+        {
+          switches.tickets ? (
+            <form class="pp-card pp-form" method="post" action="/api/tickets">
+              {error && (
+                <p class="pp-note pp-note--bad" role="alert">
+                  <Icon name="info" size={16} />
+                  {error}
+                </p>
+              )}
+              <fieldset class="pp-pills">
+                <legend>What is it about?</legend>
+                {kinds.map((k) => (
+                  <label class="pp-pill">
+                    <input type="radio" name="kind" value={k.key} checked={k.key === kind} required />
+                    <Icon name={k.icon} size={17} />
+                    {k.label}
+                  </label>
+                ))}
+              </fieldset>
+              {!user && (
+                <div class="pp-form__row">
+                  <label class="pp-field">
+                    <span>
+                      Your first name <small>(optional)</small>
+                    </span>
+                    <input name="name" autocomplete="given-name" maxlength="120" />
+                  </label>
+                  <label class="pp-field">
+                    <span>Email for the reply</span>
+                    <input name="email" type="email" autocomplete="email" required maxlength="200" />
+                  </label>
+                </div>
+              )}
+              <div class="pp-form__row">
+                <label class="pp-field">
+                  <span>Subject</span>
+                  <input name="subject" required minlength="3" maxlength="160" placeholder="One line about it" />
+                </label>
+                <label class="pp-field">
+                  <span>
+                    Game <small>(if it is about one)</small>
+                  </span>
+                  <select name="gameSlug">
+                    <option value="">Not about a game</option>
+                    {games.map((g) => (
+                      <option value={g.slug} selected={g.slug === gameParam}>
+                        {g.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+              <label class="pp-field">
+                <span>Your message</span>
+                <textarea name="body" required minlength="10" maxlength="8000" placeholder="What happened, what you expected, and the level or page if it matters." />
+              </label>
+              <fieldset class="pp-rate">
+                <legend>
+                  How are you finding {siteConfig.name}? <small>(optional)</small>
+                </legend>
+                <div class="pp-stars">
+                  {[5, 4, 3, 2, 1].map((n) => (
+                    <>
+                      <input type="radio" name="rating" value={n} id={`star-${n}`} />
+                      <label for={`star-${n}`} title={`${n} of 5`}>
+                        <Icon name="star" size={24} />
+                        <span class="sr-only">{n} stars</span>
+                      </label>
+                    </>
+                  ))}
+                </div>
+              </fieldset>
+              <div class="pp-hp" aria-hidden="true">
+                <label>
+                  Website <input name="website" tabindex="-1" autocomplete="off" />
+                </label>
+              </div>
+              <input type="hidden" name="pageUrl" value="/support" />
+              <div class="pp-form__foot">
+                <button class="pub-btn pub-btn--gold pub-btn--lg" type="submit">
+                  <Icon name="mail" size={18} />
+                  Send it
+                </button>
+                <small>{user ? `We reply to ${user.email}.` : "We only use your email to reply."}</small>
+              </div>
+            </form>
+          ) : (
+            <div class="pp-card">
+              <Empty icon="mail" title="Messages are paused" text="We are not taking new messages for a short while. The answers above cover most questions; please try again later." />
+            </div>
+          )
+        }
+        <aside class="pp-support-aside">
+          <div class="pp-card pp-track">
+            <h3 class="pp-h3">
+              <span class="pp-ic"><Icon name="ticket" size={18} /></span>Track a message
+            </h3>
+            <p>Use the reference from your confirmation (it looks like MIB-4F2K9) and the email you wrote from.</p>
+            <form class="pp-form" method="post" action="/support/track">
+              <label class="pp-field">
+                <span>Reference</span>
+                <input name="ref" required pattern="[Mm][Ii][Bb]-[A-Za-z0-9]{4,10}" placeholder="MIB-XXXXX" autocapitalize="characters" class="pp-mono" />
+              </label>
+              {!user && (
+                <label class="pp-field">
+                  <span>Email</span>
+                  <input name="email" type="email" required autocomplete="email" />
+                </label>
+              )}
+              <button class="pub-btn pub-btn--primary" type="submit">
+                <Icon name="search" size={16} />
+                Find it
+              </button>
+            </form>
+            {user && (
+              <a class="pp-track__all" href="/account/tickets">
+                All my messages
+                <Icon name="arrow-right" size={14} />
+              </a>
+            )}
+          </div>
+          <div class="pp-card pp-next-steps">
+            <h3 class="pp-h3">
+              <span class="pp-ic"><Icon name="clock" size={18} /></span>What happens next
+            </h3>
+            <ol>
+              <li>
+                <b>You get a reference</b>
+                <span>Straight away, on the next page.</span>
+              </li>
+              <li>
+                <b>A person reads it</b>
+                <span>Account and payment questions go first.</span>
+              </li>
+              <li>
+                <b>We reply by email</b>
+                <span>And the reply shows when you track it here.</span>
+              </li>
+            </ol>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

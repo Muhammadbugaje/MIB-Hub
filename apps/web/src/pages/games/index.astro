@@ -1,0 +1,233 @@
+---
+/**
+ * /games: the whole catalogue. Shelves by category, a sticky filter bar
+ * (category chips + search) that works as plain links without JavaScript
+ * (?cat=puzzle&q=laser) and instantly with it.
+ */
+import "../../styles/pages/games.css";
+import GameCard from "../../components/GameCard.astro";
+import Icon from "../../components/Icon.astro";
+import Empty from "../../components/public/Empty.astro";
+import PageHero from "../../components/public/PageHero.astro";
+import { fmt } from "../../components/public/kinds.ts";
+import { categoryIcon, categoryLabel } from "../../components/shell/art.ts";
+import PublicLayout from "../../layouts/PublicLayout.astro";
+import { repos } from "../../lib/db.ts";
+import { siteSwitches } from "../../lib/site.ts";
+
+const [games, stats, trending, switches] = await Promise.all([
+  repos.games.listPublic(),
+  repos.analytics.perGame(30),
+  repos.analytics.trending(3),
+  siteSwitches(),
+]);
+const ad = switches.ads ? await repos.ads.pick("arcade_top") : undefined;
+
+const params = Astro.url.searchParams;
+const q = (params.get("q") ?? "").trim().slice(0, 60);
+const categories = [...new Set(games.map((g) => g.category))].map((key) => ({
+  key,
+  label: categoryLabel(key),
+  icon: categoryIcon(key),
+  count: games.filter((g) => g.category === key).length,
+}));
+const catParam = params.get("cat") ?? "";
+const cat = categories.some((c) => c.key === catParam) ? catParam : "";
+
+const norm = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+const textOf = (g: (typeof games)[number]) =>
+  norm([g.title, g.description, g.category, g.meta.genre, ...(g.meta.tags ?? []), ...(g.meta.modes ?? [])].filter(Boolean).join(" "));
+const terms = norm(q).split(" ").filter(Boolean);
+const matches = (g: (typeof games)[number]) => (!cat || g.category === cat) && terms.every((t) => textOf(g).includes(t));
+const shown = games.filter(matches).length;
+
+const statBy = new Map(stats.map((s) => [s.gameSlug, s]));
+const bySlug = new Map(games.map((g) => [g.slug, g]));
+const hot = trending.map((t) => bySlug.get(t.gameSlug)).find(Boolean) ?? games[0];
+const hotStat = hot ? statBy.get(hot.slug) : undefined;
+const plays = stats.reduce((n, s) => n + s.plays, 0);
+const modes = games.reduce((n, g) => n + (g.meta.modes?.length ?? 0), 0);
+const counters = [
+  { icon: "gamepad", value: games.length, label: "Games", c: "#e6c867" },
+  { icon: "compass", value: categories.length, label: "Kinds of game", c: "#38e1f5" },
+  { icon: "layers", value: modes, label: "Game modes", c: "#a78bfa" },
+  ...(plays >= 50 ? [{ icon: "play", value: plays, label: "Plays this month", c: "#4ade80" }] : [{ icon: "zap", value: 0, label: "Downloads needed", c: "#4ade80" }]),
+];
+const CAT_SUB: Record<string, string> = {
+  versus: "Head-to-head: you against the computer, or a friend on the same device.",
+  "open-world": "Big places to explore at your own pace, with a story to follow.",
+  arcade: "Quick runs, high scores and one more go.",
+  puzzle: "Think it through, then watch it work.",
+};
+---
+
+<PublicLayout title="All games" description={`Play ${games.length} free browser games on MIB-Hub: arcade runs, versus duels, puzzles and open worlds. No downloads.`}>
+  <PageHero
+    eyebrow="The arcade"
+    pre="Every game,"
+    hl="one tap away"
+    sub="Arcade runs, versus duels, puzzles and whole worlds to explore. Everything opens in your browser, saves your progress and works on a phone."
+    icon="joystick"
+    fx="electric_field"
+    crumbs={[{ href: "/games", label: "Games" }]}
+  >
+    <ul class="pub-counters" aria-label="The catalogue">
+      {
+        counters.map((s) => (
+          <li class="pub-counter" style={`--c: ${s.c}`}>
+            <span class="pub-counter__ic"><Icon name={s.icon} size={18} /></span>
+            <b>{fmt(s.value)}</b>
+            <span>{s.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+    {
+      hot && (
+        <a class="pp-glass pp-hot" href={`/games/${hot.slug}`} slot="aside" style={`--g: ${hot.accent}`}>
+          <span class="pp-glass__lab">
+            <Icon name="flame" size={14} />
+            {trending.length ? "Trending this week" : "Start here"}
+          </span>
+          <span class="pp-hot__row">
+            <img src={`/games/${hot.slug}/icon.png`} alt="" width="64" height="64" />
+            <span>
+              <b>{hot.title}</b>
+              <small>{hot.meta.genre ?? categoryLabel(hot.category)}</small>
+            </span>
+          </span>
+          {hotStat && hotStat.plays > 0 && (
+            <span class="pp-hot__stat">
+              <Icon name="play" size={12} />
+              {fmt(hotStat.plays)} {hotStat.plays === 1 ? "play" : "plays"} in the last 30 days
+            </span>
+          )}
+          <span class="pub-btn pub-btn--gold pub-btn--block">
+            <Icon name="play" size={16} />
+            Play {hot.title}
+          </span>
+        </a>
+      )
+    }
+  </PageHero>
+
+  <section class="pub-sec pp-sec-first" aria-label="Games">
+    <div class="pub-wrap" data-filter-root data-filter-param="cat">
+      {
+        ad && (
+          <a class="pub-promo pp-promo-top" href={`/go/ad/${ad.id}`} rel={ad.source === "house" ? undefined : "sponsored noopener"}>
+            <span class="pub-promo__ic">
+              <Icon name="trophy" size={24} />
+            </span>
+            <span class="pub-promo__tx">
+              <small>{ad.source === "house" ? "In the arcade" : "Sponsored"}</small>
+              <b>{ad.title}</b>
+              {ad.body && <span>{ad.body}</span>}
+            </span>
+            <span class="pub-btn pub-btn--gold">
+              {ad.ctaLabel || "Take a look"}
+              <Icon name="arrow-right" size={16} />
+            </span>
+          </a>
+        )
+      }
+
+      <form class="pp-bar" action="/games" method="get" role="search">
+        <nav class="pp-chips" aria-label="Kinds of game">
+          <a class="pp-chip" href="/games" data-filter-chip="" aria-current={(!cat) ? "true" : "false"}>
+            <Icon name="gamepad" size={15} />All <b>{games.length}</b>
+          </a>
+          {
+            categories.map((c) => (
+              <a class="pp-chip" href={`/games?cat=${c.key}`} data-filter-chip={c.key} aria-current={(cat === c.key) ? "true" : "false"}>
+                <Icon name={c.icon} size={15} />
+                {c.label} <b>{c.count}</b>
+              </a>
+            ))
+          }
+        </nav>
+        {cat && <input type="hidden" name="cat" value={cat} />}
+        <label class="pp-find">
+          <Icon name="search" size={16} />
+          <span class="sr-only">Search the games</span>
+          <input type="search" name="q" value={q} placeholder="Find a game…" autocomplete="off" data-filter-q />
+        </label>
+      </form>
+      <p class="pp-tally" aria-live="polite"><b data-filter-count>{shown}</b> of {games.length} games</p>
+
+      {
+        categories.map((c) => (
+          <section class="pp-shelf" data-filter-group hidden={!games.some((g) => g.category === c.key && matches(g))} aria-labelledby={`shelf-${c.key}`}>
+            <header class="pp-shelf__head">
+              <span class="pp-ic">
+                <Icon name={c.icon} size={20} />
+              </span>
+              <div>
+                <h2 id={`shelf-${c.key}`}>{c.label}</h2>
+                <p>{CAT_SUB[c.key] ?? `${c.count} games`}</p>
+              </div>
+              <span class="pp-shelf__n">{String(c.count).padStart(2, "0")}</span>
+            </header>
+            <div class="pub-games">
+              {games
+                .filter((g) => g.category === c.key)
+                .map((g, i) => (
+                  <div class="pp-gi" data-filter-item data-cat={g.category} data-text={textOf(g)} hidden={!matches(g)}>
+                    <GameCard game={g} eager={i < 4} />
+                  </div>
+                ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <div data-filter-empty hidden={shown > 0}>
+        <Empty icon="search" title="No game matches that" text="Try a shorter word, or look through every kind of game.">
+          <a class="pub-btn pub-btn--primary" href="/games">Show all games</a>
+          <a class="pub-btn pub-btn--ghost" href={`/search?q=${encodeURIComponent(q)}`}>Search the whole site</a>
+        </Empty>
+      </div>
+    </div>
+  </section>
+
+  <section class="pub-band pp-why" aria-labelledby="why-h">
+    <div class="pub-wrap">
+      <div class="pp-why__grid">
+        <div>
+          <p class="pub-eyebrow">How it works</p>
+          <h2 id="why-h">Tap a game. <span class="pub-hl">You are playing.</span></h2>
+          <p class="pp-why__lead">
+            No installs, no launcher, no waiting. {switches.guestPlay ? "Play as a guest straight away; " : ""}sign in when you want your saves and scores on every device.
+          </p>
+          <div class="pp-hero__ctas">
+            {switches.leaderboards && (
+              <a class="pub-btn pub-btn--gold" href="/leaderboards">
+                <Icon name="trophy" size={16} />
+                Leaderboards
+              </a>
+            )}
+            <a class="pub-btn pub-btn--ghost" href="/support">
+              Help and questions
+            </a>
+          </div>
+        </div>
+        <ul class="pp-why__list">
+          <li><span><Icon name="zap" size={20} /></span><b>Opens in a second</b><small>Each game loads only what it needs.</small></li>
+          <li><span><Icon name="cloud" size={20} /></span><b>Saves as you go</b><small>Five save slots, synced when you sign in.</small></li>
+          <li><span><Icon name="device" size={20} /></span><b>Phone to desktop</b><small>Touch controls on phones, keys on a computer.</small></li>
+          <li><span><Icon name="users" size={20} /></span><b>Play together</b><small>Versus games take two players on one device.</small></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</PublicLayout>
+
+<script>
+  import "../../components/public/client.ts";
+</script>

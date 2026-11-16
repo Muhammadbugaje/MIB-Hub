@@ -1,0 +1,26 @@
+---
+/**
+ * A friendly empty state: an icon in a soft halo, a title, a sentence that
+ * says what to do instead, and buttons in the slot.
+ *
+ *   <Empty icon="trophy" title="No scores yet" text="Be the first name on the board.">
+ *     <a class="pub-btn pub-btn--gold" href="/play/x">Play now</a>
+ *   </Empty>
+ */
+import Icon from "../Icon.astro";
+
+interface Props {
+  icon: string;
+  title: string;
+  text?: string;
+  compact?: boolean;
+}
+const { icon, title, text, compact = false } = Astro.props;
+---
+
+<div class:list={["pp-empty", compact && "pp-empty--compact"]}>
+  <span class="pp-empty__ic"><Icon name={icon} size={compact ? 22 : 28} /></span>
+  <h3>{title}</h3>
+  {text && <p>{text}</p>}
+  {Astro.slots.has("default") && <div class="pp-empty__cta"><slot /></div>}
+</div>
