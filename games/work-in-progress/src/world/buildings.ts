@@ -151,7 +151,7 @@ function crenellate(b: Builder, w: number, d: number, y: number, mat: string, co
 }
 
 /** Sign slot: a board on a face-local builder, textured from the sign atlas. */
-function signBoard(b: Builder, signs: SignAtlas, name: string, x: number, y: number, w: number, h: number, z = 0.12): void {
+export function signBoard(b: Builder, signs: SignAtlas, name: string, x: number, y: number, w: number, h: number, z = 0.12): void {
   const [u0, v0, u1, v1] = signs.uv(name);
   b.tint([255, 255, 255, 255]).box("trim", x, y - 0.06, z - 0.06, w + 0.16, h + 0.12, 0.1, 1, ["back"]);
   b.poly("signs", [[x - w / 2, y, z + 0.005], [x + w / 2, y, z + 0.005], [x + w / 2, y + h, z + 0.005], [x - w / 2, y + h, z + 0.005]], [[u0, v0], [u1, v0], [u1, v1], [u0, v1]], [0, 0, 1]);
@@ -171,7 +171,7 @@ function awning(b: Builder, x: number, y: number, w: number, p: number, way: num
 
 /** Rough height of a building's main mass (camera clearance). */
 export function buildingHeight(B: Building): number {
-  const perFloor: Partial<Record<Building["style"], number>> = { senate: 4.4, gothic: 4.4, library: 4.8, arcade: 4.4, sahel: 4.2, medicine: 3.8, hostel: 3.2, shophouse: 3.6, deco: 4.2, barn: 4.5, stand: 6 };
+  const perFloor: Partial<Record<Building["style"], number>> = { theatre: 4.6, senate: 4.4, gothic: 4.4, library: 4.8, arcade: 4.4, sahel: 4.2, medicine: 3.8, hostel: 3.2, shophouse: 3.6, deco: 4.2, barn: 4.5, stand: 6 };
   if (B.style === "stall" || B.style === "kiosk") return 2.6;
   if (B.style === "house" || B.style === "gatehouse") return 4;
   return (perFloor[B.style] ?? 3.5) * B.floors + 2;
@@ -203,6 +203,7 @@ export function buildBuilding(ctx: BuildCtx, B: Building): void {
     case "barn": barn(s, B, rng, ctx); break;
     case "stand": stand(s, B, ctx); break;
     case "boathouse": boathouse(s, B); break;
+    case "theatre": theatre(s, B, rng, ctx); break;
   }
   if (B.style !== "busstop") ctx.col.add({ kind: "box", x: B.x, z: B.z, hx: B.w / 2, hz: B.d / 2, rot: B.rot, h: buildingHeight(B) });
 }
@@ -654,3 +655,47 @@ function boathouse(s: Site, B: Building): void {
 }
 
 export type { V3 };
+
+/**
+ * A lecture theatre (the Twin Theatres are two of these, mirror images across
+ * the lawn): a tall brick hall whose roof rises towards the back like the raked
+ * seats inside, a deep portico of round columns, a glazed foyer and the name
+ * over the entrance (swapped by tradition, says the story).
+ */
+function theatre(s: Site, B: Building, rng: Rng, ctx: BuildCtx): void {
+  const { w, d } = B, H = 8.5;
+  const BRICK: RGBA = hex("#c46a4a"), CON: RGBA = hex("#e9e2d2");
+  s.at(0, 0).tint(CON).box("stone", 0, 0, 0, w + 0.3, 0.7, d + 0.3, 4);
+  s.at(0, 0).tint(BRICK).box("brick", 0, 0.7, -1, w, H - 0.7, d - 2, 2, ["bottom"]);
+  // The roof slopes up towards the back (the raked seating), with a concrete fascia.
+  const back = s.at(0, -d / 2 + 1);
+  back.tint(BRICK).box("brick", 0, H, 0, w, 3.2, 2, 2);
+  for (let k = 0; k < 8; k++) {
+    const z = -d / 2 + 2 + k * ((d - 3) / 8);
+    const y = H + 3.2 * (1 - k / 8);
+    s.at(0, z + (d - 3) / 16).tint(CON).box("plaster", 0, H, 0, w + 0.4, y - H + 0.05, (d - 3) / 8 + 0.02, 3);
+  }
+  s.at(0, 0).tint(CON).box("plaster", 0, H + 0.02, d / 2 - 1.4, w + 0.6, 0.6, 2.4, 3);
+  // Portico: six columns and a deep canopy over glass doors.
+  const fb = s.face("front", w, d);
+  fb.tint(CON).box("plaster", 0, 5.6, 1.6, w - 2, 0.6, 3.4, 3);
+  const c = Math.cos(B.rot), sn = Math.sin(B.rot);
+  for (let k = 0; k < 6; k++) {
+    const lx = -w / 2 + 2.4 + k * ((w - 4.8) / 5), lz = d / 2 + 3;
+    fb.tint(CON).cylinder("stone", lx, 0.7, 3.0, 0.38, 0.34, 4.9, 12);
+    ctx.col.add({ kind: "circle", x: B.x + lx * c + lz * sn, z: B.z - lx * sn + lz * c, r: 0.4, h: 6 });
+  }
+  fb.tint(hex("#2c3e4a", 255)).box("trim", 0, 0.7, -0.92, w - 4, 4.6, 0.1);
+  for (let x = -w / 2 + 3; x <= w / 2 - 3; x += 1.6) fb.tint(TRIM).box("trim", x, 0.7, -0.84, 0.08, 4.6, 0.08);
+  windowAt(s.at(-w / 4, d / 2 - 0.9), 0, 1.4, { w: 2.2, h: 2.8, lit: 0.6, rng, frame: TRIM });
+  windowAt(s.at(w / 4, d / 2 - 0.9), 0, 1.4, { w: 2.2, h: 2.8, lit: 0.6, rng, frame: TRIM });
+  door(s.at(0, d / 2 - 0.9), 0, 2.6, 3, hex("#3b2a1e"));
+  // A paved apron under the portico, flush with the paths (no steps to sink into).
+  fb.tint(hex("#d8d0bf")).box("stone", 0, 0, 2.2, w - 1.2, 0.035, 4.4, 2);
+  // Tall slot windows down the sides.
+  for (const f of ["left", "right"] as const) {
+    const fs = s.face(f, w, d);
+    for (let z = -d / 2 + 3; z < d / 2 - 3; z += 2.6) windowAt(fs, z, 2, { w: 0.5, h: 5.2, lit: 0.4, rng, frame: CON });
+  }
+  if (B.sign) signBoard(s.at(0, d / 2 + 3.32), ctx.signs, B.sign, 0, 6.0, 6.4, 0.8, 0.02);
+}

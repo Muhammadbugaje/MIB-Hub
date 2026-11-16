@@ -119,7 +119,7 @@ describe("heights: nothing sinks, nothing shimmers", () => {
     expect(surfaceHeight(-60, 2)).toBe(Y.road); // Ring Road tarmac
     expect(surfaceHeight(0, -176 + 12)).toBe(Y.path); // quad path
     expect(surfaceHeight(12, 0)).toBe(Y.ring); // roundabout
-    expect(surfaceHeight(-75, -160)).toBe(0); // open grass
+    expect(surfaceHeight(-75, -130)).toBe(0); // open grass
   });
 });
 

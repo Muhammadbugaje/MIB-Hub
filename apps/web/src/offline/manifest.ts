@@ -83,9 +83,9 @@ export const LEGACY_EXTRAS: Record<string, string[]> = {
  * they load at run time. Their code in /_astro/ is found from the play page.
  *
  * To let Work in Progress opt in later (its build lives in
- * public/play/work-in-progress/):
+ * public/play-files/work-in-progress/):
  *
- *   "work-in-progress": { title: "Work in Progress", files: ["/play/work-in-progress/"] },
+ *   "work-in-progress": { title: "Work in Progress", files: ["/play-files/work-in-progress/"] },
  *
  * (Check first that no file in that folder is 25 MiB or more.)
  */

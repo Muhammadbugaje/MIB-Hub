@@ -94,7 +94,7 @@ export const lanes: { pts: P2[]; kinds: ("car" | "keke" | "okada")[] }[] = [
 
 export type Style =
   | "senate" | "gothic" | "library" | "arcade" | "sahel" | "medicine" | "hostel"
-  | "shophouse" | "house" | "gatehouse" | "stall" | "kiosk" | "busstop" | "deco" | "barn" | "stand" | "boathouse";
+  | "shophouse" | "house" | "gatehouse" | "stall" | "kiosk" | "busstop" | "deco" | "barn" | "stand" | "boathouse" | "theatre";
 
 export interface Building {
   style: Style;
@@ -117,10 +117,48 @@ const FACE_N = PI, FACE_S = 0, FACE_E = PI / 2, FACE_W = -PI / 2;
 /** Fictional shop names (never real brands). */
 export const SHOP_NAMES = [
   "Mama Ladi Provisions", "Phone Doctor", "Mama Nkechi's Kitchen", "Fresh Cut Barbers", "Ring Road Cyber & Print",
-  "Sunrise Pharmacy", "Kwari Fabrics", "Bolaji Gadgets", "Halima Tailoring", "Gidan Kwari Bakery",
+  "Sunrise Pharmacy", "Kwari Fabrics", "Bolaji Gadgets", "Alhaji Needle Tailoring", "Gidan Kwari Bakery",
   "Campus Books & Stationery", "Zobo & Kunu Spot", "Sabo Electricals", "Blessed Hands Salon", "Iya Basira Buka",
-  "Golden Grill Shawarma", "Arewa Spices", "Smart Plug Repairs", "Kano Leatherworks", "Corner Shop 24/7",
+  "Golden Grill Shawarma", "Arewa Spices", "Smart Plug Repairs", "Kano Leatherworks", "KB's Corner Shop",
 ];
+
+/** The Twin Theatres (Engineering), west of the quad. */
+export const THEATRES = { yamma: { x: -82, z: -146 }, gabas: { x: -82, z: -196 } };
+
+/**
+ * Story places outside buildings (Missions 1-10). Each has a reserved rectangle
+ * that trees, bushes and the far tree line keep out of, so nothing grows
+ * through a bench, a fence or a football court.
+ */
+export const PLACES = {
+  /** The Spot food court, in front of the Student Centre. */
+  spot: { x: -21, z: -84, hx: 7, hz: 9 },
+  /** Mai Shayi's tea bench under a neem tree, outside Giginya Hall. */
+  maiShayi: { x: -96, z: -104, hx: 4, hz: 3.5 },
+  /** The Sculpture Garden with the girl feeding fish at the pond. */
+  sculpture: { x: -32, z: -113, hx: 22, hz: 7 },
+  pond: { x: -24, z: -116, r: 3.4 },
+  /** The fenced Engineering Garden with the coil. */
+  engGarden: { x: -78, z: -226, hx: 8, hz: 6 },
+  /** The basketball court between the hostels and the gate. */
+  court: { x: -80, z: -57, hx: 14, hz: 7.5 },
+  /** The theatre lawn between the Twin Theatres (matriculation). */
+  theatreLawn: { x: -82, z: -171, hx: 10, hz: 13 },
+  /** The teaching hospital garden (tap, neem, bench, lamp), beside A&E. */
+  hospitalGarden: { x: 95, z: -104, hx: 4.5, hz: 4 },
+  /** The farm gate fence in front of the barn, and the old kola tree behind it. */
+  farm: { x: 62, z: -258, hx: 18, hz: 1.2 },
+  kola: { x: 60, z: -286, hx: 4, hz: 3 },
+};
+
+/** Rectangles kept clear of trees and bushes (the places above, with a margin). */
+export const reserved: { x: number; z: number; hx: number; hz: number }[] = [
+  ...[PLACES.spot, PLACES.maiShayi, PLACES.sculpture, PLACES.engGarden, PLACES.court, PLACES.theatreLawn, PLACES.hospitalGarden, PLACES.farm, PLACES.kola].map((r) => ({ x: r.x, z: r.z, hx: r.hx + 2.5, hz: r.hz + 2.5 })),
+];
+
+export function inReserved(x: number, z: number, margin = 0): boolean {
+  return reserved.some((r) => Math.abs(x - r.x) < r.hx + margin && Math.abs(z - r.z) < r.hz + margin);
+}
 
 function buildPlan(): Building[] {
   const rng = makeRng(1406);
@@ -145,6 +183,9 @@ function buildPlan(): Building[] {
   add({ style: "barn", x: 62, z: -272, rot: FACE_S, w: 34, d: 16, floors: 2, tone: 0, sign: "Faculty of Agriculture" });
   add({ style: "stand", x: -160, z: -253, rot: FACE_S, w: 46, d: 9, floors: 1, tone: 0 });
   add({ style: "boathouse", x: 140, z: -122, rot: FACE_E, w: 9, d: 7, floors: 1, tone: 0 });
+  // The Twin Theatres: identical, facing each other across the theatre lawn (their signs are swapped by tradition).
+  add({ style: "theatre", x: THEATRES.yamma.x, z: THEATRES.yamma.z, rot: FACE_N, w: 22, d: 16, floors: 2, tone: 0, sign: "Theatre Yamma" });
+  add({ style: "theatre", x: THEATRES.gabas.x, z: THEATRES.gabas.z, rot: FACE_S, w: 22, d: 16, floors: 2, tone: 0, sign: "Theatre Gabas" });
 
   // Bus stop on the campus side of the Ring Road.
   add({ style: "busstop", x: 46, z: -11.5, rot: FACE_S, w: 7, d: 2.4, floors: 1, tone: 0 });
@@ -224,6 +265,11 @@ export const walkLines: P2[][] = [
   [[-15.5, CLOCK.z], [-27, -152]], [[15.5, CLOCK.z], [27, -152]],
   [[-27, -200], [-42, -212], [-42, -252], [-50, -261]], [[27, -200], [42, -212], [42, -252], [52, -262]], [[-42, -252], [42, -252]],
   [[107, -122], [128, -112], [134, -100]], [[-100, -160], [-100, -188], [-118, -188]],
+  // Story paths: round the theatre lawn, to the Engineering Garden, the court and the hospital garden.
+  [[-100, -171], [-93, -171], [-82, -171], [-71, -171], [-64, -171]], [[-82, -160], [-82, -171]], [[-82, -171], [-82, -182]],
+  [[-100, -188], [-100, -212], [-78, -214], [-60, -214], [-42, -212]],
+  [[-100, -92], [-96, -74], [-82, -66], [-60, -52], [-26, -62.5], [-12.5, -59], [-12.5, -47], [-SW, GATE_Z]],
+  [[92, -84], [96, -96], [98, -104]],
   // Avenue south sidewalks and Market Street.
   [[-SW, 18.1], [-SW, MARKET_Z - SW]], [[SW, 18.1], [SW, MARKET_Z - SW]],
   [[-SW, MARKET_Z + SW], [-SW, 160]], [[SW, MARKET_Z + SW], [SW, 160]],
@@ -267,6 +313,12 @@ export const pathSurfaces: { line: P2[]; width: number; kind: "laterite" | "pavi
   { line: [[-42, -252], [42, -252]], width: 3, kind: "paving" },
   { line: [[107, -122], [128, -112], [134, -100]], width: 2.2, kind: "paving" },
   { line: [[-100, -160], [-100, -188], [-118, -188]], width: 2.2, kind: "paving" },
+  { line: [[-100, -171], [-64, -171]], width: 2.4, kind: "paving" },
+  { line: [[-82, -160], [-82, -182]], width: 2.4, kind: "paving" },
+  { line: [[-100, -188], [-100, -212], [-78, -214], [-60, -214], [-42, -212]], width: 2.2, kind: "paving" },
+  { line: [[-100, -92], [-96, -74], [-82, -66]], width: 2.2, kind: "laterite" },
+  { line: [[-60, -52], [-26, -62.5], [-12.5, -59], [-12.5, -47], [-8, -44.6]], width: 2.2, kind: "laterite" },
+  { line: [[92, -84], [96, -96], [98, -104]], width: 2, kind: "paving" },
   // A worn short cut across the grass (red earth accent, deliberately).
   { line: [[-42, -232], [-70, -238], [-98, -228]], width: 1.4, kind: "laterite" },
 ];
@@ -294,6 +346,8 @@ export const pavedAreas: { x: number; z: number; hx: number; hz: number }[] = [
   { x: 75, z: 42, hx: 44, hz: 9 },
   { x: 0, z: MARKET_Z + 10.8, hx: 165, hz: 2.2 },
   { x: 0, z: CLOCK.z, hx: 0, hz: 0 },
+  // The basketball court's slab.
+  { x: -80, z: -57, hx: 14, hz: 7.5 },
 ];
 
 /** The campus lake (an ellipse), with a pier from the west shore. */
@@ -314,6 +368,7 @@ export const lawns: { x: number; z: number; hx: number; hz: number }[] = [
   { x: -32, z: -112, hx: 25, hz: 8 },
   { x: 32, z: -112, hx: 25, hz: 8 },
   { x: 0, z: -26, hx: 200, hz: 14 },
+  { x: -82, z: -171, hx: 10, hz: 13 },
 ];
 
 /** Flower beds (campus). */
@@ -370,6 +425,7 @@ function plantTrees(): TreeSpot[] {
   const out: TreeSpot[] = [];
   const add = (kind: TreeKind, x: number, z: number, scale = rng.range(0.85, 1.2)) => {
     if (kind !== "far" && (nearRoad(x, z, 4.2) || insideBuilding(x, z, 1.2) || inLake(x, z, 3) || inStadium(x, z, 2))) return;
+    if (inReserved(x, z, kind === "far" ? 6 : 1)) return;
     out.push({ kind, x, z, scale, rot: rng.range(0, 2 * PI) });
   };
   // Neem along the campus verge of the Ring Road.
@@ -409,6 +465,8 @@ function plantTrees(): TreeSpot[] {
     const a = rng.range(0, 2 * PI), r = rng.range(250, 380);
     add("far", Math.cos(a) * r, Math.sin(a) * r * 0.9 - 40, rng.range(1.2, 2.4));
   }
+  // Story trees, placed by hand inside reserved places: Mai Shayi's neem and the hospital garden's neem.
+  out.push({ kind: "neem", x: -91.6, z: -100.6, scale: 1.12, rot: 0.7 }, { kind: "neem", x: 92.4, z: -108.2, scale: 1.0, rot: 2.1 });
   return out;
 }
 
@@ -424,10 +482,11 @@ export const bushes: { x: number; z: number; s: number }[] = (() => {
   for (let i = 0; i < 160; i++) {
     const x = rng.range(-180, 180), z = rng.range(-240, -50);
     if (Math.abs(x) < 34 && z < -140) continue;
-    if (Math.abs(x) < 12 || inLake(x, z, 2) || inStadium(x, z, 2) || insideBuilding(x, z, 1)) continue;
+    if (Math.abs(x) < 12 || inLake(x, z, 2) || inStadium(x, z, 2) || insideBuilding(x, z, 1) || inReserved(x, z, 0.5)) continue;
     out.push({ x, z, s: rng.range(0.6, 1.3) });
   }
   for (let i = 0; i < 50; i++) out.push({ x: rng.range(-170, 170), z: rng.range(-40, -18), s: rng.range(0.7, 1.2) });
+  // The hedge has a gap where the court path reaches the gate.
   return out;
 })();
 

@@ -3,21 +3,28 @@
  * menu with the look picker, the in-game HUD (name, clock, controls hint,
  * camera mode), and the cutscene layer (letterbox, subtitles, fades, Skip).
  */
-import type { CutsceneUi } from "./cutscene.ts";
-import { CLOTH, FEMALE_MODELS, HAIR, type Look, MALE_MODELS, SKIN_TONES } from "../world/people.ts";
+import type { Look } from "../world/people.ts";
 
 export const GAME_NAME = "Work in Progress";
+
+/** Lines from the story for the loading screen (nothing that spoils the mysteries). */
+const LORE = [
+  "\"Sit. Tea first, gist second.\" (Mai Shayi Audu)",
+  "The Amana Clock says 6:06. It has said 6:06 for a very long time.",
+  "\"You have eaten? Don't lie to me.\" (Mama Nkechi)",
+  "Every fresher goes to the wrong Twin Theatre once.",
+  "\"Network.\" (Mr. Clement, Bursary)",
+  "\"Four passports.\" (Mrs. Adebayo, Registry)",
+  "Garri wants cold water. Hot water makes eba.",
+  "\"Pass! Is the ball your inheritance?\" (Coach Danladi)",
+  "\"I don't sell products. I sell advantages.\" (Mubarak)",
+];
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", text = ""): HTMLElementTagNameMap[K] => {
   const e = document.createElement(tag);
   if (cls) e.className = cls;
   if (text) e.textContent = text;
   return e;
-};
-
-const MODEL_LABEL: Record<string, string> = {
-  casual: "Tee and jeans", hoodie: "Hoodie", business: "Suit", man: "Casual", manlong: "Long sleeves", mansuit: "Formal", farmer: "Overalls",
-  animwoman: "Casual", womandress: "Dress", womancasual: "Tee",
 };
 
 export function defaultLook(): Look {
@@ -34,7 +41,7 @@ export function loadLook(): Look {
   return defaultLook();
 }
 
-function saveLook(l: Look): void {
+export function saveLook(l: Look): void {
   try {
     localStorage.setItem("wip-look", JSON.stringify(l));
   } catch {
@@ -42,7 +49,7 @@ function saveLook(l: Look): void {
   }
 }
 
-export class Hud implements CutsceneUi {
+export class Hud {
   readonly root: HTMLElement;
   private loading: HTMLElement;
   private bar: HTMLElement;
@@ -58,6 +65,7 @@ export class Hud implements CutsceneUi {
   private skip = el("button", "wip-skip", "Skip ›");
   private toast = el("div", "wip-toast");
   private toastTimer = 0;
+  private tipTimer = 0;
 
   constructor(host: HTMLElement) {
     this.root = el("div", "wip-ui");
@@ -69,7 +77,15 @@ export class Hud implements CutsceneUi {
     this.bar = el("div", "wip-progress__bar");
     track.append(this.bar);
     this.loadMsg = el("p", "wip-loading__msg", "Laying the roads…");
-    card.append(track, this.loadMsg);
+    const tip = el("p", "wip-loading__tip", LORE[Math.floor(Math.random() * LORE.length)]!);
+    card.append(track, this.loadMsg, tip);
+    this.tipTimer = window.setInterval(() => {
+      tip.style.opacity = "0";
+      setTimeout(() => {
+        tip.textContent = LORE[Math.floor(Math.random() * LORE.length)]!;
+        tip.style.opacity = "1";
+      }, 400);
+    }, 4200);
     this.loading.append(card);
 
     this.hud = el("div", "wip-hud");
@@ -79,7 +95,7 @@ export class Hud implements CutsceneUi {
     this.mode = el("div", "wip-mode", "");
     this.stats = el("div", "wip-stats", "");
     const hint = el("div", "wip-hint");
-    hint.innerHTML = "<b>WASD</b> move · <b>Shift</b> run · <b>drag</b> look · <b>wheel</b> zoom · <b>C</b> showcase · <b>T</b> time speed · <b>N</b> day/night · <b>M</b> sound · <b>H</b> hide";
+    hint.innerHTML = "<b>WASD</b> move · <b>Shift</b> run · <b>drag</b> look · <b>E</b> talk / use / doors · <b>1-3</b> reply · <b>J</b> journal · <b>T</b> time · <b>M</b> sound · <b>H</b> hide";
     this.hud.append(brand, this.clock, this.mode, hint, this.stats);
     this.hud.hidden = true;
     this.sub.hidden = true;
@@ -93,6 +109,7 @@ export class Hud implements CutsceneUi {
   }
 
   hideLoading(): void {
+    clearInterval(this.tipTimer);
     this.loading.classList.add("is-gone");
     setTimeout(() => this.loading.remove(), 700);
   }
@@ -148,94 +165,5 @@ export class Hud implements CutsceneUi {
       e.stopPropagation();
       onSkip();
     };
-  }
-
-  /* ---- the start menu with the look picker */
-  menu(onPlay: (look: Look, opts: { voices: boolean; sound: boolean; skipIntro: boolean }) => void): void {
-    const look = loadLook();
-    const m = el("div", "wip-menu");
-    const card = el("div", "wip-menu__card");
-    card.append(el("h1", "wip-title", GAME_NAME), el("p", "wip-tag", "Freshers' week. Make yourself at home."));
-    const sect = (title: string) => {
-      const s = el("div", "wip-pick");
-      s.append(el("h2", "", title));
-      card.append(s);
-      return s;
-    };
-    const chips = (host: HTMLElement, values: string[], get: () => string, set: (v: string) => void, label?: (v: string) => string) => {
-      const row = el("div", "wip-chips");
-      const draw = () => {
-        row.innerHTML = "";
-        for (const v of values) {
-          const b = el("button", `wip-chip${label ? " wip-chip--text" : ""}`, label ? label(v) : "");
-          b.type = "button";
-          if (!label) b.style.background = v;
-          b.setAttribute("aria-pressed", String(get() === v));
-          b.setAttribute("aria-label", label ? label(v) : v);
-          b.onclick = () => {
-            set(v);
-            saveLook(look);
-            refreshAll();
-          };
-          row.append(b);
-        }
-      };
-      host.append(row);
-      return draw;
-    };
-    const female = () => FEMALE_MODELS.includes(look.model);
-    const drawers: (() => void)[] = [];
-    const refreshAll = () => drawers.forEach((d) => d());
-    const who = sect("You are");
-    drawers.push(chips(who, ["m", "f"], () => (female() ? "f" : "m"), (v) => {
-      look.model = v === "f" ? "womancasual" : "casual";
-      if (v === "m" && look.headwear === "hijab") look.headwear = "none";
-    }, (v) => (v === "f" ? "A young woman" : "A young man")));
-    const style = sect("Style");
-    const styleRow = el("div");
-    style.append(styleRow);
-    drawers.push(() => {
-      styleRow.innerHTML = "";
-      const models = female() ? FEMALE_MODELS : MALE_MODELS.filter((k) => k !== "farmer");
-      chips(styleRow, models, () => look.model, (v) => (look.model = v), (v) => MODEL_LABEL[v] ?? v)();
-    });
-    drawers.push(chips(sect("Skin"), SKIN_TONES, () => look.skin, (v) => (look.skin = v)));
-    drawers.push(chips(sect("Top"), CLOTH.slice(0, 14), () => look.outfit[0] ?? "", (v) => (look.outfit[0] = v)));
-    drawers.push(chips(sect("Trousers / skirt"), CLOTH.slice(2, 16), () => look.outfit[1] ?? "", (v) => (look.outfit[1] = v)));
-    drawers.push(chips(sect("Hair"), HAIR, () => look.hair, (v) => (look.hair = v)));
-    const headSect = sect("Head");
-    const headRow = el("div");
-    headSect.append(headRow);
-    drawers.push(() => {
-      headRow.innerHTML = "";
-      const opts = female() ? ["none", "hijab"] : ["none", "cap"];
-      chips(headRow, opts, () => look.headwear, (v) => (look.headwear = v as Look["headwear"]), (v) => ({ none: "Nothing", hijab: "Hijab", cap: "Cap" })[v] ?? v)();
-      if (look.headwear !== "none") chips(headRow, CLOTH.slice(0, 14), () => look.headwearColor, (v) => (look.headwearColor = v))();
-    });
-    refreshAll();
-    const opts = el("div", "wip-opts");
-    const check = (label: string, on: boolean) => {
-      const l = el("label", "wip-check");
-      const i = el("input");
-      i.type = "checkbox";
-      i.checked = on;
-      l.append(i, document.createTextNode(label));
-      opts.append(l);
-      return i;
-    };
-    const sound = check("Sound", true);
-    const voices = check("Spoken lines (computer voice)", true);
-    const skipIntro = check("Skip the opening film", false);
-    card.append(opts);
-    const play = el("button", "wip-play", "Play");
-    play.type = "button";
-    play.onclick = () => {
-      saveLook(look);
-      m.remove();
-      onPlay(look, { voices: voices.checked, sound: sound.checked, skipIntro: skipIntro.checked });
-    };
-    card.append(play, el("p", "wip-small", "Early build: what you see is the first map slice. Missions, interiors and voices come next."));
-    m.append(card);
-    this.root.append(m);
   }
 }

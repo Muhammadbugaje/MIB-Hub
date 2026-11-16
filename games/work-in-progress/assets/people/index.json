@@ -4,7 +4,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -98,7 +103,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -176,7 +186,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -262,7 +277,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -348,7 +368,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -426,7 +451,12 @@
   "clips": [
    "idle",
    "walk",
-   "run"
+   "run",
+   "wave",
+   "interact",
+   "hit",
+   "punch",
+   "fall"
   ],
   "slots": [
    {
@@ -489,7 +519,12 @@
    "idle",
    "walk",
    "run",
-   "sit"
+   "sit",
+   "clap",
+   "punch",
+   "jump",
+   "stand",
+   "fall"
   ],
   "slots": [
    {
@@ -584,7 +619,12 @@
    "idle",
    "walk",
    "run",
-   "sit"
+   "sit",
+   "clap",
+   "punch",
+   "jump",
+   "stand",
+   "fall"
   ],
   "slots": [
    {
@@ -647,7 +687,12 @@
    "idle",
    "walk",
    "run",
-   "sit"
+   "sit",
+   "clap",
+   "punch",
+   "jump",
+   "stand",
+   "fall"
   ],
   "slots": [
    {
@@ -726,7 +771,12 @@
    "idle",
    "walk",
    "run",
-   "sit"
+   "sit",
+   "clap",
+   "punch",
+   "jump",
+   "stand",
+   "fall"
   ],
   "slots": [
    {

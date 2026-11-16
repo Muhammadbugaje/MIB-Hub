@@ -2,13 +2,15 @@
  * Work in Progress: the new open-world campus game (PlayCanvas).
  *
  * The game is built separately (games/work-in-progress, `npm run build:wip`)
- * into static files under public/play/work-in-progress/. This module shows
+ * into static files under public/play-files/work-in-progress/ (not
+ * public/play/work-in-progress/: a static folder at the same path as the play
+ * page would shadow the page on Cloudflare). This module shows
  * it inside the play page in an iframe, so its engine and assets load only
  * when someone opens the game, and reports plays to the site's tracker.
  */
 import type { GameModule } from "./contract.ts";
 
-export const WIP_URL = "/play/work-in-progress/index.html";
+export const WIP_URL = "/play-files/work-in-progress/index.html";
 
 function sessionId(): string {
   const a = new Uint8Array(12);

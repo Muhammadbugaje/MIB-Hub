@@ -4,20 +4,21 @@ Every third-party file shipped with the game is listed here (plan rule 10: no as
 
 | File(s) | What | Author | Source | Licence | Changes we made |
 |---|---|---|---|---|---|
-| `people/casual.glb` | Casual Character | Quaternius | https://poly.pizza/m/kZ3DmIoGip | CC0 1.0 | Merged into one mesh, palette-mapped (recoloured per person), clips cut to idle/walk/run, stride measured |
+| `people/casual.glb` | Casual Character | Quaternius | https://poly.pizza/m/kZ3DmIoGip | CC0 1.0 | Merged into one mesh, palette-mapped (recoloured per person), clips cut to idle/walk/run plus wave/interact/hit/punch/fall (16 Nov: for cutscenes), stride measured |
 | `people/hoodie.glb` | Hoodie Character | Quaternius | https://poly.pizza/m/gKLBoRsyKe | CC0 1.0 | as above |
 | `people/business.glb` | Business Man | Quaternius | https://poly.pizza/m/JFrLIKqvCH | CC0 1.0 | as above |
 | `people/farmer.glb` | Farmer | Quaternius | https://poly.pizza/m/7pn3R6hPvE | CC0 1.0 | as above |
 | `people/animwoman.glb` | Animated Woman | Quaternius | https://poly.pizza/m/qJ2gsTUBHL | CC0 1.0 | as above |
 | `people/womandress.glb` | Animated Woman (dress) | Quaternius | https://poly.pizza/m/nIItLV9nxS | CC0 1.0 | as above |
 | `people/man.glb` | Man | Quaternius | https://poly.pizza/m/fjHyMd5Wxw | CC0 1.0 | as above, plus the sit clip (riders) |
-| `people/manlong.glb` | Man in Long Sleeves | Quaternius | https://poly.pizza/m/DLptRuewTn | CC0 1.0 | as above, plus sit |
-| `people/mansuit.glb` | Man in Suit | Quaternius | https://poly.pizza/m/mQnGoME1ez | CC0 1.0 | as above, plus sit |
-| `people/womancasual.glb` | Woman Casual | Quaternius | https://poly.pizza/m/jpKRgGDxhk | CC0 1.0 | as above, plus sit |
+| `people/manlong.glb` | Man in Long Sleeves | Quaternius | https://poly.pizza/m/DLptRuewTn | CC0 1.0 | as above, plus sit, clap, punch, jump, stand, fall (16 Nov: for cutscenes) |
+| `people/mansuit.glb` | Man in Suit | Quaternius | https://poly.pizza/m/mQnGoME1ez | CC0 1.0 | as above, plus sit, clap, punch, jump, stand, fall (16 Nov: for cutscenes) |
+| `people/womancasual.glb` | Woman Casual | Quaternius | https://poly.pizza/m/jpKRgGDxhk | CC0 1.0 | as above, plus sit, clap, punch, jump, stand, fall (16 Nov: for cutscenes) |
 | `cars/car1.glb` | Car | Quaternius | https://poly.pizza/m/unqqkULtRU | CC0 1.0 | Merged into one mesh, palette-mapped (body colour per car, glowing lights) |
 | `cars/car2.glb` | Car | Quaternius | https://poly.pizza/m/Cz6yDaUcM9 | CC0 1.0 | as above |
 | `cars/suv.glb` | SUV | Quaternius | https://poly.pizza/m/xsMtZhBkxL | CC0 1.0 | as above |
 | `cars/taxi.glb` | Taxi | Quaternius | https://poly.pizza/m/x43lOScTpN | CC0 1.0 | as above |
+| `fonts/bricolage-800-latin.woff2` | Bricolage Grotesque ExtraBold (latin subset), the display font of the menus | The Bricolage Grotesque Project Authors | https://github.com/ateliertriay/bricolage (via Google Fonts) | SIL OFL 1.1 (`fonts/OFL.txt`) | none (Google Fonts subset) |
 | engine | PlayCanvas Engine 2.23.3 | PlayCanvas Ltd | https://github.com/playcanvas/engine | MIT | none |
 
 The raw downloads are kept outside the repo in `~/Downloads/games-files/assets-raw/polypizza/`. The licences were checked on each model's Poly Pizza page on 16 Nov 2026; every model says "Public Domain (CC0)". `tools/pack-character.ts` rebuilds the game files from the raw downloads.

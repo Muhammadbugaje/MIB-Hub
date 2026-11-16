@@ -15,6 +15,7 @@ import * as pc from "playcanvas";
 import { Builder, MeshData, type RGBA } from "../gfx/builder.ts";
 import { SH } from "../gfx/materials.ts";
 import type { Rng } from "../sim/rng.ts";
+import { Rig, type GestureName } from "./rig.ts";
 
 export const HUMAN_HEIGHT = 1.74;
 
@@ -65,8 +66,11 @@ const hexToRgb = (h: string): [number, number, number] => [parseInt(h.slice(1, 3
 /** What each slot of a model is for (skin, hair, eyes, or the n-th clothing colour). */
 export function slotRoles(info: ModelInfo): ("skin" | "skinDark" | "hair" | "brow" | "eye" | "detail" | number)[] {
   let cloth = 0;
+  // The long-dress model's "Red" material is its hair (its bun), not cloth; "Brown" is the dress (checked in screenshots).
+  const dressHair = info.file.startsWith("womandress");
   return info.slots.map((s) => {
     const n = s.name.toLowerCase();
+    if (dressHair && n === "red") return "hair";
     if (n === "skin") return "skin";
     if (n.startsWith("skin")) return "skinDark";
     if (n.startsWith("hair")) return "hair";
@@ -191,13 +195,30 @@ function headwearMeshes(device: pc.GraphicsDevice): { hijab: pc.Mesh; cap: pc.Me
 
 /* ---------------------------------------------------------------- person */
 
+/** Clips that play once and then return to the body's state (idle, walk...). */
+const ONE_SHOT = new Set(["wave", "interact", "hit", "punch", "fall", "jump", "stand", "clap"]);
+
+/** The FORMAT.md `actor.anim` names. */
+export type AnimName =
+  | "sit" | "stand" | "hug" | "wave" | "phone" | "eat" | "look" | "gesture" | "laugh" | "shock" | "point" | "nod" | "shake_head"
+  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "fall" | "hit" | "idle" | "talk" | "sit_floor";
+
+/** Names the missions use that have no real clip yet on any model (procedural fallback today). */
+export const ANIM_FALLBACKS: AnimName[] = ["point", "phone", "write", "eat", "hug", "nod", "shake_head", "gesture", "talk", "shock", "laugh", "facepalm", "cheer", "carry", "kneel", "sleep", "hold_torch", "oath", "horns"];
+
 export class Person {
   readonly root: pc.Entity;
   private model: pc.Entity;
   private anim: pc.AnimComponent;
   private state = "idle";
   readonly cm: CharModel;
+  readonly rig: Rig;
   material: pc.StandardMaterial;
+  /** A one-shot clip in progress: seconds left. */
+  private shotLeft = 0;
+  /** Held pose (sit, kneel...) that walking must not cancel. */
+  held: AnimName | null = null;
+  private moving = 0;
 
   constructor(app: pc.AppBase, cm: CharModel, look: Look, parent: pc.Entity, opts: { shadows?: boolean } = {}) {
     this.cm = cm;
@@ -225,11 +246,9 @@ export class Person {
 
     this.model.addComponent("anim", { activate: true });
     this.anim = this.model.anim!;
-    for (const name of ["idle", "walk", "run", "sit"]) {
-      const t = cm.tracks.get(name);
-      if (t) this.anim.assignAnimation(name, t);
-    }
+    for (const [name, t] of cm.tracks) this.anim.assignAnimation(name, t, undefined, 1, !ONE_SHOT.has(name));
     this.anim.baseLayer?.transition("idle", 0);
+    this.rig = new Rig(this.root, this.model, cm.scale);
 
     if (look.headwear !== "none") this.addHeadwear(app, look);
   }
@@ -273,24 +292,127 @@ export class Person {
     this.root.setLocalEulerAngles(0, (yaw * 180) / Math.PI, 0);
   }
 
+  /** Models whose sit clip reads as sitting on a chair (the "man" base's clip does not, so it uses the rig pose). */
+  get hasSit(): boolean {
+    return this.cm.tracks.has("sit") && this.cm.key !== "man";
+  }
+
+  private go(state: string, blend: number): void {
+    if (state !== this.state && this.anim.baseLayer && (this.cm.tracks.has(state) || state === "idle")) {
+      this.anim.baseLayer.transition(state, blend);
+      this.state = state;
+    }
+  }
+
   /** Pick idle / walk / run from the ground speed and set the play rate so feet do not slide. */
   gait(speed: number, blend = 0.2): void {
+    this.moving = speed;
+    if (this.shotLeft > 0) return;
+    // Walking off releases a held pose (sitting people stand up first).
+    if (this.held && speed > 0.15) this.act("stand");
+    if (this.held) return;
     const cm = this.cm;
     let want = "idle";
     if (speed > 0.15) want = speed > (cm.walkSpeed + cm.runSpeed) / 2 ? "run" : "walk";
-    if (want !== this.state && this.anim.baseLayer) {
-      this.anim.baseLayer.transition(want, blend);
-      this.state = want;
-    }
+    this.go(want, blend);
     this.anim.speed = want === "walk" ? speed / cm.walkSpeed : want === "run" ? speed / cm.runSpeed : 1;
   }
 
+  /** Riders on okadas and kekes: the sit clip (straddling), or the rig's seated pose for rigs without one. */
   pose(name: "sit" | "idle"): void {
-    if (this.state !== name && this.anim.baseLayer) {
-      this.anim.baseLayer.transition(name, 0.25);
-      this.state = name;
-      this.anim.speed = 1;
+    if (name === "sit" && this.cm.tracks.has("sit")) {
+      this.held = "sit";
+      this.go("sit", 0.3);
+      return;
     }
+    if (name === "sit") this.act("sit");
+    else this.act("stand");
+  }
+
+  /**
+   * THE ANIMATION INTERFACE for missions and cutscenes. Play a FORMAT.md
+   * `actor.anim` by name: a real clip where the model has one (wave, clap,
+   * sit, punch...), otherwise the procedural fallback on the rig layer
+   * (point, phone, nod, talk...). When the animation engine brings real
+   * clips for more names, they drop in here (`has(name)` picks the clip)
+   * and no mission changes. ANIM_FALLBACKS lists which names are procedural today.
+   */
+  act(name: AnimName): void {
+    const has = (c: string) => this.cm.tracks.has(c);
+    this.anim.speed = 1;
+    switch (name) {
+      case "sit":
+      case "sit_floor":
+        // Story sitting uses the rig pose for every model, so a seat mark means the same thing for everyone:
+        // the root (feet) stands just in front of the seat, the hips go back over it.
+        this.held = "sit";
+        this.rig.seatHeight = name === "sit_floor" ? 0.06 : 0.46;
+        this.go("idle", 0.3);
+        this.rig.play("sit");
+        return;
+      case "kneel":
+      case "sleep":
+      case "carry":
+      case "phone":
+      case "hold_torch":
+      case "oath":
+        if (name === "kneel" || name === "sleep") this.held = name;
+        this.go("idle", 0.25);
+        this.rig.play(name);
+        return;
+      case "stand":
+      case "idle":
+        if (this.held || this.rig.gesture || this.rig.bodyPose) {
+          this.held = null;
+          this.rig.play(null);
+          this.go(this.moving > 0.15 ? "walk" : "idle", 0.35);
+        }
+        return;
+      case "wave":
+      case "clap":
+      case "punch":
+      case "fall":
+      case "hit":
+        if (has(name)) return this.oneShot(name);
+        if (name === "hit" && has("interact")) return this.oneShot("interact");
+        this.rig.play(name === "fall" || name === "hit" ? "shock" : name === "punch" ? "gesture" : name);
+        return;
+      case "shock":
+        if (has("hit")) return this.oneShot("hit");
+        this.rig.play("shock");
+        return;
+      case "horns":
+        this.rig.play("cheer");
+        return;
+      case "talk":
+        this.rig.play("gesture");
+        return;
+      case "look":
+        return;
+      default:
+        this.rig.play(name as GestureName);
+    }
+  }
+
+  private oneShot(clip: string): void {
+    const t = this.cm.tracks.get(clip);
+    if (!t || !this.anim.baseLayer) return;
+    this.anim.baseLayer.transition(clip, 0.15);
+    this.state = clip;
+    this.shotLeft = Math.max(0.4, t.duration - 0.12);
+  }
+
+  /** Per-frame: one-shot clips return to the body's state; the rig layer applies poses after the clips. */
+  update(dt: number): void {
+    if (this.shotLeft > 0) {
+      this.shotLeft -= dt;
+      if (this.shotLeft <= 0) {
+        this.state = "";
+        if (this.held === "sit" && !this.rig.bodyPose && this.cm.tracks.has("sit")) this.go("sit", 0.25);
+        else this.go(this.moving > 0.15 ? "walk" : "idle", 0.25);
+      }
+    }
+    if (this.anim.enabled && this.root.enabled) this.rig.update(dt);
   }
 
   /** Turn animation evaluation off for far-away people (they keep their last pose). */
@@ -300,6 +422,10 @@ export class Person {
 
   set visible(on: boolean) {
     this.root.enabled = on;
+  }
+
+  get visible(): boolean {
+    return this.root.enabled;
   }
 
   destroy(): void {

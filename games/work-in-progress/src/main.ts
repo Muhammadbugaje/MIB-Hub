@@ -2,21 +2,28 @@
  * Work in Progress: the new open-world campus game (PlayCanvas).
  *
  * Boot order: canvas and engine -> procedural textures and materials -> the
- * static town (ground, roads, buildings, props) -> trees -> sky, birds,
- * leaves -> people and cars (downloaded GLBs) -> the start menu -> the
- * opening cutscene -> free roam.
+ * static town (ground, roads, buildings, campus story places, interiors,
+ * props) -> trees -> sky, birds, leaves -> people and cars (GLBs) -> the
+ * story (Missions 1-10 from docs/plan/missions/Y1.md, built in by the Vite
+ * story plugin) -> the title screen and menu -> play.
  *
- * The loop: a fixed 60 Hz simulation (player, crowd, traffic) with the
- * picture interpolated between steps, so motion is smooth at any frame rate
- * and behaves the same on every device (plan rule D5 / P5).
+ * The loop: a fixed 60 Hz simulation (player, crowd, traffic, the story's
+ * triggers) with the picture interpolated between steps, so motion is smooth
+ * at any frame rate and behaves the same on every device (plan rule D5 / P5).
  *
- * URL options (handy for screenshots and testing):
- *   ?time=17.8     start at 17:48          ?speed=0     freeze the clock (1 = 1 game minute per second)
- *   ?view=aerial   start in a viewpoint (gate, roundabout, street, market, quad, aerial)
- *   ?quality=low   force phone settings    ?intro=0     skip the menu and the opening film
- *   ?shot=1        render a still and expose it as window.__wipShot (for the offscreen screenshot tool)
+ * URL options (testing, screenshots):
+ *   ?time=17.8        start at 17:48           ?speed=0        freeze the clock
+ *   ?view=aerial      a fixed viewpoint        ?quality=low    phone settings
+ *   ?intro=0          skip the menu (free roam, or ?mission=m003&step=2 to jump in)
+ *   ?debug=1          mission select (bottom-left button), specials on/off
+ *   ?specials=jiya,taty,madison                switch special characters on
+ *   ?shot=1           render a still for tools/shot.py; with
+ *     &cut=cut_m001_film_b&at=12               a cutscene at a second
+ *     &mission=m004&step=3&t=4                 a mission step after t seconds
+ *     &menu=title|main|creator|settings|loading the menu screens
  */
 import * as pc from "playcanvas";
+import story from "virtual:wip-story";
 import { makeMaterials, SH } from "./gfx/materials.ts";
 import { clockFace, makeSignAtlas, makeTextures, softDot } from "./gfx/textures.ts";
 import { CollisionWorld, pushOut } from "./sim/collide.ts";
@@ -24,32 +31,40 @@ import { clockText, hemisphereSH, skyAt, type RGB } from "./sim/daynight.ts";
 import { makeRng } from "./sim/rng.ts";
 import type { Obstacle } from "./sim/traffic.ts";
 import { Ambience } from "./game/audio.ts";
-import { Cutscene, type Actor, type PlayerCtx } from "./game/cutscene.ts";
-import { GAME_NAME, Hud, loadLook } from "./game/hud.ts";
-import { Input, type InputState } from "./game/input.ts";
-import { FollowCamera, Player, ShowcaseCamera } from "./game/player.ts";
-import { OPENING, colourName } from "./game/scenes.ts";
+import { GAME_NAME, Hud, loadLook, saveLook } from "./game/hud.ts";
+import { Input } from "./game/input.ts";
+import { ShowcaseCamera } from "./game/player.ts";
+import { Menu, type MenuSettings, loadSettings } from "./game/menu.ts";
+import { Campaign } from "./game/missions/runner.ts";
+import { MISSION_DEFS, setStory } from "./game/missions/scripts.ts";
+import { loadCloud, loadLocal, newProgress, type Progress } from "./game/save.ts";
+import { StoryGame } from "./game/story-game.ts";
 import { buildBuilding } from "./world/buildings.ts";
+import { buildCampus } from "./world/campus.ts";
 import { Crowd } from "./world/crowd-view.ts";
+import { buildInteriors, INTERIOR_SIGNS } from "./world/interiors.ts";
 import { GENERATORS, SHOP_NAMES, SUYA, VIEWPOINTS, buildings } from "./world/layout.ts";
 import { buildNature } from "./world/nature.ts";
-import { FEMALE_MODELS, type Look, Person, loadPeople } from "./world/people.ts";
+import { type Look, Person, loadPeople } from "./world/people.ts";
 import { buildProps, type LightSpot } from "./world/props.ts";
 import { buildGround, buildRoads } from "./world/roads.ts";
 import { Birds, FallingLeaves, Sky, Smoke } from "./world/sky.ts";
 import { StaticWorld } from "./world/static.ts";
-import { surfaceHeight } from "./world/surface.ts";
 import { Traffic, loadCars } from "./world/vehicles.ts";
+import { surfaceHeight as surfaceAt } from "./world/surface.ts";
 
 const params = new URLSearchParams(location.search);
 const num = (k: string, d: number) => (params.has(k) && Number.isFinite(Number(params.get(k))) ? Number(params.get(k)) : d);
 const SHOT = params.get("shot") === "1";
+const DEBUG = params.get("debug") === "1";
 const phone = matchMedia("(pointer: coarse)").matches || Math.min(screen.width, screen.height) < 600;
-const LOW = params.get("quality") === "low" || (phone && params.get("quality") !== "high");
+const settings: MenuSettings = loadSettings();
+const qWant = params.get("quality") ?? settings.quality;
+const LOW = qWant === "low" || (qWant === "auto" && phone);
 
 const Q = LOW
   ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 1024, cascades: 1, shadowDist: 55, npcs: 46, cars: 14, okadas: 10, kekes: 6, birds: 28, leaves: 60, lights: 4 }
-  : { pixelRatio: Math.min(window.devicePixelRatio, 2), shadowRes: 2048, cascades: 2, shadowDist: 90, npcs: 110, cars: 26, okadas: 16, kekes: 10, birds: 45, leaves: 150, lights: 10 };
+  : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 2048, cascades: 2, shadowDist: 90, npcs: qWant === "medium" ? 80 : 110, cars: 26, okadas: 16, kekes: 10, birds: 45, leaves: 150, lights: 10 };
 if (params.has("npcs")) Q.npcs = num("npcs", Q.npcs);
 
 const STEP = 1 / 60;
@@ -57,6 +72,7 @@ const BASE = "./";
 
 async function boot(): Promise<void> {
   const host = document.getElementById("app")!;
+  if (SHOT) document.body.classList.add("wip-shot");
   const canvas = document.createElement("canvas");
   canvas.className = "wip-canvas";
   host.append(canvas);
@@ -69,8 +85,7 @@ async function boot(): Promise<void> {
   app.setCanvasFillMode(pc.FILLMODE_FILL_WINDOW);
   app.setCanvasResolution(pc.RESOLUTION_AUTO);
   app.graphicsDevice.maxPixelRatio = Q.pixelRatio;
-  const onResize = () => app.resizeCanvas();
-  window.addEventListener("resize", onResize);
+  window.addEventListener("resize", () => app.resizeCanvas());
   app.scene.ambientLight = new pc.Color(0, 0, 0);
   app.scene.fog.type = pc.FOG_LINEAR;
   app.scene.fog.start = 70;
@@ -79,12 +94,10 @@ async function boot(): Promise<void> {
   app.scene.lighting.shadowsEnabled = true;
   app.scene.lighting.cookiesEnabled = false;
 
-  // Camera.
   const cam = new pc.Entity("camera");
-  cam.addComponent("camera", { clearColor: new pc.Color(0.6, 0.75, 0.9), farClip: 1400, nearClip: 0.25, fov: 55, toneMapping: pc.TONEMAP_NEUTRAL, gammaCorrection: pc.GAMMA_SRGB });
+  cam.addComponent("camera", { clearColor: new pc.Color(0.6, 0.75, 0.9), farClip: 1400, nearClip: 0.12, fov: 55, toneMapping: pc.TONEMAP_NEUTRAL, gammaCorrection: pc.GAMMA_SRGB });
   app.root.addChild(cam);
 
-  // Sun (and moon at night): one directional light with cascaded soft shadows.
   const sun = new pc.Entity("sun");
   sun.addComponent("light", {
     type: "directional", castShadows: true, shadowResolution: Q.shadowRes, numCascades: Q.cascades, cascadeDistribution: 0.55,
@@ -92,7 +105,6 @@ async function boot(): Promise<void> {
   });
   app.root.addChild(sun);
 
-  // A small pool of real point lights that follow the camera at night (street lamps, the suya fire).
   const pool: pc.Entity[] = [];
   for (let i = 0; i < Q.lights; i++) {
     const e = new pc.Entity("lamp-light");
@@ -104,7 +116,7 @@ async function boot(): Promise<void> {
   await tick();
   hud.progress(0.12, "Painting textures…");
   const tex = makeTextures(app.graphicsDevice, LOW);
-  const signNames = [...SHOP_NAMES, "Giginya Hall", "Kadanya Hall", "Senate Hall", "Faculty of Engineering", "University Library", "Faculty of Arts", "The Spot · Student Centre", "College of Health Sciences", "Welcome · Main Gate"];
+  const signNames = [...SHOP_NAMES, "Giginya Hall", "Kadanya Hall", "Senate Hall", "Faculty of Engineering", "University Library", "Faculty of Arts", "The Spot · Student Centre", "College of Health Sciences", "Welcome · Main Gate", "Theatre Yamma", "Theatre Gabas", ...INTERIOR_SIGNS];
   const signs = makeSignAtlas(app.graphicsDevice, signNames);
   const mats = makeMaterials(app.graphicsDevice, tex, signs.texture, clockFace(app.graphicsDevice));
 
@@ -120,11 +132,12 @@ async function boot(): Promise<void> {
   hud.progress(0.35, "Raising the buildings…");
   for (const b of buildings) buildBuilding({ b: world.b, signs, col }, b);
   const lightSpots: LightSpot[] = buildProps(world.b, signs, col);
-  const stats = world.finalize(app, mats, worldRoot, new Set(["grass", "asphalt", "marking", "paver", "brickpave", "kerb", "laterite", "glass", "signs", "water"]));
+  buildCampus(world.b, signs, col);
+  const interiors = buildInteriors(app, world.b, signs, col);
+  const stats = world.finalize(app, mats, worldRoot, new Set(["grass", "asphalt", "marking", "paver", "brickpave", "kerb", "laterite", "glass", "signs", "water", "daywin", "ilamp"]));
   await tick();
   hud.progress(0.45, "Planting trees…");
   const treeInfo = buildNature(app, mats, worldRoot, col, LOW);
-
   const sky = new Sky(app);
   const birds = new Birds(app, Q.birds);
   const leaves = new FallingLeaves(app, treeInfo, Q.leaves);
@@ -140,105 +153,80 @@ async function boot(): Promise<void> {
   app.root.addChild(crowdRoot);
   const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW);
 
-  // Story actors for the opening.
-  const byKey = (k: string) => people.find((p) => p.key === k) ?? people[0]!;
-  const guard = new Person(app, byKey("manlong"), { model: "manlong", skin: "#5a3a26", hair: "#141010", outfit: ["#7d7350", "#4f4a36"], headwear: "cap", headwearColor: "#4f4a36" }, app.root);
-  const muhammad = new Person(app, byKey("manlong"), { model: "manlong", skin: "#8d5b3c", hair: "#141010", outfit: ["#fbfbf8", "#2b2b2b"], headwear: "none", headwearColor: "#ffffff" }, app.root);
-  const familyCar = new pc.Entity("family-car");
-  {
-    familyCar.addChild(traffic.carEntity("suv", "#2f3c4a"));
-    familyCar.enabled = false;
-    app.root.addChild(familyCar);
-  }
-  guard.visible = false;
-  muhammad.visible = false;
-
+  hud.progress(0.95, "Reading the script…");
+  setStory(story.missions);
+  const ambience = new Ambience();
+  const g = new StoryGame({
+    app, cam, mats, people, col, interiors, hudRoot: hud.root, story,
+    carEntity: (k, c) => traffic.carEntity(k, c),
+    setAmbience: (inside) => ambience.setMuted(inside || settings.soundVolume === 0),
+    letterbox: (on) => hud.letterbox(on),
+    subtitle: (w, t) => hud.subtitle(settings.subtitles ? w : null, t),
+    fadeEl: (a) => hud.fade(a),
+    skipButton: (on, f) => hud.skipButton(on, f),
+    showHud: (on) => hud.showHud(on),
+    toast: (t) => hud.say(t),
+  });
+  g.voice.enabled = settings.voices;
+  const campaign = new Campaign(g, story.missions, DEBUG);
   hud.progress(1, "Ready");
   app.start();
 
   /* ------------------------------------------------------------- state */
-  let hours = num("time", 7.6);
+  g.hours = num("time", 17.4);
   const speeds = [1, 20, 0];
   let speedIdx = params.has("speed") ? Math.max(0, speeds.indexOf(num("speed", 1))) : 0;
   if (params.has("speed") && speeds.indexOf(num("speed", 1)) < 0) speeds[0] = num("speed", 1);
   const input = new Input(host, canvas);
   input.mountTouchUi(hud.root);
-  const ambience = new Ambience();
-  let player: Player | null = null;
-  let follow: FollowCamera | null = null;
   const showcase = new ShowcaseCamera(cam);
-  let mode: "menu" | "cutscene" | "play" | "showcase" = "menu";
-  let cut: Cutscene | null = null;
+  let menu: Menu | null = null;
   let acc = 0;
   let simTime = 0;
   const camPos = new pc.Vec3();
-  const tmp = new pc.Vec3();
   const obstacles: Obstacle[] = [];
-  const sunDirV = new pc.Vec3();
   let lightTimer = 0;
   let fpsT = 0, fpsN = 0;
   let lastEnv = -1;
+  let barkTimer = 8;
+  let playing = false;
 
-  function makePlayer(look: Look): void {
-    const cm = people.find((p) => p.key === look.model) ?? people[0]!;
-    const person = new Person(app, cm, look, app.root);
-    player = new Player(person, col, 11.3, -40.6, Math.PI);
-    follow = new FollowCamera(cam, col);
-  }
+  const specialsFromUrl = () => {
+    const s = (params.get("specials") ?? "").split(",");
+    return { jiya: s.includes("jiya"), taty: s.includes("taty"), madison: s.includes("madison") };
+  };
 
-  function startPlay(): void {
-    mode = "play";
+  function startStory(look: Look, name: string, progress: Progress, opts: { fresh: boolean }): void {
+    saveLook(look);
+    progress.name = name;
+    g.begin(look, progress, specialsFromUrl());
+    g.voice.enabled = settings.voices;
+    g.voice.volume = settings.voiceVolume;
+    g.voice.unlock();
+    g.ui.setMoney(progress.money);
+    g.doorInteractions();
+    playing = true;
     hud.showHud(true);
-    if (player) {
-      player.frozen = false;
-      follow!.reset(player.pos(1, tmp), player.yaw);
-      follow!.yaw = player.yaw;
+    g.ui.setPlaying(true);
+    if (settings.soundVolume > 0) {
+      ambience.start();
+      g.sfxs.start();
+      g.sfxs.setVolume(settings.soundVolume);
     }
-  }
-
-  function playOpening(look: Look, voices: boolean): void {
-    if (!player) return;
-    const female = FEMALE_MODELS.includes(look.model);
-    const ctx: PlayerCtx = { look, female, topColour: colourName(look.outfit[0] ?? "#ffffff"), roommate: female ? "Firdausi" : "Bature" };
-    const actors = new Map<string, Actor>([
-      ["PLAYER", { entity: player.person.root, person: player.person, kind: "person", yaw: 0, x: 0, z: 0 }],
-      ["CAR", { entity: familyCar, kind: "vehicle", yaw: 0, x: 0, z: 0 }],
-      ["GUARD", { entity: guard.root, person: guard, kind: "person", yaw: 0, x: 0, z: 0 }],
-      ["MUHAMMAD", { entity: muhammad.root, person: muhammad, kind: "person", yaw: 0, x: 0, z: 0 }],
-    ]);
-    player.frozen = true;
-    mode = "cutscene";
-    hud.showHud(false);
-    cut = new Cutscene(OPENING, ctx, actors, cam, hud, col, [], voices, (def) => {
-      const [x, , z] = def.end.player;
-      player!.teleport(x, z, def.end.yaw);
-      player!.person.visible = true;
-      familyCar.enabled = false;
-      guard.place(-5.8, surfaceHeight(-5.8, -41.2), -41.2, 0.35);
-      cut = null;
-      startPlay();
-    });
-  }
-
-  function begin(look: Look, opts: { voices: boolean; sound: boolean; skipIntro: boolean }): void {
-    makePlayer(look);
-    if (opts.sound) ambience.start();
-    if (opts.skipIntro) {
-      guard.visible = true;
-      guard.place(-5.8, surfaceHeight(-5.8, -41.2), -41.2, 0.35);
-      startPlay();
-    } else playOpening(look, opts.voices);
+    if (DEBUG) g.ui.debugButton(() => campaign.debugMenu());
+    campaign.onSpecials = (s) => (g.ctx.specials = s);
+    if (opts.fresh) progress.current = null;
+    campaign.start();
   }
 
   /* ------------------------------------------------------------ the loop */
   function environment(dt: number): void {
-    if (mode !== "menu") hours = (hours + (dt * speeds[speedIdx]!) / 60) % 24;
+    if (g.mode !== "menu" && g.mode !== "cut") g.hours = (g.hours + (dt * speeds[speedIdx]!) / 60) % 24;
+    const hours = g.hours;
     const s = skyAt(hours);
     const night = s.night;
-    // Sun by day, moon by night.
     const useMoon = s.elevation < -2;
     const d = useMoon ? s.moonDir : s.sunDir;
-    sunDirV.set(d[0], d[1], d[2]);
     sun.setPosition(0, 0, 0);
     sun.lookAt(-d[0], -d[1], -d[2]);
     sun.rotateLocal(90, 0, 0);
@@ -250,20 +238,22 @@ async function boot(): Promise<void> {
       lc.color = new pc.Color(s.sunColor[0], s.sunColor[1], s.sunColor[2]);
       lc.intensity = s.sunIntensity;
     }
-    // Hemisphere ambient: sky above, warm ground bounce below, a little sun-side warmth.
-    const amb = 0.78 - night * 0.2;
+    const inside = g.isInside;
+    const blackout = ["blackout", "torch", "candle"].includes(g.lightPreset);
+    // Indoors the sky's light comes through windows: less of it; a blackout leaves almost none.
+    const k = blackout ? 0.11 : inside ? 0.55 : 1;
+    const amb = (0.78 - night * 0.2) * k;
     const skyAmb: RGB = [s.skyTop[0] * 0.75 * amb + s.skyHorizon[0] * 0.25 * amb, s.skyTop[1] * 0.75 * amb + s.skyHorizon[1] * 0.25 * amb, s.skyTop[2] * 0.75 * amb + s.skyHorizon[2] * 0.25 * amb];
-    const ground: RGB = [s.groundBounce[0] * 0.9, s.groundBounce[1] * 0.9, s.groundBounce[2] * 0.9];
-    const nightLift: RGB = [0.025 * night, 0.035 * night, 0.07 * night];
-    hemisphereSH([skyAmb[0] + nightLift[0], skyAmb[1] + nightLift[1], skyAmb[2] + nightLift[2]], ground, [s.sunColor[0] * 0.12 * (1 - night), s.sunColor[1] * 0.1 * (1 - night), s.sunColor[2] * 0.08 * (1 - night)], s.sunDir, SH);
-    // Fog matches the sky's horizon so the far edge melts into it.
+    const ground: RGB = [s.groundBounce[0] * 0.9 * k, s.groundBounce[1] * 0.9 * k, s.groundBounce[2] * 0.9 * k];
+    const nightLift: RGB = [0.025 * night * k, 0.035 * night * k, 0.07 * night * k];
+    hemisphereSH([skyAmb[0] + nightLift[0], skyAmb[1] + nightLift[1], skyAmb[2] + nightLift[2]], ground, [s.sunColor[0] * 0.12 * (1 - night) * k, s.sunColor[1] * 0.1 * (1 - night) * k, s.sunColor[2] * 0.08 * (1 - night) * k], s.sunDir, SH);
+    if (inside) lc.intensity *= blackout ? 0 : 1;
     app.scene.fog.color = new pc.Color(s.skyHorizon[0], s.skyHorizon[1], s.skyHorizon[2]);
-    app.scene.fog.start = 110 + (1 - night) * 60;
-    app.scene.fog.end = 520 + (1 - night) * 260;
-    cam.camera!.clearColor = app.scene.fog.color;
-    app.scene.exposure = 1.0 + night * 0.45;
+    app.scene.fog.start = inside ? 400 : 110 + (1 - night) * 60;
+    app.scene.fog.end = inside ? 900 : 520 + (1 - night) * 260;
+    cam.camera!.clearColor = inside ? new pc.Color(0.05, 0.05, 0.06) : app.scene.fog.color;
+    app.scene.exposure = 1.0 + night * 0.45 + (inside && !blackout ? 0.1 : 0);
     sky.update(s, cam.getPosition(), simTime, app.scene.exposure, 0.5);
-    // Windows, lamps and signs glow at night; only update materials when the value changes noticeably.
     const envKey = Math.round(night * 40);
     if (envKey !== lastEnv) {
       lastEnv = envKey;
@@ -271,8 +261,10 @@ async function boot(): Promise<void> {
         n.mat.emissiveIntensity = n.day + (n.night - n.day) * night;
         n.mat.update();
       }
+      const dw = mats.get("daywin");
+      dw.emissiveIntensity = 1.6 * (1 - night) + 0.05;
+      dw.update();
     }
-    // Real lights near the camera.
     lightTimer -= dt;
     const cp = cam.getPosition();
     if (lightTimer <= 0) {
@@ -286,59 +278,92 @@ async function boot(): Promise<void> {
         e.light!.color = new pc.Color(n.l.color[0], n.l.color[1], n.l.color[2]);
       });
     }
-    for (const e of pool) e.light!.intensity = night * 3.2;
+    for (const e of pool) e.light!.intensity = inside ? 0 : night * 3.2;
     hud.setClock(clockText(hours), speeds[speedIdx] === 0 ? "⏸" : speeds[speedIdx]! > 1 ? `×${speeds[speedIdx]}` : "");
-    // Sound: traffic louder near roads, generators at night near the market.
     const nearRoad = Math.max(0, 1 - Math.min(Math.abs(cp.z), Math.abs(cp.x), Math.abs(cp.z - 90)) / 40);
     const nearGen = Math.max(0, ...GENERATORS.map(([x, z]) => 1 - Math.hypot(cp.x - x, cp.z - z) / 45));
-    ambience.update(night, nearRoad, nearGen);
-    // The wind clock for swaying trees and flapping birds.
+    ambience.update(night, inside ? 0 : nearRoad, inside ? 0 : nearGen);
     app.graphicsDevice.scope.resolve("uWindTime").setValue(simTime);
   }
 
-  function simStep(inp: InputState): void {
+  function simStep(inp: ReturnType<Input["read"]>): void {
     simTime += STEP;
     obstacles.length = 0;
-    if (player) obstacles.push({ x: player.x, z: player.z, r: 0.5 });
+    const pl = g.player;
+    if (pl) obstacles.push({ x: pl.x, z: pl.z, r: 0.5 });
+    if (playing) g.storyObstacles(obstacles);
     crowd.obstacles(obstacles);
     traffic.step(STEP, obstacles);
+    crowd.avoid = pl ? [{ x: pl.x, z: pl.z, r: 0.33 }] : [];
+    if (playing) g.storyPeople(crowd.avoid);
     crowd.step(STEP);
-    if (player) {
-      player.step(STEP, mode === "play" ? inp : { ...inp, moveX: 0, moveY: 0 }, follow?.yaw ?? 0);
+    if (playing) {
+      g.step(STEP, inp);
       // Cars are solid: push the player out of any vehicle.
-      for (const v of traffic.vehicles) {
-        if (v.wait > 0 || Math.abs(v.x - player.x) > 4 || Math.abs(v.z - player.z) > 4) continue;
-        const p = pushOut({ kind: "box", x: v.x, z: v.z, hx: v.kind === "car" ? 0.95 : 0.45, hz: v.length / 2, rot: Math.atan2(v.dx, v.dz) }, player.x, player.z, 0.33);
-        if (p) {
-          player.x = p[0];
-          player.z = p[1];
+      if (pl && g.mode === "play") {
+        for (const v of traffic.vehicles) {
+          if (v.wait > 0 || Math.abs(v.x - pl.x) > 4 || Math.abs(v.z - pl.z) > 4) continue;
+          const p = pushOut({ kind: "box", x: v.x, z: v.z, hx: v.kind === "car" ? 0.95 : 0.45, hz: v.length / 2, rot: Math.atan2(v.dx, v.dz) }, pl.x, pl.z, 0.33);
+          if (p) {
+            pl.x = p[0];
+            pl.z = p[1];
+          }
+        }
+        // Crowd people are solid too (a soft push, never a pop).
+        for (const n of crowd.npcs) {
+          const dx = pl.x - n.w.x, dz = pl.z - n.w.z, d = Math.hypot(dx, dz);
+          if (d < 0.62 && d > 1e-4) {
+            pl.x = n.w.x + (dx / d) * 0.62;
+            pl.z = n.w.z + (dz / d) * 0.62;
+          }
         }
       }
     }
   }
 
+  /** Ambient chatter: Year 1 barks from the public packs when you pass people. */
+  function ambientBarks(dt: number): void {
+    if (!playing || g.mode !== "play" || g.isInside) return;
+    barkTimer -= dt;
+    if (barkTimer > 0) return;
+    barkTimer = 9 + Math.random() * 8;
+    const pl = g.player;
+    const near = crowd.npcs.find((n) => Math.hypot(n.w.x - pl.x, n.w.z - pl.z) < 5.5);
+    if (!near) return;
+    const town = pl.z > 8;
+    const packs = town ? ["public_traders", "public_town", "public_riders"] : ["public_freshers", "public_students"];
+    const night = skyAt(g.hours).night > 0.5;
+    const pack = story.barks[packs[Math.floor(Math.random() * packs.length)]!];
+    if (!pack) return;
+    const pool = pack.barks.filter((b) => ["idle", "greet", "night", "heat", "food", "money"].includes(b.category) && (!b.when || (b.when === "night" ? night : false)));
+    const b = pool[Math.floor(Math.random() * pool.length)];
+    if (!b) return;
+    const who = town ? "Trader" : pack.id === "crowd.freshers" ? "Fresher" : "Student";
+    hud.subtitle(settings.subtitles ? who : null, b.text);
+    setTimeout(() => {
+      if (g.mode === "play") hud.subtitle(null, "");
+    }, 3600);
+  }
+
   function onKeys(p: Set<string>): void {
-    if (mode === "cutscene") return;
-    if (p.has("c")) {
-      mode = mode === "showcase" ? "play" : "showcase";
-      hud.setMode(mode === "showcase" ? "Showcase camera · press C to walk again" : "");
-      if (mode === "play" && player && follow) follow.reset(player.pos(1, tmp), player.yaw);
-    }
+    if (!playing || g.mode === "cut") return;
     if (p.has("t")) {
       speedIdx = (speedIdx + 1) % speeds.length;
       hud.say(speeds[speedIdx] === 0 ? "Time paused" : speeds[speedIdx]! > 1 ? `Time ×${speeds[speedIdx]}` : "Time: normal");
     }
-    if (p.has("n")) {
-      hours = hours > 6.2 && hours < 18.3 ? 20.5 : 9;
-      hud.say(hours > 12 ? "Night" : "Morning");
-    }
-    if (p.has("[")) hours = (hours + 23) % 24;
-    if (p.has("]")) hours = (hours + 1) % 24;
     if (p.has("m")) {
-      ambience.setMuted(!ambience.muted);
-      hud.say(ambience.muted ? "Sound off" : "Sound on");
+      const m = !ambience.muted;
+      ambience.setMuted(m);
+      g.sfxs.setMuted(m);
+      g.voice.enabled = !m && settings.voices;
+      hud.say(m ? "Sound off" : "Sound on");
     }
     if (p.has("h")) hud.toggleHud();
+    if (p.has("j")) {
+      if (g.ui.sheetOpen) g.ui.closeSheet();
+      else campaign.journal();
+    }
+    if (DEBUG && p.has("f2")) campaign.debugMenu();
   }
 
   app.on("update", (rawDt: number) => {
@@ -356,22 +381,16 @@ async function boot(): Promise<void> {
     const alpha = acc / STEP;
     camPos.copy(cam.getPosition());
     crowd.render(alpha, camPos.x, camPos.z);
-    if (player && mode !== "cutscene") player.render(alpha);
-
-    if (mode === "cutscene" && cut) {
-      const skip = ["escape", "enter", " ", "tap"].some((k) => inp.pressed.has(k));
-      cut.update(dt, skip);
-    } else if (mode === "play" && player && follow) {
-      follow.update(dt, inp, player.pos(alpha, tmp), player.speed, player.yaw);
-    } else if (mode === "showcase" || mode === "menu") {
-      showcase.update(dt);
-    }
+    if (playing) g.frame(dt, alpha, inp);
+    else if (menu) menu.update(dt);
+    else showcase.update(dt);
     environment(dt);
-    traffic.render(alpha, skyAt(hours).night, camPos.x, camPos.z);
+    traffic.render(alpha, skyAt(g.hours).night, camPos.x, camPos.z);
+    const out = !g.isInside;
     birds.update(simTime);
-    leaves.update(dt, simTime, camPos.x, camPos.z);
+    if (out) leaves.update(dt, simTime, camPos.x, camPos.z);
     smoke.update(dt, cam);
-
+    ambientBarks(dt);
     fpsT += rawDt;
     fpsN++;
     if (fpsT > 1) {
@@ -380,68 +399,157 @@ async function boot(): Promise<void> {
     }
   });
 
+  /* ------------------------------------------------------- load progress */
+  const local = loadLocal();
+  let progress: Progress = local.ok ? local.progress : newProgress();
+  if (!local.ok && local.reason !== "empty") hud.say(local.message);
+  // A newer cloud save (signed in on the site) wins over this device's.
+  void loadCloud().then((c) => {
+    if (c && c.savedAt > progress.savedAt && !playing) progress = c;
+  });
+
   /* ------------------------------------------------------- screenshots */
-  const view = params.get("view") as keyof typeof VIEWPOINTS | null;
-  if (SHOT && params.has("cut")) {
-    // Screenshot of the opening film at a given second (default look, no voices).
-    hud.hideLoading();
-    const look = loadLook();
-    makePlayer(look);
-    playOpening(look, false);
-    const until = num("cut", 10);
-    for (let t = 0; t < until; t += 1 / 30) app.update(1 / 30);
+  const finishShot = (extra: Record<string, unknown> = {}) => {
     for (let i = 0; i < 3; i++) {
       app.update(1 / 30);
       app.render();
     }
     (window as unknown as { __wipShot: string }).__wipShot = canvas.toDataURL("image/jpeg", 0.92);
-    (window as unknown as { __wipStats: unknown }).__wipStats = { mode, draws: app.stats.drawCalls.total };
+    (window as unknown as { __wipStats: unknown }).__wipStats = { ...stats, draws: app.stats.drawCalls.total, mode: g.mode, place: g.place, ...extra };
     document.title = "SHOT_READY";
+  };
+  // Mission scripts are async: let their promises settle between frames (a plain loop would starve them).
+  const advance = async (secs: number) => {
+    for (let t = 0; t < secs; t += 1 / 30) {
+      app.update(1 / 30);
+      // Microtasks only (offscreen views throttle timers): enough hops for a script to move on.
+      for (let k = 0; k < 8; k++) await Promise.resolve();
+    }
+  };
+
+  // Pose check (tools/shot.py): ?shot=1&pose=man,casual,womandress&anim=sit&yaw=0.6 lines people up on the quad lawn.
+  if (params.has("pose")) {
+    hud.hideLoading();
+    const models = params.get("pose")!.split(",");
+    const anim = (params.get("anim") ?? "idle") as import("./world/people.ts").AnimName;
+    const ps = models.map((k, i) => {
+      const cm = people.find((p) => p.key === k) ?? people[0]!;
+      const look = { model: cm.key, skin: "#a06a46", hair: "#141010", outfit: ["#2a5fa8", "#e0a526", "#2b2b2b", "#f4f1ea", "#a83232"], headwear: "none" as const, headwearColor: "#fff" };
+      const p = new Person(app, cm, look, app.root);
+      p.place(-16 + (i - (models.length - 1) / 2) * 1.3, surfaceAt(-16, -172), -172, num("yaw", 0.4));
+      return p;
+    });
+    g.hours = 11;
+    const t0 = num("t", 2);
+    let started = false;
+    app.on("update", (dt: number) => {
+      if (!started) {
+        started = true;
+        for (const p of ps) p.act(anim);
+      }
+      for (const p of ps) p.update(dt);
+      cam.setPosition(-16 + num("cx", 0), num("cy", 1.2), -172 + num("cz", 3.6));
+      cam.lookAt(-16, num("ly", 0.9), -172);
+    });
+    if (SHOT) {
+      await advance(t0);
+      return finishShot();
+    }
     return;
   }
-  if (SHOT || params.get("intro") === "0" || view) {
+  const view = params.get("view") as keyof typeof VIEWPOINTS | null;
+  if (params.has("menu")) {
     hud.hideLoading();
-    makePlayer(loadLook());
-    guard.visible = true;
-    guard.place(-5.8, surfaceHeight(-5.8, -41.2), -41.2, 0.35);
-    if (params.has("px")) player!.teleport(num("px", 11.3), num("pz", -40.6), num("pyaw", Math.PI));
-    startPlay();
-    const f = follow as FollowCamera | null;
-    if (f && params.has("cyaw")) f.yaw = num("cyaw", Math.PI);
-    if (f && params.has("cdist")) f.dist = num("cdist", 5);
-    if (f && params.has("cpitch")) f.pitch = num("cpitch", 0.3);
-    if (view && VIEWPOINTS[view]) {
-      mode = "showcase";
+    menu = new Menu(host, app, cam, people, settings, progress, { story: story.missions, debug: DEBUG, onPlay: () => undefined });
+    g.hours = num("time", menu.hour);
+    menu.showScreen(params.get("menu") as "title");
+    if (SHOT) {
+      await advance(num("t", 3));
+      menu.freeze();
+      finishShot();
+    }
+    return;
+  }
+  if (params.has("cut") || params.has("mission") || params.get("intro") === "0" || view || SHOT) {
+    hud.hideLoading();
+    // ?look=f: a young woman in a hijab (to check the lines that react to the player).
+    const look: Look = params.get("look") === "f" ? { model: "womancasual", skin: "#b5794f", hair: "#141010", outfit: ["#2f8a4c", "#2b2b2b", "#f4f1ea", "#f4f1ea"], headwear: "hijab", headwearColor: "#5b4ba8" } : loadLook();
+    if (SHOT) progress = newProgress(params.get("name") ?? (["animwoman", "womandress", "womancasual"].includes(look.model) ? "Amina" : "Musa"));
+    startStory(look, progress.name || "Fresher", progress, { fresh: SHOT });
+    if (params.has("cut")) {
+      g.newRun();
+      g.hours = num("time", g.hours);
+      void g.cutscene(params.get("cut")!).catch(() => undefined);
+      if (SHOT) {
+        await advance(num("at", 5));
+        return finishShot({ t: g.director?.t ?? -1, cut: params.get("cut"), cast: g.castState() });
+      }
+    } else if (params.has("mission")) {
+      const def = MISSION_DEFS.find((d) => d.id === params.get("mission"));
+      if (def) {
+        const idx = Math.max(0, def.steps.findIndex((s) => s.n === num("step", def.steps[0]!.n)));
+        void campaign.run(def, idx, idx > 0);
+      }
+      if (SHOT) {
+        await advance(num("t", 3));
+        if (params.has("walk")) {
+          input.hold("w");
+          await advance(num("walk", 2));
+          input.hold("w", false);
+        }
+        if (g.director && params.has("at")) await advance(num("at", 0));
+        return finishShot({ t: g.director?.t ?? -1, objective: g.objective?.text ?? null, mission: campaign.current, x: g.player.x, z: g.player.z, cast: g.castState() });
+      }
+    } else if (view && VIEWPOINTS[view]) {
+      playing = false;
       const v = VIEWPOINTS[view];
-      // Hold the camera still at the viewpoint.
       showcase.update = () => {
         cam.setPosition(v.pos[0], v.pos[1], v.pos[2]);
         cam.lookAt(v.look[0], v.look[1], v.look[2]);
       };
       hud.showHud(params.get("hud") !== "0");
-    }
-    if (SHOT && params.has("walk")) {
-      // Walk forward (optionally running) for N seconds to check the controller and camera.
-      input.hold("w");
-      if (params.get("run") === "1") input.hold("shift");
-      for (let t = 0; t < num("walk", 2); t += 1 / 30) app.update(1 / 30);
-      input.hold("w", false);
-      input.hold("shift", false);
-    }
-    if (SHOT) {
-      // Offscreen browsers may never run requestAnimationFrame: drive frames by hand.
-      for (let i = 0; i < num("frames", 90); i++) {
-        app.update(1 / 30);
-        app.render();
+      if (SHOT) {
+        await advance(num("frames", 90) / 30);
+        return finishShot();
       }
-      (window as unknown as { __wipShot: string }).__wipShot = canvas.toDataURL("image/jpeg", 0.92);
-      (window as unknown as { __wipStats: unknown }).__wipStats = { ...stats, draws: app.stats.drawCalls.total };
-      document.title = "SHOT_READY";
+    } else if (params.has("px")) {
+      g.newRun();
+      g.keepDoors();
+      g.teleport({ pos: [num("px", 0), 0, num("pz", -40)], where: "world" }, num("pyaw", Math.PI));
+      if (params.has("cyaw")) g.follow.yaw = num("cyaw", Math.PI);
+      if (params.has("cdist")) g.follow.dist = num("cdist", 5);
+      if (params.has("cpitch")) g.follow.pitch = num("cpitch", 0.3);
+      if (SHOT) {
+        if (params.has("walk")) {
+          input.hold("w");
+          if (params.get("run") === "1") input.hold("shift");
+          await advance(num("walk", 2));
+          input.hold("w", false);
+          input.hold("shift", false);
+        }
+        await advance(num("frames", 90) / 30);
+        return finishShot();
+      }
     }
     return;
   }
+
+  /* ------------------------------------------------------- the title screen and menu */
   hud.hideLoading();
-  hud.menu((look, opts) => begin(look, opts));
+  menu = new Menu(host, app, cam, people, settings, progress, {
+    story: story.missions,
+    debug: DEBUG,
+    onPlay: (look, name, fresh, replay) => {
+      menu?.dispose();
+      menu = null;
+      if (fresh) progress = { ...newProgress(name), version: progress.version };
+      startStory(look, name, progress, { fresh });
+      const def = replay ? MISSION_DEFS.find((d) => d.id === replay) : null;
+      if (def) void campaign.run(def, 0, false);
+    },
+  });
+  g.hours = menu.hour;
+  menu.showScreen("title");
   document.title = GAME_NAME;
 }
 

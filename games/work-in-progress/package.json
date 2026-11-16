@@ -2,7 +2,7 @@
   "name": "@mib/game-work-in-progress",
   "version": "0.1.0",
   "private": true,
-  "description": "Work in Progress: the new open-world campus game (PlayCanvas). Builds to apps/web/public/play/work-in-progress/.",
+  "description": "Work in Progress: the new open-world campus game (PlayCanvas). Builds to apps/web/public/play-files/work-in-progress/.",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -4,7 +4,7 @@
  * (sidewalk or road) with a spring; animation stops for people far from the
  * camera (simulation LOD, plan §4.7) and they keep their last pose.
  */
-import { buildGraph, makeWalker, stepWalker, type WalkGraph, type Walker } from "../sim/crowd.ts";
+import { buildGraph, makeWalker, separate, stepWalker, type WalkGraph, type Walker } from "../sim/crowd.ts";
 import { damp, dampAngle } from "../sim/motion.ts";
 import type { Obstacle } from "../sim/traffic.ts";
 import type { Rng } from "../sim/rng.ts";
@@ -38,6 +38,9 @@ export class Crowd {
     for (const n of this.npcs) out.push({ x: n.w.x, z: n.w.z, r: 0.4 });
   }
 
+  /** Obstacles the walkers keep clear of (the player, the story cast), set each step. */
+  avoid: { x: number; z: number; r: number }[] = [];
+
   step(dt: number): void {
     for (const n of this.npcs) {
       n.px = n.w.x;
@@ -49,6 +52,8 @@ export class Crowd {
       n.yaw = dampAngle(n.yaw, n.w.yaw, 9, dt);
       n.speed = n.w.moving ? n.w.speed : 0;
     }
+    separate(this.npcs.map((n) => n.w), this.graph, this.avoid, dt);
+    for (const n of this.npcs) if (n.w.idle > 0) n.speed = 0;
   }
 
   render(alpha: number, camX: number, camZ: number): void {

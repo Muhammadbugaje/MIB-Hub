@@ -69,7 +69,55 @@ export function targetSpeed(v: Vehicle, gap: number, path: Path): number {
   return Math.min(byGap, byBend);
 }
 
+/**
+ * Right of way where lanes meet (the roundabout entries, merges): look ahead
+ * 0.4 to 1.6 s at current speeds; if two vehicles would come within touching
+ * distance, the one that is further *behind* the meeting point yields (stops
+ * short) and the other goes. Ties go to the vehicle already turning (on the
+ * ring), then to the lower index. Fixes cars passing through each other where
+ * the ring and an entry lane share space.
+ */
+export function yields(vs: readonly Vehicle[], paths: readonly Path[]): Set<Vehicle> {
+  const out = new Set<Vehicle>();
+  const pa: PathSample = { x: 0, z: 0, dx: 1, dz: 0 }, pb: PathSample = { x: 0, z: 0, dx: 1, dz: 0 };
+  for (let i = 0; i < vs.length; i++) {
+    const a = vs[i]!;
+    if (a.wait > 0) continue;
+    for (let j = i + 1; j < vs.length; j++) {
+      const b = vs[j]!;
+      if (b.wait > 0) continue;
+      const dx = b.x - a.x, dz = b.z - a.z;
+      if (dx * dx + dz * dz > 22 * 22) continue;
+      // Same lane, one behind the other: the gap rule handles it.
+      if (a.path === b.path && a.dx * b.dx + a.dz * b.dz > 0.95) continue;
+      const touch = (a.length + b.length) / 2 * 0.62 + 0.9;
+      let conflict = false;
+      for (const t of [0, 0.4, 0.8, 1.2, 1.6]) {
+        sample(paths[a.path]!, a.s + Math.max(a.speed, 2) * t, pa);
+        sample(paths[b.path]!, b.s + Math.max(b.speed, 2) * t, pb);
+        if (Math.hypot(pa.x - pb.x, pa.z - pb.z) < touch) {
+          conflict = true;
+          break;
+        }
+      }
+      if (!conflict) continue;
+      // Who is further along towards the other?
+      const aAlong = dx * a.dx + dz * a.dz; // how far ahead of a the vehicle b is
+      const bAlong = -dx * b.dx - dz * b.dz; // how far ahead of b the vehicle a is
+      let loser: Vehicle;
+      if (Math.abs(aAlong - bAlong) > 0.5) loser = aAlong > bAlong ? a : b;
+      else {
+        const ta = turnAhead(paths[a.path]!, a.s, 6), tb = turnAhead(paths[b.path]!, b.s, 6);
+        loser = Math.abs(ta - tb) > 0.05 ? (ta > tb ? b : a) : b;
+      }
+      out.add(loser);
+    }
+  }
+  return out;
+}
+
 export function stepTraffic(vs: Vehicle[], paths: Path[], dt: number, obstacles: readonly Obstacle[] = []): void {
+  const give = yields(vs, paths);
   for (const v of vs) {
     const path = paths[v.path]!;
     if (v.wait > 0) {
@@ -78,11 +126,11 @@ export function stepTraffic(vs: Vehicle[], paths: Path[], dt: number, obstacles:
         v.s = 0;
         placeVehicle(v, paths);
         // Only enter when the start of the lane is clear.
-        if (gapAhead(v, vs, obstacles, 12) < 6) v.wait = 0.5;
+        if (gapAhead(v, vs, obstacles, 12) < 6 || vs.some((o) => o !== v && o.wait <= 0 && Math.hypot(o.x - v.x, o.z - v.z) < 6)) v.wait = 0.5;
       }
       continue;
     }
-    const want = targetSpeed(v, gapAhead(v, vs, obstacles), path);
+    const want = give.has(v) ? 0 : targetSpeed(v, gapAhead(v, vs, obstacles), path);
     const rate = want > v.speed ? 2.6 : 7.5; // gentle throttle, firm brakes
     v.speed += Math.max(-rate * dt, Math.min(rate * dt, want - v.speed));
     v.speed = Math.max(0, v.speed);

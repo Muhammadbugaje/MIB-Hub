@@ -7,6 +7,7 @@
 import type { P2 } from "../sim/path.ts";
 import { CLOCK, FAR, GATE_Z, MARKET_Z, RB, lateriteAreas, lawns, pathSurfaces, pavedAreas, plazas, roads } from "./layout.ts";
 import { Y, groundHeight } from "./roads.ts";
+import { INTERIOR_X0, interiorFloorAt } from "./interior-plan.ts";
 
 interface Walk { a: P2; b: P2; inner: number; outer: number }
 
@@ -29,6 +30,11 @@ function segDist(p: P2, a: P2, b: P2): { d: number; inside: boolean } {
 }
 
 export function surfaceHeight(x: number, z: number): number {
+  // Interiors (far east, out of sight): one flat floor.
+  if (x > INTERIOR_X0 - 100) return interiorFloorAt(x, z);
+  // The Senate's portico steps (same numbers as buildings.ts senate()): walk up them, never through them.
+  const st = senateSteps(x, z);
+  if (st > 0) return st;
   const p: P2 = [x, z];
   for (const w of walks) {
     const { d, inside } = segDist(p, w.a, w.b);
@@ -75,3 +81,19 @@ function flatLayer(p: P2): number {
 
 /** Height of the road surface (vehicles' wheels sit exactly here). */
 export const ROAD_Y = Y.road;
+
+/**
+ * Height of the Senate portico steps at (x, z), or 0 off them. Mirrors the five
+ * stacked step boxes built in buildings.ts (portico width 22, depth 7, the
+ * Senate at (0, -226) facing south, 26 deep): box i rises to (i + 1) x 0.24 m.
+ */
+export function senateSteps(x: number, z: number): number {
+  const front = -226 + 13; // the building's front face
+  const oz = front + 3.5; // the portico's centre line
+  let h = 0;
+  for (let i = 0; i < 5; i++) {
+    const cz = oz + 5.7 - 0.45 * i, hz = (9.4 + 0.4 * i) / 2, hx = (28 - 0.4 * i) / 2;
+    if (Math.abs(x) <= hx && Math.abs(z - cz) <= hz) h = Math.max(h, (i + 1) * 0.24);
+  }
+  return h;
+}

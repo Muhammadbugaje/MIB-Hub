@@ -38,6 +38,8 @@ export class Player {
   private safe = { x: 0, z: 0 };
   private stuckFor = 0;
   frozen = false;
+  /** Speed multiplier (Turbo Sneakers 1.45, carrying a crate 0.86). */
+  speedMul = 1;
 
   constructor(public person: Person, private col: CollisionWorld, x: number, z: number, yaw: number) {
     this.x = x;
@@ -79,7 +81,7 @@ export class Player {
         dx /= len;
         dz /= len;
       }
-      const target = mag * (inp.run ? RUN : WALK);
+      const target = mag * (inp.run ? RUN : WALK) * this.speedMul;
       const accel = target > this.speed ? 7 : 9;
       const tvx = dx * target, tvz = dz * target;
       this.vx = damp(this.vx, tvx, accel, dt);

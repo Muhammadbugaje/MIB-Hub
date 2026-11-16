@@ -130,6 +130,11 @@ export function makeMaterials(device: pc.GraphicsDevice, tex: Textures, signs: p
   sign.update();
   night.push({ mat: sign, day: 0, night: 0.55 });
   make("clock", { map: clock, gloss: 0.4, vc: false });
+  // Interiors: window panes that glow with daylight (set each frame from the sky), and ceiling lights (set by the light preset).
+  make("daywin", { color: [0.7, 0.78, 0.85], gloss: 0.9, spec: 1, emissive: [0.82, 0.9, 1], emissiveVC: true });
+  make("ilamp", { color: [1, 1, 1], gloss: 0.5, emissive: [1, 0.95, 0.82], emissiveVC: true });
+  // Story props that glow: the coil, the radio dial, a candle flame.
+  make("glow", { color: [1, 1, 1], gloss: 0.4, emissive: [1, 1, 1], emissiveVC: true });
   make("bark", { map: tex.bark.map, normal: tex.bark.normal, gloss: 0.15, wind: 0.0016, windBase: 1.5 });
   make("leaves", { map: tex.leaves.map, normal: tex.leaves.normal, bump: 0.8, gloss: 0.22, spec: 0.35, wind: 0.0042, windBase: 1.2 });
   make("palm", { map: tex.leaves.map, gloss: 0.25, spec: 0.35, twoSided: true, wind: 0.0016, windBase: 4 });

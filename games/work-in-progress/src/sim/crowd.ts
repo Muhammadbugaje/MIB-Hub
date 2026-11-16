@@ -85,7 +85,7 @@ export function makeWalker(g: WalkGraph, rng: Rng): Walker {
   return w;
 }
 
-function place(w: Walker, g: WalkGraph): void {
+export function place(w: Walker, g: WalkGraph): void {
   const a = g.nodes[w.from]!, b = g.nodes[w.to]!;
   const dx = b[0] - a[0], dz = b[1] - a[1];
   const len = Math.hypot(dx, dz) || 1;
@@ -126,4 +126,60 @@ export function stepWalker(w: Walker, g: WalkGraph, dt: number, rng: Rng, idleCh
     if (rng.chance(0.2)) w.offset = Math.max(-0.9, Math.min(0.9, w.offset + rng.range(-0.4, 0.4)));
   }
   place(w, g);
+}
+
+/**
+ * Keep walkers out of each other (and out of the player and the story cast):
+ * people closer than `gap` slide sideways on their path (their offset), the
+ * way people pass on a pavement; anyone about to walk into an obstacle waits a
+ * moment. Pure, in place, O(n) with a grid.
+ */
+export function separate(ws: Walker[], g: WalkGraph, obstacles: readonly { x: number; z: number; r: number }[], dt: number, gap = 0.72): void {
+  const cell = 2;
+  const grid = new Map<number, Walker[]>();
+  const key = (x: number, z: number) => Math.floor(x / cell) * 73856093 ^ Math.floor(z / cell) * 19349663;
+  for (const w of ws) {
+    const k = key(w.x, w.z);
+    let l = grid.get(k);
+    if (!l) grid.set(k, (l = []));
+    l.push(w);
+  }
+  const normal = (w: Walker): [number, number] => {
+    const a = g.nodes[w.from]!, b = g.nodes[w.to]!;
+    const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz) || 1;
+    return [-dz / L, dx / L];
+  };
+  const nudge = (w: Walker, ox: number, oz: number, amt: number) => {
+    const [nx, nz] = normal(w);
+    const side = ox * nx + oz * nz >= 0 ? 1 : -1;
+    w.offset = Math.max(-1.4, Math.min(1.4, w.offset + side * amt));
+  };
+  for (const w of ws) {
+    const cx = Math.floor(w.x / cell), cz = Math.floor(w.z / cell);
+    for (let i = -1; i <= 1; i++)
+      for (let j = -1; j <= 1; j++) {
+        const l = grid.get((cx + i) * 73856093 ^ (cz + j) * 19349663);
+        if (!l) continue;
+        for (const o of l) {
+          if (o === w) continue;
+          const dx = w.x - o.x, dz = w.z - o.z, d = Math.hypot(dx, dz);
+          if (d >= gap) continue;
+          // Each takes half the correction, sideways (head-on pairs both keep right).
+          const amt = Math.min(0.5, (gap - d) * 0.5 + dt * 0.6);
+          if (d < 1e-3) nudge(w, 1, 0, amt);
+          else nudge(w, dx, dz, amt);
+        }
+      }
+    for (const o of obstacles) {
+      const dx = w.x - o.x, dz = w.z - o.z, d = Math.hypot(dx, dz);
+      const min = o.r + 0.36;
+      if (d >= min + 0.5) continue;
+      nudge(w, dx || 1, dz, Math.min(0.6, (min + 0.5 - d) * 0.6));
+      // About to walk into it: wait a moment.
+      const a = g.nodes[w.from]!, b = g.nodes[w.to]!;
+      const fx = b[0] - a[0], fz = b[1] - a[1];
+      if (d < min + 0.15 && (o.x - w.x) * fx + (o.z - w.z) * fz > 0) w.idle = Math.max(w.idle, 0.5);
+    }
+    place(w, g);
+  }
 }
