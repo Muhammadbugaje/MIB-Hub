@@ -12,7 +12,8 @@ import { join, resolve } from "node:path";
 import { defineConfig, type Plugin } from "vite";
 import { storyPlugin } from "./tools/story-plugin.ts";
 
-const OUT = resolve(__dirname, "../../apps/web/public/play-files/work-in-progress");
+// Workers test unfinished builds in play-files-dev (git-ignored) with WIP_OUT=dev; the demo build in play-files is only replaced on purpose.
+const OUT = resolve(__dirname, process.env.WIP_OUT === "dev" ? "../../apps/web/public/play-files-dev/work-in-progress" : "../../apps/web/public/play-files/work-in-progress");
 
 /** Cloudflare static hosting refuses files of 25 MiB or more: fail the build instead of the deploy. */
 function sizeGuard(): Plugin {

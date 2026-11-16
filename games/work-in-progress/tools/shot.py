@@ -25,7 +25,8 @@ from AppKit import NSApplication  # noqa: E402
 from Foundation import NSMakeRect, NSURL, NSURLRequest  # noqa: E402
 from WebKit import WKWebView, WKWebViewConfiguration, WKWebsiteDataStore  # noqa: E402
 
-BASE = "http://localhost:4321/play-files/work-in-progress/index.html"
+import os as _os
+BASE = "http://localhost:4321/play-files-dev/work-in-progress/index.html" if _os.environ.get("WIP_OUT") == "dev" else "http://localhost:4321/play-files/work-in-progress/index.html"
 
 
 def main():

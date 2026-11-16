@@ -79,3 +79,6 @@ Thumbs.db
 
 # --- Offline-download manifests (rebuilt by apps/web/scripts/offline-manifest.ts before dev and build) ---
 apps/web/public/offline/games/
+
+# Unfinished Work in Progress builds (WIP_OUT=dev); never deployed.
+apps/web/public/play-files-dev/
