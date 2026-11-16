@@ -216,5 +216,50 @@
     if (S.on && S.how === "real") leave("browser");
   }
 
+  /* ---------- game view lock: a play page is a game, not a web page ----------
+   * iPhone (above all as a home-screen app) treats double taps, pinches and long presses as page gestures:
+   * it zooms, selects text and opens the copy / look-up menu. On play pages we turn all of that off:
+   * no zoom (viewport + gesture events + double-tap guard), no selection or callout, no long-press menu.
+   * Form fields (inputs, selects, text areas, editable areas) keep working normally. */
+  F.isFormField = function (el) {
+    if (!el || !el.closest) return false;
+    return !!el.closest("input, textarea, select, [contenteditable=''], [contenteditable='true']");
+  };
+  F.lockView = function () {
+    if (F.viewLocked || !doc.documentElement) return;
+    F.viewLocked = true;
+    var vp = doc.querySelector('meta[name="viewport"]');
+    if (!vp) { vp = doc.createElement("meta"); vp.name = "viewport"; doc.head.appendChild(vp); }
+    vp.setAttribute("content", "width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover");
+    var st = doc.createElement("style");
+    st.textContent =
+      "html.mib-game{-webkit-text-size-adjust:100%;text-size-adjust:100%;touch-action:manipulation;overscroll-behavior:none}" +
+      "html.mib-game body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}" +
+      "html.mib-game [data-gm-stage],html.mib-game [data-gm-stage] *,html.mib-game .mib-full,html.mib-game .mib-full *,html.mib-game canvas,html.mib-game iframe,html.mib-game button" +
+      "{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent}" +
+      "html.mib-game [data-gm-stage],html.mib-game .mib-full{touch-action:none}" +
+      "html.mib-game input,html.mib-game textarea,html.mib-game select{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}";
+    doc.head.appendChild(st);
+    doc.documentElement.classList.add("mib-game");
+    var stop = function (e) { if (e.cancelable) e.preventDefault(); };
+    // Pinch zoom (Safari's own gesture events, and two-finger moves everywhere else).
+    ["gesturestart", "gesturechange", "gestureend"].forEach(function (t) { doc.addEventListener(t, stop, { passive: false }); });
+    doc.addEventListener("touchmove", function (e) { if (e.touches && e.touches.length > 1) stop(e); }, { passive: false });
+    // Double-tap zoom: a second tap within 320 ms of the last one is not allowed to become a zoom.
+    var lastTap = 0;
+    doc.addEventListener("touchend", function (e) {
+      var now = Date.now();
+      // Buttons and links are left alone (rapid taps must still count); touch-action stops their zoom.
+      var t = e.target, ui = t && t.closest && t.closest("button, a, [role=button], [data-act]");
+      if (now - lastTap < 320 && !ui && !F.isFormField(e.target)) stop(e);
+      lastTap = now;
+    }, { passive: false });
+    doc.addEventListener("dblclick", function (e) { if (!F.isFormField(e.target)) stop(e); }, { passive: false });
+    // Long press: no copy / look-up / save-image menu, no text selection.
+    doc.addEventListener("contextmenu", function (e) { if (!F.isFormField(e.target)) stop(e); });
+    doc.addEventListener("selectstart", function (e) { if (!F.isFormField(e.target)) stop(e); });
+  };
+  try { if (doc && doc.head) F.lockView(); else root.addEventListener("DOMContentLoaded", F.lockView); } catch { /* never block the game */ }
+
   root.MIBFull = F;
 })(typeof window !== "undefined" ? window : globalThis);

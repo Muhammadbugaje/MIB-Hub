@@ -2,12 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, user-scalable=no" />
+    <script>/* Game view lock (iPhone): no pinch or double-tap zoom, no long-press copy menu. */(function(d){var s=function(e){if(e.cancelable)e.preventDefault()},f=function(t){return t&&t.closest&&t.closest("input,textarea,select")};["gesturestart","gesturechange","gestureend"].forEach(function(t){d.addEventListener(t,s,{passive:false})});d.addEventListener("touchmove",function(e){if(e.touches&&e.touches.length>1)s(e)},{passive:false});d.addEventListener("dblclick",function(e){if(!f(e.target))s(e)},{passive:false});d.addEventListener("contextmenu",function(e){if(!f(e.target))s(e)});d.addEventListener("selectstart",function(e){if(!f(e.target))s(e)})})(document);</script>
     <title>Work in Progress</title>
     <meta name="description" content="An early look at the new campus game on MIB-Hub." />
     <style>
       :root { --ink: #fffaf0; --ink-2: rgba(255, 250, 240, 0.78); --glass: rgba(18, 22, 28, 0.55); --accent: #f2b33d; --accent-2: #e8742c; }
       html, body { margin: 0; height: 100%; background: #0d1014; overflow: hidden; color: var(--ink); font: 15px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; -webkit-user-select: none; user-select: none; touch-action: none; }
+      html, body, canvas, button { -webkit-touch-callout: none; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; -webkit-text-size-adjust: 100%; }
+      input, textarea, select { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
       #app { position: fixed; inset: 0; }
       .wip-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; outline: none; }
       .wip-ui { position: absolute; inset: 0; pointer-events: none; }
