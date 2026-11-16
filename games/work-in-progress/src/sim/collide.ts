@@ -10,10 +10,14 @@ export type Collider =
 
 export class CollisionWorld {
   private cells = new Map<string, Collider[]>();
+  /** Largest query radius that `near` answers exactly (people, cameras, the goat). */
+  static readonly MARGIN = 1;
   constructor(private cell = 16) {}
 
   add(c: Collider): void {
-    const r = c.kind === "circle" ? c.r : Math.hypot(c.hx, c.hz);
+    // Registered in every cell within its reach plus a margin, so a query from
+    // a neighbouring cell (a person standing just across a cell edge) still finds it.
+    const r = (c.kind === "circle" ? c.r : Math.hypot(c.hx, c.hz)) + CollisionWorld.MARGIN;
     for (let gx = Math.floor((c.x - r) / this.cell); gx <= Math.floor((c.x + r) / this.cell); gx++)
       for (let gz = Math.floor((c.z - r) / this.cell); gz <= Math.floor((c.z + r) / this.cell); gz++) {
         const k = `${gx},${gz}`;
@@ -46,21 +50,46 @@ export class CollisionWorld {
 
   /**
    * Camera spring arm: how far along the segment from (ax, ay, az) to (bx, by, bz)
-   * the camera can go (0..1) before it would enter something taller than it.
+   * a sphere of radius r can go (0..1) before it touches a solid. A solid
+   * counts when its top is above the bottom of the sphere; solids without a
+   * height are low walls (1 m), never ignored. The hit is refined by
+   * bisection so the arm length changes smoothly (no stepping).
    */
   clearance(ax: number, ay: number, az: number, bx: number, by: number, bz: number, r = 0.35): number {
-    const steps = 24;
-    let last = 1;
+    const len = Math.hypot(bx - ax, by - ay, bz - az);
+    const steps = Math.max(8, Math.ceil(len / 0.1));
+    let prev = 0;
     for (let i = 1; i <= steps; i++) {
       const t = i / steps;
-      const x = ax + (bx - ax) * t, y = ay + (by - ay) * t, z = az + (bz - az) * t;
-      for (const c of this.near(x, z)) {
-        if ((c.h ?? 0) < y) continue;
-        if (pushOut(c, x, z, r)) return Math.max(0, (i - 1) / steps);
+      if (this.hits(ax + (bx - ax) * t, ay + (by - ay) * t, az + (bz - az) * t, r)) {
+        let lo = prev, hi = t;
+        for (let k = 0; k < 6; k++) {
+          const m = (lo + hi) / 2;
+          if (this.hits(ax + (bx - ax) * m, ay + (by - ay) * m, az + (bz - az) * m, r)) hi = m;
+          else lo = m;
+        }
+        return lo;
       }
-      last = t;
+      prev = t;
     }
-    return last;
+    return 1;
+  }
+
+  /** Is a sphere at (x, y, z) touching any solid (camera checks)? */
+  inside(x: number, y: number, z: number, r: number): boolean {
+    return this.hits(x, y, z, r);
+  }
+
+  private hits(x: number, y: number, z: number, r: number): boolean {
+    // The sphere can overlap colliders listed in neighbouring cells: check the cells it touches.
+    const seen = new Set<Collider>();
+    for (const ox of [-r, r]) for (const oz of [-r, r]) for (const c of this.near(x + ox, z + oz)) {
+      if (seen.has(c)) continue;
+      seen.add(c);
+      if ((c.h ?? 1) < y - r) continue;
+      if (pushOut(c, x, z, r)) return true;
+    }
+    return false;
   }
 
   blocked(x: number, z: number, r: number): boolean {

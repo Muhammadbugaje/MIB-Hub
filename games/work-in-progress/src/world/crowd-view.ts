@@ -4,10 +4,12 @@
  * (sidewalk or road) with a spring; animation stops for people far from the
  * camera (simulation LOD, plan §4.7) and they keep their last pose.
  */
-import { buildGraph, makeWalker, separate, stepWalker, type WalkGraph, type Walker } from "../sim/crowd.ts";
+import { buildGraph, type CrowdSolids, pruneGraph, makeWalker, separate, stepWalker, type WalkGraph, type Walker } from "../sim/crowd.ts";
 import { damp, dampAngle } from "../sim/motion.ts";
 import type { Obstacle } from "../sim/traffic.ts";
 import type { Rng } from "../sim/rng.ts";
+import type { NavGrid } from "../sim/nav.ts";
+import type { P2 } from "../sim/path.ts";
 import { walkLines } from "./layout.ts";
 import { type CharModel, Person, randomLook } from "./people.ts";
 import { surfaceHeight } from "./surface.ts";
@@ -19,8 +21,9 @@ export class Crowd {
   readonly graph: WalkGraph;
   readonly npcs: Npc[] = [];
 
-  constructor(app: pc.AppBase, parent: pc.Entity, models: CharModel[], private rng: Rng, count: number, shadows: boolean) {
-    this.graph = buildGraph(walkLines);
+  /** lines: the walk lines (main.ts passes them routed round every solid thing, sim/crowd.ts clearLines). */
+  constructor(app: pc.AppBase, parent: pc.Entity, models: CharModel[], private rng: Rng, count: number, shadows: boolean, lines: P2[][] = walkLines, nav?: NavGrid) {
+    this.graph = nav ? pruneGraph(buildGraph(lines), nav) : buildGraph(lines);
     for (let i = 0; i < count; i++) {
       const w = makeWalker(this.graph, rng);
       const look = randomLook(rng, models);
@@ -40,6 +43,8 @@ export class Crowd {
 
   /** Obstacles the walkers keep clear of (the player, the story cast), set each step. */
   avoid: { x: number; z: number; r: number }[] = [];
+  /** The map's colliders: side-steps never put a walker inside a wall, a tree or a bench. */
+  solids: CrowdSolids | null = null;
 
   step(dt: number): void {
     for (const n of this.npcs) {
@@ -47,12 +52,12 @@ export class Crowd {
       n.pz = n.w.z;
       n.py = n.y;
       n.pyaw = n.yaw;
-      stepWalker(n.w, this.graph, dt, this.rng);
+      stepWalker(n.w, this.graph, dt, this.rng, 0.12, this.solids ?? undefined);
       n.y = damp(n.y, surfaceHeight(n.w.x, n.w.z), 22, dt);
       n.yaw = dampAngle(n.yaw, n.w.yaw, 9, dt);
       n.speed = n.w.moving ? n.w.speed : 0;
     }
-    separate(this.npcs.map((n) => n.w), this.graph, this.avoid, dt);
+    separate(this.npcs.map((n) => n.w), this.graph, this.avoid, dt, 0.72, this.solids ?? undefined);
     for (const n of this.npcs) if (n.w.idle > 0) n.speed = 0;
   }
 

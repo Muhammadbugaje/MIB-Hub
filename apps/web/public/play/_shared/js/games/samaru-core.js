@@ -321,7 +321,7 @@
     music(); engineSound(); ambience(dt); if (Z.momentTick) Z.momentTick(dt); if (Z.story && Z.story.tick) Z.story.tick(dt); if (Z.intro && Z.intro.on) { Z.intro.tick(dt); return; } if (window.FSLGCoop) FSLGCoop.tick(dt);
     if (Z.mode !== "play") { cam.x += dt * 6; if (cam.x > 500) cam.x = -500; return; }
     if (api.overlayOpen()) return;
-    var mins = S.advance(P, dt), i; if (mins) newDay();
+    var mins = S.advance(P, dt * S.MIN_PER_SEC), i; if (mins) newDay();
     var dk = S.darkness(P.time), tonight = !P.flags.restored ? (P.m.done.m3 || P.m.active === "m4") && (S.hash(P.day, 77) < .5 || /^(m4|m6|m14|m17)$/.test(P.m.active)) : S.hash(P.day, 77) < .3;
     Z.blackout = !!P.flags.nepa || (dk > .6 && tonight && P.flags.light !== P.day && P.flags.light !== P.day - 1);
     me.cool -= dt; me.punch = Math.max(0, me.punch - dt); me.inv = Math.max(0, me.inv - dt); me.boost = Math.max(0, me.boost - dt); me.shield = Math.max(0, me.shield - dt); waveT -= dt;
@@ -356,8 +356,8 @@
   }
   function walk(dt, ix, iy, mag) {
     if (me.fall) { me.cs = me.speed = 0; return; }
-    var run = (api.down("run") || Z.runLock) && S.canSprint(P), sp = (run ? S.FOOT.run : S.FOOT.walk) * S.speedFactor(P) * (me.boost > 0 ? 1.45 : 1), swim = S.inWater(W, me.x, me.y); if (swim) { sp *= .42; P.energy = Math.max(0, P.energy - dt * .3); }
-    ["left", "right", "up", "down"].forEach(function (d) { if (api.double(d) && me.dash <= 0 && P.energy > 4) { me.dash = .2; me.inv = Math.max(me.inv, .3); me.da = { left: Math.PI, right: 0, up: -1.57, down: 1.57 }[d] + (Z.r3 && Z.r3.ready ? Z.r3.yaw + 1.57 : 0); P.energy -= 2; api.sound.sfx("dash"); } });
+    var run = (api.down("run") || Z.runLock) && S.canSprint(P), sp = (run ? S.FOOT.run : S.FOOT.walk) * S.speedFactor(P) * (me.boost > 0 ? 1.45 : 1), swim = S.inWater(W, me.x, me.y); if (swim) { sp *= .42; P.energy = Math.max(0, P.energy - dt * .12); }
+    ["left", "right", "up", "down"].forEach(function (d) { if (api.double(d) && me.dash <= 0 && P.energy > 4) { me.dash = .2; me.inv = Math.max(me.inv, .3); me.da = { left: Math.PI, right: 0, up: -1.57, down: 1.57 }[d] + (Z.r3 && Z.r3.ready ? Z.r3.yaw + 1.57 : 0); P.energy -= 1; api.sound.sfx("dash"); } });
     if (me.dash > 0) { me.dash -= dt; ix = Math.cos(me.da); iy = Math.sin(me.da); mag = 1; sp = 17; }
     /* feet take a moment to get up to speed and to stop; the body keeps drifting the way it was going */
     var cs0 = me.cs || 0, tv = mag > .1 ? sp : 0, cs = me.dash > 0 ? sp : cs0 < tv ? Math.min(tv, cs0 + Math.max(sp, 5) / .25 * dt) : Math.max(tv, Math.min(cs0, sp * 1.15) - Math.max(sp, 6) / .2 * dt);
@@ -386,7 +386,7 @@
     var road = S.onRoad(W, v.x, v.y), flying = me.alt > .05, surf = flying ? 1 : road ? 1 : v.type === "skate" ? .38 : v.type === "plane" ? .75 : .62, ox = v.x, oy = v.y;
     // Run on a bicycle is standing on the pedals (faster, costs energy); on a scooter or okada it is a full-throttle tuck.
     var runK = api.down("run") || Z.runLock; v.sprint = v.type === "bike" && runK && inp.throttle > 0 && P.energy > 6; v.tuck = (v.type === "scooter" || v.type === "okada") && runK && inp.throttle > 0;
-    if (v.sprint) P.energy = Math.max(0, P.energy - dt * 1.4);
+    if (v.sprint) P.energy = Math.max(0, P.energy - dt * .5);
     // Space on a bicycle or skateboard is a hop
     if (hops && Math.abs(v.speed) > 1.5 && api.hit("jump") && !(v.hz > 0)) { v.hvz = v.type === "skate" ? 3.2 : 3.7; v.hz = .001; api.sound.sfx("jump"); }
     if (v.hz > 0) { inp.brake = false; v.hvz -= 11 * dt; v.hz += v.hvz * dt; if (v.hz <= 0) { v.hz = 0; v.hvz = 0; api.sound.sfx("stomp"); api.buzz(25); } }

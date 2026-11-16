@@ -14,6 +14,10 @@ export interface InputState {
   moveX: number;
   moveY: number;
   run: boolean;
+  /** Alt: walk slowly. */
+  walk?: boolean;
+  /** Space held (a short tap is a short hop). */
+  jumpHeld?: boolean;
   lookDX: number;
   lookDY: number;
   zoom: number;
@@ -99,9 +103,19 @@ export class Input {
     this.knobEl = knob;
   }
 
+  /** Touches on menus, panels and form controls belong to the page (tap, scroll), never to the stick or camera. */
+  private static isUi(target: EventTarget | null): boolean {
+    const el = target as HTMLElement | null;
+    return !!el?.closest?.(
+      "button, a, input, select, textarea, label, [role=button], [data-ui], .wip-menu, .mn-screen, .mn-panel, .mn-body, .mn-side, .mn-scrim, .mi-sheet",
+    );
+  }
+
   private touchStart(e: TouchEvent): void {
+    let game = false;
     for (const t of Array.from(e.changedTouches)) {
-      if ((t.target as HTMLElement).closest?.("button, a, .wip-menu")) continue;
+      if (Input.isUi(t.target)) continue;
+      game = true;
       if (t.clientX < window.innerWidth * 0.45 && this.stick.id < 0) {
         this.stick = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY };
         if (this.stickEl) {
@@ -114,11 +128,14 @@ export class Input {
       }
       this.pressedQ.add("tap");
     }
-    e.preventDefault();
+    // Only claim touches that drive the game, so menus and settings can still scroll on phones.
+    if (game) e.preventDefault();
   }
 
   private touchMove(e: TouchEvent): void {
+    let game = false;
     for (const t of Array.from(e.changedTouches)) {
+      if (t.identifier === this.stick.id || t.identifier === this.lookTouch.id) game = true;
       if (t.identifier === this.stick.id) {
         this.stick.x = t.clientX;
         this.stick.y = t.clientY;
@@ -131,7 +148,7 @@ export class Input {
         this.lookTouch.y = t.clientY;
       }
     }
-    e.preventDefault();
+    if (game) e.preventDefault();
   }
 
   private touchEnd(e: TouchEvent): void {
@@ -143,6 +160,11 @@ export class Input {
       }
       if (t.identifier === this.lookTouch.id) this.lookTouch.id = -1;
     }
+  }
+
+  /** A key press for one frame (screenshot scripts: a jump). */
+  tap(key: string): void {
+    this.pressedQ.add(key);
   }
 
   /** Hold a key down (tests and screenshot scripts). */
@@ -172,6 +194,8 @@ export class Input {
     const out: InputState = {
       moveX: mx, moveY: my,
       run: k.has("shift") || this.touchRun || stickFar,
+      walk: k.has("alt"),
+      jumpHeld: k.has(" "),
       lookDX: this.lookX, lookDY: this.lookY, zoom: this.wheel,
       pressed: new Set(this.pressedQ),
     };

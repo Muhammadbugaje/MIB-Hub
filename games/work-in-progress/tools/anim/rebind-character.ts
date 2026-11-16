@@ -30,6 +30,7 @@ import { fileURLToPath } from "node:url";
 import { decodeClipPack } from "../../src/anim/clip.ts";
 import { conj, fromTo, mulQ, norm, rotV, sub, type Q, type V3 } from "../../src/anim/math.ts";
 import { B, BONE_COUNT, BONE_INDEX, MIB_BONES, PARENT, Skeleton, fk } from "../../src/anim/skeleton.ts";
+import { type Mesh, pnSubdivide, smoothNormals } from "../../src/anim/meshops.ts";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const GAME = resolve(HERE, "../..");
@@ -149,174 +150,6 @@ const MAIN_CHILD: Record<string, string> = (() => {
 })();
 
 /* ------------------------------------------------------------------ mesh maths */
-
-interface Mesh {
-  pos: number[]; // xyz
-  uv: number[];
-  joints: number[]; // 4 per vertex (mib indices)
-  weights: number[];
-  idx: number[];
-}
-
-/** Weld by position; area-weighted smooth normals with a crease limit (sharp > 75 degrees stays sharp). */
-function smoothNormals(m: Mesh, creaseDeg = 75): number[] {
-  const n = m.pos.length / 3;
-  const key = (i: number) => `${Math.round(m.pos[i * 3]! * 1e4)},${Math.round(m.pos[i * 3 + 1]! * 1e4)},${Math.round(m.pos[i * 3 + 2]! * 1e4)}`;
-  const group = new Map<string, number[]>();
-  for (let i = 0; i < n; i++) (group.get(key(i)) ?? group.set(key(i), []).get(key(i))!).push(i);
-  const faceN: V3[] = [];
-  const cornerFaces: number[][] = Array.from({ length: n }, () => []);
-  for (let f = 0; f < m.idx.length / 3; f++) {
-    const [a, b, c] = [m.idx[f * 3]!, m.idx[f * 3 + 1]!, m.idx[f * 3 + 2]!];
-    const pa: V3 = [m.pos[a * 3]!, m.pos[a * 3 + 1]!, m.pos[a * 3 + 2]!];
-    const e1 = sub([m.pos[b * 3]!, m.pos[b * 3 + 1]!, m.pos[b * 3 + 2]!], pa), e2 = sub([m.pos[c * 3]!, m.pos[c * 3 + 1]!, m.pos[c * 3 + 2]!], pa);
-    faceN.push([e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0]]); // area-weighted
-    cornerFaces[a]!.push(f);
-    cornerFaces[b]!.push(f);
-    cornerFaces[c]!.push(f);
-  }
-  const cos = Math.cos((creaseDeg * Math.PI) / 180);
-  const out = new Array<number>(n * 3).fill(0);
-  for (const ids of group.values()) {
-    const faces = ids.flatMap((i) => cornerFaces[i]!);
-    for (const i of ids) {
-      const own = cornerFaces[i]!.map((f) => norm(faceN[f]!));
-      const acc: V3 = [0, 0, 0];
-      for (const f of faces) {
-        const fn = norm(faceN[f]!);
-        if (own.length && !own.some((o) => o[0] * fn[0] + o[1] * fn[1] + o[2] * fn[2] > cos)) continue;
-        acc[0] += faceN[f]![0];
-        acc[1] += faceN[f]![1];
-        acc[2] += faceN[f]![2];
-      }
-      const r = norm(acc);
-      out[i * 3] = r[0];
-      out[i * 3 + 1] = r[1];
-      out[i * 3 + 2] = r[2];
-    }
-  }
-  return out;
-}
-
-/**
- * One level of Loop subdivision on the welded surface. Corners keep their
- * own palette UV (one slot per face), skin weights follow the same stencils
- * and are renormalised to the four biggest influences.
- */
-function loopSubdivide(m: Mesh): Mesh {
-  const n = m.pos.length / 3;
-  const key = (i: number) => `${Math.round(m.pos[i * 3]! * 1e4)},${Math.round(m.pos[i * 3 + 1]! * 1e4)},${Math.round(m.pos[i * 3 + 2]! * 1e4)}`;
-  const weld = new Map<string, number>();
-  const wOf = new Int32Array(n);
-  const wFirst: number[] = [];
-  for (let i = 0; i < n; i++) {
-    const k = key(i);
-    let w = weld.get(k);
-    if (w === undefined) {
-      w = wFirst.length;
-      weld.set(k, w);
-      wFirst.push(i);
-    }
-    wOf[i] = w;
-  }
-  const W = wFirst.length;
-  const P = (w: number): V3 => [m.pos[wFirst[w]! * 3]!, m.pos[wFirst[w]! * 3 + 1]!, m.pos[wFirst[w]! * 3 + 2]!];
-  // Skin as sparse maps per welded vertex.
-  const skinOf = (i: number): Map<number, number> => {
-    const s = new Map<number, number>();
-    for (let k = 0; k < 4; k++) {
-      const wt = m.weights[i * 4 + k]!;
-      if (wt > 0) s.set(m.joints[i * 4 + k]!, (s.get(m.joints[i * 4 + k]!) ?? 0) + wt);
-    }
-    return s;
-  };
-  const S = (w: number) => skinOf(wFirst[w]!);
-  const F = m.idx.length / 3;
-  const edges = new Map<string, { a: number; b: number; opp: number[] }>();
-  const ek = (a: number, b: number) => (a < b ? `${a}_${b}` : `${b}_${a}`);
-  const nbr: Set<number>[] = Array.from({ length: W }, () => new Set());
-  for (let f = 0; f < F; f++) {
-    const t = [wOf[m.idx[f * 3]!]!, wOf[m.idx[f * 3 + 1]!]!, wOf[m.idx[f * 3 + 2]!]!];
-    for (let e = 0; e < 3; e++) {
-      const a = t[e]!, b = t[(e + 1) % 3]!, c = t[(e + 2) % 3]!;
-      if (a === b) continue;
-      const k = ek(a, b);
-      let E = edges.get(k);
-      if (!E) edges.set(k, (E = { a, b, opp: [] }));
-      E.opp.push(c);
-      nbr[a]!.add(b);
-      nbr[b]!.add(a);
-    }
-  }
-  const boundary = new Set<number>();
-  for (const E of edges.values()) if (E.opp.length !== 2) {
-    boundary.add(E.a);
-    boundary.add(E.b);
-  }
-  const mix = (parts: [number, number][]): { p: V3; s: Map<number, number> } => {
-    const p: V3 = [0, 0, 0];
-    const s = new Map<number, number>();
-    for (const [w, k] of parts) {
-      const q = P(w);
-      p[0] += q[0] * k; p[1] += q[1] * k; p[2] += q[2] * k;
-      for (const [j, v] of S(w)) s.set(j, (s.get(j) ?? 0) + v * k);
-    }
-    return { p, s };
-  };
-  // New positions of old vertices.
-  const vNew: { p: V3; s: Map<number, number> }[] = [];
-  for (let w = 0; w < W; w++) {
-    if (boundary.has(w)) {
-      const bn = [...nbr[w]!].filter((o) => {
-        const E = edges.get(ek(w, o));
-        return E && E.opp.length !== 2;
-      });
-      if (bn.length === 2) vNew.push(mix([[w, 0.75], [bn[0]!, 0.125], [bn[1]!, 0.125]]));
-      else vNew.push(mix([[w, 1]]));
-      continue;
-    }
-    const nb = [...nbr[w]!];
-    const k = nb.length;
-    const beta = k === 3 ? 3 / 16 : 3 / (8 * k);
-    vNew.push(mix([[w, 1 - k * beta], ...nb.map((o) => [o, beta] as [number, number])]));
-  }
-  // Edge points.
-  const ePt = new Map<string, { p: V3; s: Map<number, number> }>();
-  for (const [k, E] of edges) ePt.set(k, E.opp.length === 2 ? mix([[E.a, 3 / 8], [E.b, 3 / 8], [E.opp[0]!, 1 / 8], [E.opp[1]!, 1 / 8]]) : mix([[E.a, 0.5], [E.b, 0.5]]));
-  // Emit triangles; a vertex is (point id, uv).
-  const out: Mesh = { pos: [], uv: [], joints: [], weights: [], idx: [] };
-  const vmap = new Map<string, number>();
-  const emit = (pid: string, pt: { p: V3; s: Map<number, number> }, u: number, v: number): number => {
-    const k = `${pid}|${u.toFixed(5)},${v.toFixed(5)}`;
-    let i = vmap.get(k);
-    if (i !== undefined) return i;
-    i = out.pos.length / 3;
-    vmap.set(k, i);
-    out.pos.push(...pt.p);
-    out.uv.push(u, v);
-    const top = [...pt.s].sort((a, b) => b[1] - a[1]).slice(0, 4);
-    const tot = top.reduce((s, x) => s + x[1], 0) || 1;
-    for (let j = 0; j < 4; j++) {
-      out.joints.push(top[j]?.[0] ?? 0);
-      out.weights.push((top[j]?.[1] ?? 0) / tot);
-    }
-    return i;
-  };
-  for (let f = 0; f < F; f++) {
-    const c = [m.idx[f * 3]!, m.idx[f * 3 + 1]!, m.idx[f * 3 + 2]!];
-    const w = c.map((i) => wOf[i]!);
-    if (w[0] === w[1] || w[1] === w[2] || w[0] === w[2]) continue;
-    // One palette slot per face: take the first corner's uv for the new edge points.
-    const u = m.uv[c[0]! * 2]!, v = m.uv[c[0]! * 2 + 1]!;
-    const V = c.map((i, j) => emit(`v${w[j]}`, vNew[w[j]!]!, m.uv[i * 2]!, m.uv[i * 2 + 1]!));
-    const E = [0, 1, 2].map((j) => {
-      const k = ek(w[j]!, w[(j + 1) % 3]!);
-      return emit(`e${k}`, ePt.get(k)!, u, v);
-    });
-    out.idx.push(V[0]!, E[0]!, E[2]!, V[1]!, E[1]!, E[0]!, V[2]!, E[2]!, E[1]!, E[0]!, E[1]!, E[2]!);
-  }
-  return out;
-}
 
 /* ------------------------------------------------------------------ GLB out */
 
@@ -517,21 +350,23 @@ export function rebind(buf: Buffer, ref: Skeleton, opts: { subdivide: boolean })
       continue;
     }
     if (/ToeBase$/.test(name)) {
-      // Ball of the foot: forward of the ankle, on the ground (from the mesh's foot vertices).
+      // Ball of the foot: along the reference skeleton's ankle-to-ball direction, down to the sole, so the
+      // re-pose never tilts the foot (a tilted foot lifts the toes off the ground or sinks the heel).
       const ank = have[par]!;
-      const side = name.startsWith("Left") ? 1 : -1;
-      const feet = vpos.filter((v) => v[1] < minY + 0.06 && Math.sign(v[0] - (have[B.Hips]![0])) === side);
-      const front = feet.length ? Math.max(...feet.map((v) => v[2])) : ank[2] + 0.18;
-      have[b] = [ank[0], minY + 0.01, ank[2] + (front - ank[2]) * 0.62];
+      const dir = refDir(par, b);
+      const drop = Math.max(0.03, ank[1] - minY);
+      const len = drop / Math.max(0.2, -dir[1]);
+      have[b] = [ank[0] + dir[0] * len, minY, ank[2] + dir[2] * len];
       continue;
     }
     if (/Toe_End$/.test(name)) {
-      const ank = have[PARENT[par]!]!, ball = have[par]!;
+      const ball = have[par]!;
       const side = name.startsWith("Left") ? 1 : -1;
       const feet = vpos.filter((v) => v[1] < minY + 0.06 && Math.sign(v[0] - have[B.Hips]![0]) === side);
       const front = feet.length ? Math.max(...feet.map((v) => v[2])) : ball[2] + 0.08;
-      have[b] = [ball[0], minY + 0.01, front - 0.01];
-      void ank;
+      const dir = refDir(par, b);
+      const len = Math.max(0.03, (front - 0.01 - ball[2]) / Math.max(0.3, dir[2]));
+      have[b] = [ball[0] + dir[0] * len, minY + dir[1] * len, ball[2] + dir[2] * len];
       continue;
     }
     // Fingers and other chain ends: continue from the parent along the reference direction, with the reference length scaled by the hand size.
@@ -653,6 +488,15 @@ export function rebind(buf: Buffer, ref: Skeleton, opts: { subdivide: boolean })
     const t = rotV(q, 0, p1[b]!);
     ibm.set([R[0]!, R[1]!, R[2]!, 0, R[3]!, R[4]!, R[5]!, 0, R[6]!, R[7]!, R[8]!, 0, -t[0], -t[1], -t[2], 1], b * 16);
   }
+  // The long-dress body paints its hair and its shoes with one material ("Red"): give the hair its own slot.
+  const slotList = ((json.meshes[0]!.extras ?? {}).slots as { name: string; color: number[] }[] | undefined) ?? [];
+  const redSlot = slotList.findIndex((x) => x.name === "Red");
+  if (redSlot >= 0 && slotList.some((x) => x.name === "LimeGreen") && !slotList.some((x) => /hair/i.test(x.name))) {
+    const hairSlot = slotList.length;
+    slotList.push({ name: "Hair", color: slotList[redSlot]!.color });
+    for (let i = 0; i < mesh.pos.length / 3; i++) if (Math.floor(mesh.uv[i * 2]! * 16) === redSlot && mesh.pos[i * 3 + 1]! > HUMAN_HEIGHT * 0.78) mesh.uv[i * 2] = (hairSlot + 0.5) / 16;
+    (json.meshes[0]!.extras ??= {}).slots = slotList;
+  }
   // Fit data for headwear (hijabs sized to each head, neck and shoulders): from the skin, not the hair.
   const slots = ((json.meshes[0]!.extras ?? {}).slots as { name: string }[] | undefined) ?? [];
   const isHair = (i: number) => /hair|brown/i.test(slots[Math.floor(mesh.uv[i * 2]! * 16)]?.name ?? "") && !/eyebrow/i.test(slots[Math.floor(mesh.uv[i * 2]! * 16)]?.name ?? "");
@@ -676,11 +520,13 @@ export function rebind(buf: Buffer, ref: Skeleton, opts: { subdivide: boolean })
     joints: { head: p1[B.Head]!.map((v) => +v.toFixed(4)), neck: p1[B.Neck]!.map((v) => +v.toFixed(4)), spine2: p1[B.Spine2]!.map((v) => +v.toFixed(4)), headTop: p1[B.HeadTop]!.map((v) => +v.toFixed(4)), lArm: p1[B.LArm]!.map((v) => +v.toFixed(4)) },
   };
   const lods: { name: string; mesh: Mesh; nor: number[] }[] = [];
+  // The game builds the close-up LOD (pnSubdivide) and the body morphs at load time from this base mesh.
+  const baseNor = smoothNormals(mesh);
   if (opts.subdivide) {
-    const sub1 = loopSubdivide(mesh);
+    const sub1 = pnSubdivide(mesh, baseNor);
     lods.push({ name: "lod0", mesh: sub1, nor: smoothNormals(sub1) });
   }
-  lods.push({ name: opts.subdivide ? "lod1" : "lod0", mesh, nor: smoothNormals(mesh) });
+  lods.push({ name: opts.subdivide ? "lod1" : "body", mesh, nor: baseNor });
   void mulQ;
   return {
     rest, ibm, lods, extras: { ...(json.meshes[0]!.extras ?? {}), fit },
@@ -697,10 +543,10 @@ function main(): void {
   const index: Record<string, unknown> = {};
   for (const f of readdirSync(SRC).filter((x) => x.endsWith(".glb")).sort()) {
     const key = basename(f, ".glb");
-    const r = rebind(readFileSync(join(SRC, f)), ref, { subdivide: true });
+    const r = rebind(readFileSync(join(SRC, f)), ref, { subdivide: false });
     const bytes = writeGlb(join(OUT, f), r.rest, r.ibm, r.lods, r.extras);
     const sk = new Skeleton(r.rest.rot, r.rest.pos, ref.hipHeight);
-    index[key] = { file: f, slots: oldIndex[key]?.slots ?? r.extras.slots ?? [], height: HUMAN_HEIGHT, hipHeight: +sk.hipHeight.toFixed(4), rig: "mib_rig", fit: r.extras.fit };
+    index[key] = { file: f, slots: r.extras.slots ?? oldIndex[key]?.slots ?? [], height: HUMAN_HEIGHT, hipHeight: +sk.hipHeight.toFixed(4), rig: "mib_rig", fit: r.extras.fit };
     console.log(`${key.padEnd(12)} ${(bytes / 1024).toFixed(0).padStart(5)} KB  hips ${sk.hipHeight.toFixed(3)} m  ${r.report}`);
   }
   writeFileSync(join(OUT, "index.json"), JSON.stringify(index, null, 1));

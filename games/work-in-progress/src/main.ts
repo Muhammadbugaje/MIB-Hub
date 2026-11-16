@@ -27,13 +27,21 @@ import story from "virtual:wip-story";
 import { makeMaterials, SH } from "./gfx/materials.ts";
 import { clockFace, makeSignAtlas, makeTextures, softDot } from "./gfx/textures.ts";
 import { CollisionWorld, pushOut } from "./sim/collide.ts";
+import { clearLines } from "./sim/crowd.ts";
+import { NavGrid } from "./sim/nav.ts";
+import { navWorld } from "./world/nav-world.ts";
+import { doorColliders, doorSpecs } from "./world/door-plan.ts";
+import { Doors } from "./world/door-models.ts";
+import { GrassField } from "./world/grass-field.ts";
+import { FacadeDetail } from "./world/facade-detail.ts";
+import { TreeCards } from "./world/tree-cards.ts";
 import { clockText, hemisphereSH, skyAt, type RGB } from "./sim/daynight.ts";
 import { makeRng } from "./sim/rng.ts";
 import type { Obstacle } from "./sim/traffic.ts";
 import { Ambience } from "./game/audio.ts";
 import { GAME_NAME, Hud, loadLook, saveLook } from "./game/hud.ts";
 import { Input } from "./game/input.ts";
-import { ShowcaseCamera } from "./game/player.ts";
+import { FollowCamera, ShowcaseCamera } from "./game/player.ts";
 import { Menu, type MenuSettings, loadSettings } from "./game/menu.ts";
 import { Campaign } from "./game/missions/runner.ts";
 import { MISSION_DEFS, setStory } from "./game/missions/scripts.ts";
@@ -43,9 +51,9 @@ import { buildBuilding } from "./world/buildings.ts";
 import { buildCampus } from "./world/campus.ts";
 import { Crowd } from "./world/crowd-view.ts";
 import { buildInteriors, INTERIOR_SIGNS } from "./world/interiors.ts";
-import { GENERATORS, SHOP_NAMES, SUYA, VIEWPOINTS, buildings } from "./world/layout.ts";
+import { GENERATORS, SHOP_NAMES, SUYA, VIEWPOINTS, buildings, walkLines } from "./world/layout.ts";
 import { buildNature } from "./world/nature.ts";
-import { type Look, Person, loadPeople, tickPeople } from "./world/people.ts";
+import { ANIM, ANIM_STATS, type Look, Person, loadPeople, tickPeople } from "./world/people.ts";
 import { buildProps, type LightSpot } from "./world/props.ts";
 import { buildGround, buildRoads } from "./world/roads.ts";
 import { Birds, FallingLeaves, Sky, Smoke } from "./world/sky.ts";
@@ -134,6 +142,9 @@ async function boot(): Promise<void> {
   const lightSpots: LightSpot[] = buildProps(world.b, signs, col);
   buildCampus(world.b, signs, col);
   const interiors = buildInteriors(app, world.b, signs, col);
+  // Every door people pass through (entrances, interior exits, room doorways): models and the leaves that stand open.
+  const doorList = doorSpecs(surfaceAt);
+  for (const c of doorColliders(doorList)) col.add(c);
   const stats = world.finalize(app, mats, worldRoot, new Set(["grass", "asphalt", "marking", "paver", "brickpave", "kerb", "laterite", "glass", "signs", "water", "daywin", "ilamp"]));
   await tick();
   hud.progress(0.45, "Planting trees…");
@@ -151,13 +162,30 @@ async function boot(): Promise<void> {
   const traffic = new Traffic(app, mats, cars, people, rng, { car: Q.cars, okada: Q.okadas, keke: Q.kekes });
   const crowdRoot = new pc.Entity("crowd");
   app.root.addChild(crowdRoot);
-  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW);
+  // The crowd walks lines routed round everything solid (the navigation grid, shared with the story).
+  const navGrid = new NavGrid(navWorld(col));
+  const doors = new Doors(app, mats, doorList);
+  // Facade detail near the camera (bands, downpipes, AC units, vents, entrance lamps), dithered in and out.
+  const facade = new FacadeDetail(app, mats, buildings, doorList);
+  // Leaf cards on the crowns near the camera (off on phones).
+  const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
+  // Grass blades round the camera: off on phones, a smaller patch on medium.
+  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 16 : 24, (x, z) => (navGrid.isBaked(x, z) ? navGrid.kindAt(x, z) === "lawn" : null), surfaceAt);
+  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW, clearLines(walkLines, navGrid), navGrid);
+  // The camera never passes through people or vehicles (upright cylinders around them).
+  FollowCamera.moving = () => {
+    const out: { x: number; z: number; r: number; h: number }[] = [];
+    for (const n of crowd.npcs) if (n.p.visible) out.push({ x: n.w.x, z: n.w.z, r: 0.3, h: 1.8 });
+    for (const v of traffic.vehicles) out.push({ x: v.x, z: v.z, r: v.kind === "car" ? 1.2 : 0.7, h: v.kind === "car" ? 1.5 : 1.7 });
+    return out;
+  };
+  crowd.solids = col;
 
   hud.progress(0.95, "Reading the script…");
   setStory(story.missions);
   const ambience = new Ambience();
   const g = new StoryGame({
-    app, cam, mats, people, col, interiors, hudRoot: hud.root, story,
+    app, cam, mats, people, col, nav: navGrid, doors, interiors, hudRoot: hud.root, story,
     carEntity: (k, c) => traffic.carEntity(k, c),
     setAmbience: (inside) => ambience.setMuted(inside || settings.soundVolume === 0),
     letterbox: (on) => hud.letterbox(on),
@@ -169,6 +197,11 @@ async function boot(): Promise<void> {
   });
   g.voice.enabled = settings.voices;
   const campaign = new Campaign(g, story.missions, DEBUG);
+  // ?debug=1&nav=1: start with the navigation overlay on (also in the debug menu).
+  if (DEBUG && params.get("nav") === "1") g.navs.debug = true;
+  // ?follow=1 (screenshots): the player follows whoever is leading them, through doors.
+  if (params.get("follow") === "1") g.shotFollow = true;
+  g.guideOn = () => settings.groundArrows && params.get("arrows") !== "0";
   hud.progress(1, "Ready");
   app.start();
 
@@ -298,6 +331,9 @@ async function boot(): Promise<void> {
     if (playing) g.storyPeople(crowd.avoid);
     crowd.step(STEP);
     if (playing) {
+      // Crowd walkers near the player: the story's walkers (sim/agents.ts) steer round them.
+      g.crowdNear.length = 0;
+      if (pl) for (const n of crowd.npcs) if (Math.abs(n.w.x - pl.x) < 40 && Math.abs(n.w.z - pl.z) < 40) g.crowdNear.push({ x: n.w.x, z: n.w.z, r: 0.3 });
       g.step(STEP, inp);
       // Cars are solid: push the player out of any vehicle.
       if (pl && g.mode === "play") {
@@ -381,6 +417,9 @@ async function boot(): Promise<void> {
     const alpha = acc / STEP;
     camPos.copy(cam.getPosition());
     crowd.render(alpha, camPos.x, camPos.z);
+    grass.update(camPos.x, camPos.z);
+    facade.update(camPos.x, camPos.z);
+    treeCards.update(camPos.x, camPos.z);
     if (playing) g.frame(dt, alpha, inp);
     else if (menu) menu.update(dt);
     else showcase.update(dt);
@@ -392,7 +431,7 @@ async function boot(): Promise<void> {
     smoke.update(dt, cam);
     ambientBarks(dt);
     // Characters: every person's animation, after everything above has placed them (src/anim, crowd LOD).
-    tickPeople(app, dt);
+    tickPeople(app, dt, cam);
     fpsT += rawDt;
     fpsN++;
     if (fpsT > 1) {
@@ -429,7 +468,8 @@ async function boot(): Promise<void> {
     }
   };
 
-  // Pose check (tools/shot.py): ?shot=1&pose=man,casual,womandress&anim=sit&yaw=0.6 lines people up on the quad lawn.
+  // Pose check (tools/shot.py): ?shot=1&pose=man,casual,womandress&anim=sit&yaw=0.6 lines people up on the quad lawn
+  // (&clip=walk_fwd plays a clip id, &speed=5.8 runs the blend space in place, &t= seconds to advance).
   if (params.has("pose")) {
     hud.hideLoading();
     const models = params.get("pose")!.split(",");
@@ -438,6 +478,7 @@ async function boot(): Promise<void> {
       const cm = people.find((p) => p.key === k) ?? people[0]!;
       const look = { model: cm.key, skin: "#a06a46", hair: "#141010", outfit: ["#2a5fa8", "#e0a526", "#2b2b2b", "#f4f1ea", "#a83232"], headwear: "none" as const, headwearColor: "#fff" };
       const p = new Person(app, cm, look, app.root);
+      p.forceLod = params.get("lod") === "1" ? 1 : 0; // full detail (the showcase camera moves before the pose camera each frame)
       p.place(-16 + (i - (models.length - 1) / 2) * 1.3, surfaceAt(-16, -172), -172, num("yaw", 0.4));
       return p;
     });
@@ -447,7 +488,16 @@ async function boot(): Promise<void> {
     app.on("update", (dt: number) => {
       if (!started) {
         started = true;
-        for (const p of ps) p.act(anim);
+        // &clip=<id> plays any clip from the packs (&upper=1 on the upper body); &speed=<m/s> drives the
+        // locomotion blend space in place (feet move as if walking at that speed); otherwise &anim= is a mission anim.
+        for (const p of ps) {
+          if (params.get("rest") === "1") p.showBindPose();
+          else if (params.has("speed")) {
+            p.driven = true;
+            p.anim.input.speed = num("speed", 0);
+          } else if (params.has("clip")) p.play(params.get("clip")!, { hold: true, upper: params.get("upper") === "1", blend: 0.01 });
+          else p.act(anim);
+        }
       }
       for (const p of ps) p.update(dt);
       cam.setPosition(-16 + num("cx", 0), num("cy", 1.2), -172 + num("cz", 3.6));
@@ -455,7 +505,7 @@ async function boot(): Promise<void> {
     });
     if (SHOT) {
       await advance(t0);
-      return finishShot();
+      return finishShot({ anim: ANIM_STATS, clips: ANIM.clips.size, state: ps.map((p) => p.anim.state) });
     }
     return;
   }
@@ -500,7 +550,7 @@ async function boot(): Promise<void> {
           input.hold("w", false);
         }
         if (g.director && params.has("at")) await advance(num("at", 0));
-        return finishShot({ t: g.director?.t ?? -1, objective: g.objective?.text ?? null, mission: campaign.current, x: g.player.x, z: g.player.z, cast: g.castState() });
+        return finishShot({ t: g.director?.t ?? -1, objective: g.objective?.text ?? null, mission: campaign.current, x: g.player.x, z: g.player.z, cast: g.castState(), nav: g.navs.agents.agents.map((a) => ({ x: +a.x.toFixed(2), z: +a.z.toFixed(2), st: a.status, hold: a.hold, stuck: +a.maxStuck.toFixed(1), path: a.path.length, c: a.corner })) });
       }
     } else if (view && VIEWPOINTS[view]) {
       playing = false;
@@ -518,16 +568,37 @@ async function boot(): Promise<void> {
       g.newRun();
       g.keepDoors();
       g.teleport({ pos: [num("px", 0), 0, num("pz", -40)], where: "world" }, num("pyaw", Math.PI));
+      // The campaign's opening sets its own hour: the URL's wins in free roam.
+      if (params.has("time")) g.hours = num("time", g.hours);
+      // &gx=..&gz=..: an objective there (to see the ground arrows).
+      if (params.has("gx")) g.setObjective("Test", "Go here", { pos: [num("gx", 0), 0, num("gz", 0)], where: params.get("gw") ?? "world", label: "here" });
       if (params.has("cyaw")) g.follow.yaw = num("cyaw", Math.PI);
       if (params.has("cdist")) g.follow.dist = num("cdist", 5);
       if (params.has("cpitch")) g.follow.pitch = num("cpitch", 0.3);
       if (SHOT) {
         if (params.has("walk")) {
-          input.hold("w");
+          // &key=d walks across the camera's view (a side view mid-stride); &hold=1 keeps walking for the shot.
+          const key = params.get("key") ?? "w";
+          input.hold(key);
           if (params.get("run") === "1") input.hold("shift");
           await advance(num("walk", 2));
-          input.hold("w", false);
-          input.hold("shift", false);
+          // &then=s&walk2=0.3: switch to another key (a reversal for the run pivot).
+          if (params.has("then")) {
+            input.hold(key, false);
+            input.hold(params.get("then")!);
+            await advance(num("walk2", 0.3));
+          }
+          if (params.get("hold") !== "1") {
+            input.hold(key, false);
+            if (params.has("then")) input.hold(params.get("then")!, false);
+            input.hold("shift", false);
+          }
+        }
+        // &jump=0.3: press Space, keep it held, and take the shot that many seconds later.
+        if (params.has("jump")) {
+          input.tap(" ");
+          input.hold(" ");
+          await advance(num("jump", 0.3));
         }
         await advance(num("frames", 90) / 30);
         return finishShot();

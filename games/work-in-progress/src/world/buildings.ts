@@ -53,12 +53,19 @@ class Site {
 interface WinOpts { w: number; h: number; arch?: boolean; shutters?: RGBA; frame?: RGBA; sill?: boolean; lit: number; rng: Rng; louvre?: boolean }
 
 /** One window on a face-local builder: frame, glass (lit at night by chance), sill, optional arch head and shutters. */
+const CURTAINS: RGBA[] = [[178, 64, 52, 255], [214, 186, 120, 255], [62, 96, 140, 255], [236, 230, 214, 255], [96, 130, 84, 255], [150, 90, 140, 255]];
+
 function windowAt(b: Builder, x: number, y: number, o: WinOpts): void {
   const { w, h } = o;
   const lit = o.rng.chance(o.lit);
   const glassTint: RGBA = lit ? [92, 104, 118, 255] : [70, 86, 104, 0];
   // Dark reveal (gives depth) then glass slightly in front.
   b.tint([46, 44, 42, 255]).box("trim", x, y - 0.05, 0.01, w + 0.1, h + 0.1, 0.02, 1, ["back", "bottom"]);
+  // A room behind the glass: a curtain drawn to one side (seen through the pane up close).
+  if (o.rng.chance(0.7)) {
+    const side = o.rng.chance(0.5) ? -1 : 1, cw = w * o.rng.range(0.25, 0.45);
+    b.tint(o.rng.pick(CURTAINS)).box("cloth", x + side * (w / 2 - cw / 2), y + 0.02, 0.047, cw, h - 0.04, 0.008, 1, ["back"]);
+  }
   b.tint(glassTint).quad("glass", [x - w / 2, y, 0.04], [x + w / 2, y, 0.04], [x + w / 2, y + h, 0.04], [x - w / 2, y + h, 0.04], 1);
   const fr = o.frame ?? TRIM;
   b.tint(fr);
@@ -446,6 +453,11 @@ function hostel(s: Site, B: Building, rng: Rng, tone: RGBA, ctx: BuildCtx): void
   // Central stair tower with breeze-block screen.
   const T = s.at(0, d / 2 + 0.6);
   T.tint(hex("#e9e1cf")).box("plaster", 0, 0, 0, 5, H + 2, 1.4, 3);
+  // The tower is solid (the entrance door is on its front): people and the camera stop at it.
+  {
+    const lz = d / 2 + 0.6, c = Math.cos(B.rot), sn = Math.sin(B.rot);
+    ctx.col.add({ kind: "box", x: B.x + lz * sn, z: B.z + lz * c, hx: 2.5, hz: 0.7, rot: B.rot, h: H + 2 });
+  }
   for (let y = 1; y < H; y += 0.5)
     for (let x = -1.8; x <= 1.8; x += 0.5) T.tint(hex("#d2c7ae")).box("trim", x, y, 0.72, 0.34, 0.34, 0.06);
   door(s.at(0, d / 2 + 1.31), 0, 1.8, 2.5, hex("#2f5f8a"));

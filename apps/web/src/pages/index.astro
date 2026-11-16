@@ -10,6 +10,7 @@
 import FxScene from "../components/FxScene.astro";
 import GameCard from "../components/GameCard.astro";
 import Icon from "../components/Icon.astro";
+import InstallGuide from "../components/public/InstallGuide.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Ticker from "../components/Ticker.astro";
 import { categoryLabel, initials, specialAllowed, toneFor } from "../components/shell/art.ts";
@@ -362,6 +363,9 @@ const quick = faqs.filter((f) => !seen.has(f.category) && seen.add(f.category)).
         </ul>
       </div>
     </section>
+
+    <!-- =========================================================== INSTALL -->
+    <InstallGuide />
 
     <!-- ============================================================== NEWS -->
     {

@@ -5,6 +5,7 @@
  * look at a shop), and keeps a small sideways offset so crowds do not walk in
  * single file. Pure logic.
  */
+import type { NavGrid } from "./nav.ts";
 import type { P2 } from "./path.ts";
 import type { Rng } from "./rng.ts";
 
@@ -85,13 +86,55 @@ export function makeWalker(g: WalkGraph, rng: Rng): Walker {
   return w;
 }
 
-export function place(w: Walker, g: WalkGraph): void {
+/**
+ * The walk lines with every edge that touches something solid (a gate
+ * pillar, the fountain, a bench, a lamp post) replaced by a real path round
+ * it, planned on the navigation grid. Lines that are clear stay exactly as
+ * drawn. Run once at load (only the few blocked edges are searched).
+ */
+export function clearLines(lines: P2[][], nav: NavGrid): P2[][] {
+  return lines.map((raw) => {
+    // Corners that sit on something solid move to the nearest open ground.
+    const line = raw.map((p) => (nav.walkable(p[0], p[1]) ? p : (nav.nearestWalkable(p[0], p[1], 3) as P2 | null) ?? p));
+    const out: P2[] = [line[0]!];
+    for (let i = 1; i < line.length; i++) {
+      const a = line[i - 1]!, b = line[i]!;
+      const p = nav.clear(a, b) ? null : nav.findPath(a, b, { margin: 8, allow: ["lawn", "rough"] });
+      if (!p) out.push(b);
+      else for (let k = 1; k < p.length; k++) out.push(p[k]!);
+    }
+    return out;
+  });
+}
+
+/**
+ * Drop any graph edge that touches something solid (where joining nearby
+ * corners of two routed lines made a short-cut over a corner). Walkers never
+ * take an edge that is not clear.
+ */
+export function pruneGraph(g: WalkGraph, nav: NavGrid): WalkGraph {
+  g.edges.forEach((list, i) => {
+    g.edges[i] = list.filter((j) => nav.clear(g.nodes[i]!, g.nodes[j]!));
+  });
+  return g;
+}
+
+/** Anything solid (sim/collide.ts CollisionWorld): side-steps never put a walker inside it. */
+export interface CrowdSolids { blocked(x: number, z: number, r: number): boolean }
+
+export function place(w: Walker, g: WalkGraph, solids?: CrowdSolids): void {
   const a = g.nodes[w.from]!, b = g.nodes[w.to]!;
   const dx = b[0] - a[0], dz = b[1] - a[1];
   const len = Math.hypot(dx, dz) || 1;
   const nx = -dz / len, nz = dx / len;
-  w.x = a[0] + dx * w.t + nx * w.offset;
-  w.z = a[1] + dz * w.t + nz * w.offset;
+  const cx = a[0] + dx * w.t, cz = a[1] + dz * w.t;
+  // The path's centre line is clear of everything (test/nav.test.ts); a side-step that would
+  // put the walker into a wall, a tree or a bench is pulled back towards the centre.
+  if (solids && w.offset !== 0) {
+    for (let k = 0; k < 6 && solids.blocked(cx + nx * w.offset, cz + nz * w.offset, 0.28); k++) w.offset *= k < 5 ? 0.6 : 0;
+  }
+  w.x = cx + nx * w.offset;
+  w.z = cz + nz * w.offset;
   if (len > 0.01) w.yaw = Math.atan2(dx, dz);
 }
 
@@ -103,7 +146,7 @@ export function nextNode(g: WalkGraph, at: number, prev: number, rng: Rng): numb
   return rng.pick(options);
 }
 
-export function stepWalker(w: Walker, g: WalkGraph, dt: number, rng: Rng, idleChance = 0.12): void {
+export function stepWalker(w: Walker, g: WalkGraph, dt: number, rng: Rng, idleChance = 0.12, solids?: CrowdSolids): void {
   if (w.idle > 0) {
     w.idle -= dt;
     w.moving = false;
@@ -125,7 +168,7 @@ export function stepWalker(w: Walker, g: WalkGraph, dt: number, rng: Rng, idleCh
     if (rng.chance(idleChance)) w.idle = rng.range(2, 9);
     if (rng.chance(0.2)) w.offset = Math.max(-0.9, Math.min(0.9, w.offset + rng.range(-0.4, 0.4)));
   }
-  place(w, g);
+  place(w, g, solids);
 }
 
 /**
@@ -134,7 +177,7 @@ export function stepWalker(w: Walker, g: WalkGraph, dt: number, rng: Rng, idleCh
  * way people pass on a pavement; anyone about to walk into an obstacle waits a
  * moment. Pure, in place, O(n) with a grid.
  */
-export function separate(ws: Walker[], g: WalkGraph, obstacles: readonly { x: number; z: number; r: number }[], dt: number, gap = 0.72): void {
+export function separate(ws: Walker[], g: WalkGraph, obstacles: readonly { x: number; z: number; r: number }[], dt: number, gap = 0.72, solids?: CrowdSolids): void {
   const cell = 2;
   const grid = new Map<number, Walker[]>();
   const key = (x: number, z: number) => Math.floor(x / cell) * 73856093 ^ Math.floor(z / cell) * 19349663;
@@ -180,6 +223,6 @@ export function separate(ws: Walker[], g: WalkGraph, obstacles: readonly { x: nu
       const fx = b[0] - a[0], fz = b[1] - a[1];
       if (d < min + 0.15 && (o.x - w.x) * fx + (o.z - w.z) * fz > 0) w.idle = Math.max(w.idle, 0.5);
     }
-    place(w, g);
+    place(w, g, solids);
   }
 }

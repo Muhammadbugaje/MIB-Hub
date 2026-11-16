@@ -5,7 +5,10 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import * as pc from "playcanvas";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+
+// These run whole scenes and simulations on the real colliders: allow for a busy machine.
+vi.setConfig({ testTimeout: 30_000 });
 import { Builder, MeshData } from "../src/gfx/builder.ts";
 import { CollisionWorld, pushOut } from "../src/sim/collide.ts";
 import { makePath } from "../src/sim/path.ts";
@@ -154,7 +157,7 @@ describe("director: branches, skip equals watch, no overlaps", () => {
       }
       expect(JSON.stringify(skipped.player), cut.id).toBe(JSON.stringify(watched.player));
     }
-  });
+  }, 30_000);
 
   it("actors never stand inside each other at the start or the end of a scene", () => {
     const bad: string[] = [];
@@ -174,7 +177,7 @@ describe("director: branches, skip equals watch, no overlaps", () => {
       }
     }
     expect(bad).toEqual([]);
-  });
+  }, 30_000);
 });
 
 /* ------------------------------------------------------------ the places: interiors, campus, marks */

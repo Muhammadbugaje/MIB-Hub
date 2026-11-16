@@ -176,6 +176,19 @@ export class Campaign {
       row.append(btn);
     }
     s.append(row);
+    // Navigation overlay: the walkable grid round you (red = solid, green = lawn, dark = road),
+    // every walker's planned path (yellow), and each walker's ring (green walking, blue waiting, red stuck).
+    const nrow = document.createElement("div");
+    nrow.className = "row";
+    const nb = document.createElement("button");
+    nb.textContent = `Navigation overlay ${g.navs.debug ? "ON" : "off"}`;
+    if (g.navs.debug) nb.className = "primary";
+    nb.onclick = () => {
+      g.navs.debug = !g.navs.debug;
+      this.debugMenu();
+    };
+    nrow.append(nb);
+    s.append(nrow);
     MISSION_DEFS.forEach((def, i) => {
       const r = document.createElement("div");
       r.className = "row";

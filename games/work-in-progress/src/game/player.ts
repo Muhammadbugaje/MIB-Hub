@@ -1,11 +1,13 @@
 /**
  * The player and the cameras.
  *
- * Player: a kinematic character on the fixed 60 Hz step. Speed eases in and
- * out (no instant starts or stops), the body turns smoothly towards where it
- * is going, it slides along walls (circle against boxes), it steps up kerbs
- * with a short spring (no popping), and the walk/run play rate matches the
- * ground speed (no foot sliding). What you see is interpolated between steps.
+ * Player: the kinematic character controller (sim/controller.ts) driven
+ * through the Locomotor (sim/locomotor.ts) on the fixed 60 Hz step, with the
+ * picture interpolated between steps. Walk by default (2.3 m/s), run with
+ * Shift or the run button (7 m/s), jump with Space (coyote time and a jump
+ * buffer), kerbs and steps without leaving the ground; the animation's feet
+ * are matched to the real ground speed (no sliding). Every number is in
+ * src/anim/feel.ts (the debug menu edits it live).
  *
  * Follow camera: orbit with mouse or touch, critically damped follow, and a
  * spring arm that pulls in before it can enter a building (never clips).
@@ -14,40 +16,81 @@
  * through the map's best views, for showing people.
  */
 import * as pc from "playcanvas";
+import { FEEL } from "../anim/feel.ts";
 import type { CollisionWorld } from "../sim/collide.ts";
-import { catmull, damp, dampAngle, spring } from "../sim/motion.ts";
+import { CameraRig, type CamSolids, type MovingSolid } from "../sim/camera.ts";
+import { Locomotor } from "../sim/locomotor.ts";
+import { catmull } from "../sim/motion.ts";
 import type { Person } from "../world/people.ts";
 import { surfaceHeight } from "../world/surface.ts";
 import type { InputState } from "./input.ts";
 
-export const WALK = 2.4;
-export const RUN = 6.2;
-const RADIUS = 0.33;
+/** Walk and run speeds (m/s), from the feel config. */
+export const WALK = FEEL.speed.walk;
+export const RUN = FEEL.speed.run;
 
 export class Player {
-  x: number;
-  z: number;
-  y: number;
-  yaw: number;
-  speed = 0;
-  private vx = 0;
-  private vz = 0;
-  private yVel = 0;
+  readonly loco: Locomotor;
   private prev = { x: 0, y: 0, z: 0, yaw: 0 };
   /** Last spot where the player was free (unstick and below-world recovery). */
   private safe = { x: 0, z: 0 };
   private stuckFor = 0;
-  frozen = false;
-  /** Speed multiplier (Turbo Sneakers 1.45, carrying a crate 0.86). */
-  speedMul = 1;
+  /** Visual smoothing of step-ups (the body rises over a kerb in a few frames; the capsule is already up). */
+  private stepY = 0;
+  private ground: { height: (x: number, z: number) => number; resolve: (x: number, z: number, r: number) => [number, number] };
 
   constructor(public person: Person, private col: CollisionWorld, x: number, z: number, yaw: number) {
-    this.x = x;
-    this.z = z;
-    this.y = surfaceHeight(x, z);
-    this.yaw = yaw;
+    person.driven = true;
+    this.loco = new Locomotor(person.anim, x, surfaceHeight(x, z), z, yaw);
+    this.ground = { height: (gx, gz) => surfaceHeight(gx, gz), resolve: (gx, gz, r) => this.col.resolve(gx, gz, r) };
     this.safe = { x, z };
     this.snapPrev();
+  }
+
+  get x(): number {
+    return this.loco.c.x;
+  }
+  set x(v: number) {
+    this.loco.c.x = v;
+  }
+  get z(): number {
+    return this.loco.c.z;
+  }
+  set z(v: number) {
+    this.loco.c.z = v;
+  }
+  get y(): number {
+    return this.loco.c.y;
+  }
+  set y(v: number) {
+    this.loco.c.y = v;
+  }
+  get yaw(): number {
+    return this.loco.c.yaw;
+  }
+  set yaw(v: number) {
+    this.loco.c.yaw = v;
+  }
+  get speed(): number {
+    return this.loco.c.speed;
+  }
+  /** Set the ground speed along the facing (the bicycle hands its speed back when you get off). */
+  set speed(v: number) {
+    this.loco.c.vx = Math.sin(this.yaw) * v;
+    this.loco.c.vz = Math.cos(this.yaw) * v;
+  }
+  get frozen(): boolean {
+    return this.loco.frozen;
+  }
+  set frozen(v: boolean) {
+    this.loco.frozen = v;
+  }
+  /** Speed multiplier (Turbo Sneakers 1.45, carrying a crate 0.86). */
+  get speedMul(): number {
+    return this.loco.c.speedMul;
+  }
+  set speedMul(v: number) {
+    this.loco.c.speedMul = v;
   }
 
   snapPrev(): void {
@@ -55,58 +98,32 @@ export class Player {
   }
 
   teleport(x: number, z: number, yaw: number): void {
-    this.x = x;
-    this.z = z;
-    this.y = surfaceHeight(x, z);
-    this.yaw = yaw;
-    this.vx = this.vz = this.speed = 0;
+    const c = this.loco.c;
+    c.x = x;
+    c.z = z;
+    c.y = surfaceHeight(x, z);
+    c.yaw = yaw;
+    c.vx = c.vz = c.vy = 0;
+    c.grounded = true;
+    this.stepY = this.loco.visY = 0;
     this.snapPrev();
   }
 
   /** One fixed step. camYaw: the camera's heading, so "forward" is away from the camera. */
   step(dt: number, inp: InputState, camYaw: number): void {
     this.snapPrev();
-    if (this.frozen) {
-      this.vx = damp(this.vx, 0, 10, dt);
-      this.vz = damp(this.vz, 0, 10, dt);
-    } else {
-      // Input relative to the camera: forward = direction the camera looks along the ground.
-      const fx = Math.sin(camYaw), fz = Math.cos(camYaw);
-      const rx = -fz, rz = fx; // camera right
-      let dx = fx * inp.moveY + rx * inp.moveX;
-      let dz = fz * inp.moveY + rz * inp.moveX;
-      const len = Math.hypot(dx, dz);
-      const mag = Math.min(1, len);
-      if (len > 0.001) {
-        dx /= len;
-        dz /= len;
-      }
-      const target = mag * (inp.run ? RUN : WALK) * this.speedMul;
-      const accel = target > this.speed ? 7 : 9;
-      const tvx = dx * target, tvz = dz * target;
-      this.vx = damp(this.vx, tvx, accel, dt);
-      this.vz = damp(this.vz, tvz, accel, dt);
-      if (mag > 0.05) this.yaw = dampAngle(this.yaw, Math.atan2(dx, dz), 12, dt);
-    }
-    const ox = this.x, oz = this.z;
-    let nx = this.x + this.vx * dt, nz = this.z + this.vz * dt;
-    [nx, nz] = this.col.resolve(nx, nz, RADIUS);
-    // Real velocity after collision (so sliding along a wall slows the animation too).
-    this.vx = (nx - ox) / dt;
-    this.vz = (nz - oz) / dt;
-    this.x = nx;
-    this.z = nz;
-    this.speed = Math.hypot(this.vx, this.vz);
-    // Kerbs: spring to the surface height (fast up, gentle down).
-    const ground = surfaceHeight(this.x, this.z);
-    [this.y, this.yVel] = spring(this.y, this.yVel, ground, ground > this.y ? 28 : 18, dt);
-    if (this.y < ground - 0.05) this.y = ground - 0.05;
+    const y0 = this.y;
+    this.loco.step(dt, { moveX: inp.moveX, moveY: inp.moveY, run: inp.run, walk: inp.walk, jumpPressed: inp.pressed.has(" "), jumpHeld: inp.jumpHeld }, camYaw, this.ground);
+    // Kerbs and steps: the capsule snaps, the body eases (the Locomotor's visual spring, no pop).
+    this.stepY = this.loco.visY;
+    void y0;
     // Unstick: pushing for 1.5 s without moving -> back to the last free spot.
+    // (The interiors sit far east, x > 1500: not "off the map".)
     const pushing = Math.hypot(inp.moveX, inp.moveY) > 0.3 && !this.frozen;
     if (pushing && this.speed < 0.05) this.stuckFor += dt;
     else this.stuckFor = 0;
-    if (!this.col.blocked(this.x, this.z, RADIUS)) this.safe = { x: this.x, z: this.z };
-    if (this.stuckFor > 1.5 || !Number.isFinite(this.x) || Math.abs(this.x) > 480 || Math.abs(this.z) > 480) {
+    if (!this.col.blocked(this.x, this.z, FEEL.capsule.radius)) this.safe = { x: this.x, z: this.z };
+    if (this.stuckFor > 1.5 || !Number.isFinite(this.x) || (this.x < 1500 && (Math.abs(this.x) > 480 || Math.abs(this.z) > 480)) || this.y < surfaceHeight(this.x, this.z) - 2) {
       this.teleport(this.safe.x, this.safe.z, this.yaw);
       this.stuckFor = 0;
     }
@@ -117,64 +134,74 @@ export class Player {
     let dy = this.yaw - p.yaw;
     while (dy > Math.PI) dy -= Math.PI * 2;
     while (dy < -Math.PI) dy += Math.PI * 2;
-    this.person.place(p.x + (this.x - p.x) * alpha, p.y + (this.y - p.y) * alpha, p.z + (this.z - p.z) * alpha, p.yaw + dy * alpha);
+    this.person.place(p.x + (this.x - p.x) * alpha, p.y + (this.y - p.y) * alpha + this.stepY, p.z + (this.z - p.z) * alpha, p.yaw + dy * alpha);
     this.person.gait(this.speed);
   }
 
   /** Interpolated position (for the camera). */
   pos(alpha: number, out: pc.Vec3): pc.Vec3 {
     const p = this.prev;
-    return out.set(p.x + (this.x - p.x) * alpha, p.y + (this.y - p.y) * alpha, p.z + (this.z - p.z) * alpha);
+    return out.set(p.x + (this.x - p.x) * alpha, p.y + (this.y - p.y) * alpha + this.stepY, p.z + (this.z - p.z) * alpha);
   }
 }
 
 /* ---------------------------------------------------------- follow camera */
 
 export class FollowCamera {
-  yaw = Math.PI; // camera heading (radians); the camera sits behind the player
-  pitch = 0.32;
-  dist = 5.2;
-  private arm = 5.2;
-  private target = new pc.Vec3();
-  private tv = [0, 0, 0];
-  private initialised = false;
+  /** People and vehicles the camera must not pass through (set once by main.ts). */
+  static moving: (() => MovingSolid[]) | null = null;
+  readonly rig = new CameraRig();
+  private solids: CamSolids;
+  private lastYaw = 0;
+  private turn = 0;
 
-  constructor(private cam: pc.Entity, private col: CollisionWorld) {}
+  constructor(private cam: pc.Entity, private col: CollisionWorld) {
+    this.rig.lookScale = 0.0042;
+    this.solids = {
+      clearance: (ax, ay, az, bx, by, bz, r) => this.col.clearance(ax, ay, az, bx, by, bz, r),
+      inside: (x, y, z, r) => this.col.inside(x, y, z, r),
+      ground: (x, z) => surfaceHeight(x, z),
+    };
+  }
+
+  /** Camera heading (radians); the camera sits behind the player. */
+  get yaw(): number {
+    return this.rig.yaw;
+  }
+  set yaw(v: number) {
+    this.rig.yaw = v;
+  }
+  get pitch(): number {
+    return this.rig.pitch;
+  }
+  set pitch(v: number) {
+    this.rig.pitch = v;
+  }
+  get dist(): number {
+    return this.rig.dist;
+  }
+  set dist(v: number) {
+    this.rig.dist = v;
+  }
 
   reset(at: pc.Vec3, yaw: number): void {
-    this.target.copy(at);
-    this.tv = [0, 0, 0];
-    this.yaw = yaw;
-    this.arm = this.dist;
-    this.initialised = true;
+    this.rig.reset({ x: at.x, y: at.y, z: at.z, moveYaw: yaw, speed: 0, turnRate: 0, indoors: at.x > 1500 }, yaw);
+    this.lastYaw = yaw;
   }
 
   update(dt: number, inp: InputState, playerPos: pc.Vec3, playerSpeed: number, playerYaw: number): void {
-    if (!this.initialised) this.reset(playerPos, playerYaw);
-    this.yaw -= inp.lookDX * 0.0042;
-    this.pitch = Math.max(-0.15, Math.min(1.25, this.pitch + inp.lookDY * 0.0032));
-    this.dist = Math.max(2.4, Math.min(16, this.dist * (1 + inp.zoom * 0.1)));
-    // Gently swing behind the player while they run and the user is not steering the camera.
-    if (Math.abs(inp.lookDX) < 0.5 && playerSpeed > 2.5) this.yaw = dampAngle(this.yaw, playerYaw, 0.7, dt);
-    // Critically damped follow of the head.
-    const goal = [playerPos.x, playerPos.y + 1.45, playerPos.z];
-    const t = [this.target.x, this.target.y, this.target.z];
-    for (let i = 0; i < 3; i++) [t[i], this.tv[i]] = spring(t[i]!, this.tv[i]!, goal[i]!, i === 1 ? 10 : 14, dt);
-    this.target.set(t[0]!, t[1]!, t[2]!);
-    // Spring arm: shorten before entering anything tall.
-    const cx = this.target.x - Math.sin(this.yaw) * Math.cos(this.pitch) * this.dist;
-    const cz = this.target.z - Math.cos(this.yaw) * Math.cos(this.pitch) * this.dist;
-    const cy = this.target.y + Math.sin(this.pitch) * this.dist;
-    const free = this.col.clearance(this.target.x, this.target.y, this.target.z, cx, cy, cz, 0.3);
-    const want = Math.max(0.9, this.dist * free);
-    this.arm = want < this.arm ? damp(this.arm, want, 30, dt) : damp(this.arm, want, 3, dt);
-    const k = this.arm / this.dist;
-    const px = this.target.x + (cx - this.target.x) * k;
-    const pz = this.target.z + (cz - this.target.z) * k;
-    let py = this.target.y + (cy - this.target.y) * k;
-    py = Math.max(py, surfaceHeight(px, pz) + 0.35);
-    this.cam.setPosition(px, py, pz);
-    this.cam.lookAt(this.target);
+    let dy = playerYaw - this.lastYaw;
+    while (dy > Math.PI) dy -= 2 * Math.PI;
+    while (dy < -Math.PI) dy += 2 * Math.PI;
+    this.turn += ((dt > 0 ? dy / dt : 0) - this.turn) * (1 - Math.exp(-dt * 8));
+    this.lastYaw = playerYaw;
+    // Interiors are built far east (x > 1500): a shorter arm and a tighter probe there.
+    const indoors = playerPos.x > 1500;
+    this.rig.update(dt, inp, { x: playerPos.x, y: playerPos.y, z: playerPos.z, moveYaw: playerYaw, speed: playerSpeed, turnRate: this.turn, indoors }, this.solids, FollowCamera.moving?.() ?? []);
+    const p = this.rig.pos, t = this.rig.pivot;
+    this.cam.setPosition(p.x, p.y, p.z);
+    this.cam.lookAt(t.x, t.y, t.z);
+    if (this.cam.camera) this.cam.camera.fov = this.rig.fov;
   }
 }
 

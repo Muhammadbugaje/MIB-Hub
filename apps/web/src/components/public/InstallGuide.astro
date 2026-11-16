@@ -1,0 +1,467 @@
+---
+/**
+ * "Add to Home Screen": a three-step guide for iPhone and Android, plus the
+ * occasional popup that points players at it.
+ *
+ * The step pictures are crops of real Safari screens (public/install/*.webp)
+ * with the tapped control ringed in gold. The popup shows once a fortnight at
+ * most, never on a desktop or in an installed window, and remembers "Maybe
+ * later" and "Don't remind me again" in localStorage (rules in ./install.ts).
+ */
+import Icon from "../Icon.astro";
+---
+
+<section class="pub-sec pub-sec--tint install" id="install" aria-labelledby="sec-install" data-install-guide>
+  <div class="pub-wrap">
+    <div class="install__head">
+      <div class="install__intro">
+        <p class="pub-eyebrow">Take it with you</p>
+        <h2 id="sec-install">Add MIB-Hub to your <span class="pub-hl">home screen</span></h2>
+        <p class="pub-lead">
+          Three taps and it lives beside your other apps: full screen, one tap to open, and your saves stay put. No app
+          store, nothing to download.
+        </p>
+      </div>
+      <div class="install__aside">
+        <span class="install__chip"><Icon name="device" size={15} /> iPhone &amp; Android</span>
+        <span class="install__chip"><Icon name="timer" size={15} /> About 20 seconds</span>
+        <span class="install__chip install__chip--done" data-install-done hidden>
+          <Icon name="check" size={15} /> Already installed
+        </span>
+        <button class="pub-btn pub-btn--gold" type="button" data-install-native hidden>
+          <Icon name="download" size={16} />
+          Install the app
+        </button>
+      </div>
+    </div>
+
+    <div class="install__panel">
+      <div class="install__bar">
+        <div class="install__tabs" role="tablist" aria-label="Choose your phone">
+          <button
+            class="install__tab"
+            type="button"
+            role="tab"
+            id="install-tab-iphone"
+            aria-controls="install-iphone"
+            aria-selected="true"
+            data-install-tab="iphone"
+          >
+            <Icon name="device" size={16} />
+            iPhone
+          </button>
+          <button
+            class="install__tab"
+            type="button"
+            role="tab"
+            id="install-tab-android"
+            aria-controls="install-android"
+            aria-selected="false"
+            tabindex="-1"
+            data-install-tab="android"
+          >
+            <Icon name="dots" size={16} />
+            Android
+          </button>
+        </div>
+        <p class="install__meta"><Icon name="clock" size={14} /> 3 taps · no app store</p>
+      </div>
+
+      <div class="install__body">
+        <div class="install__panelbody" id="install-iphone" role="tabpanel" aria-labelledby="install-tab-iphone" data-install-panel="iphone">
+          <p class="install__hint">On Safari, in three taps:</p>
+          <ol class="install__steps">
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">1</span>
+              <span class="install__art">
+                <img
+                  src="/install/iphone-1.webp"
+                  alt="The MIB-Hub page in Safari, with the tabs button at the bottom right circled in gold"
+                  width="860"
+                  height="573"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="install__copy">
+                <b>Tap the tabs button</b>
+                <span>Bottom-right of Safari — the two overlapping squares.</span>
+              </span>
+            </li>
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">2</span>
+              <span class="install__art">
+                <img
+                  src="/install/iphone-2.webp"
+                  alt="The Safari share sheet, with Share circled in gold"
+                  width="860"
+                  height="573"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="install__copy">
+                <b>Tap Share</b>
+                <span>The share sheet slides up. Share is the first row.</span>
+              </span>
+            </li>
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">3</span>
+              <span class="install__art">
+                <img
+                  src="/install/iphone-3.webp"
+                  alt="The bottom of the Safari share sheet, with Add to Home Screen circled in gold"
+                  width="860"
+                  height="573"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </span>
+              <span class="install__copy">
+                <b>Tap Add to Home Screen</b>
+                <span>Scroll down the list, choose it, then tap Add.</span>
+              </span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="install__panelbody" id="install-android" role="tabpanel" aria-labelledby="install-tab-android" data-install-panel="android">
+          <p class="install__hint">On Chrome, in three taps:</p>
+          <ol class="install__steps install__steps--icons">
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">1</span>
+              <span class="install__art install__art--icon" aria-hidden="true">
+                <Icon name="dots" size={54} strokeWidth={2.4} />
+              </span>
+              <span class="install__copy">
+                <b>Open the browser menu</b>
+                <span>The three dots at the top right of Chrome.</span>
+              </span>
+            </li>
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">2</span>
+              <span class="install__art install__art--icon" aria-hidden="true">
+                <Icon name="download" size={54} strokeWidth={2.2} />
+              </span>
+              <span class="install__copy">
+                <b>Tap Add to Home screen</b>
+                <span>In Chrome it may say <b>Install app</b> instead.</span>
+              </span>
+            </li>
+            <li class="install__step">
+              <span class="install__no" aria-hidden="true">3</span>
+              <span class="install__art install__art--icon" aria-hidden="true">
+                <Icon name="home" size={54} strokeWidth={2.2} />
+              </span>
+              <span class="install__copy">
+                <b>Confirm and open it</b>
+                <span>Tap Add, then launch MIB-Hub from your home screen.</span>
+              </span>
+            </li>
+          </ol>
+          <p class="install__alt">
+            <Icon name="info" size={14} />
+            Samsung Internet: Menu → Add page to → Home screen. Firefox: Menu → Add to Home screen.
+          </p>
+        </div>
+      </div>
+
+      <ul class="install__gains" aria-label="What you get">
+        <li>
+          <span class="install__gain-ic"><Icon name="maximize" size={17} /></span>
+          <span>
+            <b>Full screen</b>
+            <small>No address bar or browser buttons — every game fills the screen.</small>
+          </span>
+        </li>
+        <li>
+          <span class="install__gain-ic"><Icon name="grid" size={17} /></span>
+          <span>
+            <b>One tap away</b>
+            <small>A proper MIB-Hub icon sits with your other apps, ready to play.</small>
+          </span>
+        </li>
+        <li>
+          <span class="install__gain-ic"><Icon name="shield" size={17} /></span>
+          <span>
+            <b>Saves stay put</b>
+            <small>Your progress is kept on the device, and signing in carries it across.</small>
+          </span>
+        </li>
+        <li>
+          <span class="install__gain-ic"><Icon name="zap" size={17} /></span>
+          <span>
+            <b>Always current</b>
+            <small>It is the site you already use. No updates to chase, nothing to reinstall.</small>
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <p class="install__foot">
+      <Icon name="info" size={15} />
+      Using a computer? Nothing to install — bookmark the page instead. The guide is here whenever you switch to your
+      phone.
+    </p>
+  </div>
+</section>
+
+<!-- The occasional nudge. It is a real <dialog>: Escape closes it, focus stays inside, and
+     the buttons use method="dialog" so the value tells the script which promise was made. -->
+<dialog class="install-nudge" aria-labelledby="install-nudge-title" aria-describedby="install-nudge-lead" data-install-nudge>
+  <div class="install-nudge__hd">
+    <span class="install-nudge__ic"><Icon name="grid" size={22} /></span>
+    <p class="pub-eyebrow">One tap away</p>
+    <form method="dialog">
+      <button class="install-nudge__x" value="close" aria-label="Close">
+        <Icon name="x" size={17} />
+      </button>
+    </form>
+  </div>
+  <div class="install-nudge__body">
+    <h2 id="install-nudge-title">Keep the games one tap away</h2>
+    <p id="install-nudge-lead">
+      Add MIB-Hub to your home screen: full screen, no browser bars, and your saves stay put. About twenty seconds.
+    </p>
+
+    <ol class="install-nudge__list" data-nudge-steps="iphone">
+      <li>
+        <b>1</b>
+        <span>Tap the <Icon name="grid" size={16} /> tabs button in Safari, bottom right.</span>
+      </li>
+      <li>
+        <b>2</b>
+        <span>Tap <Icon name="share" size={16} /> <b>Share</b>.</span>
+      </li>
+      <li>
+        <b>3</b>
+        <span>Scroll down, tap <b>Add to Home Screen</b>, then <b>Add</b>.</span>
+      </li>
+    </ol>
+    <ol class="install-nudge__list" data-nudge-steps="android" hidden>
+      <li>
+        <b>1</b>
+        <span>Tap the <Icon name="dots" size={16} /> menu in Chrome, top right.</span>
+      </li>
+      <li>
+        <b>2</b>
+        <span>Tap <b>Add to Home screen</b> (or <b>Install app</b>).</span>
+      </li>
+      <li>
+        <b>3</b>
+        <span>Tap <b>Add</b>, then open MIB-Hub from your home screen.</span>
+      </li>
+    </ol>
+
+    <form method="dialog" class="install-nudge__acts">
+      <button class="pub-btn pub-btn--gold" value="jump">
+        Show me the pictures
+        <Icon name="arrow-right" size={16} />
+      </button>
+      <button class="pub-btn pub-btn--ghost" value="later">Maybe later</button>
+    </form>
+    <form method="dialog">
+      <button class="install-nudge__off" value="off">Don't remind me again</button>
+    </form>
+  </div>
+</dialog>
+
+<script>
+  import {
+    INSTALL_KEY,
+    afterDismiss,
+    afterLater,
+    afterShown,
+    deviceKind,
+    readMemory,
+    shouldOffer,
+    type DeviceKind,
+    type InstallMemory,
+  } from "./install";
+
+  type InstallPrompt = Event & {
+    prompt: () => Promise<void>;
+    userChoice?: Promise<{ outcome: "accepted" | "dismissed" }>;
+  };
+
+  const guide = document.querySelector<HTMLElement>("[data-install-guide]");
+  const nudge = document.querySelector<HTMLDialogElement>("[data-install-nudge]");
+  const device: DeviceKind = deviceKind(navigator.userAgent, navigator.maxTouchPoints, navigator.platform);
+
+  const isInstalled = () =>
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.matchMedia("(display-mode: fullscreen)").matches ||
+    window.matchMedia("(display-mode: minimal-ui)").matches ||
+    (navigator as Navigator & { standalone?: boolean }).standalone === true;
+
+  function load(): InstallMemory {
+    try {
+      return readMemory(window.localStorage.getItem(INSTALL_KEY));
+    } catch {
+      return {};
+    }
+  }
+
+  function save(memory: InstallMemory) {
+    try {
+      window.localStorage.setItem(INSTALL_KEY, JSON.stringify(memory));
+    } catch {
+      /* private mode: the nudge simply forgets, which is the safe way to fail */
+    }
+  }
+
+  /* ---- Tabs ------------------------------------------------------------- */
+  if (guide) {
+    const tabs = Array.from(guide.querySelectorAll<HTMLButtonElement>("[data-install-tab]"));
+    const panels = Array.from(guide.querySelectorAll<HTMLElement>("[data-install-panel]"));
+
+    const choose = (name: string, moveFocus = false) => {
+      tabs.forEach((tab) => {
+        const on = tab.dataset.installTab === name;
+        tab.setAttribute("aria-selected", String(on));
+        tab.tabIndex = on ? 0 : -1;
+        if (on && moveFocus) tab.focus();
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.installPanel !== name;
+      });
+    };
+
+    if (tabs.length > 0 && panels.length > 0) {
+      guide.classList.add("is-ready");
+      choose(device === "android" ? "android" : "iphone");
+      tabs.forEach((tab, index) => {
+        tab.addEventListener("click", () => choose(tab.dataset.installTab ?? "iphone"));
+        tab.addEventListener("keydown", (event) => {
+          const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+          if (step === 0 && event.key !== "Home" && event.key !== "End") return;
+          event.preventDefault();
+          const next =
+            event.key === "Home"
+              ? 0
+              : event.key === "End"
+                ? tabs.length - 1
+                : (index + step + tabs.length) % tabs.length;
+          choose(tabs[next].dataset.installTab ?? "iphone", true);
+        });
+      });
+    }
+
+    if (isInstalled()) {
+      guide.dataset.installed = "true";
+      const done = guide.querySelector<HTMLElement>("[data-install-done]");
+      if (done) done.hidden = false;
+    }
+  }
+
+  /* ---- The real install prompt, when the browser offers one --------------- */
+  const installButtons = Array.from(document.querySelectorAll<HTMLButtonElement>("[data-install-native]"));
+  let deferred: InstallPrompt | null = null;
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    if (isInstalled()) return;
+    event.preventDefault();
+    deferred = event as InstallPrompt;
+    installButtons.forEach((button) => {
+      button.hidden = false;
+    });
+  });
+
+  installButtons.forEach((button) => {
+    button.addEventListener("click", async () => {
+      if (!deferred) return;
+      await deferred.prompt();
+      await deferred.userChoice?.catch(() => undefined);
+      deferred = null;
+      installButtons.forEach((item) => {
+        item.hidden = true;
+      });
+    });
+  });
+
+  window.addEventListener("appinstalled", () => {
+    installButtons.forEach((button) => {
+      button.hidden = true;
+    });
+    save(afterDismiss(load()));
+    stopNudge();
+  });
+
+  /* ---- The occasional popup ---------------------------------------------- */
+  const DELAY = 22_000;
+  let timer: number | undefined;
+  let stopped = false;
+
+  function stopNudge() {
+    stopped = true;
+    if (timer !== undefined) {
+      window.clearTimeout(timer);
+      timer = undefined;
+    }
+  }
+
+  if (nudge && !isInstalled()) {
+    nudge.querySelectorAll<HTMLElement>("[data-nudge-steps]").forEach((list) => {
+      list.hidden = list.dataset.nudgeSteps !== device;
+    });
+
+    const show = () => {
+      if (stopped || nudge.open) return;
+      const memory = load();
+      const now = Date.now();
+      if (!shouldOffer({ device, memory, now, installed: false })) {
+        stopNudge();
+        return;
+      }
+      save(afterShown(memory, now));
+      nudge.showModal();
+    };
+
+    const arm = () => {
+      if (stopped || timer !== undefined || document.visibilityState !== "visible") return;
+      timer = window.setTimeout(() => {
+        timer = undefined;
+        if (stopped) return;
+        if (document.visibilityState !== "visible") {
+          arm();
+          return;
+        }
+        show();
+      }, DELAY);
+    };
+
+    nudge.addEventListener("close", () => {
+      const memory = load();
+      if (nudge.returnValue === "later") {
+        save(afterLater(memory, Date.now()));
+        stopNudge();
+      } else if (nudge.returnValue === "off") {
+        save(afterDismiss(memory));
+        stopNudge();
+      } else if (nudge.returnValue === "jump") {
+        stopNudge();
+        if (guide) {
+          const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          guide.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+        }
+      }
+    });
+
+    // If they find the guide on their own, the popup has nothing left to say.
+    if (guide && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            stopNudge();
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.25 },
+      );
+      observer.observe(guide);
+    }
+
+    document.addEventListener("visibilitychange", arm);
+    arm();
+  }
+</script>

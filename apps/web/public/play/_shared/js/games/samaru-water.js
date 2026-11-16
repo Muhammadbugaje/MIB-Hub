@@ -148,7 +148,7 @@
     if (under && mb < 1e8 && s.breath < mb * .3 && s.breath > 0) { if ((s.warnT = (s.warnT || 0) - dt) <= 0) { s.warnT = s.breath < mb * .15 ? .7 : 1.4; snd("pluck"); if (!s.warned) { s.warned = 1; say("<b>Air low.</b> Come up and breathe (" + key("jump") + ")."); } } } else if (!under) s.warned = 0;
     if (under) { if (mb < 1e8) s.breath = Math.max(0, s.breath - dt); if (s.breath <= 0 && !s.out) { s.breath = 0; s.want = 0; s.out = 1; snd("bubbles"); say("<b>Out of breath.</b> You kick hard for the surface. Breathe, then dive again."); } }
     else { s.breath = Math.min(mb, s.breath + dt * Math.min(mb, RULES.swimBreath) / 2.6); if (s.out && s.breath > mb * .3) s.out = 0; }
-    if (P && moving && (api().down("run") || Z.runLock)) P.energy = Math.max(0, P.energy - dt * .9); // the sprint stroke is hard work
+    if (P && moving && (api().down("run") || Z.runLock)) P.energy = Math.max(0, P.energy - dt * .35); // the sprint stroke is hard work
     var stw = Wa.site(), inArea = stw && (Math.hypot(me.x - stw.edge.x, me.y - stw.edge.y - 8) < 26 || Wa.cur); var pe = Wa.pierEnd(); if (pe && Math.hypot(me.x - pe.x, me.y - pe.y) < 16) inArea = true; s.deep = !inArea && d0 > 2.5;
     if (s.deep && !s.deepTold) { s.deepTold = 1; snd("whistle"); say("<b>Deep water.</b> You are outside the lifeguard's area. Stay near the buoys by the steps or the pier."); }
     var prev = s.ph; s.ph += dt * (moving ? 2.1 + (me.cs || 0) * .55 : 1.3);

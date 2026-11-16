@@ -58,7 +58,8 @@
     var TS = Z.lod.TIERS; if (!TS[q]) q = "high"; var TR = TS[q], phone = window.matchMedia && matchMedia("(pointer: coarse)").matches, was = R.lod, k;
     R.tier = q; R.T = TR; R.lod = TR.lod; R.quality = q === "low" ? "low" : "high"; R.shadows = TR.shadow > 0 && !R.noShadows; renderer.shadowMap.enabled = R.shadows; sun.castShadow = R.shadows;
     if (R.shadows && sun.shadow.mapSize.x !== TR.shadow) { sun.shadow.mapSize.set(TR.shadow, TR.shadow); if (sun.shadow.map) { sun.shadow.map.dispose(); sun.shadow.map = null; } }
-    renderer.shadowMap.autoUpdate = q !== "mid"; renderer.shadowMap.needsUpdate = true; R.dpr = phone ? TR.dprPhone : TR.dpr; R.res = auto ? Math.max(.8, R.res || 1) : 1; gl.width = 0; R.slowT = R.fastT = 0;
+    renderer.shadowMap.autoUpdate = q !== "mid"; renderer.shadowMap.needsUpdate = true; R.dpr = phone ? TR.dprPhone : TR.dpr; R.res = auto ? Math.max(.8, R.res || 1) : 1; gl.width = 0;
+    R.slowT = R.fastT = R.floorT = 0; R.warm = R.cool = 0; R.winT = R.winN = 0;
     Z.api.store("samaru-gfx", q); if (!auto) { Z.api.store("samaru-gfx-manual", 1); R.autoOff = true; }
     if (was != null && was !== R.lod) { for (k in R.chunks) dropChunk(k); for (k in pools) { pools[k].forEach(drop); pools[k].clear(); } } // different detail: rebuild what is on screen
     scene.traverse(function (o) { if (o.material && o.material.needsUpdate !== undefined) o.material.needsUpdate = true; });
@@ -397,11 +398,29 @@
     if (!trail) { trail = new T.Mesh(new T.BufferGeometry(), new T.MeshBasicMaterial({ color: 0xfde047, transparent: true, opacity: .85, side: T.DoubleSide, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })); trail.frustumCulled = false; scene.add(trail); }
     trail.geometry.dispose(); trail.geometry = new T.BufferGeometry(); trail.geometry.setAttribute("position", new T.Float32BufferAttribute(pos, 3)); trail.visible = true; trail.material.color.setHex(Z.P.job ? 0x4ade80 : 0xfde047); void me;
   }
-  function perf(rdt, play) { // the governor: holds the frame time by scaling resolution (0.6–1.0), then by stepping a tier down; a dead band and timers stop it hunting
-    R.ft = R.ft == null ? rdt : R.ft + (rdt - R.ft) * .05; R.up = (R.up || 0) + rdt; if (!play || R.up < 5 || document.hidden || R.noGov) { R.slowT = R.fastT = 0; return; }
-    if (R.ft > .0225) { R.slowT = (R.slowT || 0) + rdt; R.fastT = 0; } else if (R.ft < .0175) { R.fastT = (R.fastT || 0) + rdt; R.slowT = 0; } else R.slowT = R.fastT = 0;
-    if (R.slowT > 1.5) { R.slowT = 0; if (R.res > .61) R.res = Math.max(.6, R.res - .1); else if (!R.autoOff && R.tier !== "low") { R.setQuality(R.tier === "high" ? "mid" : "low", true); R.up = 0; Z.toast("Graphics set to <b>" + R.tierName() + "</b> to keep things smooth. Change it in Phone → Me."); } }
-    else if (R.fastT > 5 && R.res < 1) { R.fastT = 0; R.res = Math.min(1, R.res + .05); }
+  function perf(rdt, play) { // the governor: patient by design. It watches 3-second windows of play, ignores the first
+    // 12 s (chunks, textures and shaders are still settling), and only gives up resolution when the game is really
+    // under ~28 fps. Steps are 0.05 with a 12 s cooldown and floor at 0.75, so a 30 fps phone keeps its picture
+    // instead of sliding to mush; a tier drop needs another 12 s under ~24 fps even at the floor.
+    if (!play || document.hidden || R.noGov) { R.slowT = R.fastT = R.floorT = 0; R.winT = R.winN = 0; return; }
+    R.warm = (R.warm || 0) + rdt;
+    if (R.warm < 12) return;
+    R.winT = (R.winT || 0) + rdt; R.winN = (R.winN || 0) + 1;
+    if (R.winT < 3) return;
+    var avg = R.winT / R.winN; R.winT = R.winN = 0;
+    if (R.cool > 0) { R.cool = Math.max(0, R.cool - 3); return; }
+    if (avg > .036) { R.slowT = (R.slowT || 0) + 3; R.fastT = 0; } // under ~28 fps
+    else if (avg < .019) { R.fastT = (R.fastT || 0) + 3; R.slowT = 0; R.floorT = 0; } // over ~53 fps
+    else { R.slowT = R.fastT = R.floorT = 0; }
+    if (R.slowT >= 6) {
+      R.slowT = 0; R.cool = 12;
+      if (R.res > .76) { R.res = Math.max(.75, R.res - .05); R.floorT = 0; }
+      else if (avg > .042) R.floorT = (R.floorT || 0) + 3; // under ~24 fps at the floor: consider a tier
+      if (R.floorT >= 12) {
+        R.floorT = 0;
+        if (!R.autoOff && R.tier !== "low") { R.setQuality(R.tier === "high" ? "mid" : "low", true); Z.toast("Graphics set to <b>" + R.tierName() + "</b> to keep things smooth. Change it in Phone → Me."); }
+      }
+    } else if (R.fastT >= 15 && R.res < 1) { R.fastT = 0; R.res = Math.min(1, R.res + .05); }
   }
   function blob(n, o, r, lift) { if (n >= 48) return n; var m = R.blobM.elements; m[0] = m[10] = r; m[5] = 1; m[12] = o.x; m[13] = .07; m[14] = o.y; m[15] = 1; m[1] = m[2] = m[3] = m[4] = m[6] = m[7] = m[8] = m[9] = m[11] = 0; if (lift) { m[0] = m[10] = r * Math.max(.45, 1 - lift * .35); } R.blobs.setMatrixAt(n, R.blobM); return n + 1; }
   function effects(dt) { // vehicle dust, tyre smoke and exhaust; contact shadows. Foot dust and impacts come from samaru-fx.js

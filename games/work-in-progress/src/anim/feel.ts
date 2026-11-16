@@ -8,11 +8,23 @@
  */
 export const FEEL = {
   /** Ground speeds (m/s). Owner playtest 16 Nov 2026: "the game feels so slow", so above the plan's §5.2 starting values. Keyboard: run by default, Shift sprints, Alt walks. */
-  speed: { walk: 1.9, jog: 3.8, run: 5.8, sprint: 7.5 },
+  speed: { walk: 2.3, jog: 3.8, run: 7.0, sprint: 8.6 },
+  /**
+   * Gait points of the locomotion blend space, in game speeds (m/s): each clip
+   * is THE clip at that speed. Owner, 16 Nov: walking (2.3) plays walk_fwd,
+   * running (Shift, 7.0) plays the sprint clip. Speeds above a clip's natural
+   * stride lengthen the stride (stride warping, max 1.35x) as well as speeding
+   * the cadence, so a fast walk still reads as a walk and feet never slide.
+   */
+  gaits: [["walk_fwd", 2.3], ["jog_fwd", 3.4], ["run_fwd", 5.2], ["sprint_fwd", 7.0]] as [string, number][],
+  /** Stride warping: the share of extra speed taken by a longer stride (0.5 = half stride, half cadence), and its cap. */
+  strideWarp: { share: 0.5, max: 1.35 },
+  /** Idle fidgets (look around, yawn, shift weight) only after this long standing still with no input (s). */
+  fidget: { after: 30, every: [25, 45] as [number, number], clips: ["idle_look_around", "yawn", "idle_shift"] },
   /** Acceleration: time to reach the target speed from rest (s), and stopping time (s). */
-  accel: { toWalk: 0.15, toRun: 0.35, runToSprint: 0.35, stopFromRun: 0.25, stopFromSprint: 0.35 },
+  accel: { toWalk: 0.15, toRun: 0.35, runToSprint: 0.3, stopFromRun: 0.25, stopFromSprint: 0.3 },
   /** Turn rate (deg/s) at walk, run, sprint. */
-  turn: { walk: 720, run: 540, sprint: 300 },
+  turn: { walk: 720, run: 540, sprint: 420 },
   /** Reversal that triggers a pivot (deg) and the speed it needs (m/s). */
   pivot: { angle: 135, minSpeed: 3 },
   airControl: 0.35,

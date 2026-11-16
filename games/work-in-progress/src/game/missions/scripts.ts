@@ -18,6 +18,7 @@ import type { A3 } from "../director.ts";
 import { addItem, type Progress } from "../save.ts";
 import type { StoryGame, Target } from "../story-game.ts";
 import { B, bySign, frontOf, hall, inYaw, outYaw } from "./places.ts";
+import { placeOf } from "../nav-routes.ts";
 
 const PI = Math.PI;
 
@@ -129,16 +130,16 @@ const m001: MissionDef = {
         obj(g, "m001", 2);
         const r = g.npc(ROOMIE)!;
         g.bark(ROOMIE, "wip_m001_walk_01", "Come. Breakfast. You're paying. Don't argue, I've decided.", "amused");
-        // Down the corridor to the stairs; outside, the roommate leads you to the Spot (waits if you fall behind).
-        await g.walk(r, [{ pos: g.at("corridor_west", "hostel"), where: "hostel" }], { speed: 2.1 });
-        r.visible = false;
+        // The roommate leads you: out of the room through its door, down the corridor, down the
+        // stairs and out of the hall's front door, then along the footpaths to the Spot. A real
+        // path all the way (never through a wall); waits and waves if you fall behind.
         const h = hall(g.ctx.female);
-        const outside = W(frontOf(h, 3.4, 1.2));
-        aim(g, () => (g.place === "world" ? W(r.root.getPosition().toArray() as A3) : { pos: g.at("corridor_west", "hostel"), where: "hostel" }));
-        await g.reach({ pos: frontOf(h, 2.4), where: "world" }, 4);
-        g.put(ROOMIE, outside, outYaw(h));
-        g.bark(ROOMIE, "wip_m001_walk_02", "Lecture-day rule: at eight this place is empty. A crowd after eight means something free.", "neutral");
-        const route = spotRoute(g.ctx.female).map((p) => W(p));
+        aim(g, () => g.whereIs(r));
+        void g.reach({ pos: frontOf(h, 2.4), where: "world" }, 5).then(
+          () => g.bark(ROOMIE, "wip_m001_walk_02", "Lecture-day rule: at eight this place is empty. A crowd after eight means something free.", "neutral"),
+          () => undefined,
+        );
+        const route: Target[] = NAV_ROUTES.m001_lead(g.ctx.female, (n, w) => g.at(n, w)).route.map((p) => ({ pos: p, where: placeOf(p[0], p[2]) }));
         await g.walk(r, route, { lead: 12, speed: 2.1 });
         obj(g, "m001", 2);
         const counter = W(g.at("spot_counter"), "the Spot");
@@ -198,7 +199,7 @@ const m001: MissionDef = {
         const filmer = g.ctx.specials.taty ? "special.taty" : "crowd.students";
         g.put(filmer, W([-14, 0, -66]), PI);
         g.put(ROOMIE, W([-20.6, 0, -84.6]), PI / 2);
-        const pts = [W([-6, 0, -72]), W([-24, 0, -52]), W([-41, 0, -48.6])];
+        const pts = NAV_ROUTES.m001_goat().route.map((p) => W(p));
         await g.chaseGoat(pts, (i) => {
           if (i === 0) {
             if (g.ctx.specials.taty) g.bark("special.taty", "m001_play_t01", "Bora! Run, fresher, the goat is winning!", "excited");
@@ -597,18 +598,11 @@ const m003: MissionDef = {
         const idris = g.npc("npc.idris")!;
         const kitchen: Target = { pos: g.at("kitchen_circle", "hostel"), where: "hostel", label: "the kitchen" };
         aim(g, kitchen);
-        let following = true;
-        const tick = setInterval(() => {
-          if (!following) return;
-          const q = idris.root.getPosition();
-          const d = Math.hypot(g.player.x - q.x, g.player.z - q.z);
-          if (d > 1.6) void g.walk(idris, [{ pos: [g.player.x - Math.sin(g.player.yaw) * 1.1, 0, g.player.z - Math.cos(g.player.yaw) * 1.1], where: "hostel" }], { speed: Math.min(2.4, 1 + d * 0.5) });
-        }, 300);
+        const following = g.escort(idris, 1.1, 2.8);
         try {
           await g.reach(kitchen, 2.2);
         } finally {
-          following = false;
-          clearInterval(tick);
+          following.stop();
         }
         await g.cutscene("cut_m003_close");
         g.light("day");
@@ -1336,18 +1330,11 @@ const m009: MissionDef = {
         g.keke.setEulerAngles(0, 90, 0);
         // Escort: Jega follows you, holding a football sock to his head.
         g.bark("npc.jega", "wip_m009_sock_01", "Ba matsala. I'll just hold this sock here. For style.", "amused");
-        let on = true;
-        const tick = setInterval(() => {
-          if (!on) return;
-          const q = jega.root.getPosition();
-          const d = Math.hypot(g.player.x - q.x, g.player.z - q.z);
-          if (d > 1.8) void g.walk(jega, [W([g.player.x - Math.sin(g.player.yaw) * 1.2, 0, g.player.z - Math.cos(g.player.yaw) * 1.2])], { speed: Math.min(2.2, 0.8 + d * 0.4) });
-        }, 300);
+        const following = g.escort(jega, 1.2, 2.6);
         try {
           await g.reach(gate, 4.5);
         } finally {
-          on = false;
-          clearInterval(tick);
+          following.stop();
         }
       },
     },
@@ -1651,6 +1638,24 @@ async function vista(g: StoryGame, from: string, look: A3, lines: [string, strin
 }
 
 /** The route from the hall door to the Spot (along paths, round the court, clear of every tree and table). */
+/**
+ * The routes the story walks, in one place so the navigation tests walk
+ * exactly what the missions walk (test/nav.test.ts).
+ */
+export const NAV_ROUTES = {
+  /** M1 step 2: the roommate from the room door, down the corridor, out of the hall's front door, to the Spot. */
+  m001_lead(female: boolean, at: (name: string, where: string) => A3): { from: A3; route: A3[] } {
+    const h = hall(female);
+    // Outside, the guide picks the way on the navigation grid (footpaths first) to the Spot; no hand-placed
+    // marks on the lawn to drag them off the path.
+    return { from: at("room_door", "hostel"), route: [at("corridor_west", "hostel"), frontOf(h, 3.4, 1.2), spotRoute(female).at(-1)!] };
+  },
+  /** M1 step 4: the goat's runs (it waits at each for you). */
+  m001_goat(): { from: A3; route: A3[] } {
+    return { from: [-10.5, 0, -88], route: [[-6, 0, -72], [-24, 0, -52], [-41, 0, -48.6]] };
+  },
+};
+
 function spotRoute(female: boolean): A3[] {
   if (female) return [[100, 0, -150], [92, 0, -128], [60, 0, -122], [20, 0, -100], [5.4, 0, -96], [-8, 0, -90], [-12, 0, -82.6], [-18.4, 0, -79.4]];
   return [[-96, 0, -86], [-95, 0, -70], [-82, 0, -66.4], [-60, 0, -63], [-40, 0, -62.6], [-28, 0, -70], [-24, 0, -77.6], [-18.6, 0, -79.0]];

@@ -23,7 +23,7 @@ import * as pc from "playcanvas";
 import type { MatLib } from "../gfx/materials.ts";
 import type { CollisionWorld } from "../sim/collide.ts";
 import { damp, dampAngle } from "../sim/motion.ts";
-import { makePath, sample, type P2, type Path } from "../sim/path.ts";
+import { makePath, sample, type P2 } from "../sim/path.ts";
 import type { StoryBundle } from "../../tools/story-plugin.ts";
 import type { StoryCutscene } from "../story/parse.ts";
 import { CAMPUS_ANCHORS, SCULPTURES } from "../world/campus.ts";
@@ -45,6 +45,12 @@ import { FollowCamera, Player } from "./player.ts";
 import { applyEndState, type Progress, saveCloud, saveLocal } from "./save.ts";
 import { Sfx } from "./sfx.ts";
 import { VOICE_PROFILES, VoicePlayer, profileKey } from "./voices.ts";
+import { type Body, StoryNav } from "./story-nav.ts";
+import { GuideTrail, projectOnPath, trailMarks } from "./guide-trail.ts";
+import type { NavPoint, PathSearch } from "../sim/nav.ts";
+import type { NavGrid } from "../sim/nav.ts";
+import type { Doors } from "../world/door-models.ts";
+import { placeOf } from "./nav-routes.ts";
 
 export class Abort extends Error {
   constructor() {
@@ -57,7 +63,6 @@ export interface Target { pos: A3; where: string; label?: string }
 
 interface Waiter { check: () => boolean; resolve: () => void; reject: (e: Error) => void }
 interface Interaction { id: string; label: string; pos: () => A3; where: () => string; r: number; priority: number; onUse: () => void; person?: Person }
-interface Walker { p: Person; path: Path; s: number; speed: number; lead?: number; done: () => void; run?: boolean }
 
 export interface GameDeps {
   app: pc.AppBase;
@@ -65,6 +70,10 @@ export interface GameDeps {
   mats: MatLib;
   people: CharModel[];
   col: CollisionWorld;
+  /** The navigation grid (shared with the crowd's line routing). */
+  nav?: NavGrid;
+  /** The doors (entrances, exits, room doorways) that swing as people pass. */
+  doors?: Doors;
   interiors: BuiltInterior[];
   hudRoot: HTMLElement;
   story: StoryBundle;
@@ -104,7 +113,19 @@ export class StoryGame implements StageWorld {
   private extrasUsed = 0;
   private waiters: Waiter[] = [];
   private interactions: Interaction[] = [];
-  private walkers: Walker[] = [];
+  /** Navigation: everyone the story walks (leaders, followers, the goat, cutscene routes). */
+  readonly navs: StoryNav;
+  /** Crowd walkers near the story's people (main.ts fills this every step; agents steer round them). */
+  readonly crowdNear: { x: number; z: number; r: number }[] = [];
+  private bodies = new WeakMap<object, Body>();
+  /** Ground arrows to the objective (Settings: "Ground arrows"; main.ts wires the switch). */
+  guideOn: () => boolean = () => true;
+  private guide: GuideTrail;
+  private guidePath: NavPoint[] = [];
+  private guideSearch: PathSearch | null = null;
+  private guideGoal: NavPoint | null = null;
+  private guideRepath = 0;
+  private guideShow = false;
   private token = 0;
   objective: { mission: string; text: string; target: () => Target | null } | null = null;
   // Props.
@@ -153,6 +174,70 @@ export class StoryGame implements StageWorld {
     this.voice = new VoicePlayer(d.story.recorded);
     ui.onPrompt = () => this.useNearest();
     this.buildProps();
+    this.guide = new GuideTrail(d.app);
+    this.navs = new StoryNav(d.col, d.nav, {
+      player: () => {
+        const pl = this.player;
+        if (!pl) return { x: 0, y: 0, z: 0, place: "none", vx: 0, vz: 0, visible: false };
+        return { x: pl.x, y: pl.y, z: pl.z, place: this.place, vx: 0, vz: 0, visible: pl.person.visible };
+      },
+      unseen: (x, z) => this.unseen(x, z),
+      female: () => this.ctx?.female ?? false,
+      doorPass: (link, phase) => this.d.doors?.open(phase === "out" ? link.doorA.id : link.doorB.id, 1.0),
+    });
+  }
+
+  /** True when nobody could see a body at (x, z): another place, off camera or far away. */
+  private unseen(x: number, z: number): boolean {
+    if (placeOf(x, z) !== this.place) return true;
+    const c = this.d.cam.getPosition();
+    if (Math.hypot(c.x - x, c.z - z) > 70) return true;
+    const cam = this.d.cam.camera;
+    if (!cam) return true;
+    const sph = new pc.BoundingSphere(new pc.Vec3(x, surfaceHeight(x, z) + 0.9, z), 1);
+    return !cam.frustum.containsSphere(sph);
+  }
+
+  /** A person as the navigator moves them. */
+  bodyOf(p: Person): Body {
+    let b = this.bodies.get(p);
+    if (!b) {
+      b = {
+        place: (x, y, z, yaw) => p.place(x, y, z, yaw),
+        gait: (sp) => p.gait(sp),
+        get visible() {
+          return p.visible;
+        },
+        set visible(v: boolean) {
+          p.visible = v;
+        },
+        look: (at) => {
+          p.rig.lookAt = at ? new pc.Vec3(at[0], at[1], at[2]) : null;
+        },
+        wave: () => p.act("wave"),
+      };
+      this.bodies.set(p, b);
+    }
+    return b;
+  }
+
+  private goatBody(): Body {
+    let b = this.bodies.get(this.goat);
+    if (!b) {
+      const goat = this.goat;
+      b = {
+        place: (x, y, z, yaw) => goat.place(x, y, z, yaw),
+        gait: (sp, dt) => goat.animate(dt || 1 / 60, sp, this.time),
+        get visible() {
+          return goat.root.enabled;
+        },
+        set visible(v: boolean) {
+          goat.visible = v;
+        },
+      };
+      this.bodies.set(goat, b);
+    }
+    return b;
   }
 
   get app(): pc.AppBase {
@@ -560,10 +645,11 @@ export class StoryGame implements StageWorld {
     const p = this.npc(castId);
     if (!p) return null;
     if (!at) {
+      this.navs.release(this.bodyOf(p));
       p.visible = false;
-      this.walkers = this.walkers.filter((w) => w.p !== p);
       return p;
     }
+    this.navs.release(this.bodyOf(p));
     p.visible = true;
     p.place(at.pos[0], surfaceHeight(at.pos[0], at.pos[2]), at.pos[2], face);
     p.act("stand");
@@ -579,7 +665,7 @@ export class StoryGame implements StageWorld {
       p.act("stand");
       p.rig.lookAt = null;
     }
-    this.walkers = [];
+    this.navs.clear();
     this.goat.visible = false;
     this.goatInBasket = false;
     this.car.enabled = false;
@@ -598,7 +684,7 @@ export class StoryGame implements StageWorld {
     for (const w of this.waiters) w.reject(new Abort());
     this.waiters = [];
     this.interactions = [];
-    this.walkers = [];
+    this.navs.clear();
     this.mini.cancel();
     if (this.director) {
       this.director = null;
@@ -731,16 +817,44 @@ export class StoryGame implements StageWorld {
     }
   }
 
-  /** A character walks a route (anchors or positions); resolves on arrival. With lead, they wait for the player. */
+  /**
+   * A character walks a route (marks in any places): a real path between marks
+   * (footpaths first, round everything solid, through doors). Resolves on
+   * arrival. With lead, they guide you: wait when you fall behind, wave, come
+   * back for you, and re-route if you take another way.
+   */
   walk(castId: string | Person, route: Target[], o: { speed?: number; lead?: number; run?: boolean } = {}): Promise<void> {
     const p = typeof castId === "string" ? this.npc(castId)! : castId;
     const q = p.root.getPosition();
-    const pts: P2[] = [[q.x, q.z], ...route.map((t) => [t.pos[0], t.pos[2]] as P2)];
-    return new Promise((resolve) => {
-      this.walkers = this.walkers.filter((w) => w.p !== p);
-      p.act("stand");
-      this.walkers.push({ p, path: makePath(pts), s: 0, speed: o.speed ?? 1.4, lead: o.lead, run: o.run, done: resolve });
-    });
+    p.act("stand");
+    const yaw = (p.root.getEulerAngles().y * Math.PI) / 180;
+    return this.navs.walk(this.bodyOf(p), { x: q.x, z: q.z, yaw }, route.map((t) => t.pos), { speed: o.run ? 4.6 : Math.max(2.0, o.speed ?? 2.0), lead: o.lead });
+  }
+
+  /** A character follows you (escorts), keeping `gap` metres behind. Stop it with the handle. */
+  escort(castId: string | Person, gap = 1.2, maxSpeed = 3.2): { stop(): void } {
+    const p = typeof castId === "string" ? this.npc(castId)! : castId;
+    const q = p.root.getPosition();
+    p.act("stand");
+    const yaw = (p.root.getEulerAngles().y * Math.PI) / 180;
+    return this.navs.follow(this.bodyOf(p), { x: q.x, z: q.z, yaw }, { gap, maxSpeed });
+  }
+
+  /** Where a walking character is now (objective markers follow leaders). */
+  whereIs(p: Person): Target {
+    const at = this.navs.positionOf(this.bodyOf(p));
+    if (at) return { pos: at.pos, where: at.where };
+    const q = p.root.getPosition();
+    return { pos: [q.x, q.y, q.z], where: placeOf(q.x, q.z) };
+  }
+
+  /** Cutscene walks: plan each leg on the navigation grid (round walls, furniture, trees). */
+  navRoute(pts: P2[]): P2[] {
+    return this.navs.planRoute(pts);
+  }
+
+  blocked(x: number, z: number, r: number): boolean {
+    return this.d.col.blocked(x, z, r);
   }
 
   /** Fade to black, run f, fade back (doors, time skips). */
@@ -775,11 +889,82 @@ export class StoryGame implements StageWorld {
     this.d.setAmbience(where !== "world");
   }
 
-  /** Go through a door with a fade. */
+  /**
+   * Go through a door: walk up to it, it swings open, fade, and you come out
+   * of the matching door on the other side (it opens for you and closes
+   * behind you), facing out.
+   */
   async enterDoor(to: Target, yaw: number): Promise<void> {
-    this.sfxs.play("door");
-    await this.fadeThrough(() => this.teleport(to, yaw));
+    const doors = this.d.doors;
+    const here = doors?.near(this.place, this.player.x, this.player.z, 3.4);
+    if (doors && here) {
+      // Walk up to the threshold (a real walk: the feet move, collisions apply).
+      const ax = here.x + Math.sin(here.yaw) * 0.5, az = here.z + Math.cos(here.yaw) * 0.5;
+      this.autoWalk = { x: ax, z: az, face: here.yaw + PI };
+      const t0 = this.time;
+      await this.wait(() => this.autoWalk === null || this.time - t0 > 1.6 || Math.hypot(this.player.x - ax, this.player.z - az) < 0.18);
+      this.autoWalk = null;
+      this.player.frozen = true;
+      doors.open(here.id, 1.2);
+      this.sfxs.play("door");
+      await this.sleep(0.35);
+    } else this.sfxs.play("door");
+    await this.fadeThrough(() => {
+      // Out on the map: a step clear of the doorway, the camera a little to one side so it is not in the wall.
+      const out = to.where === "world";
+      const at: A3 = out ? [to.pos[0] + Math.sin(yaw) * 1.2, to.pos[1], to.pos[2] + Math.cos(yaw) * 1.2] : to.pos;
+      this.teleport({ ...to, pos: at }, yaw);
+      if (out && this.follow) {
+        this.follow.reset(this.player.pos(1, this.tmpV), yaw + 0.75);
+        this.follow.yaw = yaw + 0.75;
+      }
+      const there = doors?.near(this.place, to.pos[0], to.pos[2], 3.4);
+      if (there) doors!.open(there.id, 0.9);
+    });
+    this.player.frozen = false;
   }
+
+  /** Screenshots and the nav simulation in the browser (?follow=1): the player follows the guide, using doors. */
+  shotFollow = false;
+  private shotDoorBusy = false;
+
+  private followLeaderForShots(): void {
+    // The camera swings round behind you (a steady view for the stills).
+    if (this.follow) this.follow.yaw = dampAngle(this.follow.yaw, this.player.yaw, 3, 1 / 60);
+    const l = this.navs.leader();
+    if (!l) return;
+    if (l.where === this.place) {
+      const d = Math.hypot(l.pos[0] - this.player.x, l.pos[2] - this.player.z);
+      if (d > 2.4) this.steerShot(l.pos[0], l.pos[2]);
+      return;
+    }
+    // The guide is through a door: walk to it and use it.
+    const door = this.routeTo({ pos: l.pos, where: l.where });
+    const d = Math.hypot(door[0] - this.player.x, door[2] - this.player.z);
+    if (d > 1.0) this.steerShot(door[0], door[2]);
+    else if (!this.shotDoorBusy) {
+      this.shotDoorBusy = true;
+      this.useNearest();
+      void this.sleep(2).then(() => (this.shotDoorBusy = false), () => (this.shotDoorBusy = false));
+    }
+  }
+  private shotPath: [number, number][] = [];
+  private shotPathT = 0;
+  /** Walk towards (x, z) on a planned path (re-planned twice a second). */
+  private steerShot(x: number, z: number): void {
+    if (this.time - this.shotPathT > 0.5 || !this.shotPath.length) {
+      this.shotPathT = this.time;
+      this.shotPath = this.navs.planRoute([[this.player.x, this.player.z], [x, z]]);
+    }
+    while (this.shotPath.length > 1 && Math.hypot(this.shotPath[1]![0] - this.player.x, this.shotPath[1]![1] - this.player.z) < 0.4) this.shotPath.shift();
+    const t = this.shotPath[1] ?? [x, z];
+    this.autoWalkOnce = { x: t[0], z: t[1] };
+  }
+  /** A one-step steer for followLeaderForShots (walks like input would). */
+  private autoWalkOnce: { x: number; z: number } | null = null;
+
+  /** The player walks themselves to a point (door approaches); input is ignored meanwhile. */
+  private autoWalk: { x: number; z: number; face: number } | null = null;
 
   /* ================================================================ cutscenes */
 
@@ -799,7 +984,7 @@ export class StoryGame implements StageWorld {
       this.d.showHud(false);
       this.ui.setPlaying(false);
       this.player.frozen = true;
-      this.walkers = [];
+      this.navs.clear();
       // Everyone not in this scene steps out of shot.
       const inScene = new Set(Object.keys(stage.actors));
       for (const [k, p] of this.npcs) {
@@ -986,19 +1171,12 @@ export class StoryGame implements StageWorld {
    */
   async chaseGoat(points: Target[], barks: (i: number) => void): Promise<void> {
     this.goat.visible = true;
+    const body = this.goatBody();
     for (let i = 0; i < points.length; i++) {
       const pt = points[i]!;
-      // Run to the waypoint.
+      // Run to the waypoint on a real path (round people, trees and kiosks).
       const q = this.goat.root.getPosition();
-      const path = makePath([[q.x, q.z], [pt.pos[0], pt.pos[2]]]);
-      let s = 0;
-      await this.wait(() => {
-        s = Math.min(path.length, s + 4.4 / 60);
-        const p = sample(path, s);
-        this.goat.place(p.x, surfaceHeight(p.x, p.z), p.z, dampAngle(this.goat.yaw, Math.atan2(p.dx, p.dz), 8, 1 / 60));
-        this.goat.animate(1 / 60, s < path.length ? 4.4 : 0, this.time);
-        return s >= path.length;
-      });
+      await this.navs.walk(body, { x: q.x, z: q.z, yaw: this.goat.yaw }, [pt.pos], { speed: 4.4, radius: 0.35, allow: ["lawn"] });
       barks(i);
       // Turn round and wait, insultingly, until you are close.
       this.goat.lookT = 2.5;
@@ -1106,6 +1284,51 @@ export class StoryGame implements StageWorld {
     return [wx, 0, wz];
   }
 
+  private bakeTick = 0;
+
+  /**
+   * Ground arrows: keep a walking route from you to the objective (or to the
+   * door that leads to it), planned on the navigation grid a little each
+   * step, re-planned every 1.5 s and whenever you stray from it.
+   */
+  private stepGuide(dt: number): void {
+    const t = this.mode === "play" && this.guideOn() ? this.objective?.target() ?? null : null;
+    const far = !!t && (t.where !== this.place || Math.hypot(t.pos[0] - this.player.x, t.pos[2] - this.player.z) > 15);
+    this.guideShow = far;
+    if (!t || !far) {
+      this.guideSearch = null;
+      return;
+    }
+    const g = this.routeTo(t);
+    const goal: NavPoint = [g[0], g[2]];
+    const me: NavPoint = [this.player.x, this.player.z];
+    this.guideRepath -= dt;
+    const strayed = this.guidePath.length > 1 && projectOnPath(this.guidePath, me).d > 3;
+    const moved = !this.guideGoal || Math.hypot(goal[0] - this.guideGoal[0], goal[1] - this.guideGoal[1]) > 2;
+    if (!this.guideSearch && (this.guideRepath <= 0 || strayed || moved)) {
+      const nav = this.navs.nav;
+      this.guideSearch = nav.search(nav.nearestWalkable(me[0], me[1]) ?? me, nav.nearestWalkable(goal[0], goal[1], 3) ?? goal);
+      this.guideGoal = goal;
+      this.guideRepath = 1.5;
+      if (moved || strayed) this.guidePath = [];
+    }
+    if (this.guideSearch && this.guideSearch.step(700)) {
+      this.guidePath = this.guideSearch.path ?? [];
+      this.guideSearch = null;
+    }
+  }
+
+  /** The ?debug=1 navigation overlay: the grid round you, every path, stuck agents in red. */
+  private drawNavDebug(): void {
+    const app = this.d.app;
+    const pos: number[] = [], cols: number[] = [];
+    this.navs.debugDraw((a, b, c) => {
+      pos.push(a[0], a[1], a[2], b[0], b[1], b[2]);
+      cols.push(c[0], c[1], c[2], 1, c[0], c[1], c[2], 1);
+    }, this.player.x, this.player.z);
+    if (pos.length) app.drawLineArrays(pos, cols, false);
+  }
+
   /** Fixed-step update (60 Hz): player, walkers, waiters. */
   step(dt: number, inp: InputState): void {
     this.time += dt;
@@ -1119,7 +1342,17 @@ export class StoryGame implements StageWorld {
       const canRun = this.stamina > 0.04 || this.boosts.zobo > 0;
       const run = inp.run && canRun && !(this.carrying && this.boosts.zobo <= 0);
       this.player.speedMul = (this.carrying ? 0.86 : 1) * turbo;
-      this.player.step(dt, free ? { ...inp, run } : { ...inp, moveX: 0, moveY: 0, run: false }, this.follow?.yaw ?? 0);
+      if (this.shotFollow && free && !this.autoWalk) this.followLeaderForShots();
+      if (this.autoWalk && free) {
+        const dx = this.autoWalk.x - this.player.x, dz = this.autoWalk.z - this.player.z, d = Math.hypot(dx, dz);
+        // Steer by handing the controller a camera aimed at the spot and "forward" (it walks, animates, collides).
+        this.player.step(dt, { ...inp, moveX: 0, moveY: d > 0.15 ? Math.min(1, d * 1.6) : 0, run: false }, d > 0.01 ? Math.atan2(dx, dz) : this.autoWalk.face);
+        if (d <= 0.15) this.player.yaw = dampAngle(this.player.yaw, this.autoWalk.face, 10, dt);
+      } else if (this.autoWalkOnce && free) {
+        const dx = this.autoWalkOnce.x - this.player.x, dz = this.autoWalkOnce.z - this.player.z;
+        this.player.step(dt, { ...inp, moveX: 0, moveY: 1, run: false }, Math.atan2(dx, dz));
+        this.autoWalkOnce = null;
+      } else this.player.step(dt, free ? { ...inp, run } : { ...inp, moveX: 0, moveY: 0, run: false }, this.follow?.yaw ?? 0);
       // Stamina: running drains, walking refills; Zobo Max freezes it.
       if (this.boosts.zobo > 0) this.stamina = 1;
       else if (run && this.player.speed > 2.5) this.stamina = Math.max(0, this.stamina - dt * (0.07 + this.progress.stats.stamina * -0.004));
@@ -1128,33 +1361,30 @@ export class StoryGame implements StageWorld {
       if (where !== this.place) this.setPlace(where);
     }
     for (const k of ["turbo", "zobo", "kola"] as const) this.boosts[k] = Math.max(0, this.boosts[k] - dt);
-    // Walkers (people leading you, crossing a room).
-    for (const w of [...this.walkers]) {
-      const q = w.p.root.getPosition();
-      if (w.lead !== undefined && Math.hypot(this.player.x - q.x, this.player.z - q.z) > w.lead) {
-        w.p.gait(0);
-        // Look back for you.
-        w.p.rig.lookAt = new pc.Vec3(this.player.x, this.player.y + 1.5, this.player.z);
-        continue;
-      }
-      w.p.rig.lookAt = null;
-      // Never walk into the player: wait a beat if they stand in the way.
-      const ahead = sample(w.path, Math.min(w.path.length, w.s + 0.8));
-      if (Math.hypot(ahead.x - this.player.x, ahead.z - this.player.z) < 0.65) {
-        w.p.gait(0);
-        continue;
-      }
-      const sp = w.run ? 3.4 : w.speed;
-      w.s = Math.min(w.path.length, w.s + sp * dt);
-      const p = sample(w.path, w.s);
-      const yaw = Math.atan2(p.dx, p.dz);
-      w.p.place(p.x, surfaceHeight(p.x, p.z), p.z, yaw);
-      w.p.gait(w.s < w.path.length ? sp : 0);
-      if (w.s >= w.path.length) {
-        this.walkers = this.walkers.filter((x) => x !== w);
-        w.done();
+    // Everyone the story walks: leaders, followers, the goat (navigation grid, avoidance, doors).
+    const ob = this.navs.obstacles;
+    ob.length = 0;
+    for (const c of this.crowdNear) ob.push(c);
+    for (const p of this.npcs.values()) {
+      if (!p.visible || this.navs.isMoving(this.bodyOf(p))) continue;
+      const q = p.root.getPosition();
+      ob.push({ x: q.x, z: q.z, r: 0.3 });
+    }
+    if (this.goat.root.enabled && !this.navs.isMoving(this.goatBody())) {
+      const q = this.goat.root.getPosition();
+      ob.push({ x: q.x, z: q.z, r: 0.35 });
+    }
+    this.navs.step(dt);
+    this.stepGuide(dt);
+    // You and the story's walkers never stand inside each other.
+    if (this.mode === "play" && this.player.person.visible) {
+      const [px, pz] = this.navs.pushOut(this.player.x, this.player.z, 0.33);
+      if (px !== this.player.x || pz !== this.player.z) {
+        this.player.x = px;
+        this.player.z = pz;
       }
     }
+    if (this.mode === "play" && ++this.bakeTick % 8 === 0) this.navs.prebake(this.player.x, this.player.z);
     // Resolve waits (in order; a resolved wait is removed).
     const ready = this.waiters.filter((w) => w.check());
     if (ready.length) {
@@ -1169,9 +1399,15 @@ export class StoryGame implements StageWorld {
     if (this.mode === "bike") this.renderBike(alpha);
     else if (this.mode !== "cut" && this.mode !== "ride") this.player.render(alpha);
     if (this.mode !== "cut") this.player.person.update(dt);
+    this.d.doors?.update(dt);
+    if (this.guideShow && this.guidePath.length > 1) this.guide.show(trailMarks(this.guidePath, [this.player.x, this.player.z], this.time), surfaceHeight, this.time);
+    else this.guide.hide();
+    // Walkers: placed every rendered frame, interpolated between fixed steps.
+    this.navs.render(alpha, dt);
+    if (this.navs.debug) this.drawNavDebug();
     for (const p of this.npcs.values()) if (p.visible) {
       // Characters glance at you when you come near (and stop when you leave).
-      if (this.mode === "play" && !this.walkers.some((w) => w.p === p)) {
+      if (this.mode === "play" && !this.navs.isMoving(this.bodyOf(p))) {
         const q = p.root.getPosition();
         const near = Math.hypot(q.x - this.player.x, q.z - this.player.z) < 3.2;
         p.rig.lookAt = near ? new pc.Vec3(this.player.x, this.player.y + 1.55, this.player.z) : null;

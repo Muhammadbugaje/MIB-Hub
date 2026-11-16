@@ -25,6 +25,7 @@
  */
 import * as pc from "playcanvas";
 import { Animator } from "../anim/animator.ts";
+import { MotionSense } from "../anim/motion-sense.ts";
 import { FEEL } from "../anim/feel.ts";
 import { AnimLibrary, type AnimIndex } from "../anim/library.ts";
 import { B, BONE_COUNT, MIB_BONES, Skeleton } from "../anim/skeleton.ts";
@@ -35,6 +36,7 @@ import type { Rng } from "../sim/rng.ts";
 import { type GestureName } from "./rig.ts";
 import { surfaceHeight } from "./surface.ts";
 import { HIJAB_STYLES, buildHeadwear, type HijabStyle } from "./headwear.ts";
+import { DEFAULT_BODY, buildBody, type BodyKit, type BodyShape } from "./bodymesh.ts";
 
 export const HUMAN_HEIGHT = 1.74;
 
@@ -57,6 +59,8 @@ export interface CharModel {
   scale: number;
   /** mib_rig proportions of this body. */
   skeleton: Skeleton;
+  /** The smooth close-up mesh, the crowd mesh, the skin and the body morphs (built at load). */
+  kit: BodyKit;
   /** Ground speed (m/s) of a natural walk and run on this body (stride-matched). */
   walkSpeed: number;
   runSpeed: number;
@@ -73,6 +77,8 @@ export interface Look {
   headwearColor: string;
   /** Hijab style (default "wrap"); see world/headwear.ts. */
   hijabStyle?: HijabStyle;
+  /** Body shape (morph weights 0..1); omitted = the natural default. */
+  body?: BodyShape;
 }
 
 export const FEMALE_MODELS = ["animwoman", "womandress", "womancasual"];
@@ -89,12 +95,14 @@ const hexToRgb = (h: string): [number, number, number] => [parseInt(h.slice(1, 3
 
 /** What each slot of a model is for (skin, hair, eyes, or the n-th clothing colour). */
 export function slotRoles(info: Pick<ModelInfo, "file" | "slots">): ("skin" | "skinDark" | "hair" | "brow" | "eye" | "detail" | number)[] {
+  // The long-dress body: cloth colours in the cast's order [dress, trim (shoes), belt]; "Brown" is its eyebrows.
+  if (info.file.startsWith("womandress")) {
+    const map: Record<string, "skin" | "hair" | "brow" | number> = { Skin: "skin", LimeGreen: 0, Red: 1, Gold: 2, Brown: "brow", Hair: "hair" };
+    return info.slots.map((s) => map[s.name] ?? "detail");
+  }
   let cloth = 0;
-  // The long-dress model's dark "Brown" material is its hair (its bun), not cloth.
-  const dressHair = info.file.startsWith("womandress");
   return info.slots.map((s) => {
     const n = s.name.toLowerCase();
-    if (dressHair && n === "brown") return "hair";
     if (n === "skin") return "skin";
     if (n.startsWith("skin")) return "skinDark";
     if (n.startsWith("hair")) return "hair";
@@ -180,12 +188,17 @@ export async function loadPeople(app: pc.AppBase, base: string, onProgress: (f: 
     keys.map(
       (key) =>
         new Promise<CharModel>((resolve, reject) => {
-          app.assets.loadFromUrl(`${base}people/${index[key]!.file}`, "container", (err, asset) => {
+          const url = `${base}people/${index[key]!.file}`;
+          // The bytes for our own mesh build (the browser cache serves the container load the same file).
+          const bytes = fetch(url).then((r) => r.arrayBuffer());
+          app.assets.loadFromUrl(url, "container", (err, asset) => {
             if (err || !asset) return reject(new Error(String(err)));
             const container = asset.resource as pc.ContainerResource;
             const info = index[key]!;
-            onProgress(++done / (keys.length + 1));
-            resolve({ key, info, container, female: FEMALE_MODELS.includes(key), scale: 1, skeleton: skeletonOf(container), walkSpeed: 1.9, runSpeed: 5.2 });
+            bytes.then((buf) => {
+              onProgress(++done / (keys.length + 1));
+              resolve({ key, info, container, kit: buildBody(app.graphicsDevice, buf), female: FEMALE_MODELS.includes(key), scale: 1, skeleton: skeletonOf(container), walkSpeed: 1.9, runSpeed: 5.2 });
+            }, reject);
           });
         }),
     ),
@@ -218,32 +231,35 @@ function skeletonOf(container: pc.ContainerResource): Skeleton {
   return new Skeleton(rot, pos, ANIM.refHipHeight);
 }
 
+const clampN = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
+
 /* ------------------------------------------------------------------ the ticker (crowd LOD) */
 
 const LIVE = new Set<Person>();
-let tickerApp: pc.AppBase | null = null;
+let personSeed = 0;
 const camPos = new pc.Vec3();
 /** Frame cost of the last tick (ms) and how many people were at each LOD (perf HUD and tests). */
-export const ANIM_STATS = { ms: 0, lod: [0, 0, 0, 0], count: 0 };
+export const ANIM_STATS = { ms: 0, lod: [0, 0, 0, 0], count: 0, nearest: 0, why: "" };
 
-function startTicker(app: pc.AppBase): void {
-  tickerApp = app;
-}
+function startTicker(_app: pc.AppBase): void {}
 
 /**
  * Animate everyone once per frame. main.ts calls this at the end of its
  * update (after the crowd, traffic, story and cutscenes have placed people),
  * so poses always match this frame's positions.
  */
-export function tickPeople(app: pc.AppBase, dt: number): void {
-  tickAll(app, Math.min(dt, 0.1));
+export function tickPeople(app: pc.AppBase, dt: number, camera?: pc.Entity): void {
+  tickAll(app, Math.min(dt, 0.1), camera);
 }
 
-function tickAll(app: pc.AppBase, dt: number): void {
+function tickAll(app: pc.AppBase, dt: number, camera?: pc.Entity): void {
   const t0 = performance.now();
-  const cams = app.root.findComponents("camera") as pc.CameraComponent[];
-  const cam = cams.find((c) => c.enabled && c.entity.enabled);
-  if (cam) camPos.copy(cam.entity.getPosition());
+  if (camera) camPos.copy(camera.getPosition());
+  else {
+    const cams = app.root.findComponents("camera") as pc.CameraComponent[];
+    const cam = cams.find((c) => c.enabled && c.entity.enabled);
+    if (cam) camPos.copy(cam.entity.getPosition());
+  }
   const near: { p: Person; d: number }[] = [];
   ANIM_STATS.lod = [0, 0, 0, 0];
   for (const p of LIVE) {
@@ -269,6 +285,8 @@ function tickAll(app: pc.AppBase, dt: number): void {
     p.tick(dt, lod);
   }
   ANIM_STATS.count = near.length;
+  ANIM_STATS.nearest = near[0]?.d ?? -1;
+  ANIM_STATS.why = near[0] ? `${near[0].p.forceLod}/${near[0].p.animOn}` : "";
   ANIM_STATS.ms = ANIM_STATS.ms * 0.9 + (performance.now() - t0) * 0.1;
 }
 
@@ -366,10 +384,10 @@ export class Person {
   animOn = true;
   forceLod: 0 | 1 | 2 | 3 | null = null;
   private lods: pc.Entity[] = [];
+  private meshInstances: pc.MeshInstance[] = [];
   private lodShown = -1;
   private acc = 0;
-  private last = { x: 0, y: 0, z: 0, yaw: 0, set: false };
-  private measured = { speed: 0, turn: 0, accel: 0 };
+  private readonly sense = new MotionSense();
   private wanted = 0;
   private placed = { x: 0, y: 0, z: 0, yaw: 0 };
   private tmpQ = new pc.Quat();
@@ -404,23 +422,34 @@ export class Person {
     (mat as unknown as { ambientSH: Float32Array }).ambientSH = SH;
     mat.update();
     this.material = mat;
-    const renders = this.model.findComponents("render") as pc.RenderComponent[];
-    for (const r of renders) {
-      for (const mi of r.meshInstances) mi.material = mat;
-      r.castShadows = opts.shadows ?? true;
-      r.receiveShadows = true;
-      this.lods.push(r.entity);
+    // The container's own mesh is replaced by our two LODs (smooth close-up and crowd), skinned to its nodes.
+    for (const r of this.model.findComponents("render") as pc.RenderComponent[]) r.entity.removeComponent("render");
+    const kit = cm.kit;
+    const bones = kit.boneNames.map((n) => this.model.findByName(n)!);
+    for (const [name, mesh] of [["lod0", kit.lod0], ["lod1", kit.lod1]] as const) {
+      const e = new pc.Entity(name);
+      this.model.addChild(e);
+      const mi = new pc.MeshInstance(mesh, mat);
+      const si = new pc.SkinInstance(kit.skin);
+      si.bones = bones;
+      si.rootBone = this.model;
+      mi.skinInstance = si;
+      e.addComponent("render", { meshInstances: [mi], castShadows: opts.shadows ?? true, receiveShadows: true });
+      this.lods.push(e);
+      this.meshInstances.push(mi);
     }
-    this.lods.sort((a, b) => a.name.localeCompare(b.name));
+    if (look.body) this.setBody(look.body);
     this.anim = new Animator(ANIM, cm.skeleton);
+    this.anim.setSeed(++personSeed * 2654435761);
     this.anim.groundAt = (x, z) => this.groundAt(x, z);
     this.anim.onEvent = (n) => this.onEvent?.(n);
     this.rig = new PersonRig(this);
     if (look.headwear !== "none") this.addHeadwear(app, look);
     this.showLod(1);
     LIVE.add(this);
-    // Start in a natural idle (not the T-pose) even before the first tick.
-    this.tick(0, 1);
+    // Start in a natural idle (never the T-pose), even for people far away who are not ticked yet.
+    this.anim.update(0);
+    this.applyPose();
   }
 
   private addHeadwear(app: pc.AppBase, look: Look): void {
@@ -540,6 +569,9 @@ export class Person {
         this.held = name;
         this.play(spec.clip, { then: spec.then, hold: true, noRoot: true });
         return;
+      case "look":
+        // The director turns the head (rig.lookAt); "look" itself plays nothing.
+        return;
       case "fall":
         this.play("knock_down", { noRoot: false });
         return;
@@ -591,30 +623,12 @@ export class Person {
   tick(dt: number, lod: 0 | 1 | 2 | 3): void {
     const a = this.anim;
     // Measured motion (ground speed, turn rate, acceleration) from where the person was placed.
-    if (dt > 0) {
-      const L = this.last;
-      if (L.set) {
-        const s = this.root.getLocalScale().y || 1;
-        const d = Math.hypot(this.placed.x - L.x, this.placed.z - L.z);
-        const sp = d > 3 ? 0 : d / dt / s;
-        let dy = this.placed.yaw - L.yaw;
-        while (dy > Math.PI) dy -= 2 * Math.PI;
-        while (dy < -Math.PI) dy += 2 * Math.PI;
-        const k = 1 - Math.exp(-dt / 0.08);
-        const prev = this.measured.speed;
-        this.measured.speed += (sp - this.measured.speed) * k;
-        this.measured.turn += (dy / dt - this.measured.turn) * k;
-        this.measured.accel += ((this.measured.speed - prev) / dt - this.measured.accel) * k * 0.5;
-      }
-      L.x = this.placed.x;
-      L.z = this.placed.z;
-      L.yaw = this.placed.yaw;
-      L.set = true;
-    }
+    if (dt > 0) this.sense.update(this.placed.x, this.placed.z, this.placed.yaw, dt, this.root.getLocalScale().y || 1);
     if (!this.driven) {
-      a.input.speed = this.held ? 0 : this.measured.speed < 0.08 && this.wanted < 0.1 ? 0 : this.measured.speed;
-      a.input.turnRate = this.measured.turn;
-      a.input.accel = this.measured.accel;
+      const m = this.sense;
+      a.input.speed = this.held ? 0 : m.speed < 0.08 && this.wanted < 0.1 ? 0 : m.speed;
+      a.input.turnRate = m.turn;
+      a.input.accel = m.accel;
     }
     // Rate by LOD: mid-distance people at 30 Hz, far at 10 Hz (plan §4.7).
     a.lod = lod;
@@ -625,9 +639,33 @@ export class Person {
     const adt = this.acc;
     this.acc = 0;
     this.rig.sync(adt);
+    if (!this.driven) a.input.moved = this.sense.take();
     a.update(adt);
     this.applyPose();
     this.showLod(lod === 0 ? 0 : 1);
+  }
+
+  /**
+   * Body shape (owner: characters can get fatter or slimmer over the game).
+   * Weights 0..1 per morph, clamped to sane ranges; morph instances are made
+   * only for people who differ from the default body.
+   */
+  setBody(b: BodyShape): void {
+    const want: Record<string, number> = { heavy: clampN(b.heavy ?? DEFAULT_BODY.heavy!, 0, 1), lean: clampN(b.lean ?? DEFAULT_BODY.lean!, 0, 1), fit: clampN(b.fit ?? DEFAULT_BODY.fit!, 0, 1) };
+    for (const mi of this.meshInstances) {
+      const morph = mi.mesh?.morph;
+      if (!morph) continue;
+      if (!mi.morphInstance) mi.morphInstance = new pc.MorphInstance(morph);
+      this.cm.kit.morphs.forEach((name, i) => mi.morphInstance!.setWeight(i, (want[name] ?? 0) - (DEFAULT_BODY[name] ?? 0)));
+    }
+  }
+
+  /** Debug and approval shots: show the bind T-pose (no animation). */
+  showBindPose(): void {
+    this.forceLod = 3;
+    this.anim.sk.restPose(this.anim.pose);
+    this.applyPose();
+    this.showLod(0);
   }
 
   private showLod(i: number): void {

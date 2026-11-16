@@ -165,11 +165,16 @@ export function makeTextures(device: pc.GraphicsDevice, small: boolean) {
   }), 2.5);
 
   // Plaster / render: soft mottling, near white (vertex colour paints it).
+  // Up close it reads as sand-and-cement render: a fine trowelled grain, the odd dark speck,
+  // faint rain streaks running down, over the broad mottling seen from afar.
   const plaster = pair("plaster", pixels(S, (x, y) => {
     const n = tfbm(x, y, S, 6, 5, 61);
-    const v = 226 + (n - 0.5) * 34;
-    return [clamp(v), clamp(v), clamp(v - 2), n];
-  }), 1.2);
+    const grain = tfbm(x, y, S, 64, 2, 62);
+    const speck = noise2(x * 0.9, y * 0.9, 63) > 0.985 ? -26 : 0;
+    const streak = Math.max(0, tn(x / 9, y / 90, S / 9, 64) - 0.62) * 70;
+    const v = 228 + (n - 0.5) * 30 + (grain - 0.5) * 16 + speck - streak;
+    return [clamp(v), clamp(v - 1), clamp(v - 4), n * 0.35 + grain * 0.65];
+  }), 1.6);
 
   // Clay roof tiles (barrel rows). Tile = 2 m. Near white so tint picks terracotta or slate.
   const roofTile = pair("rooftile", pixels(S, (x, y) => {

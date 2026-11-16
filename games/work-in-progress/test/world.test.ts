@@ -162,17 +162,23 @@ describe("vehicle models (the classic game's complaints)", () => {
 });
 
 describe("people assets", () => {
-  const index = JSON.parse(readFileSync(resolve(__dirname, "../assets/people/index.json"), "utf8")) as Record<string, { height: number; stride: Record<string, { speed: number; facing: number }>; clips: string[] }>;
-  it("every character has idle, walk and run, faces +z, and has a measured stride", () => {
+  const index = JSON.parse(readFileSync(resolve(__dirname, "../assets/people/index.json"), "utf8")) as Record<string, { height: number; hipHeight: number; rig: string; fit?: unknown }>;
+  const anim = JSON.parse(readFileSync(resolve(__dirname, "../assets/anim/index.json"), "utf8")) as { clips: Record<string, { speed?: number }> };
+  it("every character is on mib_rig at one human height, with headwear fit data", () => {
     for (const [k, m] of Object.entries(index)) {
-      expect(m.clips, k).toEqual(expect.arrayContaining(["idle", "walk", "run"]));
-      for (const g of ["walk", "run"]) {
-        expect(m.stride[g]!.facing, `${k} ${g}`).toBe(1);
-        const atScale = (m.stride[g]!.speed * 1.74) / m.height;
-        expect(atScale, `${k} ${g}`).toBeGreaterThan(g === "walk" ? 0.8 : 1.8);
-        expect(atScale, `${k} ${g}`).toBeLessThan(g === "walk" ? 2.2 : 4.5);
-      }
+      expect(m.rig, k).toBe("mib_rig");
+      expect(m.height, k).toBeCloseTo(1.74, 3);
+      expect(m.hipHeight, k).toBeGreaterThan(0.7);
+      expect(m.hipHeight, k).toBeLessThan(1.1);
+      expect(m.fit, k).toBeTruthy();
     }
+  });
+  it("the shared clip set has idle, walk, jog, run and sprint with measured strides", () => {
+    expect(anim.clips.idle_breathe).toBeTruthy();
+    const sp = ["walk_fwd", "jog_fwd", "run_fwd", "sprint_fwd"].map((id) => anim.clips[id]?.speed ?? 0);
+    expect(sp[0]).toBeGreaterThan(1.2);
+    expect(sp[3]).toBeLessThan(8);
+    for (let i = 1; i < sp.length; i++) expect(sp[i]).toBeGreaterThan(sp[i - 1]!);
   });
 });
 

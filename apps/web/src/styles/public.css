@@ -932,3 +932,118 @@ a.pub-counter:hover { text-decoration: none; border-color: rgba(255, 255, 255, .
 .pub-main { min-height: 40vh; }
 .pub-btn:focus-visible, .pub-link:focus-visible, .pub-signin:focus-visible, .pub-icon-btn:focus-visible, .pub-searchbtn:focus-visible, .pub-user:focus-visible { box-shadow: var(--shadow-focus); border-radius: 13px; }
 .pub-hero :focus-visible, .pub-band :focus-visible, .pub-footer :focus-visible, .pub-numbers :focus-visible, .pub-ticker :focus-visible { box-shadow: 0 0 0 2px #04100c, 0 0 0 4px var(--volt-300); }
+
+/* ---- Add to Home Screen ---------------------------------------------------------------
+   A light, tinted section around a dark guide panel: device tabs, three picture
+   steps, and the four things installing actually gets you. The popup below is
+   the same advice, compressed, and only appears on phones (see install.ts). */
+.install__head { display: flex; align-items: flex-end; gap: 28px; margin-bottom: clamp(24px, 3.5vw, 34px); }
+.install__intro { min-width: 0; }
+.install__intro h2 { font-family: var(--font-display); font-size: clamp(28px, 1.6rem + 1.4vw, 40px); line-height: 1.1; font-weight: 700; letter-spacing: -.02em; margin: 8px 0 0; }
+.install__intro .pub-lead { max-width: 620px; }
+.install__aside { margin-left: auto; flex: none; max-width: 460px; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
+.install__chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 700; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); }
+.install__chip svg { color: var(--accent-fg); flex: none; }
+.install__chip--done { background: var(--primary-subtle); border-color: transparent; color: var(--primary-subtle-fg); }
+.install__chip--done svg { color: inherit; }
+
+.install__panel { position: relative; overflow: hidden; isolation: isolate; border-radius: 26px; color: #eef6f2; box-shadow: var(--shadow-lg);
+  background: radial-gradient(70% 130% at 100% 0%, rgba(139, 92, 246, .22), transparent 60%), linear-gradient(150deg, #0f3d2e, #0a2b20 55%, #071a24); }
+.install__panel::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image: linear-gradient(rgba(126, 240, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(126, 240, 255, .05) 1px, transparent 1px); background-size: 32px 32px; }
+.install__bar { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+.install__tabs { display: none; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); }
+.install.is-ready .install__tabs { display: inline-flex; }
+.install__tab { display: inline-flex; align-items: center; gap: 7px; height: 36px; padding: 0 16px; border: 0; border-radius: 999px;
+  background: none; color: #b9d0c5; font: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: background-color .18s, color .18s; }
+.install__tab:hover { color: #fff; background: rgba(255, 255, 255, .07); }
+.install__tab[aria-selected="true"] { background: var(--grad-gold); color: var(--grad-gold-ink); box-shadow: 0 8px 18px -10px rgba(200, 169, 81, .9); }
+.install__tab:focus-visible { outline: 2px solid var(--volt-400); outline-offset: 2px; }
+.install__meta { margin: 0 0 0 auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 11.5px; color: #9fe9f5; }
+.install__meta svg { flex: none; }
+
+.install__body { padding: 20px; }
+.install__hint { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-size: 11.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--gold-300); }
+.install__hint::before { content: ""; width: 18px; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--gold-400), var(--volt-400)); }
+.install__steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.install__step { position: relative; display: flex; flex-direction: column; min-width: 0; border-radius: 18px; overflow: hidden;
+  background: rgba(255, 255, 255, .045); border: 1px solid rgba(255, 255, 255, .11); }
+.install__no { position: absolute; left: 11px; top: 11px; z-index: 3; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+  font-size: 12.5px; font-weight: 800; color: var(--grad-gold-ink); background: var(--grad-gold); box-shadow: 0 6px 16px -4px rgba(0, 0, 0, .55); }
+.install__art { position: relative; display: block; aspect-ratio: 3 / 2; overflow: hidden; background: #f2f0e9; }
+.install__art img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.install__art--icon { display: grid; place-items: center; color: var(--volt-300);
+  background: radial-gradient(60% 80% at 50% 15%, rgba(56, 225, 245, .2), transparent 70%), linear-gradient(150deg, #0b3a4a, #062430 60%, #061423); }
+.install__art--icon::before { content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .05) 1px, transparent 1px); background-size: 22px 22px; }
+.install__art--icon svg { position: relative; filter: drop-shadow(0 6px 18px rgba(56, 225, 245, .35)); }
+.install__copy { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 16px; }
+.install__copy b { font-family: var(--font-display); font-size: 15.5px; font-weight: 650; line-height: 1.3; color: #fff; }
+.install__copy > span { font-size: 12.5px; line-height: 1.55; color: #b9d0c5; }
+.install__copy > span b { font-family: inherit; font-size: inherit; font-weight: 700; color: #fff; }
+.install__alt { display: flex; align-items: flex-start; gap: 7px; margin: 14px 2px 0; font-size: 12px; line-height: 1.5; color: #9fb9ad; }
+.install__alt svg { flex: none; margin-top: 1px; color: var(--gold-300); }
+
+.install__gains { list-style: none; margin: 0; padding: 18px 20px 22px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, .09); background: rgba(0, 0, 0, .14); }
+.install__gains li { display: flex; align-items: flex-start; gap: 10px; min-width: 0; }
+.install__gain-ic { width: 34px; height: 34px; border-radius: 11px; flex: none; display: grid; place-items: center; color: var(--gold-300);
+  background: rgba(200, 169, 81, .16); border: 1px solid rgba(230, 211, 154, .2); }
+.install__gains b { display: block; font-family: var(--font-display); font-size: 13.5px; font-weight: 650; color: #fff; }
+.install__gains small { display: block; margin-top: 2px; font-size: 11.5px; line-height: 1.5; color: #9fb9ad; }
+.install__foot { display: flex; align-items: flex-start; gap: 7px; margin: 16px 4px 0; font-size: 12.5px; line-height: 1.55; color: var(--text-subtle); }
+.install__foot svg { flex: none; margin-top: 2px; }
+
+@media (max-width: 980px) {
+  .install__head { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .install__aside { margin-left: 0; justify-content: flex-start; }
+  .install__gains { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 820px) {
+  .install__body { padding: 16px; }
+  .install__steps { display: flex; gap: 12px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
+    scrollbar-width: none; margin-inline: -16px; padding: 2px 16px 10px; }
+  .install__steps::-webkit-scrollbar { display: none; }
+  .install__step { flex: 0 0 min(78%, 330px); scroll-snap-align: start; }
+}
+@media (max-width: 560px) {
+  .install__panel { border-radius: 20px; }
+  .install__bar { padding: 14px; }
+  .install__meta { display: none; }
+  .install__tab { height: 34px; padding: 0 13px; font-size: 12.5px; }
+  .install__gains { grid-template-columns: 1fr; padding: 16px; }
+}
+
+/* The popup */
+.install-nudge { width: min(470px, calc(100vw - 28px)); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 24px;
+  background: var(--surface); color: var(--text); box-shadow: 0 50px 100px -30px rgba(0, 0, 0, .65); overflow: auto; }
+.install-nudge::backdrop { background: rgba(4, 10, 8, .58); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+.install-nudge[open] { animation: install-nudge-in .3s var(--ease-emphasized, cubic-bezier(.2, .8, .2, 1)); }
+@keyframes install-nudge-in { from { opacity: 0; transform: translateY(14px) scale(.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .install-nudge[open] { animation: none; } }
+.install-nudge__hd { position: relative; display: flex; align-items: center; gap: 10px; padding: 16px 18px; overflow: hidden; color: #fff;
+  background: radial-gradient(80% 120% at 100% 0%, rgba(56, 225, 245, .2), transparent 60%), linear-gradient(135deg, #0f3d2e, #071a24); }
+.install-nudge__hd::before { content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(126, 240, 255, .06) 1px, transparent 1px), linear-gradient(90deg, rgba(126, 240, 255, .06) 1px, transparent 1px); background-size: 26px 26px; }
+.install-nudge__hd .pub-eyebrow { position: relative; color: var(--gold-300); font-size: 11px; }
+.install-nudge__ic { position: relative; width: 42px; height: 42px; border-radius: 13px; flex: none; display: grid; place-items: center;
+  color: var(--gold-300); background: rgba(200, 169, 81, .18); border: 1px solid rgba(230, 211, 154, .25); }
+.install-nudge__hd form { position: relative; margin-left: auto; }
+.install-nudge__x { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: #d6e6de;
+  background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .2); }
+.install-nudge__x:hover { color: #fff; background: rgba(255, 255, 255, .16); }
+.install-nudge__body { padding: 20px; }
+.install-nudge__body h2 { margin: 0; font-family: var(--font-display); font-size: 22px; line-height: 1.2; font-weight: 700; letter-spacing: -.02em; }
+.install-nudge__body > p { margin: 8px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--text-muted); }
+.install-nudge__list { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+.install-nudge__list li { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; line-height: 1.5; }
+.install-nudge__list li > b { width: 24px; height: 24px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  font-size: 11.5px; font-weight: 800; color: var(--grad-gold-ink); background: var(--grad-gold); }
+.install-nudge__list li > span { padding-top: 3px; }
+.install-nudge__list svg { vertical-align: -3px; color: var(--accent-fg); }
+.install-nudge__acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.install-nudge__acts .pub-btn { flex: 1 1 auto; }
+.install-nudge__off { display: block; margin: 12px auto 0; padding: 6px; border: 0; background: none; cursor: pointer;
+  color: var(--text-subtle); font: inherit; font-size: 12px; text-decoration: underline; text-underline-offset: 3px; }
+.install-nudge__off:hover { color: var(--danger-fg); }

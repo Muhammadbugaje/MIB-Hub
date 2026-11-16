@@ -7,6 +7,7 @@
  */
 import { type Building, buildings, CLOCK, THEATRES } from "../../world/layout.ts";
 import type { A3, CamAnchor } from "../director.ts";
+import { entranceApproach } from "../../world/door-plan.ts";
 
 /** A point d metres in front of a building's front face (plus s metres to its right), at height y. */
 export function frontOf(b: Building, d: number, s = 0, y = 0): A3 {
@@ -83,15 +84,20 @@ export function hall(female: boolean): Building {
  * (and where you come out), facing away from the door.
  */
 export function worldDoors(female: boolean): Record<string, { at: A3; yaw: number; label: string }> {
+  // Where you stand at each entrance: just in front of its door (world/door-plan.ts), facing out.
+  const at = (b: Building): A3 => {
+    const e = entranceApproach(b);
+    return [e.at[0], 0, e.at[1]];
+  };
   const h = hall(female);
   return {
-    hostel: { at: frontOf(h, 2.4), yaw: outYaw(h), label: `Go into ${female ? "Kadanya" : "Giginya"} Hall` },
-    senate: { at: frontOf(B.senate, 2.2), yaw: outYaw(B.senate), label: "Go into the Senate" },
-    sug: { at: frontOf(B.spot, 2.0), yaw: outYaw(B.spot), label: "Go into the Student Union" },
-    yamma: { at: frontOf(B.yamma, 4.6), yaw: outYaw(B.yamma), label: "Go into Theatre Yamma" },
-    gabas: { at: frontOf(B.gabas, 4.6), yaw: outYaw(B.gabas), label: "Go into Theatre Gabas" },
-    lab: { at: frontOf(B.engineering, 3.4), yaw: outYaw(B.engineering), label: "Go into the electrical lab" },
-    ae: { at: frontOf(B.hospital, 1.8), yaw: outYaw(B.hospital), label: "Go into A&E" },
+    hostel: { at: at(h), yaw: outYaw(h), label: `Go into ${female ? "Kadanya" : "Giginya"} Hall` },
+    senate: { at: at(B.senate), yaw: outYaw(B.senate), label: "Go into the Senate" },
+    sug: { at: at(B.spot), yaw: outYaw(B.spot), label: "Go into the Student Union" },
+    yamma: { at: at(B.yamma), yaw: outYaw(B.yamma), label: "Go into Theatre Yamma" },
+    gabas: { at: at(B.gabas), yaw: outYaw(B.gabas), label: "Go into Theatre Gabas" },
+    lab: { at: at(B.engineering), yaw: outYaw(B.engineering), label: "Go into the electrical lab" },
+    ae: { at: at(B.hospital), yaw: outYaw(B.hospital), label: "Go into A&E" },
   };
 }
 

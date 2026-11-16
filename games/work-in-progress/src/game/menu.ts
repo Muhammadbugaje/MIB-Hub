@@ -30,6 +30,8 @@ export interface MenuSettings {
   soundVolume: number;
   voiceVolume: number;
   subtitles: boolean;
+  /** Glowing arrows on the ground along the way to the objective. */
+  groundArrows: boolean;
   voices: boolean;
   reducedMotion: boolean;
 }
@@ -37,7 +39,7 @@ export interface MenuSettings {
 const SETTINGS_KEY = "wip-settings";
 
 export function loadSettings(): MenuSettings {
-  const base: MenuSettings = { quality: "auto", soundVolume: 0.8, voiceVolume: 0.9, subtitles: true, voices: true, reducedMotion: matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false };
+  const base: MenuSettings = { quality: "auto", soundVolume: 0.8, voiceVolume: 0.9, subtitles: true, groundArrows: true, voices: true, reducedMotion: matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false };
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (raw) return { ...base, ...(JSON.parse(raw) as Partial<MenuSettings>) };
@@ -665,6 +667,7 @@ export class Menu {
     row("Voices", "Spoken lines", range(() => S.voiceVolume, (v) => (S.voiceVolume = v)));
     row("Computer voices", "Until the cast records, each character has a browser voice", seg([[true, "On"], [false, "Off"]], () => S.voices, (v) => (S.voices = v)));
     row("Subtitles", "Who is speaking and what they say", seg([[true, "On"], [false, "Off"]], () => S.subtitles, (v) => (S.subtitles = v)));
+    row("Ground arrows", "Glowing arrows on the ground show the way to your objective", seg([[true, "On"], [false, "Off"]], () => S.groundArrows, (v) => (S.groundArrows = v)));
     row("Reduced motion", "Calmer menus and transitions", seg([[false, "Off"], [true, "On"]], () => S.reducedMotion, (v) => {
       S.reducedMotion = v;
       this.root.classList.toggle("reduced", v);

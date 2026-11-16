@@ -237,7 +237,7 @@
       "html.mib-game body{-webkit-tap-highlight-color:transparent;overscroll-behavior:none}" +
       "html.mib-game [data-gm-stage],html.mib-game [data-gm-stage] *,html.mib-game .mib-full,html.mib-game .mib-full *,html.mib-game canvas,html.mib-game iframe,html.mib-game button" +
       "{-webkit-user-select:none!important;user-select:none!important;-webkit-touch-callout:none!important;-webkit-tap-highlight-color:transparent}" +
-      "html.mib-game [data-gm-stage],html.mib-game .mib-full{touch-action:none}" +
+      "html.mib-game [data-gm-stage] canvas,html.mib-game .mib-full canvas{touch-action:none}" +
       "html.mib-game input,html.mib-game textarea,html.mib-game select{-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}";
     doc.head.appendChild(st);
     doc.documentElement.classList.add("mib-game");

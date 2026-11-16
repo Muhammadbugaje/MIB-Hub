@@ -107,6 +107,10 @@ export interface StageWorld {
   gameplayCam(): { pos: A3; look: A3 };
   crowd(spec: NonNullable<CutStage["crowd"]>, where: string): void;
   clearCrowd(): void;
+  /** Plan a walk through these marks on the navigation grid (round walls, furniture, trees). Absent: straight lines. */
+  navRoute?(pts: P2[]): P2[];
+  /** True when a body of radius r at (x, z) would overlap something solid (side-steps never go into walls). */
+  blocked?(x: number, z: number, r: number): boolean;
 }
 
 export interface DirectorUi {
@@ -339,7 +343,8 @@ export class Director {
         }
         const end = Array.isArray(toRaw) ? this.pos(toRaw as A3) : this.pos(to);
         pts.push([end[0], end[2]]);
-        l.path = makePath(pts);
+        // People and the goat walk real paths (never through a wall); vehicles keep their road lines.
+        l.path = makePath(this.world.navRoute && (l.a.kind === "person" || l.a.kind === "goat") ? this.world.navRoute(pts) : pts);
         l.s = 0;
         l.liftTo = l.a.kind === "goat" && end[1] > 0.2 ? end[1] : 0;
         l.speed = e.key === "actor.run" ? (l.a.kind === "goat" ? 5.2 : 5.0) : 2.0;
@@ -545,8 +550,11 @@ export class Director {
         if (blocked) {
           // Sidestep: move along the path's normal a little this frame.
           const nx = -p.dz, nz = p.dx;
-          l.x += nx * 0.6 * dt;
-          l.z += nz * 0.6 * dt;
+          const sx = l.x + nx * 0.6 * dt, sz = l.z + nz * 0.6 * dt;
+          if (!this.world.blocked?.(sx, sz, l.a.radius)) {
+            l.x = sx;
+            l.z = sz;
+          }
           ns = l.s;
         } else {
           l.x = p.x;

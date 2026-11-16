@@ -6,8 +6,8 @@ Reference rig: `Soccer Game Pack/X Bot.fbx` (Mixamo bind T-pose, 66 bones, hips 
 
 ## Coverage of the plan's clip list (§4.1, slice and missions)
 
-- **From Mixamo (76):** idle_breathe, idle_look_around, idle_tired (walk_tired), walk_fwd, walk_back, walk_strafe_L, walk_strafe_R, jog_fwd, run_fwd, sprint_fwd, walk_start, run_start (walk_start), walk_stop, run_stop, turn_90L, turn_90R, turn_180 (run_pivot_180), run_pivot_180, stairs_up, stairs_down, carry_walk, carry_idle, jump_start, jump_air (fall_loop), fall_loop, land_soft, land_hard, land_run (jump_run), climb_ledge, stumble_back, crouch_idle, crouch_walk, sit_idle, stand_up, sit_floor, handshake (handshake_a), wave, point, nod, shake_head, talk_1, talk_2, laugh, shock, facepalm, cheer, clap, kneel, write, phone_call, phone_text, drink, pick_up, sleep, lie_down, yawn, dance_hiphop_1, dance_samba_1, shove, hit_react_heavy, knock_down, get_up_sit, get_up_front, get_up_back, car_exit, car_drive, kick, pass_short, header_stand, dribble_run, tackle_slide, keeper_dive_L, keeper_catch, celebrate (victory), bicycle_kick, type_laptop
-- **Made by us (20):** sit_down, sit_think, hug (hug_a), wave_from_car, eat_stand, eat_seated, horns, dazed_shake_head, car_passenger_idle, bike_mount, bike_dismount, cycle, cycle_freewheel, cycle_foot_down, okada_ride, okada_foot_down, okada_pillion, keke_drive, keke_passenger, raise_hand
+- **From Mixamo (75):** idle_look_around, idle_tired (walk_tired), walk_fwd, walk_back, walk_strafe_L, walk_strafe_R, jog_fwd, run_fwd, sprint_fwd, walk_start, run_start (walk_start), walk_stop, run_stop, turn_90L, turn_90R, turn_180 (run_pivot_180), run_pivot_180, stairs_up, stairs_down, carry_walk, carry_idle, jump_start, jump_air (fall_loop), fall_loop, land_soft, land_hard, land_run (jump_run), climb_ledge, stumble_back, crouch_idle, crouch_walk, sit_idle, stand_up, sit_floor, handshake (handshake_a), wave, point, nod, shake_head, talk_1, talk_2, laugh, shock, facepalm, cheer, clap, kneel, write, phone_call, phone_text, drink, pick_up, sleep, lie_down, yawn, dance_hiphop_1, dance_samba_1, shove, hit_react_heavy, knock_down, get_up_sit, get_up_front, get_up_back, car_exit, car_drive, kick, pass_short, header_stand, dribble_run, tackle_slide, keeper_dive_L, keeper_catch, celebrate (victory), bicycle_kick, type_laptop
+- **Made by us (21):** idle_breathe, sit_down, sit_think, hug (hug_a), wave_from_car, eat_stand, eat_seated, horns, dazed_shake_head, car_passenger_idle, bike_mount, bike_dismount, cycle, cycle_freewheel, cycle_foot_down, okada_ride, okada_foot_down, okada_pillion, keke_drive, keke_passenger, raise_hand
 - **Still missing (26):** idle_impatient, idle_phone_check, sprint_skid_stop, carry_on_head, push_wheelbarrow, vault_low, drop_down, stumble_fwd, high_five, throw_cap, phone_photo, eat_suya, put_down, give, receive, wake_up, pray, hit_react_light, guard_idle, block, dodge_L, car_enter, bike_fall, cook_stir, sweep, farm_hoe
 
 Missing clips fall back to the nearest clip or a procedural pose in `src/anim/actor.ts` (`FALLBACKS`), so a mission never stalls.
@@ -18,8 +18,8 @@ Missing clips fall back to the nearest clip or a procedural pose in `src/anim/ac
 |---|---|---|
 | action.glb | 17 | 998 KB |
 | dance.glb | 8 | 622 KB |
-| locomotion.glb | 35 | 1142 KB |
-| social.glb | 50 | 3343 KB |
+| locomotion.glb | 36 | 1189 KB |
+| social.glb | 50 | 3216 KB |
 | sports.glb | 42 | 1936 KB |
 | vehicles.glb | 15 | 455 KB |
 
@@ -27,7 +27,7 @@ Missing clips fall back to the nearest clip or a procedural pose in `src/anim/ac
 
 | Clip | Pack | Source | Kind | What the build found |
 |---|---|---|---|---|
-| `idle_breathe` | locomotion | idle.fbx | loop | no skin, 30 fps, 4.00 s, in place, faced forward (-46 deg) |
+| `idle_ready` | locomotion | idle.fbx | loop | no skin, 30 fps, 4.00 s, in place, faced forward (-46 deg) |
 | `idle_look_around` | locomotion | idle (3).fbx | loop | no skin, 30 fps, 3.27 s, in place, faced forward (-54 deg) |
 | `idle_shift` | locomotion | idle (2).fbx | loop | no skin, 30 fps, 10.00 s, in place, faced forward (-47 deg) |
 | `walk_fwd` | locomotion | Walking.fbx | loop | no skin, 30 fps, 1.03 s, in-place loop, stride 1.786 m/s |
@@ -171,6 +171,7 @@ Missing clips fall back to the nearest clip or a procedural pose in `src/anim/ac
 | `keeper_direct` | sports | goalkeeper directing.fbx | once | no skin, 30 fps, 4.00 s, travels 2.63 m (root motion) |
 | `keeper_sidestep_L` | sports | goalkeeper sidestep.fbx | loop | no skin, 30 fps, 0.53 s, in-place loop, stride 2.354 m/s |
 | `keeper_sidestep_R` | sports | goalkeeper sidestep (2).fbx | loop | no skin, 30 fps, 0.50 s, in-place loop, stride 3.134 m/s |
+| `idle_breathe` | locomotion | made: a neutral standing frame from Head Nod Yes; breathing, a slow weight shift (feet held by IK), arms and head drifting; replaces the action-stance idles as idle_breathe | loop | 8.00 s |
 | `sit_down` | social | made: Stand Up played backwards, hips eased onto the Sitting Idle seat height | once | 4.83 s |
 | `sit_think` | social | made: Sitting Idle body; right elbow on the knee, knuckles to the chin, head tilted, slow finger tap | loop | 6.00 s |
 | `eat_stand` | social | made: idle / Sitting Idle body; right hand lifts food (a suya stick) to the mouth, bites, lowers; left hand holds the plate | loop | 4.20 s |

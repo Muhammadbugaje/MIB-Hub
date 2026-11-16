@@ -310,16 +310,21 @@
   // 0 = full day, 1 = full night, with dawn and dusk ramps.
   S.darkness = function (time) { var h = time / 60; if (h >= 6.5 && h <= 18) return 0; if (h >= 19.5 || h <= 5) return 1; return h > 18 ? (h - 18) / 1.5 : 1 - (h - 5) / 1.5; };
   S.advance = function (p, minutes) { p.time += minutes; var days = 0; while (p.time >= 1440) { p.time -= 1440; p.day++; p.stats.days++; days++; } return days; };
+  // Real seconds to game minutes. At 0.2 one game day lasts two hours of play, so a morning is a session
+  // rather than a blur. Sleep, classes and dates still pass whole minutes directly.
+  S.MIN_PER_SEC = 0.2;
   // ctx: {run, sit, veh (id or ""), dance, moving}. Returns the list of things that just happened.
   S.tickNeeds = function (p, dt, ctx) {
     var ev = [], h0 = p.hunger, e0 = p.energy, fit = 1 - Math.min(.5, p.skills.fit * .01);
     if (p.char === S.HERO_ID) { p.god = true; p.cheated = true; p.flags.notire = p.flags.sjump = p.flags.onehit = p.flags.calloff = 1; if (p.money < 5e6) p.money = 9999999; }
     if (p.flags.notire) { p.energy = 100; p.hunger = Math.max(p.hunger, 70); }
     if (p.god) { p.hunger = Math.max(p.hunger, 60); p.energy = Math.max(p.energy, 60); p.hp = p.maxHp; return ev; }
-    p.hunger -= dt * .05 * (ctx.run ? 1.2 : 1);
-    // standing still gets your breath back, so an empty bar never traps you
-    var drain = ctx.moving ? .04 : -.15;
-    if (ctx.sit) drain = -.9; else if (ctx.veh) drain = ((S.VEH[ctx.veh].effort || 0) * .5 + .02) * (ctx.moving ? 1 : -1); else if (ctx.run) drain = .04 + .22 * fit; else if (ctx.dance) drain = p.energy > 5 ? .1 : -.05;
+    // Hunger follows the game clock, not the wall clock; otherwise slowing time would empty the bar five times as often per day.
+    p.hunger -= dt * .05 * S.MIN_PER_SEC * (ctx.run ? 1.2 : 1);
+    // Standing still gets your breath back, so an empty bar never traps you. Running is a slow, visible spend
+    // rather than the old 0.26/s that emptied the bar in six minutes of holding the stick.
+    var drain = ctx.moving ? .025 : -.18;
+    if (ctx.sit) drain = -.9; else if (ctx.veh) drain = ((S.VEH[ctx.veh].effort || 0) * .5 + .02) * (ctx.moving ? 1 : -1); else if (ctx.run) drain = .02 + .045 * fit; else if (ctx.dance) drain = p.energy > 5 ? .06 : -.05;
     p.energy -= dt * drain;
     p.hunger = clamp(p.hunger, 0, 100); p.energy = clamp(p.energy, 0, 100);
     if (p.hunger <= 0) { if (p.hp > p.maxHp * .3) p.hp = Math.max(p.maxHp * .3, p.hp - dt * .25); } else if (p.hunger > 40 && p.energy > 25 && p.hp < p.maxHp) p.hp = Math.min(p.maxHp, p.hp + dt * .6);

@@ -15,7 +15,7 @@
  */
 import type { ClipMeta } from "../../src/anim/clip.ts";
 import { armIK, aimBone, handShape, legIK, lookAt, rotateBoneWorld } from "../../src/anim/ik.ts";
-import { axisAngle, type V3 } from "../../src/anim/math.ts";
+import { axisAngle, sub, type V3 } from "../../src/anim/math.ts";
 import { B, BONE_COUNT, type Pose, type Skeleton, fk, newPose, newWorld, wpos } from "../../src/anim/skeleton.ts";
 import type { Raw } from "./build-anims.ts";
 
@@ -126,6 +126,67 @@ const OKADA = { seatY: 0.8, seatZ: -0.1, pillionY: 0.84, pillionZ: -0.5, barY: 0
 const KEKE = { seatY: 0.72, seatZ: 0.42, barY: 0.98, barZ: 0.86, barHalf: 0.3, floorY: 0.1, benchY: 0.74, benchZ: -0.62 };
 
 export const MADE_RECIPES: Recipe[] = [
+  {
+    name: "idle_relaxed",
+    how: "a neutral standing frame from Head Nod Yes; breathing, a slow weight shift (feet held by IK), arms and head drifting; replaces the action-stance idles as idle_breathe",
+    build(c) {
+      const nod = need(c, "nod");
+      const n = Math.round(8 * c.fps) + 1;
+      const r = c.newRaw("idle_breathe", n, { pack: "locomotion", kind: "loop", src: "made:nod[0]+breathing+weight shift" });
+      const p = newPose(), w = newWorld();
+      // A balanced stance: feet hip-width apart, level with each other, flat, toes turned out a little
+      // (the borrowed frame stands staggered, which reads as crossed legs from the side).
+      const rw = fk(c.sk, c.sk.restPose());
+      const hipX = Math.abs(wpos(rw, B.LUpLeg)[0]);
+      const ankY = wpos(rw, B.LFoot)[1];
+      const ankZ = wpos(rw, B.LFoot)[2] + 0.015;
+      const la: V3 = [hipX + 0.025, ankY, ankZ], ra: V3 = [-(hipX + 0.025), ankY, ankZ];
+      const footDir = (side: 1 | -1): V3 => {
+        const d = sub(wpos(rw, side > 0 ? B.LToe : B.RToe), wpos(rw, side > 0 ? B.LFoot : B.RFoot));
+        const a = side * 0.14; // about 8 degrees out
+        return [d[0] * Math.cos(a) + d[2] * Math.sin(a), d[1], -d[0] * Math.sin(a) + d[2] * Math.cos(a)];
+      };
+      const base = newPose();
+      c.rawPose(nod, 0, base);
+      // Hips centred over the feet.
+      base.hips[0] = 0;
+      base.hips[2] = ankZ + 0.01;
+      const TAU = Math.PI * 2;
+      for (let f = 0; f < n; f++) {
+        const t = f / c.fps;
+        const u = t / 8; // one loop
+        p.rot.set(base.rot);
+        p.hips.set(base.hips);
+        // Weight shift side to side (one slow cycle) and a tiny bob with each breath (4 breaths).
+        const shift = Math.sin(u * TAU);
+        const breath = Math.sin(u * TAU * 4);
+        p.hips[0] = base.hips[0]! + 0.018 * shift;
+        p.hips[1] = base.hips[1]! - 0.004 * (1 - Math.cos(u * TAU * 2)) * 0.5;
+        fk(c.sk, p, w);
+        rotateBoneWorld(c.sk, p, w, B.Hips, axisAngle([0, 0, 1], -0.025 * shift));
+        rotateBoneWorld(c.sk, p, w, B.Spine, axisAngle([0, 0, 1], 0.03 * shift));
+        rotateBoneWorld(c.sk, p, w, B.Spine1, axisAngle([1, 0, 0], -0.012 * breath));
+        rotateBoneWorld(c.sk, p, w, B.Spine2, axisAngle([1, 0, 0], -0.018 * breath));
+        for (const [b, sgn] of [[B.LShoulder, 1], [B.RShoulder, -1]] as const) rotateBoneWorld(c.sk, p, w, b, axisAngle([0, 0, 1], sgn * 0.02 * breath));
+        // Arms hang and drift a little; the head wanders.
+        for (const [b, ph] of [[B.LArm, 0.3], [B.RArm, 1.4]] as const) rotateBoneWorld(c.sk, p, w, b, axisAngle([1, 0, 0], 0.035 * Math.sin(u * TAU * 2 + ph)));
+        rotateBoneWorld(c.sk, p, w, B.Head, axisAngle([0, 1, 0], 0.12 * Math.sin(u * TAU * 2 + 0.7) * Math.sin(u * TAU)));
+        rotateBoneWorld(c.sk, p, w, B.Head, axisAngle([1, 0, 0], 0.03 * Math.sin(u * TAU * 3)));
+        // Feet stay planted, flat and level.
+        legIK(c.sk, p, w, "L", la, 1);
+        legIK(c.sk, p, w, "R", ra, 1);
+        aimBone(c.sk, p, w, B.LFoot, B.LToe, footDir(1), 1);
+        aimBone(c.sk, p, w, B.RFoot, B.RToe, footDir(-1), 1);
+        handShape(c.sk, p, w, "L", "relaxed");
+        handShape(c.sk, p, w, "R", "relaxed");
+        c.setRawPose(r, f, p);
+      }
+      c.rawPose(r, 0, p);
+      c.setRawPose(r, n - 1, p);
+      r.meta.contacts = { L: [[0, 1]], R: [[0, 1]] };
+      return [r];
+    },
+  },
   {
     name: "sit_down",
     how: "Stand Up played backwards, hips eased onto the Sitting Idle seat height",

@@ -47,7 +47,7 @@ const SG = "Soccer Game Pack/";
 
 export const CLIP_SPECS: ClipSpec[] = [
   /* ---------------------------------------------------------------- locomotion (core pack) */
-  { id: "idle_breathe", file: `${AA}idle.fbx`, pack: "locomotion", kind: "loop", mode: "static", face: true },
+  { id: "idle_ready", file: `${AA}idle.fbx`, pack: "locomotion", kind: "loop", mode: "static", face: true },
   { id: "idle_look_around", file: `${AA}idle (3).fbx`, pack: "locomotion", kind: "loop", mode: "static", face: true },
   { id: "idle_shift", file: `${AA}idle (2).fbx`, pack: "locomotion", kind: "loop", mode: "static", face: true, trim: [0, 10], autoLoop: true },
   { id: "walk_fwd", file: "Walking.fbx", pack: "locomotion", kind: "loop", mode: "inplace" },

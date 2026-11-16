@@ -10,7 +10,7 @@ export default [
       // The old EE Hub games, copied as they are (they were checked in that project).
       "apps/web/public/play/_shared/js/**", "apps/web/public/play/_shared/vendor/**",
       // Work in Progress: the built game (its source in games/work-in-progress is linted).
-      "apps/web/public/play-files/**"],
+      "apps/web/public/play-files/**", "apps/web/public/play-files-dev/**"],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

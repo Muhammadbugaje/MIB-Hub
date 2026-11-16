@@ -7,9 +7,9 @@
 import * as pc from "playcanvas";
 import { Builder, MeshData, type RGBA, type V3 } from "../gfx/builder.ts";
 import type { MatLib } from "../gfx/materials.ts";
-import type { CollisionWorld } from "../sim/collide.ts";
+import type { Collider, CollisionWorld } from "../sim/collide.ts";
 import { makeRng } from "../sim/rng.ts";
-import { bushes, trees, type TreeKind } from "./layout.ts";
+import { bushes, trees, type TreeKind, type TreeSpot } from "./layout.ts";
 import { surfaceHeight } from "./surface.ts";
 
 type Parts = Map<string, MeshData>;
@@ -149,6 +149,11 @@ function instance(app: pc.AppBase, mats: MatLib, parent: pc.Entity, parts: Parts
   }
 }
 
+/** The solid trunk of a tree (the crown is overhead). Shared with the headless navigation bake. */
+export function trunkCollider(t: TreeSpot): Collider {
+  return { kind: "circle", x: t.x, z: t.z, r: (t.kind === "palm" ? 0.4 : 0.45) * t.scale };
+}
+
 export interface TreeInfo { x: number; z: number; crownY: number; crownR: number; kind: TreeKind }
 
 export function buildNature(app: pc.AppBase, mats: MatLib, parent: pc.Entity, col: CollisionWorld, lowQuality: boolean): TreeInfo[] {
@@ -160,7 +165,7 @@ export function buildNature(app: pc.AppBase, mats: MatLib, parent: pc.Entity, co
       const xf = spots.map((t) => new pc.Mat4().setTRS(new pc.Vec3(t.x, surfaceHeight(t.x, t.z), t.z), new pc.Quat().setFromEulerAngles(0, (t.rot * 180) / Math.PI, 0), new pc.Vec3(t.scale, t.scale, t.scale)));
       instance(app, mats, parent, makeModel(kind, v), xf, kind !== "far" && !(lowQuality && kind === "palm"), `tree-${kind}${v}`);
       for (const t of spots) {
-        if (kind !== "far") col.add({ kind: "circle", x: t.x, z: t.z, r: (kind === "palm" ? 0.4 : 0.45) * t.scale });
+        if (kind !== "far") col.add(trunkCollider(t));
         const crownY = { neem: 5.6, mango: 4.6, flame: 5.0, palm: 12.5, far: 4.5 }[kind] * t.scale;
         const crownR = { neem: 3.2, mango: 3.6, flame: 5, palm: 3.5, far: 2.5 }[kind] * t.scale;
         info.push({ x: t.x, z: t.z, crownY, crownR, kind });
