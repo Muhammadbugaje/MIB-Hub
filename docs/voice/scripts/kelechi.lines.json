@@ -1,0 +1,720 @@
+{
+ "character": "Kelechi",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Six Plaques",
+   "file": "Kelechi - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_open_01",
+     "text": "Stand where she's standing. Head like hers."
+    },
+    {
+     "n": 2,
+     "id": "m020_open_02",
+     "text": "What do you see?"
+    },
+    {
+     "n": 3,
+     "id": "m020_mid1_01",
+     "text": "She's by a different hand. Look at the chisel."
+    },
+    {
+     "n": 4,
+     "id": "m020_mid1_02",
+     "text": "Somebody who loved her made that one."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Hock Day",
+   "file": "Kelechi - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m080_close_01",
+     "text": "Sorry. I graduate this year."
+    },
+    {
+     "n": 2,
+     "id": "m080_close_02",
+     "text": "I only asked for one more ordinary day. With everybody."
+    },
+    {
+     "n": 3,
+     "id": "m080_close_03",
+     "text": "I didn't think it would listen."
+    },
+    {
+     "n": 4,
+     "id": "m080_close_04",
+     "text": "Clay doesn't rush. I should have known."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Final Crit",
+   "file": "Kelechi - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m091_open_04",
+     "text": "Clay doesn't rush. Everything else, please rush."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "One Left",
+   "file": "Kelechi - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m096_open_01",
+     "text": "It's finished. That is where it finishes."
+    },
+    {
+     "n": 2,
+     "id": "m096_open_02",
+     "text": "Don't riddle me. Just hug."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Kelechi - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_greet_01",
+     "text": "Ndewo. [Hello.] Sit. Don't touch the wet one."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_greet_02",
+     "text": "Ah. You. Hold still. Your jaw is useful."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_f_greet_03",
+     "text": "Morning. The light is good today. Stay in it."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_f_greet_04",
+     "text": "Hello. Mind the chisel. It has opinions."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Kelechi - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_bye_01",
+     "text": "Go. Come back when the clay is dry."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_bye_02",
+     "text": "Bye. Walk slowly. You miss things."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Kelechi - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_thanks_01",
+     "text": "Daalu. [Thank you.] That was kind. I'll remember the shape of it."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_sorry_01",
+     "text": "Sorry. Clay on your sleeve. It washes. Mostly."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Kelechi - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_compliment_01",
+     "text": "You have good hands. You don't use them. Yet."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_compliment_02",
+     "text": "You stand well. Like you're listening."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Kelechi - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_tease_01",
+     "text": "You talk while you work. The clay can hear you rushing."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_tease_02",
+     "text": "You call that a sketch? It's a rumour of a sketch."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Kelechi - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_follow_01",
+     "text": "I'll walk with you. Slowly. Clay doesn't rush. Neither do I."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_wait_01",
+     "text": "Take your time. I'm used to waiting. Stone waits better."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_f_lost_01",
+     "text": "Wrong garden. Sculptures are this way. The ones that look at things."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Kelechi - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_yes_01",
+     "text": "Yes."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_no_01",
+     "text": "No. Not yet."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_f_maybe_01",
+     "text": "Maybe. Let it dry. Then ask again."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_f_confused_01",
+     "text": "Hm. Say it again. Slower. With your hands."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_f_confused_02",
+     "text": "Who? There was nobody there fa. Only the statues."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_f_agree_01",
+     "text": "Yes. That's the line. Keep that line."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_f_refuse_01",
+     "text": "No. It's not finished. Nothing's finished. But no."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Kelechi - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_joke_01",
+     "text": "What did the clay say to the kiln? 'Don't rush me.' …I only have one joke."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_ask_01",
+     "text": "What do you see? Not what you know. What you see."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Kelechi - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_win_01",
+     "text": "We won. Good. Now back to work."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_lose_01",
+     "text": "We lost. Clay forgives. People should too."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Kelechi - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_hit_01",
+     "text": "Careful. I'm fine. The bust is fine. That's what matters."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_fall_01",
+     "text": "I'm down. Good angle from here. I'll get up later."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_f_blackout_01",
+     "text": "Light's gone. Good. You feel the shape better in the dark."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_f_light_back_01",
+     "text": "Light. Now I see what I did in the dark. Hm."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_f_rain_01",
+     "text": "Rain. The clay pit will be perfect tomorrow."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_f_heat_01",
+     "text": "Heat. The clay cracks. So do I. Water, please."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Kelechi - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_food_01",
+     "text": "Abacha from Mama Nkechi. [Cassava salad.] Tastes like home. Don't tell her I cried."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_money_01",
+     "text": "Clay is cheap. Bronze is not. I work in clay."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Kelechi - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_gift_like_01",
+     "text": "For me? Thank you. I'll keep it on the shelf by the window."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_gift_dislike_01",
+     "text": "Hm. It's very… finished. Thank you."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_f_gift_love_01",
+     "text": "A new chisel. Good steel. You listened. Daalu. [Thank you.]"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Kelechi - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_idle_01",
+     "text": "Turn. Look. Wait. Turn."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_idle_02",
+     "text": "Clay doesn't rush."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Kelechi - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_night_01",
+     "text": "At night the garden is different. The statues rest. Don't wake them."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Kelechi - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_f_callback_01",
+     "text": "Stand where she's standing. You remember? You saw it. Good."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_f_callback_02",
+     "text": "Six gazes. They crossed. I only noticed because I had nothing to do."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Kelechi - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_y1_greet_01",
+     "text": "Fresher. Come and see the garden. Everybody passes it. Nobody looks."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_y1_idle_01",
+     "text": "The girl feeding fish. Nobody knows who carved her. I've asked everyone."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_y1_idle_02",
+     "text": "Somebody who loved her made that one. Look at the chisel."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_y1_callback_01",
+     "text": "You followed the six gazes with a compass. Most people use their phone."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_y1_compliment_01",
+     "text": "You looked at the statue for a full minute. Freshers never do that."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_y1_tease_01",
+     "text": "You touched the wet one. I know you did. Your thumbprint is famous now."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_y1_night_01",
+     "text": "The statue faces the pond by day. I don't look at night. On purpose."
+    },
+    {
+     "n": 8,
+     "id": "bk_kelechi_y1_ask_01",
+     "text": "Do you draw? No? Tunde will teach you. Without speaking."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Kelechi - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_y2_greet_01",
+     "text": "Second year. The mall bought a fountain. It has no face. Sad."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_y2_idle_01",
+     "text": "They want a statue for the mall. Of Chief Megawatt. In bronze. No."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_y2_idle_02",
+     "text": "Tunde and I share the studio. He draws, I shape. Nobody talks."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_y2_tease_01",
+     "text": "You're busy now. Too busy to look at things. Come back."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_y2_compliment_01",
+     "text": "You helped Lyzzy with the cables. Gently. I saw."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_y2_callback_01",
+     "text": "The night the mall went dark, the garden lit up. The statues looked happy."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_y2_ask_01",
+     "text": "Have you been to the Old Eye? I'd like to see it. Not at night."
+    },
+    {
+     "n": 8,
+     "id": "bk_kelechi_y2_ev_valentine_01",
+     "text": "Valentine. I made a small heart in clay. It cracked. Typical."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Kelechi - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_y3_greet_01",
+     "text": "You stayed. Good. Empty campus. Best light I've ever had."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_y3_idle_01",
+     "text": "Strike. No crits. No deadlines. I've made nine heads. All of Sly."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_y3_idle_02",
+     "text": "Clay from the dam. Better than shop clay. Baba Dam showed me where."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_y3_callback_01",
+     "text": "The tower above the dam. Half a tower. It's a good sculpture."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_y3_compliment_01",
+     "text": "You kept people together. That's sculpting too. With people."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_y3_tease_01",
+     "text": "You learned to sit still during the strike. Took a strike."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_y3_ev_strike_01",
+     "text": "Strike month seven. I've sculpted the Spot's whole menu."
+    },
+    {
+     "n": 8,
+     "id": "bk_kelechi_y3_blackout_01",
+     "text": "No light again. I'm working by feel. Like my grandfather tuning a radio."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Kelechi - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_y4_greet_01",
+     "text": "Sorry. I graduate this year. I keep saying sorry about it."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_y4_idle_01",
+     "text": "Last year. I keep memorising ordinary things. The tea. The bench. You."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_y4_idle_02",
+     "text": "My last piece. Five hands, and a space. Don't ask me what the space is."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_y4_callback_01",
+     "text": "I didn't think it would listen. That Wednesday. And that Wednesday."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_y4_callback_02",
+     "text": "Degree show. Clay was calm. The generator was not. Aleeya saved us."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_y4_callback_03",
+     "text": "I signed it and walked. You don't keep touching a finished thing."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_y4_compliment_01",
+     "text": "You made the day ordinary. Thank you. That's the best gift."
+    },
+    {
+     "n": 8,
+     "id": "bk_kelechi_y4_tease_01",
+     "text": "Bature tried a riddle at my goodbye. I hugged him mid-riddle. Best ending."
+    },
+    {
+     "n": 9,
+     "id": "bk_kelechi_y4_bye_01",
+     "text": "I'm going. Visit the hands sometimes. Say hello. They'll know."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Kelechi - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_y5_greet_01",
+     "text": "Ndewo! [Hello!] I'm back for a week. The garden looks right."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_y5_idle_01",
+     "text": "I teach now. In a school. The children rush. I'm learning."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_y5_idle_02",
+     "text": "The five hands. Somebody put flowers in the space. Lily, probably."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_y5_callback_01",
+     "text": "My five hands are still there. Nobody moved them. Good."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_y5_compliment_01",
+     "text": "You walk slower now. You see more. Good."
+    },
+    {
+     "n": 6,
+     "id": "bk_kelechi_y5_tease_01",
+     "text": "Final year and still no clay under your nails. Shame."
+    },
+    {
+     "n": 7,
+     "id": "bk_kelechi_y5_bye_01",
+     "text": "Convocation. Stand straight. Look at something you love. That's the photo."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Kelechi - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_ev_ev_freshers_01",
+     "text": "Freshers. Come to the Sculpture Garden. It's free. The statues don't bite."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_ev_ev_exam_01",
+     "text": "Exam week. Art history. Three thousand years in three hours. Rushed."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_ev_ev_results_01",
+     "text": "Results. I passed. The kiln is proud of me."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_ev_ev_allowance_01",
+     "text": "Allowance. Two bags of clay, one plate of rice. Balanced diet."
+    },
+    {
+     "n": 5,
+     "id": "bk_kelechi_ev_ev_market_day_01",
+     "text": "Market day. The potter by the gate. She's the best artist on campus."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Kelechi - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_ev_ev_cup_01",
+     "text": "Cup final. I made a trophy once. It's in the Engineering block. Ugly. They love it."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_ev_ev_elections_01",
+     "text": "I'm voting for whoever fixes the art gallery roof. Nobody promised."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_ev_ev_convocation_01",
+     "text": "Gowns. All those folds. I'd love to sculpt this. In a year. Slowly."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Kelechi - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kelechi_ev_ev_ramadan_01",
+     "text": "Iftar with Tunde and the Arts boys. I bring cups. Clay. I made them."
+    },
+    {
+     "n": 2,
+     "id": "bk_kelechi_ev_ev_christmas_01",
+     "text": "Christmas. Home to my mother's kitchen. I'll make her a new pot."
+    },
+    {
+     "n": 3,
+     "id": "bk_kelechi_ev_ev_valentine_01",
+     "text": "Valentine. Tunde drew everyone's crush. Then hid the drawings. Wise."
+    },
+    {
+     "n": 4,
+     "id": "bk_kelechi_ev_ev_harmattan_01",
+     "text": "Harmattan. The clay dries in an hour. I work in a wet cloth. Like a ghost."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

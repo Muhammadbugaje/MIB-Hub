@@ -1,0 +1,799 @@
+{
+ "character": "Lyzzy",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Matric Fit",
+   "file": "Lyzzy - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_mid1_02",
+     "text": "Don't move! Your face is a moment!"
+    },
+    {
+     "n": 2,
+     "id": "m004_close_01",
+     "text": "There's you. The kite."
+    },
+    {
+     "n": 3,
+     "id": "m004_close_02",
+     "text": "That's nobody. That's a gap."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Radio Silence",
+   "file": "Lyzzy - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_mid1_02",
+     "text": "(Breathe! Your voice is a moment!)"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Six Plaques",
+   "file": "Lyzzy - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_open_03",
+     "text": "He's looking at her. She's looking at the Senate."
+    },
+    {
+     "n": 2,
+     "id": "m020_open_04",
+     "text": "Typical."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Test Week Twist",
+   "file": "Lyzzy - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_close_01",
+     "text": "I had to include everyone. It's journalism."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Called Off",
+   "file": "Lyzzy - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_open_02",
+     "text": "Don't move, my arrival is a moment. What did I miss?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Proof of Work",
+   "file": "Lyzzy - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m083_open_04",
+     "text": "I brought every tape we own. Don't be nice to me."
+    },
+    {
+     "n": 2,
+     "id": "m083_mid1_01",
+     "text": "I shared this clip before I checked it."
+    },
+    {
+     "n": 3,
+     "id": "m083_mid1_02",
+     "text": "So this time, you check. Here is how."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Election Day",
+   "file": "Lyzzy - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m085_open_01",
+     "text": "Live in five, four…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Double Booking",
+   "file": "Lyzzy - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m093_mid1_01",
+     "text": "We saw it first. Dates down the side."
+    },
+    {
+     "n": 2,
+     "id": "m093_mid1_03",
+     "text": "I checked every line. Twice. I check now."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Log Off",
+   "file": "Lyzzy - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_close_02",
+     "text": "Checked. Twice. TOP OF TWO COURSES. Four years!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Dinner Night",
+   "file": "Lyzzy - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m109_close_01",
+     "text": "Don't smudge it. Your faces are a moment."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Convocation",
+   "file": "Lyzzy - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_mid2_04",
+     "text": "Don't."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Lyzzy - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_greet_01",
+     "text": "Don't move! Your face is a moment!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_greet_02",
+     "text": "Breaking news: you're here. Sources confirm. Sources is me."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_f_greet_03",
+     "text": "Ahn ahn! [Oh my!] Look at you. Walking. Live."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_f_greet_04",
+     "text": "Hey! We saw you first. Lily saw you second. She's slow."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Lyzzy - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_bye_01",
+     "text": "And that's all from the field! Back to you, studio. Bye!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_bye_02",
+     "text": "Bye! Don't do anything interesting without me."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Lyzzy - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_thanks_01",
+     "text": "Thank you! Exclusive thank-you. Nobody else is getting this one."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_sorry_01",
+     "text": "Sorry! I posted it already. I'll post a sorry. Twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Lyzzy - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_compliment_01",
+     "text": "Your outfit is giving front page. Turn left. Other left."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_compliment_02",
+     "text": "You look like a story. A good one. With a happy ending."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Lyzzy - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_tease_01",
+     "text": "You and a certain someone at the Spot. We saw it first. Columns, darling."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_tease_02",
+     "text": "Here we see the fresher in the wild. Habitat: the wrong theatre."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Lyzzy - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_follow_01",
+     "text": "I'm following you. For content. And friendship. Mostly content."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_wait_01",
+     "text": "We're live in five. Four. You're not here. Three."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_f_lost_01",
+     "text": "Breaking: you're lost. Theatre Gabas is that way. We've all done it."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Lyzzy - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_yes_01",
+     "text": "Yes! Quote me!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_no_01",
+     "text": "No comment. That's a no. With lip gloss."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_f_maybe_01",
+     "text": "Maybe. Developing story."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_f_confused_01",
+     "text": "Wait, wait. Rewind. Say it slower. For the tape."
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_f_confused_02",
+     "text": "Who? There was nobody there fa. I'd have filmed him."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_f_agree_01",
+     "text": "Exactly! That's my headline!"
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_f_refuse_01",
+     "text": "I can't run that. Lily said no. Lily is legal."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Lyzzy - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_joke_01",
+     "text": "Why did the camera break up? Too many takes. Ha! Lily, laugh."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_ask_01",
+     "text": "What happened? Tell me everything. Leave out nothing. Add nothing. I'm learning."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Lyzzy - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_win_01",
+     "text": "WE WON! Don't move! This is a moment!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_lose_01",
+     "text": "We lost. Don't film me. …Film me a little."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Lyzzy - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_hit_01",
+     "text": "Ow! Assault on the press! I'm fine. I'm reporting it to Lily."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_fall_01",
+     "text": "I'm down! Get my good side! Both sides!"
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_f_blackout_01",
+     "text": "NEPA has entered the chat. My battery is at four percent. Pray for the story."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_f_light_back_01",
+     "text": "Light! Charge everything! The phone! The ring light! My soul!"
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_f_rain_01",
+     "text": "Lily said it would rain. She's never wrong. It's very annoying."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_f_heat_01",
+     "text": "This heat. My lip gloss has melted into a new shade. 'Ring Road Sunset.'"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Lyzzy - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_food_01",
+     "text": "Suya at the Spot. Live tasting. Hmm. Ten. Lily says nine."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_money_01",
+     "text": "Data finished. A journalist without data is just a girl shouting."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Lyzzy - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_gift_like_01",
+     "text": "For me? Exclusive! I'll post it. With credit!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_gift_dislike_01",
+     "text": "Oh. Lovely. I'll… archive it."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_f_gift_love_01",
+     "text": "A new lip gloss! In my shade! Don't move, I'm reapplying in shock!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Lyzzy - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_idle_01",
+     "text": "And here comes the Faculty of Law, late, again, live."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_idle_02",
+     "text": "Lily, look. No, don't look. Okay, look now. Too late."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Lyzzy - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_night_01",
+     "text": "Night shift at the station. Every sound is a scoop."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Lyzzy - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_f_callback_01",
+     "text": "You matriculated as a kite. That photo still gets likes."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_f_callback_02",
+     "text": "The class photo. Back row. A gap. I printed it twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Lyzzy - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_y1_greet_01",
+     "text": "Fresher! Smile! You're going on the noticeboard!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_y1_idle_01",
+     "text": "He's looking at her. She's looking at the Senate. Typical."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_y1_idle_02",
+     "text": "Matric photo is up! Everybody looks like a hostage. Beautifully."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_y1_callback_01",
+     "text": "That first night on Ring Road FM. I whispered 'breathe'. I forgot to."
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_y1_callback_02",
+     "text": "Six statues, six love stories. One of them is just staring at a pond."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_y1_tease_01",
+     "text": "You and the goat at the court. We saw it first."
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_y1_compliment_01",
+     "text": "You looked so brave in the queue. Hungry, but brave."
+    },
+    {
+     "n": 8,
+     "id": "bk_lyzzy_y1_night_01",
+     "text": "Lily, is the statue looking at the hospital? …No. Never mind. Night."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Lyzzy - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_y2_greet_01",
+     "text": "Noticeboard exclusive! I need a quote! Say anything! Not that!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_y2_idle_01",
+     "text": "Mall opens. Price of suya doubles. My story. Front page."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_y2_idle_02",
+     "text": "Mubarak's opening. Free drinks. Not free. Lyzzy reports."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_y2_callback_01",
+     "text": "I included everyone in the test week story. It's journalism."
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_y2_callback_02",
+     "text": "The radio riddle. Nobody named. Everybody knew. Chills."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_y2_tease_01",
+     "text": "Love in the time of NEPA. Who held hands in the blackout? Columns, darling."
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_y2_follow_01",
+     "text": "Come, the hearing! I have a front-row seat! I made it myself!"
+    },
+    {
+     "n": 8,
+     "id": "bk_lyzzy_y2_ev_valentine_01",
+     "text": "Valentine's at the Love Garden. Twelve couples. Two are new. One is a mistake."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Lyzzy - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_y3_greet_01",
+     "text": "Don't move, my arrival is a moment. What did I miss?"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_y3_idle_01",
+     "text": "Strike. Lily's here. I'm home. We video call. She shows me plants."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_y3_idle_02",
+     "text": "Campus TV off air. I'm broadcasting to the mirror. Ratings are great."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_y3_callback_01",
+     "text": "Called off! Buses at the gate! Best live coverage of my life!"
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_y3_tease_01",
+     "text": "You stayed through the strike? Hero. Or no bus fare. I'll write both."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_y3_ev_strike_01",
+     "text": "Strike month four. I've interviewed my own parents. Twice."
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_y3_compliment_01",
+     "text": "You kept Lily company. She said so. With words. Three of them."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Lyzzy - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_y4_greet_01",
+     "text": "Hello. Before I say anything: have I checked it? Yes. Twice. Hi."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_y4_idle_01",
+     "text": "I checked every line. Twice. I check now."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_y4_idle_02",
+     "text": "Source. Second source. Then post. Then lip gloss. That's the order."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_y4_idle_03",
+     "text": "Lucky posted. I shared. I didn't check. I still think about it."
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_y4_callback_01",
+     "text": "I shared that clip before I checked. Don't be nice to me."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_y4_callback_02",
+     "text": "An Echo repeats. It never invents. We proved it. Live."
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_y4_callback_03",
+     "text": "The wall chart. Dates down the side. Lily laminated it. I told her not to."
+    },
+    {
+     "n": 8,
+     "id": "bk_lyzzy_y4_compliment_01",
+     "text": "You forgave me fast. Faster than I forgave me."
+    },
+    {
+     "n": 9,
+     "id": "bk_lyzzy_y4_tease_01",
+     "text": "Lucky says 'link in bio'. Link to what, Lucky? Your conscience?"
+    },
+    {
+     "n": 10,
+     "id": "bk_lyzzy_y4_ev_elections_01",
+     "text": "Live in five, four… election coverage. Checked. Twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Lyzzy - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_y5_greet_01",
+     "text": "Final year! Every face is a moment! I'm running out of storage!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_y5_idle_01",
+     "text": "Convocation footage. I'm filming everybody. Even the guard Dad argues with."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_y5_idle_02",
+     "text": "Five years of tapes. Lily's labelling them. In order. Finally."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_y5_callback_01",
+     "text": "Bature's results. I checked them three times. Still true. Still shocking."
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_y5_callback_02",
+     "text": "Dinner night. Don't smudge it. Your faces are a moment."
+    },
+    {
+     "n": 6,
+     "id": "bk_lyzzy_y5_compliment_01",
+     "text": "You're my favourite story. Don't tell Lily. Lily knows."
+    },
+    {
+     "n": 7,
+     "id": "bk_lyzzy_y5_tease_01",
+     "text": "Defence day. Your tie is a moment. Not a good one."
+    },
+    {
+     "n": 8,
+     "id": "bk_lyzzy_y5_bye_01",
+     "text": "After convocation… Don't. I'll cry on the footage."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Lyzzy - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_ev_ev_freshers_01",
+     "text": "Freshers' Week! New faces! New moments! Everybody, don't move!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_ev_ev_exam_01",
+     "text": "Exam week. No gossip. I'm lying. There's gossip."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_ev_ev_results_01",
+     "text": "Results are up! Don't crowd the board! I'm filming the board!"
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_ev_ev_allowance_01",
+     "text": "Allowance! New lip gloss! Breaking news!"
+    },
+    {
+     "n": 5,
+     "id": "bk_lyzzy_ev_ev_market_day_01",
+     "text": "Market day. KB's prices went up when he saw my camera. Story."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Lyzzy - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_ev_ev_cup_01",
+     "text": "Cup final, live! Jega's left boot is ON. I repeat, the left boot is on!"
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_ev_ev_convocation_01",
+     "text": "Gowns, caps, mothers crying. My finest broadcast. Don't move!"
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Lyzzy - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lyzzy_ev_ev_ramadan_01",
+     "text": "Iftar on the mosque grounds. Three hundred people, one sunset. Beautiful shot."
+    },
+    {
+     "n": 2,
+     "id": "bk_lyzzy_ev_ev_christmas_01",
+     "text": "Christmas break. Lily and I fight over the window seat. Live. Every year."
+    },
+    {
+     "n": 3,
+     "id": "bk_lyzzy_ev_ev_valentine_01",
+     "text": "Valentine's. I'm single. Fact-checked. Twice."
+    },
+    {
+     "n": 4,
+     "id": "bk_lyzzy_ev_ev_harmattan_01",
+     "text": "Harmattan haze. Every shot looks like a flashback. I love it. My skin doesn't."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

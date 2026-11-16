@@ -1,0 +1,1282 @@
+{
+ "character": "The Maker",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Mai Shayi Knows",
+   "file": "The Maker - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_mid1_01",
+     "text": "I do not write notes. I do not watch."
+    },
+    {
+     "n": 2,
+     "id": "m006_mid1_02",
+     "text": "I listen. It is a different job."
+    },
+    {
+     "n": 3,
+     "id": "m006_mid1_03",
+     "text": "Whoever sent that wanted you here. So. You came."
+    },
+    {
+     "n": 4,
+     "id": "m006_mid1_04",
+     "text": "Go and sleep. It will be a long five years."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Baba Dam's Pier",
+   "file": "The Maker - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m015_close_01",
+     "text": "My sister used to feed the fish here."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Six Plaques",
+   "file": "The Maker - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_mid1_03",
+     "text": "You went down for that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Everybody",
+   "file": "The Maker - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m022_open_01",
+     "text": "I have kept one coil lit alone for a long time."
+    },
+    {
+     "n": 2,
+     "id": "m022_open_02",
+     "text": "I begin to suspect I was doing it wrong."
+    },
+    {
+     "n": 3,
+     "id": "m022_open_03",
+     "text": "It needs people round it. Not soldiers. Witnesses."
+    },
+    {
+     "n": 4,
+     "id": "m022_open_04",
+     "text": "It was designed for a crowd. I had forgotten."
+    },
+    {
+     "n": 5,
+     "id": "m022_open_05",
+     "text": "I do not know many people. You seem to."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "The Mall Never Blinks",
+   "file": "The Maker - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m029_close_01",
+     "text": "A poet wrote, a long time ago…"
+    },
+    {
+     "n": 2,
+     "id": "m029_close_02",
+     "text": "At night there is no light, and colours are not seen;"
+    },
+    {
+     "n": 3,
+     "id": "m029_close_04",
+     "text": "Hence we know what light is by its opposite, darkness."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Iron Mama Hums",
+   "file": "The Maker - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m032_close_01",
+     "text": "Describe it."
+    },
+    {
+     "n": 2,
+     "id": "m032_close_02",
+     "text": "A thermodynamically incontinent leviathan,"
+    },
+    {
+     "n": 3,
+     "id": "m032_close_03",
+     "text": "hoarding our electrons."
+    },
+    {
+     "n": 4,
+     "id": "m032_close_05",
+     "text": "A greedy generator."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "The Second Coil",
+   "file": "The Maker - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m041_open_01",
+     "text": "Three parts. Two I can specify. One I cannot."
+    },
+    {
+     "n": 2,
+     "id": "m041_open_02",
+     "text": "The professor fitted that one herself. Would not let us watch."
+    },
+    {
+     "n": 3,
+     "id": "m041_open_03",
+     "text": "Her methodology was incontrovertibly,"
+    },
+    {
+     "n": 4,
+     "id": "m041_open_04",
+     "text": "perspicaciously communitarian."
+    },
+    {
+     "n": 5,
+     "id": "m041_open_06",
+     "text": "She liked people. The part should come from one."
+    },
+    {
+     "n": 6,
+     "id": "m041_open_07",
+     "text": "Ask my niece. Ask properly."
+    },
+    {
+     "n": 7,
+     "id": "m041_close_01",
+     "text": "A crystal. Of course. She would hide a jewel in a machine."
+    },
+    {
+     "n": 8,
+     "id": "m041_close_03",
+     "text": "Then we have a coil. We lack only a way in."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "The Maker - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_close2_01",
+     "text": "A poet wrote, a long time ago…"
+    },
+    {
+     "n": 2,
+     "id": "m044_close2_02",
+     "text": "What was the friendship of lights like us to darkness?"
+    },
+    {
+     "n": 3,
+     "id": "m044_close2_06",
+     "text": "How can light dwell together with darkness?"
+    },
+    {
+     "n": 4,
+     "id": "m044_close2_03",
+     "text": "Antidisestablishmentarian it is not. But it was splendiferous."
+    },
+    {
+     "n": 5,
+     "id": "m044_close2_05",
+     "text": "Two of them were. It went well."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "The Maker's Secret",
+   "file": "The Maker - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m061_open_01",
+     "text": "She wrote that for me. She was always early."
+    },
+    {
+     "n": 2,
+     "id": "m061_open_02",
+     "text": "No. Thank you. Give me the lead."
+    },
+    {
+     "n": 3,
+     "id": "m061_mid1_05",
+     "text": "I have been perambulating the perimeter of my own procrastination."
+    },
+    {
+     "n": 4,
+     "id": "m061_mid1_07",
+     "text": "Forty years. Yes."
+    },
+    {
+     "n": 5,
+     "id": "m061_mid2_01",
+     "text": "A poet wrote, a long time ago:"
+    },
+    {
+     "n": 6,
+     "id": "m061_mid2_02",
+     "text": "\"Hearken to the reed-flute, how it discourses"
+    },
+    {
+     "n": 7,
+     "id": "m061_mid2_03",
+     "text": "When complaining of the pains of separation.\""
+    },
+    {
+     "n": 8,
+     "id": "m061_close_01",
+     "text": "My notebook. When you are a finalist. Not before."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "The Idle King",
+   "file": "The Maker - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_close_01",
+     "text": "A poet wrote: \"For from contraries contraries are"
+    },
+    {
+     "n": 2,
+     "id": "m066_close_02",
+     "text": "brought forth, / Out of darkness was created light.\""
+    },
+    {
+     "n": 3,
+     "id": "m066_close_03",
+     "text": "Thank you for the noise."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "The Third Coil Wakes",
+   "file": "The Maker - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m070_mid1_04",
+     "text": "Triskaidekaphobia I have none; trinities I adore. Three!"
+    },
+    {
+     "n": 2,
+     "id": "m070_mid1_06",
+     "text": "I am just happy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Wedding at the Quarters",
+   "file": "The Maker - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m071_close_01",
+     "text": "A poet wrote: \"He who abides far away from his home"
+    },
+    {
+     "n": 2,
+     "id": "m071_close_02",
+     "text": "Is ever longing for the day he shall return.\""
+    },
+    {
+     "n": 3,
+     "id": "m071_close_03",
+     "text": "A good wedding. Somebody planned this one."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Lights on the Long Road",
+   "file": "The Maker - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m072_close_01",
+     "text": "An old argument."
+    },
+    {
+     "n": 2,
+     "id": "m072_close_02",
+     "text": "Forty. Good."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "The Old Eye (Heist 2)",
+   "file": "The Maker - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_close_01",
+     "text": "Sesquipedalian sky-sorcery, executed with immaculate alacrity."
+    },
+    {
+     "n": 2,
+     "id": "m081_close_03",
+     "text": "Check. Well flown."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Cancelled",
+   "file": "The Maker - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m082_close_03",
+     "text": "A poet wrote this, long ago. Not I."
+    },
+    {
+     "n": 2,
+     "id": "m082_close_04",
+     "text": "\"The mirror of the heart must needs be polished"
+    },
+    {
+     "n": 3,
+     "id": "m082_close_05",
+     "text": "Before you can distinguish fair and foul therein.\""
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "The Eel's Bargain",
+   "file": "The Maker - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m090_close_01",
+     "text": "A poet's line. Not mine."
+    },
+    {
+     "n": 2,
+     "id": "m090_close_02",
+     "text": "\"The water of life is hidden in the land of darkness.\""
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "The Mirror",
+   "file": "The Maker - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m092_close_01",
+     "text": "A poet asked this, long ago:"
+    },
+    {
+     "n": 2,
+     "id": "m092_close_02",
+     "text": "\"Knowest thou why thy mirror reflects not?"
+    },
+    {
+     "n": 3,
+     "id": "m092_close_03",
+     "text": "Because the rust has not been scoured from its face.\""
+    },
+    {
+     "n": 4,
+     "id": "m092_close_04",
+     "text": "Your counterfeit was hopelessly, magnificently two-dimensional."
+    },
+    {
+     "n": 5,
+     "id": "m092_close_06",
+     "text": "It couldn't be drawn."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "The Maker's Notebook",
+   "file": "The Maker - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m098_open_01",
+     "text": "Pneumonoultramicroscopic patience is required"
+    },
+    {
+     "n": 2,
+     "id": "m098_open_02",
+     "text": "for page two hundred and six."
+    },
+    {
+     "n": 3,
+     "id": "m098_open_04",
+     "text": "So is waiting. Read."
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Everybody, Again",
+   "file": "The Maker - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_close_01",
+     "text": "A magnanimous concatenation of synchronicity!"
+    },
+    {
+     "n": 2,
+     "id": "m106_close_02",
+     "text": "Ten faculties, one denominator!"
+    },
+    {
+     "n": 3,
+     "id": "m106_close_04",
+     "text": "Everybody came."
+    },
+    {
+     "n": 4,
+     "id": "m106_close_07",
+     "text": "Someone who will leave."
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "The Longest Night",
+   "file": "The Maker - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_close_01",
+     "text": "A poet wrote, long ago:"
+    },
+    {
+     "n": 2,
+     "id": "m111_close_02",
+     "text": "'Oftentimes hope succeeds to hopelessness,"
+    },
+    {
+     "n": 3,
+     "id": "m111_close_03",
+     "text": "Many times does sunlight succeed to darkness.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "The Ten Seals",
+   "file": "The Maker - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_close_01",
+     "text": "A poet wrote:"
+    },
+    {
+     "n": 2,
+     "id": "m114_close_02",
+     "text": "'Worldly senses are the ladder of earth,"
+    },
+    {
+     "n": 3,
+     "id": "m114_close_03",
+     "text": "Spiritual senses are the ladder of heaven.'"
+    },
+    {
+     "n": 4,
+     "id": "m114_close_04",
+     "text": "We shall need both. Mind your step."
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "Chancellor Null",
+   "file": "The Maker - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_close_01",
+     "text": "Quickly now. I have kept everyone waiting."
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "The Maker's Graduation",
+   "file": "The Maker - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_open_01",
+     "text": "I believe this is yours."
+    },
+    {
+     "n": 2,
+     "id": "m116_open_02",
+     "text": "I have had it far too long."
+    },
+    {
+     "n": 3,
+     "id": "m116_open_04",
+     "text": "Someone who will leave."
+    },
+    {
+     "n": 4,
+     "id": "m116_mid1_03",
+     "text": "A poet's words, not mine:"
+    },
+    {
+     "n": 5,
+     "id": "m116_mid1_04",
+     "text": "'This eye and that lamp are two lights, each individual;"
+    },
+    {
+     "n": 6,
+     "id": "m116_mid1_05",
+     "text": "When they came together, no one distinguished them.'"
+    },
+    {
+     "n": 7,
+     "id": "m116_mid2_01",
+     "text": "Floccinaucinihilipilification of fear:"
+    },
+    {
+     "n": 8,
+     "id": "m116_mid2_02",
+     "text": "I hereby value it at nothing."
+    },
+    {
+     "n": 9,
+     "id": "m116_mid2_04",
+     "text": "I am not afraid any more."
+    },
+    {
+     "n": 10,
+     "id": "m116_mid2_05",
+     "text": "'And if the sun did not fare by wing and foot every night,"
+    },
+    {
+     "n": 11,
+     "id": "m116_mid2_06",
+     "text": "How would the world be illuminated at morning-tide?'"
+    },
+    {
+     "n": 12,
+     "id": "m116_mid2_09",
+     "text": "Ai—"
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "Fresher",
+   "file": "The Maker - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m120_mid1_01",
+     "text": "Somebody chose your door. One day, choose well."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Maker - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_greet_01",
+     "text": "You again. Good. Stand outside the fence."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_greet_02",
+     "text": "Good evening. Mind the cable. It minds you less."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_greet_03",
+     "text": "Ah. The fresher who runs toward things."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_greet_04",
+     "text": "Sit, if you like. Not there. Beside it."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_f_greet_05",
+     "text": "You came by the long path. Sensible."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "The Maker - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_bye_01",
+     "text": "Go and sleep. The coil will not miss you."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_bye_02",
+     "text": "Go. Take the lit road home."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_bye_03",
+     "text": "Thank you for coming. People forget to."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "The Maker - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_thanks_01",
+     "text": "Thank you. Put it down gently. Everything here is old."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_thanks_02",
+     "text": "Noted. With gratitude. In that order."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Quick answers",
+   "file": "The Maker - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_confused_01",
+     "text": "I heard the question. I am choosing not to have heard it."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_confused_02",
+     "text": "That is a long story. I only have short ones."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_no_01",
+     "text": "No."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_no_02",
+     "text": "No. Ask me again in a year. The answer will be shorter."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Jokes and questions",
+   "file": "The Maker - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_ask_01",
+     "text": "Have you eaten? The coil can wait. You cannot."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_ask_02",
+     "text": "Did you greet the porter? Go back and greet him."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_joke_01",
+     "text": "Crepuscular illumination is insufficient. …It is getting dark."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_joke_02",
+     "text": "Your trajectory is lamentably circumlocutory. …You took the long way."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_f_joke_03",
+     "text": "Borborygmus. Yours. Audible from the fence. …Go and eat."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "The Maker - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_blackout_01",
+     "text": "There. Now you can hear it hum."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_blackout_02",
+     "text": "Stay near people. That is the whole trick."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_blackout_03",
+     "text": "The dark is not an enemy. It is what is there before somebody bothers."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_light_back_01",
+     "text": "Somebody bothered. Good."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_f_rain_01",
+     "text": "Rain does not trouble the coil. It troubles the shoes."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_f_heat_01",
+     "text": "Stand in the shade. The coil is warm enough for both of us."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Getting a present",
+   "file": "The Maker - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_gift_like_01",
+     "text": "Fuse wire. You have been paying attention."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_gift_like_02",
+     "text": "Tea. From Audu's. You know my habits now. Hm."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_gift_dislike_01",
+     "text": "A torch with a man's face on it. I will keep it in a drawer."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_gift_love_01",
+     "text": "A good screwdriver. Nobody has given me a tool in a long while."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Talking to yourself",
+   "file": "The Maker - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_idle_01",
+     "text": "One note. Still one note. Good."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_idle_02",
+     "text": "Copper, enamel, patience. Mostly patience."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_f_idle_03",
+     "text": "Measure twice. Then ask someone to measure. Then cut."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_f_idle_04",
+     "text": "Energy in, light out. The rest is commentary."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_f_idle_05",
+     "text": "Six dots. Somebody keeps drawing them on the kerb. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Late at night",
+   "file": "The Maker - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_f_night_01",
+     "text": "Late. Go home by the lamps."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_f_night_02",
+     "text": "The cats are early tonight."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 1: arriving",
+   "file": "The Maker - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_y1_greet_01",
+     "text": "The note. You still carry it. Hm."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_y1_idle_01",
+     "text": "Every expert was once the one asking where the Senate is."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_y1_idle_02",
+     "text": "Forty first days. Every one of them looked like fear."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_y1_tease_01",
+     "text": "You found the right theatre? Eventually is still a finish."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_y1_callback_01",
+     "text": "You went into the dam at midnight. Brave. Wet."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_y1_callback_02",
+     "text": "Six plaques. Six places. Do not go alone to any."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 2: the mall",
+   "file": "The Maker - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_y2_greet_01",
+     "text": "Second year. You walk faster. Not yet better."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_y2_idle_01",
+     "text": "The mall is bright again. Everywhere else, less so."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_y2_idle_02",
+     "text": "Money is stored effort. Spend it on skills, friends, shoes."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_y2_joke_01",
+     "text": "Your friend's commerce is obstreperously optimistic. …He shouts."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_y2_callback_01",
+     "text": "A greedy generator, unplugged by students. Write it down."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_y2_callback_02",
+     "text": "Ask my niece. Did you ask properly? Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 3: the strike",
+   "file": "The Maker - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_y3_greet_01",
+     "text": "You stayed. Good. Fewer lights. More of us."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_y3_idle_01",
+     "text": "Empty halls are louder than full ones."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_y3_idle_02",
+     "text": "Garri week comes to us all. Share the cup."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_y3_joke_01",
+     "text": "Pusillanimity is not engineering. …Do not be afraid of it."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_y3_callback_01",
+     "text": "You heard the tape. Then you know as much as I can say."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_y3_callback_02",
+     "text": "Three. Three! …Forgive me. I am just happy."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 4: fame",
+   "file": "The Maker - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_y4_greet_01",
+     "text": "You are famous now. I am told. I do not have the app."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_y4_idle_01",
+     "text": "Fame is a lamp pointed at you. Useful is a lamp you hold."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_y4_idle_02",
+     "text": "Do not confuse being seen with being known."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_y4_joke_01",
+     "text": "Prestidigitation, with cables. …The trick worked. Do not do it again."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_y4_callback_01",
+     "text": "Four. The sky held, and so did Tanko's stair."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_y4_callback_02",
+     "text": "The water is quiet again. Thank the eel. Politely."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 5: leaving",
+   "file": "The Maker - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_y5_greet_01",
+     "text": "Finalist. You carry it in your shoulders. Put some down."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_y5_idle_01",
+     "text": "Nearly. Nearly is a long word."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_y5_idle_02",
+     "text": "When you leave, leave something switched on."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_y5_idle_03",
+     "text": "Page two hundred and six. Have you read it? Read it again."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_y5_joke_01",
+     "text": "Your project is magnificently, incandescently late. …Hurry."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_y5_ask_01",
+     "text": "Did you knock? On every door? Knock on one more."
+    },
+    {
+     "n": 7,
+     "id": "bk_maker_y5_callback_01",
+     "text": "Everybody came. I did not think they would."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "After graduation",
+   "file": "The Maker - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_post_greet_01",
+     "text": "A thing is finished when it no longer needs you."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_post_greet_02",
+     "text": "I kept one light on for a long time. You taught me to share the switch."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_post_greet_03",
+     "text": "Nobody lights a ring alone. I checked. For years."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_post_greet_04",
+     "text": "I laughed twice in forty years. I intend to raise the average."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_post_greet_05",
+     "text": "Thank you. I do not say it enough, and I had a lot of time to practise."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_post_greet_06",
+     "text": "Light travels fast. Kindness travels further."
+    },
+    {
+     "n": 7,
+     "id": "bk_maker_post_follow_01",
+     "text": "Slowly. I have nowhere to be. It is a new feeling."
+    },
+    {
+     "n": 8,
+     "id": "bk_maker_post_follow_02",
+     "text": "That lamp. I did not have to light it. Look at it."
+    },
+    {
+     "n": 9,
+     "id": "bk_maker_post_follow_03",
+     "text": "The goat always comes back. So bring it back properly."
+    },
+    {
+     "n": 10,
+     "id": "bk_maker_post_follow_04",
+     "text": "The school is not the buildings. I learned this late. Learn it early."
+    },
+    {
+     "n": 11,
+     "id": "bk_maker_post_bye_01",
+     "text": "Somebody chose your door. One day, choose well."
+    },
+    {
+     "n": 12,
+     "id": "bk_maker_post_bye_02",
+     "text": "Go on. I will be at the pier at sunset. I am always there now."
+    },
+    {
+     "n": 13,
+     "id": "bk_maker_post_bye_03",
+     "text": "Do not sign anything that only says 'Stay'."
+    },
+    {
+     "n": 14,
+     "id": "bk_maker_post_food_01",
+     "text": "Audu's tea, in the morning, sitting down. I recommend it."
+    },
+    {
+     "n": 15,
+     "id": "bk_maker_post_joke_01",
+     "text": "I am in a state of quintessential otiosity. …I am resting."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "After graduation, to yourself",
+   "file": "The Maker - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_post_idle_01",
+     "text": "Start small. A torch has never been embarrassed by the sun."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_post_idle_02",
+     "text": "If you are tired, rest. If you are stuck, move. Learn which one it is."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_post_idle_03",
+     "text": "You will forget the grade. You will remember who lent you a pen."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_post_idle_04",
+     "text": "The shortest path is rarely the one with the best suya."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_post_idle_05",
+     "text": "A keeper is not someone who stays. I had the job description wrong."
+    },
+    {
+     "n": 6,
+     "id": "bk_maker_post_idle_06",
+     "text": "The clock was right twice a day. So was I. We have both improved."
+    },
+    {
+     "n": 7,
+     "id": "bk_maker_post_idle_07",
+     "text": "Half a tower is still the best view on campus."
+    },
+    {
+     "n": 8,
+     "id": "bk_maker_post_idle_08",
+     "text": "Call home. They do not need news. They need your voice."
+    },
+    {
+     "n": 9,
+     "id": "bk_maker_post_idle_09",
+     "text": "It is allowed to be proud of something small."
+    },
+    {
+     "n": 10,
+     "id": "bk_maker_post_idle_10",
+     "text": "Borrow tools. Return them cleaner. This is most of ethics."
+    },
+    {
+     "n": 11,
+     "id": "bk_maker_post_idle_11",
+     "text": "Your friends are your backup generator. Service them regularly."
+    },
+    {
+     "n": 12,
+     "id": "bk_maker_post_idle_12",
+     "text": "I was a student here longer than was sensible. I recommend five years."
+    },
+    {
+     "n": 13,
+     "id": "bk_maker_post_night_01",
+     "text": "Every lamp. Every one. And none of them mine."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "The Maker - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_ev_ev_freshers_01",
+     "text": "Be the reason the fresher finds the hall."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_ev_ev_freshers_02",
+     "text": "New faces. Same fear. It passes by the second semester."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_ev_ev_exam_01",
+     "text": "The exam ends. The understanding is yours to keep."
+    },
+    {
+     "n": 4,
+     "id": "bk_maker_ev_ev_exam_02",
+     "text": "A carry-over is a second lecture you paid for with pride."
+    },
+    {
+     "n": 5,
+     "id": "bk_maker_ev_ev_results_01",
+     "text": "Whatever it says, you still know what you know."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "The Maker - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_ev_ev_strike_01",
+     "text": "When they take light, sit near people. That is the whole trick."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_ev_ev_cup_01",
+     "text": "The Cup. I hear it from here. Engineering is losing, by the noise."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_ev_ev_convocation_01",
+     "text": "Gowns again. Every year they look smaller, or I look older."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "The Maker - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maker_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Break your fast before you fix anything."
+    },
+    {
+     "n": 2,
+     "id": "bk_maker_ev_ev_harmattan_01",
+     "text": "Harmattan. The dust gets into the windings and the temper."
+    },
+    {
+     "n": 3,
+     "id": "bk_maker_ev_ev_harmattan_02",
+     "text": "Cold mornings. That bench is still warm. Do not sit on it."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

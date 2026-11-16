@@ -1,0 +1,437 @@
+{
+ "character": "Big Baby",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Fresher Tax",
+   "file": "Big Baby - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m007_close_02",
+     "text": "Bolaji."
+    },
+    {
+     "n": 2,
+     "id": "m007_close_03",
+     "text": "Outside."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Fresher Tax, Reversed",
+   "file": "Big Baby - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m099_mid1_03",
+     "text": "Bolaji."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Big Baby - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_greet_01",
+     "text": "You. Sit. Your edges are crying."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_greet_02",
+     "text": "Ah, my dear. Welcome. Shoes off the mat."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_f_greet_03",
+     "text": "Hello. Bolaji's not here. That's why it's quiet."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Big Baby - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_bye_01",
+     "text": "Go well. Don't touch your hair for two days."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Big Baby - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_thanks_01",
+     "text": "Thank you. Now go and tell the market who did your braids."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Big Baby - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_compliment_01",
+     "text": "Your hair is behaving today. Finally. Who did it? …Me. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Big Baby - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_tease_01",
+     "text": "You came in with that hair? After harmattan? Brave."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_tease_02",
+     "text": "You walk like Bolaji when he's in trouble. Fast. Looking back."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Big Baby - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_wait_01",
+     "text": "Hurry. My clients don't wait. You're not a client yet."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_follow_01",
+     "text": "Walk me to the salon. Carry this. It's heavy. You're fine."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Big Baby - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_confused_01",
+     "text": "What? Say it again. Slowly. I braid while I listen."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_confused_02",
+     "text": "Who? There was nobody there fa. Sit down."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_f_no_01",
+     "text": "No."
+    },
+    {
+     "n": 4,
+     "id": "bk_big_baby_f_yes_01",
+     "text": "Yes, my dear."
+    },
+    {
+     "n": 5,
+     "id": "bk_big_baby_f_refuse_01",
+     "text": "No credit. Not even for you. Not even for him."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Big Baby - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_ask_01",
+     "text": "Have you seen Bolaji? Tell him: outside."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Big Baby - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_hit_01",
+     "text": "You bumped me. I didn't move. Think about that."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_heat_01",
+     "text": "This sun. Hat. Now. Your scalp is not a road."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_f_blackout_01",
+     "text": "NEPA. Generator. Bolaji. Pull the cord. …Bolaji."
+    },
+    {
+     "n": 4,
+     "id": "bk_big_baby_f_rain_01",
+     "text": "Rain. Everybody runs into the salon. Pay or wait outside."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Food and money",
+   "file": "Big Baby - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_money_01",
+     "text": "Price is price. Bargain with Bolaji. He says yes to everyone."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_food_01",
+     "text": "Suya. One for me, three for Bolaji. He thinks I don't count."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Getting a present",
+   "file": "Big Baby - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_gift_like_01",
+     "text": "For me? You're a good one. Sit. Free wash."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_gift_dislike_01",
+     "text": "Hm. I'll give it to Bolaji. He keeps everything."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_f_gift_love_01",
+     "text": "Hair oil from Kano. The real one. You can come back any time."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Talking to yourself",
+   "file": "Big Baby - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_idle_01",
+     "text": "Bolaji."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_f_idle_02",
+     "text": "Look at him. Gentle hands. I taught him that."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Late at night",
+   "file": "Big Baby - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_f_night_01",
+     "text": "Salon's closed. Even I sleep. Sometimes."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving",
+   "file": "Big Baby - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_y1_idle_01",
+     "text": "Bolaji. Outside. …No, not you. You're fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_y1_callback_01",
+     "text": "Two hundred naira from freshers? I fixed that. One word."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_y1_compliment_01",
+     "text": "You stood up to him. He liked that. He won't say. I'm saying."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Big Baby - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_y2_idle_01",
+     "text": "Sly's Cuts. I taught him. He still holds the clippers like a baby bird."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_y2_callback_01",
+     "text": "Malam Garba sat in the chair. I cried next door. Don't tell Bolaji."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_y2_tease_01",
+     "text": "You want a cut from him or me? Me. Obviously. He's still learning."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 3: the strike",
+   "file": "Big Baby - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_y3_idle_01",
+     "text": "Strike. Half my customers gone. The other half are here all day. Gossiping."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_y3_callback_01",
+     "text": "He built a tower. He came home with sawdust in his ears. I was proud."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_y3_ev_strike_01",
+     "text": "Strike. Bolaji's cutting hair for free. I'm charging for both of us."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 4: fame",
+   "file": "Big Baby - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_y4_idle_01",
+     "text": "He's at the gym at six. For Jega. He came home and slept standing up."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_y4_callback_01",
+     "text": "Lucky wanted him in a video. I said no. He said no. Then I said no again."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_y4_compliment_01",
+     "text": "You're a good friend to him. He doesn't have many. He has the right ones."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 5: leaving",
+   "file": "Big Baby - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_y5_idle_01",
+     "text": "He ended the tax. Himself. I just watched. That's love."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_y5_callback_01",
+     "text": "Bolaji."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_y5_callback_02",
+     "text": "He said he cried in a salon. It was my salon. I gave him tissues."
+    },
+    {
+     "n": 4,
+     "id": "bk_big_baby_y5_bye_01",
+     "text": "Convocation. Come for braids first. I'm booked from five. You're at four-thirty."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: term time",
+   "file": "Big Baby - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_ev_ev_freshers_01",
+     "text": "Freshers. If anybody asks for money on the court, come to me."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_ev_ev_market_day_01",
+     "text": "Market day. Thirty heads before noon. Bolaji's sweeping. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: the big ones",
+   "file": "Big Baby - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_ev_ev_convocation_01",
+     "text": "He's practising Abbas's name. All week. In my mirror. I'm so proud."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: seasons and holidays",
+   "file": "Big Baby - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_big_baby_ev_ev_ramadan_01",
+     "text": "Ramadan. I close early for iftar. Bolaji carries the pots for the mosque grounds."
+    },
+    {
+     "n": 2,
+     "id": "bk_big_baby_ev_ev_christmas_01",
+     "text": "Christmas. Everybody wants braids for the village. I'll sleep in January."
+    },
+    {
+     "n": 3,
+     "id": "bk_big_baby_ev_ev_valentine_01",
+     "text": "Valentine's. He brought one rose. I said 'Bolaji.' He knows what it meant."
+    },
+    {
+     "n": 4,
+     "id": "bk_big_baby_ev_ev_harmattan_01",
+     "text": "Harmattan. Oil your scalp. I won't say it twice. I'll say it three times."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

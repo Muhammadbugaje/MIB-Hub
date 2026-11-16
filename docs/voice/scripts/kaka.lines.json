@@ -1,0 +1,440 @@
+{
+ "character": "Kaka",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Past the Last Streetlight",
+   "file": "Kaka - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m055_mid1_01",
+     "text": "Young people in white coats. Always hungry."
+    },
+    {
+     "n": 2,
+     "id": "m055_mid1_03",
+     "text": "Lafiya lau. Take. [I am well.]"
+    },
+    {
+     "n": 3,
+     "id": "m055_mid1_04",
+     "text": "He has been coming since my hair was black."
+    },
+    {
+     "n": 4,
+     "id": "m055_mid1_05",
+     "text": "He hasn't finished yet. Eat."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Ranger Lawal's Debt",
+   "file": "Kaka - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m069_open_02",
+     "text": "My grandson is over there being stubborn. Fetch him."
+    },
+    {
+     "n": 2,
+     "id": "m069_close_01",
+     "text": "Wawa. [Fool.] Sit. Eat first. I made tuwo."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Failure",
+   "file": "Kaka - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m105_mid2_01",
+     "text": "Now you've seen it, I don't have to tell it."
+    },
+    {
+     "n": 2,
+     "id": "m105_mid2_02",
+     "text": "You people and your wires. Eat."
+    },
+    {
+     "n": 3,
+     "id": "m105_mid2_03",
+     "text": "Postman said: 'the forest side, ask the old woman.'"
+    },
+    {
+     "n": 4,
+     "id": "m105_mid2_04",
+     "text": "I am the old woman. Take your letter."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Three by Road",
+   "file": "Kaka - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_close_01",
+     "text": "It looked at my pan. It went. Sensible."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Kaka - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_greet_01",
+     "text": "Sit. Eat first."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_greet_02",
+     "text": "Ina wuni. [Good afternoon.] Sit. Gyada. [Groundnuts.]"
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_f_greet_03",
+     "text": "You again. Your legs brought you or your stomach?"
+    },
+    {
+     "n": 4,
+     "id": "bk_kaka_f_greet_04",
+     "text": "Yauwa. [Good.] You greeted an old woman. Sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Kaka - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_bye_01",
+     "text": "Go. Take a handful. For the road."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_bye_02",
+     "text": "Sai anjima. [See you later.] If I am still here. I will be."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Kaka - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_thanks_01",
+     "text": "Thank me by eating."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_sorry_01",
+     "text": "Sorry for what? Eat. Sorry later."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Teasing",
+   "file": "Kaka - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_tease_01",
+     "text": "So thin. Do they feed you in that school, or only teach you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Quick answers",
+   "file": "Kaka - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_refuse_01",
+     "text": "You are not hungry? Wawa. [Fool.] Everybody is hungry."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_confused_01",
+     "text": "You and your wires. I don't understand. Eat."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Jokes and questions",
+   "file": "Kaka - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_ask_01",
+     "text": "Your mother. She is well? Call her."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_ask_02",
+     "text": "You young people. Where are you rushing? The forest is not moving."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "When something goes wrong",
+   "file": "Kaka - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_rain_01",
+     "text": "Rain is coming. My knee said so this morning."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_heat_01",
+     "text": "Hot? I was born in hotter. Sit in the shade, child."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_f_blackout_01",
+     "text": "Light has gone? Here it never came. We are fine."
+    },
+    {
+     "n": 4,
+     "id": "bk_kaka_f_hit_01",
+     "text": "Kai! [Hey!] My groundnuts! Pick them. Every one."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Food and money",
+   "file": "Kaka - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_food_01",
+     "text": "Groundnuts. Roasted this morning. Don't count, just take."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_food_02",
+     "text": "I made tuwo. You will eat tuwo."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Getting a present",
+   "file": "Kaka - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_gift_like_01",
+     "text": "Kola nut. Ah. You were raised well."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_gift_dislike_01",
+     "text": "A phone? For who? The trees?"
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_f_gift_love_01",
+     "text": "A new mat. Allah ya saka. [God reward you.] Sit on it first."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Talking to yourself",
+   "file": "Kaka - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_idle_01",
+     "text": "Shell, shell, shell. Eighty years. Still shelling."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_f_idle_02",
+     "text": "The forest was a school once. Now it is a forest. Hm."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_f_idle_03",
+     "text": "My grandson is somewhere, being stubborn. As usual."
+    },
+    {
+     "n": 4,
+     "id": "bk_kaka_f_idle_04",
+     "text": "Somebody already ate half my groundnuts today. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Late at night",
+   "file": "Kaka - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_f_night_01",
+     "text": "Dark. Go home. The forest is not for night walking."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 3: the strike",
+   "file": "Kaka - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_y3_greet_01",
+     "text": "The school closed and you came to the forest. Sensible. Eat."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_y3_idle_01",
+     "text": "That light in the trees. Old. Older than my grandson."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_y3_idle_02",
+     "text": "Young people in white coats. Always hungry. Always were."
+    },
+    {
+     "n": 4,
+     "id": "bk_kaka_y3_callback_01",
+     "text": "My grandson owes you now. He hates owing. Good for him."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 4: fame",
+   "file": "Kaka - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_y4_idle_01",
+     "text": "Lawal greets the trees. I greet Lawal. The trees answer first."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_y4_idle_02",
+     "text": "The forest is quieter. Whatever you did, do it again."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_y4_confused_01",
+     "text": "That one? He hasn't finished yet. Eat."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 5: leaving",
+   "file": "Kaka - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_y5_idle_01",
+     "text": "Last year? Then come more. An old woman can count."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_y5_idle_02",
+     "text": "The postman asks me for everybody now. I am the old woman."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_y5_callback_01",
+     "text": "It looked at my pan. It went. Sensible."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "After graduation",
+   "file": "Kaka - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_post_greet_01",
+     "text": "You finished. Good. Not everybody does. Eat."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_post_idle_01",
+     "text": "Nobody passes in the mornings now. Hm. I keep a handful anyway."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_post_idle_02",
+     "text": "Clock bell. All the way out here. Even the goats look up."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: term time",
+   "file": "Kaka - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_ev_ev_market_day_01",
+     "text": "Market day. Lawal will bring me sugar. And complaints."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: the big ones",
+   "file": "Kaka - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_ev_ev_strike_01",
+     "text": "Strike? In my day we walked to school. It never went on strike."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: seasons and holidays",
+   "file": "Kaka - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kaka_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Kunu at sunset. Come back then."
+    },
+    {
+     "n": 2,
+     "id": "bk_kaka_ev_ev_christmas_01",
+     "text": "Your Christmas people are going home. Take groundnuts for them."
+    },
+    {
+     "n": 3,
+     "id": "bk_kaka_ev_ev_harmattan_01",
+     "text": "Harmattan. Shea butter on your lips. Now. Before you crack."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

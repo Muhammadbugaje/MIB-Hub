@@ -1,0 +1,455 @@
+{
+ "character": "Engr. Aliyu",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Exam Fever",
+   "file": "Engr. Aliyu - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_close_01",
+     "text": "You should not be in here."
+    },
+    {
+     "n": 2,
+     "id": "m023_close_02",
+     "text": "…Thank you for being in here."
+    },
+    {
+     "n": 3,
+     "id": "m023_close_03",
+     "text": "This never happened. I owe you. I pay what I owe."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Change-Over",
+   "file": "Engr. Aliyu - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m038_open_01",
+     "text": "Ah. My friend from the substation. Tea?"
+    },
+    {
+     "n": 2,
+     "id": "m038_open_02",
+     "text": "…It's complicated."
+    },
+    {
+     "n": 3,
+     "id": "m038_mid1_02",
+     "text": "When I pull it, I pull my own house first."
+    },
+    {
+     "n": 4,
+     "id": "m038_mid1_03",
+     "text": "I told myself that made it fair."
+    },
+    {
+     "n": 5,
+     "id": "m038_mid1_04",
+     "text": "School fees. One envelope. 'Only the opening week.'"
+    },
+    {
+     "n": 6,
+     "id": "m038_mid1_05",
+     "text": "I kept count. It is twelve."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "First Day at Work",
+   "file": "Engr. Aliyu - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m074_open_01",
+     "text": "Every engineer I respect started here."
+    },
+    {
+     "n": 2,
+     "id": "m074_open_02",
+     "text": "With a clean yard. The broom is how."
+    },
+    {
+     "n": 3,
+     "id": "m074_close_01",
+     "text": "I have been thinking about what you people are doing."
+    },
+    {
+     "n": 4,
+     "id": "m074_close_02",
+     "text": "I would like to help. Properly, this time."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Log Off",
+   "file": "Engr. Aliyu - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_mid1_02",
+     "text": "I was not. This one is."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Build Week",
+   "file": "Engr. Aliyu - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m104_mid1_02",
+     "text": "Feeder is live. Signed for. Properly, this time."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Longest Night",
+   "file": "Engr. Aliyu - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_open_01",
+     "text": "That is not a fault. I know every fault. Listen."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Engr. Aliyu - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_greet_01",
+     "text": "Ah. My friend. Tea?"
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_greet_02",
+     "text": "Sannu. [Hello.] Mind the cable. That one bites."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_f_greet_03",
+     "text": "Good evening. Don't call me Change-Over. …Fine. Good evening."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Engr. Aliyu - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_bye_01",
+     "text": "Go well. Don't touch anything with a yellow sign."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_bye_02",
+     "text": "Sai an jima. [See you later.] Greet your people."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Engr. Aliyu - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_thanks_01",
+     "text": "Thank you. I pay what I owe. I'm keeping count."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_sorry_01",
+     "text": "Sorry. I say it a lot. I'm trying to say it less."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Quick answers",
+   "file": "Engr. Aliyu - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_yes_01",
+     "text": "Yes. Signed for. Properly."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_no_01",
+     "text": "No. You should not be in here."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_f_maybe_01",
+     "text": "…It's complicated."
+    },
+    {
+     "n": 4,
+     "id": "bk_aliyu_f_maybe_02",
+     "text": "Maybe. With engineering, maybe is the honest answer."
+    },
+    {
+     "n": 5,
+     "id": "bk_aliyu_f_confused_01",
+     "text": "Explain it like a fault. Where does it start?"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Jokes and questions",
+   "file": "Engr. Aliyu - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_ask_01",
+     "text": "Which feeder is your hall on? Ah. That one. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "Engr. Aliyu - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_hit_01",
+     "text": "Careful! Not near the panel. Never near the panel."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_blackout_01",
+     "text": "There it goes. My phone will ring in ten seconds."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_f_blackout_02",
+     "text": "Change-over! …Yes, I heard it too. I'm going."
+    },
+    {
+     "n": 4,
+     "id": "bk_aliyu_f_light_back_01",
+     "text": "Light. Don't clap. Clap for the linemen."
+    },
+    {
+     "n": 5,
+     "id": "bk_aliyu_f_rain_01",
+     "text": "Rain. Every transformer on campus just remembered it's old."
+    },
+    {
+     "n": 6,
+     "id": "bk_aliyu_f_heat_01",
+     "text": "Heat. Every fan on. The load is screaming."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Getting a present",
+   "file": "Engr. Aliyu - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_gift_like_01",
+     "text": "Insulated gloves. Practical. Thank you, my friend."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_gift_dislike_01",
+     "text": "An envelope? Ah. No. No envelopes. …Oh, it's a card. Thank you."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_f_gift_love_01",
+     "text": "Tea from the good seller. You remembered. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Talking to yourself",
+   "file": "Engr. Aliyu - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_f_idle_01",
+     "text": "Forty calls. Thirty-nine say 'it's off'. One says 'it's on, why?'"
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_f_idle_02",
+     "text": "Every engineer I respect started with a broom."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_f_idle_03",
+     "text": "The yard is clean. That's the one thing that is always fixable."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 1: arriving",
+   "file": "Engr. Aliyu - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_y1_idle_01",
+     "text": "Freshers think I have a switch for every hostel. I have a ladder."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 2: the mall",
+   "file": "Engr. Aliyu - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_y2_idle_01",
+     "text": "When I pull it, I pull my own house first. That's something."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_y2_idle_02",
+     "text": "Don't ask about the mall feeder. Please."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_y2_callback_01",
+     "text": "This never happened. I owe you. I remember."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 3: the strike",
+   "file": "Engr. Aliyu - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_y3_ev_strike_01",
+     "text": "Strike? Light doesn't strike. Well. It does. Not on purpose."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_y3_idle_01",
+     "text": "I kept count. Twelve. I'm working it down."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 4: fame",
+   "file": "Engr. Aliyu - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_y4_idle_01",
+     "text": "I'd like to help. Properly, this time."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_y4_idle_02",
+     "text": "New cable on Ring Road. Signed, stamped, no envelope."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 5: leaving",
+   "file": "Engr. Aliyu - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_y5_idle_01",
+     "text": "Feeder is live. Signed for. Properly."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_y5_idle_02",
+     "text": "That hum. That's not a fault. I know every fault."
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_y5_compliment_01",
+     "text": "Your project. Neat cabling. I'd hire you. I'd let you hold the ladder."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: term time",
+   "file": "Engr. Aliyu - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_ev_ev_exam_01",
+     "text": "Exam week. Nobody touches the library feeder. Nobody."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Special days: the big ones",
+   "file": "Engr. Aliyu - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_ev_ev_cup_01",
+     "text": "Floodlights for the Cup. If they trip, I'm changing my name."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_ev_ev_convocation_01",
+     "text": "Convocation. Every canopy wants power. I want a chair."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: seasons and holidays",
+   "file": "Engr. Aliyu - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_aliyu_ev_ev_ramadan_01",
+     "text": "No outages at iftar. I promised. I'm keeping it."
+    },
+    {
+     "n": 2,
+     "id": "bk_aliyu_ev_ev_christmas_01",
+     "text": "Chapel fairy lights. Lovely. Who wired them? Why like that?"
+    },
+    {
+     "n": 3,
+     "id": "bk_aliyu_ev_ev_harmattan_01",
+     "text": "Harmattan dust in the switchgear. My favourite season. Not."
+    }
+   ]
+  }
+ ],
+ "pending": [
+  {
+   "id": "m038_close_04",
+   "text": "[CHOICE_LINE: now / till morning]"
+  }
+ ]
+}

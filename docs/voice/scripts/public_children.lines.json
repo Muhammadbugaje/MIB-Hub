@@ -1,0 +1,319 @@
+{
+ "character": "The Children",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Night Nurse",
+   "file": "The Children - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_mid1_02",
+     "text": "Sir, was the bad striker you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Children - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_f_greet_01",
+     "text": "Good morning, sir! Good morning, ma! Good morning, goat!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_f_greet_02",
+     "text": "Lafiya lau! [Very well!]"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_f_greet_03",
+     "text": "Uncle! Aunty! Look at my shoe!"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Jokes and questions",
+   "file": "The Children - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_f_ask_01",
+     "text": "Why is the big clock stopped? Is it tired?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_f_ask_02",
+     "text": "Why does the goat have a name and I don't have a goat?"
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "When something goes wrong",
+   "file": "The Children - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_f_blackout_01",
+     "text": "NEPA took light! When it comes we'll shout UP NEPA!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_f_blackout_02",
+     "text": "Torch under my chin! Look! I'm a teacher!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_f_rain_01",
+     "text": "Rain! Dance! Mummy will shout, but dance!"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "The Children - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_f_idle_01",
+     "text": "I can count to a hundred. Listen. One, two… I'll do it later."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_f_idle_02",
+     "text": "Teacher said the sun is a star. I said it's too close."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_f_idle_03",
+     "text": "Are you a teacher? You're big. Are you a teacher?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_children_f_idle_04",
+     "text": "Race me! Ready, steady— I already started!"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_children_f_idle_05",
+     "text": "I found a snail. His name is Professor."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_children_f_idle_06",
+     "text": "My big sister says she's 'reading'. Her eyes are closed."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_children_f_idle_07",
+     "text": "Uncle, is university like school but no uniform?"
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_children_f_idle_08",
+     "text": "My brother is at university. He sleeps there."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_children_f_idle_09",
+     "text": "One sweet and I'll tell you a secret. The secret is I want a sweet."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_children_f_idle_10",
+     "text": "Tag! You're it! No, you're it! We're both it!"
+    },
+    {
+     "n": 11,
+     "id": "bk_pub_children_f_idle_11",
+     "text": "I can almost do a front-flip. Almost is the hard part."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "The Children - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_f_night_01",
+     "text": "Mummy said come home before the street lights. There are no street lights."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_f_night_02",
+     "text": "The cats sit in a circle. I counted them. I forgot the number."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "The Children - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_y1_idle_01",
+     "text": "Light went in class. Teacher said 'keep singing'. We sang loud."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "The Children - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_y2_idle_01",
+     "text": "We went to the mall! There's a staircase that walks!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_y2_idle_02",
+     "text": "My daddy says the light is weak because somebody is borrowing it."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "The Children - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_y3_idle_01",
+     "text": "University people are teaching us under the tree! They're funny!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_y3_idle_02",
+     "text": "Are you on strike? My mummy said everybody is on strike."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "The Children - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_y4_idle_01",
+     "text": "Somebody filmed me dancing. I'm famous. My grandma saw it."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_y4_idle_02",
+     "text": "I want to be president. Of the class. Then the country. Then snacks."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "The Children - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_y5_idle_01",
+     "text": "You're finishing school? Do you get the big hat?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_y5_idle_02",
+     "text": "When I'm big I'll come to this university. Keep my seat."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "The Children - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_ev_ev_freshers_01",
+     "text": "Look! New big students! They're lost like us on first day!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_ev_ev_exam_01",
+     "text": "My brother is reading. Even when he eats, he's reading."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_ev_ev_allowance_01",
+     "text": "My brother got his allowance! He bought me puff-puff! He's my favourite!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_children_ev_ev_market_day_01",
+     "text": "Market day. Mummy said hold her wrapper and don't let go."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "The Children - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_ev_ev_strike_01",
+     "text": "The big students are free! Like Saturday every day!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_ev_ev_cup_01",
+     "text": "GOAL! I didn't see it, but GOAL!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_ev_ev_elections_01",
+     "text": "Vote for me for class monitor! I'll give you chalk!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_children_ev_ev_convocation_01",
+     "text": "Big hats! Big hats everywhere!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "The Children - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_children_ev_ev_ramadan_01",
+     "text": "I'm fasting till lunch! Half fast! Baby fast!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_children_ev_ev_christmas_01",
+     "text": "New clothes! Don't touch. They're for Christmas."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_children_ev_ev_valentine_01",
+     "text": "Valentine is when big people buy red things and smile."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_children_ev_ev_harmattan_01",
+     "text": "Harmattan! My lips are crunchy!"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

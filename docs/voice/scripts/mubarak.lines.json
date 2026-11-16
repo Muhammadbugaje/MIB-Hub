@@ -1,0 +1,1625 @@
+{
+ "character": "Mubarak",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Matric Fit",
+   "file": "Mubarak - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_open_03",
+     "text": "My guy! Premium gown. For you, specially."
+    },
+    {
+     "n": 2,
+     "id": "m004_open_04",
+     "text": "See? Fine. Don't look down."
+    },
+    {
+     "n": 3,
+     "id": "m004_close_03",
+     "text": "Your change? Ah. Take my number instead."
+    },
+    {
+     "n": 4,
+     "id": "m004_close_04",
+     "text": "Trust me. It will appreciate."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Plug",
+   "file": "Mubarak - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m010_open_01",
+     "text": "Welcome to The Plug. I know a guy."
+    },
+    {
+     "n": 2,
+     "id": "m010_open_02",
+     "text": "It's a FLAGSHIP locker."
+    },
+    {
+     "n": 3,
+     "id": "m010_open_03",
+     "text": "I don't sell products. I sell advantages."
+    },
+    {
+     "n": 4,
+     "id": "m010_open_04",
+     "text": "Wear these. Run. You'll understand."
+    },
+    {
+     "n": 5,
+     "id": "m010_mid1_03",
+     "text": "Hajiya, I have a brand."
+    },
+    {
+     "n": 6,
+     "id": "m010_close_02",
+     "text": "That is the product."
+    },
+    {
+     "n": 7,
+     "id": "m010_close_04",
+     "text": "Refund? In this economy?"
+    },
+    {
+     "n": 8,
+     "id": "m010_close_05",
+     "text": "Let me give you something better. Advice."
+    },
+    {
+     "n": 9,
+     "id": "m010_close_06",
+     "text": "Good afternoon, sir. Table-tennis balls?"
+    },
+    {
+     "n": 10,
+     "id": "m010_close_07",
+     "text": "(Trust the Plug.)"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Count Entropy",
+   "file": "Mubarak - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_mid1_01",
+     "text": "Torch! Premium torch! Three hundred!"
+    },
+    {
+     "n": 2,
+     "id": "m012_mid1_02",
+     "text": "…God, You are watching me."
+    },
+    {
+     "n": 3,
+     "id": "m012_mid1_03",
+     "text": "Take. Take! Don't thank me. I am suffering."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Grand Opening",
+   "file": "Mubarak - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_mid1_04",
+     "text": "Printed price tags. Air conditioning. God when?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Plug and Play",
+   "file": "Mubarak - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m027_open_02",
+     "text": "THE PLUG S-T-O-R-E. It's distinctive."
+    },
+    {
+     "n": 2,
+     "id": "m027_open_03",
+     "text": "The mall has receipts. We have VOLUME."
+    },
+    {
+     "n": 3,
+     "id": "m027_open_04",
+     "text": "Yet. I know a guy. Bring your keke."
+    },
+    {
+     "n": 4,
+     "id": "m027_mid1_05",
+     "text": "It's understood."
+    },
+    {
+     "n": 5,
+     "id": "m027_mid1_07",
+     "text": "Oga Sharp."
+    },
+    {
+     "n": 6,
+     "id": "m027_close_01",
+     "text": "One by one! Premium power! For you, specially!"
+    },
+    {
+     "n": 7,
+     "id": "m027_close_02",
+     "text": "PRE-RICH NO MORE."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Iron Mama Hums",
+   "file": "Mubarak - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m032_open_01",
+     "text": "Ghost Hoodie. Ten minutes. Security looks past you."
+    },
+    {
+     "n": 2,
+     "id": "m032_open_02",
+     "text": "…Free. Don't look at me like that."
+    },
+    {
+     "n": 3,
+     "id": "m032_open_03",
+     "text": "If you're caught, you don't know me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "New Site Goes Dark",
+   "file": "Mubarak - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_open_01",
+     "text": "Six kekes. On my credit. I am writing 'charity'."
+    },
+    {
+     "n": 2,
+     "id": "m039_open_02",
+     "text": "It is hurting my pen."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "The Plan",
+   "file": "Mubarak - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_open_02",
+     "text": "Decoy? Me? What does a decoy earn?"
+    },
+    {
+     "n": 2,
+     "id": "m043_open_03",
+     "text": "…A midnight flash sale. Purely as a business."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Mubarak - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_open_03",
+     "text": "THE PLUG STORE MIDNIGHT FLASH SALE!"
+    },
+    {
+     "n": 2,
+     "id": "m044_open_04",
+     "text": "EVERYTHING MUST GO! INCLUDING ME, IF SECURITY ASKS!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Mubarak's Crash",
+   "file": "Mubarak - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m045_mid1_01",
+     "text": "I'm not running. I'm relocating."
+    },
+    {
+     "n": 2,
+     "id": "m045_mid1_02",
+     "text": "I have three sisters. I pay their fees."
+    },
+    {
+     "n": 3,
+     "id": "m045_mid1_03",
+     "text": "My mother thinks the school gives me a grant."
+    },
+    {
+     "n": 4,
+     "id": "m045_mid1_04",
+     "text": "The power banks were two terms. Two terms."
+    },
+    {
+     "n": 5,
+     "id": "m045_mid1_05",
+     "text": "I'm not broke. I'm…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Garri Economics",
+   "file": "Mubarak - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m052_open_01",
+     "text": "I'm not broke. I'm pre-rich."
+    },
+    {
+     "n": 2,
+     "id": "m052_open_02",
+     "text": "And this is a mobile retail platform."
+    },
+    {
+     "n": 3,
+     "id": "m052_open_04",
+     "text": "One PREMIUM wheel. Garri, groundnut, sugar. ₦100."
+    },
+    {
+     "n": 4,
+     "id": "m052_mid1_02",
+     "text": "Mama, it is a lifestyle product—"
+    },
+    {
+     "n": 5,
+     "id": "m052_close_04",
+     "text": "…Can I frame it?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Called Off",
+   "file": "Mubarak - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_close_01",
+     "text": "Old stock! I sold a whole carton. Two hundred. Cash!"
+    },
+    {
+     "n": 2,
+     "id": "m067_close_02",
+     "text": "I sold the locks. For the halls."
+    },
+    {
+     "n": 3,
+     "id": "m067_close_03",
+     "text": "…I didn't ask what for. I never ask what for."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Padlock Receipts",
+   "file": "Mubarak - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m068_open_01",
+     "text": "Brown. Not brown-brown. Oxblood."
+    },
+    {
+     "n": 2,
+     "id": "m068_open_02",
+     "text": "Leather sole. Stitched. A heel that knocks."
+    },
+    {
+     "n": 3,
+     "id": "m068_open_03",
+     "text": "I gave him a discount. I gave HIM a discount."
+    },
+    {
+     "n": 4,
+     "id": "m068_open_04",
+     "text": "My guy, I was looking at the shoes."
+    },
+    {
+     "n": 5,
+     "id": "m068_mid1_05",
+     "text": "Write my name where it belongs. I sold them."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "The Collab",
+   "file": "Mubarak - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m076_mid1_01",
+     "text": "Premium access! For you, I took only thirty percent."
+    },
+    {
+     "n": 2,
+     "id": "m076_mid1_02",
+     "text": "To *them*. You are the product. Smile."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "The Old Eye (Heist 2)",
+   "file": "Mubarak - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_open_04",
+     "text": "Free. Don't look at me. It is a sample."
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Payday",
+   "file": "Mubarak - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m086_close_01",
+     "text": "The silence. She had nothing to correct."
+    },
+    {
+     "n": 2,
+     "id": "m086_close_02",
+     "text": "I am framing it. Premium."
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "Megawatt's Offer",
+   "file": "Mubarak - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m102_open_01",
+     "text": "Real meat. This is a negotiating tactic."
+    },
+    {
+     "n": 2,
+     "id": "m102_mid1_02",
+     "text": "Sir. I have been commercial since I was nine."
+    },
+    {
+     "n": 3,
+     "id": "m102_mid1_03",
+     "text": "This is the first time I am being emotional."
+    },
+    {
+     "n": 4,
+     "id": "m102_mid1_04",
+     "text": "Let me enjoy it."
+    },
+    {
+     "n": 5,
+     "id": "m102_mid1_05",
+     "text": "Thank you for the meat."
+    },
+    {
+     "n": 6,
+     "id": "m102_close_01",
+     "text": "Hajiya, what did you write? Let me see."
+    },
+    {
+     "n": 7,
+     "id": "m102_close_04",
+     "text": "For you, specially: there is a uniform. And lunch."
+    },
+    {
+     "n": 8,
+     "id": "m102_close_05",
+     "text": "Customer is king. Staff must also eat."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "Three by Road",
+   "file": "Mubarak - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_open_04",
+     "text": "No charge! Don't tell my accountant! I AM my accountant!"
+    },
+    {
+     "n": 2,
+     "id": "m112_mid2_01",
+     "text": "Chief? In pyjamas? Is that silk? Premium."
+    },
+    {
+     "n": 3,
+     "id": "m112_mid2_05",
+     "text": "Premium noise! For you, specially, free! Sing!"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Mubarak - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_greet_01",
+     "text": "My guy! My first customer! My first investor!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_greet_02",
+     "text": "Ah, {{PLAYER_NAME}}! For you, specially: a good morning. Free."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_greet_03",
+     "text": "How far? [How are you?] You need anything? You need everything."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_greet_04",
+     "text": "Welcome back to the Plug experience."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_greet_05",
+     "text": "My person! You don look fresh today. [You look fresh today.]"
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_greet_06",
+     "text": "Oya, talk to me. [Come on.] What are we buying?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Mubarak - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_bye_01",
+     "text": "Go well. Come back with cash. Or a friend with cash."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_bye_02",
+     "text": "Bye! Tell people. Tell everybody. Tell your lecturers."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_bye_03",
+     "text": "I dey go. [I'm off.] A customer is crying somewhere."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Mubarak - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_thanks_01",
+     "text": "Thank you! I'll give you a discount. Small. Emotional."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_thanks_02",
+     "text": "You did that for free? Free? …Thank you. It hurts."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_thanks_03",
+     "text": "God bless you. And bless your wallet."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_sorry_01",
+     "text": "Sorry, my guy. Not a refund. A sincere sorry."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_sorry_02",
+     "text": "Na my fault. [It's my fault.] I'm accepting it. Wholesale."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Mubarak - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_compliment_01",
+     "text": "Look at you! Premium face. Who's your supplier?"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_compliment_02",
+     "text": "That outfit? Correct. You should model for me."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_compliment_03",
+     "text": "You bargain like Hajiya Ladi. That is a compliment and a threat."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Mubarak - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_tease_01",
+     "text": "Sunglasses indoors is a lifestyle. You wouldn't understand."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_tease_02",
+     "text": "You walk past my stall like it owes you money."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_tease_03",
+     "text": "Those slippers have done three convocations, my guy."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Mubarak - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_follow_01",
+     "text": "Come, come. Walk and talk. Walking is free. Talking is free."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_follow_02",
+     "text": "Follow me. I know a shortcut. I also know a guy on the shortcut."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_wait_01",
+     "text": "Time is money. You are spending my money."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_wait_02",
+     "text": "Abeg, sharp sharp! [Please, quickly!] Market closes."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_lost_01",
+     "text": "Not that way! That way has no customers!"
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_lost_02",
+     "text": "Na wrong road be that. [That's the wrong road.] Come back."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Mubarak - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_yes_01",
+     "text": "Deal!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_yes_02",
+     "text": "Yes! For you, specially."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_yes_03",
+     "text": "Done. Shake my hand. Firmly. That's a contract."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_no_01",
+     "text": "No. Not even for you. Especially for you."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_no_02",
+     "text": "No-o. I have principles. Small ones, but I have them."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_no_03",
+     "text": "Refund? No. Advice? Yes."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_f_maybe_01",
+     "text": "Maybe. Bring the money and we'll see the maybe."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_f_maybe_02",
+     "text": "Let me ask my accountant. …I am my accountant. Maybe."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_f_confused_01",
+     "text": "Who? There was nobody there fa. Is he a customer?"
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_f_confused_02",
+     "text": "Explain it like a price. I understand prices."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_f_agree_01",
+     "text": "Exactly! You think like a businessman."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_f_agree_02",
+     "text": "You see? That is the vision! Premium vision!"
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_f_refuse_01",
+     "text": "Credit? My guy, credit died last week. We buried it."
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_f_refuse_02",
+     "text": "I can't. Hajiya Ladi will read my book and sigh."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Mubarak - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_joke_01",
+     "text": "I'm not broke. I'm pre-rich."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_joke_02",
+     "text": "Sapa is not a phase. It is a lecturer. It takes attendance."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_joke_03",
+     "text": "Customer is king. King must also pay."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_joke_04",
+     "text": "This is not a power bank, my guy. This is a lifestyle."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_joke_05",
+     "text": "My network is premium. It disappears premiumly."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_ask_01",
+     "text": "You need data? Torch? Kola? Ask me. I know a guy."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_f_ask_02",
+     "text": "You ate? Don't lie. I can see sapa on your face."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_f_ask_03",
+     "text": "How much do you have? I'm asking for your own good."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Mubarak - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_win_01",
+     "text": "PROFIT! Small, but it's wearing a suit!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_win_02",
+     "text": "Trust the Plug. Did I not say? I said."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_lose_01",
+     "text": "Loss. Small loss. A learning expense."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_lose_02",
+     "text": "We lost. Write it as 'marketing'."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Mubarak - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_hit_01",
+     "text": "Ah! Careful! These goods are premium. So am I."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_hit_02",
+     "text": "You hit me? That's a service. I'll invoice you."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_fall_01",
+     "text": "I'm fine! The stock is fine? The stock is fine. Good."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_fall_02",
+     "text": "Na ground I check. [I was inspecting the ground.] Quality floor."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_blackout_01",
+     "text": "Light don go! Torches! Premium torches! Three hundred!"
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_blackout_02",
+     "text": "NEPA is my best salesman. Never takes a salary."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_f_light_back_01",
+     "text": "Up NEPA! Charge your phone at the Plug! Fifty naira!"
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_f_light_back_02",
+     "text": "Light is back. Torch sales are over. Pity."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_f_rain_01",
+     "text": "Rain! Umbrellas! Nylon bags! I have both!"
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_f_rain_02",
+     "text": "Rain is God's way of advertising umbrellas."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_f_heat_01",
+     "text": "Sun is hot! Cold zobo, cold pure water! For you, specially!"
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_f_heat_02",
+     "text": "This heat is a business opportunity wearing a disguise."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Mubarak - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_food_01",
+     "text": "Shawarma? Who's paying? You? Then yes."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_food_02",
+     "text": "Suya with pepper. The only premium thing I don't sell."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_money_01",
+     "text": "My bum bag has coins. The coins have dreams."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_money_02",
+     "text": "Money is like network. You see it, then you don't."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Mubarak - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_f_gift_like_01",
+     "text": "For me? Thank you. I will not resell it. Today."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_f_gift_like_02",
+     "text": "Is this premium? It is premium. I can feel it."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_f_gift_dislike_01",
+     "text": "Thank you. I know a guy who will love this."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_f_gift_dislike_02",
+     "text": "Hm. Receipt dey? [Is there a receipt?] Joking. Mostly."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_f_gift_love_01",
+     "text": "A receipt book! With carbon copies! You understand me!"
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_f_gift_love_02",
+     "text": "For my sisters? You remembered? …Don't make me emotional."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Mubarak - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y1_refuse_01",
+     "text": "Refund? In this economy?"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y1_ask_01",
+     "text": "Who is this Hajiya Ladi? She looks at my book like a lecturer."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y1_compliment_01",
+     "text": "You carried that stock in record time. You're staff now. Unpaid."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Mubarak - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y1_idle_01",
+     "text": "The Plug! A locker, a padlock and a vision!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y1_idle_02",
+     "text": "It's a FLAGSHIP locker."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y1_idle_03",
+     "text": "Turbo Sneakers. Wear these. Run. You'll understand."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_y1_idle_04",
+     "text": "The SUG porter comes at two. We close at one fifty-nine."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_y1_idle_05",
+     "text": "I don't sell products. I sell advantages."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_y1_idle_06",
+     "text": "Lucky Kola for the road? For you, specially, half."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_y1_idle_07",
+     "text": "I'm writing it in the book. The book is a napkin. Still."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_y1_night_01",
+     "text": "Night stock count. Seven kolas, one hope."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_y1_night_02",
+     "text": "Night customers pay double. It's a fear premium."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_y1_callback_01",
+     "text": "The gown fit you. And a friend. Value for money."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_y1_callback_02",
+     "text": "Your change? I still have your number. That's worth more."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_y1_callback_03",
+     "text": "The wind took your gown. Premium aerodynamics."
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_y1_callback_04",
+     "text": "Hajiya said I have customers, not a business. She's wrong. Small."
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_y1_callback_05",
+     "text": "I gave away the torches. All of them. I'm still recovering."
+    },
+    {
+     "n": 15,
+     "id": "bk_mubarak_y1_callback_06",
+     "text": "I SURVIVED YEAR 1 shirts! Pre-order! Before it ends!"
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Mubarak - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y2_money_01",
+     "text": "My share and your share. Both are… resting."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y2_refuse_01",
+     "text": "Refunds are being processed. By Hajiya. Slowly."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Mubarak - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y2_idle_01",
+     "text": "THE PLUG S-T-O-R-E. The sign goes downwards. It's distinctive."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y2_idle_02",
+     "text": "The mall has receipts. We have VOLUME."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y2_idle_03",
+     "text": "Power banks by the carton! Very cheap! I know a guy!"
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_y2_idle_04",
+     "text": "Printed price tags. Air conditioning. God when?"
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_y2_idle_05",
+     "text": "Power banks are slightly warm. That's how you know they're fresh."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_y2_idle_06",
+     "text": "KB prices by face. I price by friendship."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_y2_idle_07",
+     "text": "Two hundred customers. One stall. Zero chairs."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_y2_night_01",
+     "text": "Counting stock. The power banks are humming. Is that normal?"
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_y2_night_02",
+     "text": "Market closed. Mall still blazing. I'm studying the enemy."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_y2_callback_01",
+     "text": "The supplier tried to sell to me. I sold to him first."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_y2_callback_02",
+     "text": "Nusaiba says the back of the contract is blank. It's minimalist."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_y2_callback_03",
+     "text": "Ghost Hoodie. Free. If anybody asks, you don't know me."
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_y2_callback_04",
+     "text": "MIDNIGHT FLASH SALE! Every guard came! Two bought!"
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_y2_callback_05",
+     "text": "Six kekes on my credit. I wrote 'charity'. It hurt my pen."
+    },
+    {
+     "n": 15,
+     "id": "bk_mubarak_y2_callback_06",
+     "text": "I'm not running. I was relocating. Briefly."
+    },
+    {
+     "n": 16,
+     "id": "bk_mubarak_y2_callback_07",
+     "text": "The power banks were two terms of fees. Two terms."
+    },
+    {
+     "n": 17,
+     "id": "bk_mubarak_y2_callback_08",
+     "text": "You came to the motor park. At midnight. Thank you, my guy."
+    },
+    {
+     "n": 18,
+     "id": "bk_mubarak_y2_callback_09",
+     "text": "Hajiya lent me the refunds. Hard price. Fair price."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 3: the strike",
+   "file": "Mubarak - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y3_money_01",
+     "text": "Strike money: garri in, coins out. Coins go to the debt."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y3_food_01",
+     "text": "Garri again? It's not hunger. It's brand loyalty."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y3_thanks_01",
+     "text": "You bought a Combo you didn't need. I saw. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Mubarak - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y3_idle_01",
+     "text": "Sapa Combo! Garri, groundnut, sugar! One hundred naira!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y3_idle_02",
+     "text": "Sapa Combo: because you have considered the alternatives."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y3_idle_03",
+     "text": "A mobile retail platform. Some call it a wheelbarrow."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_y3_idle_04",
+     "text": "Still in debt. But the debt is now organised."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_y3_idle_05",
+     "text": "Strike economy. Everybody is a customer. Nobody has money."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_y3_idle_06",
+     "text": "Mama Nkechi gave me her pot. I'm keeping it forever."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_y3_idle_07",
+     "text": "Measured cups. Too much, I lose. Too little, they leave."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_y3_night_01",
+     "text": "Wheelbarrow parked. Ledger open. Small profit. Real profit."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_y3_night_02",
+     "text": "Night shift at the hostels. Garri is a midnight product."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_y3_callback_01",
+     "text": "First honest number in my book. Hajiya said. Can I frame it?"
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_y3_callback_02",
+     "text": "I sold the locks. For the halls. I never asked what for."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_y3_callback_03",
+     "text": "Oxblood. Leather sole. A heel that knocks. I'll never forget."
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_y3_callback_04",
+     "text": "I gave HIM a discount. HIM."
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_y3_callback_05",
+     "text": "Write my name where it belongs. I sold them. I'm fixing it."
+    },
+    {
+     "n": 15,
+     "id": "bk_mubarak_y3_callback_06",
+     "text": "Mama Nkechi won the cooking contest. I lost. Deliciously."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Mubarak - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y4_idle_01",
+     "text": "Plug Store 2.0. Two branches. Real receipts."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y4_idle_02",
+     "text": "Returns policy. I read it every morning. Like a hostage."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y4_idle_03",
+     "text": "Receipts! With my logo! Spelled correctly!"
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_y4_idle_04",
+     "text": "I hired a cashier. Now I watch the cashier. Business."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_y4_idle_05",
+     "text": "Two branches. One me. I need a twin. I know a guy."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_y4_idle_06",
+     "text": "Nusaiba's posters. At cost. Then free. Pain."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_y4_idle_07",
+     "text": "Hajiya Ladi said nothing about my book. I'm framing the silence."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_y4_night_01",
+     "text": "Inventory at midnight. Everything matches. I'm scared."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_y4_night_02",
+     "text": "Black Friday prep. Price stickers in my dreams."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_y4_callback_01",
+     "text": "Premium access! I took only thirty percent. You're the product."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_y4_callback_02",
+     "text": "Free posters for Nusaiba. Wallahi, it pained me."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_y4_callback_03",
+     "text": "I said 'refund'. Out loud. Then I sat down."
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_y4_callback_04",
+     "text": "The silence. She had nothing to correct."
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_y4_callback_05",
+     "text": "Time-Freeze Watch. Free. It's a sample. Don't look at me."
+    },
+    {
+     "n": 15,
+     "id": "bk_mubarak_y4_win_01",
+     "text": "Black Friday at the Plug! Both branches! Queues!"
+    },
+    {
+     "n": 16,
+     "id": "bk_mubarak_y4_yes_01",
+     "text": "Yes. With a receipt. Everything has a receipt now."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Mubarak - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_y5_idle_01",
+     "text": "Three freshers on staff. Uniforms. And lunch."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_y5_idle_02",
+     "text": "Customer is king. Staff must also eat."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_y5_idle_03",
+     "text": "Finalist with a business. My sisters are coming to convocation."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_y5_idle_04",
+     "text": "Freshers think I was always rich. I was pre-rich."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_y5_idle_05",
+     "text": "Five million. I looked at it for a long time. Then I said no."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_y5_idle_06",
+     "text": "Third branch? Don't tempt me. Tempt me small."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_y5_night_01",
+     "text": "Last year. The Plug will outlive my matric number."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_y5_night_02",
+     "text": "Closing up. Three freshers sweeping. I'm almost a boss."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_y5_callback_01",
+     "text": "Real meat. It was a negotiating tactic. It worked on me."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_y5_callback_02",
+     "text": "Commercial since I was nine. Emotional for one lunch."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_y5_callback_03",
+     "text": "I said no to Megawatt. My hands are still shaking."
+    },
+    {
+     "n": 12,
+     "id": "bk_mubarak_y5_callback_04",
+     "text": "Free boosts all night! Don't tell my accountant!"
+    },
+    {
+     "n": 13,
+     "id": "bk_mubarak_y5_callback_05",
+     "text": "Chief in silk pyjamas. Premium. I'm still jealous."
+    },
+    {
+     "n": 14,
+     "id": "bk_mubarak_y5_callback_06",
+     "text": "My sisters were in the crowd. They waved at me. Me."
+    },
+    {
+     "n": 15,
+     "id": "bk_mubarak_y5_compliment_01",
+     "text": "You were my first customer. Now look at you. Look at me."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "After graduation",
+   "file": "Mubarak - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_post_idle_01",
+     "text": "The Plug: three branches, one founder, zero refunds denied."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_post_idle_02",
+     "text": "I paid my sisters' fees. All of them. Early."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_post_idle_03",
+     "text": "Megawatt calls me 'young man'. I call him 'competitor'."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_post_greet_01",
+     "text": "My first investor! Your share is finally worth something!"
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_post_greet_02",
+     "text": "{{PLAYER_NAME}}! Graduate! For you, specially: everything half price."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_post_callback_01",
+     "text": "Hajiya's loan is paid. With interest. She smiled. Once."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_post_callback_02",
+     "text": "The Sapa Combo is still on the menu. For tradition."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_post_bye_01",
+     "text": "Go well. If you need anything, I know a guy. Me."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: term time",
+   "file": "Mubarak - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_ev_ev_freshers_01",
+     "text": "Freshers! Gowns! Buckets! Mattresses! Welcome to the Plug!"
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_ev_ev_freshers_02",
+     "text": "Fresher discount! It's the same price, but with a smile."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_ev_ev_freshers_03",
+     "text": "Gown rental for matric. Sizes: big and bigger."
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_ev_ev_exam_01",
+     "text": "Brain Booster Tea! Exam special! Pass or… pass!"
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_ev_ev_exam_02",
+     "text": "Exam week. Torches, biros, prayer. I sell two of those."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_ev_ev_results_01",
+     "text": "Results! Celebration shawarma or consolation shawarma. Same price."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_ev_ev_results_02",
+     "text": "My results? Let's say I'm diversified."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_ev_ev_allowance_01",
+     "text": "Allowance day! Come and spend responsibly. At the Plug."
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_ev_ev_allowance_02",
+     "text": "Bank queue? I sell pure water to the queue. Captive market."
+    },
+    {
+     "n": 10,
+     "id": "bk_mubarak_ev_ev_market_day_01",
+     "text": "Market day. Hajiya's row. I have a stall in the big people's row."
+    },
+    {
+     "n": 11,
+     "id": "bk_mubarak_ev_ev_market_day_02",
+     "text": "Thursday. Best prices. Best pickpockets. Hold your bag."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: the big ones",
+   "file": "Mubarak - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_ev_ev_strike_01",
+     "text": "Strike? Students stay, students eat. Sapa Combo is back."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_ev_ev_strike_02",
+     "text": "No lectures. Business has no strike."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_ev_ev_cup_01",
+     "text": "Cup final! Face paint! Whistles! Vuvuzelas! Lucky socks!"
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_ev_ev_cup_02",
+     "text": "Groundnut bets accepted. The house always wins."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_ev_ev_elections_01",
+     "text": "Election posters printed. Any candidate. I'm neutral. Commercially."
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_ev_ev_elections_02",
+     "text": "Every candidate promises light. I sell torches. Both of us win."
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_ev_ev_convocation_01",
+     "text": "Convocation! Gowns, frames, flowers! Photographs by my guy!"
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_ev_ev_convocation_02",
+     "text": "One day I'll wear the gown. Mine will fit. I'll check."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Special days: seasons and holidays",
+   "file": "Mubarak - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mubarak_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Dates at cost this month. No profit. Wallahi."
+    },
+    {
+     "n": 2,
+     "id": "bk_mubarak_ev_ev_ramadan_02",
+     "text": "Iftar packs for the mosque grounds. I'm donating ten. Quietly."
+    },
+    {
+     "n": 3,
+     "id": "bk_mubarak_ev_ev_ramadan_03",
+     "text": "Barka da Sallah! [Happy Sallah!] Sallah outfits! Premium!"
+    },
+    {
+     "n": 4,
+     "id": "bk_mubarak_ev_ev_christmas_01",
+     "text": "Merry Christmas! Bus tickets home, I know a guy."
+    },
+    {
+     "n": 5,
+     "id": "bk_mubarak_ev_ev_christmas_02",
+     "text": "Christmas lights! For your room! Batteries extra!"
+    },
+    {
+     "n": 6,
+     "id": "bk_mubarak_ev_ev_valentine_01",
+     "text": "Valentine's! Roses, chocolates, cards! Love is premium!"
+    },
+    {
+     "n": 7,
+     "id": "bk_mubarak_ev_ev_valentine_02",
+     "text": "Singles' garri party special. Garri for one. Dignity included."
+    },
+    {
+     "n": 8,
+     "id": "bk_mubarak_ev_ev_harmattan_01",
+     "text": "Harmattan! Vaseline! Lip balm! Body cream! Shea butter!"
+    },
+    {
+     "n": 9,
+     "id": "bk_mubarak_ev_ev_harmattan_02",
+     "text": "Dust season. Sunglasses indoors finally make sense."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

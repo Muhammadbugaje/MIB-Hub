@@ -1,3028 +1,549 @@
-# Voice script: Shamsu
-
-**Cast id:** `npc.shamsu` · **Story lines:** 109 · **Barks and filler:** 209 · **Total:** 318
-
-**Voice:** About 19 at the start, Electrical Engineering top student; neat, kind, earnest, precise diction, slightly too fast when excited. Every answer starts "Simple." and is not. Catchphrases: "Simple.", "Technically…", "In sha Allah, you will pass.", "Let me draw it." He cannot lie, even a little.
-
-#
-#
- 
-H
-o
-w
- 
-t
-o
- 
-u
-s
-e
- 
-t
-h
-i
-s
- 
-s
-c
-r
-i
-p
-t
-
-
-
-
-T
-h
-a
-n
-k
- 
-y
-o
-u
- 
-f
-o
-r
- 
-l
-e
-n
-d
-i
-n
-g
- 
-y
-o
-u
-r
- 
-v
-o
-i
-c
-e
- 
-t
-o
- 
-t
-h
-e
- 
-g
-a
-m
-e
-.
- 
-T
-h
-i
-s
- 
-g
-u
-i
-d
-e
- 
-t
-a
-k
-e
-s
- 
-t
-e
-n
- 
-m
-i
-n
-u
-t
-e
-s
- 
-t
-o
- 
-r
-e
-a
-d
- 
-a
-n
-d
- 
-s
-a
-v
-e
-s
- 
-h
-o
-u
-r
-s
- 
-l
-a
-t
-e
-r
-.
-
-
-
-
-*
-*
-1
-.
- 
-S
-e
-t
- 
-u
-p
- 
-(
-o
-n
-c
-e
-)
-.
-*
-*
-
-
--
- 
-F
-i
-n
-d
- 
-t
-h
-e
- 
-q
-u
-i
-e
-t
-e
-s
-t
- 
-r
-o
-o
-m
- 
-y
-o
-u
- 
-h
-a
-v
-e
-.
- 
-A
- 
-w
-a
-r
-d
-r
-o
-b
-e
- 
-f
-u
-l
-l
- 
-o
-f
- 
-c
-l
-o
-t
-h
-e
-s
-,
- 
-o
-r
- 
-a
- 
-s
-m
-a
-l
-l
- 
-r
-o
-o
-m
- 
-w
-i
-t
-h
- 
-c
-u
-r
-t
-a
-i
-n
-s
- 
-a
-n
-d
- 
-a
- 
-b
-e
-d
-,
- 
-i
-s
- 
-b
-e
-t
-t
-e
-r
- 
-t
-h
-a
-n
- 
-a
- 
-b
-i
-g
- 
-e
-m
-p
-t
-y
- 
-r
-o
-o
-m
-:
- 
-s
-o
-f
-t
- 
-t
-h
-i
-n
-g
-s
- 
-s
-t
-o
-p
- 
-e
-c
-h
-o
-.
-
-
--
- 
-S
-w
-i
-t
-c
-h
- 
-o
-f
-f
- 
-f
-a
-n
-s
-,
- 
-a
-i
-r
- 
-c
-o
-n
-d
-i
-t
-i
-o
-n
-i
-n
-g
- 
-a
-n
-d
- 
-t
-h
-e
- 
-T
-V
-.
- 
-P
-u
-t
- 
-y
-o
-u
-r
- 
-p
-h
-o
-n
-e
- 
-o
-n
- 
-s
-i
-l
-e
-n
-t
- 
-(
-i
-f
- 
-y
-o
-u
- 
-r
-e
-c
-o
-r
-d
- 
-o
-n
- 
-i
-t
-,
- 
-u
-s
-e
- 
-a
-e
-r
-o
-p
-l
-a
-n
-e
- 
-m
-o
-d
-e
-)
-.
-
-
--
- 
-U
-s
-e
- 
-a
- 
-p
-h
-o
-n
-e
- 
-v
-o
-i
-c
-e
--
-r
-e
-c
-o
-r
-d
-e
-r
- 
-a
-p
-p
- 
-o
-r
- 
-a
- 
-m
-i
-c
-r
-o
-p
-h
-o
-n
-e
-.
- 
-C
-h
-o
-o
-s
-e
- 
-t
-h
-e
- 
-h
-i
-g
-h
-e
-s
-t
- 
-q
-u
-a
-l
-i
-t
-y
- 
-i
-t
- 
-o
-f
-f
-e
-r
-s
- 
-(
-W
-A
-V
- 
-i
-f
- 
-p
-o
-s
-s
-i
-b
-l
-e
-,
- 
-4
-8
- 
-k
-H
-z
-)
-.
-
-
--
- 
-H
-o
-l
-d
- 
-t
-h
-e
- 
-p
-h
-o
-n
-e
- 
-o
-r
- 
-m
-i
-c
-r
-o
-p
-h
-o
-n
-e
- 
-a
-b
-o
-u
-t
- 
-2
-0
- 
-c
-m
- 
-(
-o
-n
-e
- 
-h
-a
-n
-d
--
-s
-p
-a
-n
-)
- 
-f
-r
-o
-m
- 
-y
-o
-u
-r
- 
-m
-o
-u
-t
-h
-,
- 
-a
- 
-l
-i
-t
-t
-l
-e
- 
-t
-o
- 
-t
-h
-e
- 
-s
-i
-d
-e
- 
-s
-o
- 
-y
-o
-u
-r
- 
-b
-r
-e
-a
-t
-h
- 
-d
-o
-e
-s
- 
-n
-o
-t
- 
-h
-i
-t
- 
-i
-t
-.
- 
-K
-e
-e
-p
- 
-t
-h
-e
- 
-s
-a
-m
-e
- 
-d
-i
-s
-t
-a
-n
-c
-e
- 
-f
-o
-r
- 
-e
-v
-e
-r
-y
- 
-l
-i
-n
-e
-.
-
-
-
-
-*
-*
-2
-.
- 
-R
-e
-a
-d
- 
-t
-h
-e
- 
-t
-a
-b
-l
-e
-.
-*
-*
-
-
--
- 
-*
-*
-I
-d
-:
-*
-*
- 
-t
-h
-e
- 
-l
-i
-n
-e
-'
-s
- 
-n
-a
-m
-e
-.
- 
-N
-a
-m
-e
- 
-y
-o
-u
-r
- 
-f
-i
-l
-e
- 
-w
-i
-t
-h
- 
-i
-t
-,
- 
-f
-o
-r
- 
-e
-x
-a
-m
-p
-l
-e
- 
-`
-m
-0
-0
-2
-_
-o
-p
-e
-n
-_
-0
-1
-.
-w
-a
-v
-`
- 
-o
-r
- 
-`
-b
-k
-_
-j
-e
-g
-a
-_
-f
-_
-g
-r
-e
-e
-t
-_
-0
-1
-.
-w
-a
-v
-`
-.
-
-
--
- 
-*
-*
-M
-o
-o
-d
-:
-*
-*
- 
-h
-o
-w
- 
-t
-o
- 
-s
-a
-y
- 
-i
-t
-.
- 
-*
-w
-a
-r
-m
-*
- 
-f
-r
-i
-e
-n
-d
-l
-y
-,
- 
-*
-a
-m
-u
-s
-e
-d
-*
- 
-s
-m
-i
-l
-i
-n
-g
-,
- 
-*
-d
-r
-y
-*
- 
-d
-e
-a
-d
-p
-a
-n
-,
- 
-*
-s
-t
-e
-r
-n
-*
- 
-f
-i
-r
-m
-,
- 
-*
-s
-h
-a
-r
-p
-*
- 
-q
-u
-i
-c
-k
- 
-a
-n
-d
- 
-p
-o
-i
-n
-t
-e
-d
-,
- 
-*
-s
-h
-y
-*
- 
-s
-o
-f
-t
- 
-a
-n
-d
- 
-h
-e
-s
-i
-t
-a
-n
-t
-,
- 
-*
-p
-r
-o
-u
-d
-*
- 
-c
-h
-e
-s
-t
- 
-o
-u
-t
-,
- 
-*
-s
-c
-a
-r
-e
-d
-*
- 
-t
-e
-n
-s
-e
-,
- 
-*
-s
-a
-d
-*
- 
-l
-o
-w
-,
- 
-*
-e
-x
-c
-i
-t
-e
-d
-*
- 
-f
-a
-s
-t
- 
-a
-n
-d
- 
-b
-r
-i
-g
-h
-t
-,
- 
-*
-b
-o
-r
-e
-d
-*
- 
-f
-l
-a
-t
-,
- 
-*
-w
-h
-i
-s
-p
-e
-r
-*
- 
-q
-u
-i
-e
-t
- 
-b
-u
-t
- 
-c
-l
-e
-a
-r
-,
- 
-*
-n
-e
-u
-t
-r
-a
-l
-*
- 
-y
-o
-u
-r
- 
-n
-o
-r
-m
-a
-l
- 
-v
-o
-i
-c
-e
-.
-
-
--
- 
-*
-*
-C
-u
-e
-:
-*
-*
- 
-t
-h
-e
- 
-l
-i
-n
-e
- 
-s
-a
-i
-d
- 
-j
-u
-s
-t
- 
-b
-e
-f
-o
-r
-e
- 
-y
-o
-u
-r
-s
-,
- 
-s
-o
- 
-y
-o
-u
- 
-k
-n
-o
-w
- 
-t
-h
-e
- 
-m
-o
-m
-e
-n
-t
-.
- 
-D
-o
- 
-n
-o
-t
- 
-r
-e
-c
-o
-r
-d
- 
-t
-h
-e
- 
-c
-u
-e
-.
-
-
--
- 
-*
-*
-W
-o
-r
-d
-s
- 
-i
-n
- 
-[
-s
-q
-u
-a
-r
-e
- 
-b
-r
-a
-c
-k
-e
-t
-s
-]
-*
-*
- 
-a
-r
-e
- 
-t
-h
-e
- 
-E
-n
-g
-l
-i
-s
-h
- 
-t
-r
-a
-n
-s
-l
-a
-t
-i
-o
-n
-.
- 
-D
-o
- 
-n
-o
-t
- 
-s
-a
-y
- 
-t
-h
-e
-m
-.
-
-
--
- 
-`
-{
-{
-P
-L
-A
-Y
-E
-R
-_
-N
-A
-M
-E
-}
-}
-`
- 
-m
-e
-a
-n
-s
- 
-t
-h
-e
- 
-p
-l
-a
-y
-e
-r
-'
-s
- 
-n
-a
-m
-e
-:
- 
-l
-e
-a
-v
-e
- 
-a
- 
-s
-h
-o
-r
-t
- 
-n
-a
-t
-u
-r
-a
-l
- 
-p
-a
-u
-s
-e
- 
-t
-h
-e
-r
-e
- 
-i
-n
-s
-t
-e
-a
-d
- 
-o
-f
- 
-a
- 
-n
-a
-m
-e
-.
- 
-`
-{
-{
-R
-O
-O
-M
-I
-E
-}
-}
-`
- 
-i
-s
- 
-t
-h
-e
- 
-r
-o
-o
-m
-m
-a
-t
-e
-'
-s
- 
-n
-a
-m
-e
-:
- 
-s
-a
-y
- 
-"
-B
-a
-t
-u
-r
-e
-"
- 
-f
-o
-r
- 
-o
-n
-e
- 
-t
-a
-k
-e
- 
-a
-n
-d
- 
-"
-F
-i
-r
-d
-a
-u
-s
-i
-"
- 
-f
-o
-r
- 
-a
-n
-o
-t
-h
-e
-r
-,
- 
-o
-r
- 
-p
-a
-u
-s
-e
-.
-
-
--
- 
-*
-*
-B
-a
-r
-k
-s
-*
-*
- 
-(
-s
-e
-c
-t
-i
-o
-n
- 
-2
-)
- 
-a
-r
-e
- 
-s
-h
-o
-r
-t
- 
-l
-i
-n
-e
-s
- 
-h
-e
-a
-r
-d
- 
-i
-n
- 
-t
-h
-e
- 
-o
-p
-e
-n
- 
-w
-o
-r
-l
-d
-.
- 
-S
-a
-y
- 
-t
-h
-e
-m
- 
-a
-s
- 
-i
-f
- 
-s
-o
-m
-e
-o
-n
-e
- 
-j
-u
-s
-t
- 
-w
-a
-l
-k
-e
-d
- 
-p
-a
-s
-t
- 
-y
-o
-u
-.
-
-
-
-
-*
-*
-3
-.
- 
-R
-e
-c
-o
-r
-d
-.
-*
-*
-
-
--
- 
-S
-a
-y
- 
-e
-a
-c
-h
- 
-l
-i
-n
-e
- 
-*
-*
-t
-h
-r
-e
-e
- 
-t
-i
-m
-e
-s
-*
-*
-,
- 
-w
-i
-t
-h
- 
-a
- 
-o
-n
-e
--
-s
-e
-c
-o
-n
-d
- 
-s
-i
-l
-e
-n
-c
-e
- 
-b
-e
-f
-o
-r
-e
- 
-a
-n
-d
- 
-a
-f
-t
-e
-r
- 
-e
-a
-c
-h
- 
-t
-a
-k
-e
-.
- 
-W
-e
- 
-p
-i
-c
-k
- 
-t
-h
-e
- 
-b
-e
-s
-t
-.
-
-
--
- 
-I
-f
- 
-y
-o
-u
- 
-s
-t
-u
-m
-b
-l
-e
-,
- 
-j
-u
-s
-t
- 
-s
-a
-y
- 
-t
-h
-e
- 
-l
-i
-n
-e
- 
-a
-g
-a
-i
-n
-.
- 
-D
-o
- 
-n
-o
-t
- 
-s
-t
-o
-p
- 
-t
-h
-e
- 
-r
-e
-c
-o
-r
-d
-i
-n
-g
- 
-t
-o
- 
-d
-e
-l
-e
-t
-e
- 
-i
-t
-.
-
-
--
- 
-D
-r
-i
-n
-k
- 
-w
-a
-t
-e
-r
-,
- 
-t
-a
-k
-e
- 
-b
-r
-e
-a
-k
-s
- 
-e
-v
-e
-r
-y
- 
-2
-0
- 
-m
-i
-n
-u
-t
-e
-s
-,
- 
-a
-n
-d
- 
-s
-t
-o
-p
- 
-i
-f
- 
-y
-o
-u
-r
- 
-v
-o
-i
-c
-e
- 
-g
-e
-t
-s
- 
-t
-i
-r
-e
-d
-.
- 
-S
-h
-o
-u
-t
-i
-n
-g
- 
-l
-i
-n
-e
-s
- 
-l
-a
-s
-t
-.
-
-
--
- 
-I
-f
- 
-a
- 
-l
-i
-n
-e
- 
-d
-o
-e
-s
- 
-n
-o
-t
- 
-s
-o
-u
-n
-d
- 
-l
-i
-k
-e
- 
-y
-o
-u
-,
- 
-o
-r
- 
-a
- 
-p
-h
-r
-a
-s
-e
- 
-i
-n
- 
-a
-n
-o
-t
-h
-e
-r
- 
-l
-a
-n
-g
-u
-a
-g
-e
- 
-i
-s
- 
-w
-r
-o
-n
-g
-,
- 
-w
-r
-i
-t
-e
- 
-y
-o
-u
-r
- 
-v
-e
-r
-s
-i
-o
-n
- 
-d
-o
-w
-n
-.
- 
-E
-v
-e
-r
-y
- 
-l
-i
-n
-e
- 
-i
-s
- 
-a
- 
-d
-r
-a
-f
-t
- 
-a
-n
-d
- 
-w
-e
- 
-c
-h
-a
-n
-g
-e
- 
-i
-t
- 
-f
-o
-r
- 
-y
-o
-u
-.
-
-
-
-
-*
-*
-4
-.
- 
-S
-e
-n
-d
- 
-i
-t
- 
-b
-a
-c
-k
-.
-*
-*
-
-
--
- 
-P
-u
-t
- 
-a
-l
-l
- 
-y
-o
-u
-r
- 
-f
-i
-l
-e
-s
- 
-i
-n
- 
-o
-n
-e
- 
-f
-o
-l
-d
-e
-r
- 
-n
-a
-m
-e
-d
- 
-w
-i
-t
-h
- 
-y
-o
-u
-r
- 
-n
-a
-m
-e
- 
-a
-n
-d
- 
-c
-h
-a
-r
-a
-c
-t
-e
-r
- 
-(
-f
-o
-r
- 
-e
-x
-a
-m
-p
-l
-e
- 
-`
-A
-m
-i
-n
-a
-_
-J
-e
-g
-a
-`
-)
-.
-
-
--
- 
-S
-e
-n
-d
- 
-t
-h
-e
- 
-f
-o
-l
-d
-e
-r
-,
- 
-w
-i
-t
-h
- 
-t
-h
-e
- 
-s
-i
-g
-n
-e
-d
- 
-a
-g
-r
-e
-e
-m
-e
-n
-t
- 
-o
-n
- 
-t
-h
-e
- 
-l
-a
-s
-t
- 
-p
-a
-g
-e
-,
- 
-t
-o
- 
-t
-h
-e
- 
-p
-e
-r
-s
-o
-n
- 
-w
-h
-o
- 
-g
-a
-v
-e
- 
-y
-o
-u
- 
-t
-h
-i
-s
- 
-s
-c
-r
-i
-p
-t
- 
-(
-a
- 
-G
-o
-o
-g
-l
-e
- 
-D
-r
-i
-v
-e
- 
-o
-r
- 
-W
-e
-T
-r
-a
-n
-s
-f
-e
-r
- 
-l
-i
-n
-k
- 
-i
-s
- 
-e
-a
-s
-i
-e
-s
-t
-)
-.
-
-
--
- 
-A
-s
-k
- 
-a
-n
-y
-t
-h
-i
-n
-g
- 
-a
-t
- 
-a
-n
-y
- 
-t
-i
-m
-e
-.
- 
-T
-h
-e
-r
-e
- 
-i
-s
- 
-n
-o
- 
-d
-e
-a
-d
-l
-i
-n
-e
- 
-p
-r
-e
-s
-s
-u
-r
-e
-:
- 
-a
- 
-f
-e
-w
- 
-l
-i
-n
-e
-s
- 
-a
- 
-d
-a
-y
- 
-i
-s
- 
-p
-e
-r
-f
-e
-c
-t
-.
-
-
-## 1. Story lines (in story order)
-
-
-### M005 First Lecture, Wrong Theatre
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m005_mid1_01` | whisper | — | Simple. A capacitor is a bucket. |
-| `m005_mid1_02` | whisper | Shamsu: Simple. A capacitor is a bucket. | A resistor is your uncle. Current is the salary. |
-| `m005_mid1_03` | warm | The Player (every playable fresher): …No. | Good. Confusion is the first step. |
-
-### M008 Left Boot First
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m008_mid1_01` | neutral | — | Simple. The spin, the wet grass, the angle… |
-| `m008_mid1_03` | shy | The Player (every playable fresher): Why 'Sheikh'? | A goat was eating a sachet. I said something. |
-| `m008_mid1_04` | proud | Shamsu: A goat was eating a sachet. I said something. | I was not preaching. I was ADVISING the goat. |
-| `m008_mid1_05` | whisper | Shamsu: I was not preaching. I was ADVISING the goat. | Possibly I did not close the gate. |
-| `m008_mid1_06` | shy | Shamsu: Possibly I did not close the gate. | …Oh. That was you. Sorry. Also, thank you. |
-
-### M011 Test Week, One Lamp
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m011_open_01` | warm | — | Simple. |
-| `m011_open_03` | warm | {{ROOMIE}} (Bature and Firdausi): It is never simple when he says that. | In sha Allah, you will all pass. |
-| `m011_mid1_05` | neutral | Muhammad: Sorry. I shouldn't. You looked worried. | {{PLAYER_NAME}}! Who are you talking to? |
-
-### M012 Count Entropy
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m012_mid2_02` | scared | Jega: Kai. It's wearing a cape. | Technically, that is not possible. |
-
-### M019 The Vice-Chancellor's Cup
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m019_mid1_02` | shy | Small Boy: Jega! Show us! | Technically… we have won? I'm sorry. We've won. |
-
-### M023 Exam Fever
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m023_mid1_04` | neutral | Dr. Zainab: …sorry. I know you have exams. Who else do I ask? | I was not asleep. I have a diagram. |
-| `m023_mid1_05` | whisper | Shamsu: I was not asleep. I have a diagram. | Technically we are not allowed. Bring a torch. |
-| `m023_close_04` | whisper | Engr. Aliyu: This never happened. I owe you. I pay what I owe. | There are seven. My diagram has six. |
-
-### M024 Convocation Night
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m024_open_01` | scared | — | That is too much load. That is all seven feeders. |
-| `m024_open_02` | scared | Shamsu: That is too much load. That is all seven feeders. | That is— |
-
-### M029 The Mall Never Blinks
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m029_open_03` | neutral | {{ROOMIE}} (Bature and Firdausi): We blink. It doesn't. | Nine days. I have timed every outage. |
-| `m029_open_04` | stern | Shamsu: Nine days. I have timed every outage. | Watch the mall when we go dark. Count to three. |
-| `m029_open_05` | whisper | The Player (every playable fresher): Why? | Technically… just watch. |
-| `m029_mid1_01` | whisper | — | The seventh feeder. Number two. |
-| `m029_mid1_02` | scared | Shamsu: The seventh feeder. Number two. | It is not feeding us. It is feeding FROM us. |
-
-### M033 Faculty Week: Engineering
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m033_mid1_01` | proud | — | Simple. It senses the cup, it tilts by a function of— |
-| `m033_mid1_04` | shy | Abbas: The wiring is the problem. I will fix the wiring. | Technically… we have a team? |
-| `m033_close_03` | scared | Partner Or Roomie: [COMPANION_LINE: on seeing your outfit] | Yes, sir. It spilled, sir. On the Dean, sir. |
-| `m033_close_04` | sad | Shamsu: Yes, sir. It spilled, sir. On the Dean, sir. | …Next time, sir. |
-| `m033_close_05` | whisper | Shamsu: …Next time, sir. | He said, 'There is always a first.' |
-
-### M044 Unplug Iron Mama (Heist 1)
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m044_mid1_01` | proud | — | Sequential. Which is worse than simple. But done. |
-
-### M047 Two Papers, One Day
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m047_open_01` | scared | — | The qualifier is today. Eleven. They moved it. |
-| `m047_open_02` | scared | Shamsu: The qualifier is today. Eleven. They moved it. | The paper is at eight. And the arm has seized. |
-| `m047_open_04` | neutral | {{ROOMIE}} (Bature and Firdausi): (Riddle: who knocks at five? No one good.) | I can do the paper. I did it in my head, walking. |
-| `m047_open_05` | shy | Shamsu: I can do the paper. I did it in my head, walking. | Technically I require a second pair of hands. |
-| `m047_open_06` | shy | The Player (every playable fresher): You're asking for help. | Is that what this is? I did not know the form. |
-| `m047_mid1_05` | whisper | Judge A: Second of nine. You go to the nationals. | Second. |
-| `m047_mid1_06` | scared | The Player (every playable fresher): You qualified! | Yes. …Yes. I must phone my father. |
-| `m047_close_01` | scared | — | {{PLAYER_NAME}}. I need to tell you something. |
-| `m047_close_02` | sad | Shamsu: {{PLAYER_NAME}}. I need to tell you something. | I have needed to for a whole semester. I have counted. |
-| `m047_close_03` | whisper | Shamsu: I have needed to for a whole semester. I have counted. | When Dr. Khadija called you in. Before that. |
-| `m047_close_04` | whisper | Shamsu: When Dr. Khadija called you in. Before that. | She asked me— |
-| `m047_close_07` | sad | Prof. Bello: The examination does not reschedule. In. Now. | After. After the exams. In sha Allah. |
-
-### M049 Three Hundred
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m049_open_02` | warm | The Player (every playable fresher): …Me? | Simple. You are old now. Sit. I saved your seat. |
-| `m049_mid1_01` | excited | — | The panel is a farmer. The battery is a barn. |
-| `m049_mid1_02` | excited | Shamsu: The panel is a farmer. The battery is a barn. | The controller is the mother who says no. |
-| `m049_mid1_04` | shy | Nusaiba: Who is taking minutes? | Last year, in the matter of the basement, I should… |
-| `m049_mid1_05` | neutral | Shamsu: Last year, in the matter of the basement, I should… | …mention that the controller needs a diode. |
-
-### M060 The Old Site
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m060_open_02` | whisper | Prof. Nwachukwu (voice on tape): Five. Four. Three. Two. One. | It is transmitting. To nobody. Twice a day. |
-| `m060_mid1_06` | excited | Prof. Nwachukwu (voice on tape): Like invitations to a wedding nobody was planning. | Four. We already hold four. |
-| `m060_mid1_07` | dry | Shamsu: Four. We already hold four. | It was never engineering. It was a visiting problem. |
-| `m060_close_01` | neutral | — | It doesn't say 'not you'. |
-
-### M061 The Maker's Secret
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m061_open_03` | shy | The Maker: No. Thank you. Give me the lead. | It is tested, sir. Twice. Technically three times. |
-| `m061_close_02` | neutral | The Maker: My notebook. When you are a finalist. Not before. | Who are you all staring at? |
-
-### M062 The Study Group
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m062_open_01` | excited | — | Simple. One lamp, one board, one semester. We begin. |
-| `m062_open_03` | dry | Bature: Professor! Riddle me this: when is break? | Technically, June. Sit. |
-| `m062_open_05` | warm | Firdausi: Oya, biology people. Corridor. We have our own lamp. | {{PLAYER_NAME}}. Section two is yours. At seven. |
-| `m062_mid1_01` | shy | — | Before you go. One thing nobody knows. |
-| `m062_mid1_02` | neutral | Shamsu: Before you go. One thing nobody knows. | First year. I failed a course. An F. A carry-over. |
-| `m062_mid1_03` | warm | Shamsu: First year. I failed a course. An F. A carry-over. | You think I don't know how it feels. I teach because I know. |
-| `m062_mid1_04` | warm | Shamsu: You think I don't know how it feels. I teach because I know. | In sha Allah, you will pass. |
-| `m062_mid2_01` | neutral | — | Forgiveness is like a transformer. You step down the… |
-| `m062_mid2_02` | sad | Shamsu: Forgiveness is like a transformer. You step down the… | No. It is nothing like a transformer. |
-| `m062_mid2_03` | sad | Shamsu: No. It is nothing like a transformer. | Dr. Khadija asked me directly. About the basement. |
-| `m062_mid2_04` | sad | Shamsu: Dr. Khadija asked me directly. About the basement. | I cannot lie. I have tried. I practised in a mirror. |
-| `m062_mid2_05` | sad | Shamsu: I cannot lie. I have tried. I practised in a mirror. | I said yes. Then I said nothing to you for a year. |
-| `m062_mid2_06` | sad | Shamsu: I said yes. Then I said nothing to you for a year. | Which is a kind of lie. And I am sorry. |
-| `m062_mid2_07` | sad | Shamsu: Which is a kind of lie. And I am sorry. | They suspected Firdausi. I let them. That is two. |
-| `m062_close_01` | shy | — | Every course we share. Four semesters. Indexed. |
-| `m062_close_02` | warm | Shamsu: Every course we share. Four semesters. Indexed. | Take them. All of them. I know them already. |
-
-### M065 Workshop Nights
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m065_mid1_01` | whisper | — | He has been looking for one minute. I timed it. |
-
-### M070 The Third Coil Wakes
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m070_mid1_01` | amused | — | Technically it is a lock. The key is a choir. |
-
-### M072 Lights on the Long Road
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m072_open_01` | whisper | — | Simple. You know this. I wrote it in the margin. |
-
-### M076 The Collab
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m076_open_02` | stern | Lucky: Collab! Three stunts. Link in bio by six. | Simple. You stand. He flies. Nobody panics. |
-| `m076_open_03` | stern | Shamsu: Simple. You stand. He flies. Nobody panics. | Sarki, I am looking at you. |
-| `m076_open_04` | dry | The Player (every playable fresher): …That goat is looking at me. | Technically, he is looking at your history. |
-
-### M081 The Old Eye (Heist 2)
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m081_open_05` | scared | Mubarak: Free. Don't look at me. It is a sample. | Technically… that is a stair. |
-| `m081_mid1_04` | scared | Tanko: Seven, some days. | Four years of 'Which?' You never said! |
-
-### M083 Proof of Work
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m083_open_03` | excited | Basit: Four minutes. New record. Run it back. | Simple. An Echo repeats. It never invents. |
-
-### M087 Nationals
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m087_open_01` | neutral | The Player (every playable fresher): You ironed that already. | Simple. The first ironing was a draft. |
-| `m087_open_02` | scared | Shamsu: Simple. The first ironing was a draft. | My father is driving nine hours. For a robot. |
-| `m087_open_03` | shy | The Player (every playable fresher): For you. | Technically, that is what frightens me. |
-| `m087_close_05` | shy | Shamsu Mother: He has been practising that since Kano. | Technically, I have been wrong about him… |
-| `m087_close_06` | warm | Shamsu: Technically, I have been wrong about him… | …for twenty-one years. |
-
-### M098 The Maker's Notebook
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m098_open_03` | neutral | The Maker: for page two hundred and six. | Technically, that is a lung disease. |
-
-### M101 Sixth Site (Heist 3)
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m101_open_04` | whisper | Malam Garba: Hm. | Thirty-one years of oil. Simple. It is maintenance. |
-| `m101_mid1_02` | whisper | Malam Garba: Hm. | Technically, 'Hm' was a no. I am learning the dialect. |
-| `m101_close_02` | excited | Nusaiba: No dust on the bell. Somebody cleans that. | The bolts! It is page two hundred and six. Exactly! |
-
-### M103 Parts from Everywhere
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m103_open_01` | proud | — | Ten items. Nobody sells them. Simple. We requisition. |
-| `m103_open_04` | neutral | Bolaji: You have to go and greet people. | …Is there a form for greeting? |
-| `m103_close_01` | proud | — | Ten of ten. In sha Allah, it will work. |
-| `m103_close_03` | neutral | Bolaji: Not me. If I had a sweet, I would have eaten it. | Technically, we should open an investigation. |
-
-### M104 Build Week
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m104_open_03` | proud | Danjuma: No. Measure twice, then come and ask me. | Simple. Six days. I have made a Gantt chart. |
-| `m104_mid1_04` | neutral | Abbas: Two thousand turns. I counted. Do not ask again. | …It is close. It is very close. It is fine. |
-| `m104_close_01` | scared | — | Thermal runaway, which technically means— |
-
-### M106 Everybody, Again
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m106_mid1_02` | neutral | Aminu: Sir. It is humming the wrong song. | Technically, it is within tolerance— |
-| `m106_mid1_03` | whisper | Shamsu: Technically, it is within tolerance— | …He is right. The child is right. Let me draw it. |
-
-### M108 The Chancellor's Shadow
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m108_mid2_01` | whisper | — | Batteries up: blackout. Bread down: a hard night. |
-| `m108_mid2_02` | scared | Shamsu: Batteries up: blackout. Bread down: a hard night. | Four years. Technically, it is a perfect forecast. |
-
-### M110 Project Defence
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m110_open_05` | whisper | Dr. Khadija: Begin. And bring yourself. All of yourself. | In sha Allah, you will pass. |
-| `m110_close_06` | warm | Dr. Khadija: We will let you know. | I knew the answer. So did you. |
-| `m110_close_07` | shy | Shamsu: I knew the answer. So did you. | I wanted to hear you say it. …This is an allergy. |
-
-### M111 The Longest Night
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m111_open_02` | whisper | Engr. Aliyu: That is not a fault. I know every fault. Listen. | There is no hum. Technically, there is nothing. |
-
-### M112 Three by Road
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m112_open_02` | neutral | Bolaji: Sly does not ride at night. Bolaji rides. Get on. | Left at the Spot. Technically a soft left. Historically— |
-| `m112_open_03` | neutral | The Player (every playable fresher): Professor. Summary. | Left. |
-| `m112_close_05` | neutral | Ranger Lawal: I sang. You heard nothing. Follow my light. | Long, short, long. Who is up there? |
-
-### M114 The Ten Seals
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m114_open_05` | neutral | Dr. Zainab: One hour. Then I am back on my ward. Move. | Ten seals. Ten bearers. Simple. |
-| `m114_mid2_03` | shy | Nusaiba: Point two. In perpetuity. Point three: we asked. | Engineering. Technically, we should have come last. |
-
-### M115 Chancellor Null
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m115_mid1_03` | neutral | Jega: Mu je! [Let's go!] | Technically, I never left. |
-
-### M116 The Maker's Graduation
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m116_open_03` | whisper | The Maker: I have had it far too long. | Three notes. But the drawing shows four marks— |
-
-### M117 Gown
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m117_open_02` | proud | Fresher A: Senior, I can't see. What does it say? | In sha Allah, you have passed. I checked. Three times. |
-
-## 2. Barks, filler and replies
-
-These are said in the open world, not in cutscenes: greetings, replies in choice wheels, reactions, and lines that change with the year and the calendar.
-
-
-### Filler
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_f_greet_01` | greet | warm | Assalamu alaikum, {{PLAYER_NAME}}. [Peace be upon you.] You slept? | — |
-| `bk_shamsu_f_greet_02` | greet | neutral | Ah. You. Good. I have a diagram. | — |
-| `bk_shamsu_f_greet_03` | greet | excited | {{PLAYER_NAME}}! Simple question: have you revised? | — |
-| `bk_shamsu_f_greet_04` | greet | warm | Ina kwana. [Good morning.] Technically, it is still morning. | — |
-| `bk_shamsu_f_greet_05` | greet | neutral | Hello. I was just thinking about you. And about resistors. | — |
-| `bk_shamsu_f_greet_06` | greet | dry | You are early. That is new. I will note it. | — |
-| `bk_shamsu_f_bye_01` | bye | warm | Ma'a salama. [Go in peace.] In sha Allah, you will pass. | — |
-| `bk_shamsu_f_bye_02` | bye | neutral | I must go. Dr. Okonkwo lets me teach the last ten minutes. | — |
-| `bk_shamsu_f_bye_03` | bye | dry | Goodbye. Read chapter four. Then chapter four again. | — |
-| `bk_shamsu_f_thanks_01` | thanks | warm | Jazakallahu khairan. [May God reward you with good.] | — |
-| `bk_shamsu_f_thanks_02` | thanks | shy | Thank you. I am recording this in my memory. Permanently. | — |
-| `bk_shamsu_f_thanks_03` | thanks | neutral | Thank you. Technically, I owe you one. I have written it down. | — |
-| `bk_shamsu_f_sorry_01` | sorry | sad | I am sorry. I have no excuse. I checked. Twice. | — |
-| `bk_shamsu_f_sorry_02` | sorry | shy | Sorry. I explained it again, did I not? I can see your face. | — |
-| `bk_shamsu_f_sorry_03` | sorry | neutral | My mistake. A rounding error. In my manners. | — |
-| `bk_shamsu_f_compliment_01` | compliment | warm | Your notes are improving. They are almost legible. | — |
-| `bk_shamsu_f_compliment_02` | compliment | proud | That was correct. Completely. I am emotional. | — |
-| `bk_shamsu_f_compliment_03` | compliment | warm | You asked a good question. Good questions are rare. Like diodes. | — |
-| `bk_shamsu_f_compliment_04` | compliment | dry | Your outfit is… symmetrical. That is high praise from me. | — |
-| `bk_shamsu_f_tease_01` | tease | amused | You call that a circuit? That is a necklace. | — |
-| `bk_shamsu_f_tease_02` | tease | dry | You studied? For how long? Be honest. I will know. | — |
-| `bk_shamsu_f_tease_03` | tease | amused | Your handwriting is like an oscilloscope in a storm. | — |
-| `bk_shamsu_f_follow_01` | follow | neutral | Walk with me. I talk faster when I walk. | — |
-| `bk_shamsu_f_follow_02` | follow | excited | This way. Simple. Then left. Then I will explain the left. | — |
-| `bk_shamsu_f_wait_01` | wait | dry | I have been waiting four minutes. I timed it. | — |
-| `bk_shamsu_f_wait_02` | wait | neutral | Technically, you are late. Emotionally, I forgive you. | — |
-| `bk_shamsu_f_lost_01` | lost | neutral | Wrong theatre. Gabas is east. The sun is a clue. | — |
-| `bk_shamsu_f_lost_02` | lost | amused | That is the Law faculty. Unless you want to define tort. | — |
-| `bk_shamsu_f_yes_01` | yes | neutral | Yes. Simple. | — |
-| `bk_shamsu_f_yes_02` | yes | warm | Yes, in sha Allah. | — |
-| `bk_shamsu_f_yes_03` | yes | excited | Yes! And let me draw why. | — |
-| `bk_shamsu_f_no_01` | no | neutral | No. I'm sorry. No. | — |
-| `bk_shamsu_f_no_02` | no | dry | Technically, no. | — |
-| `bk_shamsu_f_no_03` | no | stern | No. That would be cheating. I don't know how to cheat. | — |
-| `bk_shamsu_f_maybe_01` | maybe | neutral | I cannot say maybe. I don't know yet. That is different. | — |
-| `bk_shamsu_f_maybe_02` | maybe | dry | Probability: forty percent. Rising. | — |
-| `bk_shamsu_f_confused_01` | confused | neutral | Who? There was nobody there fa. I counted. | — |
-| `bk_shamsu_f_confused_02` | confused | dry | I don't understand. And I understand most things. | — |
-| `bk_shamsu_f_confused_03` | confused | neutral | Say it again. Slowly. With units. | — |
-| `bk_shamsu_f_agree_01` | agree | warm | Correct. You see? You knew it already. | — |
-| `bk_shamsu_f_agree_02` | agree | neutral | I agree. And I have three references. | — |
-| `bk_shamsu_f_refuse_01` | refuse | stern | No. I will not write your assignment. I will help you write it. | — |
-| `bk_shamsu_f_refuse_02` | refuse | neutral | I cannot. My father would know. Somehow, he always knows. | — |
-| `bk_shamsu_f_joke_01` | joke | amused | Simple. Sapa is a potential difference between wants and wallet. | — |
-| `bk_shamsu_f_joke_02` | joke | amused | A capacitor is a bucket. A resistor is your uncle. You see? | — |
-| `bk_shamsu_f_joke_03` | joke | amused | I told a joke once. Then I explained it. It got funnier. | — |
-| `bk_shamsu_f_joke_04` | joke | dry | Technically, garri is a meal. Technically. | — |
-| `bk_shamsu_f_joke_05` | joke | amused | Why did the electron go home? It was charged. …That's the joke. | — |
-| `bk_shamsu_f_ask_01` | ask | neutral | Did you eat? Hunger lowers marks. It is documented. | — |
-| `bk_shamsu_f_ask_02` | ask | warm | How is your family? Mine called. Three times. Today. | — |
-| `bk_shamsu_f_ask_03` | ask | neutral | Have you seen my red pen? I have four. I want that one. | — |
-| `bk_shamsu_f_hit_01` | hit | neutral | Ah! Momentum. Mass times velocity. Mostly yours. | — |
-| `bk_shamsu_f_hit_02` | hit | dry | I'm fine. My glasses are fine. Thank God for the glasses. | — |
-| `bk_shamsu_f_fall_01` | fall | amused | I have fallen. Gravity is reliable, if nothing else. | — |
-| `bk_shamsu_f_fall_02` | fall | neutral | I'm up. Simple. Don't help. …Help a little. | — |
-| `bk_shamsu_f_win_01` | win | excited | We won! Technically, by a clear margin! | — |
-| `bk_shamsu_f_win_02` | win | proud | Alhamdulillah. [All praise is for God.] Exactly as calculated. | — |
-| `bk_shamsu_f_lose_01` | lose | sad | We lost. I have the data. I will learn from it. Tonight. | — |
-| `bk_shamsu_f_lose_02` | lose | neutral | Second. My father will call. I will answer. Eventually. | — |
-| `bk_shamsu_f_blackout_01` | blackout | neutral | NEPA. Average outage: forty-one minutes. Get a torch. | — |
-| `bk_shamsu_f_blackout_02` | blackout | dry | Technically, it is not dark. It is merely unlit. | — |
-| `bk_shamsu_f_blackout_03` | blackout | whisper | The lights are gone. Stay together. It is safer in numbers. | — |
-| `bk_shamsu_f_light_back_01` | light_back | excited | Light! Charge everything. Laptop first, phone second. | — |
-| `bk_shamsu_f_light_back_02` | light_back | amused | Up NEPA! …I said it. I am part of the community. | — |
-| `bk_shamsu_f_rain_01` | rain | neutral | Rain. Do not stand near the transformer. I am serious. | — |
-| `bk_shamsu_f_rain_02` | rain | amused | Wet socks lower morale by thirty percent. My estimate. | — |
-| `bk_shamsu_f_heat_01` | heat | neutral | The heat is a resistor. It is slowing all our currents. | — |
-| `bk_shamsu_f_heat_02` | heat | dry | Thirty-nine degrees. My brain is running in safe mode. | — |
-| `bk_shamsu_f_food_01` | food | warm | Kosai and pap. Fuel for a tutorial. | — |
-| `bk_shamsu_f_food_02` | food | amused | Jollof at the Spot. I will not explain jollof. It explains itself. | — |
-| `bk_shamsu_f_money_01` | money | dry | My account balance is a rounding error. | — |
-| `bk_shamsu_f_money_02` | money | amused | My allowance is alternating current. It comes and goes. | — |
-| `bk_shamsu_f_gift_like_01` | gift_like | warm | A pen! Thank you. I will name it after you. | — |
-| `bk_shamsu_f_gift_like_02` | gift_like | neutral | This is useful. Useful is the highest category. | — |
-| `bk_shamsu_f_gift_dislike_01` | gift_dislike | neutral | Thank you. I don't know what it is. I will research it. | — |
-| `bk_shamsu_f_gift_dislike_02` | gift_dislike | dry | It is… decorative. I respect decoration. From far. | — |
-| `bk_shamsu_f_gift_love_01` | gift_love | excited | A scientific calculator? With graphing? Masha Allah! [God has willed it!] | — |
-| `bk_shamsu_f_gift_love_02` | gift_love | shy | A new prayer cap. White. Crisp. You remembered Fridays. | — |
-
-### Year 1
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_y1_idle_01` | idle | neutral | Theatre Gabas, front row. Middle seat. Always. | — |
-| `bk_shamsu_y1_idle_02` | idle | proud | Sheikh Biru. That is what they call me. Because of a goat. | — |
-| `bk_shamsu_y1_idle_03` | idle | neutral | I counted my pens. Seven. That is the right number. | — |
-| `bk_shamsu_y1_idle_04` | idle | amused | Dr. Okonkwo smiled at my answer. Or the window. I'm not sure. | — |
-| `bk_shamsu_y1_idle_05` | idle | warm | Tutorial at seven. One lamp. In sha Allah, all of you will pass. | — |
-| `bk_shamsu_y1_idle_06` | idle | neutral | My father asks for my position. I say first. He says good. | — |
-| `bk_shamsu_y1_idle_07` | idle | dry | Freshers ask me the way. I give them the history of the way. | — |
-| `bk_shamsu_y1_night_01` | night | whisper | Reading by phone light. Technically, it counts. | — |
-| `bk_shamsu_y1_night_02` | night | neutral | The library closes at ten. My brain does not. | — |
-| `bk_shamsu_y1_callback_01` | callback | amused | I was not preaching. I was ADVISING the goat. | m008_done |
-| `bk_shamsu_y1_callback_02` | callback | shy | Possibly, I did not close the gate. Possibly. | m008_done |
-| `bk_shamsu_y1_callback_03` | callback | dry | I missed an open goal. The angles were against me. | m008_done |
-| `bk_shamsu_y1_callback_04` | callback | proud | Forty students followed my lamp. Like moths. Educated moths. | m011_done |
-| `bk_shamsu_y1_callback_05` | callback | sad | One B. Five As and a B. I am still sick about it. | m013_done |
-| `bk_shamsu_y1_callback_06` | callback | amused | I saved a penalty explaining the Magnus effect. Accidentally. | m019_done |
-| `bk_shamsu_y1_callback_07` | callback | neutral | We traced the hospital line. It held. I did not sleep. | m023_done |
-| `bk_shamsu_y1_ask_01` | ask | neutral | Do you understand Kirchhoff? Be honest. You cannot lie to me. | — |
-| `bk_shamsu_y1_agree_01` | agree | neutral | Yes. And no. Both, technically. Let me draw it. | — |
-| `bk_shamsu_y1_follow_01` | follow | excited | Tutorial! This way! I reserved the lamp! | — |
-
-### Year 2
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_y2_idle_01` | idle | excited | My robot serves zobo. In theory. In practice, the Dean. | — |
-| `bk_shamsu_y2_idle_02` | idle | neutral | Nine days. I have timed every outage. I keep a chart. | — |
-| `bk_shamsu_y2_idle_03` | idle | amused | Three-phase power is three goats on a hill. Ask me later. | — |
-| `bk_shamsu_y2_idle_04` | idle | neutral | Engineering week. I ironed my shirt. Twice. Technically three times. | — |
-| `bk_shamsu_y2_idle_05` | idle | dry | Test week. Everyone wants me. Nobody wants the explanations. | — |
-| `bk_shamsu_y2_idle_06` | idle | warm | Abbas and I built an arm. It waves. Not on purpose. | — |
-| `bk_shamsu_y2_idle_07` | idle | neutral | The mall is brighter every time we go dark. I have numbers. | — |
-| `bk_shamsu_y2_night_01` | night | whisper | Can't sleep. The qualifier, the papers. And other things. | — |
-| `bk_shamsu_y2_night_02` | night | neutral | Mai Shayi says I drink tea like it is homework. | — |
-| `bk_shamsu_y2_callback_01` | callback | dry | Yes, sir. It spilled, sir. On the Dean, sir. | m033_done |
-| `bk_shamsu_y2_callback_02` | callback | proud | The Dean said 'there is always a first.' I wrote it down. | m033_done |
-| `bk_shamsu_y2_callback_03` | callback | amused | The robot said 'In sha Allah, you will pass.' To the Dean. | m033_done |
-| `bk_shamsu_y2_callback_04` | callback | neutral | Sequential. Which is worse than simple. But done. | m044_done |
-| `bk_shamsu_y2_callback_05` | callback | proud | Qualified. Second. …Yes. Yes, I must phone my father. | m047_done |
-| `bk_shamsu_y2_callback_06` | callback | amused | The robot rode an okada. It said 'Simple' at every bump. | m047_done |
-| `bk_shamsu_y2_sorry_01` | sorry | sad | I… am sorry. For nothing. For being quiet. That is all. | m035_done |
-| `bk_shamsu_y2_ask_01` | ask | shy | Are you angry with anyone? This semester? You can say. | m035_done |
-| `bk_shamsu_y2_ask_02` | ask | neutral | Dr. Khadija's office. Was it bad? …I'm only asking. | m035_done |
-| `bk_shamsu_y2_no_01` | no | dry | No. I am busy. That is true. I checked. | — |
-
-### Year 3
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_y3_idle_01` | idle | neutral | Strike. No lectures. So I will give some. | — |
-| `bk_shamsu_y3_idle_02` | idle | proud | Thirty students last night. Sixty tonight. One lamp. | — |
-| `bk_shamsu_y3_idle_03` | idle | warm | Chalk, a board and a free hour. That is a university. | — |
-| `bk_shamsu_y3_idle_04` | idle | neutral | The strike will not cost anybody a year. Not on my watch. | — |
-| `bk_shamsu_y3_idle_05` | idle | dry | Group project: me, you, and Bolaji's thumbs-up. | — |
-| `bk_shamsu_y3_idle_06` | idle | amused | The solar panel is a farmer. The battery is a barn. | — |
-| `bk_shamsu_y3_idle_07` | idle | neutral | My parents ask when school resumes. I say 'technically'. | — |
-| `bk_shamsu_y3_night_01` | night | whisper | Six-oh-six on the radio. Three notes. I timed it again. | — |
-| `bk_shamsu_y3_night_02` | night | neutral | One lamp, one board, one semester. I'm still here. | — |
-| `bk_shamsu_y3_callback_01` | callback | neutral | It is transmitting. To nobody. Twice a day. | m060_done |
-| `bk_shamsu_y3_callback_02` | callback | whisper | It was never engineering. It was a visiting problem. | m060_done |
-| `bk_shamsu_y3_callback_03` | callback | sad | Yes. I failed a course in first year. Now you know. | m062_done |
-| `bk_shamsu_y3_callback_04` | callback | warm | You forgave me. I recorded it. Every word. | m062_done |
-| `bk_shamsu_y3_callback_05` | callback | neutral | I cannot lie. I practised in a mirror. The mirror won. | m062_done |
-| `bk_shamsu_y3_callback_06` | callback | shy | Thank you for still sitting beside me. | m062_done |
-| `bk_shamsu_y3_callback_07` | callback | proud | Every course we share. Indexed. Take them. | m062_done |
-| `bk_shamsu_y3_callback_08` | callback | dry | He looked at the lamp for one minute. I timed it. | m065_done |
-| `bk_shamsu_y3_callback_09` | callback | neutral | A lock whose key is a choir. Technically elegant. | m070_done |
-| `bk_shamsu_y3_confused_01` | confused | neutral | Who are you all staring at? The gate is empty. | m061_done |
-| `bk_shamsu_y3_compliment_01` | compliment | warm | You taught section two well. Better than me. Don't repeat that. | m062_done |
-| `bk_shamsu_y3_heat_01` | heat | dry | Strike plus harmattan. Even my patience is dehydrated. | — |
-
-### Year 4
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_y4_idle_01` | idle | neutral | Industrial training. I fixed their printer. They hired me twice. | — |
-| `bk_shamsu_y4_idle_02` | idle | proud | Sheikh-1. Our robot. It pours zobo without spilling. Mostly. | — |
-| `bk_shamsu_y4_idle_03` | idle | neutral | Nationals in our own hall. My father is driving nine hours. | — |
-| `bk_shamsu_y4_idle_04` | idle | amused | I am Goat Coordinator. It is on my CV. | — |
-| `bk_shamsu_y4_idle_05` | idle | neutral | An Echo repeats. It never invents. That is how you catch it. | — |
-| `bk_shamsu_y4_idle_06` | idle | dry | Everyone is famous this year. I prefer to be correct. | — |
-| `bk_shamsu_y4_idle_07` | idle | warm | Nusaiba is running. I have checked her figures. They balance. | — |
-| `bk_shamsu_y4_night_01` | night | whisper | Hackathon, hour thirty-one. Basit is asleep on the keyboard. | — |
-| `bk_shamsu_y4_night_02` | night | neutral | Ironing my team shirt at four. It is a ritual, not a habit. | — |
-| `bk_shamsu_y4_callback_01` | callback | amused | Simple. You stand. He flies. Nobody panics. Sarki panicked. | m076_done |
-| `bk_shamsu_y4_callback_02` | callback | amused | Four years of 'Which?' You never said! | m081_done |
-| `bk_shamsu_y4_callback_03` | callback | neutral | We proved the clip was copied. Mathematics is honest. | m083_done |
-| `bk_shamsu_y4_callback_04` | callback | proud | Second. My father wants to greet the winner's father. | m087_done |
-| `bk_shamsu_y4_callback_05` | callback | warm | I have been wrong about my father. For twenty-one years. | m087_done |
-| `bk_shamsu_y4_callback_06` | callback | shy | I froze. You talked me back. Thank you. Again. | m087_done |
-| `bk_shamsu_y4_callback_07` | callback | proud | Nusaiba won. I predicted it. With a margin of error. | m085_done |
-| `bk_shamsu_y4_win_01` | win | proud | Second at nationals. Technically, a first loser. I am happy. | m087_done |
-| `bk_shamsu_y4_lose_01` | lose | neutral | The light went in the final. The robot ran on. I didn't. | m087_done |
-
-### Year 5
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_y5_idle_01` | idle | neutral | Final year. Simple. Six days to build. I have a Gantt chart. | — |
-| `bk_shamsu_y5_idle_02` | idle | proud | Two thousand turns of wire. I counted in Arabic, then English. | — |
-| `bk_shamsu_y5_idle_03` | idle | warm | I'm giving away my notes. All of them. Someone should pass. | — |
-| `bk_shamsu_y5_idle_04` | idle | neutral | A first-class degree is a promise. I intend to keep it. | — |
-| `bk_shamsu_y5_idle_05` | idle | dry | Requisition forms. Ten. Is there a form for greeting? | — |
-| `bk_shamsu_y5_idle_06` | idle | amused | Thermal runaway. Technically means 'everybody, run away'. | — |
-| `bk_shamsu_y5_idle_07` | idle | neutral | Freshers call me 'Professor'. I correct them. Not quickly. | — |
-| `bk_shamsu_y5_night_01` | night | whisper | The workshop hums at night. Or my ears do. | — |
-| `bk_shamsu_y5_night_02` | night | neutral | Tomorrow, the defence. Tonight, the comma in chapter three. | — |
-| `bk_shamsu_y5_callback_01` | callback | dry | Technically, 'Hm' was a no. I am learning the dialect. | m101_done |
-| `bk_shamsu_y5_callback_02` | callback | proud | Page two hundred and six. Exactly! I knew it! | m101_done |
-| `bk_shamsu_y5_callback_03` | callback | sad | It burned. Nobody was hurt. Bolaji carried me. I was explaining. | m104_done |
-| `bk_shamsu_y5_callback_04` | callback | neutral | Ten of ten. In sha Allah, it will work. | m103_done |
-| `bk_shamsu_y5_callback_05` | callback | warm | I knew the answer. So did you. I wanted to hear you say it. | m110_done |
-| `bk_shamsu_y5_callback_06` | callback | shy | Silence at your defence was hard. Physically. An allergy. | m110_done |
-| `bk_shamsu_y5_callback_07` | callback | warm | In sha Allah, you have passed. I checked. Three times. | m117_done |
-| `bk_shamsu_y5_bye_01` | bye | warm | After graduation, in sha Allah, everything. Before, notes. | — |
-| `bk_shamsu_y5_compliment_01` | compliment | proud | You don't need me now. That is the best result I ever got. | m110_done |
-
-### Post-game
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_post_idle_01` | idle | proud | First class. My father framed it. Then he framed the frame. | — |
-| `bk_shamsu_post_idle_02` | idle | neutral | Master's next. In sha Allah. I've already read the reading list. | — |
-| `bk_shamsu_post_idle_03` | idle | warm | My notes are in the library now. Somebody underlined them. In pen. | — |
-| `bk_shamsu_post_greet_01` | greet | warm | {{PLAYER_NAME}}! Graduate! Simple. Come and teach my tutorial. | — |
-| `bk_shamsu_post_greet_02` | greet | excited | You came back! I have a new diagram. It is about you. | — |
-| `bk_shamsu_post_callback_01` | callback | warm | The study group still meets. Without the strike. Imagine. | m062_done |
-| `bk_shamsu_post_callback_02` | callback | amused | Sheikh-1 serves zobo at weddings now. No Deans harmed. | m087_done |
-| `bk_shamsu_post_bye_01` | bye | warm | Go well. In sha Allah, you will pass. Life also has exams. | — |
-
-### Events
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_shamsu_ev_ev_freshers_01` | ev_freshers | warm | Freshers! Front row, middle seat. Trust me. | — |
-| `bk_shamsu_ev_ev_freshers_02` | ev_freshers | amused | A fresher asked me for the time. I gave him a lecture. Sorry. | — |
-| `bk_shamsu_ev_ev_freshers_03` | ev_freshers | neutral | Free orientation tutorial. Bring a pen. Bring two. | — |
-| `bk_shamsu_ev_ev_exam_01` | ev_exam | neutral | Exam week. Sleep is not optional. Zainab said so. | — |
-| `bk_shamsu_ev_ev_exam_02` | ev_exam | dry | Technically, I'm not panicking. I'm pre-calculating. | — |
-| `bk_shamsu_ev_ev_exam_03` | ev_exam | warm | Sit. Breathe. Read every question twice. In sha Allah, you will pass. | — |
-| `bk_shamsu_ev_ev_results_01` | ev_results | scared | Results. If there is a B, don't tell me. Just pat my shoulder. | — |
-| `bk_shamsu_ev_ev_results_02` | ev_results | warm | You passed! I knew! I had a spreadsheet of you. | — |
-| `bk_shamsu_ev_ev_results_03` | ev_results | neutral | Carry-over is not a verdict. It is a second draft. | — |
-| `bk_shamsu_ev_ev_strike_01` | ev_strike | neutral | Strike again. Free class tonight. Spread the word. | — |
-| `bk_shamsu_ev_ev_strike_02` | ev_strike | dry | 'Indefinite.' That is not a time unit. I checked. | — |
-| `bk_shamsu_ev_ev_ramadan_01` | ev_ramadan | warm | Ramadan Mubarak. Iftar at the mosque grounds, then tutorial. | — |
-| `bk_shamsu_ev_ev_ramadan_02` | ev_ramadan | neutral | Fasting sharpens the mind. Until about four p.m. | — |
-| `bk_shamsu_ev_ev_ramadan_03` | ev_ramadan | warm | Eid Mubarak! [Blessed Eid!] My kaftan is crisp. Look. | — |
-| `bk_shamsu_ev_ev_christmas_01` | ev_christmas | warm | Merry Christmas to Pastor Sam and the choir. They sound correct. | — |
-| `bk_shamsu_ev_ev_christmas_02` | ev_christmas | neutral | Half the campus went home. The library is all mine. | — |
-| `bk_shamsu_ev_ev_cup_01` | ev_cup | dry | Football. Twenty-two people, one ball. Economically odd. | — |
-| `bk_shamsu_ev_ev_cup_02` | ev_cup | amused | I am Engineering's goalkeeper. Again. Nobody else volunteered. | — |
-| `bk_shamsu_ev_ev_elections_01` | ev_elections | neutral | I read every manifesto. Twice. Most are poetry. | — |
-| `bk_shamsu_ev_ev_elections_02` | ev_elections | dry | A candidate promised constant light. I asked for his circuit. | — |
-| `bk_shamsu_ev_ev_valentine_01` | ev_valentine | shy | Valentine's. Romance? After graduation, in sha Allah. | — |
-| `bk_shamsu_ev_ev_valentine_02` | ev_valentine | dry | Red roses. The colour of overloaded wiring. Charming. | — |
-| `bk_shamsu_ev_ev_harmattan_01` | ev_harmattan | neutral | Harmattan. Static on everything. My pens are attracting hair. | — |
-| `bk_shamsu_ev_ev_harmattan_02` | ev_harmattan | dry | Low humidity. High static. I shocked the Dean. Sorry, sir. | — |
-| `bk_shamsu_ev_ev_convocation_01` | ev_convocation | warm | Convocation. Gowns are just lab coats with ambition. | — |
-| `bk_shamsu_ev_ev_convocation_02` | ev_convocation | proud | One day, first class. In sha Allah. My father has booked a seat. | — |
-| `bk_shamsu_ev_ev_allowance_01` | ev_allowance | neutral | Allowance came. Books first. Suya second. Books third. | — |
-| `bk_shamsu_ev_ev_market_day_01` | ev_market_day | dry | Market day. I am buying resistors and onions. Separately. | — |
+<!-- pack-style: roomy -->
+<!-- cover: Shamsu | Simple. (It is never simple.) -->
+<!-- cover-label: Your Voice Script -->
+<!-- cover-inside: Inside: meet Shamsu  ·  how to record  ·  109 mission lines  ·  209 common lines  ·  the agreement -->
+# Meet Shamsu
+
+> Simple. (It is never simple.)
+
+The top student in Electrical Engineering and the player's seat-mate. Neat, kind, earnest and a little too fast when he is excited. Every answer begins "Simple." He cannot tell a lie, not even a small one, and one day that matters.
+
+### The voice
+
+About 19 at the start, Electrical Engineering top student; neat, kind, earnest, precise diction, slightly too fast when excited. Every answer starts "Simple." and is not. Catchphrases: "Simple.", "Technically…", "In sha Allah, you will pass.", "Let me draw it." He cannot lie, even a little.
+
+### What is this game?
+
+It's a game you play in a web browser, about surviving five years at a Nigerian university. Please don't expect GTA. Nobody steals a car. The most dangerous vehicle in it is a three-wheeled keke taxi with a married couple arguing in the back, and the nearest thing to a boss fight is a queue.
+
+You play a brand-new student, the Fresher. You register (four offices, four queues, four passport photographs), go broke by week three, live on garri, make friends for life, sit exams by torchlight because the power has gone again, and one day you graduate. Under the jokes there is a mystery: why the lights keep going off, and why a quiet old man has spent forty years in a garden keeping one of them on. Nobody gets hurt. The cure for the monster is company.
+
+The university and the town are made up. The voices are friends and family, recording on their phones. Thank you for being one of them.
+
+# How to record
+
+**What you've got.** **318 lines**, about **2,775 words**. That's 109 mission lines and 209 common lines. Read straight through, it's **about 35 minutes** of talking. Nobody should do it in one sitting. A few sections a day is perfect.
+
+**Change any word so it sounds like you.** Honestly. If a line doesn't sound right in your mouth, say it your way. If you think of a funnier one, record that as well. You are the expert on how Shamsu talks.
+
+#### Getting set up
+
+- **A phone is fine.** Use its voice recorder app on the best quality setting, in aeroplane mode so nothing pings.
+- **Pick a quiet, soft room.** A wardrobe full of clothes is the best studio in any house. Switch off fans and the TV.
+- **Hold the phone about a hand-span from your mouth,** slightly to one side, and keep it there.
+
+#### Reading the page
+
+- **The big black words are your line.** Say only those.
+- **The small orange words above a line are how to say it,** and sometimes who you are talking to. Don't read them out.
+- **Small grey words are what somebody else says just before you,** so you know the moment. Don't read them out.
+- **Words in [square brackets] are the English meaning.** Don't say them. If the Hausa, Pidgin or any other language is wrong, fix it. You know better than I do.
+- **(name)** is where the game drops in the player's name: leave a short pause. **Bature/Firdausi** is the player's roommate: say the line once with each name.
+- **Three dots (...) mean a beat of silence.**
+
+#### Recording
+
+- **One recording per coloured bar.** Start recording, read that bar's lines in order, stop. Then the next bar.
+- **Leave about two seconds of silence between lines.** That's where I cut. No need to say the line numbers.
+- **If you fluff a line,** pause and say it again. Don't stop the recording.
+- **Got the energy?** Say a line twice, two different ways, and I'll pick the best one.
+- **Shouting lines last,** and drink water.
+
+#### Sending it
+
+- Name each file after its coloured bar, like this: *Shamsu - Mission 1*.
+- Put everything in one folder and send me a Google Drive or WeTransfer link, with a photo of the signed last page. There is no deadline.
+
+# Mission lines
+
+In story order. Each coloured bar is one mission: its name, when it happens and what is going on. One recording per bar.
+
+::: Mission 1 · First Lecture, Wrong Theatre | Year 1, first semester. The first lecture, in the wrong theatre. The two theatres look the same and their signs are swapped.
+:: 1 | a whisper | Simple. A capacitor is a bucket.
+:: 2 | a whisper | A resistor is your uncle. Current is the salary.
+:: 3 | warm | ((The Fresher: “…No.”)) Good. Confusion is the first step.
+
+::: Mission 2 · Left Boot First | Year 1, first semester. Football trials at five o'clock. Jega picks the Fresher because of the goat.
+:: 1 | your normal voice | Simple. The spin, the wet grass, the angle…
+:: 2 | shy | ((The Fresher: “Why 'Sheikh'?”)) A goat was eating a sachet. I said something.
+:: 3 | proud | I was not preaching. I was ADVISING the goat.
+:: 4 | a whisper | Possibly I did not close the gate.
+:: 5 | shy | …Oh. That was you. Sorry. Also, thank you.
+
+::: Mission 3 · Test Week, One Lamp | Year 1, first semester, test week. Three tests in four days, and a tutorial for forty people under one working lamp.
+:: 1 | warm | Simple.
+:: 2 | warm | ((The roommate: “It is never simple when he says that.”)) In sha Allah, you will all pass.
+:: 3 | your normal voice | ((Muhammad: “Sorry. I shouldn't. You looked worried.”)) (name)! Who are you talking to?
+
+::: Mission 4 · Count Entropy | Year 1, first semester, exam time. The night before the first exam, the whole campus goes dark, and something moves in it.
+:: 1 | scared | ((Jega: “Kai. It's wearing a cape.”)) Technically, that is not possible.
+
+::: Mission 5 · The Vice-Chancellor's Cup | Year 1, second semester. The football final. Education are a player short, and somebody has read the rule book.
+:: 1 | shy, to a small boy | ((A small boy: “Jega! Show us!”)) Technically… we have won? I'm sorry. We've won.
+
+::: Mission 6 · Exam Fever | Year 1, second semester, exam time. Four exam papers in nine days. Somebody has moved a mattress into the library.
+:: 1 | to Dr. Zainab | ((Dr. Zainab: “…sorry. I know you have exams. Who else do I ask?”)) I was not asleep. I have a diagram.
+:: 2 | a whisper, to Dr. Zainab | Technically we are not allowed. Bring a torch.
+:: 3 | a whisper, to Engr. Aliyu | ((Engr. Aliyu: “This never happened. I owe you. I pay what I owe.”)) There are seven. My diagram has six.
+
+::: Mission 7 · Convocation Night | Year 1, after exams. The last night of Year 1. Half the school marches to the garden with torches, and the first coil lights.
+:: 1 | scared, to the Fresher | That is too much load. That is all seven feeders.
+:: 2 | scared, to the Fresher | That is—
+
+::: Mission 8 · The Mall Never Blinks | Year 2, first semester. A bad week of power cuts. Every time the campus goes dark, the mall gets brighter.
+:: 1 | your normal voice | ((The roommate: “We blink. It doesn't.”)) Nine days. I have timed every outage.
+:: 2 | firm | Watch the mall when we go dark. Count to three.
+:: 3 | a whisper | ((The Fresher: “Why?”)) Technically… just watch.
+:: 4 | a whisper, to the roommate | The seventh feeder. Number two.
+:: 5 | scared, to the roommate | It is not feeding us. It is feeding FROM us.
+
+::: Mission 9 · Faculty Week: Engineering | Year 2, first semester. Faculty Week in Engineering: bunting, a quiz, a football match and a dinner.
+:: 1 | proud | Simple. It senses the cup, it tilts by a function of—
+:: 2 | shy | ((Abbas: “The wiring is the problem. I will fix the wiring.”)) Technically… we have a team?
+:: 3 | scared | Yes, sir. It spilled, sir. On the Dean, sir.
+:: 4 | sad, low | …Next time, sir.
+:: 5 | a whisper | He said, 'There is always a first.'
+
+::: Mission 10 · Unplug Iron Mama (Heist 1) | Year 2, second semester. The heist. One long night at the mall, and sixty keys to put back before six.
+:: 1 | proud | Sequential. Which is worse than simple. But done.
+
+::: Mission 11 · Two Papers, One Day | Year 2, second semester, exam time. Exam week. A hard paper at eight, and Shamsu's robot to carry across campus by eleven.
+:: 1 | scared | The qualifier is today. Eleven. They moved it.
+:: 2 | scared | The paper is at eight. And the arm has seized.
+:: 3 | your normal voice | ((The roommate: “(Riddle: who knocks at five? No one good.)”)) I can do the paper. I did it in my head, walking.
+:: 4 | shy | Technically I require a second pair of hands.
+:: 5 | shy | ((The Fresher: “You're asking for help.”)) Is that what this is? I did not know the form.
+:: 6 | a whisper | ((A judge: “Second of nine. You go to the nationals.”)) Second.
+:: 7 | scared | ((The Fresher: “You qualified!”)) Yes. …Yes. I must phone my father.
+:: 8 | scared, to Prof. Bello | (name). I need to tell you something.
+:: 9 | sad, low, to Prof. Bello | I have needed to for a whole semester. I have counted.
+:: 10 | a whisper, to Prof. Bello | When Dr. Khadija called you in. Before that.
+:: 11 | a whisper, to Prof. Bello | She asked me—
+:: 12 | sad, low, to Prof. Bello | ((Prof. Bello: “The examination does not reschedule. In. Now.”)) After. After the exams. In sha Allah.
+
+::: Mission 12 · Three Hundred | Year 3, first semester. Third year. A fresher says "Good morning, senior" and the Fresher looks behind to see who he means.
+:: 1 | warm | ((The Fresher: “…Me?”)) Simple. You are old now. Sit. I saved your seat.
+:: 2 | excited, to Nusaiba | The panel is a farmer. The battery is a barn.
+:: 3 | excited, to Nusaiba | The controller is the mother who says no.
+:: 4 | shy, to Nusaiba | ((Nusaiba: “Who is taking minutes?”)) Last year, in the matter of the basement, I should…
+:: 5 | to Nusaiba | …mention that the controller needs a diode.
+
+::: Mission 13 · The Old Site | Year 3, during the strike. The old laboratory in the forest, by daylight. A plaque, a tape, and a voice from forty years ago.
+:: 1 | a whisper | ((Prof. Nwachukwu: “Five. Four. Three. Two. One.”)) It is transmitting. To nobody. Twice a day.
+:: 2 | excited | ((Prof. Nwachukwu: “Like invitations to a wedding nobody was planning.”)) Four. We already hold four.
+:: 3 | dry, deadpan | It was never engineering. It was a visiting problem.
+:: 4 | your normal voice | It doesn't say 'not you'.
+
+::: Mission 14 · The Maker's Secret | Year 3, during the strike. The Maker is back. He finally tells the story of the six coils.
+:: 1 | shy | ((The Maker: “No. Thank you. Give me the lead.”)) It is tested, sir. Twice. Technically three times.
+:: 2 | your normal voice | ((The Maker: “My notebook. When you are a finalist. Not before.”)) Who are you all staring at?
+
+::: Mission 15 · The Study Group | Year 3, during the strike. Shamsu runs a study group so the strike costs nobody a year. And he has something to confess.
+:: 1 | excited | Simple. One lamp, one board, one semester. We begin.
+:: 2 | dry, deadpan | ((Bature: “Professor! Riddle me this: when is break?”)) Technically, June. Sit.
+:: 3 | warm | ((Firdausi: “Oya, biology people. Corridor. We have our own lamp.”)) (name). Section two is yours. At seven.
+:: 4 | shy, to Nusaiba | Before you go. One thing nobody knows.
+:: 5 | to Nusaiba | First year. I failed a course. An F. A carry-over.
+:: 6 | warm, to Nusaiba | You think I don't know how it feels. I teach because I know.
+:: 7 | warm, to Nusaiba | In sha Allah, you will pass.
+:: 8 | your normal voice | Forgiveness is like a transformer. You step down the…
+:: 9 | sad, low | No. It is nothing like a transformer.
+:: 10 | sad, low | Dr. Khadija asked me directly. About the basement.
+:: 11 | sad, low | I cannot lie. I have tried. I practised in a mirror.
+:: 12 | sad, low | I said yes. Then I said nothing to you for a year.
+:: 13 | sad, low | Which is a kind of lie. And I am sorry.
+:: 14 | sad, low | They suspected Firdausi. I let them. That is two.
+:: 15 | shy | Every course we share. Four semesters. Indexed.
+:: 16 | warm | Take them. All of them. I know them already.
+
+::: Mission 16 · Workshop Nights | Year 3, during the strike. Nights in the workshop, building a street lamp. Bolaji turns out to be a gifted carpenter.
+:: 1 | a whisper | He has been looking for one minute. I timed it.
+
+::: Mission 17 · The Third Coil Wakes | Year 3, after the strike. Thirty-one schoolchildren walk into the forest at dawn and sing an old coil awake.
+:: 1 | amused | Technically it is a lock. The key is a choir.
+
+::: Mission 18 · Lights on the Long Road | Year 3, exam time. Two semesters of exams squeezed into three weeks, then the long road home lit up.
+:: 1 | a whisper | Simple. You know this. I wrote it in the margin.
+
+::: Mission 19 · The Collab | Year 4, first semester. A stunt video with a campus influencer and eleven goats.
+:: 1 | firm | ((Lucky, the influencer: “Collab! Three stunts. Link in bio by six.”)) Simple. You stand. He flies. Nobody panics.
+:: 2 | firm | Sarki, I am looking at you.
+:: 3 | dry, deadpan | ((The Fresher: “…That goat is looking at me.”)) Technically, he is looking at your history.
+
+::: Mission 20 · The Old Eye (Heist 2) | Year 4, first semester. A second heist: the old observatory, a four-minute window at ten past one in the morning.
+:: 1 | scared | ((Mubarak: “Free. Don't look at me. It is a sample.”)) Technically… that is a stair.
+:: 2 | scared | ((Tanko: “Seven, some days.”)) Four years of 'Which?' You never said!
+
+::: Mission 21 · Proof of Work | Year 4, first semester. A forty-eight-hour hackathon. Sixty laptops and one extension cable.
+:: 1 | excited | ((Basit: “Four minutes. New record. Run it back.”)) Simple. An Echo repeats. It never invents.
+
+::: Mission 22 · Nationals | Year 4, second semester. The national engineering finals. Shamsu irons his team shirt twice.
+:: 1 | to the Fresher | ((The Fresher: “You ironed that already.”)) Simple. The first ironing was a draft.
+:: 2 | scared, to the Fresher | My father is driving nine hours. For a robot.
+:: 3 | shy, to the Fresher | ((The Fresher: “For you.”)) Technically, that is what frightens me.
+:: 4 | shy | ((Shamsu's mother: “He has been practising that since Kano.”)) Technically, I have been wrong about him…
+:: 5 | warm | …for twenty-one years.
+
+::: Mission 23 · The Maker's Notebook | Year 5, first semester. The final-year project is approved: build the sixth coil. The Maker's old notebook.
+:: 1 | your normal voice | ((The Maker: “for page two hundred and six.”)) Technically, that is a lung disease.
+
+::: Mission 24 · Sixth Site (Heist 3) | Year 5, first semester. The third heist: through the Senate basement and Door 7, into the old tunnel.
+:: 1 | a whisper | ((Malam Garba: “Hm.”)) Thirty-one years of oil. Simple. It is maintenance.
+:: 2 | a whisper | ((Malam Garba: “Hm.”)) Technically, 'Hm' was a no. I am learning the dialect.
+:: 3 | excited, to Nusaiba | ((Nusaiba: “No dust on the bell. Somebody cleans that.”)) The bolts! It is page two hundred and six. Exactly!
+
+::: Mission 25 · Parts from Everywhere | Year 5, first semester. The sixth coil needs ten parts nobody sells. Ten faculties each give one.
+:: 1 | proud | Ten items. Nobody sells them. Simple. We requisition.
+:: 2 | your normal voice | ((Bolaji: “You have to go and greet people.”)) …Is there a form for greeting?
+:: 3 | proud | Ten of ten. In sha Allah, it will work.
+:: 4 | your normal voice | ((Bolaji: “Not me. If I had a sweet, I would have eaten it.”)) Technically, we should open an investigation.
+
+::: Mission 26 · Build Week | Year 5, first semester. Build week in the mechanical workshop, day and night.
+:: 1 | proud | ((Foreman Danjuma: “No. Measure twice, then come and ask me.”)) Simple. Six days. I have made a Gantt chart.
+:: 2 | your normal voice | ((Abbas: “Two thousand turns. I counted. Do not ask again.”)) …It is close. It is very close. It is fine.
+:: 3 | scared | Thermal runaway, which technically means—
+
+::: Mission 27 · Everybody, Again | Year 5, first semester. It was never the wiring. Going back to every friend, to build it together.
+:: 1 | your normal voice | ((Aminu: “Sir. It is humming the wrong song.”)) Technically, it is within tolerance—
+:: 2 | a whisper | …He is right. The child is right. Let me draw it.
+
+::: Mission 28 · The Chancellor's Shadow | Year 5, second semester. An envelope under the door, on very good paper. It says one word: "Stay".
+:: 1 | a whisper | Batteries up: blackout. Bread down: a hard night.
+:: 2 | scared | Four years. Technically, it is a perfect forecast.
+
+::: Mission 29 · Project Defence | Year 5, second semester. The project defence. Forty slides, of which eleven are allowed.
+:: 1 | a whisper | ((Dr. Khadija: “Begin. And bring yourself. All of yourself.”)) In sha Allah, you will pass.
+:: 2 | warm | ((Dr. Khadija: “We will let you know.”)) I knew the answer. So did you.
+:: 3 | shy | I wanted to hear you say it. …This is an allergy.
+
+::: Mission 30 · The Longest Night | Year 5, second semester. The longest night. All five lit coils go out, one after another.
+:: 1 | a whisper | ((Engr. Aliyu: “That is not a fault. I know every fault. Listen.”)) There is no hum. Technically, there is nothing.
+
+::: Mission 31 · Three by Road | Year 5, second semester. Relighting three coils by road, in the dark, on Bolaji's okada.
+:: 1 | your normal voice | ((Bolaji: “Sly does not ride at night. Bolaji rides. Get on.”)) Left at the Spot. Technically a soft left. Historically—
+:: 2 | your normal voice | ((The Fresher: “Professor. Summary.”)) Left.
+:: 3 | your normal voice | ((Ranger Lawal: “I sang. You heard nothing. Follow my light.”)) Long, short, long. Who is up there?
+
+::: Mission 32 · The Ten Seals | Year 5, second semester. Five in the morning. Ten friends carry ten seals down a tunnel to an old door.
+:: 1 | your normal voice | ((Dr. Zainab: “One hour. Then I am back on my ward. Move.”)) Ten seals. Ten bearers. Simple.
+:: 2 | shy | Engineering. Technically, we should have come last.
+
+::: Mission 33 · Chancellor Null | Year 5, second semester. Chancellor Null, in the dark. The Fresher calls every friend by name.
+:: 1 | your normal voice | ((Jega: “Mu je! [Let's go!]”)) Technically, I never left.
+
+::: Mission 34 · The Maker's Graduation | Year 5, second semester. The ring closes. The clock strikes. The Maker walks out of his garden.
+:: 1 | a whisper, to the Maker | ((The Maker: “I have had it far too long.”)) Three notes. But the drawing shows four marks—
+
+::: Mission 35 · Gown | Year 5, after exams. Final results, and graduation photographs.
+:: 1 | proud | ((A fresher (first voice): “Senior, I can't see. What does it say?”)) In sha Allah, you have passed. I checked. Three times.
+
+# Common lines
+
+These are the short lines Shamsu says around campus, outside the story: when the player walks up, bumps into you, hands you a present, or just passes by. The game picks one each time, so they never play in a row. Say each as if someone has just walked past.
+
+::: Common 1 · Saying hello | The player has just walked up.
+:: 1 | warm | Assalamu alaikum, (name). [Peace be upon you.] You slept?
+:: 2 | your normal voice | Ah. You. Good. I have a diagram.
+:: 3 | excited | (name)! Simple question: have you revised?
+:: 4 | warm | Ina kwana. [Good morning.] Technically, it is still morning.
+:: 5 | your normal voice | Hello. I was just thinking about you. And about resistors.
+:: 6 | dry, deadpan | You are early. That is new. I will note it.
+
+::: Common 2 · Saying goodbye
+:: 1 | warm | Ma'a salama. [Go in peace.] In sha Allah, you will pass.
+:: 2 | your normal voice | I must go. Dr. Okonkwo lets me teach the last ten minutes.
+:: 3 | dry, deadpan | Goodbye. Read chapter four. Then chapter four again.
+
+::: Common 3 · Thank-yous and sorries
+:: 1 | thank you, warm | Jazakallahu khairan. [May God reward you with good.]
+:: 2 | thank you, shy | Thank you. I am recording this in my memory. Permanently.
+:: 3 | thank you | Thank you. Technically, I owe you one. I have written it down.
+:: 4 | sorry, sad, low | I am sorry. I have no excuse. I checked. Twice.
+:: 5 | sorry, shy | Sorry. I explained it again, did I not? I can see your face.
+:: 6 | sorry | My mistake. A rounding error. In my manners.
+
+::: Common 4 · Being nice | Compliments. Mean them.
+:: 1 | warm | Your notes are improving. They are almost legible.
+:: 2 | proud | That was correct. Completely. I am emotional.
+:: 3 | warm | You asked a good question. Good questions are rare. Like diodes.
+:: 4 | dry, deadpan | Your outfit is… symmetrical. That is high praise from me.
+
+::: Common 5 · Teasing | Friendly. The joke is never unkind.
+:: 1 | amused | You call that a circuit? That is a necklace.
+:: 2 | dry, deadpan | You studied? For how long? Be honest. I will know.
+:: 3 | amused | Your handwriting is like an oscilloscope in a storm.
+
+::: Common 6 · Walking with the player | Keeping up, waiting, and when the player goes the wrong way.
+:: 1 | walking along | Walk with me. I talk faster when I walk.
+:: 2 | walking along, excited | This way. Simple. Then left. Then I will explain the left.
+:: 3 | waiting for the player, dry, deadpan | I have been waiting four minutes. I timed it.
+:: 4 | waiting for the player | Technically, you are late. Emotionally, I forgive you.
+:: 5 | the player went the wrong way | Wrong theatre. Gabas is east. The sun is a clue.
+:: 6 | the player went the wrong way, amused | That is the Law faculty. Unless you want to define tort.
+
+::: Common 7 · Quick answers | The player asks something and gets one of these back.
+:: 1 | yes | Yes. Simple.
+:: 2 | yes, warm | Yes, in sha Allah.
+:: 3 | yes, excited | Yes! And let me draw why.
+:: 4 | no | No. I'm sorry. No.
+:: 5 | no, dry, deadpan | Technically, no.
+:: 6 | no, firm | No. That would be cheating. I don't know how to cheat.
+:: 7 | maybe | I cannot say maybe. I don't know yet. That is different.
+:: 8 | maybe, dry, deadpan | Probability: forty percent. Rising.
+:: 9 | confused | Who? There was nobody there fa. I counted.
+:: 10 | confused, dry, deadpan | I don't understand. And I understand most things.
+:: 11 | confused | Say it again. Slowly. With units.
+:: 12 | agreeing, warm | Correct. You see? You knew it already.
+:: 13 | agreeing | I agree. And I have three references.
+:: 14 | refusing, firm | No. I will not write your assignment. I will help you write it.
+:: 15 | refusing | I cannot. My father would know. Somehow, he always knows.
+
+::: Common 8 · Jokes and questions
+:: 1 | a joke, amused | Simple. Sapa is a potential difference between wants and wallet.
+:: 2 | a joke, amused | A capacitor is a bucket. A resistor is your uncle. You see?
+:: 3 | a joke, amused | I told a joke once. Then I explained it. It got funnier.
+:: 4 | a joke, dry, deadpan | Technically, garri is a meal. Technically.
+:: 5 | a joke, amused | Why did the electron go home? It was charged. …That's the joke.
+:: 6 | a question | Did you eat? Hunger lowers marks. It is documented.
+:: 7 | a question, warm | How is your family? Mine called. Three times. Today.
+:: 8 | a question | Have you seen my red pen? I have four. I want that one.
+
+::: Common 9 · Winning and losing | After a game, a match or a bet.
+:: 1 | after winning, excited | We won! Technically, by a clear margin!
+:: 2 | after winning, proud | Alhamdulillah. [All praise is for God.] Exactly as calculated.
+:: 3 | after losing, sad, low | We lost. I have the data. I will learn from it. Tonight.
+:: 4 | after losing | Second. My father will call. I will answer. Eventually.
+
+::: Common 10 · When something goes wrong | Bumps, falls, power cuts, rain and heat. NEPA is what everybody calls the power company, and so every power cut.
+:: 1 | bumped into | Ah! Momentum. Mass times velocity. Mostly yours.
+:: 2 | bumped into, dry, deadpan | I'm fine. My glasses are fine. Thank God for the glasses.
+:: 3 | after a fall, amused | I have fallen. Gravity is reliable, if nothing else.
+:: 4 | after a fall | I'm up. Simple. Don't help. …Help a little.
+:: 5 | the lights go out | NEPA. Average outage: forty-one minutes. Get a torch.
+:: 6 | the lights go out, dry, deadpan | Technically, it is not dark. It is merely unlit.
+:: 7 | the lights go out, a whisper | The lights are gone. Stay together. It is safer in numbers.
+:: 8 | the lights come back, excited | Light! Charge everything. Laptop first, phone second.
+:: 9 | the lights come back, amused | Up NEPA! …I said it. I am part of the community.
+:: 10 | rain | Rain. Do not stand near the transformer. I am serious.
+:: 11 | rain, amused | Wet socks lower morale by thirty percent. My estimate.
+:: 12 | a hot day | The heat is a resistor. It is slowing all our currents.
+:: 13 | a hot day, dry, deadpan | Thirty-nine degrees. My brain is running in safe mode.
+
+::: Common 11 · Food and money
+:: 1 | food, warm | Kosai and pap. Fuel for a tutorial.
+:: 2 | food, amused | Jollof at the Spot. I will not explain jollof. It explains itself.
+:: 3 | money, dry, deadpan | My account balance is a rounding error.
+:: 4 | money, amused | My allowance is alternating current. It comes and goes.
+
+::: Common 12 · Getting a present | The player hands over a present. Some go down better than others.
+:: 1 | likes the present, warm | A pen! Thank you. I will name it after you.
+:: 2 | likes the present | This is useful. Useful is the highest category.
+:: 3 | not keen on the present | Thank you. I don't know what it is. I will research it.
+:: 4 | not keen on the present, dry, deadpan | It is… decorative. I respect decoration. From far.
+:: 5 | loves the present, excited | A scientific calculator? With graphing? Masha Allah! [God has willed it!]
+:: 6 | loves the present, shy | A new prayer cap. White. Crisp. You remembered Fridays.
+
+::: Common 13 · Year 1: arriving | Everything is new. Queues, friends, the first power cuts.
+:: 1 | a question | Do you understand Kirchhoff? Be honest. You cannot lie to me.
+:: 2 | agreeing | Yes. And no. Both, technically. Let me draw it.
+:: 3 | walking along, excited | Tutorial! This way! I reserved the lamp!
+
+::: Common 14 · Year 1: arriving, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Theatre Gabas, front row. Middle seat. Always.
+:: 2 | to yourself, proud | Sheikh Biru. That is what they call me. Because of a goat.
+:: 3 | to yourself | I counted my pens. Seven. That is the right number.
+:: 4 | to yourself, amused | Dr. Okonkwo smiled at my answer. Or the window. I'm not sure.
+:: 5 | to yourself, warm | Tutorial at seven. One lamp. In sha Allah, all of you will pass.
+:: 6 | to yourself | My father asks for my position. I say first. He says good.
+:: 7 | to yourself, dry, deadpan | Freshers ask me the way. I give them the history of the way.
+:: 8 | late at night, a whisper | Reading by phone light. Technically, it counts.
+:: 9 | late at night | The library closes at ten. My brain does not.
+:: 10 | looking back, amused, after “Left Boot First” | I was not preaching. I was ADVISING the goat.
+:: 11 | looking back, shy, after “Left Boot First” | Possibly, I did not close the gate. Possibly.
+:: 12 | looking back, dry, deadpan, after “Left Boot First” | I missed an open goal. The angles were against me.
+:: 13 | looking back, proud, after “Test Week, One Lamp” | Forty students followed my lamp. Like moths. Educated moths.
+:: 14 | looking back, sad, low, after “Results Day” | One B. Five As and a B. I am still sick about it.
+:: 15 | looking back, amused, after “The Vice-Chancellor's Cup” | I saved a penalty explaining the Magnus effect. Accidentally.
+:: 16 | looking back, after “Exam Fever” | We traced the hospital line. It held. I did not sleep.
+
+::: Common 15 · Year 2: the mall | A shiny new mall has opened, and the lights keep going off.
+:: 1 | sorry, sad, low, after “Test Week Twist” | I… am sorry. For nothing. For being quiet. That is all.
+:: 2 | a question, shy, after “Test Week Twist” | Are you angry with anyone? This semester? You can say.
+:: 3 | a question, after “Test Week Twist” | Dr. Khadija's office. Was it bad? …I'm only asking.
+:: 4 | no, dry, deadpan | No. I am busy. That is true. I checked.
+
+::: Common 16 · Year 2: the mall, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself, excited | My robot serves zobo. In theory. In practice, the Dean.
+:: 2 | to yourself | Nine days. I have timed every outage. I keep a chart.
+:: 3 | to yourself, amused | Three-phase power is three goats on a hill. Ask me later.
+:: 4 | to yourself | Engineering week. I ironed my shirt. Twice. Technically three times.
+:: 5 | to yourself, dry, deadpan | Test week. Everyone wants me. Nobody wants the explanations.
+:: 6 | to yourself, warm | Abbas and I built an arm. It waves. Not on purpose.
+:: 7 | to yourself | The mall is brighter every time we go dark. I have numbers.
+:: 8 | late at night, a whisper | Can't sleep. The qualifier, the papers. And other things.
+:: 9 | late at night | Mai Shayi says I drink tea like it is homework.
+:: 10 | looking back, dry, deadpan, after “Faculty Week: Engineering” | Yes, sir. It spilled, sir. On the Dean, sir.
+:: 11 | looking back, proud, after “Faculty Week: Engineering” | The Dean said 'there is always a first.' I wrote it down.
+:: 12 | looking back, amused, after “Faculty Week: Engineering” | The robot said 'In sha Allah, you will pass.' To the Dean.
+:: 13 | looking back, after “Unplug Iron Mama (Heist 1)” | Sequential. Which is worse than simple. But done.
+:: 14 | looking back, proud, after “Two Papers, One Day” | Qualified. Second. …Yes. Yes, I must phone my father.
+:: 15 | looking back, amused, after “Two Papers, One Day” | The robot rode an okada. It said 'Simple' at every bump.
+
+::: Common 17 · Year 3: the strike | The lecturers are on strike. No lectures, an empty campus, no money.
+:: 1 | confused, after “The Maker's Secret” | Who are you all staring at? The gate is empty.
+:: 2 | being nice, warm, after “The Study Group” | You taught section two well. Better than me. Don't repeat that.
+:: 3 | a hot day, dry, deadpan | Strike plus harmattan. Even my patience is dehydrated.
+
+::: Common 18 · Year 3: the strike, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Strike. No lectures. So I will give some.
+:: 2 | to yourself, proud | Thirty students last night. Sixty tonight. One lamp.
+:: 3 | to yourself, warm | Chalk, a board and a free hour. That is a university.
+:: 4 | to yourself | The strike will not cost anybody a year. Not on my watch.
+:: 5 | to yourself, dry, deadpan | Group project: me, you, and Bolaji's thumbs-up.
+:: 6 | to yourself, amused | The solar panel is a farmer. The battery is a barn.
+:: 7 | to yourself | My parents ask when school resumes. I say 'technically'.
+:: 8 | late at night, a whisper | Six-oh-six on the radio. Three notes. I timed it again.
+:: 9 | late at night | One lamp, one board, one semester. I'm still here.
+:: 10 | looking back, after “The Old Site” | It is transmitting. To nobody. Twice a day.
+:: 11 | looking back, a whisper, after “The Old Site” | It was never engineering. It was a visiting problem.
+:: 12 | looking back, sad, low, after “The Study Group” | Yes. I failed a course in first year. Now you know.
+:: 13 | looking back, warm, after “The Study Group” | You forgave me. I recorded it. Every word.
+:: 14 | looking back, after “The Study Group” | I cannot lie. I practised in a mirror. The mirror won.
+:: 15 | looking back, shy, after “The Study Group” | Thank you for still sitting beside me.
+:: 16 | looking back, proud, after “The Study Group” | Every course we share. Indexed. Take them.
+:: 17 | looking back, dry, deadpan, after “Workshop Nights” | He looked at the lamp for one minute. I timed it.
+:: 18 | looking back, after “The Third Coil Wakes” | A lock whose key is a choir. Technically elegant.
+
+::: Common 19 · Year 4: fame | Viral videos, an election, and work placements.
+:: 1 | after winning, proud, after “Nationals” | Second at nationals. Technically, a first loser. I am happy.
+:: 2 | after losing, after “Nationals” | The light went in the final. The robot ran on. I didn't.
+
+::: Common 20 · Year 4: fame, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Industrial training. I fixed their printer. They hired me twice.
+:: 2 | to yourself, proud | Sheikh-1. Our robot. It pours zobo without spilling. Mostly.
+:: 3 | to yourself | Nationals in our own hall. My father is driving nine hours.
+:: 4 | to yourself, amused | I am Goat Coordinator. It is on my CV.
+:: 5 | to yourself | An Echo repeats. It never invents. That is how you catch it.
+:: 6 | to yourself, dry, deadpan | Everyone is famous this year. I prefer to be correct.
+:: 7 | to yourself, warm | Nusaiba is running. I have checked her figures. They balance.
+:: 8 | late at night, a whisper | Hackathon, hour thirty-one. Basit is asleep on the keyboard.
+:: 9 | late at night | Ironing my team shirt at four. It is a ritual, not a habit.
+:: 10 | looking back, amused, after “The Collab” | Simple. You stand. He flies. Nobody panics. Sarki panicked.
+:: 11 | looking back, amused, after “The Old Eye (Heist 2)” | Four years of 'Which?' You never said!
+:: 12 | looking back, after “Proof of Work” | We proved the clip was copied. Mathematics is honest.
+:: 13 | looking back, proud, after “Nationals” | Second. My father wants to greet the winner's father.
+:: 14 | looking back, warm, after “Nationals” | I have been wrong about my father. For twenty-one years.
+:: 15 | looking back, shy, after “Nationals” | I froze. You talked me back. Thank you. Again.
+:: 16 | looking back, proud, after “Election Day” | Nusaiba won. I predicted it. With a margin of error.
+
+::: Common 21 · Year 5: leaving | Final year. Projects, job offers, and everyone counting the days.
+:: 1 | goodbye, warm | After graduation, in sha Allah, everything. Before, notes.
+:: 2 | being nice, proud, after “Project Defence” | You don't need me now. That is the best result I ever got.
+
+::: Common 22 · Year 5: leaving, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Final year. Simple. Six days to build. I have a Gantt chart.
+:: 2 | to yourself, proud | Two thousand turns of wire. I counted in Arabic, then English.
+:: 3 | to yourself, warm | I'm giving away my notes. All of them. Someone should pass.
+:: 4 | to yourself | A first-class degree is a promise. I intend to keep it.
+:: 5 | to yourself, dry, deadpan | Requisition forms. Ten. Is there a form for greeting?
+:: 6 | to yourself, amused | Thermal runaway. Technically means 'everybody, run away'.
+:: 7 | to yourself | Freshers call me 'Professor'. I correct them. Not quickly.
+:: 8 | late at night, a whisper | The workshop hums at night. Or my ears do.
+:: 9 | late at night | Tomorrow, the defence. Tonight, the comma in chapter three.
+:: 10 | looking back, dry, deadpan, after “Sixth Site (Heist 3)” | Technically, 'Hm' was a no. I am learning the dialect.
+:: 11 | looking back, proud, after “Sixth Site (Heist 3)” | Page two hundred and six. Exactly! I knew it!
+:: 12 | looking back, sad, low, after “Build Week” | It burned. Nobody was hurt. Bolaji carried me. I was explaining.
+:: 13 | looking back, after “Parts from Everywhere” | Ten of ten. In sha Allah, it will work.
+:: 14 | looking back, warm, after “Project Defence” | I knew the answer. So did you. I wanted to hear you say it.
+:: 15 | looking back, shy, after “Project Defence” | Silence at your defence was hard. Physically. An allergy.
+:: 16 | looking back, warm, after “Gown” | In sha Allah, you have passed. I checked. Three times.
+
+::: Common 23 · After graduation | The story is over. The player has come back to visit.
+:: 1 | to yourself, proud | First class. My father framed it. Then he framed the frame.
+:: 2 | to yourself | Master's next. In sha Allah. I've already read the reading list.
+:: 3 | to yourself, warm | My notes are in the library now. Somebody underlined them. In pen.
+:: 4 | hello, warm | (name)! Graduate! Simple. Come and teach my tutorial.
+:: 5 | hello, excited | You came back! I have a new diagram. It is about you.
+:: 6 | looking back, warm, after “The Study Group” | The study group still meets. Without the strike. Imagine.
+:: 7 | looking back, amused, after “Nationals” | Sheikh-1 serves zobo at weddings now. No Deans harmed.
+:: 8 | goodbye, warm | Go well. In sha Allah, you will pass. Life also has exams.
+
+::: Common 24 · Special days: term time | Days on the campus calendar. Allowance day is when money from home arrives.
+:: 1 | freshers' week, warm | Freshers! Front row, middle seat. Trust me.
+:: 2 | freshers' week, amused | A fresher asked me for the time. I gave him a lecture. Sorry.
+:: 3 | freshers' week | Free orientation tutorial. Bring a pen. Bring two.
+:: 4 | exam week | Exam week. Sleep is not optional. Zainab said so.
+:: 5 | exam week, dry, deadpan | Technically, I'm not panicking. I'm pre-calculating.
+:: 6 | exam week, warm | Sit. Breathe. Read every question twice. In sha Allah, you will pass.
+:: 7 | results day, scared | Results. If there is a B, don't tell me. Just pat my shoulder.
+:: 8 | results day, warm | You passed! I knew! I had a spreadsheet of you.
+:: 9 | results day | Carry-over is not a verdict. It is a second draft.
+:: 10 | allowance day | Allowance came. Books first. Suya second. Books third.
+:: 11 | market day, dry, deadpan | Market day. I am buying resistors and onions. Separately.
+
+::: Common 25 · Special days: the big ones | Save any shouting for last.
+:: 1 | the strike | Strike again. Free class tonight. Spread the word.
+:: 2 | the strike, dry, deadpan | 'Indefinite.' That is not a time unit. I checked.
+:: 3 | cup final day, dry, deadpan | Football. Twenty-two people, one ball. Economically odd.
+:: 4 | cup final day, amused | I am Engineering's goalkeeper. Again. Nobody else volunteered.
+:: 5 | election week | I read every manifesto. Twice. Most are poetry.
+:: 6 | election week, dry, deadpan | A candidate promised constant light. I asked for his circuit.
+:: 7 | graduation day, warm | Convocation. Gowns are just lab coats with ambition.
+:: 8 | graduation day, proud | One day, first class. In sha Allah. My father has booked a seat.
+
+::: Common 26 · Special days: seasons and holidays | Harmattan is the dry, dusty season.
+:: 1 | Ramadan, warm | Ramadan Mubarak. Iftar at the mosque grounds, then tutorial.
+:: 2 | Ramadan | Fasting sharpens the mind. Until about four p.m.
+:: 3 | Ramadan, warm | Eid Mubarak! [Blessed Eid!] My kaftan is crisp. Look.
+:: 4 | Christmas, warm | Merry Christmas to Pastor Sam and the choir. They sound correct.
+:: 5 | Christmas | Half the campus went home. The library is all mine.
+:: 6 | Valentine's Day, shy | Valentine's. Romance? After graduation, in sha Allah.
+:: 7 | Valentine's Day, dry, deadpan | Red roses. The colour of overloaded wiring. Charming.
+:: 8 | harmattan | Harmattan. Static on everything. My pens are attracting hair.
+:: 9 | harmattan, dry, deadpan | Low humidity. High static. I shocked the Dean. Sorry, sir.
 
 
 # Volunteer voice agreement
 
-**Game:** the open-world game on MIB-Hub, created by Muhammad Iliyasu Bugaje ("the creator"). **Character:** Shamsu.
+**Game:** the open-world browser game on MIB-Hub, created by Muhammad ("the creator"). **Character:** Shamsu.
 
 Please read this, fill in the boxes, sign, and send a photo or scan of this page back with your recordings. If anything is unclear, ask before you sign.
 
 1. **I am volunteering.** I am recording these lines for free, as a favour and as part of a community project. I will not be paid now or later, and I will not receive royalties.
-2. **What I allow.** The creator may use, edit and publish my recordings of the lines in this script (and any lines we agree later) in the game, its updates, trailers, the MIB-Hub website and its promotion, anywhere in the world, for as long as the game is available.
+2. **What I allow.** The creator may use, edit and publish my recordings of the lines in this script (and any lines we agree later) in this game, its updates, its trailers and its promotion, including on the MIB-Hub website, for as long as the game is available. They will not be used for anything else.
 3. **No AI copies.** My recordings will not be used to train or create an artificial copy of my voice without my separate written permission.
-4. **Credit.** I will be credited in the game and on the website by the name I write below (or not at all, if I choose anonymous).
-5. **Changing my mind.** I can ask in writing to stop at any time. The creator will then stop any new use and remove my lines in the next update. Copies that have already been released (for example a trailer someone downloaded) cannot be called back.
+4. **Credit.** I will be credited by first name only, by the name I write below, or not at all if I choose "anonymous".
+5. **Changing my mind.** I can ask in writing to stop at any time. The creator will then stop any new use and remove my lines in the next update. Copies already released (for example a trailer someone has downloaded) cannot be called back.
 
-| | |
-|---|---|
-| Full name | |
-| Credit me as (or "anonymous") | |
-| Phone or email | |
-| Age 18 or over? (yes / no) | |
-| Signature | |
-| Date | |
-| If under 18: parent or guardian's name, signature and date | |
-| For the creator: name, signature and date | Muhammad Iliyasu Bugaje |
+---
+
+**Full name:** ___________________________________________________________
+
+---
+
+**Credit me as (first name, or "anonymous"):** ___________________________________
+
+---
+
+**Phone or email:** _______________________________________________________
+
+---
+
+**Age 18 or over? (yes / no):** ______________________________________________
+
+---
+
+**If under 18, a parent or guardian signs here:** ________________________________
+
+---
+
+**Signature:** __________________________________ **Date:** _____________________
+
+---
+
+### For the creator
+
+---
+
+**Name:** __________________ **Signature:** __________________ **Date:** _____________
+

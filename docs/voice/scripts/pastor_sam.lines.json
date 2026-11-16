@@ -1,0 +1,378 @@
+{
+ "character": "Pastor Sam",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "The Sit-Down",
+   "file": "Pastor Sam - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_mid1_04",
+     "text": "No, ask him!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Cook-Off",
+   "file": "Pastor Sam - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m089_open_04",
+     "text": "No, ask him."
+    },
+    {
+     "n": 2,
+     "id": "m089_mid1_01",
+     "text": "Thirty-one years. He still won't share the system."
+    },
+    {
+     "n": 3,
+     "id": "m089_close_02",
+     "text": "…that we disagree. Deliciously."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Pastor Sam - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_greet_01",
+     "text": "My child! Good morning! Have you eaten? Auwal says I must ask."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_greet_02",
+     "text": "How far? [How are you?] You look like someone who needs rice."
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_f_greet_03",
+     "text": "God bless your morning. And your afternoon. I'm generous."
+    },
+    {
+     "n": 4,
+     "id": "bk_pastor_sam_f_greet_04",
+     "text": "Have you seen Auwal? He owes me a match. And a pot."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Pastor Sam - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_bye_01",
+     "text": "Go well. Walk in peace. Walk fast if it rains."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_bye_02",
+     "text": "God keep you. Greet your roommate. Greet Auwal if you see him."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Pastor Sam - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_thanks_01",
+     "text": "Thank you! Ah, gratitude. My favourite sermon. Short version."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_sorry_01",
+     "text": "Forgiven. Quickly. Life is short and lunch is soon."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Pastor Sam - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_compliment_01",
+     "text": "You helped carry the chairs. Heaven saw. So did the chairs."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Pastor Sam - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_tease_01",
+     "text": "You missed service? Fine. You didn't miss the rice after. I saw."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Pastor Sam - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_yes_01",
+     "text": "Yes! Amen! I mean, yes!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_no_01",
+     "text": "No. And Auwal also says no. We agree. Write it down."
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_f_maybe_01",
+     "text": "Ask him."
+    },
+    {
+     "n": 4,
+     "id": "bk_pastor_sam_f_confused_01",
+     "text": "I'm lost. Auwal usually finishes my sentences. Where is he?"
+    },
+    {
+     "n": 5,
+     "id": "bk_pastor_sam_f_agree_01",
+     "text": "Correct! Auwal will agree too. Eventually. After arguing."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Pastor Sam - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_ask_01",
+     "text": "Who makes better jollof, me or Auwal? Careful. Think."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_ask_02",
+     "text": "How are your studies? And your sleep? And your mother?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_f_joke_01",
+     "text": "Auwal's team scored. I was praying. For the goalkeeper."
+    },
+    {
+     "n": 4,
+     "id": "bk_pastor_sam_f_joke_02",
+     "text": "Thirty-one years and he still won't tell me his suya spice."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Pastor Sam - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_rain_01",
+     "text": "Rain. A blessing. Also a leak in the vestry. Both."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_blackout_01",
+     "text": "Light's gone. We sing louder. The generator is in God's hands."
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_f_heat_01",
+     "text": "This heat! Even the choir robes are sweating."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Pastor Sam - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_food_01",
+     "text": "Pepper soup! Who made it? Don't say Auwal. …It's Auwal."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Pastor Sam - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_gift_like_01",
+     "text": "Puff-puff! You know my weakness. Don't tell Auwal."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_gift_dislike_01",
+     "text": "A jersey of Auwal's team? …I will use it as a dishcloth. Lovingly."
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_f_gift_love_01",
+     "text": "A photo of me and Auwal, primary school! Look at our heads!"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Pastor Sam - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_f_idle_01",
+     "text": "Two hundred chairs. Two hundred and one. Who brought a chair?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_f_idle_02",
+     "text": "Choir practice at six. Pray it doesn't rain. Pray it doesn't flat."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 1: arriving",
+   "file": "Pastor Sam - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_y1_idle_01",
+     "text": "Freshers! Lost? Chapel is that way. Mosque is the other way. Both feed."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 2: the mall",
+   "file": "Pastor Sam - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_y2_idle_01",
+     "text": "Auwal bet me a goat on the Cup. I'm praying for a draw."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 3: the strike",
+   "file": "Pastor Sam - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_y3_ev_strike_01",
+     "text": "Strike? Then come and help. We are cooking for the ones who stayed."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_y3_callback_01",
+     "text": "Substitute me! I could not breathe! Auwal ran for both of us."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 4: fame",
+   "file": "Pastor Sam - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_y4_idle_01",
+     "text": "Rumours? Don't carry them. Carry chairs. More useful."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 5: leaving",
+   "file": "Pastor Sam - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_y5_idle_01",
+     "text": "Final year. We are praying for you. Both of us. Different times."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Pastor Sam - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_ev_ev_exam_01",
+     "text": "Exams. Read, then rest, then pray. In whatever order works."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Pastor Sam - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_ev_ev_cup_01",
+     "text": "Cup day! I support Engineering. Auwal supports whoever is losing."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_ev_ev_convocation_01",
+     "text": "Convocation! Thanksgiving! Jollof! My three favourite words."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Pastor Sam - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pastor_sam_ev_ev_ramadan_01",
+     "text": "Iftar tonight! Our pots go across the road, as every year."
+    },
+    {
+     "n": 2,
+     "id": "bk_pastor_sam_ev_ev_ramadan_02",
+     "text": "I'm not fasting. But I won't eat in front of Auwal. I'm not a monster."
+    },
+    {
+     "n": 3,
+     "id": "bk_pastor_sam_ev_ev_christmas_01",
+     "text": "Carols at seven! Auwal is bringing the kunu. He always does."
+    },
+    {
+     "n": 4,
+     "id": "bk_pastor_sam_ev_ev_harmattan_01",
+     "text": "Harmattan. Everyone in the choir has catarrh. Very soulful."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

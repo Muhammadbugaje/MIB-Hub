@@ -1,0 +1,624 @@
+{
+ "character": "Baba Porter",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "Baba Porter - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_film_08",
+     "text": "Sign here. And here. Don't lose it."
+    },
+    {
+     "n": 2,
+     "id": "m001_film_09",
+     "text": "Fourth floor. There is no lift."
+    },
+    {
+     "n": 3,
+     "id": "m001_film_10",
+     "text": "There has never been a lift."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Belle First",
+   "file": "Baba Porter - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m003_close_03",
+     "text": "Twelve. Good. Nobody alone."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Everybody",
+   "file": "Baba Porter - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m022_close_01",
+     "text": "I've been waiting to be asked."
+    },
+    {
+     "n": 2,
+     "id": "m022_close_02",
+     "text": "Thirty years."
+    },
+    {
+     "n": 3,
+     "id": "m022_close_03",
+     "text": "YOU! That mattress has a room number! FIND IT!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Stalite",
+   "file": "Baba Porter - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m025_mid1_01",
+     "text": "No."
+    },
+    {
+     "n": 2,
+     "id": "m025_mid1_02",
+     "text": "Have you signed for your key? Sign."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Those Who Stayed",
+   "file": "Baba Porter - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_close_02",
+     "text": "Sit. I am sitting. Tell nobody."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Idle King",
+   "file": "Baba Porter - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_open_03",
+     "text": "Every shot I save, you sign here. And here."
+    },
+    {
+     "n": 2,
+     "id": "m066_close_04",
+     "text": "Not our lock. Never was. Here. Don't lose it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Finalist",
+   "file": "Baba Porter - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m097_mid1_02",
+     "text": "Good boy, that one. Always carries from the heavy end."
+    },
+    {
+     "n": 2,
+     "id": "m097_mid2_01",
+     "text": "The professor asked me. Forty years now."
+    },
+    {
+     "n": 3,
+     "id": "m097_mid2_02",
+     "text": "'Pick the one who runs toward the trouble.'"
+    },
+    {
+     "n": 4,
+     "id": "m097_mid2_03",
+     "text": "Some years, nobody ran. Those notes I kept."
+    },
+    {
+     "n": 5,
+     "id": "m097_mid2_04",
+     "text": "You chased a goat. I had my doubts."
+    },
+    {
+     "n": 6,
+     "id": "m097_mid2_05",
+     "text": "But you brought it back."
+    },
+    {
+     "n": 7,
+     "id": "m097_close_01",
+     "text": "I wrote one line."
+    },
+    {
+     "n": 8,
+     "id": "m097_close_02",
+     "text": "I only ever write one line."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Three by Road",
+   "file": "Baba Porter - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_mid1_02",
+     "text": "Room 214! Okafor! Sign here. And sit down."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Sign-Out",
+   "file": "Baba Porter - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_mid2_01",
+     "text": "I can't manage the stairs."
+    },
+    {
+     "n": 2,
+     "id": "m119_mid2_02",
+     "text": "And I think the professor would say it is your turn."
+    },
+    {
+     "n": 3,
+     "id": "m119_mid2_03",
+     "text": "Pick the one who runs toward the trouble."
+    },
+    {
+     "n": 4,
+     "id": "m119_mid2_04",
+     "text": "You'll come back. They always do. To look at the clock."
+    },
+    {
+     "n": 5,
+     "id": "m119_mid2_05",
+     "text": "Sign here. …No. Not this one. This one you don't sign."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Fresher",
+   "file": "Baba Porter - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m120_close_01",
+     "text": "You! Room 606. Your post has been waiting."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Baba Porter - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_greet_01",
+     "text": "You. Sign in."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_greet_02",
+     "text": "Good morning. Your key. Your face. Both present. Good."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_f_greet_03",
+     "text": "Wipe your feet. This floor was mopped in 1987. Respect it."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_f_greet_04",
+     "text": "Ina kwana. [Good morning.] Sign here. And here."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Baba Porter - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_bye_01",
+     "text": "Sign out. Don't lose it."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_bye_02",
+     "text": "Gate locks at ten. It has never once waited for anybody."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Baba Porter - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_thanks_01",
+     "text": "Don't thank me. Sign."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_sorry_01",
+     "text": "Sorry is not a signature."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Walking with the player",
+   "file": "Baba Porter - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_wait_01",
+     "text": "I am not getting younger. Neither is the queue."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_lost_01",
+     "text": "Fourth floor is up. It has always been up."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Quick answers",
+   "file": "Baba Porter - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_confused_01",
+     "text": "A lift? There has never been a lift."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_no_01",
+     "text": "No visitors after ten. No. Not even your 'cousin'."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_f_no_02",
+     "text": "No."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_f_yes_01",
+     "text": "Yes. Sign."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "Baba Porter - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_hit_01",
+     "text": "Walk! This is a hall, not a football pitch!"
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_blackout_01",
+     "text": "Stay where you are! Everybody, count off! Loud!"
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_f_blackout_02",
+     "text": "Candle is in the drawer. Sign for the candle."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_f_light_back_01",
+     "text": "There. Nobody alone. Good. Go back to your rooms."
+    },
+    {
+     "n": 5,
+     "id": "bk_baba_porter_f_rain_01",
+     "text": "Shoes off! I did not mop for your rain."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Food and money",
+   "file": "Baba Porter - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_food_01",
+     "text": "Indomie in the room is a fire hazard. Give me one."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Getting a present",
+   "file": "Baba Porter - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_gift_like_01",
+     "text": "Biscuits. Hm. The tin is empty. …The other tin."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_gift_dislike_01",
+     "text": "Perfume? For whom? The keys?"
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_f_gift_love_01",
+     "text": "A new pen. Mine has signed forty years. It is tired."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Talking to yourself",
+   "file": "Baba Porter - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_idle_01",
+     "text": "Room 214. Again. That boy has lost his key eleven times."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_idle_02",
+     "text": "Four hundred keys. I know every one by its sound."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_f_idle_03",
+     "text": "Post. Post. Post. …Hm. That one goes in the tin."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_f_idle_04",
+     "text": "Mattress in the corridor. Whose? Speak or it is mine."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Late at night",
+   "file": "Baba Porter - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_f_night_01",
+     "text": "Ten o'clock. In. In. In. Out of the corridor."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_f_night_02",
+     "text": "Go to bed. Leave the porter to his radio."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 1: arriving",
+   "file": "Baba Porter - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_y1_greet_01",
+     "text": "Fresher. You found your room. Most take a week."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_y1_idle_01",
+     "text": "Goat-chaser! Your boots are on my floor!"
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_y1_idle_02",
+     "text": "Twelve came in. Twelve went up. Good."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_y1_tease_01",
+     "text": "Goat-runner. The whole hall saw. Sign, before you become a song."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "Baba Porter - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_y2_idle_01",
+     "text": "A sixth floor? No. Have you signed for your key? Sign."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_y2_idle_02",
+     "text": "Second years. You stop signing in. I start remembering."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_y2_confused_01",
+     "text": "Who? He signs nothing. I don't ask him to."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "Baba Porter - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_y3_idle_01",
+     "text": "Half the keys on the board. The other half went home."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_y3_idle_02",
+     "text": "Sit. I am sitting. Tell nobody."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_y3_greet_01",
+     "text": "You stayed. Hm. Good. Sign anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "Baba Porter - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_y4_idle_01",
+     "text": "You were on the television. I did not watch. Sign here."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_y4_idle_02",
+     "text": "Post for 606 again. Same hand. Don't ask. Sign."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "Baba Porter - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_y5_idle_01",
+     "text": "My knees have resigned. The stairs accepted it."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_y5_idle_02",
+     "text": "That quiet one carried a mattress up. Good boy. Heavy end."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_y5_greet_01",
+     "text": "Finalist. You walk like a man who owns the floor. You don't."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_y5_callback_01",
+     "text": "Still my doubts about the goat. Less now."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "After graduation",
+   "file": "Baba Porter - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_post_greet_01",
+     "text": "You came back. They always do. To look at the clock."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_post_greet_02",
+     "text": "Senior. You still sign. Habit is a good thing."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_post_idle_01",
+     "text": "Six floors. Mop for six now. Nobody pays me for six."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_porter_post_idle_02",
+     "text": "Your fresher is settling. Ran toward the trouble yesterday."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Baba Porter - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_ev_ev_freshers_01",
+     "text": "Mothers to the left! Mattresses to the right! Fathers, outside!"
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_ev_ev_freshers_02",
+     "text": "Fourth floor. There is no lift. There has never been a lift."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_ev_ev_exam_01",
+     "text": "Reading in the corridor is still in the corridor. Move."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Baba Porter - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_ev_ev_convocation_01",
+     "text": "Sign out. …No. Not today. Today you don't sign."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Baba Porter - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_porter_ev_ev_ramadan_01",
+     "text": "Suhoor at four. I will knock. I always knock."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_porter_ev_ev_christmas_01",
+     "text": "Going home? Sign out. Bring me chin-chin back. Small."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_porter_ev_ev_harmattan_01",
+     "text": "Dust on my book. Dust on my keys. Dust on my patience."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

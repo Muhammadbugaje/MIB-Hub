@@ -1,0 +1,349 @@
+{
+ "character": "The Faithful",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Faithful - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_greet_01",
+     "text": "Assalamu alaikum. [Peace be upon you.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_greet_02",
+     "text": "Wa alaikum salam. [And upon you, peace.]"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_f_greet_03",
+     "text": "Good morning! Happy Sunday!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_f_greet_04",
+     "text": "Barka da Juma'a! [Happy Friday!]"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "The Faithful - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_bye_01",
+     "text": "Sai anjima. [See you later.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_bye_02",
+     "text": "Go well. See you next Sunday."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "The Faithful - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_thanks_01",
+     "text": "Na gode. [Thank you.] Allah ya saka da alheri. [God reward you.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_thanks_02",
+     "text": "Thank you! God bless you, eh."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "When something goes wrong",
+   "file": "The Faithful - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_rain_01",
+     "text": "Rain! Share the umbrella. Two heads, one roof."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_rain_02",
+     "text": "Rain on Friday. The mats are inside. Come in, come in."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_f_blackout_01",
+     "text": "Light's gone, but the hymn knows its way. Keep singing."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_f_blackout_02",
+     "text": "No light for the microphone. His voice carries anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Talking to yourself",
+   "file": "The Faithful - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_idle_01",
+     "text": "Who took my slippers? …Oh. They're mine. Sorry, sorry."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_idle_02",
+     "text": "Hurry, it's almost time. Walk fast, but walk well."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_f_idle_03",
+     "text": "Choir practice ran long. My voice is resting till Sunday."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_f_idle_04",
+     "text": "The tap by the mosque is working today. Alhamdulillah. [Praise God.]"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_worship_f_idle_05",
+     "text": "Mama, wait for me! I'm coming! I'm wearing my good shoes!"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_worship_f_idle_06",
+     "text": "After prayers, tea at Mai Shayi Audu's. Like every Friday."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_worship_f_idle_07",
+     "text": "Pastor Sam and Ustaz Auwal are sharing one umbrella again."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_worship_f_idle_08",
+     "text": "Juma'a crowd. Park well, leave space for the keke."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_worship_f_idle_09",
+     "text": "Somebody left a bag at the gate. Whose bag? Come and take it."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_worship_f_idle_10",
+     "text": "We prayed about the exams. Now we read for the exams. Both."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Late at night",
+   "file": "The Faithful - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_f_night_01",
+     "text": "Late prayer done. Walk home together, it's dark."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_f_night_02",
+     "text": "Vigil tonight. Bring a sweater and a friend."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 1: arriving",
+   "file": "The Faithful - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_y1_idle_01",
+     "text": "Candles in the chapel, lamps at the mosque. Everybody's lighting something."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 2: the mall",
+   "file": "The Faithful - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_y2_idle_01",
+     "text": "Collection for the generator fund. Every little helps."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_y2_idle_02",
+     "text": "The mall played music during Juma'a. Somebody asked. They lowered it."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 3: the strike",
+   "file": "The Faithful - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_y3_idle_01",
+     "text": "Fewer people at Juma'a this strike, but they're greeting harder."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_y3_idle_02",
+     "text": "Small congregation this Sunday. We sang louder to fill the room."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_y3_idle_03",
+     "text": "Food after service for the students who stayed. Take a plate. Take two."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 4: fame",
+   "file": "The Faithful - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_y4_idle_01",
+     "text": "The sermon was about honest talk. Election week. Good timing."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_y4_idle_02",
+     "text": "Don't believe everything on your phone. Check, then speak."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 5: leaving",
+   "file": "The Faithful - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_y5_idle_01",
+     "text": "Final years asking for prayers. Of course. Come."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_y5_idle_02",
+     "text": "My son graduates this year. I'll be grateful in the front row."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: term time",
+   "file": "The Faithful - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_ev_ev_freshers_01",
+     "text": "Freshers! The mosque is there, the chapel is there. Welcome."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_ev_ev_exam_01",
+     "text": "Exam week. Mosque full, chapel full, library full. Everybody's working."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_ev_ev_results_01",
+     "text": "Results day. Thanksgiving at service. Some loud, some quiet."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_ev_ev_allowance_01",
+     "text": "Allowance came. First, give a little. Then the market."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_worship_ev_ev_market_day_01",
+     "text": "Thursday. Market first, then evening prayer, then rest."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: the big ones",
+   "file": "The Faithful - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_ev_ev_strike_01",
+     "text": "The chapel is open for anybody who needs a quiet place."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_ev_ev_cup_01",
+     "text": "After prayers, to the stadium! The match won't wait."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_ev_ev_elections_01",
+     "text": "Pray for good leaders. Then go and vote for one."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_ev_ev_convocation_01",
+     "text": "Convocation thanksgiving. Families in their best, grinning."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: seasons and holidays",
+   "file": "The Faithful - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_worship_ev_ev_ramadan_01",
+     "text": "Iftar in ten minutes! Dates are on the table, the water is cold."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_worship_ev_ev_ramadan_02",
+     "text": "Ramadan Kareem! [Blessed Ramadan!] Come and break fast with us."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_worship_ev_ev_ramadan_03",
+     "text": "Sallah tomorrow! New clothes, visits, everybody greeting!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_worship_ev_ev_christmas_01",
+     "text": "Carol night at the chapel! Everybody's welcome. Bring your voice."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_worship_ev_ev_christmas_02",
+     "text": "Merry Christmas! The chapel lights are on. Come and see."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_worship_ev_ev_harmattan_01",
+     "text": "Harmattan dawn. Cold water for ablution. Brrr. Bismillah. [In God's name.]"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

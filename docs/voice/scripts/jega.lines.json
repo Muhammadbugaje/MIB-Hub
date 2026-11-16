@@ -1,0 +1,1976 @@
+{
+ "character": "Jega",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Left Boot First",
+   "file": "Jega - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_open_01",
+     "text": "Takalmin hagu tukuna. (Left boot first.)"
+    },
+    {
+     "n": 2,
+     "id": "m008_open_02",
+     "text": "Always. Don't argue with success."
+    },
+    {
+     "n": 3,
+     "id": "m008_open_04",
+     "text": "Kai! You chased the goat. Wallahi, you're on my side."
+    },
+    {
+     "n": 4,
+     "id": "m008_open_05",
+     "text": "Mu je! (Let's go!)"
+    },
+    {
+     "n": 5,
+     "id": "m008_mid1_07",
+     "text": "Haba, Professor! Ball first, sermon later!"
+    },
+    {
+     "n": 6,
+     "id": "m008_close_01",
+     "text": "…Ban sani ba. (I don't know.)"
+    },
+    {
+     "n": 7,
+     "id": "m008_close_02",
+     "text": "Kai, {{PLAYER_NAME}}. We have a cup to win."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Doctor's Orders",
+   "file": "Jega - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m009_open_01",
+     "text": "Kai. …Did we score?"
+    },
+    {
+     "n": 2,
+     "id": "m009_open_02",
+     "text": "Ba matsala. (No problem.) It's only the face."
+    },
+    {
+     "n": 3,
+     "id": "m009_mid1_08",
+     "text": "In goal: Yusuf. Left back: Sani. Striker: me…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Count Entropy",
+   "file": "Jega - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_mid2_01",
+     "text": "Kai. It's wearing a cape."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Vice-Chancellor's Cup",
+   "file": "Jega - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m019_open_02",
+     "text": "My mother's socks. Don't laugh."
+    },
+    {
+     "n": 2,
+     "id": "m019_open_03",
+     "text": "…You can laugh small."
+    },
+    {
+     "n": 3,
+     "id": "m019_open_05",
+     "text": "Takalmin hagu tukuna. Mu je!"
+    },
+    {
+     "n": 4,
+     "id": "m019_close_01",
+     "text": "Next year you will see it. Wallahi."
+    },
+    {
+     "n": 5,
+     "id": "m019_close_02",
+     "text": "Right boot first. Once. For a child. Kai."
+    },
+    {
+     "n": 6,
+     "id": "m019_close_03",
+     "text": "Mu sake. (We go again.) Next year."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Wingman",
+   "file": "Jega - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m021_open_01",
+     "text": "Kai. Come. I have a tactical problem."
+    },
+    {
+     "n": 2,
+     "id": "m021_open_02",
+     "text": "Ban sani ba. (I don't know.) Officially."
+    },
+    {
+     "n": 3,
+     "id": "m021_open_03",
+     "text": "Let me practise. Sannu… no. Hello… no."
+    },
+    {
+     "n": 4,
+     "id": "m021_open_04",
+     "text": "Kai! …No. She is not a goalkeeper."
+    },
+    {
+     "n": 5,
+     "id": "m021_open_05",
+     "text": "You go. You chased a goat. You fear nothing."
+    },
+    {
+     "n": 6,
+     "id": "m021_close_02",
+     "text": "(…Is it going well? I can't tell.)"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Scout in the Stands",
+   "file": "Jega - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_open_01",
+     "text": "Kai. Safa ta bace. (The sock is missing.)"
+    },
+    {
+     "n": 2,
+     "id": "m037_open_02",
+     "text": "Both. My mother's. From Madam Whistle's line."
+    },
+    {
+     "n": 3,
+     "id": "m037_open_03",
+     "text": "We cannot play."
+    },
+    {
+     "n": 4,
+     "id": "m037_open_04",
+     "text": "Haba. You are my friend, so I forgive that."
+    },
+    {
+     "n": 5,
+     "id": "m037_open_06",
+     "text": "I know about the scout. EVERYBODY told me."
+    },
+    {
+     "n": 6,
+     "id": "m037_mid1_02",
+     "text": "One. One sock. A man has two feet."
+    },
+    {
+     "n": 7,
+     "id": "m037_mid1_04",
+     "text": "It is not lucky."
+    },
+    {
+     "n": 8,
+     "id": "m037_mid1_07",
+     "text": "…Takalmin hagu tukuna. (Left boot first.)"
+    },
+    {
+     "n": 9,
+     "id": "m037_close_02",
+     "text": "Hel— IDK. Hold this. My hands are sweating."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Sign-Out, Small",
+   "file": "Jega - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_open_03",
+     "text": "Next season. The trial. Kai, did I tell you?"
+    },
+    {
+     "n": 2,
+     "id": "m048_open_05",
+     "text": "…Ban sani ba what I'd do without her."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Teacher (Name)",
+   "file": "Jega - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m053_open_01",
+     "text": "Ina kwana, Primary Four! Good morning!"
+    },
+    {
+     "n": 2,
+     "id": "m053_open_03",
+     "text": "Toh. They can smell fear. Don't have any."
+    },
+    {
+     "n": 3,
+     "id": "m053_mid1_02",
+     "text": "Every school here sings it. Since, since."
+    },
+    {
+     "n": 4,
+     "id": "m053_mid1_03",
+     "text": "Why is your face like network?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Patrol Games",
+   "file": "Jega - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m059_open_01",
+     "text": "So we don't lose each other! Wait. I fix it."
+    },
+    {
+     "n": 2,
+     "id": "m059_open_03",
+     "text": "Ba matsala. Mu je! [No problem. Let's go!]"
+    },
+    {
+     "n": 3,
+     "id": "m059_mid1_01",
+     "text": "He can't see me. I am thinking like a leaf."
+    },
+    {
+     "n": 4,
+     "id": "m059_close_01",
+     "text": "Kai…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Injury Time",
+   "file": "Jega - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_open_01",
+     "text": "Takalmin hagu tukuna. [Left boot first.]"
+    },
+    {
+     "n": 2,
+     "id": "m063_open_02",
+     "text": "She knows 'training'. Training is a big word. Toh?"
+    },
+    {
+     "n": 3,
+     "id": "m063_open_03",
+     "text": "This pitch is like my uncle's farm. Mu je!"
+    },
+    {
+     "n": 4,
+     "id": "m063_mid1_01",
+     "text": "Ban sani ba. Truly. [I don't know.]"
+    },
+    {
+     "n": 5,
+     "id": "m063_mid1_02",
+     "text": "Somebody said 'slowly, slowly'."
+    },
+    {
+     "n": 6,
+     "id": "m063_mid2_02",
+     "text": "…Training."
+    },
+    {
+     "n": 7,
+     "id": "m063_mid2_03",
+     "text": "The left boot was first. This is physics."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Night Nurse",
+   "file": "Jega - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_mid1_01",
+     "text": "Long ago, there was a final. And a striker. A bad one."
+    },
+    {
+     "n": 2,
+     "id": "m064_mid1_03",
+     "text": "Kai! No. It was my friend. I was the handsome one."
+    },
+    {
+     "n": 3,
+     "id": "m064_mid1_04",
+     "text": "…and he missed. Ya rasa. [He lost.] And he got up."
+    },
+    {
+     "n": 4,
+     "id": "m064_mid1_05",
+     "text": "Mu sake. [We go again.] That is the whole story."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "The Idle King",
+   "file": "Jega - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_open_01",
+     "text": "I cannot play. So I will shout. In two languages."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Ranger Lawal's Debt",
+   "file": "Jega - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m069_open_01",
+     "text": "Toh! I am in charge of safety. Offside! Come back!"
+    },
+    {
+     "n": 2,
+     "id": "m069_close_02",
+     "text": "He will say 'Go back'. Watch."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "The Third Coil Wakes",
+   "file": "Jega - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m070_open_03",
+     "text": "Thirty-one slips. All signed. I am a professional."
+    },
+    {
+     "n": 2,
+     "id": "m070_mid1_05",
+     "text": "He is fine. He is just happy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Wedding at the Quarters",
+   "file": "Jega - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m071_mid1_01",
+     "text": "Stand there. Like a goalpost. Present, not involved."
+    },
+    {
+     "n": 2,
+     "id": "m071_mid1_03",
+     "text": "Toh. Every week. Na yi alkawari. [I promise.]"
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Rehab",
+   "file": "Jega - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m078_open_03",
+     "text": "Haba! What is this column? 'Excuses'?"
+    },
+    {
+     "n": 2,
+     "id": "m078_mid1_01",
+     "text": "Abu daya kawai na iya. [I only know one thing.]"
+    },
+    {
+     "n": 3,
+     "id": "m078_mid1_02",
+     "text": "Idan ya tafi, ni wane ne? [If it goes, who am I?]"
+    },
+    {
+     "n": 4,
+     "id": "m078_close_01",
+     "text": "Toh. …Mu sake. [Right. We go again.]"
+    },
+    {
+     "n": 5,
+     "id": "m078_close_03",
+     "text": "Two. …Three. I am not filling the other column."
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "Comeback",
+   "file": "Jega - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_open_01",
+     "text": "…No. Not today. Takalmin hagu tukuna."
+    },
+    {
+     "n": 2,
+     "id": "m088_open_02",
+     "text": "[Left boot first.] Don't argue with success."
+    },
+    {
+     "n": 3,
+     "id": "m088_open_04",
+     "text": "You start. Seventy minutes. Then give me my pitch."
+    },
+    {
+     "n": 4,
+     "id": "m088_mid1_01",
+     "text": "Kai. The right one? …Traitor."
+    },
+    {
+     "n": 5,
+     "id": "m088_mid1_03",
+     "text": "Yauwa! Mun sake! [That's it! We went again!]"
+    },
+    {
+     "n": 6,
+     "id": "m088_close_02",
+     "text": "Zero. …Two. Don't write it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "Parts from Everywhere",
+   "file": "Jega - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_mid1_03",
+     "text": "Kai, don't look at me. Pay them. They have a union."
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Contract",
+   "file": "Jega - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m107_open_06",
+     "text": "Toh, Mama. …Toh."
+    },
+    {
+     "n": 2,
+     "id": "m107_open_07",
+     "text": "Mu je. [Let's go.] Walk with me."
+    },
+    {
+     "n": 3,
+     "id": "m107_mid1_01",
+     "text": "I sign. One condition. After my exams."
+    },
+    {
+     "n": 4,
+     "id": "m107_mid1_03",
+     "text": "No. Left boot first. Put it in the contract."
+    },
+    {
+     "n": 5,
+     "id": "m107_mid1_04",
+     "text": "I am serious. Write it."
+    },
+    {
+     "n": 6,
+     "id": "m107_close_01",
+     "text": "Sannu ba ta hana zuwa."
+    },
+    {
+     "n": 7,
+     "id": "m107_close_02",
+     "text": "[Going slowly does not stop you arriving.]"
+    },
+    {
+     "n": 8,
+     "id": "m107_close_03",
+     "text": "My father said it. I only understood it today."
+    },
+    {
+     "n": 9,
+     "id": "m107_close_04",
+     "text": "Yauwa. Mu sake. [That's it. We go again.]"
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "Dinner Night",
+   "file": "Jega - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m109_mid2_02",
+     "text": "Her name. Kai. Five years, everybody has asked me."
+    },
+    {
+     "n": 2,
+     "id": "m109_mid2_03",
+     "text": "Sunanta Helen. [Her name is Helen.]"
+    },
+    {
+     "n": 3,
+     "id": "m109_mid2_04",
+     "text": "I have always known it."
+    },
+    {
+     "n": 4,
+     "id": "m109_mid2_05",
+     "text": "I liked that only I got to say it."
+    },
+    {
+     "n": 5,
+     "id": "m109_mid2_07",
+     "text": "Me. Your Jega."
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "Three by Road",
+   "file": "Jega - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_close_02",
+     "text": "Six stools, standing. The seventh, ban taba ba."
+    },
+    {
+     "n": 2,
+     "id": "m112_close_03",
+     "text": "[I didn't touch it.] Some things are not my match."
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "The Ten Seals",
+   "file": "Jega - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_open_02",
+     "text": "Aminu, hold the clapper. No ringing. Not yet."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid3_01",
+     "text": "Education. Left hand first. Aminu, yauwa. [That's it.]"
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "Chancellor Null",
+   "file": "Jega - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_mid1_02",
+     "text": "Mu je! [Let's go!]"
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "Sign-Out",
+   "file": "Jega - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_open_02",
+     "text": "Stand still. Kai! I am writing on your back."
+    },
+    {
+     "n": 2,
+     "id": "m119_open_03",
+     "text": "'Left boot first.' So you never forget."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Jega - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_greet_01",
+     "text": "Ina kwana! [Good morning!] You ate?"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_greet_02",
+     "text": "My guy! Left boot first today?"
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_greet_03",
+     "text": "Sannu, {{PLAYER_NAME}}! [Hello!] Body dey? Legs dey?"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_greet_04",
+     "text": "Kai! The goat chaser himself!"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_greet_05",
+     "text": "Ina gajiya? [How is the tiredness?] Tell me everything."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_greet_06",
+     "text": "Yauwa! Just the person. Mu je! [Let's go!]"
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_greet_07",
+     "text": "Toh. You. Me. Pitch. Five o'clock."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Jega - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_bye_01",
+     "text": "Sai anjima! [See you later!] Don't miss five o'clock."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_bye_02",
+     "text": "Mu hadu gobe. [We meet tomorrow.] In sha Allah."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_bye_03",
+     "text": "Go. Go read. One of us must."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_bye_04",
+     "text": "Toh. I'm going. My legs are already going."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Jega - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_thanks_01",
+     "text": "Na gode sosai. [Thank you very much.] You are a brother."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_thanks_02",
+     "text": "Yauwa! This is why I picked you first."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_thanks_03",
+     "text": "Kai. Thank you. Don't tell anybody I said it soft."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_thanks_04",
+     "text": "Allah ya saka da alheri. [May God repay you with good.]"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_sorry_01",
+     "text": "Yi hakuri. [Sorry.] That one was my fault. Fully."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_sorry_02",
+     "text": "Sorry, my friend. My mouth ran faster than my head."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_sorry_03",
+     "text": "Sorry! I thought you were a ball."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Jega - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_compliment_01",
+     "text": "Look at that first touch! Who taught you? Me?"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_compliment_02",
+     "text": "Wallahi, you have heart. [I swear.] Heart is the skill."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_compliment_03",
+     "text": "That shirt? Correct. Very correct."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_compliment_04",
+     "text": "You run like you owe the grass money."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Jega - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_tease_01",
+     "text": "You call that a pass? Is the ball your inheritance?"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_tease_02",
+     "text": "Haba! [Come on!] Even Bature shoots better. Even Bature."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_tease_03",
+     "text": "Your boots are clean. Suspicious. You don't train."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_tease_04",
+     "text": "You read so much your eyes are doing overtime."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Jega - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_follow_01",
+     "text": "Mu je! [Let's go!] Keep up!"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_follow_02",
+     "text": "Stay on my left. Left is lucky."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_follow_03",
+     "text": "Walk with me. I talk, you agree. Simple system."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_wait_01",
+     "text": "Kai! I am stretching while I wait. Look, a full warm-up."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_wait_02",
+     "text": "Toh? Are you coming, or are you a statue?"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_wait_03",
+     "text": "Even the injury-time board is faster than you."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_lost_01",
+     "text": "That way is Theatre Yamma. Wrong theatre, my friend."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_f_lost_02",
+     "text": "Ina za ka? [Where are you going?] Come back, come back."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_f_lost_03",
+     "text": "Offside! Come back!"
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Jega - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_yes_01",
+     "text": "Yauwa! [That's it!]"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_yes_02",
+     "text": "Toh. [Okay.] Done."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_yes_03",
+     "text": "I, wallahi. [Yes, I swear.]"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_yes_04",
+     "text": "Mu je! [Let's go!]"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_no_01",
+     "text": "A'a. [No.] Not today."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_no_02",
+     "text": "Haba. [Come on.] No, my friend."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_no_03",
+     "text": "No. Coach would kill me. Then my mother."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_f_maybe_01",
+     "text": "Maybe. Let me ask my left boot."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_f_maybe_02",
+     "text": "Watakila. [Perhaps.] After training."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_f_maybe_03",
+     "text": "Ban sani ba. [I don't know.] My famous answer."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_f_confused_01",
+     "text": "Who? There was nobody there fa."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_f_confused_02",
+     "text": "Kai, you are talking to the wind again?"
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_f_confused_03",
+     "text": "Wait. Explain it like Shamsu, but shorter."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_f_agree_01",
+     "text": "Gaskiya ne. [It's true.] You said it."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_f_agree_02",
+     "text": "Correct! One hundred percent. Two hundred."
+    },
+    {
+     "n": 16,
+     "id": "bk_jega_f_agree_03",
+     "text": "Toh, I agree. Don't get used to it."
+    },
+    {
+     "n": 17,
+     "id": "bk_jega_f_refuse_01",
+     "text": "A'a. Right boot first? Never. Don't argue with success."
+    },
+    {
+     "n": 18,
+     "id": "bk_jega_f_refuse_02",
+     "text": "Haircut before a final? Do you want us to lose?"
+    },
+    {
+     "n": 19,
+     "id": "bk_jega_f_refuse_03",
+     "text": "No, my friend. Not that one."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Jega - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_joke_01",
+     "text": "Yunwa nake ji fa. [I'm hungry fa.] Hunger is doing me press-ups."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_joke_02",
+     "text": "My phone has one bar. The bar is tired."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_joke_03",
+     "text": "Coach said 'use your head.' So I did. On the goalpost."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_joke_04",
+     "text": "NEPA and me, we both take light. Me, from defenders."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_ask_01",
+     "text": "You ate today? Real food. Not garri water."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_ask_02",
+     "text": "How is your mother? Greet her for me."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_ask_03",
+     "text": "Have you… seen a tall girl? Keeps score? No reason."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Jega - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_win_01",
+     "text": "Yauwa! Mun ci! [That's it! We won!]"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_win_02",
+     "text": "Left boot first. I told you. Science."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_lose_01",
+     "text": "Ba matsala. We lose today, mu sake gobe. [We go again tomorrow.]"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_lose_02",
+     "text": "Toh. Shake hands. Then cry small, inside."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Jega - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_hit_01",
+     "text": "Kai! Foul! Yellow card!"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_hit_02",
+     "text": "Ba matsala. [No problem.] I have been hit by goalposts."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_fall_01",
+     "text": "I'm fine. The ground came up to greet me."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_fall_02",
+     "text": "Up. Mu sake. [We go again.]"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_blackout_01",
+     "text": "NEPA! Haba! In the middle of my story!"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_blackout_02",
+     "text": "Light don go. [The light is gone.] Torches, everybody."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_f_blackout_03",
+     "text": "Stay close. The dark here is… too quiet."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_f_light_back_01",
+     "text": "UP NEPA!"
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_f_light_back_02",
+     "text": "Light is back! Charge everything! Even your shoes!"
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_f_rain_01",
+     "text": "Rain! The pitch will be butter. Mu je!"
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_f_rain_02",
+     "text": "Ruwan sama! [Rain!] My socks! Who has my socks?"
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_f_heat_01",
+     "text": "Rana ta yi zafi. [The sun is hot.] Even the ball is sweating."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_f_heat_02",
+     "text": "This sun wants to play left back."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Jega - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_food_01",
+     "text": "Tuwo! Miyan kuka! [Okra-leaf soup!] My mother's food!"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_food_02",
+     "text": "Suya? I am already there in spirit."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_food_03",
+     "text": "Eat first. Talk after. That is the rule."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_money_01",
+     "text": "My pocket has only fresh air and one receipt."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_money_02",
+     "text": "Sapa has entered the chat. And sat down."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Jega - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_f_gift_like_01",
+     "text": "Na gode! [Thank you!] I will use it at training."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_f_gift_like_02",
+     "text": "Yauwa! You know me well."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_f_gift_dislike_01",
+     "text": "Kai… a book? For me? Thank you. I will look at it."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_f_gift_dislike_02",
+     "text": "Toh. It is… a thing. Thank you."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_f_gift_love_01",
+     "text": "SOCKS?! Kai! You understand me completely!"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_f_gift_love_02",
+     "text": "For me? Wallahi, I won't forget this. Ever."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Jega - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y1_ask_01",
+     "text": "That tall girl. The one with the scoresheet. You know her?"
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y1_ask_02",
+     "text": "You've seen Coach Danladi angry? Don't."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y1_win_01",
+     "text": "Trials! Education picked me! Mu je!"
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Jega - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y1_idle_01",
+     "text": "Coach looked at me today. Twice. That's a contract."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y1_idle_02",
+     "text": "First in my family at university. And first in the canteen queue."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y1_idle_03",
+     "text": "Same bus seat. Same boots. Same hope."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y1_idle_04",
+     "text": "Human Kinetics. Yes, it is a real course. We run with notes."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y1_idle_05",
+     "text": "One day, the Vice-Chancellor's Cup. Watch."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y1_idle_06",
+     "text": "Giginya Hall water runs at five a.m. I run at five a.m."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_y1_idle_07",
+     "text": "My roommate snores in two languages. Like me."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_y1_night_01",
+     "text": "Night training. Just me, the ball and the crickets."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_y1_night_02",
+     "text": "Mai Shayi still awake? Then I am still awake."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_y1_night_03",
+     "text": "The Clock Tower says 6:06. Again. Toh."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_y1_callback_01",
+     "text": "We picked you first. Because of the goat. Correct choice."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_y1_callback_02",
+     "text": "Shamsu missed an open goal and gave us a lecture on angles."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_y1_callback_03",
+     "text": "My eyebrow has stitches. I look dangerous now."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_y1_callback_04",
+     "text": "That doctor. She told me to shut up. I shut up."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_y1_callback_05",
+     "text": "One carry-over. It is only a friend who stayed longer."
+    },
+    {
+     "n": 16,
+     "id": "bk_jega_y1_callback_06",
+     "text": "Right boot first. Once. For a child. Kai."
+    },
+    {
+     "n": 17,
+     "id": "bk_jega_y1_callback_07",
+     "text": "We lost. But I shook every hand. My father would say yauwa."
+    },
+    {
+     "n": 18,
+     "id": "bk_jega_y1_callback_08",
+     "text": "She said she knows her own name. Toh. So do I."
+    },
+    {
+     "n": 19,
+     "id": "bk_jega_y1_callback_09",
+     "text": "Hello… no. Sannu… no. Kai, I am still practising."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Jega - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y2_tease_01",
+     "text": "Bature on the radio, talking football. I'm suing."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y2_tease_02",
+     "text": "You heard about Mubarak's power banks? Don't buy. They breathe."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y2_follow_01",
+     "text": "Captain says: follow. Mu je!"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y2_compliment_01",
+     "text": "You played like a captain today. Don't take my job."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y2_sorry_01",
+     "text": "I shouted on the pitch. Captain's mouth. Yi hakuri. [Sorry.]"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y2_ask_01",
+     "text": "Has anybody seen the goat today? Asking for my socks."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Jega - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y2_idle_01",
+     "text": "Captain. Me. Captain. Kai, say it again."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y2_idle_02",
+     "text": "Socks washed. Socks dried. Socks guarded."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y2_idle_03",
+     "text": "Madam Whistle's line is the safest place on campus. Normally."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y2_idle_04",
+     "text": "The scout! Is he here? Don't tell me. Tell me."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y2_idle_05",
+     "text": "IDK came to training. She said she was passing. Thirty minutes."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y2_idle_06",
+     "text": "The mall has an escalator that only goes up. Like my career."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_y2_idle_07",
+     "text": "Two tests this week. I'm training my brain. Squats."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_y2_night_01",
+     "text": "Can't sleep. I'm thinking about the semi-final. And her."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_y2_night_02",
+     "text": "Mai Shayi, one more cup. My legs need tea."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_y2_callback_01",
+     "text": "One sock. A goat ate one sock. Who raised that goat?"
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_y2_callback_02",
+     "text": "Two goals. In a stranger's sock. Wallahi."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_y2_callback_03",
+     "text": "The scout's card? Helen has it. My hands were sweating."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_y2_callback_04",
+     "text": "Shamsu's robot poured zobo on the Dean. Best match I saw."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_y2_callback_05",
+     "text": "Five-a-side at Engineering week. They have no left foot."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_y2_callback_06",
+     "text": "The trial is next year! Did I tell you? I told you."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 3: the strike",
+   "file": "Jega - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y3_fall_01",
+     "text": "Kai! Crutch went left, I went right."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y3_follow_01",
+     "text": "Walk slowly. My new legs are made of aluminium."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y3_wait_01",
+     "text": "You're waiting for ME now? Haba. The world turns."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y3_agree_01",
+     "text": "Yes. Ask Shamsu's class. Everybody who stayed is passing."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y3_hit_01",
+     "text": "The KNEE! Watch the knee! …I'm fine. Watch it anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Jega - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y3_idle_01",
+     "text": "Strike. No lectures. Football has no strike."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y3_idle_02",
+     "text": "Town league pays. My knees pay more."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y3_idle_03",
+     "text": "Helen thinks I'm at training. It is training. Some kind."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y3_idle_04",
+     "text": "Ina kwana, Primary Four! [Good morning!] Did you do homework?"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y3_idle_05",
+     "text": "Thirty-one pupils. Thirty-one coaches. They all shout."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y3_idle_06",
+     "text": "Garri for breakfast. Garri for lunch. Garri is my team now."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_y3_idle_07",
+     "text": "Campus is so empty you can hear the grass grow."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_y3_night_01",
+     "text": "Empty hostel at night. Even my echo went home."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_y3_night_02",
+     "text": "Moon is full. Somebody should play under it."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_y3_callback_01",
+     "text": "I hid behind a tree. I was thinking like a leaf."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_y3_callback_02",
+     "text": "Sir, is 'Ban sani ba' an answer? Only for me, children."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_y3_callback_03",
+     "text": "The knee went. The left boot was first. This is physics."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_y3_callback_04",
+     "text": "Crutches. Two new legs. Neither one can shoot."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_y3_callback_05",
+     "text": "Who lifted me up that day? Ban sani ba. Truly."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_y3_callback_06",
+     "text": "I told the children the Cup final. They said I was handsome."
+    },
+    {
+     "n": 16,
+     "id": "bk_jega_y3_callback_07",
+     "text": "I cannot play, so I shouted. In two languages. We won."
+    },
+    {
+     "n": 17,
+     "id": "bk_jega_y3_callback_08",
+     "text": "A whistle. Nobody gave it to me. I took responsibility."
+    },
+    {
+     "n": 18,
+     "id": "bk_jega_y3_callback_09",
+     "text": "Thirty-one permission slips. All signed. I'm a professional."
+    },
+    {
+     "n": 19,
+     "id": "bk_jega_y3_callback_10",
+     "text": "I told her. Everything. In Hausa. She stayed."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Jega - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y4_win_01",
+     "text": "Seventieth minute. Twenty minutes is enough for a legend."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y4_tease_01",
+     "text": "You're on video every day. Your face is tired, my friend."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y4_compliment_01",
+     "text": "You trained with me every morning. That is a brother."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 4: fame, to yourself",
+   "file": "Jega - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y4_idle_01",
+     "text": "Six months became nine. Toh. Nine is also a number."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y4_idle_02",
+     "text": "Helen made me a sheet. There's a column called 'Excuses'."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y4_idle_03",
+     "text": "Pool at six. Gym at seven. Pain at seven-oh-one."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y4_idle_04",
+     "text": "The pool is the only place I can't argue with Coach Ngozi."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y4_idle_05",
+     "text": "Ten metres jogging today. Ten! Write it down!"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y4_idle_06",
+     "text": "Everybody is famous this year. I'm famous for limping."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_y4_idle_07",
+     "text": "Helen is studying physio. On me. I am the practical."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_y4_idle_08",
+     "text": "Bench today. Bench is also football. Small football."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_y4_night_01",
+     "text": "Knee is quiet tonight. Don't wake it."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_y4_night_02",
+     "text": "Ice on the knee, tea in the hand. Senior life."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_y4_callback_01",
+     "text": "Excuses column: empty. Pain column: I'm not filling it."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_y4_callback_02",
+     "text": "Idan ya tafi, ni wane ne? [If it goes, who am I?] …I asked."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_y4_callback_03",
+     "text": "We sat on the pitch. Then we got up. That's all it needed."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_y4_callback_04",
+     "text": "The right foot. I scored with the RIGHT. Traitor."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_y4_callback_05",
+     "text": "Mun sake! [We went again!] Cup is OURS!"
+    },
+    {
+     "n": 16,
+     "id": "bk_jega_y4_callback_06",
+     "text": "Left boot first still. The right boot just took the credit."
+    },
+    {
+     "n": 17,
+     "id": "bk_jega_y4_callback_07",
+     "text": "Nusaiba for president. I am her security. Unpaid."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Year 5: leaving",
+   "file": "Jega - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y5_bye_01",
+     "text": "Soon I go. But I'll come back for every final. Wallahi."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y5_bye_02",
+     "text": "Sai wani lokaci. [Until another time.] Not goodbye."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Year 5: leaving, to yourself",
+   "file": "Jega - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_y5_idle_01",
+     "text": "Finalist. Me. My mother will cry. Then call everybody."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_y5_idle_02",
+     "text": "An academy wants me. A real one. Kai."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_y5_idle_03",
+     "text": "Project, exams, football. My calendar has no room for breath."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_y5_idle_04",
+     "text": "Primary Four is Primary Six now. They still call me Iroko."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_y5_idle_05",
+     "text": "Freshers ask me the way. I send them the way I came."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_y5_idle_06",
+     "text": "Sannu ba ta hana zuwa. [Going slowly does not stop arriving.]"
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_y5_idle_07",
+     "text": "Dinner night. I have to say something. In public. Kai."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_y5_night_01",
+     "text": "Last year of night training. I'm counting the nights."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_y5_night_02",
+     "text": "Giginya at midnight. I'll miss even the snoring."
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_y5_callback_01",
+     "text": "I signed. After exams. Left boot first is in the contract."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_y5_callback_02",
+     "text": "Mama said don't choose alone. I didn't. You came."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_y5_callback_03",
+     "text": "Clause nine was rude. Nusaiba said. I believe her."
+    },
+    {
+     "n": 13,
+     "id": "bk_jega_y5_callback_04",
+     "text": "Sunanta Helen. [Her name is Helen.] I said it. Out loud."
+    },
+    {
+     "n": 14,
+     "id": "bk_jega_y5_callback_05",
+     "text": "Five years of 'what's her name'. I liked keeping it."
+    },
+    {
+     "n": 15,
+     "id": "bk_jega_y5_callback_06",
+     "text": "I wrote 'Left boot first' on your back. Permanent marker."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "After graduation",
+   "file": "Jega - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_post_idle_01",
+     "text": "Professional now. My first payslip, I framed. Like Mubarak."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_post_idle_02",
+     "text": "I came back to coach Demo on Saturdays. They still shout."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_post_idle_03",
+     "text": "The academy has a gym with air conditioning. I feel guilty."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_post_greet_01",
+     "text": "{{PLAYER_NAME}}! Graduate! Mu je, show me the campus again!"
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_post_greet_02",
+     "text": "Ina kwana, old man! [Good morning!] You still eat garri?"
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_post_callback_01",
+     "text": "Helen says hello. And says I should say it properly. Hello."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_post_callback_02",
+     "text": "I finished the degree. My mother has the photo on every wall."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_post_bye_01",
+     "text": "Next match, you sit front row. Left side. Lucky side."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Special days: term time",
+   "file": "Jega - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_ev_ev_freshers_01",
+     "text": "Freshers! Look at them! We were that lost."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_ev_ev_freshers_02",
+     "text": "Fresher! You play football? Come at five. Bring legs."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_ev_ev_freshers_03",
+     "text": "New faces. New strikers, In sha Allah."
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_ev_ev_exam_01",
+     "text": "Exam week. My boots are resting. My eyes are not."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_ev_ev_exam_02",
+     "text": "Library is full. Somebody brought a mattress. Smart man."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_ev_ev_exam_03",
+     "text": "Human anatomy. Kai. The body has too many bones."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_ev_ev_results_01",
+     "text": "Results are up. You go first. Tell me with your face."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_ev_ev_results_02",
+     "text": "Carry-over? It's only a course that likes me."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_ev_ev_results_03",
+     "text": "I passed! All! Somebody hold me!"
+    },
+    {
+     "n": 10,
+     "id": "bk_jega_ev_ev_allowance_01",
+     "text": "Allowance day! Suya for everybody! …For two people."
+    },
+    {
+     "n": 11,
+     "id": "bk_jega_ev_ev_allowance_02",
+     "text": "Bank queue is longer than a penalty shootout."
+    },
+    {
+     "n": 12,
+     "id": "bk_jega_ev_ev_market_day_01",
+     "text": "Market day. I'm buying socks. Backup socks. Backup-backup."
+    }
+   ]
+  },
+  {
+   "section": "Common 25",
+   "title": "Special days: the big ones",
+   "file": "Jega - Common 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_ev_ev_strike_01",
+     "text": "Strike again? Toh. Football doesn't strike."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_ev_ev_strike_02",
+     "text": "No lecture, no allowance. Only garri and sunshine."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_ev_ev_cup_01",
+     "text": "Vice-Chancellor's Cup week! Drums! Banners! Mu je!"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_ev_ev_cup_02",
+     "text": "Left boot first. Mother's socks. Same seat on the bus."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_ev_ev_cup_03",
+     "text": "Don't talk to me about haircuts until after the final."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_ev_ev_elections_01",
+     "text": "Every candidate promised light. NEPA is laughing."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_ev_ev_elections_02",
+     "text": "Elections week. I vote for whoever fixes the pitch."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_ev_ev_convocation_01",
+     "text": "Convocation. One day that will be us. In sha Allah."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_ev_ev_convocation_02",
+     "text": "Gowns everywhere. Mine, I'll wear left sleeve first."
+    }
+   ]
+  },
+  {
+   "section": "Common 26",
+   "title": "Special days: seasons and holidays",
+   "file": "Jega - Common 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_jega_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem! Iftar at the mosque grounds, come."
+    },
+    {
+     "n": 2,
+     "id": "bk_jega_ev_ev_ramadan_02",
+     "text": "Training after iftar this month. Coach agreed. Barely."
+    },
+    {
+     "n": 3,
+     "id": "bk_jega_ev_ev_ramadan_03",
+     "text": "Barka da Sallah! [Happy Sallah!] Come and eat. Ka ci! [Eat!]"
+    },
+    {
+     "n": 4,
+     "id": "bk_jega_ev_ev_christmas_01",
+     "text": "Merry Christmas! Pastor Sam's choir sounds like a cup final."
+    },
+    {
+     "n": 5,
+     "id": "bk_jega_ev_ev_christmas_02",
+     "text": "Half the hostel went home. The other half is eating rice."
+    },
+    {
+     "n": 6,
+     "id": "bk_jega_ev_ev_valentine_01",
+     "text": "Valentine's. I bought flowers. The wrong ones. Again."
+    },
+    {
+     "n": 7,
+     "id": "bk_jega_ev_ev_valentine_02",
+     "text": "Red everything. Even the suya man has a red cap."
+    },
+    {
+     "n": 8,
+     "id": "bk_jega_ev_ev_harmattan_01",
+     "text": "Harmattan! My lips have become sandpaper."
+    },
+    {
+     "n": 9,
+     "id": "bk_jega_ev_ev_harmattan_02",
+     "text": "Dust everywhere. The ball comes back brown."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

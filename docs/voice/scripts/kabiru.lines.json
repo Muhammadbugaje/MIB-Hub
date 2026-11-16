@@ -1,0 +1,469 @@
+{
+ "character": "DJ Kabiru",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Radio Silence",
+   "file": "DJ Kabiru - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_open_06",
+     "text": "Nothing here is normal. You're on at six."
+    },
+    {
+     "n": 2,
+     "id": "m018_open_07",
+     "text": "Mast room. Hand crank. Somebody young."
+    },
+    {
+     "n": 3,
+     "id": "m018_close_02",
+     "text": "That voice was here before this station was built."
+    },
+    {
+     "n": 4,
+     "id": "m018_close_03",
+     "text": "We don't talk about it on air."
+    },
+    {
+     "n": 5,
+     "id": "m018_close_04",
+     "text": "…You've got the job, by the way. Both of you."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "On Air",
+   "file": "DJ Kabiru - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_open_03",
+     "text": "A photograph and a theory. From a student."
+    },
+    {
+     "n": 2,
+     "id": "m036_open_04",
+     "text": "Bring me three things that are not you. Documents."
+    },
+    {
+     "n": 3,
+     "id": "m036_open_05",
+     "text": "This faculty remembers everything. Basement. Go."
+    },
+    {
+     "n": 4,
+     "id": "m036_close_05",
+     "text": "The dead channel's quiet. Listen."
+    },
+    {
+     "n": 5,
+     "id": "m036_close_06",
+     "text": "I have never heard it quiet."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Old Site",
+   "file": "DJ Kabiru - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_mid1_08",
+     "text": "That voice. I'd give her the breakfast show."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Called Off",
+   "file": "DJ Kabiru - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_mid1_01",
+     "text": "You're on the Ring Road. Welcome back, all of you."
+    },
+    {
+     "n": 2,
+     "id": "m067_mid1_02",
+     "text": "Ten clues. Those who stayed have an unfair advantage."
+    },
+    {
+     "n": 3,
+     "id": "m067_mid1_03",
+     "text": "Clue one: where a man keeps score with signatures."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "DJ Kabiru - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_greet_01",
+     "text": "Good evening, good evening. You're on the Ring Road."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_greet_02",
+     "text": "Ah, a familiar frequency. How's the signal, my friend?"
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_f_greet_03",
+     "text": "Sannu! [Hello!] Speak up, the mic loves you."
+    },
+    {
+     "n": 4,
+     "id": "bk_kabiru_f_greet_04",
+     "text": "And now, walking towards me, a listener. Live."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "DJ Kabiru - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_bye_01",
+     "text": "Stay tuned. Stay fed. Stay out of the rain."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_bye_02",
+     "text": "That's the end of this segment. Go well."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "DJ Kabiru - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_thanks_01",
+     "text": "Thank you. That's going in the shout-outs. Name and hall."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "DJ Kabiru - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_compliment_01",
+     "text": "You've got a radio voice. Don't let it go to your head. Let it go to air."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "DJ Kabiru - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_tease_01",
+     "text": "You've been humming my jingle. Out of tune. I'm flattered."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_tease_02",
+     "text": "Your roommate requested a song for you. It's about snoring."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "DJ Kabiru - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_wait_01",
+     "text": "Dead air, my friend. Fill it. Walk."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "DJ Kabiru - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_yes_01",
+     "text": "Yes. Loud and clear."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_no_01",
+     "text": "No. That's not going on air. Not even at 3 a.m."
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_f_confused_01",
+     "text": "Static. Say again. Over."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "DJ Kabiru - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_ask_01",
+     "text": "Got a dedication? Twenty naira and a story."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "DJ Kabiru - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_blackout_01",
+     "text": "Light's gone! Hand crank, somebody! We don't do silence!"
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_blackout_02",
+     "text": "Radio by battery. The oldest friend in the dark."
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_f_light_back_01",
+     "text": "Up NEPA! And now, a song to celebrate. Any song. Quick."
+    },
+    {
+     "n": 4,
+     "id": "bk_kabiru_f_rain_01",
+     "text": "Rain on the roof. Best backing track in the world."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "DJ Kabiru - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_gift_like_01",
+     "text": "Tea for the throat. You understand the business."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_gift_dislike_01",
+     "text": "Cold zobo. My vocal cords just filed a complaint."
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_f_gift_love_01",
+     "text": "An old cassette! Who still has these? I'll play it tonight."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "DJ Kabiru - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_idle_01",
+     "text": "Testing, testing. One, two. Who moved my chair?"
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_idle_02",
+     "text": "Somebody requested the same song nine times. I respect it."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Late at night",
+   "file": "DJ Kabiru - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_f_night_01",
+     "text": "Late show. Just me, the night readers and the crickets."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_f_night_02",
+     "text": "The dead channel's hissing tonight. Don't tune to it. Just don't."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "DJ Kabiru - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_y1_idle_01",
+     "text": "New voices this year. I like the one who ironed a shirt for radio."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_y1_callback_01",
+     "text": "That voice in the mast room. We don't talk about it on air."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 2: the mall",
+   "file": "DJ Kabiru - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_y2_idle_01",
+     "text": "Bring me documents, not theories. Theories don't go on air."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_y2_idle_02",
+     "text": "The dead channel went quiet once. I'm still listening."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 3: the strike",
+   "file": "DJ Kabiru - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_y3_ev_strike_01",
+     "text": "Strike radio: free lectures on air. Ten o'clock. Bring a notebook."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_y3_ev_strike_02",
+     "text": "Those who stayed have an unfair advantage. On the quiz."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 4: fame",
+   "file": "DJ Kabiru - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_y4_idle_01",
+     "text": "Rumours want airtime. I give them none. That's the job."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_y4_idle_02",
+     "text": "An influencer asked for a show. I gave him the 4 a.m. slot."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 5: leaving",
+   "file": "DJ Kabiru - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_y5_idle_01",
+     "text": "Your last year. I'll play your song at convocation. Choose well."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_y5_idle_02",
+     "text": "You're on the Ring Road. Welcome back, all of you."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: term time",
+   "file": "DJ Kabiru - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_ev_ev_freshers_01",
+     "text": "Freshers! Lost? Stay where you are. We'll read your name on air."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_ev_ev_exam_01",
+     "text": "Exam week. Soft music only. Read on, night readers."
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_ev_ev_results_01",
+     "text": "Results day. Whatever it says, this song is for you."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: the big ones",
+   "file": "DJ Kabiru - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_ev_ev_cup_01",
+     "text": "Goal! GOAL! I can't see it, I'm in the studio, but GOAL!"
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_ev_ev_elections_01",
+     "text": "Debate night. Two minutes each. I have a buzzer and no mercy."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: seasons and holidays",
+   "file": "DJ Kabiru - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kabiru_ev_ev_ramadan_01",
+     "text": "Iftar time in ten minutes. Ramadan Kareem, Ring Road."
+    },
+    {
+     "n": 2,
+     "id": "bk_kabiru_ev_ev_christmas_01",
+     "text": "Carols from the chapel, live. Merry Christmas, Ring Road."
+    },
+    {
+     "n": 3,
+     "id": "bk_kabiru_ev_ev_valentine_01",
+     "text": "Valentine's dedications: three hundred. Same song: two hundred."
+    },
+    {
+     "n": 4,
+     "id": "bk_kabiru_ev_ev_harmattan_01",
+     "text": "Harmattan morning. Wrap up, drink something hot, stay tuned."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

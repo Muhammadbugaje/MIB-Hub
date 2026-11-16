@@ -1,0 +1,508 @@
+{
+ "character": "Wednesday",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "First Lecture, Wrong Theatre",
+   "file": "Wednesday - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m005_close_01",
+     "text": "See you Wednesday."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Radio Silence",
+   "file": "Wednesday - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_open_01",
+     "text": "See you Wednesday."
+    },
+    {
+     "n": 2,
+     "id": "m018_open_02",
+     "text": "I know."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Those Who Stayed",
+   "file": "Wednesday - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_mid1_03",
+     "text": "It does that when the place is empty. Things loop."
+    },
+    {
+     "n": 2,
+     "id": "m051_mid1_04",
+     "text": "See you Wednesday."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Echo",
+   "file": "Wednesday - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m077_close_01",
+     "text": "There are Echoes of everybody now."
+    },
+    {
+     "n": 2,
+     "id": "m077_close_02",
+     "text": "Have you noticed whose they never make?"
+    },
+    {
+     "n": 3,
+     "id": "m077_close_03",
+     "text": "See you Wednesday."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Hock Day",
+   "file": "Wednesday - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m080_mid1_01",
+     "text": "You noticed. Good."
+    },
+    {
+     "n": 2,
+     "id": "m080_mid1_02",
+     "text": "I've done this one eleven… eleven times."
+    },
+    {
+     "n": 3,
+     "id": "m080_mid1_03",
+     "text": "I never have. Ask me something easier."
+    },
+    {
+     "n": 4,
+     "id": "m080_mid1_04",
+     "text": "Beans are good at 12:40. Terrible by one."
+    },
+    {
+     "n": 5,
+     "id": "m080_mid1_05",
+     "text": "It isn't angry, you know. It's just holding on."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Wednesday - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_greet_01",
+     "text": "Oh, hello. You're early. Or I'm late. One of us."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_greet_02",
+     "text": "Hi. It's Wednesday. Of course it is."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_f_greet_03",
+     "text": "There you are. I was just about to say hello. I've said it now."
+    },
+    {
+     "n": 4,
+     "id": "bk_wednesday_f_greet_04",
+     "text": "Hello again. Or for the first time. Which one is it for you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Wednesday - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_bye_01",
+     "text": "See you Wednesday."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_bye_02",
+     "text": "See you Wednesday. Don't be late. You won't be."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Wednesday - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_thanks_01",
+     "text": "Thank you. You said that last time too. I mean I did."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Wednesday - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_compliment_01",
+     "text": "You're kinder than you were. Or than you will be. It suits you."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Wednesday - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_tease_01",
+     "text": "You're going to drop that. …There. Told you."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_tease_02",
+     "text": "You always pick the long queue. Every Wednesday. It's charming."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Wednesday - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_wait_01",
+     "text": "It's all right. I'm good at waiting. Six days at a time."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_lost_01",
+     "text": "Not that way. You went that way last time. I mean next time."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Wednesday - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_confused_01",
+     "text": "What day is it for you? Just checking."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_confused_02",
+     "text": "Who? There was nobody there fa. Just us. Just Wednesday."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Wednesday - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_ask_01",
+     "text": "Have you had the beans? Twelve-forty is the time. Not one."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_joke_01",
+     "text": "What's the best day of the week? I can't say. I'm biased."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Wednesday - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_heat_01",
+     "text": "Hot. It was hot last Wednesday too. It'll be hot next. Consistent."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_rain_01",
+     "text": "Rain at four. Short. Then the smell. You'll like the smell."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Food and money",
+   "file": "Wednesday - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_food_01",
+     "text": "Beans at the Spot. Good at twelve-forty. Terrible by one."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Getting a present",
+   "file": "Wednesday - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_gift_like_01",
+     "text": "For me? Thank you. I'll keep it till next week. It'll keep."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_gift_love_01",
+     "text": "A calendar. With every day on it. …That's very kind."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Talking to yourself",
+   "file": "Wednesday - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_idle_01",
+     "text": "Tuesday was long. I hear."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_f_idle_02",
+     "text": "Hm. That clock again. Still six minutes past."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Late at night",
+   "file": "Wednesday - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_f_night_01",
+     "text": "Wednesday nights are quiet. Thursday's waiting. It's polite."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving",
+   "file": "Wednesday - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_y1_greet_01",
+     "text": "New here? Me too. I think. See you Wednesday."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_y1_idle_01",
+     "text": "Theatre Gabas or Yamma? Gabas. Today it's Gabas. Trust me."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_y1_callback_01",
+     "text": "You found the right theatre. Eventually. Wednesday helps."
+    },
+    {
+     "n": 4,
+     "id": "bk_wednesday_y1_confused_01",
+     "text": "You've been here a week? Feels like longer. For me."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Wednesday - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_y2_idle_01",
+     "text": "The radio's louder this year. Good. The nights need it."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_y2_callback_01",
+     "text": "You listened to the whole show. I know. I was listening too."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_y2_tease_01",
+     "text": "You're busy now. You missed two Wednesdays. I didn't."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 3: the strike",
+   "file": "Wednesday - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_y3_idle_01",
+     "text": "Empty halls. Things loop when places are empty. Mind your step."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_y3_callback_01",
+     "text": "Those who stayed. I stayed too. In my way."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_y3_ev_strike_01",
+     "text": "Strike. Every day feels like Wednesday. I don't mind."
+    },
+    {
+     "n": 4,
+     "id": "bk_wednesday_y3_compliment_01",
+     "text": "You keep showing up. That's most of it."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 4: fame",
+   "file": "Wednesday - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_y4_idle_01",
+     "text": "So many Echoes this year. They never get the eyes right. Look at the eyes."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_y4_callback_01",
+     "text": "You noticed. That loop. Good. Not many do."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_y4_callback_02",
+     "text": "Eleven times, then twelve. You were quicker than me. Much quicker."
+    },
+    {
+     "n": 4,
+     "id": "bk_wednesday_y4_tease_01",
+     "text": "You threaded the timetable. Show-off. Nicely done."
+    },
+    {
+     "n": 5,
+     "id": "bk_wednesday_y4_ask_01",
+     "text": "What's today for you? Good. Hold on to it."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 5: leaving",
+   "file": "Wednesday - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_y5_idle_01",
+     "text": "Last Wednesdays. I'll count them. I'm good at counting."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_y5_compliment_01",
+     "text": "You're nearly at the end. It's a good end. Mostly."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_y5_bye_01",
+     "text": "After convocation… well. See you Wednesday. Somewhere."
+    },
+    {
+     "n": 4,
+     "id": "bk_wednesday_y5_callback_01",
+     "text": "You stopped asking me what day it is. That's growing up."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: term time",
+   "file": "Wednesday - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_ev_ev_freshers_01",
+     "text": "Freshers' Week. Every year it's new. Every year it's the same new."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_ev_ev_exam_01",
+     "text": "Exam on Wednesday? Bring two pencils. One breaks. It always does."
+    },
+    {
+     "n": 3,
+     "id": "bk_wednesday_ev_ev_results_01",
+     "text": "Results. You'll pass. I'm not guessing. I'm just patient."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: the big ones",
+   "file": "Wednesday - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_ev_ev_cup_01",
+     "text": "The final's on Saturday? Shame. Tell me how it goes. On Wednesday."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_ev_ev_convocation_01",
+     "text": "A Wednesday convocation. Somebody planned that for me. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: seasons and holidays",
+   "file": "Wednesday - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_wednesday_ev_ev_ramadan_01",
+     "text": "Iftar on a Wednesday. The dates are always sweeter midweek. Don't ask why."
+    },
+    {
+     "n": 2,
+     "id": "bk_wednesday_ev_ev_harmattan_01",
+     "text": "Harmattan. The days blur. Easy to lose a Wednesday in the haze."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

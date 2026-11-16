@@ -1,0 +1,2832 @@
+{
+ "character": "The Fresher",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "The Fresher - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_open_p01",
+     "text": "…My biscuits."
+    },
+    {
+     "n": 2,
+     "id": "m001_mid1_p01",
+     "text": "…That goat is looking at me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Queue Theory",
+   "file": "The Fresher - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m002_open_p01",
+     "text": "…Thank you?"
+    },
+    {
+     "n": 2,
+     "id": "m002_mid1_p01",
+     "text": "How do you know my name?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Belle First",
+   "file": "The Fresher - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m003_open_p01",
+     "text": "Will you help?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Matric Fit",
+   "file": "The Fresher - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_open_p01",
+     "text": "My gown?"
+    },
+    {
+     "n": 2,
+     "id": "m004_open_p02",
+     "text": "Today is Friday."
+    },
+    {
+     "n": 3,
+     "id": "m004_close_p01",
+     "text": "Who's that? Back row."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "First Lecture, Wrong Theatre",
+   "file": "The Fresher - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m005_open_p01",
+     "text": "…A kind of cake?"
+    },
+    {
+     "n": 2,
+     "id": "m005_open_p02",
+     "text": "Wrong theatre."
+    },
+    {
+     "n": 3,
+     "id": "m005_mid1_p01",
+     "text": "…No."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Mai Shayi Knows",
+   "file": "The Fresher - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_open_p01",
+     "text": "And the Maker?"
+    },
+    {
+     "n": 2,
+     "id": "m006_mid1_p01",
+     "text": "Did you write this?"
+    },
+    {
+     "n": 3,
+     "id": "m006_close_p01",
+     "text": "Nothing. …I think."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Left Boot First",
+   "file": "The Fresher - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_mid1_p01",
+     "text": "Why 'Sheikh'?"
+    },
+    {
+     "n": 2,
+     "id": "m008_close_p01",
+     "text": "What's her name?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Doctor's Orders",
+   "file": "The Fresher - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m009_open_p01",
+     "text": "You're bleeding."
+    },
+    {
+     "n": 2,
+     "id": "m009_close_p01",
+     "text": "Sorry, Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "The Plug",
+   "file": "The Fresher - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m010_open_p01",
+     "text": "It's a locker."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Test Week, One Lamp",
+   "file": "The Fresher - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_mid1_p01",
+     "text": "No. No no no."
+    },
+    {
+     "n": 2,
+     "id": "m011_close_p01",
+     "text": "Who's that? Behind me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Count Entropy",
+   "file": "The Fresher - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_open_p01",
+     "text": "There are hundreds."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Results Day",
+   "file": "The Fresher - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m013_open_p01",
+     "text": "We move."
+    },
+    {
+     "n": 2,
+     "id": "m013_mid1_p01",
+     "text": "Yes, sir."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Sly's Last Stand",
+   "file": "The Fresher - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_close_p01",
+     "text": "Same time next week?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Baba Dam's Pier",
+   "file": "The Fresher - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m015_mid1_p01",
+     "text": "What's that? On the cliff."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Keke Grand Prix",
+   "file": "The Fresher - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m017_open_p01",
+     "text": "…Is this the test?"
+    },
+    {
+     "n": 2,
+     "id": "m017_close_p01",
+     "text": "And nine?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Radio Silence",
+   "file": "The Fresher - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_open_p01",
+     "text": "It IS Wednesday."
+    },
+    {
+     "n": 2,
+     "id": "m018_mid1_p01",
+     "text": "And now the weather. Dust."
+    },
+    {
+     "n": 3,
+     "id": "m018_close_p01",
+     "text": "Who is she?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "Wingman",
+   "file": "The Fresher - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m021_open_p01",
+     "text": "Just say her name."
+    },
+    {
+     "n": 2,
+     "id": "m021_mid1_p01",
+     "text": "A friend. Tall. Behind a tree."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "Everybody",
+   "file": "The Fresher - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m022_close_p01",
+     "text": "Asked by who?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Exam Fever",
+   "file": "The Fresher - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_open_p01",
+     "text": "Read."
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "Convocation Night",
+   "file": "The Fresher - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_open_p01",
+     "text": "Everybody. With me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "Stalite",
+   "file": "The Fresher - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m025_open_p01",
+     "text": "That's my bed."
+    },
+    {
+     "n": 2,
+     "id": "m025_mid1_p01",
+     "text": "There's no sixth floor."
+    },
+    {
+     "n": 3,
+     "id": "m025_close_p01",
+     "text": "Which man?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "Grand Opening",
+   "file": "The Fresher - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_open_p01",
+     "text": "I'll carry it."
+    },
+    {
+     "n": 2,
+     "id": "m026_mid1_p01",
+     "text": "His face is on the torch."
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "Plug and Play",
+   "file": "The Fresher - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m027_open_p01",
+     "text": "We have nothing."
+    },
+    {
+     "n": 2,
+     "id": "m027_close_p01",
+     "text": "…Why are they warm?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "Okada Diploma",
+   "file": "The Fresher - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m028_mid1_p01",
+     "text": "Who is he visiting?"
+    },
+    {
+     "n": 2,
+     "id": "m028_close_p01",
+     "text": "How do you get home in the dark?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 25",
+   "title": "The Mall Never Blinks",
+   "file": "The Fresher - Mission 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m029_open_p01",
+     "text": "Why?"
+    },
+    {
+     "n": 2,
+     "id": "m029_close_p01",
+     "text": "Sir? …Where are you?"
+    },
+    {
+     "n": 3,
+     "id": "m029_close_p02",
+     "text": "Where is he?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 26",
+   "title": "Meter Reader",
+   "file": "The Fresher - Mission 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m030_open_p01",
+     "text": "What bird?"
+    },
+    {
+     "n": 2,
+     "id": "m030_open_p02",
+     "text": "That's a word."
+    },
+    {
+     "n": 3,
+     "id": "m030_mid1_p01",
+     "text": "How do you—"
+    },
+    {
+     "n": 4,
+     "id": "m030_close_p01",
+     "text": "Yes."
+    }
+   ]
+  },
+  {
+   "section": "Mission 27",
+   "title": "Point of Order",
+   "file": "The Fresher - Mission 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m031_open_p01",
+     "text": "I'm an engineer."
+    },
+    {
+     "n": 2,
+     "id": "m031_mid1_p01",
+     "text": "Where people gather."
+    },
+    {
+     "n": 3,
+     "id": "m031_close_p01",
+     "text": "As my learned senior said."
+    }
+   ]
+  },
+  {
+   "section": "Mission 28",
+   "title": "Iron Mama Hums",
+   "file": "The Fresher - Mission 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m032_open_p01",
+     "text": "How much?"
+    },
+    {
+     "n": 2,
+     "id": "m032_mid1_p01",
+     "text": "'Beneath the market, where people gather.'"
+    },
+    {
+     "n": 3,
+     "id": "m032_close_p01",
+     "text": "Sir. There's a second coil. Something's feeding on it."
+    },
+    {
+     "n": 4,
+     "id": "m032_close_p02",
+     "text": "A generator. Huge. Painted yellow."
+    },
+    {
+     "n": 5,
+     "id": "m032_close_p03",
+     "text": "…He sells to everybody."
+    }
+   ]
+  },
+  {
+   "section": "Mission 29",
+   "title": "Faculty Week: Engineering",
+   "file": "The Fresher - Mission 29",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_open_p01",
+     "text": "We move."
+    }
+   ]
+  },
+  {
+   "section": "Mission 30",
+   "title": "Test Week Twist",
+   "file": "The Fresher - Mission 30",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_mid1_p01",
+     "text": "Yes, ma."
+    },
+    {
+     "n": 2,
+     "id": "m035_close_p01",
+     "text": "You included Lily."
+    }
+   ]
+  },
+  {
+   "section": "Mission 31",
+   "title": "On Air",
+   "file": "The Fresher - Mission 31",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_open_p01",
+     "text": "From where?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 32",
+   "title": "Scout in the Stands",
+   "file": "The Fresher - Mission 32",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_open_p01",
+     "text": "Socks are socks."
+    },
+    {
+     "n": 2,
+     "id": "m037_close_p01",
+     "text": "He said your name."
+    }
+   ]
+  },
+  {
+   "section": "Mission 33",
+   "title": "Change-Over",
+   "file": "The Fresher - Mission 33",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m038_open_p01",
+     "text": "Sir. I wanted you to see this first."
+    },
+    {
+     "n": 2,
+     "id": "m038_mid1_p01",
+     "text": "…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 34",
+   "title": "New Site Goes Dark",
+   "file": "The Fresher - Mission 34",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_mid1_p01",
+     "text": "…Okay."
+    }
+   ]
+  },
+  {
+   "section": "Mission 35",
+   "title": "Love in the Time of NEPA",
+   "file": "The Fresher - Mission 35",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m040_open_p01",
+     "text": "Sapa has entered the chat."
+    },
+    {
+     "n": 2,
+     "id": "m040_open_p02",
+     "text": "…Which one?"
+    },
+    {
+     "n": 3,
+     "id": "m040_mid1_p01",
+     "text": "I'm broke. Properly. Three hundred naira."
+    }
+   ]
+  },
+  {
+   "section": "Mission 36",
+   "title": "The Second Coil",
+   "file": "The Fresher - Mission 36",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m041_mid1_p01",
+     "text": "He said his sister fed the fish at the dam."
+    }
+   ]
+  },
+  {
+   "section": "Mission 37",
+   "title": "Night Shift",
+   "file": "The Fresher - Mission 37",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m042_open_p01",
+     "text": "…Ten. And a bit."
+    },
+    {
+     "n": 2,
+     "id": "m042_mid1_p01",
+     "text": "Doctor, if I bridge the theatre circuit—"
+    },
+    {
+     "n": 3,
+     "id": "m042_mid1_p02",
+     "text": "Sorry, Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 38",
+   "title": "The Plan",
+   "file": "The Fresher - Mission 38",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_open_p01",
+     "text": "It's a rectangle."
+    },
+    {
+     "n": 2,
+     "id": "m043_mid1_p01",
+     "text": "…That tyre is fine."
+    },
+    {
+     "n": 3,
+     "id": "m043_close_p01",
+     "text": "Why so cheap?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 39",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "The Fresher - Mission 39",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_open_p01",
+     "text": "It turned."
+    },
+    {
+     "n": 2,
+     "id": "m044_close_p01",
+     "text": "Goodnight, sir."
+    }
+   ]
+  },
+  {
+   "section": "Mission 40",
+   "title": "Mubarak's Crash",
+   "file": "The Fresher - Mission 40",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m045_open_p01",
+     "text": "…He sold forty."
+    },
+    {
+     "n": 2,
+     "id": "m045_mid1_p01",
+     "text": "Without your sunglasses."
+    },
+    {
+     "n": 3,
+     "id": "m045_mid1_p02",
+     "text": "Come back. We'll face it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 41",
+   "title": "Two Papers, One Day",
+   "file": "The Fresher - Mission 41",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_open_p01",
+     "text": "You're asking for help."
+    },
+    {
+     "n": 2,
+     "id": "m047_mid1_p01",
+     "text": "You qualified!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 42",
+   "title": "Three Hundred",
+   "file": "The Fresher - Mission 42",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m049_open_p01",
+     "text": "…Me?"
+    },
+    {
+     "n": 2,
+     "id": "m049_close_p01",
+     "text": "Meetings about what, ma?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 43",
+   "title": "Indefinite",
+   "file": "The Fresher - Mission 43",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m050_mid1_p01",
+     "text": "Not travelling?"
+    },
+    {
+     "n": 2,
+     "id": "m050_close_p01",
+     "text": "We move."
+    }
+   ]
+  },
+  {
+   "section": "Mission 44",
+   "title": "Those Who Stayed",
+   "file": "The Fresher - Mission 44",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_open_p01",
+     "text": "Daddy, is everything—"
+    },
+    {
+     "n": 2,
+     "id": "m051_mid1_p01",
+     "text": "You saw it too?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 45",
+   "title": "Garri Economics",
+   "file": "The Fresher - Mission 45",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m052_open_p01",
+     "text": "That's… actually good."
+    }
+   ]
+  },
+  {
+   "section": "Mission 46",
+   "title": "Teacher (Name)",
+   "file": "The Fresher - Mission 46",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m053_open_p01",
+     "text": "…We'll find out."
+    },
+    {
+     "n": 2,
+     "id": "m053_mid1_p01",
+     "text": "Jega. That song."
+    }
+   ]
+  },
+  {
+   "section": "Mission 47",
+   "title": "Farm Hands",
+   "file": "The Fresher - Mission 47",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m054_open_p01",
+     "text": "What time is it?"
+    },
+    {
+     "n": 2,
+     "id": "m054_mid1_p01",
+     "text": "…That goat is looking at me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 48",
+   "title": "Past the Last Streetlight",
+   "file": "The Fresher - Mission 48",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m055_open_p01",
+     "text": "It's brighter than before."
+    },
+    {
+     "n": 2,
+     "id": "m055_mid1_p01",
+     "text": "Kaka. Who is that?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 49",
+   "title": "Empty Halls",
+   "file": "The Fresher - Mission 49",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m056_open_p01",
+     "text": "I sat here by mistake."
+    },
+    {
+     "n": 2,
+     "id": "m056_mid1_p01",
+     "text": "Don't sit. Keep talking."
+    },
+    {
+     "n": 3,
+     "id": "m056_close_p01",
+     "text": "Good shoes."
+    }
+   ]
+  },
+  {
+   "section": "Mission 50",
+   "title": "The Sit-Down",
+   "file": "The Fresher - Mission 50",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_open_p01",
+     "text": "Just sit?"
+    },
+    {
+     "n": 2,
+     "id": "m057_close_p01",
+     "text": "Tomorrow."
+    }
+   ]
+  },
+  {
+   "section": "Mission 51",
+   "title": "Free Clinic",
+   "file": "The Fresher - Mission 51",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m058_open_p01",
+     "text": "Who shouts loudest goes first?"
+    },
+    {
+     "n": 2,
+     "id": "m058_close_p01",
+     "text": "Doctor. Who signs like this?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 52",
+   "title": "Patrol Games",
+   "file": "The Fresher - Mission 52",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m059_open_p01",
+     "text": "Jega. White jersey?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 53",
+   "title": "The Old Site",
+   "file": "The Fresher - Mission 53",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_close_p01",
+     "text": "I'll carry it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 54",
+   "title": "The Maker's Secret",
+   "file": "The Fresher - Mission 54",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m061_open_p01",
+     "text": "We didn't play it."
+    },
+    {
+     "n": 2,
+     "id": "m061_mid2_p01",
+     "text": "There were seven stools."
+    }
+   ]
+  },
+  {
+   "section": "Mission 55",
+   "title": "The Study Group",
+   "file": "The Fresher - Mission 55",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m062_open_p01",
+     "text": "Mine?!"
+    },
+    {
+     "n": 2,
+     "id": "m062_close_p01",
+     "text": "Come in. There's garri."
+    }
+   ]
+  },
+  {
+   "section": "Mission 56",
+   "title": "Injury Time",
+   "file": "The Fresher - Mission 56",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_open_p01",
+     "text": "Does Helen know?"
+    },
+    {
+     "n": 2,
+     "id": "m063_mid1_p01",
+     "text": "Who helped you up?"
+    },
+    {
+     "n": 3,
+     "id": "m063_close_p01",
+     "text": "…He will."
+    }
+   ]
+  },
+  {
+   "section": "Mission 57",
+   "title": "Night Nurse",
+   "file": "The Fresher - Mission 57",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_open_p01",
+     "text": "Can I sit?"
+    },
+    {
+     "n": 2,
+     "id": "m064_close_p01",
+     "text": "The lamp is still on."
+    }
+   ]
+  },
+  {
+   "section": "Mission 58",
+   "title": "Workshop Nights",
+   "file": "The Fresher - Mission 58",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_open_p01",
+     "text": "John Carter, pass the—"
+    },
+    {
+     "n": 2,
+     "id": "m065_close_p01",
+     "text": "Six. And the clock in the middle."
+    }
+   ]
+  },
+  {
+   "section": "Mission 59",
+   "title": "Called Off",
+   "file": "The Fresher - Mission 59",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_open_p01",
+     "text": "Start with the goalkeeper."
+    },
+    {
+     "n": 2,
+     "id": "m067_mid1_p01",
+     "text": "Baba Porter's goal."
+    }
+   ]
+  },
+  {
+   "section": "Mission 60",
+   "title": "Padlock Receipts",
+   "file": "The Fresher - Mission 60",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m068_open_p01",
+     "text": "And his face?"
+    },
+    {
+     "n": 2,
+     "id": "m068_mid2_p01",
+     "text": "They've been sawn, sir."
+    },
+    {
+     "n": 3,
+     "id": "m068_close_p01",
+     "text": "Who is taking minutes?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 61",
+   "title": "The Third Coil Wakes",
+   "file": "The Fresher - Mission 61",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m070_open_p01",
+     "text": "I'll carry it. Slowly."
+    }
+   ]
+  },
+  {
+   "section": "Mission 62",
+   "title": "Wedding at the Quarters",
+   "file": "The Fresher - Mission 62",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m071_open_p01",
+     "text": "Which uncles?"
+    },
+    {
+     "n": 2,
+     "id": "m071_close_p01",
+     "text": "You left the garden."
+    }
+   ]
+  },
+  {
+   "section": "Mission 63",
+   "title": "Lights on the Long Road",
+   "file": "The Fresher - Mission 63",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m072_open_p01",
+     "text": "Sorry, sir."
+    },
+    {
+     "n": 2,
+     "id": "m072_mid1_p01",
+     "text": "Doctor, I think you should—"
+    },
+    {
+     "n": 3,
+     "id": "m072_mid1_p02",
+     "text": "Sorry, Doctor."
+    },
+    {
+     "n": 4,
+     "id": "m072_close_p01",
+     "text": "Who were you talking to?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 64",
+   "title": "IT Letter",
+   "file": "The Fresher - Mission 64",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m073_open_p01",
+     "text": "I brought eight."
+    },
+    {
+     "n": 2,
+     "id": "m073_mid1_p01",
+     "text": "And a friend's. First name Muhammad."
+    }
+   ]
+  },
+  {
+   "section": "Mission 65",
+   "title": "First Day at Work",
+   "file": "The Fresher - Mission 65",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m074_open_p01",
+     "text": "With a broom, sir?"
+    },
+    {
+     "n": 2,
+     "id": "m074_mid1_p01",
+     "text": "…There's no such thing, is there."
+    },
+    {
+     "n": 3,
+     "id": "m074_close_p01",
+     "text": "We'll need you."
+    }
+   ]
+  },
+  {
+   "section": "Mission 66",
+   "title": "Lucky Goes Viral",
+   "file": "The Fresher - Mission 66",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m075_mid1_p01",
+     "text": "Mum, I can explain…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 67",
+   "title": "The Collab",
+   "file": "The Fresher - Mission 67",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m076_open_p01",
+     "text": "…That goat is looking at me."
+    },
+    {
+     "n": 2,
+     "id": "m076_mid1_p01",
+     "text": "You sold tickets? To me?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 68",
+   "title": "Echo",
+   "file": "The Fresher - Mission 68",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m077_open_p01",
+     "text": "It's doing the turn right."
+    },
+    {
+     "n": 2,
+     "id": "m077_mid1_p01",
+     "text": "I wasn't there."
+    },
+    {
+     "n": 3,
+     "id": "m077_close_p01",
+     "text": "Whose?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 69",
+   "title": "Manifesto",
+   "file": "The Fresher - Mission 69",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m079_open_p01",
+     "text": "What's the budget?"
+    },
+    {
+     "n": 2,
+     "id": "m079_mid1_p01",
+     "text": "Minus two from what?"
+    },
+    {
+     "n": 3,
+     "id": "m079_close_p01",
+     "text": "All ten. Even Medicine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 70",
+   "title": "Hock Day",
+   "file": "The Fresher - Mission 70",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m080_open_p01",
+     "text": "…Your birthday. I knew that."
+    },
+    {
+     "n": 2,
+     "id": "m080_mid1_p01",
+     "text": "How do we stop it?"
+    },
+    {
+     "n": 3,
+     "id": "m080_close_p01",
+     "text": "It was a good day."
+    }
+   ]
+  },
+  {
+   "section": "Mission 71",
+   "title": "The Old Eye (Heist 2)",
+   "file": "The Fresher - Mission 71",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_mid1_p01",
+     "text": "Who was the seventh cup for?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 72",
+   "title": "Cancelled",
+   "file": "The Fresher - Mission 72",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m082_open_p01",
+     "text": "It's not me."
+    },
+    {
+     "n": 2,
+     "id": "m082_mid1_p01",
+     "text": "Mum, it isn't…"
+    },
+    {
+     "n": 3,
+     "id": "m082_mid1_p02",
+     "text": "…Not yet."
+    }
+   ]
+  },
+  {
+   "section": "Mission 73",
+   "title": "Proof of Work",
+   "file": "The Fresher - Mission 73",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m083_mid1_p01",
+     "text": "Put it in writing."
+    }
+   ]
+  },
+  {
+   "section": "Mission 74",
+   "title": "Touch Grass",
+   "file": "The Fresher - Mission 74",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m084_open_p01",
+     "text": "I'm fine, Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 75",
+   "title": "Election Day",
+   "file": "The Fresher - Mission 75",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m085_open_p01",
+     "text": "Tab four. I've got you."
+    }
+   ]
+  },
+  {
+   "section": "Mission 76",
+   "title": "Payday",
+   "file": "The Fresher - Mission 76",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m086_open_p01",
+     "text": "It's already spent."
+    },
+    {
+     "n": 2,
+     "id": "m086_mid1_p01",
+     "text": "Dad. I'm sending something home."
+    },
+    {
+     "n": 3,
+     "id": "m086_mid1_p02",
+     "text": "From my work."
+    },
+    {
+     "n": 4,
+     "id": "m086_close_p01",
+     "text": "What's in it?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 77",
+   "title": "Nationals",
+   "file": "The Fresher - Mission 77",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m087_open_p01",
+     "text": "You ironed that already."
+    },
+    {
+     "n": 2,
+     "id": "m087_open_p02",
+     "text": "For you."
+    },
+    {
+     "n": 3,
+     "id": "m087_mid1_p01",
+     "text": "Shamsu."
+    }
+   ]
+  },
+  {
+   "section": "Mission 78",
+   "title": "Comeback",
+   "file": "The Fresher - Mission 78",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_open_p01",
+     "text": "We move."
+    }
+   ]
+  },
+  {
+   "section": "Mission 79",
+   "title": "Cook-Off",
+   "file": "The Fresher - Mission 79",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m089_open_p01",
+     "text": "Yes, ma."
+    },
+    {
+     "n": 2,
+     "id": "m089_open_p02",
+     "text": "Who's in charge of the pots?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 80",
+   "title": "The Eel's Bargain",
+   "file": "The Fresher - Mission 80",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m090_open_p01",
+     "text": "And the big one?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 81",
+   "title": "Final Crit",
+   "file": "The Fresher - Mission 81",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m091_open_p01",
+     "text": "What's first?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 82",
+   "title": "The Mirror",
+   "file": "The Fresher - Mission 82",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m092_open_p01",
+     "text": "…It's doing the turn right."
+    },
+    {
+     "n": 2,
+     "id": "m092_mid1_p01",
+     "text": "I've got you. Up."
+    }
+   ]
+  },
+  {
+   "section": "Mission 83",
+   "title": "Double Booking",
+   "file": "The Fresher - Mission 83",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m093_open_p01",
+     "text": "Whose phone is that?"
+    },
+    {
+     "n": 2,
+     "id": "m093_close_p01",
+     "text": "It's a good pier."
+    }
+   ]
+  },
+  {
+   "section": "Mission 84",
+   "title": "Seoul or Stay",
+   "file": "The Fresher - Mission 84",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m094_open_p01",
+     "text": "No, Doctor."
+    },
+    {
+     "n": 2,
+     "id": "m094_close_p01",
+     "text": "Which one?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 85",
+   "title": "Log Off",
+   "file": "The Fresher - Mission 85",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_open_p01",
+     "text": "…A great deal, ma."
+    },
+    {
+     "n": 2,
+     "id": "m095_close_p01",
+     "text": "You read."
+    }
+   ]
+  },
+  {
+   "section": "Mission 86",
+   "title": "One Left",
+   "file": "The Fresher - Mission 86",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m096_open_p01",
+     "text": "There's a gap."
+    }
+   ]
+  },
+  {
+   "section": "Mission 87",
+   "title": "Finalist",
+   "file": "The Fresher - Mission 87",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m097_open_p01",
+     "text": "Don't take the shortcut."
+    },
+    {
+     "n": 2,
+     "id": "m097_mid1_p01",
+     "text": "…Who?"
+    },
+    {
+     "n": 3,
+     "id": "m097_mid2_p01",
+     "text": "It was you."
+    },
+    {
+     "n": 4,
+     "id": "m097_close_p01",
+     "text": "Then who wrote this? 'Five more.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 88",
+   "title": "The Maker's Notebook",
+   "file": "The Fresher - Mission 88",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m098_open_p01",
+     "text": "I'll bring it back."
+    }
+   ]
+  },
+  {
+   "section": "Mission 89",
+   "title": "Fresher Tax, Reversed",
+   "file": "The Fresher - Mission 89",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m099_open_p01",
+     "text": "What do you need?"
+    },
+    {
+     "n": 2,
+     "id": "m099_close_p01",
+     "text": "Sly is retired."
+    }
+   ]
+  },
+  {
+   "section": "Mission 90",
+   "title": "The Missing Script",
+   "file": "The Fresher - Mission 90",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m100_open_p01",
+     "text": "I carried your bag there."
+    },
+    {
+     "n": 2,
+     "id": "m100_open_p02",
+     "text": "…Me."
+    },
+    {
+     "n": 3,
+     "id": "m100_mid1_p01",
+     "text": "How do you know?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 91",
+   "title": "Sixth Site (Heist 3)",
+   "file": "The Fresher - Mission 91",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m101_open_p01",
+     "text": "We move."
+    },
+    {
+     "n": 2,
+     "id": "m101_mid1_p01",
+     "text": "This one's warm."
+    }
+   ]
+  },
+  {
+   "section": "Mission 92",
+   "title": "Megawatt's Offer",
+   "file": "The Fresher - Mission 92",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m102_open_p01",
+     "text": "That is all?"
+    },
+    {
+     "n": 2,
+     "id": "m102_close_p01",
+     "text": "I remember."
+    }
+   ]
+  },
+  {
+   "section": "Mission 93",
+   "title": "Parts from Everywhere",
+   "file": "The Fresher - Mission 93",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_open_p01",
+     "text": "I'll carry it."
+    },
+    {
+     "n": 2,
+     "id": "m103_mid1_p01",
+     "text": "One million naira?"
+    },
+    {
+     "n": 3,
+     "id": "m103_close_p01",
+     "text": "There are eleven."
+    }
+   ]
+  },
+  {
+   "section": "Mission 94",
+   "title": "Build Week",
+   "file": "The Fresher - Mission 94",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m104_open_p01",
+     "text": "And cut once?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 95",
+   "title": "Failure",
+   "file": "The Fresher - Mission 95",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m105_mid1_p01",
+     "text": "Then what was it?"
+    },
+    {
+     "n": 2,
+     "id": "m105_mid2_p01",
+     "text": "The seventh stool—"
+    },
+    {
+     "n": 3,
+     "id": "m105_close_p01",
+     "text": "All of them."
+    }
+   ]
+  },
+  {
+   "section": "Mission 96",
+   "title": "Everybody, Again",
+   "file": "The Fresher - Mission 96",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_open_p01",
+     "text": "We built it alone. It burned."
+    },
+    {
+     "n": 2,
+     "id": "m106_open_p02",
+     "text": "We need help."
+    }
+   ]
+  },
+  {
+   "section": "Mission 97",
+   "title": "Contract",
+   "file": "The Fresher - Mission 97",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m107_close_p01",
+     "text": "We go again."
+    }
+   ]
+  },
+  {
+   "section": "Mission 98",
+   "title": "The Chancellor's Shadow",
+   "file": "The Fresher - Mission 98",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m108_open_p01",
+     "text": "Baba Porter?"
+    },
+    {
+     "n": 2,
+     "id": "m108_open_p02",
+     "text": "…Not his hand."
+    },
+    {
+     "n": 3,
+     "id": "m108_mid1_p01",
+     "text": "Hey. You all right?"
+    },
+    {
+     "n": 4,
+     "id": "m108_mid2_p01",
+     "text": "How did you know?"
+    },
+    {
+     "n": 5,
+     "id": "m108_mid2_p02",
+     "text": "I know."
+    }
+   ]
+  },
+  {
+   "section": "Mission 99",
+   "title": "Dinner Night",
+   "file": "The Fresher - Mission 99",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m109_open_p01",
+     "text": "…They fit."
+    },
+    {
+     "n": 2,
+     "id": "m109_close_p01",
+     "text": "One more than all."
+    }
+   ]
+  },
+  {
+   "section": "Mission 100",
+   "title": "Project Defence",
+   "file": "The Fresher - Mission 100",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m110_open_p01",
+     "text": "They're lit, sir."
+    },
+    {
+     "n": 2,
+     "id": "m110_mid1_p01",
+     "text": "Let me draw it."
+    },
+    {
+     "n": 3,
+     "id": "m110_close_p01",
+     "text": "Simple."
+    }
+   ]
+  },
+  {
+   "section": "Mission 101",
+   "title": "The Longest Night",
+   "file": "The Fresher - Mission 101",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_open_p01",
+     "text": "The hospital."
+    },
+    {
+     "n": 2,
+     "id": "m111_mid1_p01",
+     "text": "Doctor. Your flight—"
+    },
+    {
+     "n": 3,
+     "id": "m111_mid1_p02",
+     "text": "I'll bring everybody."
+    }
+   ]
+  },
+  {
+   "section": "Mission 102",
+   "title": "Three by Road",
+   "file": "The Fresher - Mission 102",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_open_p01",
+     "text": "Professor. Summary."
+    },
+    {
+     "n": 2,
+     "id": "m112_close_p01",
+     "text": "…I can't tell."
+    }
+   ]
+  },
+  {
+   "section": "Mission 103",
+   "title": "Two by Sky and Water",
+   "file": "The Fresher - Mission 103",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m113_open_p01",
+     "text": "I'll take the roof."
+    },
+    {
+     "n": 2,
+     "id": "m113_mid1_p01",
+     "text": "Tanko. The back stair. Which way?"
+    },
+    {
+     "n": 3,
+     "id": "m113_close_p01",
+     "text": "Sorry, Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 104",
+   "title": "The Ten Seals",
+   "file": "The Fresher - Mission 104",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_open_p01",
+     "text": "We move."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid1_p01",
+     "text": "Always?"
+    },
+    {
+     "n": 3,
+     "id": "m114_close_p01",
+     "text": "It's not lighting."
+    }
+   ]
+  },
+  {
+   "section": "Mission 105",
+   "title": "Chancellor Null",
+   "file": "The Fresher - Mission 105",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_mid1_p01",
+     "text": "{{ROOMIE}}."
+    },
+    {
+     "n": 2,
+     "id": "m115_mid1_p02",
+     "text": "Jega. Shamsu. Nusaiba."
+    },
+    {
+     "n": 3,
+     "id": "m115_mid2_p01",
+     "text": "…I know this hand."
+    },
+    {
+     "n": 4,
+     "id": "m115_close_p01",
+     "text": "You signed."
+    }
+   ]
+  },
+  {
+   "section": "Mission 106",
+   "title": "The Maker's Graduation",
+   "file": "The Fresher - Mission 106",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_close_p01",
+     "text": "I can't read it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 107",
+   "title": "Gown",
+   "file": "The Fresher - Mission 107",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m117_open_p01",
+     "text": "Thank you, sir."
+    },
+    {
+     "n": 2,
+     "id": "m117_mid1_p01",
+     "text": "Fine?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 108",
+   "title": "Convocation",
+   "file": "The Fresher - Mission 108",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_open_p01",
+     "text": "I'm fine."
+    },
+    {
+     "n": 2,
+     "id": "m118_open_p02",
+     "text": "It is now."
+    },
+    {
+     "n": 3,
+     "id": "m118_mid1_p01",
+     "text": "Sorry, Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 109",
+   "title": "Sign-Out",
+   "file": "The Fresher - Mission 109",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_open_p01",
+     "text": "Not for long."
+    },
+    {
+     "n": 2,
+     "id": "m119_open_p02",
+     "text": "As if I could."
+    },
+    {
+     "n": 3,
+     "id": "m119_mid1_p01",
+     "text": "What did you write?"
+    },
+    {
+     "n": 4,
+     "id": "m119_mid2_p01",
+     "text": "I'm leaving tomorrow."
+    },
+    {
+     "n": 5,
+     "id": "m119_close_p01",
+     "text": "…Welcome."
+    }
+   ]
+  },
+  {
+   "section": "Mission 110",
+   "title": "Fresher",
+   "file": "The Fresher - Mission 110",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m120_open_p01",
+     "text": "…Still right."
+    },
+    {
+     "n": 2,
+     "id": "m120_mid1_p01",
+     "text": "Today, I think."
+    },
+    {
+     "n": 3,
+     "id": "m120_mid3_p01",
+     "text": "Straight, then left at the clock."
+    },
+    {
+     "n": 4,
+     "id": "m120_mid3_p02",
+     "text": "Don't take the shortcut."
+    },
+    {
+     "n": 5,
+     "id": "m120_close_p01",
+     "text": "Welcome, fresher."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Fresher - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_greet_01",
+     "text": "Hey."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_greet_02",
+     "text": "Morning!"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_greet_03",
+     "text": "Sannu! [Hello!]"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_greet_04",
+     "text": "How far? [How are you?]"
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_greet_05",
+     "text": "You good?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "The Fresher - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_bye_01",
+     "text": "Later."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_bye_02",
+     "text": "I'm off."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_bye_03",
+     "text": "See you."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_bye_04",
+     "text": "Sai anjima. [See you later.]"
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "The Fresher - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_thanks_01",
+     "text": "Thanks."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_thanks_02",
+     "text": "I owe you one."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_thanks_03",
+     "text": "Na gode. [Thank you.]"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_thanks_04",
+     "text": "You're a lifesaver."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_sorry_01",
+     "text": "Sorry."
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_sorry_02",
+     "text": "My bad."
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_sorry_03",
+     "text": "Sorry, Doctor."
+    },
+    {
+     "n": 8,
+     "id": "bk_player_f_sorry_04",
+     "text": "I'll fix it."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "The Fresher - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_compliment_01",
+     "text": "Nice one."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_compliment_02",
+     "text": "That was clean."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_compliment_03",
+     "text": "You look sharp."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "The Fresher - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_tease_01",
+     "text": "Is that your best?"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_tease_02",
+     "text": "Bold of you."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_tease_03",
+     "text": "Breaking news: you read."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "The Fresher - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_follow_01",
+     "text": "Lead the way."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_follow_02",
+     "text": "Right behind you."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_wait_01",
+     "text": "Wait for me!"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_wait_02",
+     "text": "One minute!"
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_wait_03",
+     "text": "Coming, coming."
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_lost_01",
+     "text": "Where am I?"
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_lost_02",
+     "text": "Wrong theatre again."
+    },
+    {
+     "n": 8,
+     "id": "bk_player_f_lost_03",
+     "text": "This is not the hostel."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "The Fresher - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_yes_01",
+     "text": "Yes."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_yes_02",
+     "text": "Okay."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_yes_03",
+     "text": "We move."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_yes_04",
+     "text": "Deal."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_yes_05",
+     "text": "Sure, why not?"
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_no_01",
+     "text": "No."
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_no_02",
+     "text": "Not today."
+    },
+    {
+     "n": 8,
+     "id": "bk_player_f_no_03",
+     "text": "Absolutely not."
+    },
+    {
+     "n": 9,
+     "id": "bk_player_f_no_04",
+     "text": "A'a. [No.]"
+    },
+    {
+     "n": 10,
+     "id": "bk_player_f_maybe_01",
+     "text": "Maybe."
+    },
+    {
+     "n": 11,
+     "id": "bk_player_f_maybe_02",
+     "text": "Let me think."
+    },
+    {
+     "n": 12,
+     "id": "bk_player_f_maybe_03",
+     "text": "Ask me after food."
+    },
+    {
+     "n": 13,
+     "id": "bk_player_f_confused_01",
+     "text": "Huh?"
+    },
+    {
+     "n": 14,
+     "id": "bk_player_f_confused_02",
+     "text": "Come again?"
+    },
+    {
+     "n": 15,
+     "id": "bk_player_f_confused_03",
+     "text": "Wait, what?"
+    },
+    {
+     "n": 16,
+     "id": "bk_player_f_confused_04",
+     "text": "Sorry, who are you?"
+    },
+    {
+     "n": 17,
+     "id": "bk_player_f_agree_01",
+     "text": "True talk."
+    },
+    {
+     "n": 18,
+     "id": "bk_player_f_agree_02",
+     "text": "Fair."
+    },
+    {
+     "n": 19,
+     "id": "bk_player_f_agree_03",
+     "text": "I'm with you."
+    },
+    {
+     "n": 20,
+     "id": "bk_player_f_refuse_01",
+     "text": "I'll pass."
+    },
+    {
+     "n": 21,
+     "id": "bk_player_f_refuse_02",
+     "text": "Not for that price."
+    },
+    {
+     "n": 22,
+     "id": "bk_player_f_refuse_03",
+     "text": "No way, no how."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "The Fresher - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_joke_01",
+     "text": "I'm not lost. I'm exploring."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_joke_02",
+     "text": "Sapa has entered the chat."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_joke_03",
+     "text": "I only came for the jollof."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_ask_01",
+     "text": "How much?"
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_ask_02",
+     "text": "Who's that?"
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_ask_03",
+     "text": "What happened here?"
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_ask_04",
+     "text": "Where does this queue end?"
+    },
+    {
+     "n": 8,
+     "id": "bk_player_f_ask_05",
+     "text": "Is there food?"
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "The Fresher - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_win_01",
+     "text": "Yes!"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_win_02",
+     "text": "Who's the champion?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_win_03",
+     "text": "Easy. ...Not easy."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_lose_01",
+     "text": "Again."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_lose_02",
+     "text": "Rematch!"
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_lose_03",
+     "text": "That one doesn't count."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "The Fresher - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_hit_01",
+     "text": "Oof!"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_hit_02",
+     "text": "I'm fine! I'm fine."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_hit_03",
+     "text": "Watch it!"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_fall_01",
+     "text": "Floor, my old friend."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_fall_02",
+     "text": "Meant to do that."
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_fall_03",
+     "text": "Ow. Nobody saw that."
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_blackout_01",
+     "text": "NEPA!"
+    },
+    {
+     "n": 8,
+     "id": "bk_player_f_blackout_02",
+     "text": "And the light is gone."
+    },
+    {
+     "n": 9,
+     "id": "bk_player_f_blackout_03",
+     "text": "Phone torch, come out."
+    },
+    {
+     "n": 10,
+     "id": "bk_player_f_light_back_01",
+     "text": "Up NEPA!"
+    },
+    {
+     "n": 11,
+     "id": "bk_player_f_light_back_02",
+     "text": "Light! Charge everything!"
+    },
+    {
+     "n": 12,
+     "id": "bk_player_f_rain_01",
+     "text": "Rain? Now?"
+    },
+    {
+     "n": 13,
+     "id": "bk_player_f_rain_02",
+     "text": "Run!"
+    },
+    {
+     "n": 14,
+     "id": "bk_player_f_heat_01",
+     "text": "This sun is personal."
+    },
+    {
+     "n": 15,
+     "id": "bk_player_f_heat_02",
+     "text": "Water. Please."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "The Fresher - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_food_01",
+     "text": "I'm hungry fa."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_food_02",
+     "text": "Is that suya?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_food_03",
+     "text": "Belle first."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_food_04",
+     "text": "Extra yaji."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_f_money_01",
+     "text": "Too expensive."
+    },
+    {
+     "n": 6,
+     "id": "bk_player_f_money_02",
+     "text": "Last price?"
+    },
+    {
+     "n": 7,
+     "id": "bk_player_f_money_03",
+     "text": "I'll pay you later."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "The Fresher - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_gift_like_01",
+     "text": "For me? Thanks!"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_gift_dislike_01",
+     "text": "Oh. ...Thanks?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_gift_love_01",
+     "text": "I love it!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "The Fresher - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_idle_01",
+     "text": "That goat again."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_idle_02",
+     "text": "Assignment due when?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_f_idle_03",
+     "text": "Where's my roommate with my biscuits?"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_f_idle_04",
+     "text": "Network, please. Just one bar."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "The Fresher - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_night_01",
+     "text": "It's quiet tonight."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_night_02",
+     "text": "Too late to be out."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "The Fresher - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_f_callback_01",
+     "text": "Still not a kind of cake."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_f_callback_02",
+     "text": "Left boot first. Got it."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "The Fresher - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_y1_idle_01",
+     "text": "First week. I've got this."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_y1_ask_01",
+     "text": "Which one is Gabas?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_y1_joke_01",
+     "text": "Matric gown fits. Sort of."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_y1_ev_results_01",
+     "text": "My first results..."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_y1_win_01",
+     "text": "One year down!"
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "The Fresher - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_y2_idle_01",
+     "text": "Second year. New hostel."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_y2_ask_01",
+     "text": "Kwari Mall again?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_y2_joke_01",
+     "text": "I'm in business now. Kind of."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_y2_wait_01",
+     "text": "Two papers, one day."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_y2_win_01",
+     "text": "Survived Year Two."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "The Fresher - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_y3_idle_01",
+     "text": "Strike again?"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_y3_food_01",
+     "text": "Garri for dinner. Again."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_y3_ask_01",
+     "text": "Anyone up for football?"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_y3_confused_01",
+     "text": "When does school resume?"
+    },
+    {
+     "n": 5,
+     "id": "bk_player_y3_joke_01",
+     "text": "Three hundred level of what, exactly?"
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "The Fresher - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_y4_idle_01",
+     "text": "Project's due tomorrow?"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_y4_ask_01",
+     "text": "Who are we voting for?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_y4_joke_01",
+     "text": "Senior now. Act normal."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_y4_night_01",
+     "text": "Hackathon. Sleep is cancelled."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_y4_win_01",
+     "text": "One more year."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "The Fresher - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_y5_idle_01",
+     "text": "Final year. Wow."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_y5_ask_01",
+     "text": "Sign my shirt?"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_y5_thanks_01",
+     "text": "Thanks for everything. Really."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_y5_idle_02",
+     "text": "Where did five years go?"
+    },
+    {
+     "n": 5,
+     "id": "bk_player_y5_bye_01",
+     "text": "I'll miss this place."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "The Fresher - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_ev_ev_freshers_01",
+     "text": "Welcome, freshers!"
+    },
+    {
+     "n": 2,
+     "id": "bk_player_ev_ev_exam_01",
+     "text": "Read. Sleep. Repeat."
+    },
+    {
+     "n": 3,
+     "id": "bk_player_ev_ev_results_01",
+     "text": "Please. Just a pass."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_ev_ev_allowance_01",
+     "text": "Alert! Allowance landed."
+    },
+    {
+     "n": 5,
+     "id": "bk_player_ev_ev_market_day_01",
+     "text": "Last price, please."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "The Fresher - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_ev_ev_strike_01",
+     "text": "Not again."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_ev_ev_cup_01",
+     "text": "Up the faculty!"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_ev_ev_elections_01",
+     "text": "Who's got my vote?"
+    },
+    {
+     "n": 4,
+     "id": "bk_player_ev_ev_convocation_01",
+     "text": "We made it."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "The Fresher - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_player_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem."
+    },
+    {
+     "n": 2,
+     "id": "bk_player_ev_ev_christmas_01",
+     "text": "Merry Christmas!"
+    },
+    {
+     "n": 3,
+     "id": "bk_player_ev_ev_valentine_01",
+     "text": "Just friends. Promise."
+    },
+    {
+     "n": 4,
+     "id": "bk_player_ev_ev_harmattan_01",
+     "text": "Cold. Dusty. Lips cracked."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

@@ -1,0 +1,505 @@
+{
+ "character": "Baba Dam",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Baba Dam's Pier",
+   "file": "Baba Dam - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m015_open_02",
+     "text": "Fish don't hurry. Pier don't either."
+    },
+    {
+     "n": 2,
+     "id": "m015_open_03",
+     "text": "Four planks. You broke one. So: four planks."
+    },
+    {
+     "n": 3,
+     "id": "m015_mid1_01",
+     "text": "A tower. One day."
+    },
+    {
+     "n": 4,
+     "id": "m015_mid1_02",
+     "text": "They brought the stakes when my hair was black."
+    },
+    {
+     "n": 5,
+     "id": "m015_mid1_03",
+     "text": "Then they ran out of wood."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Dam at Midnight",
+   "file": "Baba Dam - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m016_open_01",
+     "text": "Listen."
+    },
+    {
+     "n": 2,
+     "id": "m016_open_03",
+     "text": "Forty years it sang soft. This month, loud."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Touch Grass",
+   "file": "Baba Dam - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m084_open_01",
+     "text": "Phone."
+    },
+    {
+     "n": 2,
+     "id": "m084_open_02",
+     "text": "Fish don't hurry. Today, you also."
+    },
+    {
+     "n": 3,
+     "id": "m084_mid1_01",
+     "text": "His sister."
+    },
+    {
+     "n": 4,
+     "id": "m084_mid1_02",
+     "text": "Ask him nothing."
+    },
+    {
+     "n": 5,
+     "id": "m084_close_03",
+     "text": "Cats don't hurry either. Eat."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Eel's Bargain",
+   "file": "Baba Dam - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m090_close_03",
+     "text": "Look at the fish. Like somebody used to feed them."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Two by Sky and Water",
+   "file": "Baba Dam - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m113_close_01",
+     "text": "She remembers the kilishi."
+    },
+    {
+     "n": 2,
+     "id": "m113_close_02",
+     "text": "Fish don't hurry. But they don't forget."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Baba Dam - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_greet_01",
+     "text": "Fish don't hurry. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_greet_02",
+     "text": "Sannu. [Hello.] Mind the fourth plank."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_f_greet_03",
+     "text": "You. Shoes off. The pier is old."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Baba Dam - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_bye_01",
+     "text": "Go slowly. The road is not a river, but still."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_bye_02",
+     "text": "Go. The fish are shy of talkers."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Baba Dam - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_thanks_01",
+     "text": "Thank the fish."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Teasing",
+   "file": "Baba Dam - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_tease_01",
+     "text": "You cast like you're throwing a phone. Again."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Walking with the player",
+   "file": "Baba Dam - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_wait_01",
+     "text": "Slow? Good. Slower."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Baba Dam - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_no_01",
+     "text": "No. Not today. The water said."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_yes_01",
+     "text": "Yes. Bring bait."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Baba Dam - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_joke_01",
+     "text": "Swimming lesson. Lesson one: float. Lesson two: float."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_joke_02",
+     "text": "You caught a fish. Or the fish caught you. We'll see."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Winning and losing",
+   "file": "Baba Dam - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_win_01",
+     "text": "Big one. Don't shout. The others will hear."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_lose_01",
+     "text": "Gone. Fish don't hurry, but they don't stay either."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Baba Dam - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_rain_01",
+     "text": "Rain on the water. Fish come up to look."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_heat_01",
+     "text": "Hot? Feet in the water. Fish won't mind. Much."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_f_fall_01",
+     "text": "In the water? Float. I told you. Float."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Food and money",
+   "file": "Baba Dam - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_food_01",
+     "text": "Catch it, clean it, fire it. Best meal on campus. No queue."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Getting a present",
+   "file": "Baba Dam - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_gift_like_01",
+     "text": "Hooks. Good ones. Hm."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_gift_dislike_01",
+     "text": "A phone case that floats. My phone does not float. I do not have one."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_f_gift_love_01",
+     "text": "Kilishi. Ah. Some here will be glad of it."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Talking to yourself",
+   "file": "Baba Dam - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_idle_01",
+     "text": "Water is low. The fish are thinking."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_f_idle_02",
+     "text": "Forty years on this pier. It has lost more planks than me."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_f_idle_03",
+     "text": "That tower on the cliff. One day. They ran out of wood."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_dam_f_idle_04",
+     "text": "Listen. …No. Just water today."
+    },
+    {
+     "n": 5,
+     "id": "bk_baba_dam_f_idle_05",
+     "text": "The kingfisher is better than me. I tell nobody."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Late at night",
+   "file": "Baba Dam - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_f_night_01",
+     "text": "No swimming at night. The water belongs to others then."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving",
+   "file": "Baba Dam - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_y1_idle_01",
+     "text": "Four planks. You fixed them. The pier remembers."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_y1_idle_02",
+     "text": "The water hums this month. Loud. Don't swim at the pier."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_y1_callback_01",
+     "text": "You gave dried meat to an eel. She liked you. Bad sign."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Baba Dam - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_y2_idle_01",
+     "text": "The mall has a fountain. Hm. This one is bigger."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_y2_idle_02",
+     "text": "She is bigger this year. The eel. Eats more kilishi than me."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 3: the strike",
+   "file": "Baba Dam - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_y3_idle_01",
+     "text": "Strike. Good. More fish for the ones who stayed."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_y3_idle_02",
+     "text": "Someone is building again on the cliff. One rung. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 4: fame",
+   "file": "Baba Dam - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_y4_idle_01",
+     "text": "The spillway stinks. She is angry. I would be too."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_y4_idle_02",
+     "text": "Phone in the tin. Fish don't hurry. Today you also."
+    },
+    {
+     "n": 3,
+     "id": "bk_baba_dam_y4_callback_01",
+     "text": "She lets you swim past now. That girl talked to her right."
+    },
+    {
+     "n": 4,
+     "id": "bk_baba_dam_y4_callback_02",
+     "text": "That photograph on my boat. Ask him nothing."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 5: leaving",
+   "file": "Baba Dam - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_y5_idle_01",
+     "text": "Last year. Come and fish. The exam will still be there."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_y5_idle_02",
+     "text": "Fish don't hurry. But they don't forget."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "After graduation",
+   "file": "Baba Dam - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_post_idle_01",
+     "text": "He comes at sunset now. Sits. We say nothing. Very good."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_post_idle_02",
+     "text": "The tower has another rung. At this pace, my grandson's son."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: term time",
+   "file": "Baba Dam - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_ev_ev_exam_01",
+     "text": "Exams? Read here. Fish don't talk. Unlike your roommate."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_ev_ev_market_day_01",
+     "text": "Market day. Smoked fish. Early, before Hajiya prices them."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: the big ones",
+   "file": "Baba Dam - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_ev_ev_strike_01",
+     "text": "No lectures? Come. The dam never closed."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: seasons and holidays",
+   "file": "Baba Dam - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_baba_dam_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Fresh fish at sunset. I keep you one."
+    },
+    {
+     "n": 2,
+     "id": "bk_baba_dam_ev_ev_harmattan_01",
+     "text": "Harmattan. The water smokes in the morning. Fish come deep."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

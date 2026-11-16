@@ -1,0 +1,322 @@
+{
+ "character": "The Hospital",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Hospital - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_f_greet_01",
+     "text": "Sannu. [Hello.] Card number? Sit, they'll call you."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_f_greet_02",
+     "text": "Visiting? Two at a time, please. Two."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_f_greet_03",
+     "text": "Good morning. You're here for a visit or a check? Either way, sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Thank-yous and sorries",
+   "file": "The Hospital - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_f_thanks_01",
+     "text": "You're welcome. Rest. That's your only assignment today."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_f_sorry_01",
+     "text": "Sannu fa. [Take heart.] You'll be better soon."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "When something goes wrong",
+   "file": "The Hospital - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_f_blackout_01",
+     "text": "Light gone! Generator, please, now is your moment!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_f_blackout_02",
+     "text": "Torches on. Nobody touch the drips. Calm, calm."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_f_light_back_01",
+     "text": "Light's back. Everybody breathe."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "The Hospital - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_f_idle_01",
+     "text": "Number forty-two! Forty-two! …Has anybody seen forty-two?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_f_idle_02",
+     "text": "The queue is for everybody. Even the impatient."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_f_idle_03",
+     "text": "Bring your card, your folder and your patience. Mostly patience."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hospital_f_idle_04",
+     "text": "His mother brought food for the whole ward. Nobody is complaining."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_hospital_f_idle_05",
+     "text": "Visitors, lower your voices, please. People are healing."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_hospital_f_idle_06",
+     "text": "Sleep under your net, eh? It's not decoration."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_hospital_f_idle_07",
+     "text": "Drink water. Eat proper food. Garri alone is not a diet."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_hospital_f_idle_08",
+     "text": "He says he's fine. He's here, so sit down, Mr. Fine."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_hospital_f_idle_09",
+     "text": "The lab results will be ready by four. Hospital four."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_hospital_f_idle_10",
+     "text": "Wash your hands. Yes, again. Hands forget."
+    },
+    {
+     "n": 11,
+     "id": "bk_pub_hospital_f_idle_11",
+     "text": "Who brought the flask of pap? The whole bench is smelling it. Bless you."
+    },
+    {
+     "n": 12,
+     "id": "bk_pub_hospital_f_idle_12",
+     "text": "She's asleep now. Go and eat something. Then come back."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "The Hospital - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_f_night_01",
+     "text": "Night shift. That bench by the ward is warm again. It always is."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_f_night_02",
+     "text": "Shh. Everybody's sleeping. Even the generator is whispering."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_f_night_03",
+     "text": "The statue in the garden faces this way at night. Funny, eh?"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "The Hospital - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_y1_idle_01",
+     "text": "Blackout again. We stitched a hand by phone torch yesterday."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_y1_idle_02",
+     "text": "Students come in tired, not sick. Eat, sleep, come back."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "The Hospital - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_y2_idle_01",
+     "text": "The mall has three generators. We have one. A brave one."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_y2_idle_02",
+     "text": "They cut our line again. Somebody is selling our light."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "The Hospital - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_y3_idle_01",
+     "text": "Strike. The students who stayed come here to talk. We listen."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_y3_idle_02",
+     "text": "Free clinic today. Bring anybody who's been sitting too still."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_y3_idle_03",
+     "text": "Whatever happens outside, the night nurses are here."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "The Hospital - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_y4_idle_01",
+     "text": "I can't confirm what's in any video. Confidentiality. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_y4_idle_02",
+     "text": "Medicine Week stall: free blood pressure, free advice, free smiles."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "The Hospital - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_y5_idle_01",
+     "text": "An old patient came back to say thank you. Five years later. Made my week."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_y5_idle_02",
+     "text": "Our house officers are graduating. Who will we shout at now?"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "The Hospital - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_ev_ev_freshers_01",
+     "text": "Freshers' medical! Line here, forms there, stop panicking."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_ev_ev_exam_01",
+     "text": "Exam week. No sleep, headaches. Water, food, bed. Not more coffee."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_ev_ev_results_01",
+     "text": "Results day. One fainted, one danced. Both are fine. Sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "The Hospital - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_ev_ev_strike_01",
+     "text": "Strike or not, this ward stays open."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_ev_ev_cup_01",
+     "text": "Football injury? Sit. Ice. The match is over. Let it go."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_ev_ev_elections_01",
+     "text": "Election week. Sore throats from shouting. Honey and warm water."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hospital_ev_ev_convocation_01",
+     "text": "Convocation. Our nurses' children are graduating. The ward is smiling."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "The Hospital - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hospital_ev_ev_ramadan_01",
+     "text": "Fasting and dizzy? Break gently. Water and dates first."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hospital_ev_ev_christmas_01",
+     "text": "Christmas on the ward. The patients chose the colour of the lights."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hospital_ev_ev_valentine_01",
+     "text": "Visitors with flowers. Patients pretending not to be pleased."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hospital_ev_ev_harmattan_01",
+     "text": "Harmattan. Dry eyes, cracked lips, coughs. Drink water. Cover up."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

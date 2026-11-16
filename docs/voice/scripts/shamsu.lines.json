@@ -1,0 +1,2023 @@
+{
+ "character": "Shamsu",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "First Lecture, Wrong Theatre",
+   "file": "Shamsu - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m005_mid1_01",
+     "text": "Simple. A capacitor is a bucket."
+    },
+    {
+     "n": 2,
+     "id": "m005_mid1_02",
+     "text": "A resistor is your uncle. Current is the salary."
+    },
+    {
+     "n": 3,
+     "id": "m005_mid1_03",
+     "text": "Good. Confusion is the first step."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Left Boot First",
+   "file": "Shamsu - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_mid1_01",
+     "text": "Simple. The spin, the wet grass, the angle…"
+    },
+    {
+     "n": 2,
+     "id": "m008_mid1_03",
+     "text": "A goat was eating a sachet. I said something."
+    },
+    {
+     "n": 3,
+     "id": "m008_mid1_04",
+     "text": "I was not preaching. I was ADVISING the goat."
+    },
+    {
+     "n": 4,
+     "id": "m008_mid1_05",
+     "text": "Possibly I did not close the gate."
+    },
+    {
+     "n": 5,
+     "id": "m008_mid1_06",
+     "text": "…Oh. That was you. Sorry. Also, thank you."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Test Week, One Lamp",
+   "file": "Shamsu - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_open_01",
+     "text": "Simple."
+    },
+    {
+     "n": 2,
+     "id": "m011_open_03",
+     "text": "In sha Allah, you will all pass."
+    },
+    {
+     "n": 3,
+     "id": "m011_mid1_05",
+     "text": "{{PLAYER_NAME}}! Who are you talking to?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Count Entropy",
+   "file": "Shamsu - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_mid2_02",
+     "text": "Technically, that is not possible."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "The Vice-Chancellor's Cup",
+   "file": "Shamsu - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m019_mid1_02",
+     "text": "Technically… we have won? I'm sorry. We've won."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Exam Fever",
+   "file": "Shamsu - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_mid1_04",
+     "text": "I was not asleep. I have a diagram."
+    },
+    {
+     "n": 2,
+     "id": "m023_mid1_05",
+     "text": "Technically we are not allowed. Bring a torch."
+    },
+    {
+     "n": 3,
+     "id": "m023_close_04",
+     "text": "There are seven. My diagram has six."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Convocation Night",
+   "file": "Shamsu - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_open_01",
+     "text": "That is too much load. That is all seven feeders."
+    },
+    {
+     "n": 2,
+     "id": "m024_open_02",
+     "text": "That is—"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "The Mall Never Blinks",
+   "file": "Shamsu - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m029_open_03",
+     "text": "Nine days. I have timed every outage."
+    },
+    {
+     "n": 2,
+     "id": "m029_open_04",
+     "text": "Watch the mall when we go dark. Count to three."
+    },
+    {
+     "n": 3,
+     "id": "m029_open_05",
+     "text": "Technically… just watch."
+    },
+    {
+     "n": 4,
+     "id": "m029_mid1_01",
+     "text": "The seventh feeder. Number two."
+    },
+    {
+     "n": 5,
+     "id": "m029_mid1_02",
+     "text": "It is not feeding us. It is feeding FROM us."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Faculty Week: Engineering",
+   "file": "Shamsu - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_mid1_01",
+     "text": "Simple. It senses the cup, it tilts by a function of—"
+    },
+    {
+     "n": 2,
+     "id": "m033_mid1_04",
+     "text": "Technically… we have a team?"
+    },
+    {
+     "n": 3,
+     "id": "m033_close_03",
+     "text": "Yes, sir. It spilled, sir. On the Dean, sir."
+    },
+    {
+     "n": 4,
+     "id": "m033_close_04",
+     "text": "…Next time, sir."
+    },
+    {
+     "n": 5,
+     "id": "m033_close_05",
+     "text": "He said, 'There is always a first.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Shamsu - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_mid1_01",
+     "text": "Sequential. Which is worse than simple. But done."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Two Papers, One Day",
+   "file": "Shamsu - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_open_01",
+     "text": "The qualifier is today. Eleven. They moved it."
+    },
+    {
+     "n": 2,
+     "id": "m047_open_02",
+     "text": "The paper is at eight. And the arm has seized."
+    },
+    {
+     "n": 3,
+     "id": "m047_open_04",
+     "text": "I can do the paper. I did it in my head, walking."
+    },
+    {
+     "n": 4,
+     "id": "m047_open_05",
+     "text": "Technically I require a second pair of hands."
+    },
+    {
+     "n": 5,
+     "id": "m047_open_06",
+     "text": "Is that what this is? I did not know the form."
+    },
+    {
+     "n": 6,
+     "id": "m047_mid1_05",
+     "text": "Second."
+    },
+    {
+     "n": 7,
+     "id": "m047_mid1_06",
+     "text": "Yes. …Yes. I must phone my father."
+    },
+    {
+     "n": 8,
+     "id": "m047_close_01",
+     "text": "{{PLAYER_NAME}}. I need to tell you something."
+    },
+    {
+     "n": 9,
+     "id": "m047_close_02",
+     "text": "I have needed to for a whole semester. I have counted."
+    },
+    {
+     "n": 10,
+     "id": "m047_close_03",
+     "text": "When Dr. Khadija called you in. Before that."
+    },
+    {
+     "n": 11,
+     "id": "m047_close_04",
+     "text": "She asked me—"
+    },
+    {
+     "n": 12,
+     "id": "m047_close_07",
+     "text": "After. After the exams. In sha Allah."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Three Hundred",
+   "file": "Shamsu - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m049_open_02",
+     "text": "Simple. You are old now. Sit. I saved your seat."
+    },
+    {
+     "n": 2,
+     "id": "m049_mid1_01",
+     "text": "The panel is a farmer. The battery is a barn."
+    },
+    {
+     "n": 3,
+     "id": "m049_mid1_02",
+     "text": "The controller is the mother who says no."
+    },
+    {
+     "n": 4,
+     "id": "m049_mid1_04",
+     "text": "Last year, in the matter of the basement, I should…"
+    },
+    {
+     "n": 5,
+     "id": "m049_mid1_05",
+     "text": "…mention that the controller needs a diode."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "The Old Site",
+   "file": "Shamsu - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_open_02",
+     "text": "It is transmitting. To nobody. Twice a day."
+    },
+    {
+     "n": 2,
+     "id": "m060_mid1_06",
+     "text": "Four. We already hold four."
+    },
+    {
+     "n": 3,
+     "id": "m060_mid1_07",
+     "text": "It was never engineering. It was a visiting problem."
+    },
+    {
+     "n": 4,
+     "id": "m060_close_01",
+     "text": "It doesn't say 'not you'."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "The Maker's Secret",
+   "file": "Shamsu - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m061_open_03",
+     "text": "It is tested, sir. Twice. Technically three times."
+    },
+    {
+     "n": 2,
+     "id": "m061_close_02",
+     "text": "Who are you all staring at?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "The Study Group",
+   "file": "Shamsu - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m062_open_01",
+     "text": "Simple. One lamp, one board, one semester. We begin."
+    },
+    {
+     "n": 2,
+     "id": "m062_open_03",
+     "text": "Technically, June. Sit."
+    },
+    {
+     "n": 3,
+     "id": "m062_open_05",
+     "text": "{{PLAYER_NAME}}. Section two is yours. At seven."
+    },
+    {
+     "n": 4,
+     "id": "m062_mid1_01",
+     "text": "Before you go. One thing nobody knows."
+    },
+    {
+     "n": 5,
+     "id": "m062_mid1_02",
+     "text": "First year. I failed a course. An F. A carry-over."
+    },
+    {
+     "n": 6,
+     "id": "m062_mid1_03",
+     "text": "You think I don't know how it feels. I teach because I know."
+    },
+    {
+     "n": 7,
+     "id": "m062_mid1_04",
+     "text": "In sha Allah, you will pass."
+    },
+    {
+     "n": 8,
+     "id": "m062_mid2_01",
+     "text": "Forgiveness is like a transformer. You step down the…"
+    },
+    {
+     "n": 9,
+     "id": "m062_mid2_02",
+     "text": "No. It is nothing like a transformer."
+    },
+    {
+     "n": 10,
+     "id": "m062_mid2_03",
+     "text": "Dr. Khadija asked me directly. About the basement."
+    },
+    {
+     "n": 11,
+     "id": "m062_mid2_04",
+     "text": "I cannot lie. I have tried. I practised in a mirror."
+    },
+    {
+     "n": 12,
+     "id": "m062_mid2_05",
+     "text": "I said yes. Then I said nothing to you for a year."
+    },
+    {
+     "n": 13,
+     "id": "m062_mid2_06",
+     "text": "Which is a kind of lie. And I am sorry."
+    },
+    {
+     "n": 14,
+     "id": "m062_mid2_07",
+     "text": "They suspected Firdausi. I let them. That is two."
+    },
+    {
+     "n": 15,
+     "id": "m062_close_01",
+     "text": "Every course we share. Four semesters. Indexed."
+    },
+    {
+     "n": 16,
+     "id": "m062_close_02",
+     "text": "Take them. All of them. I know them already."
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Workshop Nights",
+   "file": "Shamsu - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_mid1_01",
+     "text": "He has been looking for one minute. I timed it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "The Third Coil Wakes",
+   "file": "Shamsu - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m070_mid1_01",
+     "text": "Technically it is a lock. The key is a choir."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "Lights on the Long Road",
+   "file": "Shamsu - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m072_open_01",
+     "text": "Simple. You know this. I wrote it in the margin."
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "The Collab",
+   "file": "Shamsu - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m076_open_02",
+     "text": "Simple. You stand. He flies. Nobody panics."
+    },
+    {
+     "n": 2,
+     "id": "m076_open_03",
+     "text": "Sarki, I am looking at you."
+    },
+    {
+     "n": 3,
+     "id": "m076_open_04",
+     "text": "Technically, he is looking at your history."
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "The Old Eye (Heist 2)",
+   "file": "Shamsu - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_open_05",
+     "text": "Technically… that is a stair."
+    },
+    {
+     "n": 2,
+     "id": "m081_mid1_04",
+     "text": "Four years of 'Which?' You never said!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "Proof of Work",
+   "file": "Shamsu - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m083_open_03",
+     "text": "Simple. An Echo repeats. It never invents."
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "Nationals",
+   "file": "Shamsu - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m087_open_01",
+     "text": "Simple. The first ironing was a draft."
+    },
+    {
+     "n": 2,
+     "id": "m087_open_02",
+     "text": "My father is driving nine hours. For a robot."
+    },
+    {
+     "n": 3,
+     "id": "m087_open_03",
+     "text": "Technically, that is what frightens me."
+    },
+    {
+     "n": 4,
+     "id": "m087_close_05",
+     "text": "Technically, I have been wrong about him…"
+    },
+    {
+     "n": 5,
+     "id": "m087_close_06",
+     "text": "…for twenty-one years."
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "The Maker's Notebook",
+   "file": "Shamsu - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m098_open_03",
+     "text": "Technically, that is a lung disease."
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "Sixth Site (Heist 3)",
+   "file": "Shamsu - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m101_open_04",
+     "text": "Thirty-one years of oil. Simple. It is maintenance."
+    },
+    {
+     "n": 2,
+     "id": "m101_mid1_02",
+     "text": "Technically, 'Hm' was a no. I am learning the dialect."
+    },
+    {
+     "n": 3,
+     "id": "m101_close_02",
+     "text": "The bolts! It is page two hundred and six. Exactly!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 25",
+   "title": "Parts from Everywhere",
+   "file": "Shamsu - Mission 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_open_01",
+     "text": "Ten items. Nobody sells them. Simple. We requisition."
+    },
+    {
+     "n": 2,
+     "id": "m103_open_04",
+     "text": "…Is there a form for greeting?"
+    },
+    {
+     "n": 3,
+     "id": "m103_close_01",
+     "text": "Ten of ten. In sha Allah, it will work."
+    },
+    {
+     "n": 4,
+     "id": "m103_close_03",
+     "text": "Technically, we should open an investigation."
+    }
+   ]
+  },
+  {
+   "section": "Mission 26",
+   "title": "Build Week",
+   "file": "Shamsu - Mission 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m104_open_03",
+     "text": "Simple. Six days. I have made a Gantt chart."
+    },
+    {
+     "n": 2,
+     "id": "m104_mid1_04",
+     "text": "…It is close. It is very close. It is fine."
+    },
+    {
+     "n": 3,
+     "id": "m104_close_01",
+     "text": "Thermal runaway, which technically means—"
+    }
+   ]
+  },
+  {
+   "section": "Mission 27",
+   "title": "Everybody, Again",
+   "file": "Shamsu - Mission 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_mid1_02",
+     "text": "Technically, it is within tolerance—"
+    },
+    {
+     "n": 2,
+     "id": "m106_mid1_03",
+     "text": "…He is right. The child is right. Let me draw it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 28",
+   "title": "The Chancellor's Shadow",
+   "file": "Shamsu - Mission 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m108_mid2_01",
+     "text": "Batteries up: blackout. Bread down: a hard night."
+    },
+    {
+     "n": 2,
+     "id": "m108_mid2_02",
+     "text": "Four years. Technically, it is a perfect forecast."
+    }
+   ]
+  },
+  {
+   "section": "Mission 29",
+   "title": "Project Defence",
+   "file": "Shamsu - Mission 29",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m110_open_05",
+     "text": "In sha Allah, you will pass."
+    },
+    {
+     "n": 2,
+     "id": "m110_close_06",
+     "text": "I knew the answer. So did you."
+    },
+    {
+     "n": 3,
+     "id": "m110_close_07",
+     "text": "I wanted to hear you say it. …This is an allergy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 30",
+   "title": "The Longest Night",
+   "file": "Shamsu - Mission 30",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_open_02",
+     "text": "There is no hum. Technically, there is nothing."
+    }
+   ]
+  },
+  {
+   "section": "Mission 31",
+   "title": "Three by Road",
+   "file": "Shamsu - Mission 31",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_open_02",
+     "text": "Left at the Spot. Technically a soft left. Historically—"
+    },
+    {
+     "n": 2,
+     "id": "m112_open_03",
+     "text": "Left."
+    },
+    {
+     "n": 3,
+     "id": "m112_close_05",
+     "text": "Long, short, long. Who is up there?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 32",
+   "title": "The Ten Seals",
+   "file": "Shamsu - Mission 32",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_open_05",
+     "text": "Ten seals. Ten bearers. Simple."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid2_03",
+     "text": "Engineering. Technically, we should have come last."
+    }
+   ]
+  },
+  {
+   "section": "Mission 33",
+   "title": "Chancellor Null",
+   "file": "Shamsu - Mission 33",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_mid1_03",
+     "text": "Technically, I never left."
+    }
+   ]
+  },
+  {
+   "section": "Mission 34",
+   "title": "The Maker's Graduation",
+   "file": "Shamsu - Mission 34",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_open_03",
+     "text": "Three notes. But the drawing shows four marks—"
+    }
+   ]
+  },
+  {
+   "section": "Mission 35",
+   "title": "Gown",
+   "file": "Shamsu - Mission 35",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m117_open_02",
+     "text": "In sha Allah, you have passed. I checked. Three times."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Shamsu - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_greet_01",
+     "text": "Assalamu alaikum, {{PLAYER_NAME}}. [Peace be upon you.] You slept?"
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_greet_02",
+     "text": "Ah. You. Good. I have a diagram."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_greet_03",
+     "text": "{{PLAYER_NAME}}! Simple question: have you revised?"
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_greet_04",
+     "text": "Ina kwana. [Good morning.] Technically, it is still morning."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_greet_05",
+     "text": "Hello. I was just thinking about you. And about resistors."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_greet_06",
+     "text": "You are early. That is new. I will note it."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Shamsu - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_bye_01",
+     "text": "Ma'a salama. [Go in peace.] In sha Allah, you will pass."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_bye_02",
+     "text": "I must go. Dr. Okonkwo lets me teach the last ten minutes."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_bye_03",
+     "text": "Goodbye. Read chapter four. Then chapter four again."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Shamsu - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_thanks_01",
+     "text": "Jazakallahu khairan. [May God reward you with good.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_thanks_02",
+     "text": "Thank you. I am recording this in my memory. Permanently."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_thanks_03",
+     "text": "Thank you. Technically, I owe you one. I have written it down."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_sorry_01",
+     "text": "I am sorry. I have no excuse. I checked. Twice."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_sorry_02",
+     "text": "Sorry. I explained it again, did I not? I can see your face."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_sorry_03",
+     "text": "My mistake. A rounding error. In my manners."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Shamsu - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_compliment_01",
+     "text": "Your notes are improving. They are almost legible."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_compliment_02",
+     "text": "That was correct. Completely. I am emotional."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_compliment_03",
+     "text": "You asked a good question. Good questions are rare. Like diodes."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_compliment_04",
+     "text": "Your outfit is… symmetrical. That is high praise from me."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Shamsu - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_tease_01",
+     "text": "You call that a circuit? That is a necklace."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_tease_02",
+     "text": "You studied? For how long? Be honest. I will know."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_tease_03",
+     "text": "Your handwriting is like an oscilloscope in a storm."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Shamsu - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_follow_01",
+     "text": "Walk with me. I talk faster when I walk."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_follow_02",
+     "text": "This way. Simple. Then left. Then I will explain the left."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_wait_01",
+     "text": "I have been waiting four minutes. I timed it."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_wait_02",
+     "text": "Technically, you are late. Emotionally, I forgive you."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_lost_01",
+     "text": "Wrong theatre. Gabas is east. The sun is a clue."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_lost_02",
+     "text": "That is the Law faculty. Unless you want to define tort."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Shamsu - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_yes_01",
+     "text": "Yes. Simple."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_yes_02",
+     "text": "Yes, in sha Allah."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_yes_03",
+     "text": "Yes! And let me draw why."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_no_01",
+     "text": "No. I'm sorry. No."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_no_02",
+     "text": "Technically, no."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_no_03",
+     "text": "No. That would be cheating. I don't know how to cheat."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_f_maybe_01",
+     "text": "I cannot say maybe. I don't know yet. That is different."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_f_maybe_02",
+     "text": "Probability: forty percent. Rising."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_f_confused_01",
+     "text": "Who? There was nobody there fa. I counted."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_f_confused_02",
+     "text": "I don't understand. And I understand most things."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_f_confused_03",
+     "text": "Say it again. Slowly. With units."
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_f_agree_01",
+     "text": "Correct. You see? You knew it already."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_f_agree_02",
+     "text": "I agree. And I have three references."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_f_refuse_01",
+     "text": "No. I will not write your assignment. I will help you write it."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_f_refuse_02",
+     "text": "I cannot. My father would know. Somehow, he always knows."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Shamsu - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_joke_01",
+     "text": "Simple. Sapa is a potential difference between wants and wallet."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_joke_02",
+     "text": "A capacitor is a bucket. A resistor is your uncle. You see?"
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_joke_03",
+     "text": "I told a joke once. Then I explained it. It got funnier."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_joke_04",
+     "text": "Technically, garri is a meal. Technically."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_joke_05",
+     "text": "Why did the electron go home? It was charged. …That's the joke."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_ask_01",
+     "text": "Did you eat? Hunger lowers marks. It is documented."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_f_ask_02",
+     "text": "How is your family? Mine called. Three times. Today."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_f_ask_03",
+     "text": "Have you seen my red pen? I have four. I want that one."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Shamsu - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_win_01",
+     "text": "We won! Technically, by a clear margin!"
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_win_02",
+     "text": "Alhamdulillah. [All praise is for God.] Exactly as calculated."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_lose_01",
+     "text": "We lost. I have the data. I will learn from it. Tonight."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_lose_02",
+     "text": "Second. My father will call. I will answer. Eventually."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Shamsu - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_hit_01",
+     "text": "Ah! Momentum. Mass times velocity. Mostly yours."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_hit_02",
+     "text": "I'm fine. My glasses are fine. Thank God for the glasses."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_fall_01",
+     "text": "I have fallen. Gravity is reliable, if nothing else."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_fall_02",
+     "text": "I'm up. Simple. Don't help. …Help a little."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_blackout_01",
+     "text": "NEPA. Average outage: forty-one minutes. Get a torch."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_blackout_02",
+     "text": "Technically, it is not dark. It is merely unlit."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_f_blackout_03",
+     "text": "The lights are gone. Stay together. It is safer in numbers."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_f_light_back_01",
+     "text": "Light! Charge everything. Laptop first, phone second."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_f_light_back_02",
+     "text": "Up NEPA! …I said it. I am part of the community."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_f_rain_01",
+     "text": "Rain. Do not stand near the transformer. I am serious."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_f_rain_02",
+     "text": "Wet socks lower morale by thirty percent. My estimate."
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_f_heat_01",
+     "text": "The heat is a resistor. It is slowing all our currents."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_f_heat_02",
+     "text": "Thirty-nine degrees. My brain is running in safe mode."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Shamsu - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_food_01",
+     "text": "Kosai and pap. Fuel for a tutorial."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_food_02",
+     "text": "Jollof at the Spot. I will not explain jollof. It explains itself."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_money_01",
+     "text": "My account balance is a rounding error."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_money_02",
+     "text": "My allowance is alternating current. It comes and goes."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Shamsu - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_f_gift_like_01",
+     "text": "A pen! Thank you. I will name it after you."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_f_gift_like_02",
+     "text": "This is useful. Useful is the highest category."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_f_gift_dislike_01",
+     "text": "Thank you. I don't know what it is. I will research it."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_f_gift_dislike_02",
+     "text": "It is… decorative. I respect decoration. From far."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_f_gift_love_01",
+     "text": "A scientific calculator? With graphing? Masha Allah! [God has willed it!]"
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_f_gift_love_02",
+     "text": "A new prayer cap. White. Crisp. You remembered Fridays."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Shamsu - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y1_ask_01",
+     "text": "Do you understand Kirchhoff? Be honest. You cannot lie to me."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y1_agree_01",
+     "text": "Yes. And no. Both, technically. Let me draw it."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y1_follow_01",
+     "text": "Tutorial! This way! I reserved the lamp!"
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Shamsu - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y1_idle_01",
+     "text": "Theatre Gabas, front row. Middle seat. Always."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y1_idle_02",
+     "text": "Sheikh Biru. That is what they call me. Because of a goat."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y1_idle_03",
+     "text": "I counted my pens. Seven. That is the right number."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y1_idle_04",
+     "text": "Dr. Okonkwo smiled at my answer. Or the window. I'm not sure."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_y1_idle_05",
+     "text": "Tutorial at seven. One lamp. In sha Allah, all of you will pass."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_y1_idle_06",
+     "text": "My father asks for my position. I say first. He says good."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_y1_idle_07",
+     "text": "Freshers ask me the way. I give them the history of the way."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_y1_night_01",
+     "text": "Reading by phone light. Technically, it counts."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_y1_night_02",
+     "text": "The library closes at ten. My brain does not."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_y1_callback_01",
+     "text": "I was not preaching. I was ADVISING the goat."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_y1_callback_02",
+     "text": "Possibly, I did not close the gate. Possibly."
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_y1_callback_03",
+     "text": "I missed an open goal. The angles were against me."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_y1_callback_04",
+     "text": "Forty students followed my lamp. Like moths. Educated moths."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_y1_callback_05",
+     "text": "One B. Five As and a B. I am still sick about it."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_y1_callback_06",
+     "text": "I saved a penalty explaining the Magnus effect. Accidentally."
+    },
+    {
+     "n": 16,
+     "id": "bk_shamsu_y1_callback_07",
+     "text": "We traced the hospital line. It held. I did not sleep."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Shamsu - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y2_sorry_01",
+     "text": "I… am sorry. For nothing. For being quiet. That is all."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y2_ask_01",
+     "text": "Are you angry with anyone? This semester? You can say."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y2_ask_02",
+     "text": "Dr. Khadija's office. Was it bad? …I'm only asking."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y2_no_01",
+     "text": "No. I am busy. That is true. I checked."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Shamsu - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y2_idle_01",
+     "text": "My robot serves zobo. In theory. In practice, the Dean."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y2_idle_02",
+     "text": "Nine days. I have timed every outage. I keep a chart."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y2_idle_03",
+     "text": "Three-phase power is three goats on a hill. Ask me later."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y2_idle_04",
+     "text": "Engineering week. I ironed my shirt. Twice. Technically three times."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_y2_idle_05",
+     "text": "Test week. Everyone wants me. Nobody wants the explanations."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_y2_idle_06",
+     "text": "Abbas and I built an arm. It waves. Not on purpose."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_y2_idle_07",
+     "text": "The mall is brighter every time we go dark. I have numbers."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_y2_night_01",
+     "text": "Can't sleep. The qualifier, the papers. And other things."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_y2_night_02",
+     "text": "Mai Shayi says I drink tea like it is homework."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_y2_callback_01",
+     "text": "Yes, sir. It spilled, sir. On the Dean, sir."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_y2_callback_02",
+     "text": "The Dean said 'there is always a first.' I wrote it down."
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_y2_callback_03",
+     "text": "The robot said 'In sha Allah, you will pass.' To the Dean."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_y2_callback_04",
+     "text": "Sequential. Which is worse than simple. But done."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_y2_callback_05",
+     "text": "Qualified. Second. …Yes. Yes, I must phone my father."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_y2_callback_06",
+     "text": "The robot rode an okada. It said 'Simple' at every bump."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 3: the strike",
+   "file": "Shamsu - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y3_confused_01",
+     "text": "Who are you all staring at? The gate is empty."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y3_compliment_01",
+     "text": "You taught section two well. Better than me. Don't repeat that."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y3_heat_01",
+     "text": "Strike plus harmattan. Even my patience is dehydrated."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Shamsu - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y3_idle_01",
+     "text": "Strike. No lectures. So I will give some."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y3_idle_02",
+     "text": "Thirty students last night. Sixty tonight. One lamp."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y3_idle_03",
+     "text": "Chalk, a board and a free hour. That is a university."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y3_idle_04",
+     "text": "The strike will not cost anybody a year. Not on my watch."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_y3_idle_05",
+     "text": "Group project: me, you, and Bolaji's thumbs-up."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_y3_idle_06",
+     "text": "The solar panel is a farmer. The battery is a barn."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_y3_idle_07",
+     "text": "My parents ask when school resumes. I say 'technically'."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_y3_night_01",
+     "text": "Six-oh-six on the radio. Three notes. I timed it again."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_y3_night_02",
+     "text": "One lamp, one board, one semester. I'm still here."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_y3_callback_01",
+     "text": "It is transmitting. To nobody. Twice a day."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_y3_callback_02",
+     "text": "It was never engineering. It was a visiting problem."
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_y3_callback_03",
+     "text": "Yes. I failed a course in first year. Now you know."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_y3_callback_04",
+     "text": "You forgave me. I recorded it. Every word."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_y3_callback_05",
+     "text": "I cannot lie. I practised in a mirror. The mirror won."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_y3_callback_06",
+     "text": "Thank you for still sitting beside me."
+    },
+    {
+     "n": 16,
+     "id": "bk_shamsu_y3_callback_07",
+     "text": "Every course we share. Indexed. Take them."
+    },
+    {
+     "n": 17,
+     "id": "bk_shamsu_y3_callback_08",
+     "text": "He looked at the lamp for one minute. I timed it."
+    },
+    {
+     "n": 18,
+     "id": "bk_shamsu_y3_callback_09",
+     "text": "A lock whose key is a choir. Technically elegant."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Shamsu - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y4_win_01",
+     "text": "Second at nationals. Technically, a first loser. I am happy."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y4_lose_01",
+     "text": "The light went in the final. The robot ran on. I didn't."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 4: fame, to yourself",
+   "file": "Shamsu - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y4_idle_01",
+     "text": "Industrial training. I fixed their printer. They hired me twice."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y4_idle_02",
+     "text": "Sheikh-1. Our robot. It pours zobo without spilling. Mostly."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y4_idle_03",
+     "text": "Nationals in our own hall. My father is driving nine hours."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y4_idle_04",
+     "text": "I am Goat Coordinator. It is on my CV."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_y4_idle_05",
+     "text": "An Echo repeats. It never invents. That is how you catch it."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_y4_idle_06",
+     "text": "Everyone is famous this year. I prefer to be correct."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_y4_idle_07",
+     "text": "Nusaiba is running. I have checked her figures. They balance."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_y4_night_01",
+     "text": "Hackathon, hour thirty-one. Basit is asleep on the keyboard."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_y4_night_02",
+     "text": "Ironing my team shirt at four. It is a ritual, not a habit."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_y4_callback_01",
+     "text": "Simple. You stand. He flies. Nobody panics. Sarki panicked."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_y4_callback_02",
+     "text": "Four years of 'Which?' You never said!"
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_y4_callback_03",
+     "text": "We proved the clip was copied. Mathematics is honest."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_y4_callback_04",
+     "text": "Second. My father wants to greet the winner's father."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_y4_callback_05",
+     "text": "I have been wrong about my father. For twenty-one years."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_y4_callback_06",
+     "text": "I froze. You talked me back. Thank you. Again."
+    },
+    {
+     "n": 16,
+     "id": "bk_shamsu_y4_callback_07",
+     "text": "Nusaiba won. I predicted it. With a margin of error."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Year 5: leaving",
+   "file": "Shamsu - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y5_bye_01",
+     "text": "After graduation, in sha Allah, everything. Before, notes."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y5_compliment_01",
+     "text": "You don't need me now. That is the best result I ever got."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Year 5: leaving, to yourself",
+   "file": "Shamsu - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_y5_idle_01",
+     "text": "Final year. Simple. Six days to build. I have a Gantt chart."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_y5_idle_02",
+     "text": "Two thousand turns of wire. I counted in Arabic, then English."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_y5_idle_03",
+     "text": "I'm giving away my notes. All of them. Someone should pass."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_y5_idle_04",
+     "text": "A first-class degree is a promise. I intend to keep it."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_y5_idle_05",
+     "text": "Requisition forms. Ten. Is there a form for greeting?"
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_y5_idle_06",
+     "text": "Thermal runaway. Technically means 'everybody, run away'."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_y5_idle_07",
+     "text": "Freshers call me 'Professor'. I correct them. Not quickly."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_y5_night_01",
+     "text": "The workshop hums at night. Or my ears do."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_y5_night_02",
+     "text": "Tomorrow, the defence. Tonight, the comma in chapter three."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_y5_callback_01",
+     "text": "Technically, 'Hm' was a no. I am learning the dialect."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_y5_callback_02",
+     "text": "Page two hundred and six. Exactly! I knew it!"
+    },
+    {
+     "n": 12,
+     "id": "bk_shamsu_y5_callback_03",
+     "text": "It burned. Nobody was hurt. Bolaji carried me. I was explaining."
+    },
+    {
+     "n": 13,
+     "id": "bk_shamsu_y5_callback_04",
+     "text": "Ten of ten. In sha Allah, it will work."
+    },
+    {
+     "n": 14,
+     "id": "bk_shamsu_y5_callback_05",
+     "text": "I knew the answer. So did you. I wanted to hear you say it."
+    },
+    {
+     "n": 15,
+     "id": "bk_shamsu_y5_callback_06",
+     "text": "Silence at your defence was hard. Physically. An allergy."
+    },
+    {
+     "n": 16,
+     "id": "bk_shamsu_y5_callback_07",
+     "text": "In sha Allah, you have passed. I checked. Three times."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "After graduation",
+   "file": "Shamsu - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_post_idle_01",
+     "text": "First class. My father framed it. Then he framed the frame."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_post_idle_02",
+     "text": "Master's next. In sha Allah. I've already read the reading list."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_post_idle_03",
+     "text": "My notes are in the library now. Somebody underlined them. In pen."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_post_greet_01",
+     "text": "{{PLAYER_NAME}}! Graduate! Simple. Come and teach my tutorial."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_post_greet_02",
+     "text": "You came back! I have a new diagram. It is about you."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_post_callback_01",
+     "text": "The study group still meets. Without the strike. Imagine."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_post_callback_02",
+     "text": "Sheikh-1 serves zobo at weddings now. No Deans harmed."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_post_bye_01",
+     "text": "Go well. In sha Allah, you will pass. Life also has exams."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Special days: term time",
+   "file": "Shamsu - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_ev_ev_freshers_01",
+     "text": "Freshers! Front row, middle seat. Trust me."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_ev_ev_freshers_02",
+     "text": "A fresher asked me for the time. I gave him a lecture. Sorry."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_ev_ev_freshers_03",
+     "text": "Free orientation tutorial. Bring a pen. Bring two."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_ev_ev_exam_01",
+     "text": "Exam week. Sleep is not optional. Zainab said so."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_ev_ev_exam_02",
+     "text": "Technically, I'm not panicking. I'm pre-calculating."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_ev_ev_exam_03",
+     "text": "Sit. Breathe. Read every question twice. In sha Allah, you will pass."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_ev_ev_results_01",
+     "text": "Results. If there is a B, don't tell me. Just pat my shoulder."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_ev_ev_results_02",
+     "text": "You passed! I knew! I had a spreadsheet of you."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_ev_ev_results_03",
+     "text": "Carry-over is not a verdict. It is a second draft."
+    },
+    {
+     "n": 10,
+     "id": "bk_shamsu_ev_ev_allowance_01",
+     "text": "Allowance came. Books first. Suya second. Books third."
+    },
+    {
+     "n": 11,
+     "id": "bk_shamsu_ev_ev_market_day_01",
+     "text": "Market day. I am buying resistors and onions. Separately."
+    }
+   ]
+  },
+  {
+   "section": "Common 25",
+   "title": "Special days: the big ones",
+   "file": "Shamsu - Common 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_ev_ev_strike_01",
+     "text": "Strike again. Free class tonight. Spread the word."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_ev_ev_strike_02",
+     "text": "'Indefinite.' That is not a time unit. I checked."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_ev_ev_cup_01",
+     "text": "Football. Twenty-two people, one ball. Economically odd."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_ev_ev_cup_02",
+     "text": "I am Engineering's goalkeeper. Again. Nobody else volunteered."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_ev_ev_elections_01",
+     "text": "I read every manifesto. Twice. Most are poetry."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_ev_ev_elections_02",
+     "text": "A candidate promised constant light. I asked for his circuit."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_ev_ev_convocation_01",
+     "text": "Convocation. Gowns are just lab coats with ambition."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_ev_ev_convocation_02",
+     "text": "One day, first class. In sha Allah. My father has booked a seat."
+    }
+   ]
+  },
+  {
+   "section": "Common 26",
+   "title": "Special days: seasons and holidays",
+   "file": "Shamsu - Common 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_shamsu_ev_ev_ramadan_01",
+     "text": "Ramadan Mubarak. Iftar at the mosque grounds, then tutorial."
+    },
+    {
+     "n": 2,
+     "id": "bk_shamsu_ev_ev_ramadan_02",
+     "text": "Fasting sharpens the mind. Until about four p.m."
+    },
+    {
+     "n": 3,
+     "id": "bk_shamsu_ev_ev_ramadan_03",
+     "text": "Eid Mubarak! [Blessed Eid!] My kaftan is crisp. Look."
+    },
+    {
+     "n": 4,
+     "id": "bk_shamsu_ev_ev_christmas_01",
+     "text": "Merry Christmas to Pastor Sam and the choir. They sound correct."
+    },
+    {
+     "n": 5,
+     "id": "bk_shamsu_ev_ev_christmas_02",
+     "text": "Half the campus went home. The library is all mine."
+    },
+    {
+     "n": 6,
+     "id": "bk_shamsu_ev_ev_valentine_01",
+     "text": "Valentine's. Romance? After graduation, in sha Allah."
+    },
+    {
+     "n": 7,
+     "id": "bk_shamsu_ev_ev_valentine_02",
+     "text": "Red roses. The colour of overloaded wiring. Charming."
+    },
+    {
+     "n": 8,
+     "id": "bk_shamsu_ev_ev_harmattan_01",
+     "text": "Harmattan. Static on everything. My pens are attracting hair."
+    },
+    {
+     "n": 9,
+     "id": "bk_shamsu_ev_ev_harmattan_02",
+     "text": "Low humidity. High static. I shocked the Dean. Sorry, sir."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

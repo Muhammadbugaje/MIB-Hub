@@ -1,0 +1,324 @@
+{
+ "character": "The Fans",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Scout in the Stands",
+   "file": "The Fans - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_mid2_01",
+     "text": "Pixel! Pixel! Pixel!"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Fans - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_f_greet_01",
+     "text": "Which side are you? Choose fast, the match won't wait."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Winning and losing",
+   "file": "The Fans - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_f_win_01",
+     "text": "We won! WE WON! Engineering forever! Or whoever we are!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_f_lose_01",
+     "text": "We lost. I'm going to sit on this bench and age."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "When something goes wrong",
+   "file": "The Fans - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_f_rain_01",
+     "text": "Rain? Football doesn't stop for rain! …Okay, it stopped."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_f_heat_01",
+     "text": "This sun is playing for the other side."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_f_blackout_01",
+     "text": "Floodlights gone! Sing, so the players can find each other!"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "The Fans - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_f_idle_01",
+     "text": "Referee! Are you watching another match?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_f_idle_02",
+     "text": "GOAL! GOAL! …Offside? Since when?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_f_idle_03",
+     "text": "Groundnut, two cups. One for me, one for the tension."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_fans_f_idle_04",
+     "text": "That striker shoots like the goalpost owes him an apology."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_fans_f_idle_05",
+     "text": "Number nine! Number NINE! …Ah. He's tying his laces."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_fans_f_idle_06",
+     "text": "Hold my drum. I'm going to advise the coach."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_fans_f_idle_07",
+     "text": "Last match I lost my voice. Today I brought a spare."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_fans_f_idle_08",
+     "text": "Drums! Louder! The other side can still hear themselves think!"
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_fans_f_idle_09",
+     "text": "Who is that keeper? He catches like a wall with hands."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_fans_f_idle_10",
+     "text": "Penalty! PENALTY! I didn't see it, but PENALTY!"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "The Fans - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_f_night_01",
+     "text": "Night match under one bulb. The ball is a rumour."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "The Fans - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_y1_idle_01",
+     "text": "VC's Cup! First match! I don't know the rules, but I know the songs."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_y1_idle_02",
+     "text": "That fresher striker with the boots, he's good o."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "The Fans - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_y2_idle_01",
+     "text": "Scouts in the stands! Everybody play like you're on TV!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_y2_idle_02",
+     "text": "They're showing it on the big screen at the mall. I'm loyal. I'm here."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "The Fans - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_y3_idle_01",
+     "text": "Strike, but we still play. Ten a side. Twelve fans. Loud ones."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_y3_idle_02",
+     "text": "No referee in the strike. We're refereeing by shouting."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_y3_idle_03",
+     "text": "Our striker is limping. Ice! Somebody! Pure water!"
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "The Fans - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_y4_idle_01",
+     "text": "Candidates doing laps round the pitch at half-time."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_y4_idle_02",
+     "text": "Somebody filmed the miss and it's everywhere. Leave him. He'll score."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_y4_idle_03",
+     "text": "Our striker is back! Look at him run! Give the physio a medal!"
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "The Fans - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_y5_idle_01",
+     "text": "Last final for the finalists! Make it count, seniors!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_y5_idle_02",
+     "text": "Five years shouting on this stand. My voice is graduating too."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "The Fans - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_ev_ev_freshers_01",
+     "text": "Freshers! Learn the songs first. The rules come later."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_ev_ev_exam_01",
+     "text": "Exam week. No match. My drum is on study leave."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_ev_ev_results_01",
+     "text": "Passed? Come to the pitch. Failed? Also come to the pitch."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_fans_ev_ev_allowance_01",
+     "text": "Allowance day. New boots! Old feet, new boots!"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "The Fans - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_ev_ev_strike_01",
+     "text": "Strike? More time for five-a-side!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_ev_ev_cup_01",
+     "text": "VC's Cup! Saturday, four o'clock! Bring your drum!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_ev_ev_cup_02",
+     "text": "Final! Final! Who has a spare jersey? I'll wear any faculty!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_fans_ev_ev_cup_03",
+     "text": "Groundnut bets! Three cups on Engineering!"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_fans_ev_ev_elections_01",
+     "text": "Candidates sponsoring jerseys. Everybody's a striker this week."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_fans_ev_ev_convocation_01",
+     "text": "Our old captain is graduating! Lift him! Carefully!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "The Fans - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_fans_ev_ev_ramadan_01",
+     "text": "Ramadan match after iftar! Light legs, full hearts."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_fans_ev_ev_christmas_01",
+     "text": "Christmas match: Stayers versus Travellers. Stayers win by default."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_fans_ev_ev_valentine_01",
+     "text": "Valentine's match. Couples on the left. Singles on the right, louder."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_fans_ev_ev_harmattan_01",
+     "text": "Harmattan match. Can't see the ball. Can see the dust."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

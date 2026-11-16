@@ -1,0 +1,511 @@
+{
+ "character": "Tanko",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Mai Shayi Knows",
+   "file": "Tanko - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_close_01",
+     "text": "Riddle. What has six legs and cannot stand?"
+    },
+    {
+     "n": 2,
+     "id": "m006_close_03",
+     "text": "Which?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Six Plaques",
+   "file": "Tanko - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_close_02",
+     "text": "Six legs and cannot stand. You have your answer."
+    },
+    {
+     "n": 2,
+     "id": "m020_close_03",
+     "text": "Now: what has ten mouths and was never fed?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Mall Never Blinks",
+   "file": "Tanko - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m029_close_03",
+     "text": "Which 'he'?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Old Eye (Heist 2)",
+   "file": "Tanko - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_mid1_01",
+     "text": "I was in the class below them."
+    },
+    {
+     "n": 2,
+     "id": "m081_mid1_02",
+     "text": "I carried their tea. Up this stair. Six cups."
+    },
+    {
+     "n": 3,
+     "id": "m081_mid1_03",
+     "text": "Seven, some days."
+    },
+    {
+     "n": 4,
+     "id": "m081_mid1_05",
+     "text": "Nobody asked me a question."
+    },
+    {
+     "n": 5,
+     "id": "m081_mid1_06",
+     "text": "They asked me riddles."
+    },
+    {
+     "n": 6,
+     "id": "m081_mid1_07",
+     "text": "Ah. Now that… is a riddle. Which?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Two by Sky and Water",
+   "file": "Tanko - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m113_mid1_01",
+     "text": "Third door. Up nine. Duck at the beam."
+    },
+    {
+     "n": 2,
+     "id": "m113_mid1_02",
+     "text": "Handle on your left, low. I carried tea there a year."
+    },
+    {
+     "n": 3,
+     "id": "m113_mid1_03",
+     "text": "Go. Riddle later."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Tanko - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_greet_01",
+     "text": "Riddle. What has a gate but no wall? …Me. Hello."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_greet_02",
+     "text": "You came. Which you? The one from yesterday?"
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_greet_03",
+     "text": "Sannu! [Hello!] Answer first, greeting after."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Tanko - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_bye_01",
+     "text": "Go. But which way?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_bye_02",
+     "text": "Riddle for the road: what leaves and stays? …Your shadow."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Tanko - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_thanks_01",
+     "text": "Thanks? Which for?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Walking with the player",
+   "file": "Tanko - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_wait_01",
+     "text": "Slow? Which slow? Snail slow, or Bursary slow?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_lost_01",
+     "text": "Lost? What has many doors and one way out? This campus."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Quick answers",
+   "file": "Tanko - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_yes_01",
+     "text": "Yes. Which yes?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_no_01",
+     "text": "No. But only this one."
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_confused_01",
+     "text": "Which?"
+    },
+    {
+     "n": 4,
+     "id": "bk_tanko_f_confused_02",
+     "text": "Which 'he'? Which 'there'? Which 'nobody'?"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Jokes and questions",
+   "file": "Tanko - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_ask_01",
+     "text": "Riddle. What has ten mouths and was never fed?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_ask_02",
+     "text": "Riddle. What gets wetter the more it dries? Not your towel. Which?"
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_joke_01",
+     "text": "What has hands, a face, and nowhere to go? Look up."
+    },
+    {
+     "n": 4,
+     "id": "bk_tanko_f_joke_02",
+     "text": "What do you lose by saying its name? Silence. Now we've lost it."
+    },
+    {
+     "n": 5,
+     "id": "bk_tanko_f_joke_03",
+     "text": "What is full of holes and still holds water? The sponge. Too easy."
+    },
+    {
+     "n": 6,
+     "id": "bk_tanko_f_joke_04",
+     "text": "What is always in front of you and never seen? Your future. Which?"
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "When something goes wrong",
+   "file": "Tanko - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_blackout_01",
+     "text": "What grows bigger the more you take away? The dark."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_light_back_01",
+     "text": "What returns without travelling? Light. Ha! Which?"
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_rain_01",
+     "text": "What falls and never breaks? Rain. What breaks and never falls? Day."
+    },
+    {
+     "n": 4,
+     "id": "bk_tanko_f_hit_01",
+     "text": "What bumps and does not say sorry? You. Answer me."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Food and money",
+   "file": "Tanko - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_food_01",
+     "text": "What do you eat before you eat it? A promise from Mama Nkechi."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Getting a present",
+   "file": "Tanko - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_gift_like_01",
+     "text": "A gift. What do you give and still keep? Your word. Thank you."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_gift_dislike_01",
+     "text": "What is given and not wanted? …No riddle. Just this."
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_gift_love_01",
+     "text": "Tea. Hot. Hm. For this, you may ask me an easy one."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Talking to yourself",
+   "file": "Tanko - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_idle_01",
+     "text": "What runs all night and never leaves the hostel? The tap."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_f_idle_02",
+     "text": "What queues longest and moves least? The Bursary. Ha."
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_f_idle_03",
+     "text": "What is lit by one and seen by all? …Hm. Not yet."
+    },
+    {
+     "n": 4,
+     "id": "bk_tanko_f_idle_04",
+     "text": "What has a neck and no head? The bottle. Also some lecturers."
+    },
+    {
+     "n": 5,
+     "id": "bk_tanko_f_idle_05",
+     "text": "What can you hold without touching? A promise. Hm."
+    },
+    {
+     "n": 6,
+     "id": "bk_tanko_f_idle_06",
+     "text": "What goes up and never comes down? Your age. And mall prices."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Late at night",
+   "file": "Tanko - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_f_night_01",
+     "text": "What has one eye and watches all night? The moon. Or the porter."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 1: arriving",
+   "file": "Tanko - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_y1_idle_01",
+     "text": "What has six legs and cannot stand? Still no answer? Good."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_y1_idle_02",
+     "text": "What do freshers carry that weighs nothing? Fear. Put it down."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 2: the mall",
+   "file": "Tanko - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_y2_idle_01",
+     "text": "What shines brightest when everything else is dark? Which building?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_y2_idle_02",
+     "text": "What do you plug in and pull out? Your friend's shop. Ha."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 3: the strike",
+   "file": "Tanko - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_y3_idle_01",
+     "text": "What is empty and still full? A hall in a strike."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_y3_idle_02",
+     "text": "What waits in a forest for forty years? …Which forest?"
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 4: fame",
+   "file": "Tanko - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_y4_idle_01",
+     "text": "What wears your face and is not you? Ask the cameras."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_y4_idle_02",
+     "text": "Nobody asked me a question. Only riddles. Still true."
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_y4_callback_01",
+     "text": "Six cups up that stair. Riddle: who drank the seventh? Which?"
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 5: leaving",
+   "file": "Tanko - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_y5_idle_01",
+     "text": "What has ten mouths and was never fed? You know now."
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_y5_idle_02",
+     "text": "What leaves every year and comes back new? Finalists. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "After graduation",
+   "file": "Tanko - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_post_greet_01",
+     "text": "Riddle: what was stopped and now runs? Listen. Which?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_post_idle_01",
+     "text": "What does a riddler do when nobody is lost? Rest. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: term time",
+   "file": "Tanko - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_ev_ev_freshers_01",
+     "text": "New faces! Riddle: who is new every year? Which?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_ev_ev_exam_01",
+     "text": "What has questions and no riddles? Exams. Boring."
+    },
+    {
+     "n": 3,
+     "id": "bk_tanko_ev_ev_results_01",
+     "text": "What is on the board and not in your head? Your grade. Hm."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: the big ones",
+   "file": "Tanko - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_ev_ev_cup_01",
+     "text": "What has one ball and twenty-two owners? Which team?"
+    },
+    {
+     "n": 2,
+     "id": "bk_tanko_ev_ev_elections_01",
+     "text": "What promises everything and owns nothing? A poster."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: seasons and holidays",
+   "file": "Tanko - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tanko_ev_ev_harmattan_01",
+     "text": "What dries everything and is never thirsty? Harmattan."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

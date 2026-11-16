@@ -1,0 +1,1529 @@
+{
+ "character": "Small Parts",
+ "sections": [
+  {
+   "section": "AB",
+   "title": "AB",
+   "file": "Small Parts - AB",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_open_03",
+     "text": "Dome: check. Eyepiece: check. Stair: …unknown."
+    },
+    {
+     "n": 2,
+     "id": "m081_close_02",
+     "text": "Check?"
+    },
+    {
+     "n": 3,
+     "id": "m113_open_03",
+     "text": "Second star, 03:40. Eleven degrees. Checklist is short."
+    },
+    {
+     "n": 4,
+     "id": "m113_mid1_04",
+     "text": "Left. Hold. …Check. Check! CHECK!"
+    },
+    {
+     "n": 5,
+     "id": "m114_mid3_03",
+     "text": "Physical Sciences. Lens cap, seated. Check."
+    }
+   ]
+  },
+  {
+   "section": "Ahmad",
+   "title": "Ahmad",
+   "file": "Small Parts - Ahmad",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_open_03",
+     "text": "Electrical. We'll try not to embarrass you. Correct."
+    }
+   ]
+  },
+  {
+   "section": "Aisha",
+   "title": "Aisha",
+   "file": "Small Parts - Aisha",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_open_03",
+     "text": "I'm counting. I count better than Mama. Don't tell."
+    },
+    {
+     "n": 2,
+     "id": "m071_open_01",
+     "text": "First hour you serve. Then you may be a guest."
+    },
+    {
+     "n": 3,
+     "id": "m071_open_02",
+     "text": "Do not let the uncles at the cooler."
+    },
+    {
+     "n": 4,
+     "id": "m092_mid1_01",
+     "text": "The ledger. Mama will kill me. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Alhaji Needle, the tailor",
+   "title": "Alhaji Needle, the tailor",
+   "file": "Small Parts - Alhaji Needle, the tailor",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_open_01",
+     "text": "Thursday."
+    },
+    {
+     "n": 2,
+     "id": "m004_open_02",
+     "text": "It is. May God bless it."
+    },
+    {
+     "n": 3,
+     "id": "m033_close_01",
+     "text": "Friday. As I said. Thursday, by God's calendar."
+    },
+    {
+     "n": 4,
+     "id": "m071_open_04",
+     "text": "Thursday."
+    },
+    {
+     "n": 5,
+     "id": "m109_open_01",
+     "text": "Your outfit. Today is Saturday. I said Saturday."
+    },
+    {
+     "n": 6,
+     "id": "m109_open_03",
+     "text": "Don't tell people. They will expect it."
+    }
+   ]
+  },
+  {
+   "section": "Aunty Asiya",
+   "title": "Aunty Asiya",
+   "file": "Small Parts - Aunty Asiya",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m041_mid1_01",
+     "text": "He sent you. He never sends anyone."
+    },
+    {
+     "n": 2,
+     "id": "m041_mid1_02",
+     "text": "For when 'someone asked properly'. Nobody ever has."
+    },
+    {
+     "n": 3,
+     "id": "m041_mid1_03",
+     "text": "Uncle has no sister. My father, and him. Two boys."
+    },
+    {
+     "n": 4,
+     "id": "m041_mid1_04",
+     "text": "I'd know."
+    },
+    {
+     "n": 5,
+     "id": "m041_mid1_05",
+     "text": "…I would know. Wouldn't I?"
+    }
+   ]
+  },
+  {
+   "section": "Baba Shuttle",
+   "title": "Baba Shuttle",
+   "file": "Small Parts - Baba Shuttle",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_open_03",
+     "text": "Nineteen years I drive it. Not tonight."
+    },
+    {
+     "n": 2,
+     "id": "m039_open_04",
+     "text": "The culvert. The bend. And the rut like a shadow."
+    }
+   ]
+  },
+  {
+   "section": "Basit",
+   "title": "Basit",
+   "file": "Small Parts - Basit",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m017_mid1_01",
+     "text": "No no no. Run it back! RUN IT BACK!"
+    },
+    {
+     "n": 2,
+     "id": "m083_open_02",
+     "text": "Four minutes. New record. Run it back."
+    },
+    {
+     "n": 3,
+     "id": "m083_close_03",
+     "text": "Forty years of uptime. Respect, Mama."
+    },
+    {
+     "n": 4,
+     "id": "m114_mid3_04",
+     "text": "Computing. No run-backs on this one. First try."
+    }
+   ]
+  },
+  {
+   "section": "The boy in the fourth row",
+   "title": "The boy in the fourth row",
+   "file": "Small Parts - The boy in the fourth row",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m045_open_01",
+     "text": "Ah! AH! My bag is breathing!"
+    }
+   ]
+  },
+  {
+   "section": "Bus conductors (a crowd)",
+   "title": "Bus conductors (a crowd)",
+   "file": "Small Parts - Bus conductors (a crowd)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m050_close_01",
+     "text": "Kano four thousand! Kano with load is a conversation!"
+    }
+   ]
+  },
+  {
+   "section": "Chi-Tech, the phone repairer",
+   "title": "Chi-Tech, the phone repairer",
+   "file": "Small Parts - Chi-Tech, the phone repairer",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m045_open_04",
+     "text": "This one? This is not electronics."
+    },
+    {
+     "n": 2,
+     "id": "m045_open_05",
+     "text": "This is a prayer point."
+    }
+   ]
+  },
+  {
+   "section": "The Chief Medical Director",
+   "title": "The Chief Medical Director",
+   "file": "Small Parts - The Chief Medical Director",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_close_02",
+     "text": "The professor said: when someone keeps your lights on"
+    },
+    {
+     "n": 2,
+     "id": "m064_close_03",
+     "text": "who is not paid to, give them this."
+    },
+    {
+     "n": 3,
+     "id": "m064_close_04",
+     "text": "We assumed she meant an electrician."
+    }
+   ]
+  },
+  {
+   "section": "Chief Megawatt's lawyer",
+   "title": "Chief Megawatt's lawyer",
+   "file": "Small Parts - Chief Megawatt's lawyer",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m046_mid1_05",
+     "text": "These students are burglars, with respect."
+    }
+   ]
+  },
+  {
+   "section": "Clemantine",
+   "title": "Clemantine",
+   "file": "Small Parts - Clemantine",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m040_open_01",
+     "text": "'Forgot It Was Today': five thousand."
+    },
+    {
+     "n": 2,
+     "id": "m040_open_02",
+     "text": "'Said It's Just A Day': see the manager. I am the manager."
+    }
+   ]
+  },
+  {
+   "section": "Comrade Sadiya",
+   "title": "Comrade Sadiya",
+   "file": "Small Parts - Comrade Sadiya",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m050_open_02",
+     "text": "Order! Comrades! One comrade at a time!"
+    },
+    {
+     "n": 2,
+     "id": "m085_mid1_02",
+     "text": "Aleeya. Out. …Fine. Quietly."
+    },
+    {
+     "n": 3,
+     "id": "m085_mid1_03",
+     "text": "That is a seven. I taught the boy who wrote it."
+    },
+    {
+     "n": 4,
+     "id": "m085_mid1_04",
+     "text": "Nusaiba. By eleven."
+    },
+    {
+     "n": 5,
+     "id": "m085_mid1_05",
+     "text": "Turnout is one over the register. …Arithmetic."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Agriculture",
+   "title": "The Dean of Agriculture",
+   "file": "Small Parts - The Dean of Agriculture",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m054_close_02",
+     "text": "It passes from lead ram to lead ram."
+    },
+    {
+     "n": 2,
+     "id": "m054_close_03",
+     "text": "Since the professor's day. We never asked why."
+    },
+    {
+     "n": 3,
+     "id": "m054_close_04",
+     "text": "Take it. He'll sulk. Bring him a new one."
+    },
+    {
+     "n": 4,
+     "id": "m054_close_05",
+     "text": "A loud one."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Arts",
+   "title": "The Dean of Arts",
+   "file": "Small Parts - The Dean of Arts",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_close_01",
+     "text": "I was listening. I always listen to the riddles."
+    },
+    {
+     "n": 2,
+     "id": "m036_close_02",
+     "text": "My wife thinks I am marking."
+    },
+    {
+     "n": 3,
+     "id": "m036_close_03",
+     "text": "'When your people are ready.' It held the turntable."
+    },
+    {
+     "n": 4,
+     "id": "m036_close_04",
+     "text": "Tonight we were ready. Or you were, and we came along."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Computing",
+   "title": "The Dean of Computing",
+   "file": "Small Parts - The Dean of Computing",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m083_open_01",
+     "text": "Forty-eight hours. Build something true."
+    },
+    {
+     "n": 2,
+     "id": "m083_open_05",
+     "text": "I will judge the ethics round myself. Gently."
+    },
+    {
+     "n": 3,
+     "id": "m083_close_01",
+     "text": "It came with the first computer."
+    },
+    {
+     "n": 4,
+     "id": "m083_close_02",
+     "text": "We thought it was the manufacturer's."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Engineering",
+   "title": "The Dean of Engineering",
+   "file": "Small Parts - The Dean of Engineering",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_mid2_05",
+     "text": "My paperweight. And the last Dean's."
+    },
+    {
+     "n": 2,
+     "id": "m024_mid2_06",
+     "text": "'When your people are ready.' I think: tonight."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Environmental Design",
+   "title": "The Dean of Environmental Design",
+   "file": "Small Parts - The Dean of Environmental Design",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m091_close_03",
+     "text": "Our first acquisition. By an unknown student."
+    },
+    {
+     "n": 2,
+     "id": "m091_close_04",
+     "text": "We never knew what it was a study for."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Law",
+   "title": "The Dean of Law",
+   "file": "Small Parts - The Dean of Law",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m046_close_03",
+     "text": "Forty years our judges have banged a gavel on this."
+    },
+    {
+     "n": 2,
+     "id": "m046_close_04",
+     "text": "Then I listened to a riddle on the radio."
+    },
+    {
+     "n": 3,
+     "id": "m046_close_05",
+     "text": "It was never ours to keep. It was ours to earn."
+    },
+    {
+     "n": 4,
+     "id": "m100_mid2_01",
+     "text": "Dr. Dangana. Your account, please."
+    },
+    {
+     "n": 5,
+     "id": "m100_mid2_05",
+     "text": "The mark stands. Eighty-one."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Life Sciences",
+   "title": "The Dean of Life Sciences",
+   "file": "Small Parts - The Dean of Life Sciences",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m090_close_06",
+     "text": "Our trophy. For a prize nobody ever won."
+    },
+    {
+     "n": 2,
+     "id": "m090_close_07",
+     "text": "I think it was for this."
+    }
+   ]
+  },
+  {
+   "section": "The Dean of Physical Sciences",
+   "title": "The Dean of Physical Sciences",
+   "file": "Small Parts - The Dean of Physical Sciences",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m081_close_04",
+     "text": "Forty years we have looked through the hole in this."
+    },
+    {
+     "n": 2,
+     "id": "m081_close_05",
+     "text": "Take it. Somebody should look at the rest."
+    }
+   ]
+  },
+  {
+   "section": "DJ Sugar",
+   "title": "DJ Sugar",
+   "file": "Small Parts - DJ Sugar",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m075_open_03",
+     "text": "Floor is open! Somebody embarrass themselves!"
+    }
+   ]
+  },
+  {
+   "section": "Emeka, king of the okada riders",
+   "title": "Emeka, king of the okada riders",
+   "file": "Small Parts - Emeka, king of the okada riders",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m017_close_01",
+     "text": "The gold exhaust! Don't ask what it came off."
+    },
+    {
+     "n": 2,
+     "id": "m028_open_01",
+     "text": "Her name is Patience. She requires it."
+    },
+    {
+     "n": 3,
+     "id": "m028_open_02",
+     "text": "Front brake is for stopping."
+    },
+    {
+     "n": 4,
+     "id": "m028_open_03",
+     "text": "Back brake is for regretting."
+    },
+    {
+     "n": 5,
+     "id": "m028_open_04",
+     "text": "Throttle is your opinion. Don't have too much."
+    },
+    {
+     "n": 6,
+     "id": "m028_open_05",
+     "text": "Good! Lean! Not that much! INSURANCE!"
+    }
+   ]
+  },
+  {
+   "section": "Engr. Aliyu's daughter",
+   "title": "Engr. Aliyu's daughter",
+   "file": "Small Parts - Engr. Aliyu's daughter",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m038_close_01",
+     "text": "Daddy, your hair."
+    },
+    {
+     "n": 2,
+     "id": "m038_close_02",
+     "text": "Are you the one who is fixing the light?"
+    },
+    {
+     "n": 3,
+     "id": "m038_close_03",
+     "text": "Daddy says it will be all right. Somebody is."
+    }
+   ]
+  },
+  {
+   "section": "An exam invigilator",
+   "title": "An exam invigilator",
+   "file": "Small Parts - An exam invigilator",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m072_open_02",
+     "text": "No talking. Even helpful talking."
+    }
+   ]
+  },
+  {
+   "section": "The far hostels (a crowd, shouting)",
+   "title": "The far hostels (a crowd, shouting)",
+   "file": "Small Parts - The far hostels (a crowd, shouting)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m040_close_02",
+     "text": "Up NEP— …Ahhh. Not NOW."
+    }
+   ]
+  },
+  {
+   "section": "The football scout",
+   "title": "The football scout",
+   "file": "Small Parts - The football scout",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_close_01",
+     "text": "Captain. A trial. Next year. Call this number."
+    },
+    {
+     "n": 2,
+     "id": "m107_open_01",
+     "text": "Sign today. Report Monday. Football does not wait."
+    },
+    {
+     "n": 3,
+     "id": "m107_mid1_02",
+     "text": "…Fine. After exams. Is that all?"
+    },
+    {
+     "n": 4,
+     "id": "m107_mid1_05",
+     "text": "'Left… boot… first.' Twenty years. Never. Not once."
+    },
+    {
+     "n": 5,
+     "id": "m107_mid1_06",
+     "text": "And you are, madam?"
+    }
+   ]
+  },
+  {
+   "section": "Footballers (a crowd)",
+   "title": "Footballers (a crowd)",
+   "file": "Small Parts - Footballers (a crowd)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_mid1_03",
+     "text": "Ice! Somebody bring pure water! Don't touch the leg!"
+    }
+   ]
+  },
+  {
+   "section": "Foreman Asabe",
+   "title": "Foreman Asabe",
+   "file": "Small Parts - Foreman Asabe",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_open_02",
+     "text": "Measure twice. Mix once. Ready is when I say."
+    },
+    {
+     "n": 2,
+     "id": "m104_close_03",
+     "text": "Six. Six again. Everybody is out."
+    }
+   ]
+  },
+  {
+   "section": "Foreman Danjuma",
+   "title": "Foreman Danjuma",
+   "file": "Small Parts - Foreman Danjuma",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_open_01",
+     "text": "Measure twice. Cut once. Then measure what you cut."
+    },
+    {
+     "n": 2,
+     "id": "m065_mid1_02",
+     "text": "Whose son are you?"
+    },
+    {
+     "n": 3,
+     "id": "m065_close_01",
+     "text": "We ran out of wood."
+    },
+    {
+     "n": 4,
+     "id": "m104_open_01",
+     "text": "Measure twice."
+    },
+    {
+     "n": 5,
+     "id": "m104_open_02",
+     "text": "No. Measure twice, then come and ask me."
+    }
+   ]
+  },
+  {
+   "section": "Foreman Ikenna",
+   "title": "Foreman Ikenna",
+   "file": "Small Parts - Foreman Ikenna",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_open_03",
+     "text": "Measure twice. Electricity accepts no apologies."
+    },
+    {
+     "n": 2,
+     "id": "m074_open_03",
+     "text": "After that: bring my left-handed screwdriver."
+    }
+   ]
+  },
+  {
+   "section": "A fresher (first voice)",
+   "title": "A fresher (first voice)",
+   "file": "Small Parts - A fresher (first voice)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m097_open_01",
+     "text": "Excuse me, senior. Which way is the Senate?"
+    },
+    {
+     "n": 2,
+     "id": "m117_open_01",
+     "text": "Senior, I can't see. What does it say?"
+    }
+   ]
+  },
+  {
+   "section": "A fresher (second voice)",
+   "title": "A fresher (second voice)",
+   "file": "Small Parts - A fresher (second voice)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m108_mid1_02",
+     "text": "Ibrahim Sani Yusuf Danbatta! Your food is cold!"
+    }
+   ]
+  },
+  {
+   "section": "A fresher (third voice)",
+   "title": "A fresher (third voice)",
+   "file": "Small Parts - A fresher (third voice)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m097_mid1_01",
+     "text": "Senior! Senior, it's floating!"
+    }
+   ]
+  },
+  {
+   "section": "A fresher with a message",
+   "title": "A fresher with a message",
+   "file": "Small Parts - A fresher with a message",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_open_01",
+     "text": "Senior. From the level adviser. I didn't read it."
+    },
+    {
+     "n": 2,
+     "id": "m035_open_02",
+     "text": "…I read it. Sorry, senior."
+    }
+   ]
+  },
+  {
+   "section": "The Fresher's copy (an Echo)",
+   "title": "The Fresher's copy (an Echo)",
+   "file": "Small Parts - The Fresher's copy (an Echo)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m082_open_01",
+     "text": "…that Nusaiba girl? Leave her to me."
+    }
+   ]
+  },
+  {
+   "section": "The Fresher's date",
+   "title": "The Fresher's date",
+   "file": "Small Parts - The Fresher's date",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_close_01",
+     "text": "Whose name is under yours?"
+    }
+   ]
+  },
+  {
+   "section": "The gate guard",
+   "title": "The gate guard",
+   "file": "Small Parts - The gate guard",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_film_02",
+     "text": "Oga, it is the only gate."
+    }
+   ]
+  },
+  {
+   "section": "Hassan",
+   "title": "Hassan",
+   "file": "Small Parts - Hassan",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m007_open_04",
+     "text": "Two hundred. Receipt provided."
+    },
+    {
+     "n": 2,
+     "id": "m014_open_01",
+     "text": "Delivery. Sign for the note. Sign for the receipt."
+    },
+    {
+     "n": 3,
+     "id": "m034_open_01",
+     "text": "Fourth time he has swept. I am counting."
+    },
+    {
+     "n": 4,
+     "id": "m099_open_03",
+     "text": "The legend of Big Sly. Terror of the court."
+    }
+   ]
+  },
+  {
+   "section": "The headmistress",
+   "title": "The headmistress",
+   "file": "Small Parts - The headmistress",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m053_mid1_01",
+     "text": "School song. Backs straight. One, two—"
+    },
+    {
+     "n": 2,
+     "id": "m070_mid1_02",
+     "text": "School song. Backs straight. One, two—"
+    },
+    {
+     "n": 3,
+     "id": "m070_close_01",
+     "text": "She said it should go wherever the song went."
+    },
+    {
+     "n": 4,
+     "id": "m070_close_02",
+     "text": "The song has gone here. Ring it gently."
+    }
+   ]
+  },
+  {
+   "section": "Iya Risi",
+   "title": "Iya Risi",
+   "file": "Small Parts - Iya Risi",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_close_01",
+     "text": "One! Two! Three! Sunday, why are you third? Four! Five!"
+    },
+    {
+     "n": 2,
+     "id": "m072_mid1_01",
+     "text": "You will shine. You will not embarrass me. You hear?"
+    }
+   ]
+  },
+  {
+   "section": "Jega's mother",
+   "title": "Jega's mother",
+   "file": "Small Parts - Jega's mother",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m107_open_04",
+     "text": "Kar ka zaba da yunwa. [Do not choose it hungry.]"
+    },
+    {
+     "n": 2,
+     "id": "m107_open_05",
+     "text": "Kar ka zaba kai kadai. [Do not choose it alone.]"
+    }
+   ]
+  },
+  {
+   "section": "A judge",
+   "title": "A judge",
+   "file": "Small Parts - A judge",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_mid1_01",
+     "text": "Not a drop. Mark it."
+    },
+    {
+     "n": 2,
+     "id": "m047_mid1_04",
+     "text": "Second of nine. You go to the nationals."
+    }
+   ]
+  },
+  {
+   "section": "The keke examiner",
+   "title": "The keke examiner",
+   "file": "Small Parts - The keke examiner",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m017_open_01",
+     "text": "I will follow. On foot."
+    },
+    {
+     "n": 2,
+     "id": "m110_open_02",
+     "text": "'The sixth resonator.' I see."
+    },
+    {
+     "n": 3,
+     "id": "m110_open_03",
+     "text": "And the other five are, what, folklore?"
+    },
+    {
+     "n": 4,
+     "id": "m110_mid1_01",
+     "text": "Ten tolerances, one resonance. Why does it converge?"
+    },
+    {
+     "n": 5,
+     "id": "m110_mid1_02",
+     "text": "Mathematically. No stories."
+    },
+    {
+     "n": 6,
+     "id": "m110_close_03",
+     "text": "And what is the device actually for?"
+    }
+   ]
+  },
+  {
+   "section": "A Law lecturer",
+   "title": "A Law lecturer",
+   "file": "Small Parts - A Law lecturer",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m005_open_01",
+     "text": "You. The gentleman in the unfortunate shirt."
+    },
+    {
+     "n": 2,
+     "id": "m005_open_02",
+     "text": "Define a tort."
+    }
+   ]
+  },
+  {
+   "section": "The little sibling",
+   "title": "The little sibling",
+   "file": "Small Parts - The little sibling",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_open_04",
+     "text": "It's okay here. I guess. Is that clock always right?"
+    }
+   ]
+  },
+  {
+   "section": "Lucky, the influencer",
+   "title": "Lucky, the influencer",
+   "file": "Small Parts - Lucky, the influencer",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m076_open_01",
+     "text": "Collab! Three stunts. Link in bio by six."
+    },
+    {
+     "n": 2,
+     "id": "m092_open_03",
+     "text": "I'm not filming. I swear. I can't press it."
+    }
+   ]
+  },
+  {
+   "section": "Malam Sule",
+   "title": "Malam Sule",
+   "file": "Small Parts - Malam Sule",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_mid2_01",
+     "text": "Sarki! Again!"
+    },
+    {
+     "n": 2,
+     "id": "m001_mid2_02",
+     "text": "One engineering boy was lecturing it. On littering."
+    },
+    {
+     "n": 3,
+     "id": "m001_mid2_03",
+     "text": "Ten minutes. Left the gate open."
+    },
+    {
+     "n": 4,
+     "id": "m001_mid2_04",
+     "text": "You brought him back. People don't, you know."
+    },
+    {
+     "n": 5,
+     "id": "m001_mid2_05",
+     "text": "Behind the barn. The old kola tree. Look down."
+    }
+   ]
+  },
+  {
+   "section": "The man in the good shoes",
+   "title": "The man in the good shoes",
+   "file": "Small Parts - The man in the good shoes",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m027_mid1_01",
+     "text": "Padlocks. Two hundred. No receipt."
+    },
+    {
+     "n": 2,
+     "id": "m027_mid1_03",
+     "text": "Next month is fine. I am in no hurry at all."
+    }
+   ]
+  },
+  {
+   "section": "The minute-taker",
+   "title": "The minute-taker",
+   "file": "Small Parts - The minute-taker",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m046_close_01",
+     "text": "Twenty-three. …Twenty-four. …Twenty-three."
+    },
+    {
+     "n": 2,
+     "id": "m046_close_02",
+     "text": "…'About twenty.'"
+    }
+   ]
+  },
+  {
+   "section": "Mr. Clement",
+   "title": "Mr. Clement",
+   "file": "Small Parts - Mr. Clement",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m002_mid1_01",
+     "text": "Network."
+    },
+    {
+     "n": 2,
+     "id": "m117_mid1_01",
+     "text": "Network is… fine."
+    },
+    {
+     "n": 3,
+     "id": "m117_mid1_02",
+     "text": "Don't rush it. Let it settle. …Next."
+    }
+   ]
+  },
+  {
+   "section": "Mrs. Shehu",
+   "title": "Mrs. Shehu",
+   "file": "Small Parts - Mrs. Shehu",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m098_mid1_01",
+     "text": "Name. Time. Left glove. Right glove. Sign."
+    },
+    {
+     "n": 2,
+     "id": "m098_mid1_03",
+     "text": "Shhh."
+    }
+   ]
+  },
+  {
+   "section": "Musa",
+   "title": "Musa",
+   "file": "Small Parts - Musa",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m025_open_03",
+     "text": "Senior! Sorry, senior! Good morning, senior!"
+    },
+    {
+     "n": 2,
+     "id": "m025_close_01",
+     "text": "The man on the stairs said you'd help."
+    },
+    {
+     "n": 3,
+     "id": "m025_close_02",
+     "text": "'The one who chased the goat. Don't be afraid.'"
+    },
+    {
+     "n": 4,
+     "id": "m025_close_03",
+     "text": "White shirt. He said sorry for something."
+    },
+    {
+     "n": 5,
+     "id": "m025_close_04",
+     "text": "There was… I think there was a man."
+    }
+   ]
+  },
+  {
+   "section": "Musa B.",
+   "title": "Musa B.",
+   "file": "Small Parts - Musa B.",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m102_close_03",
+     "text": "Senior! You remember me? I slept on your bed!"
+    }
+   ]
+  },
+  {
+   "section": "The new court boss",
+   "title": "The new court boss",
+   "file": "Small Parts - The new court boss",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m099_open_01",
+     "text": "Fresher tax. Five hundred. Tradition."
+    },
+    {
+     "n": 2,
+     "id": "m099_mid1_06",
+     "text": "…Is there a uniform?"
+    }
+   ]
+  },
+  {
+   "section": "Oga Sharp",
+   "title": "Oga Sharp",
+   "file": "Small Parts - Oga Sharp",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m027_mid1_02",
+     "text": "Next month."
+    }
+   ]
+  },
+  {
+   "section": "An old man phoning the radio",
+   "title": "An old man phoning the radio",
+   "file": "Small Parts - An old man phoning the radio",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_mid1_05",
+     "text": "My landlord."
+    },
+    {
+     "n": 2,
+     "id": "m036_mid1_06",
+     "text": "The thing under the meat hall."
+    }
+   ]
+  },
+  {
+   "section": "An old market trader",
+   "title": "An old market trader",
+   "file": "Small Parts - An old market trader",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_mid1_01",
+     "text": "How do I come down? Is it a different building?"
+    }
+   ]
+  },
+  {
+   "section": "Patients",
+   "title": "Patients",
+   "file": "Small Parts - Patients",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m058_mid1_01",
+     "text": "Rest? Doctor, I have been resting since 1987."
+    },
+    {
+     "n": 2,
+     "id": "m058_mid1_02",
+     "text": "Give me something stronger."
+    }
+   ]
+  },
+  {
+   "section": "Primary 4 (children, all together)",
+   "title": "Primary 4 (children, all together)",
+   "file": "Small Parts - Primary 4 (children, all together)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m053_open_02",
+     "text": "GOOD MORNING SIR! LAFIYA LAU!"
+    },
+    {
+     "n": 2,
+     "id": "m070_open_02",
+     "text": "GOOD MORNING, IROKO!"
+    },
+    {
+     "n": 3,
+     "id": "m070_mid1_03",
+     "text": "Sir, can we go now? It's break."
+    }
+   ]
+  },
+  {
+   "section": "Prof. Bello",
+   "title": "Prof. Bello",
+   "file": "Small Parts - Prof. Bello",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_close_05",
+     "text": "Candidates for the two o'clock paper!"
+    },
+    {
+     "n": 2,
+     "id": "m047_close_06",
+     "text": "The examination does not reschedule. In. Now."
+    },
+    {
+     "n": 3,
+     "id": "m081_open_01",
+     "text": "The sky does not reschedule. One window: 01:10."
+    },
+    {
+     "n": 4,
+     "id": "m081_open_02",
+     "text": "Do not be Nigerian about the time."
+    },
+    {
+     "n": 5,
+     "id": "m113_open_01",
+     "text": "I said the sky does not reschedule."
+    },
+    {
+     "n": 6,
+     "id": "m113_open_02",
+     "text": "I would like to be proved wrong. Once."
+    },
+    {
+     "n": 7,
+     "id": "m113_mid1_05",
+     "text": "It rescheduled. Do not tell my students."
+    }
+   ]
+  },
+  {
+   "section": "The Registrar",
+   "title": "The Registrar",
+   "file": "Small Parts - The Registrar",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_mid2_01",
+     "text": "And, by special resolution of Senate,"
+    },
+    {
+     "n": 2,
+     "id": "m118_mid2_02",
+     "text": "a degree forty years overdue, to—"
+    }
+   ]
+  },
+  {
+   "section": "A second-year student",
+   "title": "A second-year student",
+   "file": "Small Parts - A second-year student",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m010_close_01",
+     "text": "They stopped working after ten minutes."
+    },
+    {
+     "n": 2,
+     "id": "m010_close_03",
+     "text": "I want a refund."
+    }
+   ]
+  },
+  {
+   "section": "Shamsu's father",
+   "title": "Shamsu's father",
+   "file": "Small Parts - Shamsu's father",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m087_close_01",
+     "text": "Second."
+    },
+    {
+     "n": 2,
+     "id": "m087_close_02",
+     "text": "Who came first? I want to greet his father."
+    },
+    {
+     "n": 3,
+     "id": "m087_close_03",
+     "text": "And then I want to tell him about my son."
+    }
+   ]
+  },
+  {
+   "section": "Shamsu's mother",
+   "title": "Shamsu's mother",
+   "file": "Small Parts - Shamsu's mother",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m087_close_04",
+     "text": "He has been practising that since Kano."
+    }
+   ]
+  },
+  {
+   "section": "Shamsu's robot",
+   "title": "Shamsu's robot",
+   "file": "Small Parts - Shamsu's robot",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_mid1_02",
+     "text": "In sha Allah, you will pass."
+    },
+    {
+     "n": 2,
+     "id": "m047_mid1_02",
+     "text": "In sha Allah, you will pass."
+    }
+   ]
+  },
+  {
+   "section": "The sign-painter",
+   "title": "The sign-painter",
+   "file": "Small Parts - The sign-painter",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m027_open_01",
+     "text": "The board has finished. I'm going down."
+    }
+   ]
+  },
+  {
+   "section": "A small boy",
+   "title": "A small boy",
+   "file": "Small Parts - A small boy",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m019_mid1_01",
+     "text": "Jega! Show us!"
+    }
+   ]
+  },
+  {
+   "section": "Sule",
+   "title": "Sule",
+   "file": "Small Parts - Sule",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m054_open_02",
+     "text": "Late. The animals have been up since four."
+    },
+    {
+     "n": 2,
+     "id": "m054_close_01",
+     "text": "You again. …Forty. You bring them back. Good."
+    }
+   ]
+  },
+  {
+   "section": "Summy",
+   "title": "Summy",
+   "file": "Small Parts - Summy",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m085_open_04",
+     "text": "Good evening, {{UNI_SHORT}}. First question."
+    },
+    {
+     "n": 2,
+     "id": "m109_mid2_01",
+     "text": "Longest-Running Joke. I'm not even opening it."
+    }
+   ]
+  },
+  {
+   "section": "The suya seller",
+   "title": "The suya seller",
+   "file": "Small Parts - The suya seller",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_mid1_02",
+     "text": "Not the yaji! NOT THE YAJI!"
+    }
+   ]
+  },
+  {
+   "section": "The Vice-Chancellor",
+   "title": "The Vice-Chancellor",
+   "file": "Small Parts - The Vice-Chancellor",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m046_open_01",
+     "text": "We are here to establish what happened. Only that."
+    },
+    {
+     "n": 2,
+     "id": "m046_open_02",
+     "text": "The student has brought… a friend."
+    },
+    {
+     "n": 3,
+     "id": "m046_mid1_02",
+     "text": "Of course you do."
+    }
+   ]
+  },
+  {
+   "section": "A voice on the phone, unknown number",
+   "title": "A voice on the phone, unknown number",
+   "file": "Small Parts - A voice on the phone, unknown number",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_close_01",
+     "text": "Six."
+    }
+   ]
+  },
+  {
+   "section": "A wary student",
+   "title": "A wary student",
+   "file": "Small Parts - A wary student",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m034_open_02",
+     "text": "Ah. I just remembered. I have… a thing."
+    }
+   ]
+  },
+  {
+   "section": "A woman's voice on an old transmitter",
+   "title": "A woman's voice on an old transmitter",
+   "file": "Small Parts - A woman's voice on an old transmitter",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_close_01",
+     "text": "Seven. Six. Five. Four. Three. Two. One."
+    }
+   ]
+  },
+  {
+   "section": "A woman's voice on the radio",
+   "title": "A woman's voice on the radio",
+   "file": "Small Parts - A woman's voice on the radio",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m003_close_01",
+     "text": "Seven. Six. Five. Four. Three. Two. One."
+    }
+   ]
+  },
+  {
+   "section": "The young rangers (children)",
+   "title": "The young rangers (children)",
+   "file": "Small Parts - The young rangers (children)",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m069_mid1_01",
+     "text": "He looked at you. That is a speech, from him."
+    },
+    {
+     "n": 2,
+     "id": "m069_mid1_02",
+     "text": "I am not afraid of water. I will hold your sleeve."
+    }
+   ]
+  }
+ ],
+ "pending": [
+  {
+   "id": "m021_close_01",
+   "text": "[COMPANION_LINE: by who came]"
+  },
+  {
+   "id": "m033_close_02",
+   "text": "[COMPANION_LINE: on seeing your outfit]"
+  },
+  {
+   "id": "m040_mid1_01",
+   "text": "[BROKE_LINE: by partner, from the bible's 'if you are broke' column]"
+  },
+  {
+   "id": "m040_close_01",
+   "text": "[EVENING_LINE: by companion and path]"
+  }
+ ]
+}

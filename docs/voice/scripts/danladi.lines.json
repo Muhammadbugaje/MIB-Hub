@@ -1,0 +1,407 @@
+{
+ "character": "Coach Danladi",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Left Boot First",
+   "file": "Coach Danladi - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_open_03",
+     "text": "Pass! Is the ball your inheritance?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Vice-Chancellor's Cup",
+   "file": "Coach Danladi - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m019_open_04",
+     "text": "Out! Out! The grass is not coming to you!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Comeback",
+   "file": "Coach Danladi - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_open_03",
+     "text": "Boots are boots! Outside! The grass is waiting!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Contract",
+   "file": "Coach Danladi - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m107_open_02",
+     "text": "Is the degree your inheritance? Is the contract?"
+    },
+    {
+     "n": 2,
+     "id": "m107_open_03",
+     "text": "Me, I have neither. I have a whistle."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Coach Danladi - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_greet_01",
+     "text": "You! Good! Legs warm? No? Why not?"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_greet_02",
+     "text": "Sannu. [Hello.] The early bird gets the ball."
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_greet_03",
+     "text": "Ah, my striker of the future! Or the past. We'll see."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Coach Danladi - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_bye_01",
+     "text": "Go. Eat. Sleep. Come back with legs."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_bye_02",
+     "text": "Sai gobe. [See you tomorrow.] Bring your boots, not your excuses."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Coach Danladi - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_thanks_01",
+     "text": "Thank you. A goat that greets gets grass."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Coach Danladi - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_compliment_01",
+     "text": "Good touch! The calabash is full!"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Coach Danladi - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_tease_01",
+     "text": "Pass! Is the ball your inheritance?"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_tease_02",
+     "text": "You dribbled yourself. Twice. Impressive. Terrible."
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_tease_03",
+     "text": "The chicken that won't run becomes soup!"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Coach Danladi - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_follow_01",
+     "text": "Run with me! A river that stops is a pond!"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_wait_01",
+     "text": "Faster! The grass is not coming to you!"
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_wait_02",
+     "text": "Are you walking? Is this a wedding?"
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Coach Danladi - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_yes_01",
+     "text": "Yes! Like that! Again!"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_no_01",
+     "text": "No! Shoot with the foot, not the face!"
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_agree_01",
+     "text": "Correct. The elder sees from sitting what the youth sees from the tree."
+    },
+    {
+     "n": 4,
+     "id": "bk_danladi_f_confused_01",
+     "text": "What is this formation? A queue?"
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Winning and losing",
+   "file": "Coach Danladi - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_win_01",
+     "text": "We won! Don't celebrate too long. The ball is round. It comes back."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_lose_01",
+     "text": "We lost. Good. Now we know where the holes are."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Coach Danladi - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_hit_01",
+     "text": "Up! Up! The ground is not your bed!"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_fall_01",
+     "text": "Dive later. You're not in a film."
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_rain_01",
+     "text": "Rain? Perfect! The ball slides, the brave slide with it!"
+    },
+    {
+     "n": 4,
+     "id": "bk_danladi_f_heat_01",
+     "text": "Hot? Drink water. The sun did not ask to play."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Coach Danladi - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_gift_like_01",
+     "text": "A new whistle! Ah! Now they will hear me in the next state."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_gift_dislike_01",
+     "text": "A chair? A coach does not sit. …Leave it there."
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_f_gift_love_01",
+     "text": "Old Cup photo. Look at me. Look at my legs then. Ah!"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Coach Danladi - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_f_idle_01",
+     "text": "Left boot first! Jega is right about one thing."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_f_idle_02",
+     "text": "Cones. Who took my cones? A cone is not a hat!"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 1: arriving",
+   "file": "Coach Danladi - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_y1_idle_01",
+     "text": "The Cup is coming. The lazy will watch from the stands."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_y1_callback_01",
+     "text": "That boy Jega. Left boot first. The goat knows its path."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 2: the mall",
+   "file": "Coach Danladi - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_y2_idle_01",
+     "text": "A scout in the stands. Play as if nobody is watching. Somebody is."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 3: the strike",
+   "file": "Coach Danladi - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_y3_ev_strike_01",
+     "text": "Strike? Football does not strike. Pitch at five."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_y3_ev_strike_02",
+     "text": "Half the team went home. The other half ate garri. Both are slow."
+    },
+    {
+     "n": 3,
+     "id": "bk_danladi_y3_idle_01",
+     "text": "An empty pitch is a sad drum. Come and play."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 4: fame",
+   "file": "Coach Danladi - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_y4_idle_01",
+     "text": "Boots are boots! Outside! The grass is waiting!"
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 5: leaving",
+   "file": "Coach Danladi - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_y5_idle_01",
+     "text": "Is the degree your inheritance? Then finish it."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_y5_idle_02",
+     "text": "Me, I have no degree, no contract. I have a whistle. Enough."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Coach Danladi - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_ev_ev_freshers_01",
+     "text": "Trials Saturday. Bring boots. Borrowed boots count."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_ev_ev_exam_01",
+     "text": "Exams. Go and read. A footballer who fails is benched at home."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Coach Danladi - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_ev_ev_cup_01",
+     "text": "Cup day! Drums! Who brought my lucky towel?"
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_ev_ev_cup_02",
+     "text": "One match at a time. You cannot eat the whole goat in one bite."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Coach Danladi - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_danladi_ev_ev_ramadan_01",
+     "text": "Ramadan: training after iftar. Light drills. Water first."
+    },
+    {
+     "n": 2,
+     "id": "bk_danladi_ev_ev_harmattan_01",
+     "text": "Cold morning jog! The dust is free training!"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

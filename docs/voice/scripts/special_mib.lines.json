@@ -1,0 +1,329 @@
+{
+ "character": "M.I. Bugaje",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "M.I. Bugaje - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_greet_01",
+     "text": "You're early. Or I'm late. Both are fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_greet_02",
+     "text": "Ah. There you are. Again."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_greet_03",
+     "text": "Hello. Don't look surprised. I'm always somewhere."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "M.I. Bugaje - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_bye_01",
+     "text": "Go on. I'll be here. Or near."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_bye_02",
+     "text": "Until the next time you don't expect me."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_bye_03",
+     "text": "I'll leave first. It's a habit."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "M.I. Bugaje - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_thanks_01",
+     "text": "Don't thank me. Pass it on. That's the receipt."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_thanks_02",
+     "text": "You're welcome. You always were."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_sorry_01",
+     "text": "No need. You'll do better. You already have."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "M.I. Bugaje - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_compliment_01",
+     "text": "Good. Now do it without me."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_compliment_02",
+     "text": "Not bad. Not finished. Nothing good is."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Walking with the player",
+   "file": "M.I. Bugaje - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_wait_01",
+     "text": "Take your time. It's the only thing that's yours."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_follow_01",
+     "text": "Walk ahead. I like to see where people go."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "M.I. Bugaje - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_yes_01",
+     "text": "Yes. You knew before you asked."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_no_01",
+     "text": "No. Not yet. 'Yet' is a kind word."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_maybe_01",
+     "text": "Perhaps. Most true things start there."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "M.I. Bugaje - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_ask_01",
+     "text": "What are you carrying? No. The other thing."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_ask_02",
+     "text": "Did you eat? Small things first."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_joke_01",
+     "text": "Three letters. People assume they stand for something."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Winning and losing",
+   "file": "M.I. Bugaje - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_win_01",
+     "text": "Again."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_win_02",
+     "text": "One point. It's always one point."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_lose_01",
+     "text": "You won. Don't spend it all at once."
+    },
+    {
+     "n": 4,
+     "id": "bk_mib_f_lose_02",
+     "text": "Well played. I'll remember. I remember most things."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "M.I. Bugaje - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_hit_01",
+     "text": "Careful. You'll need those elbows later."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_fall_01",
+     "text": "Up. The ground is a teacher, not a bed."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_blackout_01",
+     "text": "Dark. Look up. That part is free."
+    },
+    {
+     "n": 4,
+     "id": "bk_mib_f_light_back_01",
+     "text": "There. Someone was listening."
+    },
+    {
+     "n": 5,
+     "id": "bk_mib_f_rain_01",
+     "text": "Rain doesn't hurry. Neither should you."
+    },
+    {
+     "n": 6,
+     "id": "bk_mib_f_rain_02",
+     "text": "Wet shoes, dry heart. A fair trade."
+    },
+    {
+     "n": 7,
+     "id": "bk_mib_f_heat_01",
+     "text": "White in the sun. You'd think I'd planned it."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Food and money",
+   "file": "M.I. Bugaje - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_food_01",
+     "text": "Share it. It lasts longer that way."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Getting a present",
+   "file": "M.I. Bugaje - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_gift_like_01",
+     "text": "For me? Keep half. Give me the other half later."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Talking to yourself",
+   "file": "M.I. Bugaje - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_idle_01",
+     "text": "Play."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_idle_02",
+     "text": "The table is never wrong. Only early."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_f_idle_03",
+     "text": "Thirteen is lucky, for people who count."
+    },
+    {
+     "n": 4,
+     "id": "bk_mib_f_idle_04",
+     "text": "Every game is two games. The one you play, and the one you learn."
+    },
+    {
+     "n": 5,
+     "id": "bk_mib_f_idle_05",
+     "text": "Gold is only white that waited."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Late at night",
+   "file": "M.I. Bugaje - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_f_night_01",
+     "text": "Late. Good. The quiet hours are honest."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_f_night_02",
+     "text": "Go home. The night will keep."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "After graduation",
+   "file": "M.I. Bugaje - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mib_post_greet_01",
+     "text": "You came back. They usually do."
+    },
+    {
+     "n": 2,
+     "id": "bk_mib_post_idle_01",
+     "text": "New names on the table. Good. It was lonely up there."
+    },
+    {
+     "n": 3,
+     "id": "bk_mib_post_idle_02",
+     "text": "The market has more stalls at night. Count them."
+    },
+    {
+     "n": 4,
+     "id": "bk_mib_post_idle_03",
+     "text": "A cap fits better the second time."
+    },
+    {
+     "n": 5,
+     "id": "bk_mib_post_compliment_01",
+     "text": "You're the original now. Someone will copy you. Let them."
+    },
+    {
+     "n": 6,
+     "id": "bk_mib_post_bye_01",
+     "text": "Go well. Leave a light on for the next ones."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

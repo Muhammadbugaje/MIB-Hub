@@ -1,0 +1,354 @@
+{
+ "character": "The Staff",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Staff - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_greet_01",
+     "text": "Good morning. Are you in my class? You look like you are not."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_greet_02",
+     "text": "Yes? Make it quick. I have a meeting about meetings."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_f_greet_03",
+     "text": "Ah, good morning. You came early. Good. Keep it so."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "The Staff - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_bye_01",
+     "text": "See me after class."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_bye_02",
+     "text": "Go and read. Actually read."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Quick answers",
+   "file": "The Staff - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_no_01",
+     "text": "No. Extension is not a human right."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_refuse_01",
+     "text": "Bring it on Monday. Monday of this week."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "When something goes wrong",
+   "file": "The Staff - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_blackout_01",
+     "text": "Light gone. Carry on. Read the board with your memory."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_blackout_02",
+     "text": "The generator? Bursary says it's 'in process'. Since 2011."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_f_heat_01",
+     "text": "No fan, no light. Nobody faint. Fainting is not on the attendance."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Talking to yourself",
+   "file": "The Staff - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_idle_01",
+     "text": "…and I told them, the course outline is not a suggestion."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_idle_02",
+     "text": "The portal is down. Network. Come back yesterday."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_f_idle_03",
+     "text": "Bring the original, two photocopies and your patience."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_lecturers_f_idle_04",
+     "text": "Is this handwriting or a map of Kwari Dam?"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_lecturers_f_idle_05",
+     "text": "If the light goes, we continue. Knowledge is not on the grid."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_lecturers_f_idle_06",
+     "text": "Office hours are Tuesday. Today is Tuesday. My office is closed."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_lecturers_f_idle_07",
+     "text": "Sign the attendance. Only for yourself. I can count."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_lecturers_f_idle_08",
+     "text": "Which of you is 'Group Four'? All of you? Okay."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_lecturers_f_idle_09",
+     "text": "When I was a student, we read with a lantern. And we were grateful."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_lecturers_f_idle_10",
+     "text": "Where is the class rep? Class rep! Come and rep the class!"
+    },
+    {
+     "n": 11,
+     "id": "bk_pub_lecturers_f_idle_11",
+     "text": "The memo says 'urgent'. It was written last semester."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Late at night",
+   "file": "The Staff - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_f_night_01",
+     "text": "Marking at midnight. Somebody wrote a poem in question two."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_f_night_02",
+     "text": "The night porter says the clock chimed once. That clock does not chime."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 1: arriving",
+   "file": "The Staff - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_y1_idle_01",
+     "text": "Every week the light goes. Every week I bring chalk and courage."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_y1_idle_02",
+     "text": "Freshers in the wrong theatre. Again. Every year, the same theatre."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 2: the mall",
+   "file": "The Staff - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_y2_idle_01",
+     "text": "The mall has three generators. My department has one extension box."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_y2_idle_02",
+     "text": "Somebody is tapping power from the faculty line. My kettle knows."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_y2_idle_03",
+     "text": "I'm on the committee for the new mall. I don't know why."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 3: the strike",
+   "file": "The Staff - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_y3_idle_01",
+     "text": "I support the strike. I also miss my students. Both."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_y3_idle_02",
+     "text": "Strike. My office is open if anyone wants to talk. Not teach. Talk."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_y3_idle_03",
+     "text": "Students holding free classes under the tree. That is a university."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 4: fame",
+   "file": "The Staff - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_y4_idle_01",
+     "text": "I'm in a video, apparently. I didn't say that. I said it slower."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_y4_idle_02",
+     "text": "Elections. Please. Not in my lecture. Campaign outside."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_y4_idle_03",
+     "text": "Everybody is famous this semester. Nobody submitted the assignment."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 5: leaving",
+   "file": "The Staff - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_y5_idle_01",
+     "text": "Project defence on Monday. Chapter three is still a rumour."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_y5_idle_02",
+     "text": "Final years. I'll miss failing you. Joking. Mostly."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_y5_idle_03",
+     "text": "I watched you go from 'which theatre?' to 'which job?'"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: term time",
+   "file": "The Staff - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_ev_ev_freshers_01",
+     "text": "Welcome, freshers. Where you sit today is where you sit forever."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_ev_ev_exam_01",
+     "text": "Pens down at the bell. Not after. At."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_ev_ev_exam_02",
+     "text": "No phones. No notes. No sighing loudly."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_lecturers_ev_ev_results_01",
+     "text": "Results are out. My office is not a complaints department."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_lecturers_ev_ev_allowance_01",
+     "text": "Allowance week. Suddenly the textbook is 'on its way'."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: the big ones",
+   "file": "The Staff - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_ev_ev_strike_01",
+     "text": "Strike day. The theatre is empty. I came anyway. Habit."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_ev_ev_cup_01",
+     "text": "I won't say who I support. Engineering. I said nothing."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_ev_ev_elections_01",
+     "text": "Vote with your head. Not your stomach. Not the free biscuits."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_lecturers_ev_ev_convocation_01",
+     "text": "Convocation. I'll be in the gown. Hot, proud, slightly late."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: seasons and holidays",
+   "file": "The Staff - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_lecturers_ev_ev_ramadan_01",
+     "text": "Ramadan. Lectures end early so people can break fast. Be on time."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_lecturers_ev_ev_christmas_01",
+     "text": "Merry Christmas. The assignment is still due on the fifth."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_lecturers_ev_ev_valentine_01",
+     "text": "Valentine's Day is not on the timetable. The quiz is."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_lecturers_ev_ev_harmattan_01",
+     "text": "Close the windows. The dust is attending without registering."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

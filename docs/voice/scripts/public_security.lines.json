@@ -1,0 +1,327 @@
+{
+ "character": "Security",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Security - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_f_greet_01",
+     "text": "Good evening. ID card, please. Smile is optional."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_f_greet_02",
+     "text": "Sannu. [Hello.] Where are you going at this hour?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_f_greet_03",
+     "text": "Ah, it's you. Pass. Greet your mother for me."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Quick answers",
+   "file": "Security - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_f_no_01",
+     "text": "No ID, no entry. Not even with charm."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_f_no_02",
+     "text": "Don't argue with the barrier. It's older than you."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "When something goes wrong",
+   "file": "Security - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_f_blackout_01",
+     "text": "Light don go! [Power's gone!] Torches up! Nobody runs, nobody shouts!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_f_blackout_02",
+     "text": "Blackout patrol. Keep to the lit path."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_f_rain_01",
+     "text": "The gatehouse is full of students who 'just stopped to greet'."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "Security - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_f_idle_01",
+     "text": "Who parked this keke here? Is this keke a student?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_f_idle_02",
+     "text": "No loitering. Walk with purpose. Any purpose."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_f_idle_03",
+     "text": "Gate closes at ten. Not ten-oh-five. Ten."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_security_f_idle_04",
+     "text": "Your ID photo is from a different century."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_security_f_idle_05",
+     "text": "The goat again. No ID. Nobody stops it. It's above the law."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_security_f_idle_06",
+     "text": "Somebody's bucket is outside again. We now guard buckets."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_security_f_idle_07",
+     "text": "Radio check. …Radio? Hello? Network. Of course."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "Security - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_f_night_01",
+     "text": "After midnight, walk with a friend. Or a torch. Both is better."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_f_night_02",
+     "text": "Yes, the noticeboard has new slips. No, I didn't see who."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_f_night_03",
+     "text": "The old man in the garden? We greet. That's all. Keep walking."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_security_f_night_04",
+     "text": "Cats in a circle again. Not my department."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_security_f_night_05",
+     "text": "Ghost okada? I don't know what it is. I know you should go home."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "Security - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_y1_idle_01",
+     "text": "The light is going more this year. My torch is my best friend."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_y1_idle_02",
+     "text": "Freshers keep asking me the way. I'm security, not Google."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "Security - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_y2_idle_01",
+     "text": "Mall security has uniforms. We have whistles and wisdom."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_y2_idle_02",
+     "text": "Somebody is cutting cables at night. If you hear something, tell us."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_y2_idle_03",
+     "text": "I chased a cable thief. Lost him at the mall. The mall never blinks. I blinked."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "Security - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_y3_idle_01",
+     "text": "Strike. Empty halls. I'm mostly guarding lizards."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_y3_idle_02",
+     "text": "Who's still on campus? Let me write your name. For company."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_y3_idle_03",
+     "text": "Quiet nights. Too quiet. I've started greeting trees."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "Security - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_y4_idle_01",
+     "text": "Election week. Shout all you like. Nobody fights. Keep it so."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_y4_idle_02",
+     "text": "Don't believe every video. I was in one. I was eating."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_y4_idle_03",
+     "text": "Posters on the gate again. Down they come."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "Security - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_y5_idle_01",
+     "text": "Five years I check your ID. Today I don't need to look."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_y5_idle_02",
+     "text": "Final year, eh? Don't forget us at the gate."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "Security - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_ev_ev_freshers_01",
+     "text": "Freshers, follow the signs. The signs are correct. Mostly."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_ev_ev_exam_01",
+     "text": "Exam hall: phones off, IDs out, mouths closed."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_ev_ev_results_01",
+     "text": "Results crush! One at a time at the noticeboard! One!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_security_ev_ev_allowance_01",
+     "text": "ATM queue: no pushing. The machine doesn't care who's first."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_security_ev_ev_market_day_01",
+     "text": "Market day. Phone in your front pocket. Back pocket is a donation."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "Security - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_ev_ev_strike_01",
+     "text": "Strike or no strike, the gate opens at six."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_ev_ev_cup_01",
+     "text": "Stadium rule: no drums in the trophy room. Why do I have to say this?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_ev_ev_elections_01",
+     "text": "Campaigning stops at the gate. The gate is neutral."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_security_ev_ev_convocation_01",
+     "text": "Convocation. Ten lost aunties. All looking for 'Ibrahim'."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "Security - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_security_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem! [Blessed Ramadan!] Iftar crowd at six. I'll be at the gate."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_security_ev_ev_christmas_01",
+     "text": "Merry Christmas! Travellers, sign out at the gate."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_security_ev_ev_valentine_01",
+     "text": "Valentine's. More bouquets than students. Check the flowers too."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_security_ev_ev_harmattan_01",
+     "text": "Harmattan haze. If you can't see me, I can still see you."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

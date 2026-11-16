@@ -1,0 +1,493 @@
+{
+ "character": "Faty",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Keke Grand Prix",
+   "file": "Faty - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m017_open_03",
+     "text": "He means right."
+    },
+    {
+     "n": 2,
+     "id": "m017_open_05",
+     "text": "Emotionally, we are lost."
+    },
+    {
+     "n": 3,
+     "id": "m017_open_06",
+     "text": "My dear, this is the marriage. Drive."
+    },
+    {
+     "n": 4,
+     "id": "m017_close_02",
+     "text": "Page twelve. That's you. One joke a year."
+    },
+    {
+     "n": 5,
+     "id": "m017_close_03",
+     "text": "The first eight are my mother's."
+    },
+    {
+     "n": 6,
+     "id": "m017_close_05",
+     "text": "And you wouldn't believe who."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Sign-Out, Small",
+   "file": "Faty - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_open_01",
+     "text": "What did you write? On my BACK, Lula?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Idle King",
+   "file": "Faty - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_mid2_02",
+     "text": "It was the imam's brother. I wrote it down. Page six."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Maker's Graduation",
+   "file": "Faty - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_mid2_07",
+     "text": "He laughed once. Page nine. Nobody believed us."
+    },
+    {
+     "n": 2,
+     "id": "m116_mid2_08",
+     "text": "Lula. Write the date."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Sign-Out",
+   "file": "Faty - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_mid1_01",
+     "text": "The date. And: 'He laughed. Out loud. At nothing.'"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Faty - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_greet_01",
+     "text": "Ah, you. Sit. Lula, the young one is here. No, the other young one."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_greet_02",
+     "text": "Hello. Don't ask him for directions. Ask me."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_f_greet_03",
+     "text": "Sannu da zuwa. [Welcome.] We were just talking about you. Page twelve."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Faty - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_bye_01",
+     "text": "Go well. He means go right."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Faty - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_thanks_01",
+     "text": "Thank you, my dear. I'll write it down. Not as a joke. As a fact."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Faty - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_compliment_01",
+     "text": "You're a good listener. Rare. Lula, take notes."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Faty - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_tease_01",
+     "text": "That was your joke? It won't make the book. Try next year."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Faty - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_lost_01",
+     "text": "He said left. He means right. He always means right."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Faty - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_confused_01",
+     "text": "Pardon? Say it again. Slowly. For the book."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_confused_02",
+     "text": "Who? There was nobody there fa. Only Lula, telling it wrong."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_f_yes_01",
+     "text": "Yes. Write that down. No, I'll write it."
+    },
+    {
+     "n": 4,
+     "id": "bk_faty_f_no_01",
+     "text": "No. Lula will say yes. Ignore him."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Faty - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_ask_01",
+     "text": "What happened today that's worth writing down? Think. Take your time."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_joke_01",
+     "text": "One joke a year. This year's? Not yet. I'm a strict editor."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Faty - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_heat_01",
+     "text": "Heat. Lula fans me with the book. Not that book. The other book."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_rain_01",
+     "text": "Rain. It'll stop at four. Lula says three. It'll stop at four."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_f_hit_01",
+     "text": "Careful. The book. I'm fine. The book."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Food and money",
+   "file": "Faty - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_food_01",
+     "text": "Tuwo again. Lula says 'Again?' every night. Forty-one years. Write that."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Getting a present",
+   "file": "Faty - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_gift_like_01",
+     "text": "A notebook. For when this one is full. Thank you."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_gift_dislike_01",
+     "text": "Hm. Lula will love it. Lula loves everything."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_f_gift_love_01",
+     "text": "A pencil sharpener. The good one. My dear. My dear."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Talking to yourself",
+   "file": "Faty - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_idle_01",
+     "text": "Every joke is dated. Some are dated twice. Those are Lula's."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_f_idle_02",
+     "text": "My mother started the book. Her handwriting was worse than Lula's."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Late at night",
+   "file": "Faty - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_f_night_01",
+     "text": "At night I read Lula a page. He laughs at the same ones. Every time."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving",
+   "file": "Faty - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_y1_callback_01",
+     "text": "You drove us with Lula giving directions. That's courage. That's in the book."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_y1_callback_02",
+     "text": "Page twelve. That's you. One joke a year. Don't let it go to your head."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_y1_idle_01",
+     "text": "Emotionally, we are still lost. Physically, we are at the motor park."
+    },
+    {
+     "n": 4,
+     "id": "bk_faty_y1_tease_01",
+     "text": "You laughed at Lula's joke. Out of kindness. I saw. I wrote it."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Faty - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_y2_callback_01",
+     "text": "What did you write? On his BACK? …I wrote it. Don't tell him."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_y2_idle_01",
+     "text": "Lula wants the escalator in the book. Not a joke. A tragedy."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_y2_compliment_01",
+     "text": "You visit. Not many do. You'll be in the book. Page fifteen."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 3: the strike",
+   "file": "Faty - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_y3_callback_01",
+     "text": "The ram story. Lula told it wrong. It was the imam's brother."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_y3_idle_01",
+     "text": "The book stayed with us through the strike. Everything else went home."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_y3_ev_strike_01",
+     "text": "Strike. Plenty of time. Not enough jokes. Quality, not quantity."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 4: fame",
+   "file": "Faty - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_y4_idle_01",
+     "text": "This year's joke? I have three candidates. Only one gets in."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_y4_compliment_01",
+     "text": "You check before you laugh. Good. So do I."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_y4_tease_01",
+     "text": "Lula likes you. He told me. I told him to tell you. He forgot."
+    },
+    {
+     "n": 4,
+     "id": "bk_faty_y4_ev_market_day_01",
+     "text": "Market day. I bargain. Lula agrees with the seller. Every time."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 5: leaving",
+   "file": "Faty - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_y5_callback_01",
+     "text": "That night I made Lula write the date. His handwriting. Terrible. It's in."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_y5_callback_02",
+     "text": "The last entry that year wasn't a joke. It was true. That's allowed once."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_y5_idle_01",
+     "text": "Page nine. No. I don't talk about page nine."
+    },
+    {
+     "n": 4,
+     "id": "bk_faty_y5_bye_01",
+     "text": "After convocation, come to tea. Bring a joke. We'll judge it."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: term time",
+   "file": "Faty - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_ev_ev_freshers_01",
+     "text": "Freshers. Every year one of them says something funny. I find them."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: the big ones",
+   "file": "Faty - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_ev_ev_cup_01",
+     "text": "Cup final. Lula is shouting at the wrong team. Emotionally, he's right."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_ev_ev_elections_01",
+     "text": "Elections. I read every manifesto. One had a joke. Not a good one."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_ev_ev_convocation_01",
+     "text": "Convocation. One line each. 'They graduated.' Short. True. Funny enough."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: seasons and holidays",
+   "file": "Faty - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_faty_ev_ev_ramadan_01",
+     "text": "Ramadan. Iftar on the mosque grounds. Lula carries the dates. Counts them twice."
+    },
+    {
+     "n": 2,
+     "id": "bk_faty_ev_ev_christmas_01",
+     "text": "Christmas. Our neighbours' rice is the best rice. Don't tell Mama Nkechi."
+    },
+    {
+     "n": 3,
+     "id": "bk_faty_ev_ev_valentine_01",
+     "text": "Valentine's. He bought me a pen. Forty-one years. Same pen, same joke."
+    },
+    {
+     "n": 4,
+     "id": "bk_faty_ev_ev_harmattan_01",
+     "text": "Harmattan. The pages curl. I press them under the radio."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

@@ -1,2959 +1,520 @@
-# Voice script: Nusaiba
-
-**Cast id:** `npc.nusaiba` · **Story lines:** 70 · **Barks and filler:** 239 · **Total:** 309
-
-**Voice:** Early twenties, Law student; crisp, quick, courtroom-polite. Complete sentences and numbered points; bossy for your own good, warm underneath. Clicks her pen when thinking. Catchphrases: "Point one." "Wait. Look again." "Put it in writing." "Who is taking minutes?"
-
-#
-#
- 
-H
-o
-w
- 
-t
-o
- 
-u
-s
-e
- 
-t
-h
-i
-s
- 
-s
-c
-r
-i
-p
-t
-
-
-
-
-T
-h
-a
-n
-k
- 
-y
-o
-u
- 
-f
-o
-r
- 
-l
-e
-n
-d
-i
-n
-g
- 
-y
-o
-u
-r
- 
-v
-o
-i
-c
-e
- 
-t
-o
- 
-t
-h
-e
- 
-g
-a
-m
-e
-.
- 
-T
-h
-i
-s
- 
-g
-u
-i
-d
-e
- 
-t
-a
-k
-e
-s
- 
-t
-e
-n
- 
-m
-i
-n
-u
-t
-e
-s
- 
-t
-o
- 
-r
-e
-a
-d
- 
-a
-n
-d
- 
-s
-a
-v
-e
-s
- 
-h
-o
-u
-r
-s
- 
-l
-a
-t
-e
-r
-.
-
-
-
-
-*
-*
-1
-.
- 
-S
-e
-t
- 
-u
-p
- 
-(
-o
-n
-c
-e
-)
-.
-*
-*
-
-
--
- 
-F
-i
-n
-d
- 
-t
-h
-e
- 
-q
-u
-i
-e
-t
-e
-s
-t
- 
-r
-o
-o
-m
- 
-y
-o
-u
- 
-h
-a
-v
-e
-.
- 
-A
- 
-w
-a
-r
-d
-r
-o
-b
-e
- 
-f
-u
-l
-l
- 
-o
-f
- 
-c
-l
-o
-t
-h
-e
-s
-,
- 
-o
-r
- 
-a
- 
-s
-m
-a
-l
-l
- 
-r
-o
-o
-m
- 
-w
-i
-t
-h
- 
-c
-u
-r
-t
-a
-i
-n
-s
- 
-a
-n
-d
- 
-a
- 
-b
-e
-d
-,
- 
-i
-s
- 
-b
-e
-t
-t
-e
-r
- 
-t
-h
-a
-n
- 
-a
- 
-b
-i
-g
- 
-e
-m
-p
-t
-y
- 
-r
-o
-o
-m
-:
- 
-s
-o
-f
-t
- 
-t
-h
-i
-n
-g
-s
- 
-s
-t
-o
-p
- 
-e
-c
-h
-o
-.
-
-
--
- 
-S
-w
-i
-t
-c
-h
- 
-o
-f
-f
- 
-f
-a
-n
-s
-,
- 
-a
-i
-r
- 
-c
-o
-n
-d
-i
-t
-i
-o
-n
-i
-n
-g
- 
-a
-n
-d
- 
-t
-h
-e
- 
-T
-V
-.
- 
-P
-u
-t
- 
-y
-o
-u
-r
- 
-p
-h
-o
-n
-e
- 
-o
-n
- 
-s
-i
-l
-e
-n
-t
- 
-(
-i
-f
- 
-y
-o
-u
- 
-r
-e
-c
-o
-r
-d
- 
-o
-n
- 
-i
-t
-,
- 
-u
-s
-e
- 
-a
-e
-r
-o
-p
-l
-a
-n
-e
- 
-m
-o
-d
-e
-)
-.
-
-
--
- 
-U
-s
-e
- 
-a
- 
-p
-h
-o
-n
-e
- 
-v
-o
-i
-c
-e
--
-r
-e
-c
-o
-r
-d
-e
-r
- 
-a
-p
-p
- 
-o
-r
- 
-a
- 
-m
-i
-c
-r
-o
-p
-h
-o
-n
-e
-.
- 
-C
-h
-o
-o
-s
-e
- 
-t
-h
-e
- 
-h
-i
-g
-h
-e
-s
-t
- 
-q
-u
-a
-l
-i
-t
-y
- 
-i
-t
- 
-o
-f
-f
-e
-r
-s
- 
-(
-W
-A
-V
- 
-i
-f
- 
-p
-o
-s
-s
-i
-b
-l
-e
-,
- 
-4
-8
- 
-k
-H
-z
-)
-.
-
-
--
- 
-H
-o
-l
-d
- 
-t
-h
-e
- 
-p
-h
-o
-n
-e
- 
-o
-r
- 
-m
-i
-c
-r
-o
-p
-h
-o
-n
-e
- 
-a
-b
-o
-u
-t
- 
-2
-0
- 
-c
-m
- 
-(
-o
-n
-e
- 
-h
-a
-n
-d
--
-s
-p
-a
-n
-)
- 
-f
-r
-o
-m
- 
-y
-o
-u
-r
- 
-m
-o
-u
-t
-h
-,
- 
-a
- 
-l
-i
-t
-t
-l
-e
- 
-t
-o
- 
-t
-h
-e
- 
-s
-i
-d
-e
- 
-s
-o
- 
-y
-o
-u
-r
- 
-b
-r
-e
-a
-t
-h
- 
-d
-o
-e
-s
- 
-n
-o
-t
- 
-h
-i
-t
- 
-i
-t
-.
- 
-K
-e
-e
-p
- 
-t
-h
-e
- 
-s
-a
-m
-e
- 
-d
-i
-s
-t
-a
-n
-c
-e
- 
-f
-o
-r
- 
-e
-v
-e
-r
-y
- 
-l
-i
-n
-e
-.
-
-
-
-
-*
-*
-2
-.
- 
-R
-e
-a
-d
- 
-t
-h
-e
- 
-t
-a
-b
-l
-e
-.
-*
-*
-
-
--
- 
-*
-*
-I
-d
-:
-*
-*
- 
-t
-h
-e
- 
-l
-i
-n
-e
-'
-s
- 
-n
-a
-m
-e
-.
- 
-N
-a
-m
-e
- 
-y
-o
-u
-r
- 
-f
-i
-l
-e
- 
-w
-i
-t
-h
- 
-i
-t
-,
- 
-f
-o
-r
- 
-e
-x
-a
-m
-p
-l
-e
- 
-`
-m
-0
-0
-2
-_
-o
-p
-e
-n
-_
-0
-1
-.
-w
-a
-v
-`
- 
-o
-r
- 
-`
-b
-k
-_
-j
-e
-g
-a
-_
-f
-_
-g
-r
-e
-e
-t
-_
-0
-1
-.
-w
-a
-v
-`
-.
-
-
--
- 
-*
-*
-M
-o
-o
-d
-:
-*
-*
- 
-h
-o
-w
- 
-t
-o
- 
-s
-a
-y
- 
-i
-t
-.
- 
-*
-w
-a
-r
-m
-*
- 
-f
-r
-i
-e
-n
-d
-l
-y
-,
- 
-*
-a
-m
-u
-s
-e
-d
-*
- 
-s
-m
-i
-l
-i
-n
-g
-,
- 
-*
-d
-r
-y
-*
- 
-d
-e
-a
-d
-p
-a
-n
-,
- 
-*
-s
-t
-e
-r
-n
-*
- 
-f
-i
-r
-m
-,
- 
-*
-s
-h
-a
-r
-p
-*
- 
-q
-u
-i
-c
-k
- 
-a
-n
-d
- 
-p
-o
-i
-n
-t
-e
-d
-,
- 
-*
-s
-h
-y
-*
- 
-s
-o
-f
-t
- 
-a
-n
-d
- 
-h
-e
-s
-i
-t
-a
-n
-t
-,
- 
-*
-p
-r
-o
-u
-d
-*
- 
-c
-h
-e
-s
-t
- 
-o
-u
-t
-,
- 
-*
-s
-c
-a
-r
-e
-d
-*
- 
-t
-e
-n
-s
-e
-,
- 
-*
-s
-a
-d
-*
- 
-l
-o
-w
-,
- 
-*
-e
-x
-c
-i
-t
-e
-d
-*
- 
-f
-a
-s
-t
- 
-a
-n
-d
- 
-b
-r
-i
-g
-h
-t
-,
- 
-*
-b
-o
-r
-e
-d
-*
- 
-f
-l
-a
-t
-,
- 
-*
-w
-h
-i
-s
-p
-e
-r
-*
- 
-q
-u
-i
-e
-t
- 
-b
-u
-t
- 
-c
-l
-e
-a
-r
-,
- 
-*
-n
-e
-u
-t
-r
-a
-l
-*
- 
-y
-o
-u
-r
- 
-n
-o
-r
-m
-a
-l
- 
-v
-o
-i
-c
-e
-.
-
-
--
- 
-*
-*
-C
-u
-e
-:
-*
-*
- 
-t
-h
-e
- 
-l
-i
-n
-e
- 
-s
-a
-i
-d
- 
-j
-u
-s
-t
- 
-b
-e
-f
-o
-r
-e
- 
-y
-o
-u
-r
-s
-,
- 
-s
-o
- 
-y
-o
-u
- 
-k
-n
-o
-w
- 
-t
-h
-e
- 
-m
-o
-m
-e
-n
-t
-.
- 
-D
-o
- 
-n
-o
-t
- 
-r
-e
-c
-o
-r
-d
- 
-t
-h
-e
- 
-c
-u
-e
-.
-
-
--
- 
-*
-*
-W
-o
-r
-d
-s
- 
-i
-n
- 
-[
-s
-q
-u
-a
-r
-e
- 
-b
-r
-a
-c
-k
-e
-t
-s
-]
-*
-*
- 
-a
-r
-e
- 
-t
-h
-e
- 
-E
-n
-g
-l
-i
-s
-h
- 
-t
-r
-a
-n
-s
-l
-a
-t
-i
-o
-n
-.
- 
-D
-o
- 
-n
-o
-t
- 
-s
-a
-y
- 
-t
-h
-e
-m
-.
-
-
--
- 
-`
-{
-{
-P
-L
-A
-Y
-E
-R
-_
-N
-A
-M
-E
-}
-}
-`
- 
-m
-e
-a
-n
-s
- 
-t
-h
-e
- 
-p
-l
-a
-y
-e
-r
-'
-s
- 
-n
-a
-m
-e
-:
- 
-l
-e
-a
-v
-e
- 
-a
- 
-s
-h
-o
-r
-t
- 
-n
-a
-t
-u
-r
-a
-l
- 
-p
-a
-u
-s
-e
- 
-t
-h
-e
-r
-e
- 
-i
-n
-s
-t
-e
-a
-d
- 
-o
-f
- 
-a
- 
-n
-a
-m
-e
-.
- 
-`
-{
-{
-R
-O
-O
-M
-I
-E
-}
-}
-`
- 
-i
-s
- 
-t
-h
-e
- 
-r
-o
-o
-m
-m
-a
-t
-e
-'
-s
- 
-n
-a
-m
-e
-:
- 
-s
-a
-y
- 
-"
-B
-a
-t
-u
-r
-e
-"
- 
-f
-o
-r
- 
-o
-n
-e
- 
-t
-a
-k
-e
- 
-a
-n
-d
- 
-"
-F
-i
-r
-d
-a
-u
-s
-i
-"
- 
-f
-o
-r
- 
-a
-n
-o
-t
-h
-e
-r
-,
- 
-o
-r
- 
-p
-a
-u
-s
-e
-.
-
-
--
- 
-*
-*
-B
-a
-r
-k
-s
-*
-*
- 
-(
-s
-e
-c
-t
-i
-o
-n
- 
-2
-)
- 
-a
-r
-e
- 
-s
-h
-o
-r
-t
- 
-l
-i
-n
-e
-s
- 
-h
-e
-a
-r
-d
- 
-i
-n
- 
-t
-h
-e
- 
-o
-p
-e
-n
- 
-w
-o
-r
-l
-d
-.
- 
-S
-a
-y
- 
-t
-h
-e
-m
- 
-a
-s
- 
-i
-f
- 
-s
-o
-m
-e
-o
-n
-e
- 
-j
-u
-s
-t
- 
-w
-a
-l
-k
-e
-d
- 
-p
-a
-s
-t
- 
-y
-o
-u
-.
-
-
-
-
-*
-*
-3
-.
- 
-R
-e
-c
-o
-r
-d
-.
-*
-*
-
-
--
- 
-S
-a
-y
- 
-e
-a
-c
-h
- 
-l
-i
-n
-e
- 
-*
-*
-t
-h
-r
-e
-e
- 
-t
-i
-m
-e
-s
-*
-*
-,
- 
-w
-i
-t
-h
- 
-a
- 
-o
-n
-e
--
-s
-e
-c
-o
-n
-d
- 
-s
-i
-l
-e
-n
-c
-e
- 
-b
-e
-f
-o
-r
-e
- 
-a
-n
-d
- 
-a
-f
-t
-e
-r
- 
-e
-a
-c
-h
- 
-t
-a
-k
-e
-.
- 
-W
-e
- 
-p
-i
-c
-k
- 
-t
-h
-e
- 
-b
-e
-s
-t
-.
-
-
--
- 
-I
-f
- 
-y
-o
-u
- 
-s
-t
-u
-m
-b
-l
-e
-,
- 
-j
-u
-s
-t
- 
-s
-a
-y
- 
-t
-h
-e
- 
-l
-i
-n
-e
- 
-a
-g
-a
-i
-n
-.
- 
-D
-o
- 
-n
-o
-t
- 
-s
-t
-o
-p
- 
-t
-h
-e
- 
-r
-e
-c
-o
-r
-d
-i
-n
-g
- 
-t
-o
- 
-d
-e
-l
-e
-t
-e
- 
-i
-t
-.
-
-
--
- 
-D
-r
-i
-n
-k
- 
-w
-a
-t
-e
-r
-,
- 
-t
-a
-k
-e
- 
-b
-r
-e
-a
-k
-s
- 
-e
-v
-e
-r
-y
- 
-2
-0
- 
-m
-i
-n
-u
-t
-e
-s
-,
- 
-a
-n
-d
- 
-s
-t
-o
-p
- 
-i
-f
- 
-y
-o
-u
-r
- 
-v
-o
-i
-c
-e
- 
-g
-e
-t
-s
- 
-t
-i
-r
-e
-d
-.
- 
-S
-h
-o
-u
-t
-i
-n
-g
- 
-l
-i
-n
-e
-s
- 
-l
-a
-s
-t
-.
-
-
--
- 
-I
-f
- 
-a
- 
-l
-i
-n
-e
- 
-d
-o
-e
-s
- 
-n
-o
-t
- 
-s
-o
-u
-n
-d
- 
-l
-i
-k
-e
- 
-y
-o
-u
-,
- 
-o
-r
- 
-a
- 
-p
-h
-r
-a
-s
-e
- 
-i
-n
- 
-a
-n
-o
-t
-h
-e
-r
- 
-l
-a
-n
-g
-u
-a
-g
-e
- 
-i
-s
- 
-w
-r
-o
-n
-g
-,
- 
-w
-r
-i
-t
-e
- 
-y
-o
-u
-r
- 
-v
-e
-r
-s
-i
-o
-n
- 
-d
-o
-w
-n
-.
- 
-E
-v
-e
-r
-y
- 
-l
-i
-n
-e
- 
-i
-s
- 
-a
- 
-d
-r
-a
-f
-t
- 
-a
-n
-d
- 
-w
-e
- 
-c
-h
-a
-n
-g
-e
- 
-i
-t
- 
-f
-o
-r
- 
-y
-o
-u
-.
-
-
-
-
-*
-*
-4
-.
- 
-S
-e
-n
-d
- 
-i
-t
- 
-b
-a
-c
-k
-.
-*
-*
-
-
--
- 
-P
-u
-t
- 
-a
-l
-l
- 
-y
-o
-u
-r
- 
-f
-i
-l
-e
-s
- 
-i
-n
- 
-o
-n
-e
- 
-f
-o
-l
-d
-e
-r
- 
-n
-a
-m
-e
-d
- 
-w
-i
-t
-h
- 
-y
-o
-u
-r
- 
-n
-a
-m
-e
- 
-a
-n
-d
- 
-c
-h
-a
-r
-a
-c
-t
-e
-r
- 
-(
-f
-o
-r
- 
-e
-x
-a
-m
-p
-l
-e
- 
-`
-A
-m
-i
-n
-a
-_
-J
-e
-g
-a
-`
-)
-.
-
-
--
- 
-S
-e
-n
-d
- 
-t
-h
-e
- 
-f
-o
-l
-d
-e
-r
-,
- 
-w
-i
-t
-h
- 
-t
-h
-e
- 
-s
-i
-g
-n
-e
-d
- 
-a
-g
-r
-e
-e
-m
-e
-n
-t
- 
-o
-n
- 
-t
-h
-e
- 
-l
-a
-s
-t
- 
-p
-a
-g
-e
-,
- 
-t
-o
- 
-t
-h
-e
- 
-p
-e
-r
-s
-o
-n
- 
-w
-h
-o
- 
-g
-a
-v
-e
- 
-y
-o
-u
- 
-t
-h
-i
-s
- 
-s
-c
-r
-i
-p
-t
- 
-(
-a
- 
-G
-o
-o
-g
-l
-e
- 
-D
-r
-i
-v
-e
- 
-o
-r
- 
-W
-e
-T
-r
-a
-n
-s
-f
-e
-r
- 
-l
-i
-n
-k
- 
-i
-s
- 
-e
-a
-s
-i
-e
-s
-t
-)
-.
-
-
--
- 
-A
-s
-k
- 
-a
-n
-y
-t
-h
-i
-n
-g
- 
-a
-t
- 
-a
-n
-y
- 
-t
-i
-m
-e
-.
- 
-T
-h
-e
-r
-e
- 
-i
-s
- 
-n
-o
- 
-d
-e
-a
-d
-l
-i
-n
-e
- 
-p
-r
-e
-s
-s
-u
-r
-e
-:
- 
-a
- 
-f
-e
-w
- 
-l
-i
-n
-e
-s
- 
-a
- 
-d
-a
-y
- 
-i
-s
- 
-p
-e
-r
-f
-e
-c
-t
-.
-
-
-## 1. Story lines (in story order)
-
-
-### M005 First Lecture, Wrong Theatre
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m005_mid1_04` | neutral | Shamsu: Good. Confusion is the first step. | With respect, ma. That sign should be negative. |
-| `m005_mid1_05` | proud | Nusaiba: With respect, ma. That sign should be negative. | I have three reasons. |
-
-### M012 Count Entropy
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m012_mid2_03` | stern | Shamsu: Technically, that is not possible. | Torches down, not in faces. Line up. NOW. |
-
-### M019 The Vice-Chancellor's Cup
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m019_open_01` | proud | — | Rule 14(c). I have three points and two deans. |
-
-### M027 Plug and Play
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m027_mid1_04` | stern | Good Shoes: Next month is fine. I am in no hurry at all. | The back is blank. Where is the warranty? |
-| `m027_mid1_06` | stern | Mubarak: It's understood. | And the supplier's name? |
-| `m027_mid1_08` | dry | Mubarak: Oga Sharp. | That is not a name. That is a review. |
-| `m027_mid1_09` | sharp | Nusaiba: That is not a name. That is a review. | I'm not saying 'I told you so' later. I'm saying it now. |
-
-### M031 Point of Order
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m031_open_01` | stern | — | My partner has malaria. You are junior counsel. |
-| `m031_open_02` | proud | The Player (every playable fresher): I'm an engineer. | The rules don't say which faculty. I checked. |
-| `m031_open_03` | stern | Nusaiba: The rules don't say which faculty. I checked. | Three authorities by one o'clock. Can you read fast? |
-| `m031_mid1_01` | whisper | — | 'For the traders of Gidan Kwari…' |
-| `m031_mid1_02` | whisper | Nusaiba: 'For the traders of Gidan Kwari…' | '…and for the gathering of people, in perpetuity.' |
-| `m031_mid1_03` | stern | The Player (every playable fresher): Where people gather. | I'm not angry. I'm drafting. |
-| `m031_close_03` | amused | Dr. Minus: Minus two, Miss Nusaiba. For confidence. | Minus two. And today's date. Thank you, my lord. |
-| `m031_close_04` | neutral | Nusaiba: Minus two. And today's date. Thank you, my lord. | He's not stupid. He's careful. And afraid. |
-| `m031_close_05` | stern | Nusaiba: He's not stupid. He's careful. And afraid. | The land was never ours to let for that. |
-| `m031_close_06` | warm | Nusaiba: The land was never ours to let for that. | Keep the copy somewhere dry. |
-
-### M035 Test Week Twist
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m035_mid2_01` | sharp | — | Who talked? I want a name and a date. |
-
-### M043 The Plan
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m043_open_04` | stern | Mubarak: …A midnight flash sale. Purely as a business. | I'm not going in. Someone must be able to say so. |
-| `m043_open_05` | neutral | Nusaiba: I'm not going in. Someone must be able to say so. | There will be a hearing. I'm preparing for it now. |
-
-### M045 Mubarak's Crash
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m045_close_03` | warm | Hajiya Ladi: And you sell nothing you have not plugged in yourself. | I came to say I told you so. Sign here instead. |
-| `m045_close_04` | dry | Nusaiba: I came to say I told you so. Sign here instead. | It has a back page. |
-
-### M046 The Hearing
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m046_open_03` | proud | Vice Chancellor: The student has brought… a friend. | The rules permit a friend. They do not say 'silent'. |
-| `m046_mid1_01` | proud | — | I have three points. |
-| `m046_mid1_03` | stern | Vice Chancellor: Of course you do. | 'For the gathering of people, in perpetuity.' |
-| `m046_mid1_04` | neutral | Nusaiba: 'For the gathering of people, in perpetuity.' | A condition nobody read. |
-| `m046_close_06` | proud | Dean Law: It was never ours to keep. It was ours to earn. | Three. Seven to go. Who is taking minutes? |
-
-### M049 Three Hundred
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m049_mid1_03` | dry | Shamsu: The controller is the mother who says no. | Who is taking minutes? |
-
-### M050 Indefinite
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m050_open_03` | neutral | Sadiya: Order! Comrades! One comrade at a time! | I have a motion. In writing. Carry these. |
-
-### M060 The Old Site
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m060_open_04` | neutral | {{ROOMIE}} (Bature and Firdausi): Seven chairs. Six gave up. I relate to the six. | Touch nothing. …Fine. Touch the tins. |
-| `m060_mid1_01` | neutral | — | Fragment nine goes before four. Play it again. |
-| `m060_close_02` | stern | Shamsu: It doesn't say 'not you'. | It doesn't say 'you'. We know who it means. |
-
-### M061 The Maker's Secret
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m061_mid1_06` | warm | The Maker: I have been perambulating the perimeter of my own procrastination. | You've been stuck. |
-| `m061_close_03` | whisper | Shamsu: Who are you all staring at? | …I thought I saw someone. |
-
-### M062 The Study Group
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m062_mid1_05` | warm | Shamsu: In sha Allah, you will pass. | Minuted. With respect. A great deal of it. |
-
-### M068 Padlock Receipts
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m068_mid1_01` | neutral | — | Refused on the ninth. Locks bought on the twelfth. |
-| `m068_mid1_02` | stern | Nusaiba: Refused on the ninth. Locks bought on the twelfth. | Nothing illegal happened. |
-| `m068_mid1_03` | sharp | Nusaiba: Nothing illegal happened. | Do you know how angry that makes me? Nothing to cite. |
-| `m068_mid1_04` | neutral | Jiya: Facts are ruder than adjectives. Use the facts. | Fine. We don't cite. We describe. Put it in writing. |
-| `m068_close_03` | stern | Hajiya Ladi: More than you owed. Less than you think. | Somebody has to be in the room when it's decided. |
-| `m068_close_04` | neutral | Nusaiba: Somebody has to be in the room when it's decided. | Fine. I'll run. |
-| `m068_close_05` | warm | The Player (every playable fresher): Who is taking minutes? | You are. You always were. |
-
-### M079 Manifesto
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m079_open_01` | stern | — | Point one: I'm running. Point two: you're my campaign. |
-| `m079_open_02` | dry | Nusaiba: Point one: I'm running. Point two: you're my campaign. | Point three will hurt. We have until tonight. |
-| `m079_open_03` | neutral | The Player (every playable fresher): What's the budget? | Four thousand naira and you. |
-| `m079_mid1_02` | neutral | Dr. Minus: I trust this hobby will not affect my course. | With respect, sir, and I'm choosing that word… |
-| `m079_mid1_03` | dry | Nusaiba: With respect, sir, and I'm choosing that word… | …it is your course. I'm doing the practical. |
-| `m079_mid1_05` | stern | The Player (every playable fresher): Minus two from what? | I'm writing it down. With the date. |
-| `m079_close_01` | stern | The Player (every playable fresher): All ten. Even Medicine. | I'm not angry. I'm drafting. |
-
-### M083 Proof of Work
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m083_mid1_03` | shy | Lyzzy: So this time, you check. Here is how. | Point three. I doubted you. For about an hour. |
-| `m083_mid1_04` | warm | Nusaiba: Point three. I doubted you. For about an hour. | I'm sorry for the hour. |
-
-### M085 Election Day
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m085_open_02` | whisper | Lyzzy: Live in five, four… | Are you in my ear? |
-| `m085_mid1_07` | amused | Muktar: Point of order: minute that I lost gracefully. | Minuted. Who is taking minutes? …You are. |
-| `m085_close_02` | neutral | Dr. Minus: Congratulations. Your examination is in May. | …Noted. With the date. |
-
-### M100 The Missing Script
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m100_open_01` | neutral | — | Wait. Look again. |
-| `m100_open_03` | stern | Muktar: Point of order. You are the president. Just call. | If I use the office for me, I can never use it for anyone. |
-| `m100_open_04` | neutral | Nusaiba: If I use the office for me, I can never use it for anyone. | We do it the long way. Who is taking minutes? |
-| `m100_mid2_06` | neutral | Dean Law: The mark stands. Eighty-one. | Thank you. I'd like the marking scheme, please. |
-| `m100_mid2_07` | dry | Nusaiba: Thank you. I'd like the marking scheme, please. | I think it's 83. |
-| `m100_close_02` | warm | Dr. Minus: Plus two. For conduct. | Put it in writing. …I'll do it myself. |
-
-### M101 Sixth Site (Heist 3)
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m101_open_02` | dry | Muktar: Legend. Scale. And here: 'Point of order: you are here.' | I am minuting that this map is good. Once. |
-| `m101_close_01` | whisper | — | No dust on the bell. Somebody cleans that. |
-
-### M106 Everybody, Again
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m106_open_03` | whisper | Muktar: Point of order: half of Senate is in Yamma. | Point one. Say it plainly. They came to hear it. |
-| `m106_close_05` | neutral | The Maker: Everybody came. | Wait. Look again. Ten seals. Six coils. |
-| `m106_close_06` | neutral | Nusaiba: Wait. Look again. Ten seals. Six coils. | The garden has seven spaces. So what goes there? |
-
-### M114 The Ten Seals
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m114_mid2_01` | neutral | Jiya: Dated correctly this time. Lovely drafting. Off you go. | Point one. A right of way, for the carrying of light. |
-| `m114_mid2_02` | stern | Nusaiba: Point one. A right of way, for the carrying of light. | Point two. In perpetuity. Point three: we asked. |
-| `m114_mid2_05` | proud | Bature: Arts. Riddle me this: no. Not now. Just… here. | Law. Put it in writing: we knocked. |
-
-### M115 Chancellor Null
-
-| Id | Mood | Cue | Line |
-|---|---|---|---|
-| `m115_mid1_04` | stern | Shamsu: Technically, I never left. | Point one. I'm here. |
-
-## 2. Barks, filler and replies
-
-These are said in the open world, not in cutscenes: greetings, replies in choice wheels, reactions, and lines that change with the year and the calendar.
-
-
-### Filler
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_f_greet_01` | greet | warm | Ah. You. Good. I have a job for you. | — |
-| `bk_nusaiba_f_greet_02` | greet | neutral | Morning. You're on time. I'm noting it. | — |
-| `bk_nusaiba_f_greet_03` | greet | dry | You're late. Not to anything. Generally. | — |
-| `bk_nusaiba_f_greet_04` | greet | warm | Sannu. [Hello.] Have you eaten, or shall I minute that too? | — |
-| `bk_nusaiba_f_greet_05` | greet | amused | There you are. Point one: hello. | — |
-| `bk_nusaiba_f_greet_06` | greet | neutral | Hello. Who upset you? Don't say nobody. Your shoulders said somebody. | — |
-| `bk_nusaiba_f_bye_01` | bye | neutral | Go. And put it in writing. | — |
-| `bk_nusaiba_f_bye_02` | bye | warm | Safe journey. Text me when you arrive. Not a voice note. | — |
-| `bk_nusaiba_f_bye_03` | bye | dry | Meeting adjourned. | — |
-| `bk_nusaiba_f_bye_04` | bye | warm | Sai anjima. [See you later.] Bring the folder. | — |
-| `bk_nusaiba_f_thanks_01` | thanks | warm | Thank you. Minuted, with gratitude. | — |
-| `bk_nusaiba_f_thanks_02` | thanks | proud | Noted. You were useful. Don't let it go to your head. | — |
-| `bk_nusaiba_f_thanks_03` | thanks | warm | Na gode. [Thank you.] Truly. Point one, and the only point. | — |
-| `bk_nusaiba_f_sorry_01` | sorry | shy | I was wrong. Point one. There is no point two. | — |
-| `bk_nusaiba_f_sorry_02` | sorry | neutral | I apologise. In writing, if you need it. | — |
-| `bk_nusaiba_f_sorry_03` | sorry | sad | Sorry. I organised you again, didn't I? | — |
-| `bk_nusaiba_f_compliment_01` | compliment | warm | That was clear. I love clear. | — |
-| `bk_nusaiba_f_compliment_02` | compliment | proud | You argued that well. Who taught you? …Me. Good. | — |
-| `bk_nusaiba_f_compliment_03` | compliment | amused | Look at you, holding a folder like a professional. | — |
-| `bk_nusaiba_f_compliment_04` | compliment | warm | You were scared and you came anyway. That's the whole job. | — |
-| `bk_nusaiba_f_tease_01` | tease | dry | Your shirt has an opinion. Overruled. | — |
-| `bk_nusaiba_f_tease_02` | tease | amused | You said 'like' four times. I counted. I always count. | — |
-| `bk_nusaiba_f_tease_03` | tease | sharp | Objection. That excuse is irrelevant. And also bad. | — |
-| `bk_nusaiba_f_tease_04` | tease | dry | You're not lying. You're telling the truth very, very slowly. | — |
-| `bk_nusaiba_f_follow_01` | follow | stern | Keep up. Ideas don't wait, and neither do I. | — |
-| `bk_nusaiba_f_follow_02` | follow | neutral | Walk and talk. Point one, while we cross. | — |
-| `bk_nusaiba_f_follow_03` | follow | warm | Stay on my left. I click the pen on the right. | — |
-| `bk_nusaiba_f_wait_01` | wait | stern | I'm timing you. Not a threat. Data. | — |
-| `bk_nusaiba_f_wait_02` | wait | sharp | Every minute you're late, I draft a sentence about you. | — |
-| `bk_nusaiba_f_wait_03` | wait | dry | The Amana Clock stopped. You don't have that excuse. | — |
-| `bk_nusaiba_f_wait_04` | wait | neutral | You weren't late. You were outside, deciding. Come in. | — |
-| `bk_nusaiba_f_lost_01` | lost | sharp | Wrong way. The law library is the other side. | — |
-| `bk_nusaiba_f_lost_02` | lost | neutral | Wait. Look again. That's Yamma, not Gabas. | — |
-| `bk_nusaiba_f_yes_01` | yes | neutral | Yes. Unanimous. One vote, mine. | — |
-| `bk_nusaiba_f_yes_02` | yes | proud | Agreed. Put it in writing. | — |
-| `bk_nusaiba_f_yes_03` | yes | warm | Yes. Obviously. Why are you still asking? | — |
-| `bk_nusaiba_f_no_01` | no | stern | No. With respect. A great deal of it. | — |
-| `bk_nusaiba_f_no_02` | no | sharp | No. And I have three reasons. | — |
-| `bk_nusaiba_f_no_03` | no | dry | Motion denied. | — |
-| `bk_nusaiba_f_maybe_01` | maybe | neutral | Possibly. I'll need it in writing first. | — |
-| `bk_nusaiba_f_maybe_02` | maybe | dry | Maybe. Let me click on it. | — |
-| `bk_nusaiba_f_confused_01` | confused | neutral | Wait. Look again. …No, I still don't understand. | — |
-| `bk_nusaiba_f_confused_02` | confused | neutral | Rephrase that. Slowly. As if to a judge. | — |
-| `bk_nusaiba_f_confused_03` | confused | neutral | Your mouth said yes. Your feet said no. Which one do I minute? | — |
-| `bk_nusaiba_f_agree_01` | agree | warm | Seconded. Carried. | — |
-| `bk_nusaiba_f_agree_02` | agree | proud | Finally, someone reasonable. Me. And now you. | — |
-| `bk_nusaiba_f_refuse_01` | refuse | stern | I will not. I've read the rules. Have you? | — |
-| `bk_nusaiba_f_refuse_02` | refuse | sharp | Not without a receipt. | — |
-| `bk_nusaiba_f_joke_01` | joke | amused | I have three jokes. The third one will hurt. | — |
-| `bk_nusaiba_f_joke_02` | joke | amused | My love language is a numbered list. | — |
-| `bk_nusaiba_f_ask_01` | ask | neutral | Quick question. Who is taking minutes? | — |
-| `bk_nusaiba_f_ask_02` | ask | sharp | Did you read it, or did you 'see it'? | — |
-| `bk_nusaiba_f_ask_03` | ask | neutral | Source? 'Somebody said' is not a source. | — |
-| `bk_nusaiba_f_ask_04` | ask | stern | You're not tired. You're embarrassed. Sit. | — |
-| `bk_nusaiba_f_ask_05` | ask | sharp | You rehearsed that answer. Give me the real one. | — |
-| `bk_nusaiba_f_hit_01` | hit | sharp | Excuse me. That was assault on a folder. | — |
-| `bk_nusaiba_f_hit_02` | hit | dry | I'm fine. The papers are not. Pick them up. | — |
-| `bk_nusaiba_f_fall_01` | fall | stern | Nobody saw that. Nobody minuted that. | — |
-| `bk_nusaiba_f_win_01` | win | proud | As I submitted. | — |
-| `bk_nusaiba_f_win_02` | win | excited | Point one, point two, point three: YES! | — |
-| `bk_nusaiba_f_lose_01` | lose | sad | We lost. We appeal. Not today. Tomorrow. | — |
-| `bk_nusaiba_f_lose_02` | lose | stern | Fine. Noted. With the date. | — |
-| `bk_nusaiba_f_blackout_01` | blackout | dry | NEPA. Again. I'm drafting a letter to the darkness. | — |
-| `bk_nusaiba_f_blackout_02` | blackout | stern | Torches down, not in faces. You know the drill. | — |
-| `bk_nusaiba_f_blackout_03` | blackout | dry | Light gone. My laptop is on forty per cent. So am I. | — |
-| `bk_nusaiba_f_light_back_01` | light_back | excited | Light! Charge in order of urgency. Me first. | — |
-| `bk_nusaiba_f_light_back_02` | light_back | dry | NEPA has returned. Minute it. It won't last. | — |
-| `bk_nusaiba_f_rain_01` | rain | stern | Folder under the shirt. Priorities. | — |
-| `bk_nusaiba_f_rain_02` | rain | neutral | Rain. Lectures will be empty. I'll still go. | — |
-| `bk_nusaiba_f_heat_01` | heat | dry | This heat should be taken to court. | — |
-| `bk_nusaiba_f_heat_02` | heat | neutral | Drink water. Zainab will ask. She always asks. | — |
-| `bk_nusaiba_f_food_01` | food | warm | Mama Nkechi's jollof. Exhibit A for happiness. | — |
-| `bk_nusaiba_f_food_02` | food | dry | Garri again? It's giving 'end of the month'. | — |
-| `bk_nusaiba_f_food_03` | food | warm | You've said 'I'm fine' twice and eaten nothing. Eat. Then be fine. | — |
-| `bk_nusaiba_f_money_01` | money | dry | Sapa has entered the chat. I've asked it to leave. | — |
-| `bk_nusaiba_f_money_02` | money | dry | My account balance is 'pending further review'. | — |
-| `bk_nusaiba_f_money_03` | money | warm | Water only, and 'not hungry'? Sit. My treat. Minuted, then forgotten. | — |
-| `bk_nusaiba_f_gift_like_01` | gift_like | warm | Pens! The good ones. You know me. | — |
-| `bk_nusaiba_f_gift_like_02` | gift_like | warm | Thank you. I'll keep this somewhere dry. | — |
-| `bk_nusaiba_f_gift_dislike_01` | gift_dislike | neutral | It's… a choice. I respect choices. Mostly. | — |
-| `bk_nusaiba_f_gift_dislike_02` | gift_dislike | dry | Thank you. I'll find a committee that needs this. | — |
-| `bk_nusaiba_f_gift_love_01` | gift_love | excited | A ring binder? Colour tabs? You absolutely know me. | — |
-| `bk_nusaiba_f_gift_love_02` | gift_love | shy | You remembered. Nobody remembers. …Thank you. | — |
-| `bk_nusaiba_f_idle_01` | idle | neutral | Point one… no. Point one should be point three. | — |
-| `bk_nusaiba_f_idle_02` | idle | dry | Who scheduled two meetings at four? …Me. Of course. | — |
-| `bk_nusaiba_f_idle_03` | idle | neutral | Click. Click. Click. Fine. That's the argument. | — |
-| `bk_nusaiba_f_idle_04` | idle | amused | I'm not bossy. I'm early to everyone's decisions. | — |
-| `bk_nusaiba_f_idle_05` | idle | whisper | He's laughing too loudly. Something's wrong. I'll ask him later. | — |
-| `bk_nusaiba_f_night_01` | night | neutral | It's late. Walk on the lit side of the ring road. | — |
-| `bk_nusaiba_f_night_02` | night | dry | Still drafting. The moon is my only reviewer. | — |
-| `bk_nusaiba_f_night_03` | night | warm | You keep checking your phone. Call home. Then sleep. | — |
-
-### Year 1
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_y1_greet_01` | greet | warm | Fresher! Welcome. Here's a form. Here's another form. | — |
-| `bk_nusaiba_y1_greet_02` | greet | amused | You're the Engineering one. The wrong theatre one. | — |
-| `bk_nusaiba_y1_idle_01` | idle | dry | Every year, freshers walk into Yamma for a Gabas lecture. | — |
-| `bk_nusaiba_y1_idle_02` | idle | proud | Class rep. I volunteered before they finished the sentence. | — |
-| `bk_nusaiba_y1_idle_03` | idle | neutral | Registration has fourteen stamps. I made a chart. | — |
-| `bk_nusaiba_y1_idle_04` | idle | dry | I made a timetable for my timetable. | — |
-| `bk_nusaiba_y1_idle_05` | idle | sharp | The Spot queue. Organised by nobody. It physically hurts me. | — |
-| `bk_nusaiba_y1_idle_06` | idle | neutral | The Amana Clock says 6:06. It said that yesterday too. | — |
-| `bk_nusaiba_y1_idle_07` | idle | neutral | Shamsu says 'Simple.' Nothing that man says is simple. | — |
-| `bk_nusaiba_y1_idle_08` | idle | dry | Jega asked me the time. I gave him a schedule. | — |
-| `bk_nusaiba_y1_idle_09` | idle | neutral | That fresher smiles at everyone and calls no one. I'll walk with her. | — |
-| `bk_nusaiba_y1_callback_01` | callback | proud | With respect, ma: that sign WAS negative. I checked again. | m005_done |
-| `bk_nusaiba_y1_callback_02` | callback | amused | Mubarak sold you that gown? Show me the receipt. …Oh dear. | m004_done |
-| `bk_nusaiba_y1_callback_03` | callback | warm | Torches down, not in faces. You remembered. I'm moved. | m012_done |
-| `bk_nusaiba_y1_callback_04` | callback | neutral | Rule 14(c). I'd cite it again. I'll cite it forever. | m019_done |
-| `bk_nusaiba_y1_callback_05` | callback | excited | Everybody signed. EVERYBODY. I'd frame that list. | m022_done |
-| `bk_nusaiba_y1_tease_01` | tease | dry | Engineering? You people only argue with numbers. | — |
-| `bk_nusaiba_y1_tease_02` | tease | amused | You read the timetable upside down. Twice. I watched. | — |
-| `bk_nusaiba_y1_night_01` | night | dry | Lights out at the hall. My lamp, unfortunately, is in. | — |
-| `bk_nusaiba_y1_ev_exam_01` | ev_exam | neutral | Test week. I've colour-coded my panic. | — |
-| `bk_nusaiba_y1_ev_exam_02` | ev_exam | stern | Read the question twice. Then a third time, angrily. | — |
-| `bk_nusaiba_y1_ev_results_01` | ev_results | warm | Results are up. You passed. I knew. I made a spreadsheet. | — |
-| `bk_nusaiba_y1_sorry_01` | sorry | warm | First semester is hard. Hard is not the same as wrong. | — |
-| `bk_nusaiba_y1_sorry_02` | sorry | warm | You want to go home. I know that face. Unpack one thing tonight. | — |
-
-### Year 2
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_y2_greet_01` | greet | amused | Junior counsel! Can you read fast today? | — |
-| `bk_nusaiba_y2_idle_01` | idle | neutral | Moot court on Friday. My partner has malaria. Again. | — |
-| `bk_nusaiba_y2_idle_02` | idle | dry | Kwari Mall. Lovely lights. Who exactly is paying for them? | — |
-| `bk_nusaiba_y2_idle_03` | idle | proud | I read the whole lease. Yes, the whole lease. For fun. | — |
-| `bk_nusaiba_y2_idle_04` | idle | dry | Mubarak wants a contract reviewed. For 'exposure'. | — |
-| `bk_nusaiba_y2_idle_05` | idle | amused | Dr. Minus took two marks for confidence. I have more. | — |
-| `bk_nusaiba_y2_idle_06` | idle | neutral | Dr. Minus: fair, strict, wrong. Two out of three. | — |
-| `bk_nusaiba_y2_idle_07` | idle | proud | Hajiya Ladi asked for my card. I've never been prouder. | — |
-| `bk_nusaiba_y2_idle_08` | idle | dry | He said 'last price' and looked left. It's not the last price. | — |
-| `bk_nusaiba_y2_idle_09` | idle | sharp | Mubarak's smiling. Mubarak smiles when he owes someone. Who? | — |
-| `bk_nusaiba_y2_callback_01` | callback | dry | That power bank. Where was the warranty? Exactly. | m027_done |
-| `bk_nusaiba_y2_callback_02` | callback | warm | My two favourite words: 'in perpetuity'. | m031_done |
-| `bk_nusaiba_y2_callback_03` | callback | proud | Junior counsel. You were good. Don't make it weird. | m031_done |
-| `bk_nusaiba_y2_callback_04` | callback | sharp | Who talked? I'm not asking. I'm just… remembering. | m035_done |
-| `bk_nusaiba_y2_callback_05` | callback | neutral | I wasn't there. I can say so. Under oath. | m044_done |
-| `bk_nusaiba_y2_callback_06` | callback | excited | Mubarak signed a ledger. My life has meaning. | m045_done |
-| `bk_nusaiba_y2_callback_07` | callback | proud | The rules permit a friend. They never said 'silent'. | m046_done |
-| `bk_nusaiba_y2_callback_08` | callback | neutral | Three seals. Seven to go. I'm keeping count. | m046_done |
-| `bk_nusaiba_y2_tease_01` | tease | amused | Second year and still in the wrong theatre? Faaa. | — |
-| `bk_nusaiba_y2_tease_02` | tease | dry | Your file is thicker than my textbook. Impressive. | — |
-| `bk_nusaiba_y2_night_01` | night | dry | The mall is blazing. Our corridor has one bulb. Noted. | — |
-| `bk_nusaiba_y2_night_02` | night | neutral | Night reading. The moot doesn't care that NEPA left. | — |
-| `bk_nusaiba_y2_ev_exam_01` | ev_exam | dry | Exam in May. Lease in my bag. Sleep in my dreams. | — |
-
-### Year 3
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_y3_greet_01` | greet | warm | Still here? Good. Those who stayed get first pick of chairs. | — |
-| `bk_nusaiba_y3_idle_01` | idle | dry | Indefinite. That's not a date. That's a drafting error. | — |
-| `bk_nusaiba_y3_idle_02` | idle | sad | The motion is ready. Nobody's here to second it. | — |
-| `bk_nusaiba_y3_idle_03` | idle | neutral | Empty halls. Even my pen click sounds lonely. | — |
-| `bk_nusaiba_y3_idle_04` | idle | dry | I'm reading ahead. Ahead of what? Unclear. | — |
-| `bk_nusaiba_y3_idle_05` | idle | neutral | Somebody has to be in the room. I keep thinking that. | — |
-| `bk_nusaiba_y3_idle_06` | idle | dry | Shamsu explains. I argue. The strike listens to neither. | — |
-| `bk_nusaiba_y3_idle_07` | idle | amused | Aleeya made me laugh in a meeting. I've filed a complaint. | — |
-| `bk_nusaiba_y3_idle_08` | idle | amused | Garri economics: one cup, three people, a constitution. | — |
-| `bk_nusaiba_y3_idle_09` | idle | sad | Everyone says they're 'resting'. Half of them are hungry. Count the plates. | — |
-| `bk_nusaiba_y3_callback_01` | callback | dry | I had a motion. In writing. The bus left anyway. | m050_done |
-| `bk_nusaiba_y3_callback_02` | callback | neutral | Mubarak's Sapa Combo needs a contract. I've drafted one. | m052_done |
-| `bk_nusaiba_y3_callback_03` | callback | warm | You teach at Demo now. Point one: you're good at it. | m053_done |
-| `bk_nusaiba_y3_callback_04` | callback | neutral | Fragment nine before four. I still dream in tape hiss. | m060_done |
-| `bk_nusaiba_y3_callback_05` | callback | dry | Touch nothing at the Old Site. …Fine. The tins. | m060_done |
-| `bk_nusaiba_y3_callback_06` | callback | warm | The study group was minuted. With respect. A great deal. | m062_done |
-| `bk_nusaiba_y3_callback_07` | callback | stern | Refused on the ninth. Bought on the twelfth. I remember. | m068_done |
-| `bk_nusaiba_y3_callback_08` | callback | shy | I said I'll run. I keep pretending I didn't. It's not working. | m068_done |
-| `bk_nusaiba_y3_callback_09` | callback | warm | You're taking minutes. You always were. | m068_done |
-| `bk_nusaiba_y3_tease_01` | tease | amused | Four days of garri. I can tell. It's in your face. | — |
-| `bk_nusaiba_y3_tease_02` | tease | dry | Strike? Then read something. Anything. A label. | — |
-| `bk_nusaiba_y3_night_01` | night | neutral | No lectures. No light. Just me and a petition. | — |
-| `bk_nusaiba_y3_night_02` | night | dry | The strike is quiet at night. I hate quiet. It's unminuted. | — |
-| `bk_nusaiba_y3_ask_01` | ask | warm | You're angry about the strike. You're scared of the gap. Say the second one. | — |
-
-### Year 4
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_y4_greet_01` | greet | amused | Vote— sorry. Hello. Reflex. | — |
-| `bk_nusaiba_y4_greet_02` | greet | proud | Hello. The President is greeting you. Feel honoured. | m085_done |
-| `bk_nusaiba_y4_idle_01` | idle | neutral | Manifesto, page one. Draft eleven. Still page one. | — |
-| `bk_nusaiba_y4_idle_02` | idle | amused | Muktar called a point of order on my breakfast. | — |
-| `bk_nusaiba_y4_idle_03` | idle | dry | Somebody draws a cape on every poster. Who? …Good capes. | — |
-| `bk_nusaiba_y4_idle_04` | idle | proud | Debate tonight. I have three points. They all hurt. | — |
-| `bk_nusaiba_y4_idle_05` | idle | dry | Dr. Minus calls it a hobby. My hobby has polling units. | — |
-| `bk_nusaiba_y4_idle_06` | idle | sharp | Lucky wants a collab. I want a policy. We are not the same. | — |
-| `bk_nusaiba_y4_idle_07` | idle | proud | Lyzzy checks her sources now. I've never been prouder. | — |
-| `bk_nusaiba_y4_callback_01` | callback | stern | Point two: you're my campaign. Still true. | m079_done |
-| `bk_nusaiba_y4_callback_02` | callback | warm | That clip wasn't me. You checked. Thank you for checking. | m082_done |
-| `bk_nusaiba_y4_callback_03` | callback | shy | I doubted you for an hour. I'm still sorry for the hour. | m083_done |
-| `bk_nusaiba_y4_callback_04` | callback | excited | President. Say it again. …No, don't. I'll cry. | m085_done |
-| `bk_nusaiba_y4_callback_05` | callback | dry | 'Your examination is in May.' I wrote it down. | m085_done |
-| `bk_nusaiba_y4_callback_06` | callback | amused | Muktar lost gracefully. I minuted it. Twice. | m085_done |
-| `bk_nusaiba_y4_tease_01` | tease | dry | You campaigned in slippers. We won anyway. Barely. | — |
-| `bk_nusaiba_y4_tease_02` | tease | amused | You handed out my flyers upside down. Very disruptive. | — |
-| `bk_nusaiba_y4_night_01` | night | neutral | Count at midnight. Recount at one. Joy at two. | — |
-| `bk_nusaiba_y4_night_02` | night | dry | Night at the SUG office. The fan works. Sometimes. | — |
-| `bk_nusaiba_y4_idle_08` | idle | neutral | Point one: rest is a policy. I'm drafting it. Not taking it. | — |
-| `bk_nusaiba_y4_idle_09` | idle | sharp | Wait. Look again. That's not my face on that clip. | — |
-| `bk_nusaiba_y4_idle_10` | idle | neutral | Muktar touches his collar before a weak point. Don't tell him I know. | — |
-| `bk_nusaiba_y4_idle_11` | idle | dry | Wednesday. I still can't read her. It's honestly insulting. | — |
-
-### Year 5
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_y5_greet_01` | greet | excited | Senior! Look at you. Look at us. | — |
-| `bk_nusaiba_y5_greet_02` | greet | warm | Final year, and you still greet me like a fresher. Good. | — |
-| `bk_nusaiba_y5_idle_01` | idle | dry | Final year. My project is a hundred pages. My nails are gone. | — |
-| `bk_nusaiba_y5_idle_02` | idle | proud | As President, I queue like everyone. That's the point. | — |
-| `bk_nusaiba_y5_idle_03` | idle | neutral | My script is 'missing'. I'm composed. I'm composing. | — |
-| `bk_nusaiba_y5_idle_04` | idle | warm | Handing over soon. My successor needs a folder. And a pen. | — |
-| `bk_nusaiba_y5_idle_05` | idle | amused | Dinner night seating chart. It has its own seating chart. | — |
-| `bk_nusaiba_y5_idle_06` | idle | sad | Five years. I've minuted all of them. Mostly yours. | — |
-| `bk_nusaiba_y5_idle_07` | idle | neutral | Who takes minutes after us? …They'll learn. | — |
-| `bk_nusaiba_y5_idle_08` | idle | dry | Defence next week. I've filed objections to my own project. | — |
-| `bk_nusaiba_y5_idle_09` | idle | warm | You're not calm. You're numb. Different. Sit with me. | — |
-| `bk_nusaiba_y5_callback_01` | callback | dry | Eighty-one. I think it's eighty-three. I'm still asking. | m100_done |
-| `bk_nusaiba_y5_callback_02` | callback | proud | 'Plus two. For conduct.' Written down. With the date. | m100_done |
-| `bk_nusaiba_y5_callback_03` | callback | stern | If I use the office for me, I can't use it for anyone. | m100_done |
-| `bk_nusaiba_y5_callback_04` | callback | amused | That map was good. I minuted it. Once. | m101_done |
-| `bk_nusaiba_y5_callback_05` | callback | whisper | No dust on the bell. Somebody cleans it. Who? | m101_done |
-| `bk_nusaiba_y5_callback_06` | callback | proud | Everybody came. Say it plainly: everybody. | m106_done |
-| `bk_nusaiba_y5_callback_07` | callback | amused | You were on time to dinner. I'm framing the menu. | m109_done |
-| `bk_nusaiba_y5_callback_08` | callback | proud | Put it in writing: we knocked. | m114_done |
-| `bk_nusaiba_y5_tease_01` | tease | dry | That project title is thirty-one words. Trim. | — |
-| `bk_nusaiba_y5_night_01` | night | warm | Last nights in the law library. I'm sentimental. Briefly. | — |
-
-### Post-game
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_post_idle_01` | idle | proud | Point one: I'm a lawyer now. Point two: still your friend. | — |
-| `bk_nusaiba_post_idle_02` | idle | warm | Called to the Bar. My mother cried. I minuted it. | — |
-| `bk_nusaiba_post_idle_03` | idle | neutral | Homecoming. I've made a list. You're on it. Twice. | — |
-| `bk_nusaiba_post_idle_04` | idle | amused | New freshers still walk into Yamma. Some things are eternal. | — |
-
-### Events
-
-| Id | Kind | Mood | Line | When |
-|---|---|---|---|---|
-| `bk_nusaiba_ev_ev_freshers_01` | ev_freshers | stern | Freshers! Forms on the left. Questions on the right. Panic outside. | — |
-| `bk_nusaiba_ev_ev_freshers_02` | ev_freshers | dry | Welcome. Don't buy a gown from anyone named Mubarak. | — |
-| `bk_nusaiba_ev_ev_exam_01` | ev_exam | neutral | Exam week. I've stopped speaking in sentences. Only points. | — |
-| `bk_nusaiba_ev_ev_exam_02` | ev_exam | stern | Answer the question. Not a different, nicer question. | — |
-| `bk_nusaiba_ev_ev_results_01` | ev_results | warm | Results are up. Breathe first. Then read. | — |
-| `bk_nusaiba_ev_ev_results_02` | ev_results | warm | It's one number. It is not your name. | — |
-| `bk_nusaiba_ev_ev_strike_01` | ev_strike | dry | 'Indefinite'? Define it. In writing. | — |
-| `bk_nusaiba_ev_ev_strike_02` | ev_strike | sharp | Strike motion. Second it. Somebody. Anybody. | — |
-| `bk_nusaiba_ev_ev_ramadan_01` | ev_ramadan | dry | Iftar in twenty minutes. Do not say 'suya' near me. | — |
-| `bk_nusaiba_ev_ev_ramadan_02` | ev_ramadan | warm | Ramadan Mubarak. My meetings are shorter. You're welcome. | — |
-| `bk_nusaiba_ev_ev_christmas_01` | ev_christmas | warm | Merry Christmas! The SUG has small chops. I counted them. | — |
-| `bk_nusaiba_ev_ev_cup_01` | ev_cup | neutral | Rule 14(c). Highlighted. Just in case. | — |
-| `bk_nusaiba_ev_ev_cup_02` | ev_cup | amused | Law has a team? Law has a team. We lose politely. | — |
-| `bk_nusaiba_ev_ev_elections_01` | ev_elections | stern | Vote. Not for me. Okay, for me. But vote. | — |
-| `bk_nusaiba_ev_ev_elections_02` | ev_elections | neutral | Point one: polling unit. Point two: your card. Point three: go. | — |
-| `bk_nusaiba_ev_ev_elections_03` | ev_elections | sharp | No buying votes. Not even with suya. Especially suya. | — |
-| `bk_nusaiba_ev_ev_elections_04` | ev_elections | amused | Muktar says 'point of order'. I say 'point one'. It's war. | — |
-| `bk_nusaiba_ev_ev_elections_05` | ev_elections | stern | Count it again. Out loud. With witnesses. | — |
-| `bk_nusaiba_ev_ev_elections_06` | ev_elections | dry | Results at midnight. My pen is out of clicks. | — |
-| `bk_nusaiba_ev_ev_elections_07` | ev_elections | proud | I won. Now the hard part. Everything. | m085_done |
-| `bk_nusaiba_ev_ev_valentine_01` | ev_valentine | dry | Valentine's? I have a moot on the fifteenth. Romance is pending. | — |
-| `bk_nusaiba_ev_ev_valentine_02` | ev_valentine | warm | If you bring flowers, be on time. That's the whole gift. | player_male |
-| `bk_nusaiba_ev_ev_harmattan_01` | ev_harmattan | dry | Harmattan. My lips are drafting an objection. | — |
-| `bk_nusaiba_ev_ev_harmattan_02` | ev_harmattan | neutral | Dust on my folder. Lotion on my hands. Order restored. | — |
-| `bk_nusaiba_ev_ev_convocation_01` | ev_convocation | stern | Gowns! Hold still. Your cap is a legal hazard. | — |
-| `bk_nusaiba_ev_ev_convocation_02` | ev_convocation | sad | Somebody cried at convocation. It was me. Don't minute it. | — |
-| `bk_nusaiba_ev_ev_allowance_01` | ev_allowance | dry | Allowance came. Budget made. Budget broken by noon. | — |
-| `bk_nusaiba_ev_ev_market_day_01` | ev_market_day | proud | Hajiya Ladi's market: prices in writing, finally. | — |
-| `bk_nusaiba_ev_ev_market_day_02` | ev_market_day | amused | Market day. I'm haggling with a printed price list. | — |
+<!-- pack-style: roomy -->
+<!-- cover: Nusaiba | Point one: she's right. Point two: put it in writing. -->
+<!-- cover-label: Your Voice Script -->
+<!-- cover-inside: Inside: meet Nusaiba  ·  how to record  ·  70 mission lines  ·  239 common lines  ·  the agreement -->
+# Meet Nusaiba
+
+> Point one: she's right. Point two: put it in writing.
+
+A Law student who talks in complete sentences and numbered points, clicks her pen when she is thinking, and bosses her friends around for their own good. She will be student president. She is already taking minutes.
+
+### The voice
+
+Early twenties, Law student; crisp, quick, courtroom-polite. Complete sentences and numbered points; bossy for your own good, warm underneath. Clicks her pen when thinking. Catchphrases: "Point one." "Wait. Look again." "Put it in writing." "Who is taking minutes?"
+
+### What is this game?
+
+It's a game you play in a web browser, about surviving five years at a Nigerian university. Please don't expect GTA. Nobody steals a car. The most dangerous vehicle in it is a three-wheeled keke taxi with a married couple arguing in the back, and the nearest thing to a boss fight is a queue.
+
+You play a brand-new student, the Fresher. You register (four offices, four queues, four passport photographs), go broke by week three, live on garri, make friends for life, sit exams by torchlight because the power has gone again, and one day you graduate. Under the jokes there is a mystery: why the lights keep going off, and why a quiet old man has spent forty years in a garden keeping one of them on. Nobody gets hurt. The cure for the monster is company.
+
+The university and the town are made up. The voices are friends and family, recording on their phones. Thank you for being one of them.
+
+# How to record
+
+**What you've got.** **309 lines**, about **2,587 words**. That's 70 mission lines and 239 common lines. Read straight through, it's **about 35 minutes** of talking. Nobody should do it in one sitting. A few sections a day is perfect.
+
+**Change any word so it sounds like you.** Honestly. If a line doesn't sound right in your mouth, say it your way. If you think of a funnier one, record that as well. You are the expert on how Nusaiba talks.
+
+#### Getting set up
+
+- **A phone is fine.** Use its voice recorder app on the best quality setting, in aeroplane mode so nothing pings.
+- **Pick a quiet, soft room.** A wardrobe full of clothes is the best studio in any house. Switch off fans and the TV.
+- **Hold the phone about a hand-span from your mouth,** slightly to one side, and keep it there.
+
+#### Reading the page
+
+- **The big black words are your line.** Say only those.
+- **The small orange words above a line are how to say it,** and sometimes who you are talking to. Don't read them out.
+- **Small grey words are what somebody else says just before you,** so you know the moment. Don't read them out.
+- **Words in [square brackets] are the English meaning.** Don't say them. If the Hausa, Pidgin or any other language is wrong, fix it. You know better than I do.
+- **(name)** is where the game drops in the player's name: leave a short pause. **Bature/Firdausi** is the player's roommate: say the line once with each name.
+- **Three dots (...) mean a beat of silence.**
+
+#### Recording
+
+- **One recording per coloured bar.** Start recording, read that bar's lines in order, stop. Then the next bar.
+- **Leave about two seconds of silence between lines.** That's where I cut. No need to say the line numbers.
+- **If you fluff a line,** pause and say it again. Don't stop the recording.
+- **Got the energy?** Say a line twice, two different ways, and I'll pick the best one.
+- **Shouting lines last,** and drink water.
+
+#### Sending it
+
+- Name each file after its coloured bar, like this: *Nusaiba - Mission 1*.
+- Put everything in one folder and send me a Google Drive or WeTransfer link, with a photo of the signed last page. There is no deadline.
+
+# Mission lines
+
+In story order. Each coloured bar is one mission: its name, when it happens and what is going on. One recording per bar.
+
+::: Mission 1 · First Lecture, Wrong Theatre | Year 1, first semester. The first lecture, in the wrong theatre. The two theatres look the same and their signs are swapped.
+:: 1 | your normal voice | ((Shamsu: “Good. Confusion is the first step.”)) With respect, ma. That sign should be negative.
+:: 2 | proud | I have three reasons.
+
+::: Mission 2 · Count Entropy | Year 1, first semester, exam time. The night before the first exam, the whole campus goes dark, and something moves in it.
+:: 1 | firm | ((Shamsu: “Technically, that is not possible.”)) Torches down, not in faces. Line up. NOW.
+
+::: Mission 3 · The Vice-Chancellor's Cup | Year 1, second semester. The football final. Education are a player short, and somebody has read the rule book.
+:: 1 | proud | Rule 14(c). I have three points and two deans.
+
+::: Mission 4 · Plug and Play | Year 2, first semester. Mubarak's business has a real stall now. The sign-painter ran out of board.
+:: 1 | firm | ((The man in the good shoes: “Next month is fine. I am in no hurry at all.”)) The back is blank. Where is the warranty?
+:: 2 | firm | ((Mubarak: “It's understood.”)) And the supplier's name?
+:: 3 | dry, deadpan | ((Mubarak: “Oga Sharp.”)) That is not a name. That is a review.
+:: 4 | sharp, quick | I'm not saying 'I told you so' later. I'm saying it now.
+
+::: Mission 5 · Point of Order | Year 2, first semester, test week. Nusaiba's moot court. Morning in the law library, afternoon in front of Dr. Minus.
+:: 1 | firm | My partner has malaria. You are junior counsel.
+:: 2 | proud | ((The Fresher: “I'm an engineer.”)) The rules don't say which faculty. I checked.
+:: 3 | firm | Three authorities by one o'clock. Can you read fast?
+:: 4 | a whisper, to the Fresher | 'For the traders of Gidan Kwari…'
+:: 5 | a whisper, to the Fresher | '…and for the gathering of people, in perpetuity.'
+:: 6 | firm, to the Fresher | ((The Fresher: “Where people gather.”)) I'm not angry. I'm drafting.
+:: 7 | amused | ((Dr. Minus: “Minus two, Miss Nusaiba. For confidence.”)) Minus two. And today's date. Thank you, my lord.
+:: 8 | your normal voice | He's not stupid. He's careful. And afraid.
+:: 9 | firm | The land was never ours to let for that.
+:: 10 | warm | Keep the copy somewhere dry.
+
+::: Mission 6 · Test Week Twist | Year 2, first semester, test week. Three late tests, and an official warning letter from the department.
+:: 1 | sharp, quick, to Bature | Who talked? I want a name and a date.
+
+::: Mission 7 · The Plan | Year 2, second semester. Planning a heist on the bedroom floor, with cups of garri for buildings.
+:: 1 | firm | ((Mubarak: “…A midnight flash sale. Purely as a business.”)) I'm not going in. Someone must be able to say so.
+:: 2 | your normal voice | There will be a hearing. I'm preparing for it now.
+
+::: Mission 8 · Mubarak's Crash | Year 2, second semester. A power bank from Mubarak's stall starts smoking in a lecture. His business collapses.
+:: 1 | warm, to Hajiya Ladi | ((Hajiya Ladi: “And you sell nothing you have not plugged in yourself.”)) I came to say I told you so. Sign here instead.
+:: 2 | dry, deadpan, to Hajiya Ladi | It has a back page.
+
+::: Mission 9 · The Hearing | Year 2, second semester. A formal hearing on Senate paper. Somebody has told on the Fresher.
+:: 1 | proud | ((The Vice-Chancellor: “The student has brought… a friend.”)) The rules permit a friend. They do not say 'silent'.
+:: 2 | proud | I have three points.
+:: 3 | firm | ((The Vice-Chancellor: “Of course you do.”)) 'For the gathering of people, in perpetuity.'
+:: 4 | your normal voice | A condition nobody read.
+:: 5 | proud | ((The Dean of Law: “It was never ours to keep. It was ours to earn.”)) Three. Seven to go. Who is taking minutes?
+
+::: Mission 10 · Three Hundred | Year 3, first semester. Third year. A fresher says "Good morning, senior" and the Fresher looks behind to see who he means.
+:: 1 | dry, deadpan, to Shamsu | ((Shamsu: “The controller is the mother who says no.”)) Who is taking minutes?
+
+::: Mission 11 · Indefinite | Year 3, during the strike. The lecturers go on strike, "indefinitely". The student congress is a shouting match.
+:: 1 | your normal voice | ((Comrade Sadiya: “Order! Comrades! One comrade at a time!”)) I have a motion. In writing. Carry these.
+
+::: Mission 12 · The Old Site | Year 3, during the strike. The old laboratory in the forest, by daylight. A plaque, a tape, and a voice from forty years ago.
+:: 1 | your normal voice | ((The roommate: “Seven chairs. Six gave up. I relate to the six.”)) Touch nothing. …Fine. Touch the tins.
+:: 2 | your normal voice | Fragment nine goes before four. Play it again.
+:: 3 | firm | ((Shamsu: “It doesn't say 'not you'.”)) It doesn't say 'you'. We know who it means.
+
+::: Mission 13 · The Maker's Secret | Year 3, during the strike. The Maker is back. He finally tells the story of the six coils.
+:: 1 | warm | ((The Maker: “I have been perambulating the perimeter of my own procrastination.”)) You've been stuck.
+:: 2 | a whisper | ((Shamsu: “Who are you all staring at?”)) …I thought I saw someone.
+
+::: Mission 14 · The Study Group | Year 3, during the strike. Shamsu runs a study group so the strike costs nobody a year. And he has something to confess.
+:: 1 | warm, to Shamsu | ((Shamsu: “In sha Allah, you will pass.”)) Minuted. With respect. A great deal of it.
+
+::: Mission 15 · Padlock Receipts | Year 3, after the strike. Who padlocked the lecture halls? Mubarak finds his own receipt.
+:: 1 | your normal voice | Refused on the ninth. Locks bought on the twelfth.
+:: 2 | firm | Nothing illegal happened.
+:: 3 | sharp, quick | Do you know how angry that makes me? Nothing to cite.
+:: 4 | your normal voice | Fine. We don't cite. We describe. Put it in writing.
+:: 5 | firm | ((Hajiya Ladi: “More than you owed. Less than you think.”)) Somebody has to be in the room when it's decided.
+:: 6 | your normal voice | Fine. I'll run.
+:: 7 | warm | ((The Fresher: “Who is taking minutes?”)) You are. You always were.
+
+::: Mission 16 · Manifesto | Year 4, first semester. Nusaiba runs for student president. Posters, a walkabout and a budget of 4,000 naira.
+:: 1 | firm | Point one: I'm running. Point two: you're my campaign.
+:: 2 | dry, deadpan | Point three will hurt. We have until tonight.
+:: 3 | your normal voice | ((The Fresher: “What's the budget?”)) Four thousand naira and you.
+:: 4 | your normal voice | ((Dr. Minus: “I trust this hobby will not affect my course.”)) With respect, sir, and I'm choosing that word…
+:: 5 | dry, deadpan | …it is your course. I'm doing the practical.
+:: 6 | firm | ((The Fresher: “Minus two from what?”)) I'm writing it down. With the date.
+:: 7 | firm, to the Fresher | ((The Fresher: “All ten. Even Medicine.”)) I'm not angry. I'm drafting.
+
+::: Mission 17 · Proof of Work | Year 4, first semester. A forty-eight-hour hackathon. Sixty laptops and one extension cable.
+:: 1 | shy | ((Lyzzy: “So this time, you check. Here is how.”)) Point three. I doubted you. For about an hour.
+:: 2 | warm | I'm sorry for the hour.
+
+::: Mission 18 · Election Day | Year 4, second semester. The election. A televised debate, polling day, and a recount.
+:: 1 | a whisper | ((Lyzzy: “Live in five, four…”)) Are you in my ear?
+:: 2 | amused | ((Muktar: “Point of order: minute that I lost gracefully.”)) Minuted. Who is taking minutes? …You are.
+:: 3 | to Dr. Minus | ((Dr. Minus: “Congratulations. Your examination is in May.”)) …Noted. With the date.
+
+::: Mission 19 · The Missing Script | Year 5, first semester, test week. Nusaiba's exam script has vanished and she is marked absent.
+:: 1 | your normal voice | Wait. Look again.
+:: 2 | firm | ((Muktar: “Point of order. You are the president. Just call.”)) If I use the office for me, I can never use it for anyone.
+:: 3 | your normal voice | We do it the long way. Who is taking minutes?
+:: 4 | your normal voice | ((The Dean of Law: “The mark stands. Eighty-one.”)) Thank you. I'd like the marking scheme, please.
+:: 5 | dry, deadpan | I think it's 83.
+:: 6 | warm | ((Dr. Minus: “Plus two. For conduct.”)) Put it in writing. …I'll do it myself.
+
+::: Mission 20 · Sixth Site (Heist 3) | Year 5, first semester. The third heist: through the Senate basement and Door 7, into the old tunnel.
+:: 1 | dry, deadpan | ((Muktar: “Legend. Scale. And here: 'Point of order: you are here.'”)) I am minuting that this map is good. Once.
+:: 2 | a whisper, to Shamsu | No dust on the bell. Somebody cleans that.
+
+::: Mission 21 · Everybody, Again | Year 5, first semester. It was never the wiring. Going back to every friend, to build it together.
+:: 1 | a whisper | ((Muktar: “Point of order: half of Senate is in Yamma.”)) Point one. Say it plainly. They came to hear it.
+:: 2 | your normal voice | ((The Maker: “Everybody came.”)) Wait. Look again. Ten seals. Six coils.
+:: 3 | your normal voice | The garden has seven spaces. So what goes there?
+
+::: Mission 22 · The Ten Seals | Year 5, second semester. Five in the morning. Ten friends carry ten seals down a tunnel to an old door.
+:: 1 | your normal voice | ((Jiya: “Dated correctly this time. Lovely drafting. Off you go.”)) Point one. A right of way, for the carrying of light.
+:: 2 | firm | Point two. In perpetuity. Point three: we asked.
+:: 3 | proud | ((Bature: “Arts. Riddle me this: no. Not now. Just… here.”)) Law. Put it in writing: we knocked.
+
+::: Mission 23 · Chancellor Null | Year 5, second semester. Chancellor Null, in the dark. The Fresher calls every friend by name.
+:: 1 | firm | ((Shamsu: “Technically, I never left.”)) Point one. I'm here.
+
+# Common lines
+
+These are the short lines Nusaiba says around campus, outside the story: when the player walks up, bumps into you, hands you a present, or just passes by. The game picks one each time, so they never play in a row. Say each as if someone has just walked past.
+
+::: Common 1 · Saying hello | The player has just walked up.
+:: 1 | warm | Ah. You. Good. I have a job for you.
+:: 2 | your normal voice | Morning. You're on time. I'm noting it.
+:: 3 | dry, deadpan | You're late. Not to anything. Generally.
+:: 4 | warm | Sannu. [Hello.] Have you eaten, or shall I minute that too?
+:: 5 | amused | There you are. Point one: hello.
+:: 6 | your normal voice | Hello. Who upset you? Don't say nobody. Your shoulders said somebody.
+
+::: Common 2 · Saying goodbye
+:: 1 | your normal voice | Go. And put it in writing.
+:: 2 | warm | Safe journey. Text me when you arrive. Not a voice note.
+:: 3 | dry, deadpan | Meeting adjourned.
+:: 4 | warm | Sai anjima. [See you later.] Bring the folder.
+
+::: Common 3 · Thank-yous and sorries
+:: 1 | thank you, warm | Thank you. Minuted, with gratitude.
+:: 2 | thank you, proud | Noted. You were useful. Don't let it go to your head.
+:: 3 | thank you, warm | Na gode. [Thank you.] Truly. Point one, and the only point.
+:: 4 | sorry, shy | I was wrong. Point one. There is no point two.
+:: 5 | sorry | I apologise. In writing, if you need it.
+:: 6 | sorry, sad, low | Sorry. I organised you again, didn't I?
+
+::: Common 4 · Being nice | Compliments. Mean them.
+:: 1 | warm | That was clear. I love clear.
+:: 2 | proud | You argued that well. Who taught you? …Me. Good.
+:: 3 | amused | Look at you, holding a folder like a professional.
+:: 4 | warm | You were scared and you came anyway. That's the whole job.
+
+::: Common 5 · Teasing | Friendly. The joke is never unkind.
+:: 1 | dry, deadpan | Your shirt has an opinion. Overruled.
+:: 2 | amused | You said 'like' four times. I counted. I always count.
+:: 3 | sharp, quick | Objection. That excuse is irrelevant. And also bad.
+:: 4 | dry, deadpan | You're not lying. You're telling the truth very, very slowly.
+
+::: Common 6 · Walking with the player | Keeping up, waiting, and when the player goes the wrong way.
+:: 1 | walking along, firm | Keep up. Ideas don't wait, and neither do I.
+:: 2 | walking along | Walk and talk. Point one, while we cross.
+:: 3 | walking along, warm | Stay on my left. I click the pen on the right.
+:: 4 | waiting for the player, firm | I'm timing you. Not a threat. Data.
+:: 5 | waiting for the player, sharp, quick | Every minute you're late, I draft a sentence about you.
+:: 6 | waiting for the player, dry, deadpan | The Amana Clock stopped. You don't have that excuse.
+:: 7 | waiting for the player | You weren't late. You were outside, deciding. Come in.
+:: 8 | the player went the wrong way, sharp, quick | Wrong way. The law library is the other side.
+:: 9 | the player went the wrong way | Wait. Look again. That's Yamma, not Gabas.
+
+::: Common 7 · Quick answers | The player asks something and gets one of these back.
+:: 1 | yes | Yes. Unanimous. One vote, mine.
+:: 2 | yes, proud | Agreed. Put it in writing.
+:: 3 | yes, warm | Yes. Obviously. Why are you still asking?
+:: 4 | no, firm | No. With respect. A great deal of it.
+:: 5 | no, sharp, quick | No. And I have three reasons.
+:: 6 | no, dry, deadpan | Motion denied.
+:: 7 | maybe | Possibly. I'll need it in writing first.
+:: 8 | maybe, dry, deadpan | Maybe. Let me click on it.
+:: 9 | confused | Wait. Look again. …No, I still don't understand.
+:: 10 | confused | Rephrase that. Slowly. As if to a judge.
+:: 11 | confused | Your mouth said yes. Your feet said no. Which one do I minute?
+:: 12 | agreeing, warm | Seconded. Carried.
+:: 13 | agreeing, proud | Finally, someone reasonable. Me. And now you.
+:: 14 | refusing, firm | I will not. I've read the rules. Have you?
+:: 15 | refusing, sharp, quick | Not without a receipt.
+
+::: Common 8 · Jokes and questions
+:: 1 | a joke, amused | I have three jokes. The third one will hurt.
+:: 2 | a joke, amused | My love language is a numbered list.
+:: 3 | a question | Quick question. Who is taking minutes?
+:: 4 | a question, sharp, quick | Did you read it, or did you 'see it'?
+:: 5 | a question | Source? 'Somebody said' is not a source.
+:: 6 | a question, firm | You're not tired. You're embarrassed. Sit.
+:: 7 | a question, sharp, quick | You rehearsed that answer. Give me the real one.
+
+::: Common 9 · Winning and losing | After a game, a match or a bet.
+:: 1 | after winning, proud | As I submitted.
+:: 2 | after winning, excited | Point one, point two, point three: YES!
+:: 3 | after losing, sad, low | We lost. We appeal. Not today. Tomorrow.
+:: 4 | after losing, firm | Fine. Noted. With the date.
+
+::: Common 10 · When something goes wrong | Bumps, falls, power cuts, rain and heat. NEPA is what everybody calls the power company, and so every power cut.
+:: 1 | bumped into, sharp, quick | Excuse me. That was assault on a folder.
+:: 2 | bumped into, dry, deadpan | I'm fine. The papers are not. Pick them up.
+:: 3 | after a fall, firm | Nobody saw that. Nobody minuted that.
+:: 4 | the lights go out, dry, deadpan | NEPA. Again. I'm drafting a letter to the darkness.
+:: 5 | the lights go out, firm | Torches down, not in faces. You know the drill.
+:: 6 | the lights go out, dry, deadpan | Light gone. My laptop is on forty per cent. So am I.
+:: 7 | the lights come back, excited | Light! Charge in order of urgency. Me first.
+:: 8 | the lights come back, dry, deadpan | NEPA has returned. Minute it. It won't last.
+:: 9 | rain, firm | Folder under the shirt. Priorities.
+:: 10 | rain | Rain. Lectures will be empty. I'll still go.
+:: 11 | a hot day, dry, deadpan | This heat should be taken to court.
+:: 12 | a hot day | Drink water. Zainab will ask. She always asks.
+
+::: Common 11 · Food and money
+:: 1 | food, warm | Mama Nkechi's jollof. Exhibit A for happiness.
+:: 2 | food, dry, deadpan | Garri again? It's giving 'end of the month'.
+:: 3 | food, warm | You've said 'I'm fine' twice and eaten nothing. Eat. Then be fine.
+:: 4 | money, dry, deadpan | Sapa has entered the chat. I've asked it to leave.
+:: 5 | money, dry, deadpan | My account balance is 'pending further review'.
+:: 6 | money, warm | Water only, and 'not hungry'? Sit. My treat. Minuted, then forgotten.
+
+::: Common 12 · Getting a present | The player hands over a present. Some go down better than others.
+:: 1 | likes the present, warm | Pens! The good ones. You know me.
+:: 2 | likes the present, warm | Thank you. I'll keep this somewhere dry.
+:: 3 | not keen on the present | It's… a choice. I respect choices. Mostly.
+:: 4 | not keen on the present, dry, deadpan | Thank you. I'll find a committee that needs this.
+:: 5 | loves the present, excited | A ring binder? Colour tabs? You absolutely know me.
+:: 6 | loves the present, shy | You remembered. Nobody remembers. …Thank you.
+
+::: Common 13 · Talking to yourself | Said to nobody in particular as the player walks past.
+:: 1 | your normal voice | Point one… no. Point one should be point three.
+:: 2 | dry, deadpan | Who scheduled two meetings at four? …Me. Of course.
+:: 3 | your normal voice | Click. Click. Click. Fine. That's the argument.
+:: 4 | amused | I'm not bossy. I'm early to everyone's decisions.
+:: 5 | a whisper | He's laughing too loudly. Something's wrong. I'll ask him later.
+
+::: Common 14 · Late at night | After dark. Quieter.
+:: 1 | your normal voice | It's late. Walk on the lit side of the ring road.
+:: 2 | dry, deadpan | Still drafting. The moon is my only reviewer.
+:: 3 | warm | You keep checking your phone. Call home. Then sleep.
+
+::: Common 15 · Year 1: arriving | Everything is new. Queues, friends, the first power cuts.
+:: 1 | hello, warm | Fresher! Welcome. Here's a form. Here's another form.
+:: 2 | hello, amused | You're the Engineering one. The wrong theatre one.
+:: 3 | teasing, dry, deadpan | Engineering? You people only argue with numbers.
+:: 4 | teasing, amused | You read the timetable upside down. Twice. I watched.
+:: 5 | exam week | Test week. I've colour-coded my panic.
+:: 6 | exam week, firm | Read the question twice. Then a third time, angrily.
+:: 7 | results day, warm | Results are up. You passed. I knew. I made a spreadsheet.
+:: 8 | sorry, warm | First semester is hard. Hard is not the same as wrong.
+:: 9 | sorry, warm | You want to go home. I know that face. Unpack one thing tonight.
+
+::: Common 16 · Year 1: arriving, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself, dry, deadpan | Every year, freshers walk into Yamma for a Gabas lecture.
+:: 2 | to yourself, proud | Class rep. I volunteered before they finished the sentence.
+:: 3 | to yourself | Registration has fourteen stamps. I made a chart.
+:: 4 | to yourself, dry, deadpan | I made a timetable for my timetable.
+:: 5 | to yourself, sharp, quick | The Spot queue. Organised by nobody. It physically hurts me.
+:: 6 | to yourself | The Amana Clock says 6:06. It said that yesterday too.
+:: 7 | to yourself | Shamsu says 'Simple.' Nothing that man says is simple.
+:: 8 | to yourself, dry, deadpan | Jega asked me the time. I gave him a schedule.
+:: 9 | to yourself | That fresher smiles at everyone and calls no one. I'll walk with her.
+:: 10 | looking back, proud, after “First Lecture, Wrong Theatre” | With respect, ma: that sign WAS negative. I checked again.
+:: 11 | looking back, amused, after “Matric Fit” | Mubarak sold you that gown? Show me the receipt. …Oh dear.
+:: 12 | looking back, warm, after “Count Entropy” | Torches down, not in faces. You remembered. I'm moved.
+:: 13 | looking back, after “The Vice-Chancellor's Cup” | Rule 14(c). I'd cite it again. I'll cite it forever.
+:: 14 | looking back, excited, after “Everybody” | Everybody signed. EVERYBODY. I'd frame that list.
+:: 15 | late at night, dry, deadpan | Lights out at the hall. My lamp, unfortunately, is in.
+
+::: Common 17 · Year 2: the mall | A shiny new mall has opened, and the lights keep going off.
+:: 1 | hello, amused | Junior counsel! Can you read fast today?
+:: 2 | teasing, amused | Second year and still in the wrong theatre? Faaa.
+:: 3 | teasing, dry, deadpan | Your file is thicker than my textbook. Impressive.
+:: 4 | exam week, dry, deadpan | Exam in May. Lease in my bag. Sleep in my dreams.
+
+::: Common 18 · Year 2: the mall, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Moot court on Friday. My partner has malaria. Again.
+:: 2 | to yourself, dry, deadpan | Kwari Mall. Lovely lights. Who exactly is paying for them?
+:: 3 | to yourself, proud | I read the whole lease. Yes, the whole lease. For fun.
+:: 4 | to yourself, dry, deadpan | Mubarak wants a contract reviewed. For 'exposure'.
+:: 5 | to yourself, amused | Dr. Minus took two marks for confidence. I have more.
+:: 6 | to yourself | Dr. Minus: fair, strict, wrong. Two out of three.
+:: 7 | to yourself, proud | Hajiya Ladi asked for my card. I've never been prouder.
+:: 8 | to yourself, dry, deadpan | He said 'last price' and looked left. It's not the last price.
+:: 9 | to yourself, sharp, quick | Mubarak's smiling. Mubarak smiles when he owes someone. Who?
+:: 10 | looking back, dry, deadpan, after “Plug and Play” | That power bank. Where was the warranty? Exactly.
+:: 11 | looking back, warm, after “Point of Order” | My two favourite words: 'in perpetuity'.
+:: 12 | looking back, proud, after “Point of Order” | Junior counsel. You were good. Don't make it weird.
+:: 13 | looking back, sharp, quick, after “Test Week Twist” | Who talked? I'm not asking. I'm just… remembering.
+:: 14 | looking back, after “Unplug Iron Mama (Heist 1)” | I wasn't there. I can say so. Under oath.
+:: 15 | looking back, excited, after “Mubarak's Crash” | Mubarak signed a ledger. My life has meaning.
+:: 16 | looking back, proud, after “The Hearing” | The rules permit a friend. They never said 'silent'.
+:: 17 | looking back, after “The Hearing” | Three seals. Seven to go. I'm keeping count.
+:: 18 | late at night, dry, deadpan | The mall is blazing. Our corridor has one bulb. Noted.
+:: 19 | late at night | Night reading. The moot doesn't care that NEPA left.
+
+::: Common 19 · Year 3: the strike | The lecturers are on strike. No lectures, an empty campus, no money.
+:: 1 | hello, warm | Still here? Good. Those who stayed get first pick of chairs.
+:: 2 | teasing, amused | Four days of garri. I can tell. It's in your face.
+:: 3 | teasing, dry, deadpan | Strike? Then read something. Anything. A label.
+:: 4 | a question, warm | You're angry about the strike. You're scared of the gap. Say the second one.
+
+::: Common 20 · Year 3: the strike, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself, dry, deadpan | Indefinite. That's not a date. That's a drafting error.
+:: 2 | to yourself, sad, low | The motion is ready. Nobody's here to second it.
+:: 3 | to yourself | Empty halls. Even my pen click sounds lonely.
+:: 4 | to yourself, dry, deadpan | I'm reading ahead. Ahead of what? Unclear.
+:: 5 | to yourself | Somebody has to be in the room. I keep thinking that.
+:: 6 | to yourself, dry, deadpan | Shamsu explains. I argue. The strike listens to neither.
+:: 7 | to yourself, amused | Aleeya made me laugh in a meeting. I've filed a complaint.
+:: 8 | to yourself, amused | Garri economics: one cup, three people, a constitution.
+:: 9 | to yourself, sad, low | Everyone says they're 'resting'. Half of them are hungry. Count the plates.
+:: 10 | looking back, dry, deadpan, after “Indefinite” | I had a motion. In writing. The bus left anyway.
+:: 11 | looking back, after “Garri Economics” | Mubarak's Sapa Combo needs a contract. I've drafted one.
+:: 12 | looking back, warm, after “Teacher (Name)” | You teach at Demo now. Point one: you're good at it.
+:: 13 | looking back, after “The Old Site” | Fragment nine before four. I still dream in tape hiss.
+:: 14 | looking back, dry, deadpan, after “The Old Site” | Touch nothing at the Old Site. …Fine. The tins.
+:: 15 | looking back, warm, after “The Study Group” | The study group was minuted. With respect. A great deal.
+:: 16 | looking back, firm, after “Padlock Receipts” | Refused on the ninth. Bought on the twelfth. I remember.
+:: 17 | looking back, shy, after “Padlock Receipts” | I said I'll run. I keep pretending I didn't. It's not working.
+:: 18 | looking back, warm, after “Padlock Receipts” | You're taking minutes. You always were.
+:: 19 | late at night | No lectures. No light. Just me and a petition.
+:: 20 | late at night, dry, deadpan | The strike is quiet at night. I hate quiet. It's unminuted.
+
+::: Common 21 · Year 4: fame | Viral videos, an election, and work placements.
+:: 1 | hello, amused | Vote— sorry. Hello. Reflex.
+:: 2 | hello, proud, after “Election Day” | Hello. The President is greeting you. Feel honoured.
+:: 3 | teasing, dry, deadpan | You campaigned in slippers. We won anyway. Barely.
+:: 4 | teasing, amused | You handed out my flyers upside down. Very disruptive.
+
+::: Common 22 · Year 4: fame, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself | Manifesto, page one. Draft eleven. Still page one.
+:: 2 | to yourself, amused | Muktar called a point of order on my breakfast.
+:: 3 | to yourself, dry, deadpan | Somebody draws a cape on every poster. Who? …Good capes.
+:: 4 | to yourself, proud | Debate tonight. I have three points. They all hurt.
+:: 5 | to yourself, dry, deadpan | Dr. Minus calls it a hobby. My hobby has polling units.
+:: 6 | to yourself, sharp, quick | Lucky wants a collab. I want a policy. We are not the same.
+:: 7 | to yourself, proud | Lyzzy checks her sources now. I've never been prouder.
+:: 8 | looking back, firm, after “Manifesto” | Point two: you're my campaign. Still true.
+:: 9 | looking back, warm, after “Cancelled” | That clip wasn't me. You checked. Thank you for checking.
+:: 10 | looking back, shy, after “Proof of Work” | I doubted you for an hour. I'm still sorry for the hour.
+:: 11 | looking back, excited, after “Election Day” | President. Say it again. …No, don't. I'll cry.
+:: 12 | looking back, dry, deadpan, after “Election Day” | 'Your examination is in May.' I wrote it down.
+:: 13 | looking back, amused, after “Election Day” | Muktar lost gracefully. I minuted it. Twice.
+:: 14 | late at night | Count at midnight. Recount at one. Joy at two.
+:: 15 | late at night, dry, deadpan | Night at the SUG office. The fan works. Sometimes.
+:: 16 | to yourself | Point one: rest is a policy. I'm drafting it. Not taking it.
+:: 17 | to yourself, sharp, quick | Wait. Look again. That's not my face on that clip.
+:: 18 | to yourself | Muktar touches his collar before a weak point. Don't tell him I know.
+:: 19 | to yourself, dry, deadpan | Wednesday. I still can't read her. It's honestly insulting.
+
+::: Common 23 · Year 5: leaving | Final year. Projects, job offers, and everyone counting the days.
+:: 1 | hello, excited | Senior! Look at you. Look at us.
+:: 2 | hello, warm | Final year, and you still greet me like a fresher. Good.
+:: 3 | teasing, dry, deadpan | That project title is thirty-one words. Trim.
+
+::: Common 24 · Year 5: leaving, to yourself | Said to nobody in particular as the player walks past.
+:: 1 | to yourself, dry, deadpan | Final year. My project is a hundred pages. My nails are gone.
+:: 2 | to yourself, proud | As President, I queue like everyone. That's the point.
+:: 3 | to yourself | My script is 'missing'. I'm composed. I'm composing.
+:: 4 | to yourself, warm | Handing over soon. My successor needs a folder. And a pen.
+:: 5 | to yourself, amused | Dinner night seating chart. It has its own seating chart.
+:: 6 | to yourself, sad, low | Five years. I've minuted all of them. Mostly yours.
+:: 7 | to yourself | Who takes minutes after us? …They'll learn.
+:: 8 | to yourself, dry, deadpan | Defence next week. I've filed objections to my own project.
+:: 9 | to yourself, warm | You're not calm. You're numb. Different. Sit with me.
+:: 10 | looking back, dry, deadpan, after “The Missing Script” | Eighty-one. I think it's eighty-three. I'm still asking.
+:: 11 | looking back, proud, after “The Missing Script” | 'Plus two. For conduct.' Written down. With the date.
+:: 12 | looking back, firm, after “The Missing Script” | If I use the office for me, I can't use it for anyone.
+:: 13 | looking back, amused, after “Sixth Site (Heist 3)” | That map was good. I minuted it. Once.
+:: 14 | looking back, a whisper, after “Sixth Site (Heist 3)” | No dust on the bell. Somebody cleans it. Who?
+:: 15 | looking back, proud, after “Everybody, Again” | Everybody came. Say it plainly: everybody.
+:: 16 | looking back, amused, after “Dinner Night” | You were on time to dinner. I'm framing the menu.
+:: 17 | looking back, proud, after “The Ten Seals” | Put it in writing: we knocked.
+:: 18 | late at night, warm | Last nights in the law library. I'm sentimental. Briefly.
+
+::: Common 25 · After graduation | The story is over. The player has come back to visit.
+:: 1 | to yourself, proud | Point one: I'm a lawyer now. Point two: still your friend.
+:: 2 | to yourself, warm | Called to the Bar. My mother cried. I minuted it.
+:: 3 | to yourself | Homecoming. I've made a list. You're on it. Twice.
+:: 4 | to yourself, amused | New freshers still walk into Yamma. Some things are eternal.
+
+::: Common 26 · Special days: term time | Days on the campus calendar. Allowance day is when money from home arrives.
+:: 1 | freshers' week, firm | Freshers! Forms on the left. Questions on the right. Panic outside.
+:: 2 | freshers' week, dry, deadpan | Welcome. Don't buy a gown from anyone named Mubarak.
+:: 3 | exam week | Exam week. I've stopped speaking in sentences. Only points.
+:: 4 | exam week, firm | Answer the question. Not a different, nicer question.
+:: 5 | results day, warm | Results are up. Breathe first. Then read.
+:: 6 | results day, warm | It's one number. It is not your name.
+:: 7 | allowance day, dry, deadpan | Allowance came. Budget made. Budget broken by noon.
+:: 8 | market day, proud | Hajiya Ladi's market: prices in writing, finally.
+:: 9 | market day, amused | Market day. I'm haggling with a printed price list.
+
+::: Common 27 · Special days: the big ones | Save any shouting for last.
+:: 1 | the strike, dry, deadpan | 'Indefinite'? Define it. In writing.
+:: 2 | the strike, sharp, quick | Strike motion. Second it. Somebody. Anybody.
+:: 3 | cup final day | Rule 14(c). Highlighted. Just in case.
+:: 4 | cup final day, amused | Law has a team? Law has a team. We lose politely.
+:: 5 | election week, firm | Vote. Not for me. Okay, for me. But vote.
+:: 6 | election week | Point one: polling unit. Point two: your card. Point three: go.
+:: 7 | election week, sharp, quick | No buying votes. Not even with suya. Especially suya.
+:: 8 | election week, amused | Muktar says 'point of order'. I say 'point one'. It's war.
+:: 9 | election week, firm | Count it again. Out loud. With witnesses.
+:: 10 | election week, dry, deadpan | Results at midnight. My pen is out of clicks.
+:: 11 | election week, proud, after “Election Day” | I won. Now the hard part. Everything.
+:: 12 | graduation day, firm | Gowns! Hold still. Your cap is a legal hazard.
+:: 13 | graduation day, sad, low | Somebody cried at convocation. It was me. Don't minute it.
+
+::: Common 28 · Special days: seasons and holidays | Harmattan is the dry, dusty season.
+:: 1 | Ramadan, dry, deadpan | Iftar in twenty minutes. Do not say 'suya' near me.
+:: 2 | Ramadan, warm | Ramadan Mubarak. My meetings are shorter. You're welcome.
+:: 3 | Christmas, warm | Merry Christmas! The SUG has small chops. I counted them.
+:: 4 | Valentine's Day, dry, deadpan | Valentine's? I have a moot on the fifteenth. Romance is pending.
+:: 5 | Valentine's Day, warm, to a male player | If you bring flowers, be on time. That's the whole gift.
+:: 6 | harmattan, dry, deadpan | Harmattan. My lips are drafting an objection.
+:: 7 | harmattan | Dust on my folder. Lotion on my hands. Order restored.
 
 
 # Volunteer voice agreement
 
-**Game:** the open-world game on MIB-Hub, created by Muhammad Iliyasu Bugaje ("the creator"). **Character:** Nusaiba.
+**Game:** the open-world browser game on MIB-Hub, created by Muhammad ("the creator"). **Character:** Nusaiba.
 
 Please read this, fill in the boxes, sign, and send a photo or scan of this page back with your recordings. If anything is unclear, ask before you sign.
 
 1. **I am volunteering.** I am recording these lines for free, as a favour and as part of a community project. I will not be paid now or later, and I will not receive royalties.
-2. **What I allow.** The creator may use, edit and publish my recordings of the lines in this script (and any lines we agree later) in the game, its updates, trailers, the MIB-Hub website and its promotion, anywhere in the world, for as long as the game is available.
+2. **What I allow.** The creator may use, edit and publish my recordings of the lines in this script (and any lines we agree later) in this game, its updates, its trailers and its promotion, including on the MIB-Hub website, for as long as the game is available. They will not be used for anything else.
 3. **No AI copies.** My recordings will not be used to train or create an artificial copy of my voice without my separate written permission.
-4. **Credit.** I will be credited in the game and on the website by the name I write below (or not at all, if I choose anonymous).
-5. **Changing my mind.** I can ask in writing to stop at any time. The creator will then stop any new use and remove my lines in the next update. Copies that have already been released (for example a trailer someone downloaded) cannot be called back.
+4. **Credit.** I will be credited by first name only, by the name I write below, or not at all if I choose "anonymous".
+5. **Changing my mind.** I can ask in writing to stop at any time. The creator will then stop any new use and remove my lines in the next update. Copies already released (for example a trailer someone has downloaded) cannot be called back.
 
-| | |
-|---|---|
-| Full name | |
-| Credit me as (or "anonymous") | |
-| Phone or email | |
-| Age 18 or over? (yes / no) | |
-| Signature | |
-| Date | |
-| If under 18: parent or guardian's name, signature and date | |
-| For the creator: name, signature and date | Muhammad Iliyasu Bugaje |
+---
+
+**Full name:** ___________________________________________________________
+
+---
+
+**Credit me as (first name, or "anonymous"):** ___________________________________
+
+---
+
+**Phone or email:** _______________________________________________________
+
+---
+
+**Age 18 or over? (yes / no):** ______________________________________________
+
+---
+
+**If under 18, a parent or guardian signs here:** ________________________________
+
+---
+
+**Signature:** __________________________________ **Date:** _____________________
+
+---
+
+### For the creator
+
+---
+
+**Name:** __________________ **Signature:** __________________ **Date:** _____________
+

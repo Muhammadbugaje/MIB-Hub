@@ -1,0 +1,375 @@
+{
+ "character": "Coach Ngozi",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Sly's Last Stand",
+   "file": "Coach Ngozi - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_mid1_01",
+     "text": "The scale speaks. Don't take it personally."
+    },
+    {
+     "n": 2,
+     "id": "m014_mid1_02",
+     "text": "Three lifts. On the beat. Then you eat properly."
+    },
+    {
+     "n": 3,
+     "id": "m014_mid1_03",
+     "text": "Garri is not a food group. It is a cry for help."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Coach Ngozi - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_greet_01",
+     "text": "You came! Ah! Warm-up first. Arms. Go."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_greet_02",
+     "text": "Nno! [Welcome!] Water bottle? Good. Towel? Good. Excuses? Leave them."
+    },
+    {
+     "n": 3,
+     "id": "bk_ngozi_f_greet_03",
+     "text": "Look who remembered the gym exists."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Coach Ngozi - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_bye_01",
+     "text": "Stretch tonight. Your legs will thank me tomorrow. Or curse me."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_bye_02",
+     "text": "Go and eat properly. Properly. Not garri and hope."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Coach Ngozi - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_thanks_01",
+     "text": "Thank me with three more reps."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Coach Ngozi - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_compliment_01",
+     "text": "Clean form! Somebody has been practising!"
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_compliment_02",
+     "text": "Every body is good at something. Yours just found it."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Coach Ngozi - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_tease_01",
+     "text": "You groaned before you lifted. Lift first, groan after."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_tease_02",
+     "text": "Garri is not a food group. It is a cry for help."
+    },
+    {
+     "n": 3,
+     "id": "bk_ngozi_f_tease_03",
+     "text": "You took a selfie between sets. The set is jealous."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Coach Ngozi - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_follow_01",
+     "text": "With me! One, two, three, breathe!"
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_wait_01",
+     "text": "On the beat! The beat is not waiting!"
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Coach Ngozi - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_yes_01",
+     "text": "Yes! One more!"
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_no_01",
+     "text": "No. Not that weight. Not yet. We build."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Coach Ngozi - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_ask_01",
+     "text": "What did you eat today? Count it. Out loud."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Coach Ngozi - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_win_01",
+     "text": "Personal best! Write it down! I'm writing it down!"
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_lose_01",
+     "text": "Didn't lift it today. Tomorrow you will. That's the whole secret."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Coach Ngozi - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_hit_01",
+     "text": "Sit. Shake it off. The scale speaks, the floor doesn't."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_heat_01",
+     "text": "Hot? Water. Shade. Then we do it slowly."
+    },
+    {
+     "n": 3,
+     "id": "bk_ngozi_f_blackout_01",
+     "text": "No light? Push-ups don't need light. Down!"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Coach Ngozi - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_food_01",
+     "text": "Beans! Protein! Ah, you're learning!"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Coach Ngozi - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_gift_like_01",
+     "text": "Groundnuts. Good protein. Don't eat them all at once. I will."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_gift_dislike_01",
+     "text": "Soft drink. In my gym. You want me to faint?"
+    },
+    {
+     "n": 3,
+     "id": "bk_ngozi_f_gift_love_01",
+     "text": "A new skipping rope! Oh, you will regret this tomorrow. In a good way."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Coach Ngozi - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_f_idle_01",
+     "text": "Three lifts. On the beat. Then you eat properly."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_f_idle_02",
+     "text": "Who left the dumbbell on the bench? It's not a pillow."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 1: arriving",
+   "file": "Coach Ngozi - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_y1_callback_01",
+     "text": "The scale spoke that day. Don't take it personally. Look at you now."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_y1_idle_01",
+     "text": "Freshers come in January. Leave in February. Be a March person."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 2: the mall",
+   "file": "Coach Ngozi - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_y2_idle_01",
+     "text": "Mall gym has mirrors everywhere. Mine has one. It's honest."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 3: the strike",
+   "file": "Coach Ngozi - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_y3_ev_strike_01",
+     "text": "Strike? Perfect. No lectures. Squats."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_y3_ev_strike_02",
+     "text": "Free classes this month. Bring your roommate. Bring your neighbour."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 4: fame",
+   "file": "Coach Ngozi - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_y4_idle_01",
+     "text": "No filming in the gym. Your muscles are not content."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 5: leaving",
+   "file": "Coach Ngozi - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_y5_idle_01",
+     "text": "Final year. Stress? Lift it. Literally."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: term time",
+   "file": "Coach Ngozi - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_ev_ev_exam_01",
+     "text": "Exam week? Ten minutes walking clears the head. Doctor's orders. Mine."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: the big ones",
+   "file": "Coach Ngozi - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_ev_ev_cup_01",
+     "text": "Cup season. Half the team trained here. You can tell."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: seasons and holidays",
+   "file": "Coach Ngozi - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ngozi_ev_ev_ramadan_01",
+     "text": "Fasting? Light stretches only. After iftar, we talk."
+    },
+    {
+     "n": 2,
+     "id": "bk_ngozi_ev_ev_christmas_01",
+     "text": "Christmas rice. January gym. I've seen this film."
+    },
+    {
+     "n": 3,
+     "id": "bk_ngozi_ev_ev_valentine_01",
+     "text": "Valentine's? Love yourself. Ten squats. That's self-love."
+    },
+    {
+     "n": 4,
+     "id": "bk_ngozi_ev_ev_harmattan_01",
+     "text": "Cold morning jog! Bonus points! My points, but still!"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

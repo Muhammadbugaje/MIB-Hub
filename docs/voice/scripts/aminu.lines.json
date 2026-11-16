@@ -1,0 +1,91 @@
+{
+ "character": "Aminu",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Teacher (Name)",
+   "file": "Aminu - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m053_open_04",
+     "text": "Sir, is the new sir a real sir?"
+    },
+    {
+     "n": 2,
+     "id": "m053_close_01",
+     "text": "It's what we sing at assembly. The three-note song."
+    },
+    {
+     "n": 3,
+     "id": "m053_close_02",
+     "text": "Everybody knows it. You didn't know it?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Third Coil Wakes",
+   "file": "Aminu - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m070_open_04",
+     "text": "Sir, my grandmother wrote 'no sweets'. I can read."
+    },
+    {
+     "n": 2,
+     "id": "m070_close_03",
+     "text": "There. Now it's seven. Tidy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Parts from Everywhere",
+   "file": "Aminu - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_mid1_01",
+     "text": "Four kilos, sir. A hand bell's worth of brass."
+    },
+    {
+     "n": 2,
+     "id": "m103_mid1_02",
+     "text": "Or biscuit."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Everybody, Again",
+   "file": "Aminu - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_mid1_01",
+     "text": "Sir. It is humming the wrong song."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "The Ten Seals",
+   "file": "Aminu - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_open_03",
+     "text": "Sir, I am holding it with two hands and my mind."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid3_02",
+     "text": "Sir, is this going to be in the exam?"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

@@ -1,0 +1,2543 @@
+{
+ "character": "Bature",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "Bature - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_open_01",
+     "text": "Ah, you're awake. I was guarding your biscuits."
+    },
+    {
+     "n": 2,
+     "id": "m001_open_02",
+     "text": "From inside."
+    },
+    {
+     "n": 3,
+     "id": "m001_open_03",
+     "text": "Riddle: what's yours, but your roommate uses it more?"
+    },
+    {
+     "n": 4,
+     "id": "m001_open_04",
+     "text": "Your NAME. But also the biscuits."
+    },
+    {
+     "n": 5,
+     "id": "m001_open_05",
+     "text": "Come and see your kingdom."
+    },
+    {
+     "n": 6,
+     "id": "m001_mid1_03",
+     "text": "Freshers chase. It's tradition. Since now."
+    },
+    {
+     "n": 7,
+     "id": "m001_close_01",
+     "text": "…Don't lose that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Belle First",
+   "file": "Bature - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m003_open_03",
+     "text": "I'm more of a consultant."
+    },
+    {
+     "n": 2,
+     "id": "m003_open_04",
+     "text": "KB sold out of candles. At noon. Who knew?"
+    },
+    {
+     "n": 3,
+     "id": "m003_mid1_02",
+     "text": "They have taken light. Welcome to university."
+    },
+    {
+     "n": 4,
+     "id": "m003_mid1_03",
+     "text": "Plan B. Garri. Cold water only."
+    },
+    {
+     "n": 5,
+     "id": "m003_mid1_04",
+     "text": "Hot water? You want eba by accident?"
+    },
+    {
+     "n": 6,
+     "id": "m003_close_02",
+     "text": "Old thing. It does that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Mai Shayi Knows",
+   "file": "Bature - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_open_02",
+     "text": "I'll pay with a riddle. What has keys but no door?"
+    },
+    {
+     "n": 2,
+     "id": "m006_close_02",
+     "text": "Two goats. Tired."
+    },
+    {
+     "n": 3,
+     "id": "m006_close_04",
+     "text": "What are you looking at?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Fresher Tax",
+   "file": "Bature - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m007_close_06",
+     "text": "What's two metres tall and fears a hairdresser?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Left Boot First",
+   "file": "Bature - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_mid1_02",
+     "text": "Sheikh Biru! Lecture us on football!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Test Week, One Lamp",
+   "file": "Bature - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_open_02",
+     "text": "It is never simple when he says that."
+    },
+    {
+     "n": 2,
+     "id": "m011_open_05",
+     "text": "Forty moths. One Professor."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Count Entropy",
+   "file": "Bature - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_open_01",
+     "text": "Riddle me this. …No. Not tonight."
+    },
+    {
+     "n": 2,
+     "id": "m012_open_02",
+     "text": "And everybody's reading. Alone."
+    },
+    {
+     "n": 3,
+     "id": "m012_open_03",
+     "text": "One torch is a snack. Five is a problem."
+    },
+    {
+     "n": 4,
+     "id": "m012_close_02",
+     "text": "We have a paper at eight. Why am I happy?"
+    },
+    {
+     "n": 5,
+     "id": "m012_close_03",
+     "text": "…That wasn't there yesterday."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Results Day",
+   "file": "Bature - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m013_open_01",
+     "text": "Riddle: what is A4, and ruins your life?"
+    },
+    {
+     "n": 2,
+     "id": "m013_open_02",
+     "text": "We don't move. We are carried."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Sly's Last Stand",
+   "file": "Bature - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_open_02",
+     "text": "'B.B.' She signed it. So it's real."
+    },
+    {
+     "n": 2,
+     "id": "m014_open_03",
+     "text": "The gym opens at seven. I'll watch. From far."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Baba Dam's Pier",
+   "file": "Bature - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m015_open_01",
+     "text": "Riddle: what is free, wet, and full of fi—"
+    },
+    {
+     "n": 2,
+     "id": "m015_close_03",
+     "text": "Good evening to you too, Baba Ranger."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "The Dam at Midnight",
+   "file": "Bature - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m016_open_02",
+     "text": "That's the garden's sound. Under WATER."
+    },
+    {
+     "n": 2,
+     "id": "m016_open_04",
+     "text": "I'm the loud one. I'll stay up here and be loud."
+    },
+    {
+     "n": 3,
+     "id": "m016_close_02",
+     "text": "Who are you talking to? I heard you talking!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Radio Silence",
+   "file": "Bature - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_open_05",
+     "text": "I ironed a shirt. For radio. Is that normal?"
+    },
+    {
+     "n": 2,
+     "id": "m018_mid1_01",
+     "text": "Good… good evening. This is, um. The news."
+    },
+    {
+     "n": 3,
+     "id": "m018_mid1_03",
+     "text": "Riddle: what goes off without warning? Our light."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Everybody",
+   "file": "Bature - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m022_open_06",
+     "text": "EVERYBODY. Underlined. Twice. Start walking."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Exam Fever",
+   "file": "Bature - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_open_01",
+     "text": "Riddle: what has four papers and no mercy?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Stalite",
+   "file": "Bature - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m025_open_01",
+     "text": "Riddle: what has two owners and one mattress?"
+    },
+    {
+     "n": 2,
+     "id": "m025_open_02",
+     "text": "No, I'm actually asking. What do we do?"
+    },
+    {
+     "n": 3,
+     "id": "m025_close_05",
+     "text": "He's eating our garri. I approve of him."
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "The Mall Never Blinks",
+   "file": "Bature - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m029_open_01",
+     "text": "It doesn't blink. Have you noticed?"
+    },
+    {
+     "n": 2,
+     "id": "m029_open_02",
+     "text": "We blink. It doesn't."
+    },
+    {
+     "n": 3,
+     "id": "m029_mid1_03",
+     "text": "'Beneath the market, where people gather.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "Meter Reader",
+   "file": "Bature - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m030_open_01",
+     "text": "If I see him, I make a bird call."
+    },
+    {
+     "n": 2,
+     "id": "m030_open_02",
+     "text": "…Bird."
+    },
+    {
+     "n": 3,
+     "id": "m030_open_03",
+     "text": "It's a rare bird. Go."
+    },
+    {
+     "n": 4,
+     "id": "m030_close_01",
+     "text": "Bird! BIRD!"
+    },
+    {
+     "n": 5,
+     "id": "m030_close_02",
+     "text": "We have him. I feel sick. Do you feel sick?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "Iron Mama Hums",
+   "file": "Bature - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m032_open_04",
+     "text": "So it CAN come down."
+    },
+    {
+     "n": 2,
+     "id": "m032_mid1_01",
+     "text": "They're sitting on the cables. Like hens."
+    },
+    {
+     "n": 3,
+     "id": "m032_close_04",
+     "text": "English, sir?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Faculty Week: Engineering",
+   "file": "Bature - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_open_01",
+     "text": "ENGINERING. One E short. Like our budget."
+    },
+    {
+     "n": 2,
+     "id": "m033_open_02",
+     "text": "I'm not in this faculty. The pies don't know that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "Test Week Twist",
+   "file": "Bature - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_mid2_02",
+     "text": "Riddle me this: what has four suspects and—"
+    },
+    {
+     "n": 2,
+     "id": "m035_mid2_03",
+     "text": "…No. Sorry. Not funny."
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "On Air",
+   "file": "Bature - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_open_01",
+     "text": "This is Riddles After Dark. I'm Bature. You're awake."
+    },
+    {
+     "n": 2,
+     "id": "m036_open_06",
+     "text": "And I'll need a riddle. A big one."
+    },
+    {
+     "n": 3,
+     "id": "m036_mid1_03",
+     "text": "Riddle me this, Ring Road."
+    },
+    {
+     "n": 4,
+     "id": "m036_mid1_04",
+     "text": "What eats light, and gives back a shopping centre?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "Scout in the Stands",
+   "file": "Bature - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_open_05",
+     "text": "There's a scout today. Nobody's told him. So: sh."
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "New Site Goes Dark",
+   "file": "Bature - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_open_05",
+     "text": "Riddle: what has forty poles and no lamp? Don't answer."
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "Love in the Time of NEPA",
+   "file": "Bature - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m040_open_03",
+     "text": "Love riddles. A hundred each. I'm rich. Don't ask me."
+    },
+    {
+     "n": 2,
+     "id": "m040_open_04",
+     "text": "You have ₦300 and the truth. One of them is free."
+    }
+   ]
+  },
+  {
+   "section": "Mission 25",
+   "title": "The Second Coil",
+   "file": "Bature - Mission 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m041_open_05",
+     "text": "Say am again slowly."
+    }
+   ]
+  },
+  {
+   "section": "Mission 26",
+   "title": "The Plan",
+   "file": "Bature - Mission 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_open_01",
+     "text": "The mall. I drew it from memory."
+    },
+    {
+     "n": 2,
+     "id": "m043_open_08",
+     "text": "Six against. Motion dies. Like our social lives."
+    }
+   ]
+  },
+  {
+   "section": "Mission 27",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Bature - Mission 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_open_02",
+     "text": "Riddle: what holds six fools and one rope?"
+    },
+    {
+     "n": 2,
+     "id": "m044_close_01",
+     "text": "It's going DOWN. We broke it properly."
+    }
+   ]
+  },
+  {
+   "section": "Mission 28",
+   "title": "Two Papers, One Day",
+   "file": "Bature - Mission 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_open_03",
+     "text": "(Riddle: who knocks at five? No one good.)"
+    }
+   ]
+  },
+  {
+   "section": "Mission 29",
+   "title": "Sign-Out, Small",
+   "file": "Bature - Mission 29",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_open_06",
+     "text": "They're asking YOU to sign. We're old. Riddle that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 30",
+   "title": "Indefinite",
+   "file": "Bature - Mission 30",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m050_open_01",
+     "text": "Indefinite. That is not a date. That is a mood."
+    },
+    {
+     "n": 2,
+     "id": "m050_close_02",
+     "text": "Was the campus always this big?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 31",
+   "title": "Those Who Stayed",
+   "file": "Bature - Mission 31",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_open_03",
+     "text": "I put fifty naira in my pocket so it won't feel alone."
+    }
+   ]
+  },
+  {
+   "section": "Mission 32",
+   "title": "Garri Economics",
+   "file": "Bature - Mission 32",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m052_open_03",
+     "text": "It has one wheel."
+    },
+    {
+     "n": 2,
+     "id": "m052_mid1_04",
+     "text": "Mubarak, I am loyal. But I am also hungry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 33",
+   "title": "Past the Last Streetlight",
+   "file": "Bature - Mission 33",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m055_open_01",
+     "text": "I am here as a witness. Not a participant."
+    },
+    {
+     "n": 2,
+     "id": "m055_open_02",
+     "text": "Witnesses stand behind. Go first."
+    },
+    {
+     "n": 3,
+     "id": "m055_mid1_06",
+     "text": "Who hasn't finished what?"
+    },
+    {
+     "n": 4,
+     "id": "m055_close_03",
+     "text": "Yes, Baba Ra— yes, sir."
+    }
+   ]
+  },
+  {
+   "section": "Mission 34",
+   "title": "Empty Halls",
+   "file": "Bature - Mission 34",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m056_open_01",
+     "text": "Riddle me this!"
+    },
+    {
+     "n": 2,
+     "id": "m056_open_02",
+     "text": "…It gave it back wrong. Even the hall is on strike."
+    },
+    {
+     "n": 3,
+     "id": "m056_mid1_01",
+     "text": "Normalise sleeping in class. But not like THIS."
+    },
+    {
+     "n": 4,
+     "id": "m056_mid1_02",
+     "text": "Finally. Someone asks me to keep talking."
+    },
+    {
+     "n": 5,
+     "id": "m056_close_01",
+     "text": "School padlocks are grey. And older than us."
+    }
+   ]
+  },
+  {
+   "section": "Mission 35",
+   "title": "The Sit-Down",
+   "file": "Bature - Mission 35",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_mid1_01",
+     "text": "Breaking news: the Pastor has passed."
+    },
+    {
+     "n": 2,
+     "id": "m057_mid1_02",
+     "text": "…The ball. He passed the ball."
+    },
+    {
+     "n": 3,
+     "id": "m057_close_01",
+     "text": "Riddle me this. …No. Tomorrow. Tomorrow I'll have one."
+    }
+   ]
+  },
+  {
+   "section": "Mission 36",
+   "title": "Patrol Games",
+   "file": "Bature - Mission 36",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m059_open_02",
+     "text": "The inside is also white. We are finished."
+    },
+    {
+     "n": 2,
+     "id": "m059_open_04",
+     "text": "Quietly. 'Mu je' quietly."
+    },
+    {
+     "n": 3,
+     "id": "m059_mid1_02",
+     "text": "You are thinking like a goalpost."
+    },
+    {
+     "n": 4,
+     "id": "m059_close_02",
+     "text": "Who is paying that light bill?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 37",
+   "title": "The Old Site",
+   "file": "Bature - Mission 37",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_open_03",
+     "text": "Seven chairs. Six gave up. I relate to the six."
+    }
+   ]
+  },
+  {
+   "section": "Mission 38",
+   "title": "The Maker's Secret",
+   "file": "Bature - Mission 38",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m061_mid2_04",
+     "text": "So nobody will mention the seventh chair. Fine. Fine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 39",
+   "title": "The Study Group",
+   "file": "Bature - Mission 39",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m062_open_02",
+     "text": "Professor! Riddle me this: when is break?"
+    },
+    {
+     "n": 2,
+     "id": "m062_close_03",
+     "text": "Breaking news: he delivered. Like DHL with a beard."
+    }
+   ]
+  },
+  {
+   "section": "Mission 40",
+   "title": "The Idle King",
+   "file": "Bature - Mission 40",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_mid1_05",
+     "text": "She was this funny all along? I feel robbed."
+    }
+   ]
+  },
+  {
+   "section": "Mission 41",
+   "title": "Called Off",
+   "file": "Bature - Mission 41",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_open_03",
+     "text": "Honestly? Everything. Sit down."
+    }
+   ]
+  },
+  {
+   "section": "Mission 42",
+   "title": "Lucky Goes Viral",
+   "file": "Bature - Mission 42",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m075_open_01",
+     "text": "One plate, two spoons. It's called a merger."
+    },
+    {
+     "n": 2,
+     "id": "m075_open_02",
+     "text": "No. Sit down. Your feet are doing something."
+    },
+    {
+     "n": 3,
+     "id": "m075_close_01",
+     "text": "'King of the Spot.' 'Marry me.' 'Sells shoes, DM.'"
+    },
+    {
+     "n": 4,
+     "id": "m075_close_02",
+     "text": "You have fans. I have your leftover rice. Fair."
+    },
+    {
+     "n": 5,
+     "id": "m075_close_03",
+     "text": "Bot. Scroll."
+    }
+   ]
+  },
+  {
+   "section": "Mission 43",
+   "title": "Echo",
+   "file": "Bature - Mission 43",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m077_open_01",
+     "text": "Tell me that's you. Tell me you have a twin."
+    },
+    {
+     "n": 2,
+     "id": "m077_open_02",
+     "text": "You never do the turn right. …Oh."
+    }
+   ]
+  },
+  {
+   "section": "Mission 44",
+   "title": "Hock Day",
+   "file": "Bature - Mission 44",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m080_open_01",
+     "text": "Riddle me this: what comes once a year, today?"
+    },
+    {
+     "n": 2,
+     "id": "m080_open_02",
+     "text": "You paused. I counted the pause. Lunch at one."
+    }
+   ]
+  },
+  {
+   "section": "Mission 45",
+   "title": "Cancelled",
+   "file": "Bature - Mission 45",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m082_open_02",
+     "text": "That's not… Tell me that's not."
+    },
+    {
+     "n": 2,
+     "id": "m082_close_01",
+     "text": "The turn. That's not your turn."
+    },
+    {
+     "n": 3,
+     "id": "m082_close_02",
+     "text": "You have never once done that turn right."
+    }
+   ]
+  },
+  {
+   "section": "Mission 46",
+   "title": "Payday",
+   "file": "Bature - Mission 46",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m086_open_01",
+     "text": "Riddle me this: who is my best friend since 1900?"
+    },
+    {
+     "n": 2,
+     "id": "m086_open_02",
+     "text": "On what? You haven't left the bed!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 47",
+   "title": "The Mirror",
+   "file": "Bature - Mission 47",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m092_open_01",
+     "text": "You can have the riddles."
+    },
+    {
+     "n": 2,
+     "id": "m092_open_02",
+     "text": "You can't have the timing. Nobody can. Even me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 48",
+   "title": "Double Booking",
+   "file": "Bature - Mission 48",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m093_open_01",
+     "text": "Riddle me this: what has two dates and no plan?"
+    },
+    {
+     "n": 2,
+     "id": "m093_open_02",
+     "text": "That is the riddle. Look at it. Then look at me."
+    },
+    {
+     "n": 3,
+     "id": "m093_open_03",
+     "text": "And the twins have a chart. With string."
+    },
+    {
+     "n": 4,
+     "id": "m093_mid1_04",
+     "text": "Why do I have a column?"
+    },
+    {
+     "n": 5,
+     "id": "m093_close_01",
+     "text": "Forty-one planks. Last year it was thirty-nine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 49",
+   "title": "Log Off",
+   "file": "Bature - Mission 49",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_close_03",
+     "text": "Riddle me this: what did I do to deserve this?"
+    },
+    {
+     "n": 2,
+     "id": "m095_close_04",
+     "text": "Breaking news: I read. Don't tell my village."
+    }
+   ]
+  },
+  {
+   "section": "Mission 50",
+   "title": "One Left",
+   "file": "Bature - Mission 50",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m096_open_03",
+     "text": "Riddle me th— …No. Fine. Go well."
+    }
+   ]
+  },
+  {
+   "section": "Mission 51",
+   "title": "Finalist",
+   "file": "Bature - Mission 51",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m097_open_02",
+     "text": "Look at you. Senior. Giving directions like a signboard."
+    }
+   ]
+  },
+  {
+   "section": "Mission 52",
+   "title": "The Chancellor's Shadow",
+   "file": "Bature - Mission 52",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m108_open_01",
+     "text": "I got one too. Good paper. Holds a teacup very well."
+    },
+    {
+     "n": 2,
+     "id": "m108_open_02",
+     "text": "We're late. Whoever it is can wait. We can't."
+    },
+    {
+     "n": 3,
+     "id": "m108_mid1_01",
+     "text": "Why is he in a gown? Convocation is in July."
+    },
+    {
+     "n": 4,
+     "id": "m108_mid1_03",
+     "text": "…So we call them. Like register. I can do register."
+    }
+   ]
+  },
+  {
+   "section": "Mission 53",
+   "title": "Dinner Night",
+   "file": "Bature - Mission 53",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m109_open_02",
+     "text": "On time? Check the sky. Check the trousers."
+    },
+    {
+     "n": 2,
+     "id": "m109_mid1_03",
+     "text": "Riddle me this. What do you give, and keep after giving?"
+    },
+    {
+     "n": 3,
+     "id": "m109_mid1_04",
+     "text": "Your word."
+    },
+    {
+     "n": 4,
+     "id": "m109_close_02",
+     "text": "Why are you counting? We're all there."
+    }
+   ]
+  },
+  {
+   "section": "Mission 54",
+   "title": "Project Defence",
+   "file": "Bature - Mission 54",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m110_close_01",
+     "text": "…forty-one per cent cheaper over ten years. Source: Okafor."
+    },
+    {
+     "n": 2,
+     "id": "m110_close_02",
+     "text": "Riddle me this: why did I say that out loud? Ha. Joke."
+    }
+   ]
+  },
+  {
+   "section": "Mission 55",
+   "title": "The Ten Seals",
+   "file": "Bature - Mission 55",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_mid2_04",
+     "text": "Arts. Riddle me this: no. Not now. Just… here."
+    }
+   ]
+  },
+  {
+   "section": "Mission 56",
+   "title": "Chancellor Null",
+   "file": "Bature - Mission 56",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_open_01",
+     "text": "Why is everybody looking at me like a stranger?"
+    },
+    {
+     "n": 2,
+     "id": "m115_mid1_01",
+     "text": "Present! …Sorry. Habit."
+    }
+   ]
+  },
+  {
+   "section": "Mission 57",
+   "title": "Sign-Out",
+   "file": "Bature - Mission 57",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_open_01",
+     "text": "Five years, and that's the cleanest thing you own."
+    },
+    {
+     "n": 2,
+     "id": "m119_mid1_03",
+     "text": "A riddle. No answer. You'll get it in ten years."
+    },
+    {
+     "n": 3,
+     "id": "m119_mid1_04",
+     "text": "Call me."
+    }
+   ]
+  },
+  {
+   "section": "Mission 58",
+   "title": "Fresher",
+   "file": "Bature - Mission 58",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m120_close_02",
+     "text": "Riddle me this: what has six floors now? CALL ME."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Bature - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_greet_01",
+     "text": "Riddle me this: who's back? You. Hi."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_greet_02",
+     "text": "Breaking news: roommate returns. Public relieved."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_greet_03",
+     "text": "You're home! Did you bring food? Say yes."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_greet_04",
+     "text": "Ah. You. I was just guarding your biscuits."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_greet_05",
+     "text": "Riddle: what has two legs and owes me garri? Hello!"
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_f_greet_01",
+     "text": "Riddle me this: who's Firdausi's favourite cousin? Me. Hi."
+    },
+    {
+     "n": 7,
+     "id": "bk_bature_f_greet_02",
+     "text": "Ah, my cousin's roommate! Has she named another lizard?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Bature - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_bye_01",
+     "text": "Go well. Leave the biscuits."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_bye_02",
+     "text": "Breaking news: roommate leaves. Nobody cries. Much."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_bye_03",
+     "text": "Not back by ten? I'm eating your share."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_bye_04",
+     "text": "Riddle for the road: … I forgot it. Go."
+    },
+    {
+     "n": 5,
+     "id": "bk_bature_f_bye_01",
+     "text": "Stay tuned. That's radio for 'goodbye'."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Bature - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_thanks_01",
+     "text": "Thanks. You're the second best person in this room."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_thanks_02",
+     "text": "Na gode. [Thank you.] {{ROOMIE}} is grateful. Rare event."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_thanks_03",
+     "text": "Thank you. I'll pay you back. In riddles."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_sorry_01",
+     "text": "Sorry. I ate the groundnut. Both bags. Riddle: who?"
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_sorry_02",
+     "text": "My bad. Really. No joke this time."
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_f_thanks_01",
+     "text": "Thanks. I'll mention you on air. Anonymously. Loudly."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Bature - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_compliment_01",
+     "text": "You look sharp. Sharper than our knife. Low bar, but still."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_compliment_02",
+     "text": "Look at you, reading. Breaking news."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_compliment_03",
+     "text": "You're good at this. Don't tell anyone I said it."
+    },
+    {
+     "n": 4,
+     "id": "bk_bature_f_compliment_01",
+     "text": "You laughed at my riddle. Nobody does that. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Bature - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_tease_01",
+     "text": "You snore in three languages. One is Morse code."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_tease_02",
+     "text": "Your side of the room is a crime scene. Mostly socks."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_tease_03",
+     "text": "You call that cooking? That's warming with ambition."
+    },
+    {
+     "n": 4,
+     "id": "bk_bature_f_tease_01",
+     "text": "Tell Firdausi she owes me garri. Since first year."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Bature - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_follow_01",
+     "text": "Lead on. I'll narrate. 'They walked bravely, and late…'"
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_follow_02",
+     "text": "Right behind you. Counting steps. Thirty… four? Two?"
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_follow_03",
+     "text": "Wait for me. My slippers are on strike."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_wait_01",
+     "text": "I'm ageing. Visibly. Come on."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_wait_02",
+     "text": "Riddle: what is slow, and also you? Hurry."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_f_lost_01",
+     "text": "Wrong way. The Spot is that side. Food is always that side."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_f_lost_02",
+     "text": "Breaking news: we are lost. More at eleven."
+    },
+    {
+     "n": 8,
+     "id": "bk_bature_f_follow_01",
+     "text": "Walking with you. This is now a live outside broadcast."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Bature - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_yes_01",
+     "text": "Yes! Obviously! …What did I agree to?"
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_yes_02",
+     "text": "Yes. Riddle me this: why not?"
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_no_01",
+     "text": "No. Riddle me this: no."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_no_02",
+     "text": "No. Not even for jollof. …Okay, maybe for jollof."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_no_03",
+     "text": "Absolutely not. {{ROOMIE}} has standards. One."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_f_maybe_01",
+     "text": "Maybe. Ask me after I eat."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_f_maybe_02",
+     "text": "Maybe. Let me consult my mattress."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_f_confused_01",
+     "text": "Say am again slowly. [Say it again slowly.]"
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_f_confused_02",
+     "text": "I read that sentence three times. It's still in Engineering."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_f_agree_01",
+     "text": "Agreed. Shake on it. Wash first."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_f_agree_02",
+     "text": "Team Room! Undefeated since Monday!"
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_f_refuse_01",
+     "text": "I'm not going. My bed has asked me to stay."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_f_refuse_02",
+     "text": "No. I'm a witness, not a participant."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Bature - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_joke_01",
+     "text": "Riddle: what's full of holes but holds water? Not our roof."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_joke_02",
+     "text": "Riddle: what comes once and leaves forever? Light. NEPA light."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_ask_01",
+     "text": "Did you eat? Is there more? Mostly the second."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_ask_02",
+     "text": "Riddle me this: can I borrow your charger?"
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_ask_03",
+     "text": "You okay? Real answer. Not the 'I'm fine' one."
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_f_ask_01",
+     "text": "Listening tonight? Ring Road FM. Say yes. Lie if needed."
+    },
+    {
+     "n": 7,
+     "id": "bk_bature_f_joke_01",
+     "text": "Riddle me this, Ring Road: what's on air, and off light? Us."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Bature - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_win_01",
+     "text": "WE WON! Breaking news! Everybody calm down! Not you!"
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_win_02",
+     "text": "Riddle: who's the best? Us. That was easy."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_lose_01",
+     "text": "We lost. Garri tonight. Garri understands."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_lose_02",
+     "text": "Next time. Mu sake. [We go again.]"
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Bature - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_hit_01",
+     "text": "Ow. I'm narrating this as assault."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_hit_02",
+     "text": "You bumped me. I'll sue. In riddles."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_fall_01",
+     "text": "And they fall! The crowd gasps! …I'm fine."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_fall_02",
+     "text": "The floor and I are on first-name terms now."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_blackout_01",
+     "text": "They have taken light. Welcome to university. Again."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_f_blackout_02",
+     "text": "Riddle: what's dark and full of us? This room."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_f_blackout_03",
+     "text": "NEPA, why? We were getting along."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_f_light_back_01",
+     "text": "UP NEPA! Charge everything! Charge the kettle!"
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_f_light_back_02",
+     "text": "Light! Quick, iron something before it changes its mind."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_f_rain_01",
+     "text": "Rain. Lecture's cancelled. In my heart."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_f_rain_02",
+     "text": "Our window leaks. Breaking news: indoor rain."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_f_heat_01",
+     "text": "It's so hot my garri is cooking itself."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_f_heat_02",
+     "text": "The fan is turning. Slowly. Out of pity."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Bature - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_food_01",
+     "text": "One plate, two spoons. It's a merger."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_food_02",
+     "text": "Is that suya? Asking for me."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_food_03",
+     "text": "Garri, sugar, groundnut, cold water. Five stars."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_money_01",
+     "text": "Sapa has entered the chat. It's sitting on my bed."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_money_02",
+     "text": "I have fifty naira and a dream. The dream is jollof."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Bature - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_gift_like_01",
+     "text": "Biscuits! You know the way to my heart. It's biscuits."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_gift_like_02",
+     "text": "For me? I'll share it. Probably. Some of it."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_gift_dislike_01",
+     "text": "Thank you. I'll keep it. Under the bed. Respectfully."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_gift_dislike_02",
+     "text": "A book. Riddle: what is never opened? This."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_f_gift_love_01",
+     "text": "A whole bag of groundnut? I'll name my firstborn after you."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_f_gift_love_02",
+     "text": "Chin chin! The good one! You're my favourite human."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Bature - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_idle_01",
+     "text": "Narrator voice: and the roommate sat. And sat."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_idle_02",
+     "text": "Riddle me this. …Nobody's here. I'll answer. Garri."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_f_idle_03",
+     "text": "Forty-two stairs. Forty-three? I'll count again tomorrow."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_f_idle_04",
+     "text": "{{ROOMIE}} is not lazy. {{ROOMIE}} is conserving energy."
+    },
+    {
+     "n": 5,
+     "id": "bk_bature_f_idle_01",
+     "text": "Mass Comm. We communicate. Massively."
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_f_idle_02",
+     "text": "Professor! …Sorry. Wrong person. Hello, person."
+    },
+    {
+     "n": 7,
+     "id": "bk_bature_f_idle_03",
+     "text": "Tanko gave me a riddle last year. I'm still on it."
+    },
+    {
+     "n": 8,
+     "id": "bk_bature_f_idle_04",
+     "text": "Jega says I'm the worst striker he knows. He knows two."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Bature - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_f_night_01",
+     "text": "You awake? …Riddle. No. Sleep. Goodnight."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_f_night_02",
+     "text": "Narrator voice: it was late. They were hungry. Again."
+    },
+    {
+     "n": 3,
+     "id": "bk_bature_f_night_01",
+     "text": "Riddles After Dark, eleven p.m. You're awake anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 1: arriving",
+   "file": "Bature - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y1_greet_01",
+     "text": "Roommate! I saved you the corner of the bed. The cold corner."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y1_tease_01",
+     "text": "Your matric gown is wearing you."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y1_tease_02",
+     "text": "You wear your lanyard to the bathroom. Freshers."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y1_ev_exam_01",
+     "text": "Test week. I read out loud. The neighbours are reading too."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y1_ev_results_01",
+     "text": "Results are up. I'm not looking. You look. Tell me gently."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Bature - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y1_idle_01",
+     "text": "Riddle me this: what has two beds and one Indomie?"
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y1_idle_02",
+     "text": "The tap runs at six. I run at six-oh-one."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y1_idle_03",
+     "text": "Breaking news: roommate attends lecture. Wrong theatre."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y1_idle_04",
+     "text": "Small room. Big dreams. Medium garri."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y1_idle_05",
+     "text": "I tried to read. The page read me. It won."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_y1_idle_06",
+     "text": "Mai Shayi took a riddle as payment. Legal tender."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_y1_callback_01",
+     "text": "Day one, I guarded your biscuits. A hero."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_y1_callback_02",
+     "text": "Freshers chase goats. Tradition. Since that day."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_y1_callback_03",
+     "text": "Our first jollof. Half done. NEPA finished it."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_y1_callback_04",
+     "text": "Twelve freshers, one candle, one cup of garri. Classic."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_y1_callback_05",
+     "text": "One torch is a snack. Five is a problem. I still say it."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_y1_callback_06",
+     "text": "That plank broke under me slowly. While I talked. Rude."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_y1_callback_07",
+     "text": "At the dam, you were talking to someone. I heard you."
+    },
+    {
+     "n": 14,
+     "id": "bk_roomie_y1_callback_08",
+     "text": "EVERYBODY. Underlined twice. My finest document."
+    },
+    {
+     "n": 15,
+     "id": "bk_roomie_y1_callback_09",
+     "text": "Fresher no more! Riddle: what's next? Second year. Easy."
+    },
+    {
+     "n": 16,
+     "id": "bk_roomie_y1_night_01",
+     "text": "Lights out. Who's scared of the dark? Not me. Stay close."
+    },
+    {
+     "n": 17,
+     "id": "bk_roomie_y1_night_02",
+     "text": "The corridor hums at night. Say it's normal. Say it."
+    },
+    {
+     "n": 18,
+     "id": "bk_bature_y1_idle_01",
+     "text": "I ironed a shirt for radio. Radio can't see shirts."
+    },
+    {
+     "n": 19,
+     "id": "bk_bature_y1_idle_02",
+     "text": "Jega's team picked me last. Correctly."
+    },
+    {
+     "n": 20,
+     "id": "bk_bature_y1_callback_01",
+     "text": "'Good evening. This is, um, the news.' My debut."
+    },
+    {
+     "n": 21,
+     "id": "bk_bature_y1_callback_02",
+     "text": "Kabiru let me read the weather. Dust. Nailed it."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Bature - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y2_greet_01",
+     "text": "Second-year! Stand up straight. Freshers are watching."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y2_tease_01",
+     "text": "Three mall trips this week. For 'the air conditioning'."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y2_ev_exam_01",
+     "text": "You read. I'll make the tea. That's teamwork."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Bature - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y2_idle_01",
+     "text": "Second year. I've stopped getting lost. Mostly."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y2_idle_02",
+     "text": "The mall never blinks. Have you noticed? I have."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y2_idle_03",
+     "text": "Sapa level: I licked the seasoning sachet. Plain."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y2_idle_04",
+     "text": "Riddle: what's open all night and isn't our light? The mall."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y2_idle_05",
+     "text": "Breaking news: roommate buys power bank. Already warm."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_y2_callback_01",
+     "text": "Somebody's slippers on our floor. Eating our garri. Fine."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_y2_callback_02",
+     "text": "Bird call. Rare bird. Still practising."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_y2_callback_03",
+     "text": "So it CAN come down. The escalator. And our hopes."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_y2_callback_04",
+     "text": "ENGINERING. One E short. I still laugh."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_y2_callback_05",
+     "text": "I drew the mall. A rectangle labelled MALL. Genius."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_y2_callback_06",
+     "text": "We broke it properly. Professionally."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_y2_callback_07",
+     "text": "Three hundred naira and the truth. Still a good date."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_y2_callback_08",
+     "text": "Who knocks at five a.m.? Shamsu. With a soldering iron."
+    },
+    {
+     "n": 14,
+     "id": "bk_roomie_y2_callback_09",
+     "text": "They asked US to sign. We're old now. Riddle that."
+    },
+    {
+     "n": 15,
+     "id": "bk_roomie_y2_night_01",
+     "text": "The mall is blazing. We have one candle and vibes."
+    },
+    {
+     "n": 16,
+     "id": "bk_roomie_y2_night_02",
+     "text": "Can't sleep. The mall hums. Like a fridge with ambition."
+    },
+    {
+     "n": 17,
+     "id": "bk_roomie_y2_idle_06",
+     "text": "Narrator voice: they had a plan. The plan was a rectangle."
+    },
+    {
+     "n": 18,
+     "id": "bk_bature_y2_idle_01",
+     "text": "Kabiru's voice is warm bread. Mine is toast."
+    },
+    {
+     "n": 19,
+     "id": "bk_bature_y2_idle_02",
+     "text": "Decoy. That was my role. I decoyed beautifully."
+    },
+    {
+     "n": 20,
+     "id": "bk_bature_y2_callback_01",
+     "text": "Riddles After Dark. My show. My voice. My riddles."
+    },
+    {
+     "n": 21,
+     "id": "bk_bature_y2_callback_02",
+     "text": "A caller solved my riddle. I had to hang up. Jealous."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 3: the strike",
+   "file": "Bature - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y3_greet_01",
+     "text": "Still here? Good. I was talking to the wall. It's tired."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y3_tease_01",
+     "text": "Teaching at Demo? Teacher! Can I have marks?"
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y3_ev_market_day_01",
+     "text": "Farm work at five-thirty. A cock woke me. Personally."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Bature - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y3_idle_01",
+     "text": "Strike, day forty. I've read every label in this room."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y3_idle_02",
+     "text": "Garri: breakfast, lunch, emotional support."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y3_idle_03",
+     "text": "Those who stayed. That's us. A small, hungry club."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y3_idle_04",
+     "text": "Narrator voice: the campus was empty. The roommate, hungrier."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y3_idle_05",
+     "text": "The hall is on strike too. The taps are protesting."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_y3_callback_01",
+     "text": "Indefinite. Not a date. A mood. Still the mood."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_y3_callback_02",
+     "text": "Mai Shayi's kettle. Five of us. Best tea in history."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_y3_callback_03",
+     "text": "Mubarak's wheelbarrow has one wheel. Like my plans."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_y3_callback_04",
+     "text": "Witnesses stand behind. I stood. Very behind."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_y3_callback_05",
+     "text": "I wrote my name in the dust. Somebody wiped it. Neatly."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_y3_callback_06",
+     "text": "Thanks for sitting with me. That's all. Thanks."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_y3_callback_07",
+     "text": "Riddle me this… I have one now. Tomorrow. Promise."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_y3_callback_08",
+     "text": "Seven chairs at the Old Site. I count them in my head."
+    },
+    {
+     "n": 14,
+     "id": "bk_roomie_y3_callback_09",
+     "text": "Shamsu's study group: free notes, free lamp, free lecture."
+    },
+    {
+     "n": 15,
+     "id": "bk_roomie_y3_callback_10",
+     "text": "Buses! Twenty buses! The campus is loud again!"
+    },
+    {
+     "n": 16,
+     "id": "bk_roomie_y3_night_01",
+     "text": "Empty campus at night. Even the crickets went home."
+    },
+    {
+     "n": 17,
+     "id": "bk_roomie_y3_night_02",
+     "text": "No light, no lectures. Just us and the fan's memory."
+    },
+    {
+     "n": 18,
+     "id": "bk_roomie_y3_idle_06",
+     "text": "Garri economics: I'm the economy. I'm also the garri."
+    },
+    {
+     "n": 19,
+     "id": "bk_bature_y3_idle_01",
+     "text": "Strike radio: me, a mic, four listeners. Hi, Mum."
+    },
+    {
+     "n": 20,
+     "id": "bk_bature_y3_idle_02",
+     "text": "Ring Road FM is quiet. I talk to the transmitter."
+    },
+    {
+     "n": 21,
+     "id": "bk_bature_y3_callback_01",
+     "text": "You pulled me up. Riddle me this: tomorrow. I'll have one."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Year 4: fame",
+   "file": "Bature - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y4_greet_01",
+     "text": "Look at you, in office shoes. Do they hurt? They hurt."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y4_tease_01",
+     "text": "You posted that? With that caption? Bold."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y4_ev_market_day_01",
+     "text": "Cook-off at Mama Nkechi's. I'm a judge. I'm a mouth."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Year 4: fame, to yourself",
+   "file": "Bature - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y4_idle_01",
+     "text": "IT placement: six hours at a photocopier. Employed."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y4_idle_02",
+     "text": "We give freshers directions now. Wrong ones, but with love."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y4_idle_03",
+     "text": "Lucky's ring light woke the whole floor."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y4_idle_04",
+     "text": "Narrator voice: they had money. For one weekend."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y4_idle_05",
+     "text": "Riddle: what's printed, stamped, and still not ready? IT letter."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_y4_callback_01",
+     "text": "'King of the Spot.' 'Sells shoes, DM.' Your fans."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_y4_callback_02",
+     "text": "You have fans. I have your leftover rice. Fair."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_y4_callback_03",
+     "text": "I saw you across the court. You were also here. Don't explain."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_y4_callback_04",
+     "text": "You paused before lunch. I counted the pause."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_y4_callback_05",
+     "text": "That wasn't your turn in the clip. You never do the turn right."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_y4_callback_06",
+     "text": "I hung four of Nusaiba's posters. Upside down. We won."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_y4_callback_07",
+     "text": "Payday! Riddle: who's my best friend since 1900? You."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_y4_callback_08",
+     "text": "Two dates at seven. Riddle me this: who brought groundnuts?"
+    },
+    {
+     "n": 14,
+     "id": "bk_roomie_y4_callback_09",
+     "text": "The pier, you, me, groundnuts. Not sad. Not sad at all."
+    },
+    {
+     "n": 15,
+     "id": "bk_roomie_y4_callback_10",
+     "text": "Forty classmates want tutorials. From ME. Riddle that."
+    },
+    {
+     "n": 16,
+     "id": "bk_roomie_y4_night_01",
+     "text": "Report due tomorrow. Riddle: who hasn't started? Us."
+    },
+    {
+     "n": 17,
+     "id": "bk_roomie_y4_night_02",
+     "text": "The phone is in the tin. I'm fine. I miss it. I'm fine."
+    },
+    {
+     "n": 18,
+     "id": "bk_bature_y4_idle_01",
+     "text": "Results are out. I topped two courses. Don't tell my reputation."
+    },
+    {
+     "n": 19,
+     "id": "bk_bature_y4_idle_02",
+     "text": "My show moved to ten. Prime time. For owls."
+    },
+    {
+     "n": 20,
+     "id": "bk_bature_y4_idle_03",
+     "text": "Top in Media Law. Shh. Officially, I'm a clown."
+    },
+    {
+     "n": 21,
+     "id": "bk_bature_y4_callback_01",
+     "text": "Lucky asked for a radio collab. I gave him a riddle. He left."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Year 5: leaving",
+   "file": "Bature - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y5_greet_01",
+     "text": "Finalist! You walk like you own the ring road."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y5_tease_01",
+     "text": "You're crying at a group photo. Again. Third one."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Year 5: leaving, to yourself",
+   "file": "Bature - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_y5_idle_01",
+     "text": "Final year. Forty-one stairs. Every time now."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_y5_idle_02",
+     "text": "Last semester. I'm saving every riddle for the farewell."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_y5_idle_03",
+     "text": "Breaking news: roommate submits project early. Nobody believes it."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_y5_idle_04",
+     "text": "Freshers ask US where Gabas is. We used to be them."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_y5_idle_05",
+     "text": "Narrator voice: and they lived happily. After exams."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_y5_idle_06",
+     "text": "Alhaji Needle said Thursday. Which Thursday? He won't say."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_y5_callback_01",
+     "text": "Senior! Giving directions like a signboard."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_y5_callback_02",
+     "text": "Fresher tax, reversed. We pay them now. In zobo."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_y5_callback_03",
+     "text": "Your project smoked. The whole lawn watched. In nightclothes."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_y5_callback_04",
+     "text": "I got a letter too. Good paper. Holds tea well."
+    },
+    {
+     "n": 11,
+     "id": "bk_roomie_y5_callback_05",
+     "text": "On time to dinner? Check the sky. Check the outfit."
+    },
+    {
+     "n": 12,
+     "id": "bk_roomie_y5_callback_06",
+     "text": "What do you give and keep after giving? Your word."
+    },
+    {
+     "n": 13,
+     "id": "bk_roomie_y5_callback_07",
+     "text": "I said something smart at my defence. Still shaking."
+    },
+    {
+     "n": 14,
+     "id": "bk_roomie_y5_callback_08",
+     "text": "Everybody looked at me like a stranger. Never again, please."
+    },
+    {
+     "n": 15,
+     "id": "bk_roomie_y5_night_01",
+     "text": "Last nights in this room. Don't make it weird. …Too late."
+    },
+    {
+     "n": 16,
+     "id": "bk_roomie_y5_night_02",
+     "text": "Riddle me this: what will I miss? …Don't make me say it."
+    },
+    {
+     "n": 17,
+     "id": "bk_roomie_y5_idle_07",
+     "text": "That groundnut bag on the shelf? Yours. Forever. Rent free."
+    },
+    {
+     "n": 18,
+     "id": "bk_roomie_y5_idle_08",
+     "text": "Riddle: who'll miss NEPA? Nobody. …Me. A little."
+    },
+    {
+     "n": 19,
+     "id": "bk_bature_y5_idle_01",
+     "text": "Last show soon. I'll end with a riddle. No answer."
+    },
+    {
+     "n": 20,
+     "id": "bk_bature_y5_idle_02",
+     "text": "Final project: a radio documentary. Thirty minutes of me."
+    },
+    {
+     "n": 21,
+     "id": "bk_bature_y5_callback_01",
+     "text": "'Forty-one per cent cheaper. Source: Okafor.' Who taught me that?"
+    }
+   ]
+  },
+  {
+   "section": "Common 25",
+   "title": "After graduation",
+   "file": "Bature - Common 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_post_idle_01",
+     "text": "Riddle me this: who's still your roommate? Me. Always."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_post_idle_02",
+     "text": "New job. They have light all day. I don't trust it."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_post_idle_03",
+     "text": "I passed our hall. Somebody's slippers on our floor. Ours."
+    },
+    {
+     "n": 4,
+     "id": "bk_bature_post_idle_01",
+     "text": "Riddles After Dark, still on air. Still awake. Still you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 26",
+   "title": "Special days: term time",
+   "file": "Bature - Common 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_ev_ev_freshers_01",
+     "text": "Freshers! Riddle: who's lost? All of you. Welcome."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_ev_ev_freshers_02",
+     "text": "Don't chase the goat. Or do. It's tradition."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_ev_ev_exam_01",
+     "text": "Exam week. I live in the library now. Bring garri."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_ev_ev_exam_02",
+     "text": "My brain is full. New information, please hold."
+    },
+    {
+     "n": 5,
+     "id": "bk_bature_ev_ev_exam_01",
+     "text": "Exam week on the Ring Road. Lights low, riddles easy."
+    },
+    {
+     "n": 6,
+     "id": "bk_roomie_ev_ev_results_01",
+     "text": "You look. I'll stand behind you. Far behind."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_ev_ev_allowance_01",
+     "text": "ALLOWANCE! Riddle: what disappears by Thursday? This."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_ev_ev_allowance_02",
+     "text": "Money came. Suya tonight. Garri tomorrow. Balance."
+    },
+    {
+     "n": 9,
+     "id": "bk_roomie_ev_ev_market_day_01",
+     "text": "Market day. I'm bargaining with my last fifty naira."
+    }
+   ]
+  },
+  {
+   "section": "Common 27",
+   "title": "Special days: the big ones",
+   "file": "Bature - Common 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_ev_ev_strike_01",
+     "text": "Strike again? Garri, bucket, torch. We know the drill."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_ev_ev_strike_02",
+     "text": "Indefinite, part two. The sequel nobody asked for."
+    },
+    {
+     "n": 3,
+     "id": "bk_bature_ev_ev_strike_01",
+     "text": "Strike playlist: ten songs, all about waiting."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_ev_ev_cup_01",
+     "text": "Cup day! I'll sing. Badly. Loudly. For the team."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_ev_ev_cup_02",
+     "text": "Jega does left boot first. I do left slipper first. Science."
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_ev_ev_cup_01",
+     "text": "Commentary by me! Jega's through on goal… he's tied his boot."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_ev_ev_elections_01",
+     "text": "I'm not campaigning. I'm narrating democracy."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_ev_ev_elections_02",
+     "text": "Breaking news: roommate votes. Democracy survives."
+    },
+    {
+     "n": 9,
+     "id": "bk_bature_ev_ev_elections_01",
+     "text": "Election night special on Ring Road FM. Bring snacks."
+    },
+    {
+     "n": 10,
+     "id": "bk_roomie_ev_ev_convocation_01",
+     "text": "Convocation! Somebody's mother is crying. Everybody's mother."
+    },
+    {
+     "n": 11,
+     "id": "bk_bature_ev_ev_convocation_01",
+     "text": "Live from convocation. I'm crying on air. Don't tune out."
+    }
+   ]
+  },
+  {
+   "section": "Common 28",
+   "title": "Special days: seasons and holidays",
+   "file": "Bature - Common 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_roomie_ev_ev_ramadan_01",
+     "text": "Iftar in ten minutes. I'm guarding the dates. Respectfully."
+    },
+    {
+     "n": 2,
+     "id": "bk_roomie_ev_ev_ramadan_02",
+     "text": "Sahur alarm at four. I set three. I heard none."
+    },
+    {
+     "n": 3,
+     "id": "bk_roomie_ev_ev_christmas_01",
+     "text": "Half the floor went home for Christmas. More rice per person."
+    },
+    {
+     "n": 4,
+     "id": "bk_roomie_ev_ev_valentine_01",
+     "text": "Valentine's. I have a date. With jollof. It's serious."
+    },
+    {
+     "n": 5,
+     "id": "bk_roomie_ev_ev_valentine_02",
+     "text": "Riddle: what's red and sold out? Every rose in Kwari."
+    },
+    {
+     "n": 6,
+     "id": "bk_bature_ev_ev_valentine_01",
+     "text": "Valentine's request line is open. No riddles. …One riddle."
+    },
+    {
+     "n": 7,
+     "id": "bk_roomie_ev_ev_harmattan_01",
+     "text": "Harmattan. My lips have cracked. So has my spirit."
+    },
+    {
+     "n": 8,
+     "id": "bk_roomie_ev_ev_harmattan_02",
+     "text": "Dust on everything. Even the garri. Extra crunchy."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

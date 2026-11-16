@@ -154,6 +154,10 @@ def script_lines(rows, width, head=None):
     for r in rows:
         r = r + [""] * (3 - len(r))
         mood = ('<font size="7.6" color="#b45309"><b>%s</b></font><br/>' % inline(r[1].upper())) if r[1] else ""
+        cue = re.match(r"\(\((.+?)\)\)\s*(.*)$", r[2])  # optional "((the line said just before))", in small grey type
+        if cue:
+            mood += '<font size="8.4" color="#6b7280"><i>%s</i></font><br/>' % inline(cue.group(1))
+            r[2] = cue.group(2)
         data.append([Paragraph(inline(r[0]), ST["snum"]), Paragraph(mood + inline(r[2]), ST["sline"])])
     t = Table(data, colWidths=[11 * mm, width - 11 * mm])
     t.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("LINEBELOW", (0, 0), (-1, -1), 0.5, LINE),
@@ -235,6 +239,8 @@ def flow(md, width):
             flush()
             lvl = len(m.group(1))
             if lvl == 1 and out:
+                while isinstance(out[-1], Spacer) and len(out) > 1:
+                    out.pop()  # a spacer pushed over the page end would leave a blank page before the break
                 out.append(PageBreak())
             h = Paragraph(inline(m.group(2)), ST["h%d" % lvl])
             h.keepWithNext = True  # never leave a heading alone at the foot of a page
@@ -314,7 +320,7 @@ def audience(key):
         return "Private to the owner"
     if key.endswith("_STORY_PACK"):
         return "Made for you, with thanks"
-    return "For the cast. Please keep it private"
+    return "For the cast, please keep it private"
 
 
 def cover_info(text):
@@ -323,7 +329,17 @@ def cover_info(text):
     return (m.group(1), m.group(2), m.group(3) or "#f59e0b", m.group(4) or "#22d3ee") if m else None
 
 
-def draw_cover(c, name, tagline, note, warm="#f59e0b", cool="#22d3ee"):
+COVER_LABEL = "Your Story Pack"
+COVER_INSIDE = "Inside: a letter  ·  the game  ·  the whole story  ·  your missions  ·  your lines"
+
+
+def cover_extra(text, key, default):
+    """Optional "<!-- cover-label: ... -->" and "<!-- cover-inside: ... -->" change the two fixed lines of the cover."""
+    m = re.search(r"<!--\s*cover-%s:\s*(.+?)\s*-->" % key, text[:2000])
+    return m.group(1) if m else default
+
+
+def draw_cover(c, name, tagline, note, warm="#f59e0b", cool="#22d3ee", label=COVER_LABEL, inside=COVER_INSIDE):
     """Full-bleed dark cover: glowing bands, the person's name huge, the tagline, a small footer."""
     W, H = A4
     c.saveState()
@@ -350,12 +366,15 @@ def draw_cover(c, name, tagline, note, warm="#f59e0b", cool="#22d3ee"):
     c.drawString(m, H - 46 * mm, tx("MIB-HUB  ·  A BROWSER GAME ABOUT FIVE YEARS OF CAMPUS LIFE"))
     # the name, huge
     size = 110 if len(name) <= 6 else 84
+    wide = pdfmetrics.stringWidth(tx(name.upper()), FB, size)
+    if wide > W - 2 * m:  # a long name: shrink it to fit between the margins
+        size = max(36, size * (W - 2 * m) / wide)
     c.setFillColor(colors.white)
     c.setFont(FB, size)
     c.drawString(m - 3, H * 0.47, tx(name.upper()))
     c.setFont(FB, 30)
     c.setFillColor(colors.HexColor("#fbbf24"))
-    c.drawString(m, H * 0.47 - 40, tx("Your Story Pack"))
+    c.drawString(m, H * 0.47 - 40, tx(label))
     # tagline, wrapped
     c.setFont(F, 14)
     c.setFillColor(colors.HexColor("#cbd5e1"))
@@ -366,7 +385,7 @@ def draw_cover(c, name, tagline, note, warm="#f59e0b", cool="#22d3ee"):
     # what's inside
     c.setFont(F, 10)
     c.setFillColor(colors.HexColor("#94a3b8"))
-    c.drawString(m, 34 * mm, tx("Inside: a letter  ·  the game  ·  the whole story  ·  your missions  ·  your lines"))
+    c.drawString(m, 34 * mm, tx(inside))
     c.setFillColor(colors.HexColor("#334155"))
     c.rect(m, 28 * mm, W - 2 * m, 0.6, stroke=0, fill=1)
     c.setFillColor(colors.HexColor("#94a3b8"))
@@ -405,7 +424,9 @@ def build(key):
         c.restoreState()
 
     try:
-        first = (lambda c, d: draw_cover(c, cv[0], cv[1], audience(key) + " · " + date.today().strftime("%d %B %Y"), cv[2], cv[3])) \
+        first = (lambda c, d: draw_cover(c, cv[0], cv[1], audience(key) + " · " + date.today().strftime("%d %B %Y"), cv[2], cv[3],
+                                         cover_extra(texts[0], "label", COVER_LABEL),
+                                         cover_extra(texts[0], "inside", COVER_INSIDE))) \
             if cv else (lambda c, d: None)
         doc.build(el, onFirstPage=first, onLaterPages=page)
     finally:

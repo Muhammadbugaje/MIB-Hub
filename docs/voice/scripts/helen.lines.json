@@ -1,0 +1,805 @@
+{
+ "character": "Helen",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Wingman",
+   "file": "Helen - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m021_mid1_01",
+     "text": "Who's asking?"
+    },
+    {
+     "n": 2,
+     "id": "m021_mid1_02",
+     "text": "Does he think I can't see him? The tree is thin."
+    },
+    {
+     "n": 3,
+     "id": "m021_mid1_04",
+     "text": "'IDK' was my idea. After the trials. My whole team says it."
+    },
+    {
+     "n": 4,
+     "id": "m021_mid1_05",
+     "text": "I'm waiting to see how long he carries it."
+    },
+    {
+     "n": 5,
+     "id": "m021_mid1_06",
+     "text": "Tell him six o'clock. And I know my own name."
+    },
+    {
+     "n": 6,
+     "id": "m021_close_03",
+     "text": "(It's going well. Watch the film.)"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Scout in the Stands",
+   "file": "Helen - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_mid1_03",
+     "text": "Wear mine."
+    },
+    {
+     "n": 2,
+     "id": "m037_mid1_05",
+     "text": "It beat Law, Science and Agriculture this term."
+    },
+    {
+     "n": 3,
+     "id": "m037_mid1_06",
+     "text": "What has yours beaten?"
+    },
+    {
+     "n": 4,
+     "id": "m037_close_03",
+     "text": "He did. He didn't notice. Don't tell him."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Sign-Out, Small",
+   "file": "Helen - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_open_04",
+     "text": "Three times. I wrote it in MY diary."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Injury Time",
+   "file": "Helen - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_mid2_01",
+     "text": "Where was the training?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Wedding at the Quarters",
+   "file": "Helen - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m071_mid1_02",
+     "text": "Who's asking? …I am. Every week. Where you were."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Rehab",
+   "file": "Helen - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m078_open_04",
+     "text": "Who's asking? Leave it blank."
+    },
+    {
+     "n": 2,
+     "id": "m078_close_02",
+     "text": "Pain?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Comeback",
+   "file": "Helen - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_close_01",
+     "text": "Pain?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Contract",
+   "file": "Helen - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m107_mid1_07",
+     "text": "Who's asking?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Dinner Night",
+   "file": "Helen - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m109_mid2_06",
+     "text": "Who's asking?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Helen - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_greet_01",
+     "text": "Who's asking?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_greet_02",
+     "text": "Hello. Are you walking on that ankle or dragging it?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_f_greet_03",
+     "text": "Oh, it's you. Jega's messenger. What's the message today?"
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_f_greet_04",
+     "text": "Good morning. Shoulders back. Was that so hard?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Helen - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_bye_01",
+     "text": "Go. Stretch first. You won't, but go."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_bye_02",
+     "text": "Bye. Tell nobody you saw me. They'll ask my name."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Helen - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_thanks_01",
+     "text": "Thank you. That was kind. Was it on purpose?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_sorry_01",
+     "text": "Sorry. Did that hurt? Don't lie, I'm a physio."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Helen - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_compliment_01",
+     "text": "Good posture today. Did somebody tell you, or did you grow?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_compliment_02",
+     "text": "That serve was nearly decent. Who taught you? Not Jega."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Helen - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_tease_01",
+     "text": "You walk like your bag is full of textbooks. Is it? Or garri?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_tease_02",
+     "text": "Do you know your hamstrings exist? They know you exist."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Helen - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_follow_01",
+     "text": "I'm coming. Slowly. Do you know what rushing does to a knee?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_wait_01",
+     "text": "Are you coming, or shall I book you an appointment?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_f_lost_01",
+     "text": "Is this the physio wing? No. Is that a problem? Yes."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Helen - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_yes_01",
+     "text": "Yes. Was there any doubt?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_no_01",
+     "text": "No. Was that the answer you wanted?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_f_maybe_01",
+     "text": "Maybe. Who's asking?"
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_f_confused_01",
+     "text": "What is he trying to say? Does he know?"
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_f_confused_02",
+     "text": "Who? There was nobody there fa. Are you sleeping enough?"
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_f_agree_01",
+     "text": "Exactly. Why didn't I say that? I did."
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_f_refuse_01",
+     "text": "No. Did you think a smile would work? It nearly did. No."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Helen - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_joke_01",
+     "text": "What's my name? IDK. Why does everyone laugh? I laugh too."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_ask_01",
+     "text": "Pain? Out of ten? Be honest. Jega says four when it's nine."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Helen - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_win_01",
+     "text": "We won. Did you see the block? Of course you did. Everybody did."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_lose_01",
+     "text": "We lost. Did we learn? We'll find out on Thursday."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Helen - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_hit_01",
+     "text": "Did you just walk into me? Was the Love Garden bench in the way?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_fall_01",
+     "text": "Sit. Breathe. Does anything feel wrong? No? Then up."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_f_blackout_01",
+     "text": "Light's gone. Do you need to see to stretch? You don't."
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_f_light_back_01",
+     "text": "Light. Shall we pretend we were reading?"
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_f_rain_01",
+     "text": "Rain. Volleyball's off. Who's sad? Not me."
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_f_heat_01",
+     "text": "Water. Now. Do you want cramp in Theatre Gabas?"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Helen - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_food_01",
+     "text": "Fried yam again? Is that a meal or a decision?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_money_01",
+     "text": "Do you know what a physio costs in town? Do you know what I charge Jega? Nothing."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Helen - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_gift_like_01",
+     "text": "For me? What's the occasion? …Do I need one? No. Thank you."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_gift_dislike_01",
+     "text": "Flowers from the gate? Did Jega send you? Tell him I know."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_f_gift_love_01",
+     "text": "Roasted corn. Hot. How did you know? Did someone tell you? Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Helen - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_idle_01",
+     "text": "Rotate. Hold. Release. Why does nobody hold?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_idle_02",
+     "text": "IDK. My whole team says it now. Do they know why? Does it matter?"
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Helen - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_night_01",
+     "text": "Late training? Ice, not heat. Who taught you heat?"
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Helen - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_f_callback_01",
+     "text": "Six o'clock. I knew my own name. He nearly didn't."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_f_callback_02",
+     "text": "The tree was very thin. Did he think I couldn't see him?"
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Helen - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_y1_greet_01",
+     "text": "You're the one carrying his messages? Is he paying you?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_y1_idle_01",
+     "text": "Is that the footballer staring? Does he think the tree is a wall?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_y1_idle_02",
+     "text": "He told his friends 'IDK'. I told my team. Who's winning?"
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_y1_ask_01",
+     "text": "What does he want? Does he know what he wants?"
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_y1_tease_01",
+     "text": "Wrong flowers. Did you choose them, or did they choose you?"
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_y1_callback_01",
+     "text": "The cinema. He talked through all of it. Was it a film? I don't know."
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_y1_compliment_01",
+     "text": "You listened first. Did you know most people don't?"
+    },
+    {
+     "n": 8,
+     "id": "bk_helen_y1_rain_01",
+     "text": "Volleyball court's flooded. Shall we train in the corridor? Yes."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Helen - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_y2_greet_01",
+     "text": "You again. Is Jega's sock found yet?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_y2_idle_01",
+     "text": "It beat Law, Science and Agriculture this term. What has your faculty beaten?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_y2_idle_02",
+     "text": "A goat ate his lucky sock. Did anyone take the goat's statement? Bilkisu did."
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_y2_callback_01",
+     "text": "He played in one sock and scored twice. Don't tell him I cried."
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_y2_callback_02",
+     "text": "Three times he forgot. I wrote it in MY diary. Do you keep one?"
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_y2_tease_01",
+     "text": "Jega says I'm his good luck. Did he ask me first? He did not."
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_y2_ev_valentine_01",
+     "text": "He bought me a bag of corn. Is that romance? It was warm."
+    },
+    {
+     "n": 8,
+     "id": "bk_helen_y2_compliment_01",
+     "text": "You're good at the quiet bits. Did you know that?"
+    },
+    {
+     "n": 9,
+     "id": "bk_helen_y2_follow_01",
+     "text": "Walk with me to the volleyball court? Will you carry the net? Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Helen - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_y3_greet_01",
+     "text": "Where's he? You know? Will you tell me, or will he?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_y3_idle_01",
+     "text": "Training. In town. On a ploughed field. Was it training?"
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_y3_idle_02",
+     "text": "Who's asking? I am. Every week. Where you were."
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_y3_callback_01",
+     "text": "Where was the training? He told the truth in the end. That's all I asked."
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_y3_callback_02",
+     "text": "I walked away from the TH. Did I want to? No. Did I need to? Yes."
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_y3_ask_01",
+     "text": "Has he eaten today? Has he slept? Has he lied?"
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_y3_tease_01",
+     "text": "You're his conscience? How's that going?"
+    },
+    {
+     "n": 8,
+     "id": "bk_helen_y3_heat_01",
+     "text": "Strike heat. No fans. Do you know how many students faint? I do."
+    },
+    {
+     "n": 9,
+     "id": "bk_helen_y3_compliment_01",
+     "text": "You stayed with him at the TH. Did you know I knew?"
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Helen - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_y4_greet_01",
+     "text": "Six o'clock. Rehab. Who's late? You. Who's surprised? Nobody."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_y4_idle_01",
+     "text": "Excuses column. Do not fill. Has he filled it? Twice. In pen."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_y4_idle_02",
+     "text": "Pain? Swelling? Did he skip the pool? He skipped the pool."
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_y4_idle_03",
+     "text": "Bolaji does the exercises too. Does he need them? He insists."
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_y4_callback_01",
+     "text": "You found him on the empty pitch. Did you fix it? You sat. That fixes more."
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_y4_callback_02",
+     "text": "Wrong foot! Did you see his face? Like the ball betrayed his family!"
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_y4_ask_01",
+     "text": "Twenty minutes, cleared. Who's counting? Me. And Coach. And the knee."
+    },
+    {
+     "n": 8,
+     "id": "bk_helen_y4_follow_01",
+     "text": "Pool next. Can you swim? Can you pretend?"
+    },
+    {
+     "n": 9,
+     "id": "bk_helen_y4_ev_cup_01",
+     "text": "If he lands on that knee, who's running onto the pitch? Me. Then Zainab."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Helen - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_y5_greet_01",
+     "text": "Final year. Do you know what you're doing? Does anyone?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_y5_idle_01",
+     "text": "Contract talk. Is he nervous? He's polishing the left boot. Yes."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_y5_callback_01",
+     "text": "Who's asking? He said it on the microphone. Five years. He finally asked."
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_y5_callback_02",
+     "text": "He signed. Did he call me first? He did. I said, who's asking?"
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_y5_compliment_01",
+     "text": "You've grown up. Did it hurt? It usually does."
+    },
+    {
+     "n": 6,
+     "id": "bk_helen_y5_tease_01",
+     "text": "My name? Are you still asking? It's on the dinner card."
+    },
+    {
+     "n": 7,
+     "id": "bk_helen_y5_bye_01",
+     "text": "After convocation, where will you go? Will you write? Who's asking? I am."
+    },
+    {
+     "n": 8,
+     "id": "bk_helen_y5_ask_01",
+     "text": "Are you stretching before the procession? It's a long walk in a gown."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Helen - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_ev_ev_freshers_01",
+     "text": "Freshers asking my name. Shall I tell them? IDK."
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_ev_ev_exam_01",
+     "text": "Anatomy. Two hundred and six bones. Can you name ten? Start with the knee."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_ev_ev_results_01",
+     "text": "Results? I passed. Were you worried? Was he?"
+    },
+    {
+     "n": 4,
+     "id": "bk_helen_ev_ev_allowance_01",
+     "text": "Allowance came. He bought new boots. Did he need them? Who's asking?"
+    },
+    {
+     "n": 5,
+     "id": "bk_helen_ev_ev_market_day_01",
+     "text": "Market day. Will he buy me corn? Will he forget his wallet? Both."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Helen - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_ev_ev_strike_01",
+     "text": "Strike. No lectures. Will the volleyball team stop? Who's asking?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_ev_ev_elections_01",
+     "text": "Who am I voting for? Who's asking? …Nusaiba. Obviously."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_ev_ev_convocation_01",
+     "text": "Gown, cap, his left boot first. Some things don't change. Why would they?"
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Helen - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_helen_ev_ev_ramadan_01",
+     "text": "Iftar on the mosque grounds? I'll bring the water. Who's carrying the coolers?"
+    },
+    {
+     "n": 2,
+     "id": "bk_helen_ev_ev_christmas_01",
+     "text": "Christmas break. Who's travelling? Take a pillow for the bus. Your neck will thank me."
+    },
+    {
+     "n": 3,
+     "id": "bk_helen_ev_ev_harmattan_01",
+     "text": "Harmattan. Cracked lips, cracked heels, cracked excuses. Moisturise."
+    }
+   ]
+  }
+ ],
+ "pending": [
+  {
+   "id": "m021_mid1_03",
+   "text": "[GIFT_LINE: corn or flowers]"
+  }
+ ]
+}

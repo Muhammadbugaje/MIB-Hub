@@ -1,0 +1,466 @@
+{
+ "character": "Tunde",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Test Week, One Lamp",
+   "file": "Tunde - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_close_01",
+     "text": "I draw what's there."
+    },
+    {
+     "n": 2,
+     "id": "m011_close_02",
+     "text": "…I don't remember that being there."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Final Crit",
+   "file": "Tunde - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m091_close_01",
+     "text": "I tried eleven times to paint what was in it."
+    },
+    {
+     "n": 2,
+     "id": "m091_close_02",
+     "text": "It kept… not being there."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Mirror",
+   "file": "Tunde - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m092_close_05",
+     "text": "It couldn't draw."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Tunde - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_greet_01",
+     "text": "…Hi. Hold still."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_greet_02",
+     "text": "Oh. Hello. Done. You moved."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_f_greet_03",
+     "text": "…Hey. Drew you yesterday. From memory."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Tunde - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_bye_01",
+     "text": "…Bye. Keep your chin like that."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Tunde - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_thanks_01",
+     "text": "…Thanks. Here. A drawing."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_sorry_01",
+     "text": "Sorry. Pencil on your sleeve."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Tunde - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_compliment_01",
+     "text": "Good face. For drawing."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_compliment_02",
+     "text": "…Your hands. Nice shapes."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Tunde - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_tease_01",
+     "text": "…You blink a lot. Very hard to draw."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Tunde - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_wait_01",
+     "text": "…Take your time. I'm sketching."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_follow_01",
+     "text": "…I'll walk. I'll draw the road."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_f_lost_01",
+     "text": "…Not there. Art block. Behind the gallery."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Tunde - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_confused_01",
+     "text": "…Hm? I was shading."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_confused_02",
+     "text": "…Who? There was nobody there fa. Nobody to draw."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_f_yes_01",
+     "text": "…Mm. Yes."
+    },
+    {
+     "n": 4,
+     "id": "bk_tunde_f_no_01",
+     "text": "…No. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Tunde - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_ask_01",
+     "text": "…Can I draw you? Two minutes. Five."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Tunde - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_win_01",
+     "text": "…We won. Drew it already."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Tunde - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_hit_01",
+     "text": "…Ah. My pencil. It's fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_blackout_01",
+     "text": "…Dark. I'll draw the dark."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_f_rain_01",
+     "text": "…Rain. Ink runs. It's nice."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Tunde - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_food_01",
+     "text": "…Puff-puff. I drew it first. Then ate it."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Tunde - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_gift_like_01",
+     "text": "…A sketchbook. Thank you. Thank you."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_gift_dislike_01",
+     "text": "…Oh. Thank you. It's… shiny."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_f_gift_love_01",
+     "text": "…Charcoal. The good one. …Wow."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Tunde - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_idle_01",
+     "text": "…Scratch. Scratch. …There."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_f_idle_02",
+     "text": "I draw what's there."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Tunde - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_f_night_01",
+     "text": "…Night lines are softer."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 1: arriving",
+   "file": "Tunde - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_y1_idle_01",
+     "text": "…Drew the lamp queue. Forty moths. And you."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_y1_callback_01",
+     "text": "…Drew Shamsu under the one lamp. Everybody looks like moths."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_y1_compliment_01",
+     "text": "…You looked tired in the exam. Good drawing."
+    },
+    {
+     "n": 4,
+     "id": "bk_tunde_y1_tease_01",
+     "text": "…You ran to the wrong theatre. I drew it. Twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 2: the mall",
+   "file": "Tunde - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_y2_idle_01",
+     "text": "…Drew the mall. Then crossed it out."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_y2_compliment_01",
+     "text": "…You helped the trader with her stall. Drew that."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_y2_callback_01",
+     "text": "…Scored the haircut. Ten. Abbas said nine and a half."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 3: the strike",
+   "file": "Tunde - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_y3_idle_01",
+     "text": "…Drew everybody who stayed. Ran out of paper."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_y3_callback_01",
+     "text": "…Drew the moonlight match. The ball's just a dot."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_y3_ev_strike_01",
+     "text": "…Strike. Plenty of time. Not enough paper."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 4: fame",
+   "file": "Tunde - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_y4_idle_01",
+     "text": "…Lucky asked for a portrait. Drew his phone."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_y4_callback_01",
+     "text": "…My sketch. It couldn't draw that. Glad."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_y4_callback_02",
+     "text": "…Hung the last portrait straight. You held the ladder. Thanks."
+    },
+    {
+     "n": 4,
+     "id": "bk_tunde_y4_compliment_01",
+     "text": "…You helped her up. Nobody filmed it. I drew it."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 5: leaving",
+   "file": "Tunde - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_y5_idle_01",
+     "text": "…Drawing everybody before they go. Hold still. Please."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_y5_callback_01",
+     "text": "…Kelechi's hands. I drew them. Every day this week."
+    },
+    {
+     "n": 3,
+     "id": "bk_tunde_y5_bye_01",
+     "text": "…Here. For after. Don't open it yet."
+    },
+    {
+     "n": 4,
+     "id": "bk_tunde_y5_compliment_01",
+     "text": "…You look like you. That's hard."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: term time",
+   "file": "Tunde - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_ev_ev_freshers_01",
+     "text": "…New faces. Good. I was running out."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_ev_ev_exam_01",
+     "text": "…Exam. I drew the invigilator. He saw. He liked it."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: the big ones",
+   "file": "Tunde - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_ev_ev_cup_01",
+     "text": "…Drew the goal. Before it happened. …It happened."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_ev_ev_convocation_01",
+     "text": "…Gowns. Five hundred gowns. One sketch each."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: seasons and holidays",
+   "file": "Tunde - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_tunde_ev_ev_valentine_01",
+     "text": "…Drew someone. Not saying who."
+    },
+    {
+     "n": 2,
+     "id": "bk_tunde_ev_ev_harmattan_01",
+     "text": "…Harmattan. Everything's beige. Hard to draw. Lovely."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

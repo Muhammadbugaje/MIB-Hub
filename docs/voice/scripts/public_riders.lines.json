@@ -1,0 +1,322 @@
+{
+ "character": "The Riders",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Riders - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_f_greet_01",
+     "text": "Where you dey go? [Where are you going?]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_f_greet_02",
+     "text": "Keke! Keke! Gate, Senate, New Site!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_f_greet_03",
+     "text": "Shuttle to New Site! One more! One more! Two more!"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Thank-yous and sorries",
+   "file": "The Riders - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_f_thanks_01",
+     "text": "Na gode! [Thank you!] Safe journey!"
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "When something goes wrong",
+   "file": "The Riders - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_f_hit_01",
+     "text": "Ah! Watch your leg! The keke is not a footstool!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_f_rain_01",
+     "text": "Rain! Fare has doubled! Don't look at me, look at the sky!"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "The Riders - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_f_idle_01",
+     "text": "Senate one-fifty! Mall two hundred! Far places, negotiate!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_f_idle_02",
+     "text": "Enter, enter. There is space. Space is a mindset."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_f_idle_03",
+     "text": "Shift small. Small. Small again. Perfect. Now we are four."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_riders_f_idle_04",
+     "text": "Oga, your change is coming. It's on the next trip."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_riders_f_idle_05",
+     "text": "Everybody bring exact. Change is on strike."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_riders_f_idle_06",
+     "text": "Hold well. This road has opinions."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_riders_f_idle_07",
+     "text": "Pothole there! Pothole here! The pothole is the road."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_riders_f_idle_08",
+     "text": "Last shuttle to New Site! After this one, it's your legs."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_riders_f_idle_09",
+     "text": "Fuel went up again. So did I. Two-fifty now."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_riders_f_idle_10",
+     "text": "Where is my conductor? He went to buy bread one hour ago."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "The Riders - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_f_night_01",
+     "text": "Night price is different. Darkness is a premium service."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_f_night_02",
+     "text": "Ghost okada at three in the morning? Abeg [please], I'm going home."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_f_night_03",
+     "text": "I don't pass by the garden at night. Not fear. Just… sleep."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "The Riders - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_y1_idle_01",
+     "text": "Traffic lights are off again. Me, I'm the traffic light now."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_y1_idle_02",
+     "text": "One fresher asked me for a receipt. Receipt! For keke!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_y1_idle_03",
+     "text": "I carried a goat yesterday. Better passenger than you. Didn't argue."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "The Riders - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_y2_idle_01",
+     "text": "Mall! Mall! Everybody's going to look at the escalator!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_y2_idle_02",
+     "text": "Fuel queue from here to tomorrow. Fare is now 'how much you get?'"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_y2_idle_03",
+     "text": "Okada school? Who taught that one? He's riding like an apology."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "The Riders - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_y3_idle_01",
+     "text": "The strike has finished my customers. I carry bread and memories."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_y3_idle_02",
+     "text": "Empty campus. I'm riding slowly so it looks busy."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_y3_idle_03",
+     "text": "Motor park is full. Everybody's going home till they call it off."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "The Riders - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_y4_idle_01",
+     "text": "Every passenger is filming. Am I trending? Tell me if I'm trending."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_y4_idle_02",
+     "text": "Campaign sticker in front, another one at the back. I'm neutral."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_y4_idle_03",
+     "text": "Candidates giving free rides. My income has resigned."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "The Riders - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_y5_idle_01",
+     "text": "Finalists everywhere! Hold your gown, the wind is fast!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_y5_idle_02",
+     "text": "Five years I carry you, now you're going? Pay double. For memory."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "The Riders - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_ev_ev_freshers_01",
+     "text": "Freshers! Senate this way! Hostel that way! Future: pay me."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_ev_ev_exam_01",
+     "text": "Exam hall? Hold tight. I'll fly you. Safely."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_ev_ev_results_01",
+     "text": "Results day. Half my passengers are singing, half are silent."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_riders_ev_ev_allowance_01",
+     "text": "Allowance day. First the bank, then the mall, then back to me."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_riders_ev_ev_market_day_01",
+     "text": "Gidan Kwari! Thursday market! Shift small!"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "The Riders - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_ev_ev_strike_01",
+     "text": "Kaduna! Kano! Jos! Home is calling, I'm the phone!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_ev_ev_cup_01",
+     "text": "Stadium! Stadium! Match at four! Wear your colours!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_ev_ev_elections_01",
+     "text": "A candidate put a speaker on my keke. My ears are on strike."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_riders_ev_ev_convocation_01",
+     "text": "Convocation! Families, big bags! Canopy! Canopy this way!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "The Riders - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_riders_ev_ev_ramadan_01",
+     "text": "Last trips before iftar! Hurry, hurry, sunset doesn't wait!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_riders_ev_ev_christmas_01",
+     "text": "Christmas travellers! Bags on top, people inside, chickens… we'll see."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_riders_ev_ev_harmattan_01",
+     "text": "Harmattan dust. I can't see the road. The road can't see me. Fair."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

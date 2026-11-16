@@ -1,0 +1,1775 @@
+{
+ "character": "Dr. Zainab",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Doctor's Orders",
+   "file": "Dr. Zainab - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m009_mid1_02",
+     "text": "Which one is the patient?"
+    },
+    {
+     "n": 2,
+     "id": "m009_mid1_03",
+     "text": "Both. Wonderful. Aigoo. (Oh dear.)"
+    },
+    {
+     "n": 3,
+     "id": "m009_mid1_04",
+     "text": "You: bed. You: chair. No, the CHAIR."
+    },
+    {
+     "n": 4,
+     "id": "m009_mid1_05",
+     "text": "The bed is for sick people. You are only foolish."
+    },
+    {
+     "n": 5,
+     "id": "m009_mid1_06",
+     "text": "Pen torch. My top pocket. Hold it HERE."
+    },
+    {
+     "n": 6,
+     "id": "m009_mid1_07",
+     "text": "Shake, and I stitch your sleeve to his face."
+    },
+    {
+     "n": 7,
+     "id": "m009_close_01",
+     "text": "Two tablets after food. Not 'vibes'."
+    },
+    {
+     "n": 8,
+     "id": "m009_close_02",
+     "text": "And drink water. Both of you. Did I stutter?"
+    },
+    {
+     "n": 9,
+     "id": "m009_close_03",
+     "text": "My number. Do NOT call for nonsense."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Radio Silence",
+   "file": "Dr. Zainab - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m018_open_03",
+     "text": "Caller. Energy drink is not breakfast."
+    },
+    {
+     "n": 2,
+     "id": "m018_open_04",
+     "text": "Caller. CALLER. I can hear you opening one."
+    },
+    {
+     "n": 3,
+     "id": "m018_mid1_04",
+     "text": "Excuse me. Is that my PATIENT reading the news?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Exam Fever",
+   "file": "Dr. Zainab - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_mid1_01",
+     "text": "THE HOSPITAL LINE DROPS EVERY NIGHT. 01:17."
+    },
+    {
+     "n": 2,
+     "id": "m023_mid1_02",
+     "text": "I HAVE BABIES ON MACHINES. THIS IS NOT NONSENSE."
+    },
+    {
+     "n": 3,
+     "id": "m023_mid1_03",
+     "text": "…sorry. I know you have exams. Who else do I ask?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Okada Diploma",
+   "file": "Dr. Zainab - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m028_mid1_01",
+     "text": "Your helmet is on backwards."
+    },
+    {
+     "n": 2,
+     "id": "m028_mid1_02",
+     "text": "This explains a great deal about you."
+    },
+    {
+     "n": 3,
+     "id": "m028_mid1_04",
+     "text": "…Thank you. I mean it."
+    },
+    {
+     "n": 4,
+     "id": "m028_mid1_05",
+     "text": "That old man is in the garden again."
+    },
+    {
+     "n": 5,
+     "id": "m028_mid1_06",
+     "text": "No. I will not tell you which ward."
+    },
+    {
+     "n": 6,
+     "id": "m028_mid1_07",
+     "text": "Confidentiality is not a suggestion."
+    },
+    {
+     "n": 7,
+     "id": "m028_mid1_08",
+     "text": "He comes. He sits. He never comes in."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Night Shift",
+   "file": "Dr. Zainab - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m042_open_01",
+     "text": "Forty minutes of diesel. The tanker comes at five."
+    },
+    {
+     "n": 2,
+     "id": "m042_open_02",
+     "text": "How many forty minutes between now and five?"
+    },
+    {
+     "n": 3,
+     "id": "m042_open_03",
+     "text": "Good. So we make diesel appear. You carry."
+    },
+    {
+     "n": 4,
+     "id": "m042_mid1_01",
+     "text": "I asked you for one thing. One."
+    },
+    {
+     "n": 5,
+     "id": "m042_mid1_02",
+     "text": "I did not ask you to think at me."
+    },
+    {
+     "n": 6,
+     "id": "m042_mid1_03",
+     "text": "Six children. I know to the watt what each one needs."
+    },
+    {
+     "n": 7,
+     "id": "m042_mid1_04",
+     "text": "And you are standing in my ward with a plan."
+    },
+    {
+     "n": 8,
+     "id": "m042_mid1_05",
+     "text": "Listen with your ears. Not your mouth. Carry."
+    },
+    {
+     "n": 9,
+     "id": "m042_close_01",
+     "text": "And another thing. When I say carry, the correct—"
+    },
+    {
+     "n": 10,
+     "id": "m042_close_03",
+     "text": "That is what your NEPA jokes cost."
+    },
+    {
+     "n": 11,
+     "id": "m042_close_04",
+     "text": "Whatever you people do at night, with your torches."
+    },
+    {
+     "n": 12,
+     "id": "m042_close_05",
+     "text": "I don't want to know. Fix it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Sign-Out, Small",
+   "file": "Dr. Zainab - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_mid1_02",
+     "text": "I'm not crying. It's the ramyeon. It's spicy."
+    },
+    {
+     "n": 2,
+     "id": "m048_mid1_03",
+     "text": "Read it. I can't. I've asked for the coast."
+    },
+    {
+     "n": 3,
+     "id": "m048_mid1_05",
+     "text": "Of all the places in Nigeria. I can see the ROOF."
+    },
+    {
+     "n": 4,
+     "id": "m048_mid1_06",
+     "text": "Aigoo."
+    },
+    {
+     "n": 5,
+     "id": "m048_mid1_07",
+     "text": "Fine. Somebody must keep you people alive. Drink water."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "The Sit-Down",
+   "file": "Dr. Zainab - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_open_01",
+     "text": "It's not laziness. Don't say 'cheer up'."
+    },
+    {
+     "n": 2,
+     "id": "m057_open_02",
+     "text": "Sit with them. Then outside. Small, small."
+    },
+    {
+     "n": 3,
+     "id": "m057_open_03",
+     "text": "Just sit. It's harder than it sounds. Did I stutter?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Free Clinic",
+   "file": "Dr. Zainab - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m058_open_01",
+     "text": "Eighty-two. And one goat, who is not a patient. Yet."
+    },
+    {
+     "n": 2,
+     "id": "m058_open_02",
+     "text": "You. Cards. Red now, yellow soon, green waits."
+    },
+    {
+     "n": 3,
+     "id": "m058_open_05",
+     "text": "Listen with your ears, not your mouth. No."
+    },
+    {
+     "n": 4,
+     "id": "m058_mid1_03",
+     "text": "Why is that tap dripping? Who allowed that tap?"
+    },
+    {
+     "n": 5,
+     "id": "m058_close_02",
+     "text": "You did well. Both of you. Drink water."
+    },
+    {
+     "n": 6,
+     "id": "m058_close_03",
+     "text": "Before my time. Some visitors never sign. Close it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Injury Time",
+   "file": "Dr. Zainab - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_close_01",
+     "text": "Six months. If he listens."
+    },
+    {
+     "n": 2,
+     "id": "m063_close_02",
+     "text": "Does he listen?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Night Nurse",
+   "file": "Dr. Zainab - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_open_01",
+     "text": "Hauwa needs hands. Don't argue with her. I don't."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Lights on the Long Road",
+   "file": "Dr. Zainab - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m072_mid1_03",
+     "text": "I have an offer. A fellowship. Paediatrics. In Seoul."
+    },
+    {
+     "n": 2,
+     "id": "m072_mid1_04",
+     "text": "I haven't decided. Don't decide for me."
+    },
+    {
+     "n": 3,
+     "id": "m072_mid1_05",
+     "text": "Drink water. You've been digging. Did I stutter?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Rehab",
+   "file": "Dr. Zainab - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m078_close_04",
+     "text": "Good. Now burn the socks. Doctor's orders."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Touch Grass",
+   "file": "Dr. Zainab - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m084_open_03",
+     "text": "I was told there would be no patients."
+    },
+    {
+     "n": 2,
+     "id": "m084_open_04",
+     "text": "You look pale. Sit. No. I'm off. …Drink water."
+    },
+    {
+     "n": 3,
+     "id": "m084_close_01",
+     "text": "Kimchi does that at the hospital too."
+    },
+    {
+     "n": 4,
+     "id": "m084_close_02",
+     "text": "At the garden bench. …What is she looking at?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Comeback",
+   "file": "Dr. Zainab - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_mid1_02",
+     "text": "Do NOT jump on him! The knee! Aigoo!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Seoul or Stay",
+   "file": "Dr. Zainab - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m094_open_01",
+     "text": "Sit. The chair. You know the rule about the bed."
+    },
+    {
+     "n": 2,
+     "id": "m094_open_02",
+     "text": "I answer Seoul by six. You are here as company."
+    },
+    {
+     "n": 3,
+     "id": "m094_open_03",
+     "text": "Company. Not counsel. Did I stutter?"
+    },
+    {
+     "n": 4,
+     "id": "m094_open_05",
+     "text": "Aigoo. [Oh dear.] Come. Listen with your ears."
+    },
+    {
+     "n": 5,
+     "id": "m094_mid1_01",
+     "text": "Who is your friend?"
+    },
+    {
+     "n": 6,
+     "id": "m094_mid1_02",
+     "text": "Have we met? You look like someone I see here."
+    },
+    {
+     "n": 7,
+     "id": "m094_mid1_04",
+     "text": "Which patient's… No. Confidentiality."
+    },
+    {
+     "n": 8,
+     "id": "m094_close_01",
+     "text": "I'll tell you after your exams."
+    },
+    {
+     "n": 9,
+     "id": "m094_close_02",
+     "text": "You listened. All night. I noticed."
+    },
+    {
+     "n": 10,
+     "id": "m094_close_03",
+     "text": "Go and sleep. Doctor's orders."
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Everybody, Again",
+   "file": "Dr. Zainab - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_mid1_04",
+     "text": "Don't draw it. Loosen the bolt. Listen with your ears."
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "The Longest Night",
+   "file": "Dr. Zainab - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_mid1_01",
+     "text": "They can wait a day. These ones can't."
+    },
+    {
+     "n": 2,
+     "id": "m111_mid1_02",
+     "text": "One: thirty minutes of diesel. Two: children upstairs."
+    },
+    {
+     "n": 3,
+     "id": "m111_mid1_03",
+     "text": "Three: bring me light. And people. Did I stutter?"
+    },
+    {
+     "n": 4,
+     "id": "m111_mid1_05",
+     "text": "Hwaiting. [You can do it.] Drink water. Go."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "The Ten Seals",
+   "file": "Dr. Zainab - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_open_04",
+     "text": "One hour. Then I am back on my ward. Move."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid2_07",
+     "text": "Medicine. For whoever keeps the lights on. Drink water."
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Convocation",
+   "file": "Dr. Zainab - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_mid1_01",
+     "text": "Aigoo. [Oh dear.] Look at you in a gown. Stand straight."
+    },
+    {
+     "n": 2,
+     "id": "m118_mid1_02",
+     "text": "I came from the airport. Did you drink water?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Dr. Zainab - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_greet_01",
+     "text": "Annyeong. [Hi.] Did you drink water?"
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_greet_02",
+     "text": "You again. What did you do?"
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_greet_03",
+     "text": "Hello. Sit. No, the chair."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_greet_04",
+     "text": "Bap meogeosseo? [Have you eaten?] Don't lie to me."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_greet_05",
+     "text": "My favourite repeat customer. Second favourite. Jega's first."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Dr. Zainab - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_bye_01",
+     "text": "Jalja. [Sleep well.] Real sleep. Not phone sleep."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_bye_02",
+     "text": "Go. Drink water on the way."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_bye_03",
+     "text": "Bye. Don't come back injured."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_bye_04",
+     "text": "Hwaiting! [You can do it!] Now go."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Dr. Zainab - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_thanks_01",
+     "text": "Gomawo. [Thanks.] You were useful today. Rare."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_thanks_02",
+     "text": "Thank you. I mean it. Don't make a face."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_sorry_01",
+     "text": "Mianhae. [Sorry.] I snapped. Night shift does that."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_sorry_02",
+     "text": "Sorry. I was sharp. I'm tired, not angry."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Dr. Zainab - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_compliment_01",
+     "text": "Good. You listened. Look at you, growing."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_compliment_02",
+     "text": "Nice shirt. Sit up straight in it."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_compliment_03",
+     "text": "Daebak. [Amazing.] I'm genuinely impressed."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Dr. Zainab - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_tease_01",
+     "text": "Your socks. Explain your socks."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_tease_02",
+     "text": "You walk like someone who skipped breakfast. Did you?"
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_tease_03",
+     "text": "You look like a K-drama second lead. Tired and hopeful."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_tease_04",
+     "text": "You called me Snow White? Fine. Then you're Dopey."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Dr. Zainab - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_follow_01",
+     "text": "Walk faster. Children don't wait for slow people."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_follow_02",
+     "text": "Stay close. The TH corridors eat freshers."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_follow_03",
+     "text": "Keep up. I've done thirty hours. You've done breakfast."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_wait_01",
+     "text": "Ppalli ppalli. [Hurry, hurry.] Did I stutter?"
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_wait_02",
+     "text": "I'm counting. My patients can't wait. Hurry."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_f_lost_01",
+     "text": "Wrong ward. That's Orthopaedics. Turn around."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_f_lost_02",
+     "text": "That's the pharmacy queue. You'll be there till Year 3."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Dr. Zainab - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_yes_01",
+     "text": "Yes. Doctor's orders."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_yes_02",
+     "text": "Ne. [Yes.] Obviously."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_yes_03",
+     "text": "Yes. And drink water."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_no_01",
+     "text": "No. Did I stutter?"
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_no_02",
+     "text": "Absolutely not. Medically, morally, no."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_f_no_03",
+     "text": "Ani. [No.] Next question."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_f_maybe_01",
+     "text": "Maybe. After my shift. Ask me in twelve hours."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_f_maybe_02",
+     "text": "Possibly. Bring snacks and I'll think faster."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_f_confused_01",
+     "text": "Jinjja? [Really?] Explain that again. Slowly."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_f_confused_02",
+     "text": "I've seen a lot. I have not seen that."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_f_agree_01",
+     "text": "Correct. Finally, a sensible patient."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_f_agree_02",
+     "text": "Yes. That. Exactly that."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_f_refuse_01",
+     "text": "No sick note for 'vibes'."
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_f_refuse_02",
+     "text": "I don't prescribe for heartbreak. Drink water."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Dr. Zainab - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_joke_01",
+     "text": "Kimchi bit the curtain. Suya watched. Accomplice."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_joke_02",
+     "text": "My K-drama: a doctor sleeps eight hours. Pure fantasy."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_ask_01",
+     "text": "When did you last eat? Real food. Garri doesn't count."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_ask_02",
+     "text": "Two tablets after food. Which food? Name it."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_ask_03",
+     "text": "Gwaenchana? [Are you okay?] Honestly."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Dr. Zainab - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_win_01",
+     "text": "Daebak! [Amazing!] Hwaiting worked!"
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_win_02",
+     "text": "Told you. Drink water, then celebrate."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_lose_01",
+     "text": "Aigoo. [Oh dear.] Okay. We go again tomorrow."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_lose_02",
+     "text": "Losing is a symptom, not a diagnosis."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Dr. Zainab - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_hit_01",
+     "text": "Excuse me. I'm holding a syringe."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_hit_02",
+     "text": "Careful. I bruise, and I remember."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_fall_01",
+     "text": "Don't move. Wiggle your toes. Good. Now get up."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_fall_02",
+     "text": "Aigoo. [Oh dear.] Gravity wins again."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_blackout_01",
+     "text": "Light's gone. Generator in ninety seconds. Count with me."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_f_blackout_02",
+     "text": "NEPA. Not now. Never now."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_f_blackout_03",
+     "text": "Dark again. Kimchi will think it's bedtime."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_f_light_back_01",
+     "text": "Light. Thank God. The monitors are back."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_f_light_back_02",
+     "text": "Up NEPA. Now please stay."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_f_rain_01",
+     "text": "Rain. More malaria next week. I'm stocking up."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_f_rain_02",
+     "text": "Rain and ramyeon. The only cure I believe in."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_f_heat_01",
+     "text": "Heat like this, you drink water. Every hour. Every."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_f_heat_02",
+     "text": "Forty degrees. My scrubs have become a sauna."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Dr. Zainab - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_food_01",
+     "text": "Instant ramyeon in the call room. Fine dining."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_food_02",
+     "text": "Suya! …The food. Not the cat. Don't tell the cat."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_food_03",
+     "text": "Tteokbokki [spicy rice cakes] would cure everything. Nobody sells it."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_money_01",
+     "text": "House officer salary. Delayed. Like everything else."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_money_02",
+     "text": "Sapa reached the hospital. Even the doctors."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Dr. Zainab - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_gift_like_01",
+     "text": "A cat sticker! Kimchi will hate it. I love it."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_gift_like_02",
+     "text": "Snacks. You understand me."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_gift_dislike_01",
+     "text": "An energy drink? For a doctor? Bold."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_gift_dislike_02",
+     "text": "Thank you. …I'll give this to Hauwa."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_f_gift_love_01",
+     "text": "Korean snacks? Where did you— Gomawo! [Thanks!]"
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_f_gift_love_02",
+     "text": "A cat toy! Suya says thank you. Kimchi will steal it."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Dr. Zainab - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_idle_01",
+     "text": "Kimchi, saranghae. [I love you.] Do not touch the curtains."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_idle_02",
+     "text": "Thirty-six hours awake. I can hear colours."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_f_idle_03",
+     "text": "Episode eleven. He's about to confess. I'm on call."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_f_idle_04",
+     "text": "Suya, get off the keyboard. That's my handover."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Dr. Zainab - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_f_night_01",
+     "text": "Night shift. Ramyeon, a drama, and nine babies."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_f_night_02",
+     "text": "Shh. The ward is finally asleep. Breathe quietly."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 1: arriving",
+   "file": "Dr. Zainab - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y1_greet_01",
+     "text": "Fresher! You look healthy. Suspicious."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y1_greet_02",
+     "text": "Oh, the goat-chasing one. Hello."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y1_tease_01",
+     "text": "First-year malaria. A rite of passage. Take your drugs."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y1_tease_02",
+     "text": "You've lost weight. That's not a compliment. Eat."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y1_ev_exam_01",
+     "text": "Exams? You're pale. Drink water. Then read."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Dr. Zainab - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y1_idle_01",
+     "text": "House officer. House. Officer. I live here now."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y1_idle_02",
+     "text": "Ward round at six. I woke at five fifty-eight."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y1_idle_03",
+     "text": "Ask Dr. Z? Never heard of her. Drink water."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y1_idle_04",
+     "text": "Hauwa says sit. I sit. Everybody sits for Hauwa."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y1_idle_05",
+     "text": "Kimchi learnt to open the fridge. I'm raising a criminal."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_y1_idle_06",
+     "text": "Pen torch, top pocket. Always. Ask Jega why."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_y1_callback_01",
+     "text": "That eyebrow healed nicely. My stitching, not his luck."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_y1_callback_02",
+     "text": "You held the pen torch steady. Don't let it go to your head."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_y1_callback_03",
+     "text": "The bed is for sick people. Still true. Still you."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_y1_callback_04",
+     "text": "Energy drink is not breakfast. I'm still saying it."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_y1_callback_05",
+     "text": "My PATIENT, reading the news. Aigoo. [Oh dear.]"
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_y1_callback_06",
+     "text": "I shouted about the line. Sorry. Not about the babies."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_y1_callback_07",
+     "text": "Jega lost the final and came for paracetamol. Loyal."
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_y1_night_01",
+     "text": "01:17. The lights blink. Every night. I hate 01:17."
+    },
+    {
+     "n": 15,
+     "id": "bk_zainab_y1_night_02",
+     "text": "Night calls. Ramyeon. Sleep is a K-drama myth."
+    },
+    {
+     "n": 16,
+     "id": "bk_zainab_y1_idle_07",
+     "text": "Firdausi asked about medicine. I gave her a warning and a glove."
+    },
+    {
+     "n": 17,
+     "id": "bk_zainab_y1_idle_08",
+     "text": "Jega, head one more goalpost and I'll name a ward after you."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Dr. Zainab - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y2_greet_01",
+     "text": "Ah. Alive. Good. Keep it that way."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y2_tease_01",
+     "text": "You hit a pothole on an okada? Nobody is surprised."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y2_tease_02",
+     "text": "A candle date? Bring candles AND a torch."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Dr. Zainab - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y2_idle_01",
+     "text": "Second year of shouting at your friends. Same friends."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y2_idle_02",
+     "text": "Housemanship ends soon. I'll miss nothing. Except Hauwa."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y2_idle_03",
+     "text": "The mall has light all night. My ward has forty minutes."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y2_idle_04",
+     "text": "Hauwa ate my ramyeon. I've reported it to nobody."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y2_idle_05",
+     "text": "Helmet backwards. I still laugh about it at night."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_y2_idle_06",
+     "text": "Posting letter soon. National service. Please, the coast."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_y2_idle_07",
+     "text": "Firdausi shadowed me today. She didn't faint. Hire her."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_y2_idle_08",
+     "text": "Suya sat on my stethoscope. He's a doctor now."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_y2_callback_01",
+     "text": "Helmet. Front. Facing forward. We practised."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_y2_callback_02",
+     "text": "That old man? Patient confidentiality is not a suggestion."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_y2_callback_03",
+     "text": "Which ward? I like you. Still no."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_y2_callback_04",
+     "text": "Forty minutes of diesel. I count to forty in my sleep."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_y2_callback_05",
+     "text": "You carried. All night. I noticed. Don't tell anyone."
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_y2_callback_06",
+     "text": "Whatever you people do at night: it worked. Don't tell me."
+    },
+    {
+     "n": 15,
+     "id": "bk_zainab_y2_callback_07",
+     "text": "Of all the places in Nigeria. {{TOWN}}. I can see the roof."
+    },
+    {
+     "n": 16,
+     "id": "bk_zainab_y2_callback_08",
+     "text": "I'm not crying. Spicy ramyeon. Still the excuse."
+    },
+    {
+     "n": 17,
+     "id": "bk_zainab_y2_night_01",
+     "text": "Generator hours. I know them like K-pop lyrics."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 3: the strike",
+   "file": "Dr. Zainab - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y3_greet_01",
+     "text": "Still on campus in the strike? Did you eat today?"
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y3_tease_01",
+     "text": "Strike diet: garri, garri, regret. I can see it on you."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y3_tease_02",
+     "text": "You've been reading? In a strike? Who are you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Dr. Zainab - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y3_idle_01",
+     "text": "Eighty-two patients. One goat. The goat is not a patient."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y3_idle_02",
+     "text": "Your lecturers strike. Fevers don't."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y3_idle_03",
+     "text": "Red now. Yellow soon. Green waits. Even uncles."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y3_idle_04",
+     "text": "Who allowed that tap? It drips. I hear it in my sleep."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y3_idle_05",
+     "text": "The clinic has one fan. Three blades. Two work."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_y3_idle_06",
+     "text": "I check my email. I close my email. I check it."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_y3_idle_07",
+     "text": "Mental health is health. Not weakness. Did I stutter?"
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_y3_idle_08",
+     "text": "I'm fine. Doctors are fine. Doctors are always fine."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_y3_callback_01",
+     "text": "Sit with them. Just sit. You did. Good."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_y3_callback_02",
+     "text": "Firdausi heard a whole heart. I heard her hear it."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_y3_callback_03",
+     "text": "Old register, odd signatures. Not my business. Close it."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_y3_callback_04",
+     "text": "Six months. If he listens. Is he listening?"
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_y3_callback_05",
+     "text": "Tell Jega: the knee doesn't care about prize money."
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_y3_callback_06",
+     "text": "You did nights with Hauwa? You're stronger than me."
+    },
+    {
+     "n": 15,
+     "id": "bk_zainab_y3_callback_07",
+     "text": "I said I haven't decided. Stop looking at me like that."
+    },
+    {
+     "n": 16,
+     "id": "bk_zainab_y3_callback_08",
+     "text": "Kimchi sleeps on the letter from Seoul. She has opinions."
+    },
+    {
+     "n": 17,
+     "id": "bk_zainab_y3_night_01",
+     "text": "The clinic generator has opinions. So do I."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Year 4: fame",
+   "file": "Dr. Zainab - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y4_greet_01",
+     "text": "Welcome to Paediatrics. You're the tallest patient here."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y4_tease_01",
+     "text": "IT student? You look like an intern. Tired and lost."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y4_tease_02",
+     "text": "Nusaiba made me sign three petitions before breakfast."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Year 4: fame, to yourself",
+   "file": "Dr. Zainab - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y4_idle_01",
+     "text": "Junior resident, Paediatrics. Small patients. Big opinions."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y4_idle_02",
+     "text": "Children cry, I sing. Badly. In Korean. It works."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y4_idle_03",
+     "text": "Cold ramyeon. Unsent email. Ward round. Normal Tuesday."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y4_idle_04",
+     "text": "Back at the TH. Same corridors. Different me."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y4_idle_05",
+     "text": "Lollipops after injections. Policy. Mine."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_y4_idle_06",
+     "text": "Annyeong, little one. [Hi.] Doctor is here. No crying."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_y4_idle_07",
+     "text": "Hwaiting! [You can do it!] One more spoon. Good."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_y4_idle_08",
+     "text": "I have an email to send. Not today."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_y4_idle_09",
+     "text": "Campaign posters on my ward door? Nusaiba. Down. Now."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_y4_callback_01",
+     "text": "Burn the socks. I said it. I meant it."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_y4_callback_02",
+     "text": "No patients, they said. Touch grass, they said. Sit."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_y4_callback_03",
+     "text": "Why do cats stare at empty benches? Don't answer."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_y4_callback_04",
+     "text": "Do NOT jump on his knee! …You jumped. Aigoo. [Oh dear.]"
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_y4_callback_05",
+     "text": "Firdausi named an eel after me. I'm choosing to be flattered."
+    },
+    {
+     "n": 15,
+     "id": "bk_zainab_y4_callback_06",
+     "text": "You listened. All night. I noticed."
+    },
+    {
+     "n": 16,
+     "id": "bk_zainab_y4_callback_07",
+     "text": "Which button? After your exams. That was the deal."
+    },
+    {
+     "n": 17,
+     "id": "bk_zainab_y4_night_01",
+     "text": "Night on the children's ward. Twelve snores. All tiny."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Year 5: leaving",
+   "file": "Dr. Zainab - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y5_greet_01",
+     "text": "Finalist! Stand straight. You'll have a gown soon."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Year 5: leaving, to yourself",
+   "file": "Dr. Zainab - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_y5_idle_01",
+     "text": "Your final year. Also an important year for me. Drink water."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_y5_idle_02",
+     "text": "Defence nerves? Breathe out longer than in. Doctor's orders."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_y5_idle_03",
+     "text": "Kimchi and Suya are learning to share. Slowly. Like you lot."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_y5_idle_04",
+     "text": "Somebody has to keep you people alive until convocation."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_y5_idle_05",
+     "text": "I keep a list of your injuries. It's long. Lovingly."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_y5_idle_06",
+     "text": "Five years ago you chased a goat. Look at you now."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_y5_idle_07",
+     "text": "Gwaenchana? [Are you okay?] Finals do that. Eat."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_y5_idle_08",
+     "text": "I'm proud of you. I'll say it once. Write it down."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_y5_idle_09",
+     "text": "Hauwa says I'm soft now. I've reported her to nobody."
+    },
+    {
+     "n": 10,
+     "id": "bk_zainab_y5_idle_10",
+     "text": "Hwaiting! [You can do it!] Last papers. Then sleep a week."
+    },
+    {
+     "n": 11,
+     "id": "bk_zainab_y5_callback_01",
+     "text": "Your project smoked on the lawn. Symptom: ambition."
+    },
+    {
+     "n": 12,
+     "id": "bk_zainab_y5_callback_02",
+     "text": "Don't draw it. Loosen the bolt. Shamsu hasn't forgiven me."
+    },
+    {
+     "n": 13,
+     "id": "bk_zainab_y5_callback_03",
+     "text": "They could wait a day. The children couldn't."
+    },
+    {
+     "n": 14,
+     "id": "bk_zainab_y5_callback_04",
+     "text": "Daebak. [Amazing.] You brought everybody."
+    },
+    {
+     "n": 15,
+     "id": "bk_zainab_y5_callback_05",
+     "text": "One hour off the ward. For the lights. Worth it."
+    },
+    {
+     "n": 16,
+     "id": "bk_zainab_y5_callback_06",
+     "text": "Alhaji Needle delivered on time. A medical miracle."
+    },
+    {
+     "n": 17,
+     "id": "bk_zainab_y5_callback_07",
+     "text": "Defence done? Pulse check. Fast. Normal. Congratulations."
+    },
+    {
+     "n": 18,
+     "id": "bk_zainab_y5_night_01",
+     "text": "Last nights before convocation. Sleep. That's an order."
+    },
+    {
+     "n": 19,
+     "id": "bk_zainab_y5_idle_11",
+     "text": "Medicine, graduate entry. Firdausi. I'm not crying. Ramyeon."
+    }
+   ]
+  },
+  {
+   "section": "Common 25",
+   "title": "After graduation",
+   "file": "Dr. Zainab - Common 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_post_idle_01",
+     "text": "Annyeong from Seoul. [Hi from Seoul.] Did you drink water?"
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_post_idle_02",
+     "text": "Seoul has cat cafés. I've been to nine. For research."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_post_idle_03",
+     "text": "It's cold here. I miss NEPA. …No, I don't."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_post_idle_04",
+     "text": "Snow White in real snow. Yes, I see the joke."
+    }
+   ]
+  },
+  {
+   "section": "Common 26",
+   "title": "Special days: term time",
+   "file": "Dr. Zainab - Common 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_ev_ev_freshers_01",
+     "text": "Freshers, the TH is not a hangout. Except the canteen."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_ev_ev_freshers_02",
+     "text": "Malaria season meets freshers' week. My busiest week."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_ev_ev_exam_01",
+     "text": "Panic is real. Breathe with me. In. Out. Again."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_ev_ev_exam_02",
+     "text": "No energy drinks. No all-nighters. …Fine. One."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_ev_ev_results_01",
+     "text": "Whatever the results say, eat lunch."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_ev_ev_results_02",
+     "text": "A bad grade is not a diagnosis."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_ev_ev_allowance_01",
+     "text": "Allowance came? Buy fruit. One fruit. It's a start."
+    },
+    {
+     "n": 8,
+     "id": "bk_zainab_ev_ev_market_day_01",
+     "text": "Market day. I'm here for oranges and gossip."
+    },
+    {
+     "n": 9,
+     "id": "bk_zainab_ev_ev_market_day_02",
+     "text": "Hajiya Ladi asked for a free consult. She paid in tomatoes."
+    }
+   ]
+  },
+  {
+   "section": "Common 27",
+   "title": "Special days: the big ones",
+   "file": "Dr. Zainab - Common 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_ev_ev_strike_01",
+     "text": "Strike again? Use it. Sleep. Eat. Read one page."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_ev_ev_cup_01",
+     "text": "Cup final. I'm on standby. With ice packs. For Jega."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_ev_ev_cup_02",
+     "text": "Do not head it like that. Do NOT. …Aigoo. [Oh dear.]"
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_ev_ev_elections_01",
+     "text": "Vote. Then drink water. Civic duty and hydration."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_ev_ev_elections_02",
+     "text": "Nusaiba made me sign three things. One was a pledge."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_ev_ev_convocation_01",
+     "text": "Convocation. I'll cry. It will be the ramyeon again."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_ev_ev_convocation_02",
+     "text": "Snow White came to see her favourite people graduate."
+    }
+   ]
+  },
+  {
+   "section": "Common 28",
+   "title": "Special days: seasons and holidays",
+   "file": "Dr. Zainab - Common 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_zainab_ev_ev_ramadan_01",
+     "text": "Break your fast with water and dates, not five puff-puffs."
+    },
+    {
+     "n": 2,
+     "id": "bk_zainab_ev_ev_ramadan_02",
+     "text": "Iftar on the ward. Hauwa brought dates. We shared."
+    },
+    {
+     "n": 3,
+     "id": "bk_zainab_ev_ev_christmas_01",
+     "text": "Christmas on call. Pastor Sam brought jollof. Bless him."
+    },
+    {
+     "n": 4,
+     "id": "bk_zainab_ev_ev_valentine_01",
+     "text": "Valentine's? I'm dating a call rota. It's complicated."
+    },
+    {
+     "n": 5,
+     "id": "bk_zainab_ev_ev_valentine_02",
+     "text": "Flowers for a doctor? Cat food for her cats. Smarter."
+    },
+    {
+     "n": 6,
+     "id": "bk_zainab_ev_ev_harmattan_01",
+     "text": "Harmattan. Lips, lotion, water. In that order."
+    },
+    {
+     "n": 7,
+     "id": "bk_zainab_ev_ev_harmattan_02",
+     "text": "Dust season. Asthma clinic is full. Don't add yourself."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

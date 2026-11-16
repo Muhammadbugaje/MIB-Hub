@@ -1,0 +1,513 @@
+{
+ "character": "Hajiya Ladi",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "The Plug",
+   "file": "Hajiya Ladi - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m010_mid1_01",
+     "text": "You have customers."
+    },
+    {
+     "n": 2,
+     "id": "m010_mid1_02",
+     "text": "You do not have a business."
+    },
+    {
+     "n": 3,
+     "id": "m010_mid1_04",
+     "text": "A business has a book. Bring it when you have one."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Grand Opening",
+   "file": "Hajiya Ladi - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_open_01",
+     "text": "A stall you hate is still a stall."
+    },
+    {
+     "n": 2,
+     "id": "m026_open_02",
+     "text": "Forty traders. One door. Four o'clock. You: carry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Mubarak's Crash",
+   "file": "Hajiya Ladi - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m045_close_01",
+     "text": "A loan. Weekly. A book. I read it on Thursdays."
+    },
+    {
+     "n": 2,
+     "id": "m045_close_02",
+     "text": "And you sell nothing you have not plugged in yourself."
+    },
+    {
+     "n": 3,
+     "id": "m045_close_05",
+     "text": "Two."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Garri Economics",
+   "file": "Hajiya Ladi - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m052_close_01",
+     "text": "Bring your book. Let me see your profit."
+    },
+    {
+     "n": 2,
+     "id": "m052_close_02",
+     "text": "Profit. Small."
+    },
+    {
+     "n": 3,
+     "id": "m052_close_03",
+     "text": "But it is the first honest number in this book."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Padlock Receipts",
+   "file": "Hajiya Ladi - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m068_open_05",
+     "text": "A man who buys two hundred locks buys other things."
+    },
+    {
+     "n": 2,
+     "id": "m068_open_06",
+     "text": "It is Thursday. Ask my market."
+    },
+    {
+     "n": 3,
+     "id": "m068_close_01",
+     "text": "Your debt is cleared. Not by money. By this."
+    },
+    {
+     "n": 4,
+     "id": "m068_close_02",
+     "text": "More than you owed. Less than you think."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Wedding at the Quarters",
+   "file": "Hajiya Ladi - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m071_open_03",
+     "text": "All of them."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Megawatt's Offer",
+   "file": "Hajiya Ladi - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m102_close_02",
+     "text": "It is my book also. Go and face your staff."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Three by Road",
+   "file": "Hajiya Ladi - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_mid2_04",
+     "text": "Bring your generator. Let me see your profit. Later."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Hajiya Ladi - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_greet_01",
+     "text": "Sannu. [Hello.] You are carrying or buying?"
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_greet_02",
+     "text": "Ina kwana. [Good morning.] Your face says you want credit."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_greet_03",
+     "text": "Yauwa. [Good.] You greeted first. Your mother trained you."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Hajiya Ladi - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_bye_01",
+     "text": "Go. Count your change outside, not in my face."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_bye_02",
+     "text": "Sai anjima. [See you later.] Greet your people."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Hajiya Ladi - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_thanks_01",
+     "text": "Thank me with a full book."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Walking with the player",
+   "file": "Hajiya Ladi - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_wait_01",
+     "text": "Market closes at four. The sun does not negotiate."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Quick answers",
+   "file": "Hajiya Ladi - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_no_01",
+     "text": "No. Ask again when you have a book."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_yes_01",
+     "text": "To. [Okay.] Thursday. Bring it Thursday."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_refuse_01",
+     "text": "Credit? I have daughters. I know the word 'later'."
+    },
+    {
+     "n": 4,
+     "id": "bk_hajiya_ladi_f_agree_01",
+     "text": "Good. Small. But good."
+    },
+    {
+     "n": 5,
+     "id": "bk_hajiya_ladi_f_confused_01",
+     "text": "Who? There was nobody there fa. Are you buying or dreaming?"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "Hajiya Ladi - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_rain_01",
+     "text": "Rain! Tarpaulin! Grains first, gossip after!"
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_heat_01",
+     "text": "Shade is free. Water is twenty. Choose."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_blackout_01",
+     "text": "Market never had light. Market is fine."
+    },
+    {
+     "n": 4,
+     "id": "bk_hajiya_ladi_f_hit_01",
+     "text": "Kai! [Hey!] That was tomatoes. Now it is stew."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Food and money",
+   "file": "Hajiya Ladi - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_money_01",
+     "text": "Bring your book. Let me see your profit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_money_02",
+     "text": "Price is price. Discount is for those who carry."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_money_03",
+     "text": "Profit is not what you sell. It is what is left."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Getting a present",
+   "file": "Hajiya Ladi - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_gift_like_01",
+     "text": "A new exercise book. You understand me."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_gift_dislike_01",
+     "text": "Mall perfume? I can smell the rent in it."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_gift_love_01",
+     "text": "A calculator. Solar. Allah ya saka. [God reward you.]"
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Talking to yourself",
+   "file": "Hajiya Ladi - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_f_idle_01",
+     "text": "Forty traders. One door. Everybody carry."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_f_idle_02",
+     "text": "Pepper is up. Onions are up. Patience is down."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_f_idle_03",
+     "text": "A stall you hate is still a stall."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 1: arriving",
+   "file": "Hajiya Ladi - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_y1_idle_01",
+     "text": "Your friend has customers. He does not have a business."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_y1_tease_01",
+     "text": "A brand? A brand is a business with no book."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 2: the mall",
+   "file": "Hajiya Ladi - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_y2_idle_01",
+     "text": "New stalls. Smaller. Dearer. The escalator only goes up."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_y2_idle_02",
+     "text": "That man gave us torches with his face. In the dark. Hm."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_y2_money_01",
+     "text": "A loan. Weekly. I read it on Thursdays."
+    },
+    {
+     "n": 4,
+     "id": "bk_hajiya_ladi_y2_callback_01",
+     "text": "The back page. Two. You saw it. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 3: the strike",
+   "file": "Hajiya Ladi - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_y3_idle_01",
+     "text": "No students, no market. Still I open. Somebody must."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_y3_idle_02",
+     "text": "My eldest is marrying. Every uncle is coming. All of them."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_y3_callback_01",
+     "text": "Two hundred padlocks. I told you. Ask my market."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 4: fame",
+   "file": "Hajiya Ladi - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_y4_idle_01",
+     "text": "My Aisha keeps three shops' books now. Better than mine."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_y4_idle_02",
+     "text": "Phone shops multiplying. Phones are not."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 5: leaving",
+   "file": "Hajiya Ladi - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_y5_idle_01",
+     "text": "Your friend's book. I read it Thursday. I said nothing. Good sign."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_y5_money_01",
+     "text": "Final year? Final price. Still no discount."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "After graduation",
+   "file": "Hajiya Ladi - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_post_greet_01",
+     "text": "Graduate. Hm. You still owe me a Thursday."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_post_idle_01",
+     "text": "The lights stay on now. Business is boring. I like boring."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: term time",
+   "file": "Hajiya Ladi - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_ev_ev_allowance_01",
+     "text": "Allowance day. Today everybody is my customer."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_ev_ev_market_day_01",
+     "text": "Market day! Carry or move. Those are the only two jobs."
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_ev_ev_market_day_02",
+     "text": "Everybody wants a price. Nobody wants to carry."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: the big ones",
+   "file": "Hajiya Ladi - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_ev_ev_strike_01",
+     "text": "Strike. Prices stay. Hunger is not on strike."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: seasons and holidays",
+   "file": "Hajiya Ladi - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hajiya_ladi_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Dates are fair price this month. Only this month."
+    },
+    {
+     "n": 2,
+     "id": "bk_hajiya_ladi_ev_ev_christmas_01",
+     "text": "Christmas rush. Rice for everybody. Barka da Kirsimeti. [Merry Christmas.]"
+    },
+    {
+     "n": 3,
+     "id": "bk_hajiya_ladi_ev_ev_harmattan_01",
+     "text": "Harmattan. Cover the grains. Cover your lips. Cover your book."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

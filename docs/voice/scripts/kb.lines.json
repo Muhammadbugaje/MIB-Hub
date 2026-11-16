@@ -1,0 +1,473 @@
+{
+ "character": "KB",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "The Plan",
+   "file": "KB - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_close_04",
+     "text": "Bread. Fifty. For everybody's face. Eat."
+    },
+    {
+     "n": 2,
+     "id": "m043_close_05",
+     "text": "Saturday is a long night. I hear."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Chancellor's Shadow",
+   "file": "KB - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m108_mid2_03",
+     "text": "I couldn't say it. Who would believe a shopkeeper?"
+    },
+    {
+     "n": 2,
+     "id": "m108_mid2_04",
+     "text": "So I priced it."
+    },
+    {
+     "n": 3,
+     "id": "m108_mid2_05",
+     "text": "For your face today? Free. I listen to the radio."
+    },
+    {
+     "n": 4,
+     "id": "m108_mid2_06",
+     "text": "The other radio."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "KB - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_greet_01",
+     "text": "Welcome! For your face today? Everything is negotiable. Except bread."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_greet_02",
+     "text": "My customer! Your face is fine today. Prices are fine too."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_greet_03",
+     "text": "Ah. That face. That face pays full price."
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_f_greet_04",
+     "text": "How far? [How are you?] Look at the board before you talk."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "KB - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_bye_01",
+     "text": "Go well! Come back when your face is happier."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_bye_02",
+     "text": "Bye. Prices change at sunset. So do faces."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "KB - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_thanks_01",
+     "text": "Thank me? Thank your face. It got the discount."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Quick answers",
+   "file": "KB - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_no_01",
+     "text": "No credit. Credit is a different shop. It closed."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_refuse_01",
+     "text": "Discount? Your face is not in the mood for discount."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_confused_01",
+     "text": "Who? There was nobody there fa. You want something or not?"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Jokes and questions",
+   "file": "KB - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_joke_01",
+     "text": "Price by mood. Today my mood is: rent."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_joke_02",
+     "text": "Same item, two prices? One is for you. One is for your friend's face."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_ask_01",
+     "text": "You have candles at home? …Just asking. Shopkeeper asking."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "KB - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_blackout_01",
+     "text": "Light gone? Ehen. [I see.] You bought the batteries? No? Hm."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_blackout_02",
+     "text": "Shop is open. Bring your own light. And your own face."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_light_back_01",
+     "text": "Light! Batteries back to ₦200. Mood restored."
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_f_rain_01",
+     "text": "Rain! Umbrella ₦1,500. It's raining, my friend. Supply and demand."
+    },
+    {
+     "n": 5,
+     "id": "bk_kb_f_heat_01",
+     "text": "Cold water ₦100. Warm water ₦50. Choose your suffering."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Food and money",
+   "file": "KB - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_money_01",
+     "text": "For your face today? ₦300."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_money_02",
+     "text": "Yesterday ₦200. Today ₦350. Tomorrow? Ask tomorrow."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_money_03",
+     "text": "Smile. …₦250. Smile again. …No, the first one was better."
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_f_money_04",
+     "text": "Transfer? Network is in a meeting. Cash."
+    },
+    {
+     "n": 5,
+     "id": "bk_kb_f_food_01",
+     "text": "Indomie, ₦250. Indomie with my advice, ₦300."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Getting a present",
+   "file": "KB - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_gift_like_01",
+     "text": "Chalk! Box of it. You understand my business model."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_gift_dislike_01",
+     "text": "A calculator? Fixed prices? You want to kill me?"
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_gift_love_01",
+     "text": "A new blackboard. Big. …Now I can be twice as confusing."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Talking to yourself",
+   "file": "KB - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_idle_01",
+     "text": "Batteries, ₦900. …What? Batteries have feelings too."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_f_idle_02",
+     "text": "Bread, ₦50. Today only. Don't ask why. Eat."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_f_idle_03",
+     "text": "Candles, sold out. Since noon. Who knew?"
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_f_idle_04",
+     "text": "Rewriting the board. Chalk is my only staff."
+    },
+    {
+     "n": 5,
+     "id": "bk_kb_f_idle_05",
+     "text": "Radio says sunny. My radio says other things."
+    },
+    {
+     "n": 6,
+     "id": "bk_kb_f_idle_06",
+     "text": "Torch, cheap today. Too cheap. Buy two anyway."
+    },
+    {
+     "n": 7,
+     "id": "bk_kb_f_idle_07",
+     "text": "Matches, ₦5. Don't ask. I'm in a generous mood. Suddenly."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Late at night",
+   "file": "KB - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_f_night_01",
+     "text": "Late. Last loaf. Take it. Tonight, take it."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 1: arriving",
+   "file": "KB - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_y1_idle_01",
+     "text": "Table today, shop tomorrow. Tell your friend with the 'brand'."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_y1_tease_01",
+     "text": "Your friend sells chargers in a basement. I sell faces. Different market."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "KB - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_y2_greet_01",
+     "text": "Grand opening! Prices by mood! Today my mood is: opening."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_y2_idle_01",
+     "text": "For your face? No. For the week. Batteries, triple."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_y2_idle_02",
+     "text": "The mall has escalators. I have a stool. Same function."
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_y2_tease_01",
+     "text": "Free torch with that man's face? I charge less for no face."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "KB - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_y3_idle_01",
+     "text": "Strike prices. Garri cheap. Patience expensive."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_y3_idle_02",
+     "text": "Bread, ₦50. Saturday is a long night. I hear."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_y3_money_01",
+     "text": "Student in strike? For your face today? Half."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "KB - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_y4_idle_01",
+     "text": "Famous face! Famous face pays famous price."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_y4_idle_02",
+     "text": "Kerosene up. Don't look at me like that. Look at the sky."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "KB - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_y5_greet_01",
+     "text": "Eat now. Bread is half price. Now, not later."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_y5_idle_01",
+     "text": "Who would believe a shopkeeper? So I priced it."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_y5_idle_02",
+     "text": "True prices now. They're more boring. Batteries, ₦900."
+    },
+    {
+     "n": 4,
+     "id": "bk_kb_y5_callback_01",
+     "text": "The other radio. Still listening. For your face: free."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "After graduation",
+   "file": "KB - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_post_idle_01",
+     "text": "Batteries ₦200 every day now. I'm bored. Buy anyway."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_post_idle_02",
+     "text": "Board is the same all week. Customers think I'm sick."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "KB - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_ev_ev_freshers_01",
+     "text": "Freshers! New faces! New prices! Everybody, a fresh face price!"
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_ev_ev_exam_01",
+     "text": "Exam week. Coffee ₦100. Rechargeable lamp, cheap. Read."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_ev_ev_allowance_01",
+     "text": "Allowance day! I can see it in your face. Prices up."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "KB - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_ev_ev_strike_01",
+     "text": "Strike. Stay-behind price. Don't tell anybody."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "KB - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_kb_ev_ev_christmas_01",
+     "text": "Christmas! Biscuits by the carton. Go home with a face."
+    },
+    {
+     "n": 2,
+     "id": "bk_kb_ev_ev_valentine_01",
+     "text": "Valentine. Chocolate by mood. Single face, discount."
+    },
+    {
+     "n": 3,
+     "id": "bk_kb_ev_ev_harmattan_01",
+     "text": "Harmattan! Vaseline ₦400. Your lips are paying, not you."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

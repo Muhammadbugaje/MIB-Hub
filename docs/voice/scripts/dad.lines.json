@@ -1,0 +1,611 @@
+{
+ "character": "Dad",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "Dad - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_film_01",
+     "text": "This is not the main gate."
+    },
+    {
+     "n": 2,
+     "id": "m001_film_06",
+     "text": "When I was your age I trekked to school."
+    },
+    {
+     "n": 3,
+     "id": "m001_film_11",
+     "text": "Manage it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Results Day",
+   "file": "Dad - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m013_mid1_01",
+     "text": "I am not angry."
+    },
+    {
+     "n": 2,
+     "id": "m013_mid1_02",
+     "text": "I am only calculating."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Those Who Stayed",
+   "file": "Dad - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_open_01",
+     "text": "We are managing. You manage too."
+    },
+    {
+     "n": 2,
+     "id": "m051_open_02",
+     "text": "Greet your roommate. Your mother is fine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Payday",
+   "file": "Dad - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m086_mid1_01",
+     "text": "…From your work?"
+    },
+    {
+     "n": 2,
+     "id": "m086_mid1_02",
+     "text": "I will tell your mother it came from you."
+    },
+    {
+     "n": 3,
+     "id": "m086_mid1_03",
+     "text": "We managed. You have also managed."
+    },
+    {
+     "n": 4,
+     "id": "m086_mid1_04",
+     "text": "Have you eaten? Don't spend the rest on shoes."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Gown",
+   "file": "Dad - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m117_open_04",
+     "text": "When I was your age…"
+    },
+    {
+     "n": 2,
+     "id": "m117_open_05",
+     "text": "…Well done. Take your mother."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Convocation",
+   "file": "Dad - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_open_01",
+     "text": "Five years ago I parked here! Ask him! Ask him!"
+    },
+    {
+     "n": 2,
+     "id": "m118_mid1_05",
+     "text": "Chin up! Smile for your fa— they all look the same!"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Dad - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_greet_01",
+     "text": "Hello. It's your father. Your mother is next to me. She says eat."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_greet_02",
+     "text": "{{PLAYER_NAME}}. Good evening. I have three questions."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_greet_03",
+     "text": "Ah. You picked up. On the first ring. What do you need?"
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_f_greet_04",
+     "text": "Hello. I'm calling for no reason. Your mother made me."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Dad - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_bye_01",
+     "text": "Greet your roommate. Your mother is fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_bye_02",
+     "text": "Read your books. Balance your books. Both kinds."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_bye_03",
+     "text": "Okay. This call is costing money. Goodnight."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Dad - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_thanks_01",
+     "text": "…Hm. Thank you. I'll tell your mother you said it first."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_sorry_01",
+     "text": "Sorry is good. A plan is better. What is the plan?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Teasing",
+   "file": "Dad - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_tease_01",
+     "text": "When I was your age I trekked to school. Both ways. Uphill."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_tease_02",
+     "text": "Shoes again? How many feet do you have now?"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Walking with the player",
+   "file": "Dad - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_wait_01",
+     "text": "Hello? Hello? Are you there? I'm paying for this silence."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Dad - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_yes_01",
+     "text": "Yes. Manage it."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_no_01",
+     "text": "No. A want is not a need. Write that on your wall."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_maybe_01",
+     "text": "Let me think about it. That means no, but politely."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_f_confused_01",
+     "text": "What is 'sapa'? …Ah. I see. We called it 'month end'."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_f_agree_01",
+     "text": "Correct. Finally, a sensible sentence. I'll write it down."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Dad - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_ask_01",
+     "text": "How much is left? Don't round. Give me the naira and the kobo."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_ask_02",
+     "text": "Have you eaten? Your mother asked me to ask. I'm asking."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_ask_03",
+     "text": "What did you buy? Itemise it. I'm holding a pen."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_f_joke_01",
+     "text": "Your mother says I'm too strict. I've calculated. I'm exactly strict."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Dad - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_blackout_01",
+     "text": "No light? When I was your age, light was a rumour. Read by day."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_rain_01",
+     "text": "Raining? Don't stand under a tree. Or a transformer. Read inside."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_heat_01",
+     "text": "Hot there? Then read early, before the sun gets ideas."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Dad - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_money_01",
+     "text": "I am not angry. I am only calculating."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_money_02",
+     "text": "Money is a guest. If you don't respect it, it leaves early."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_f_money_03",
+     "text": "Manage it."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_f_food_01",
+     "text": "Cook. Don't buy every meal. A pot of rice is a week of peace."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Dad - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_gift_like_01",
+     "text": "A tie. …It's a good tie. I'll wear it on Monday. Or not. Yes. Monday."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_gift_love_01",
+     "text": "From your own work? …I will tell your mother it came from you."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Dad - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_f_idle_01",
+     "text": "When I was your age… I'm starting again. When I was your age…"
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_f_idle_02",
+     "text": "Your little one wants your old bicycle. I said ask you. Ask you."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 1: arriving",
+   "file": "Dad - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_y1_idle_01",
+     "text": "That was not the main gate. I know it was the only gate. Still."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_y1_idle_02",
+     "text": "Did you register your courses? All of them? Show me the slip."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_y1_ask_01",
+     "text": "Your adviser. What's the name? I want to know who is watching you."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_y1_ev_results_01",
+     "text": "I am not angry. I am only calculating. …Good result. Hm. Good."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_y1_ev_results_02",
+     "text": "One carry-over. When I was your age, we called it a warning."
+    },
+    {
+     "n": 6,
+     "id": "bk_dad_y1_ev_results_03",
+     "text": "…Well done. Don't tell your mother I said it first."
+    },
+    {
+     "n": 7,
+     "id": "bk_dad_y1_ev_allowance_01",
+     "text": "Allowance sent. Food first, books second, nonsense never."
+    },
+    {
+     "n": 8,
+     "id": "bk_dad_y1_ev_allowance_02",
+     "text": "That is for the whole month. Not for the first weekend."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 2: the mall",
+   "file": "Dad - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_y2_idle_01",
+     "text": "Your friend has a shop. Does he keep a ledger? Ask him. Ask him."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_y2_idle_02",
+     "text": "A mall with its own power. Who is paying for that power? Think."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_y2_ev_results_01",
+     "text": "Up from last year. I've plotted it. The line is going up."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_y2_ev_results_02",
+     "text": "Down. I've plotted it. I don't like this line."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_y2_ev_allowance_01",
+     "text": "Allowance sent. Last month you spent it in nine days. Make it ten."
+    },
+    {
+     "n": 6,
+     "id": "bk_dad_y2_ev_allowance_02",
+     "text": "You asked for 'small extra'. Define small. Define extra."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 3: the strike",
+   "file": "Dad - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_y3_ev_strike_01",
+     "text": "We are managing. You manage too."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_y3_ev_strike_02",
+     "text": "Strike or no strike, read. The exam will come back. Exams always do."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_y3_idle_01",
+     "text": "I'm reading your textbook. Chapter one. Your field is… brave."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_y3_idle_02",
+     "text": "You're doing small jobs? Good. Work is not shame. Idleness is."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_y3_ev_allowance_01",
+     "text": "It's less this month. Things are tight. I'm sorry. Manage it."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 4: fame",
+   "file": "Dad - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_y4_idle_01",
+     "text": "You're on the internet. Is the internet paying your fees?"
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_y4_idle_02",
+     "text": "Reputation is like a ledger. Every entry stays."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_y4_ev_results_01",
+     "text": "Good. I told my colleagues. Twice. They've asked me to stop."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_y4_ev_results_02",
+     "text": "One more year to fix it. That's enough time. I've calculated."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_y4_ev_allowance_01",
+     "text": "You sent money home? …I'm returning it. With a lecture attached."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 5: leaving",
+   "file": "Dad - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_y5_idle_01",
+     "text": "Final year. Your project. Is it finished? Is it on time? Is it safe?"
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_y5_idle_02",
+     "text": "We managed. You have also managed."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_y5_ev_results_01",
+     "text": "…Well done. Take your mother. She's crying. I'm not. Network."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_y5_ev_convocation_01",
+     "text": "Five years ago I parked here! Ask him! Ask him!"
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_y5_ev_convocation_02",
+     "text": "Chin up! Smile! Wait, which one is you? You all look the same!"
+    },
+    {
+     "n": 6,
+     "id": "bk_dad_y5_ev_allowance_01",
+     "text": "Last one. After this, the allowance is you. …Manage it."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Dad - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_ev_ev_freshers_01",
+     "text": "New freshers? Show them the way. Show them the bank queue too."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_ev_ev_exam_01",
+     "text": "Exams. Switch off that phone. After this call. Not during."
+    },
+    {
+     "n": 3,
+     "id": "bk_dad_ev_ev_exam_02",
+     "text": "Read the question twice. I always told you. You never listened."
+    },
+    {
+     "n": 4,
+     "id": "bk_dad_ev_ev_results_01",
+     "text": "When I was your age, results were pinned with a nail."
+    },
+    {
+     "n": 5,
+     "id": "bk_dad_ev_ev_allowance_01",
+     "text": "Check your account. Then check your spending. In that order."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Dad - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_ev_ev_cup_01",
+     "text": "Your faculty won? When I was your age I scored once. Just once."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Dad - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_dad_ev_ev_christmas_01",
+     "text": "Christmas break. The bus fare is sent. The bus fare only."
+    },
+    {
+     "n": 2,
+     "id": "bk_dad_ev_ev_harmattan_01",
+     "text": "Harmattan. Close your window. Dust is not free cleaning."
+    }
+   ]
+  }
+ ],
+ "pending": [
+  {
+   "id": "m013_mid1_03",
+   "text": "[LECTURE_LINE: chosen by grades and spending]"
+  }
+ ]
+}

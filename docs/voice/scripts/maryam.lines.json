@@ -1,0 +1,454 @@
+{
+ "character": "Maryam",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "On Air",
+   "file": "Maryam - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m036_mid1_01",
+     "text": "'A humming room under the meat hall…'"
+    },
+    {
+     "n": 2,
+     "id": "m036_mid1_02",
+     "text": "'…that the students built, and forgot.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Old Site",
+   "file": "Maryam - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_mid1_09",
+     "text": "Have you read anything that good? I haven't."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Cook-Off",
+   "file": "Maryam - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m089_close_03",
+     "text": "Nobody has judged the yam. I'll wait."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Maker's Notebook",
+   "file": "Maryam - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m098_mid1_02",
+     "text": "…Does anybody want yam?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Maryam - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_greet_01",
+     "text": "Have you read anything good? No? Come in. Sit. Yam?"
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_greet_02",
+     "text": "Hello. What's on your shelf? Be honest. Textbooks don't count."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_f_greet_03",
+     "text": "Sannu. [Hello.] I saved you a book. And some yam. Separately."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Maryam - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_bye_01",
+     "text": "Go. Read on the shuttle. It makes the road shorter."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Maryam - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_thanks_01",
+     "text": "Thank you. That deserves a bookmark. Here."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Maryam - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_compliment_01",
+     "text": "You returned it on time. With no coffee rings. Marry a librarian."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Maryam - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_tease_01",
+     "text": "Your shelf has one novel. It's a phone charger box."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_tease_02",
+     "text": "You read the last page first. I can tell. It's in your face."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Maryam - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_confused_01",
+     "text": "Pardon? I was in chapter nine. Say it to chapter one."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_confused_02",
+     "text": "Who? There was nobody there fa. You've been reading too many novels."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_f_refuse_01",
+     "text": "No. I don't lend that one. It came back with jollof on page twelve once."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Maryam - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_ask_01",
+     "text": "Have you read… anything? This year? A menu counts. Barely."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_joke_01",
+     "text": "Why did the book join the gym? To work on its spine. Yam?"
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Maryam - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_hit_01",
+     "text": "Careful. That's a first edition. You're a later edition. Fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_blackout_01",
+     "text": "'It was a dark and stormy night…' Light's gone. Perfect timing. Yam?"
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_f_rain_01",
+     "text": "Rain on the bookshop roof. Best sound on campus. Stay."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Maryam - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_food_01",
+     "text": "Roasted yam. Hot. From the woman by the gate. Have half. Have all."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Maryam - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_gift_like_01",
+     "text": "A bookmark! Thank you. My books thank you. They were lonely."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_gift_dislike_01",
+     "text": "An e-reader. Thank you. I'll use it as a coaster."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_f_gift_love_01",
+     "text": "An old book! Look at the binding! Smell it! …Don't tell anyone I sniffed it."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Maryam - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_idle_01",
+     "text": "'…and the rains came early that year, and nobody was ready.'"
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_f_idle_02",
+     "text": "Biography. Poetry. Yam recipes. That's a shelf."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Late at night",
+   "file": "Maryam - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_f_night_01",
+     "text": "'The library at night keeps its own counsel.' Somebody wrote that. I'll find who."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Maryam - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_y1_greet_01",
+     "text": "Fresher! What are you reading? Your timetable doesn't count."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_y1_idle_01",
+     "text": "First years buy the textbook, then sell it back unopened. Every year."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_y1_callback_01",
+     "text": "You matriculated in a gown made for two. I put it in my notebook."
+    },
+    {
+     "n": 4,
+     "id": "bk_maryam_y1_tease_01",
+     "text": "Your first essay. 'In conclusion' three times. Choose one conclusion."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 2: the mall",
+   "file": "Maryam - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_y2_idle_01",
+     "text": "'A humming room under the meat hall.' I still read it at night."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_y2_callback_01",
+     "text": "The archive. Three departments, one story. We found it with dust and patience."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_y2_compliment_01",
+     "text": "You read the ledger like a novel. That's a skill. Nobody has it."
+    },
+    {
+     "n": 4,
+     "id": "bk_maryam_y2_tease_01",
+     "text": "You've started a business. And a radio show. And stopped reading. I noticed."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 3: the strike",
+   "file": "Maryam - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_y3_idle_01",
+     "text": "Strike. Bookshop open. One customer. Me. I'm buying everything."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_y3_callback_01",
+     "text": "The tape machine. Her voice. Have you read anything that brave? I haven't."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_y3_callback_02",
+     "text": "The tape machine was under my bed, behind the yam sack. Glad I keep both."
+    },
+    {
+     "n": 4,
+     "id": "bk_maryam_y3_ev_strike_01",
+     "text": "Strike month six. I've reread every book. Even the bad ones. Especially."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 4: fame",
+   "file": "Maryam - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_y4_idle_01",
+     "text": "Cook-off. I entered yam. Only yam. It's a statement."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_y4_callback_01",
+     "text": "Nobody judged the yam. I waited. I'm still waiting."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_y4_compliment_01",
+     "text": "You checked before you shared. Like a good reader. Like an editor."
+    },
+    {
+     "n": 4,
+     "id": "bk_maryam_y4_tease_01",
+     "text": "Your column in the twins' chart. I read it. Twice. It needs editing."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 5: leaving",
+   "file": "Maryam - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_y5_idle_01",
+     "text": "My book. Printed in the market. Two hundred copies. Forty sold. All to Mum."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_y5_idle_02",
+     "text": "'Thank you for the lamp.' Off the night noticeboard. No name. I kept it."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_y5_callback_01",
+     "text": "The notebook. Everyone was so quiet. I offered yam. It helped."
+    },
+    {
+     "n": 4,
+     "id": "bk_maryam_y5_compliment_01",
+     "text": "You'll be in my next book. Kindly. Mostly kindly."
+    },
+    {
+     "n": 5,
+     "id": "bk_maryam_y5_bye_01",
+     "text": "Convocation. Keep a book in your bag. Always. Yam is optional."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: term time",
+   "file": "Maryam - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_ev_ev_freshers_01",
+     "text": "Freshers! Bookshop sale! Second-hand textbooks with first-hand notes!"
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_ev_ev_exam_01",
+     "text": "Exam week. Everyone wants the book I've had on the shelf for a year."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_ev_ev_market_day_01",
+     "text": "Market day! The book man by the tailor has poetry. Old poetry. I'm going!"
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: the big ones",
+   "file": "Maryam - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_ev_ev_convocation_01",
+     "text": "Convocation. Gowns everywhere. Like a library came to life."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: seasons and holidays",
+   "file": "Maryam - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_maryam_ev_ev_ramadan_01",
+     "text": "Iftar. I'm bringing yam. I'm always bringing yam."
+    },
+    {
+     "n": 2,
+     "id": "bk_maryam_ev_ev_christmas_01",
+     "text": "Christmas break. Shop shut. I've taken six books home. And yam."
+    },
+    {
+     "n": 3,
+     "id": "bk_maryam_ev_ev_harmattan_01",
+     "text": "Harmattan. The old pages crack. I wrap them in cloth. Like babies."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

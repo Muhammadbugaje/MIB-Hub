@@ -1,0 +1,88 @@
+{
+ "character": "Muktar",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Point of Order",
+   "file": "Muktar - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m031_close_01",
+     "text": "Point of order: I would like to lose gracefully."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Manifesto",
+   "file": "Muktar - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m079_open_04",
+     "text": "Point of order: I have ordered the trophy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Election Day",
+   "file": "Muktar - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m085_open_03",
+     "text": "Point of order: is my reverb on?"
+    },
+    {
+     "n": 2,
+     "id": "m085_mid1_06",
+     "text": "Point of order: minute that I lost gracefully."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Missing Script",
+   "file": "Muktar - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m100_open_02",
+     "text": "Point of order. You are the president. Just call."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Sixth Site (Heist 3)",
+   "file": "Muktar - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m101_open_01",
+     "text": "Legend. Scale. And here: 'Point of order: you are here.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Everybody, Again",
+   "file": "Muktar - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m106_open_02",
+     "text": "Point of order: half of Senate is in Yamma."
+    },
+    {
+     "n": 2,
+     "id": "m106_close_03",
+     "text": "Point of order: what?"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

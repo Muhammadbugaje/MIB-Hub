@@ -1,0 +1,744 @@
+{
+ "character": "Emily",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Okada Diploma",
+   "file": "Emily - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m028_close_01",
+     "text": "Sorry! Sorry! I ran. I always run. No change!"
+    },
+    {
+     "n": 2,
+     "id": "m028_close_02",
+     "text": "Strawberry? From our farm. Just past the fence."
+    },
+    {
+     "n": 3,
+     "id": "m028_close_03",
+     "text": "Fast. …Strawberry?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "New Site Goes Dark",
+   "file": "Emily - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_close_02",
+     "text": "Strawberry? We counted five."
+    },
+    {
+     "n": 2,
+     "id": "m039_close_03",
+     "text": "Then we heard another engine. Behind them. Clear."
+    },
+    {
+     "n": 3,
+     "id": "m039_close_04",
+     "text": "And then we… didn't."
+    },
+    {
+     "n": 4,
+     "id": "m039_close_05",
+     "text": "And you were just standing there."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Farm Hands",
+   "file": "Emily - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m054_open_01",
+     "text": "Strawberry? No. Later. Water first."
+    },
+    {
+     "n": 2,
+     "id": "m054_mid1_01",
+     "text": "Senator! That's the road to the VC's roses!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Called Off",
+   "file": "Emily - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m067_open_01",
+     "text": "I met every bus! I brought everybody strawberry!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Ranger Lawal's Debt",
+   "file": "Emily - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m069_open_03",
+     "text": "Strawberry? No. Tractor. I'll get the tractor!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Ten Seals",
+   "file": "Emily - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_mid2_06",
+     "text": "Agriculture. Senator sends his regards. And a strawberry."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Emily - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_greet_01",
+     "text": "Hi! Sorry! I ran! I always run! Strawberry?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_greet_02",
+     "text": "Morning! I've been up since five. The cows don't do lie-ins."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_greet_03",
+     "text": "Oh, hello! Hold this. No, the basket. Thank you. Hi!"
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_f_greet_04",
+     "text": "Sannu! [Hello!] You look sad. Here. Strawberry."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Emily - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_bye_01",
+     "text": "Bye! I have to run. The tractor is waiting. Tractors don't wait."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_bye_02",
+     "text": "Go! Eat something red today. Doctor's orders. I'm not a doctor."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Emily - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_thanks_01",
+     "text": "Thank you! Here, take two. No, three. Okay, the basket."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_sorry_01",
+     "text": "Sorry! Sorry! My basket hit you. It's heavy. It's love."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Emily - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_compliment_01",
+     "text": "You look so healthy! Like a strawberry in the right season."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_compliment_02",
+     "text": "You can carry a sack! Can you also drive a tractor? No? Soon!"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Emily - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_tease_01",
+     "text": "You've never seen a farm before? Look. That's a cow. It's looking at you."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_tease_02",
+     "text": "You call that running? I run with a basket on my head."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Emily - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_follow_01",
+     "text": "Come, come! Faster! The shuttle leaves at four, and it means four-ish!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_wait_01",
+     "text": "Faster! The cows have been waiting since six! So have I!"
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_wait_02",
+     "text": "Hurry! The strawberries are ripening while we stand here!"
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_f_lost_01",
+     "text": "That's the road to Agriculture. Keep going past the cows. The cows know."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Emily - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_yes_01",
+     "text": "Yes! Yes! Strawberry?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_no_01",
+     "text": "No. But here. Strawberry."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_maybe_01",
+     "text": "Maybe. Ask me after harvest."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_f_confused_01",
+     "text": "Wait, what? Say it slower. I'm breathing."
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_f_confused_02",
+     "text": "Who? There was nobody there fa. Just Senator. He's a ram."
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_f_agree_01",
+     "text": "Exactly! That's what I told the Dean! He said 'later'!"
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_f_refuse_01",
+     "text": "No, I can't. But take this strawberry so you're not sad about it."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Emily - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_joke_01",
+     "text": "Why did the strawberry cry? It was in a jam! Sorry. My father's joke."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_ask_01",
+     "text": "Have you eaten? You haven't. Strawberry. Then go to Mama Nkechi."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Emily - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_win_01",
+     "text": "We won! Strawberries for everyone! Within reason!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_lose_01",
+     "text": "We lost. Strawberry?"
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_lose_02",
+     "text": "Strawberry? It doesn't fix it. It helps."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Emily - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_hit_01",
+     "text": "Oh! Sorry! Was that the basket or me? The basket. Probably."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_fall_01",
+     "text": "I'm fine! I've fallen off worse. Like a tractor."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_blackout_01",
+     "text": "NEPA again. At the farm we don't notice. We go to bed with the chickens."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_f_light_back_01",
+     "text": "Light! Quick, the cold room! The strawberries!"
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_f_rain_01",
+     "text": "Rain! Finally! The farm is dancing! I'm dancing!"
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_f_heat_01",
+     "text": "Too hot. Strawberries hate this. So do I. Shade."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Emily - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_food_01",
+     "text": "Mama Nkechi gives me rice. I give her strawberries. Best trade on campus."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_money_01",
+     "text": "I made forty naira profit this week. I gave away the rest. Again."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Emily - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_gift_like_01",
+     "text": "For me? Oh, thank you! I'll put it on the tractor! For luck!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_gift_dislike_01",
+     "text": "Oh. Thank you. I'll… give it to someone sad. That's what I do."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_f_gift_love_01",
+     "text": "Seeds! Proper seeds! You remembered! I'm going to cry on them!"
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Emily - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_idle_01",
+     "text": "Basket. Phone. Notes. Basket. Where's my other basket?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_idle_02",
+     "text": "Senator! Get back here! Sorry. That's the ram. He's having a day."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Emily - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_night_01",
+     "text": "At night the fields are so quiet. You hear everything. Even strawberries."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Emily - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_f_callback_01",
+     "text": "Remember the fruit? You were the delivery rider! I paid you in strawberries!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_f_callback_02",
+     "text": "Your helmet was on backwards. Zainab told you. I told you too. Twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Emily - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_y1_idle_01",
+     "text": "Farm to market, market to farm. First years look at me like I'm a horse."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_y1_idle_02",
+     "text": "The long road to New Site has no lights. Somebody should fix that."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_y1_greet_01",
+     "text": "Hi! You don't know me yet. I'm the girl with the basket. Take one!"
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_y1_ev_harmattan_01",
+     "text": "Harmattan. The farm's all dust. The strawberries are sulking under cloth."
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_y1_rain_01",
+     "text": "Rain coming! Lily said so! Lily is always right!"
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_y1_tease_01",
+     "text": "Freshers! You all look so lost. Like goats at a party."
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_y1_compliment_01",
+     "text": "You said thank you to the shuttle driver. Nobody does that. Strawberry."
+    },
+    {
+     "n": 8,
+     "id": "bk_emily_y1_follow_01",
+     "text": "Want to see the farm? It's just past the fence. Then the next fence."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Emily - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_y2_greet_01",
+     "text": "Hi! It's you! The rider! Strawberry?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_y2_idle_01",
+     "text": "New Site has no water. Three days. The strawberries have more water than us."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_y2_idle_02",
+     "text": "Emeka calls me 'the strawberry girl'. I've stopped correcting him."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_y2_callback_01",
+     "text": "Five kekes of water through the first rain. Iya Risi still talks about it."
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_y2_callback_02",
+     "text": "You brought water to New Site! In the rain! You're a hero! Strawberry!"
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_y2_tease_01",
+     "text": "You drove the okada into a moot court. Lyzzy got it on video."
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_y2_compliment_01",
+     "text": "You don't panic. That's rare. Panic is my whole personality."
+    },
+    {
+     "n": 8,
+     "id": "bk_emily_y2_rain_01",
+     "text": "First rain! Run! No, stay! Run!"
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Emily - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_y3_greet_01",
+     "text": "You came! The farm needs hands! Strawberry? No. Later. Water first."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_y3_idle_01",
+     "text": "The students left. The animals didn't. The animals never strike."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_y3_idle_02",
+     "text": "Senator is out AGAIN. He's heading for the VC's roses!"
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_y3_callback_01",
+     "text": "Your first tractor! You only hit one fence! A small fence!"
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_y3_callback_02",
+     "text": "Senator's bell. Six dots and one in the middle. The Dean never asked why."
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_y3_callback_03",
+     "text": "I'll get the tractor! That night by the forest! I still have the mud!"
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_y3_ev_strike_01",
+     "text": "Strike month five. The farm's never had so many friends. Thank you."
+    },
+    {
+     "n": 8,
+     "id": "bk_emily_y3_compliment_01",
+     "text": "You picked the strawberries so gently. You're a farmer now. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Emily - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_y4_heat_01",
+     "text": "Driest year yet. I'm carrying water to the beds at dawn. You can help. Please?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_y4_greet_01",
+     "text": "Market day's coming! Strawberries, jam, juice, and a sign Aleeya painted!"
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_y4_idle_01",
+     "text": "Somebody wants to buy our land. Dad said no. Nicely. Then twice."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_y4_idle_02",
+     "text": "Lily's doing the greenhouse. I'm doing the field. Together we're a farm."
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_y4_callback_01",
+     "text": "I met every bus! I brought everybody strawberries!"
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_y4_tease_01",
+     "text": "You're famous now. Even the cows have heard. They're unimpressed."
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_y4_compliment_01",
+     "text": "You stuck by your friends after that clip. That's farm loyalty."
+    },
+    {
+     "n": 8,
+     "id": "bk_emily_y4_ev_market_day_01",
+     "text": "Market stall! Sold out by noon! Gave the rest away by one!"
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Emily - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_y5_rain_01",
+     "text": "Rain on the farm in final year! It came for my last harvest! I'm crying!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_y5_greet_01",
+     "text": "Final year! The farm's safe! I'm crying! Strawberry?"
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_y5_idle_01",
+     "text": "Senator sends his regards. And a strawberry. Mostly he sends a smell."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_y5_idle_02",
+     "text": "Dad signed the paper. The farm stays. Forever. Or till the next crisis."
+    },
+    {
+     "n": 5,
+     "id": "bk_emily_y5_callback_01",
+     "text": "Agriculture's seal. Senator behaved. Almost."
+    },
+    {
+     "n": 6,
+     "id": "bk_emily_y5_compliment_01",
+     "text": "You'll be fine out there. You've driven a tractor. Everything else is easier."
+    },
+    {
+     "n": 7,
+     "id": "bk_emily_y5_bye_01",
+     "text": "Come and visit after convocation. Bring a basket. Leave with two."
+    },
+    {
+     "n": 8,
+     "id": "bk_emily_y5_tease_01",
+     "text": "You still can't tell a strawberry flower from a weed. Five years!"
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Emily - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_ev_ev_freshers_01",
+     "text": "Freshers! Free strawberries for everybody who looks lost! So everybody!"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_ev_ev_exam_01",
+     "text": "Exam week. Soil Science. I'm reading in the barn. The cows are helping."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_ev_ev_results_01",
+     "text": "Results are out! I passed! Strawberry? For me this time!"
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_ev_ev_allowance_01",
+     "text": "Allowance! I spent it on fertiliser. That's romance at the farm."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Emily - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_ev_ev_cup_01",
+     "text": "Cup final! I brought snacks! For both teams! Is that allowed?"
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_ev_ev_elections_01",
+     "text": "Who's promising to fix the New Site road? I'll vote for whoever means it."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_ev_ev_convocation_01",
+     "text": "Convocation! I brought strawberries for everyone in a gown. Two each."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Emily - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_emily_ev_ev_ramadan_01",
+     "text": "Iftar basket! Dates, water, and strawberries. Don't argue. It's tradition now."
+    },
+    {
+     "n": 2,
+     "id": "bk_emily_ev_ev_christmas_01",
+     "text": "Christmas. The farm doesn't close. Dad says the strawberries don't know."
+    },
+    {
+     "n": 3,
+     "id": "bk_emily_ev_ev_valentine_01",
+     "text": "Valentine's. Strawberries are expensive this week. I'm still giving them away."
+    },
+    {
+     "n": 4,
+     "id": "bk_emily_ev_ev_harmattan_01",
+     "text": "Harmattan. Cover the beds. Drink water. Hug a cow. Cows are warm."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

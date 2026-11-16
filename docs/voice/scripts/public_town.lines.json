@@ -1,0 +1,305 @@
+{
+ "character": "The Town",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Town - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_f_greet_01",
+     "text": "Ina kwana? [Good morning?] You greet well. Good child."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_f_greet_02",
+     "text": "Ẹ káàárọ̀! [Good morning!] How's school?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_f_greet_03",
+     "text": "Sannu da aiki! [Well done with your work!]"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_f_greet_04",
+     "text": "Nnọọ! [Welcome!] Come and sit small."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "When something goes wrong",
+   "file": "The Town - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_f_blackout_01",
+     "text": "Light don go again! Bring the lantern, the real one!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_f_blackout_02",
+     "text": "No light, no fan, no TV. Then let's tell stories."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_f_rain_01",
+     "text": "Rain! The clothes! Children, the clothes!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_f_heat_01",
+     "text": "This heat. Even the goats are queueing for shade."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Talking to yourself",
+   "file": "The Town - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_f_idle_01",
+     "text": "The tailor said Thursday. Which Thursday? He's a philosopher."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_f_idle_02",
+     "text": "Bread went up again. Even the bread is surprised."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_f_idle_03",
+     "text": "In my time, that clock worked. In my time, many things worked."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_f_idle_04",
+     "text": "My son, come and help me carry this. Your back is young."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_town_f_idle_05",
+     "text": "Generator noise everywhere! Who can hear the radio?"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_town_f_idle_06",
+     "text": "Welder! Welder! He's not here. He is 'coming'."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_town_f_idle_07",
+     "text": "I took my shoe to the cobbler. Now he's renting it back to me."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_town_f_idle_08",
+     "text": "That pothole has been there since my wedding. It's family now."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_town_f_idle_09",
+     "text": "Children! Out of the road! Okada is not a toy!"
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_town_f_idle_10",
+     "text": "These students, always running. Where is everybody going?"
+    },
+    {
+     "n": 11,
+     "id": "bk_pub_town_f_idle_11",
+     "text": "Grinding machine! Pepper, tomatoes! Bring your bowl!"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Late at night",
+   "file": "The Town - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_f_night_01",
+     "text": "Lock your doors. Not for thieves. For mosquitoes."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_f_night_02",
+     "text": "The old man in the university garden? He greets well. That's all I know."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Year 1: arriving",
+   "file": "The Town - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_y1_idle_01",
+     "text": "Every evening NEPA takes light. We've stopped being angry. Mostly."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 2: the mall",
+   "file": "The Town - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_y2_idle_01",
+     "text": "The new mall: big glass, big lights. Our street is still dark."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_y2_idle_02",
+     "text": "Somebody is tapping wires at night. My meter is crying."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 3: the strike",
+   "file": "The Town - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_y3_idle_01",
+     "text": "The students who stayed for the strike help everybody. Good children."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_y3_idle_02",
+     "text": "My tailor has no customers. He's sewing his own trousers."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 4: fame",
+   "file": "The Town - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_y4_idle_01",
+     "text": "Everybody's pointing a phone at everybody. Then who is living?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_y4_idle_02",
+     "text": "Election posters on my wall. I didn't agree. My wall did."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 5: leaving",
+   "file": "The Town - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_y5_idle_01",
+     "text": "These students came small. Now look. Gowns. Ahh, time."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_y5_idle_02",
+     "text": "The town feels brighter. More lamps on the road. Somebody did something."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Special days: term time",
+   "file": "The Town - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_ev_ev_freshers_01",
+     "text": "Freshers in town! Hold your bags well. The market is a teacher."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_ev_ev_exam_01",
+     "text": "Exam season. Students buying Brain Booster Tea like medicine."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_ev_ev_results_01",
+     "text": "My neighbour's son passed! He's dancing in the road. Let him."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_ev_ev_allowance_01",
+     "text": "Allowance day. The market will be loud tonight. Good for business."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_town_ev_ev_market_day_01",
+     "text": "Thursday! I've been awake since four, ready to bargain."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: the big ones",
+   "file": "The Town - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_ev_ev_strike_01",
+     "text": "Strike again? In my day— well, also strike. Same."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_ev_ev_cup_01",
+     "text": "The whole town is shouting for the university. Who else?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_ev_ev_elections_01",
+     "text": "Candidates. Promise everything, deliver pamphlets."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_ev_ev_convocation_01",
+     "text": "Convocation. Tailors haven't slept. Everything is 'Thursday'."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: seasons and holidays",
+   "file": "The Town - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_town_ev_ev_ramadan_01",
+     "text": "Iftar at my house today. Come, there's enough."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_town_ev_ev_christmas_01",
+     "text": "Merry Christmas! Come and eat rice. Don't say no."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_town_ev_ev_valentine_01",
+     "text": "In my time, Valentine was called 'go and greet her father'."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_town_ev_ev_harmattan_01",
+     "text": "Harmattan. Wear a sweater. Yes, you. I can see you shivering."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

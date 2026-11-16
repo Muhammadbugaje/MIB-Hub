@@ -1,0 +1,2299 @@
+{
+ "character": "Taty",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "Taty - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_play_t01",
+     "text": "Bora! Run, fresher, the goat is winning!"
+    },
+    {
+     "n": 2,
+     "id": "m001_play_t02",
+     "text": "Don't look at me, I'm on lap six!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Mai Shayi Knows",
+   "file": "Taty - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_play_t01",
+     "text": "Pixel. Pixel! We live together. You can't just join a cult."
+    },
+    {
+     "n": 2,
+     "id": "m006_play_t02",
+     "text": "They do this every evening. Nobody knows why. Pixel won't say."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Left Boot First",
+   "file": "Taty - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m008_open_t01",
+     "text": "Coach, give me the whistle. I'll break them gently."
+    },
+    {
+     "n": 2,
+     "id": "m008_play_t01",
+     "text": "Bora! One lap. Easy lap. Baby lap."
+    },
+    {
+     "n": 3,
+     "id": "m008_play_t02",
+     "text": "I lied. Two."
+    },
+    {
+     "n": 4,
+     "id": "m008_play_t03",
+     "text": "You're not dying. I've seen dying. This is Tuesday."
+    },
+    {
+     "n": 5,
+     "id": "m008_play_t04",
+     "text": "You tie that boot one more time, I'm taking it home."
+    },
+    {
+     "n": 6,
+     "id": "m008_play_t05",
+     "text": "Good! Now do it tired. Tired is where it counts."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Count Entropy",
+   "file": "Taty - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_mid1_t01",
+     "text": "Give me twenty. I have arms. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m012_play_t01",
+     "text": "Give me ten. No, twenty. I have arms."
+    },
+    {
+     "n": 3,
+     "id": "m012_play_t02",
+     "text": "Block C is lit. Block D is lit. Who's next? Don't make me choose."
+    },
+    {
+     "n": 4,
+     "id": "m012_play_t03",
+     "text": "Pixel doesn't like them. Pixel doesn't like anybody. So that means nothing."
+    },
+    {
+     "n": 5,
+     "id": "m012_play_t04",
+     "text": "I'm not scared. I'm fast. It's a different thing."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Sly's Last Stand",
+   "file": "Taty - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_mid1_t01",
+     "text": "Fresher! You again. Good. I need a victim."
+    },
+    {
+     "n": 2,
+     "id": "m014_play_t01",
+     "text": "Lift on my count. One. Two. I'm not helping, I'm just touching the bar. Three."
+    },
+    {
+     "n": 3,
+     "id": "m014_play_t02",
+     "text": "You ate garri for dinner. I can see it in your soul."
+    },
+    {
+     "n": 4,
+     "id": "m014_play_t03",
+     "text": "Last set. I lied. Second last."
+    },
+    {
+     "n": 5,
+     "id": "m014_play_t04",
+     "text": "Big man! You fight fair or I make you run with me. Your choice."
+    },
+    {
+     "n": 6,
+     "id": "m014_play_t05",
+     "text": "See? You moved him. Last month you couldn't move his shadow."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Baba Dam's Pier",
+   "file": "Taty - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m015_play_t01",
+     "text": "He says 'float'. I say 'kick'. Do both. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m015_play_t02",
+     "text": "You swim like a chair. A brave chair."
+    },
+    {
+     "n": 3,
+     "id": "m015_play_t03",
+     "text": "Pixel thinks water is a mistake. Pixel is wrong about many things."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "The Dam at Midnight",
+   "file": "Taty - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m016_close_t01",
+     "text": "Are you okay? I saw bubbles. I was over there!"
+    },
+    {
+     "n": 2,
+     "id": "m016_play_t01",
+     "text": "I'll be up here. With the light. Go down, come up, simple."
+    },
+    {
+     "n": 3,
+     "id": "m016_play_t02",
+     "text": "An eel? A big one? …How big? No. Don't tell me. Tell me."
+    },
+    {
+     "n": 4,
+     "id": "m016_play_t03",
+     "text": "That wasn't me. I was on the other side. …Who pulled you out?"
+    },
+    {
+     "n": 5,
+     "id": "m016_play_t04",
+     "text": "Pixel, what? There's nothing there. Stop it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "The Vice-Chancellor's Cup",
+   "file": "Taty - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m019_play_t01",
+     "text": "Drink. Breathe. You have forty-five more. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m019_play_t02",
+     "text": "Jega! Left boot! I'm not superstitious but LEFT BOOT!"
+    },
+    {
+     "n": 3,
+     "id": "m019_play_t03",
+     "text": "You lost. So what. You ran. Come here. Hug. Now we train."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Six Plaques",
+   "file": "Taty - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_play_t01",
+     "text": "Pixel! That's evidence! …Okay it's string. But it's important string."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Everybody",
+   "file": "Taty - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m022_play_t01",
+     "text": "Yes. What is it? Doesn't matter. Yes."
+    },
+    {
+     "n": 2,
+     "id": "m022_play_t02",
+     "text": "Who's left? Give me the list. I'll run it. You talk, I fetch."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Exam Fever",
+   "file": "Taty - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m023_play_t01",
+     "text": "Hospital says ward three is flickering. I'm going back. Don't let go of that thing."
+    },
+    {
+     "n": 2,
+     "id": "m023_play_t02",
+     "text": "Four trips. I'm warm now. Keep going."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Convocation Night",
+   "file": "Taty - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_play_t01",
+     "text": "Left side's mine! All of it! Don't send anyone, they'll slow me down!"
+    },
+    {
+     "n": 2,
+     "id": "m024_play_t02",
+     "text": "Wave three? That's all? Bora!"
+    },
+    {
+     "n": 3,
+     "id": "m024_play_t03",
+     "text": "Pixel's in my hood and she's furious. That's how you know we're winning."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Okada Diploma",
+   "file": "Taty - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m028_play_t01",
+     "text": "Meat pie! Put it by the post. No, the OTHER post, that one's unlucky."
+    },
+    {
+     "n": 2,
+     "id": "m028_play_t02",
+     "text": "You on the bike, me on legs. To the gate. Bora!"
+    },
+    {
+     "n": 3,
+     "id": "m028_play_t03",
+     "text": "Your helmet's backwards. I wasn't going to say. I'm saying."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Faculty Week: Engineering",
+   "file": "Taty - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_play_t01",
+     "text": "Doctor in a lab coat is fouling me. I respect it."
+    },
+    {
+     "n": 2,
+     "id": "m033_play_t02",
+     "text": "Jega! The ball is on the FLOOR. Use the foot. The foot!"
+    },
+    {
+     "n": 3,
+     "id": "m033_play_t03",
+     "text": "GOAL! Sorry, ma. Not sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Sly Goes Straight",
+   "file": "Taty - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m034_play_t01",
+     "text": "Two centimetres. I'll know. I measure with my heart."
+    },
+    {
+     "n": 2,
+     "id": "m034_play_t02",
+     "text": "Big man, your hands are soft! Why were you scaring children? This is your job!"
+    },
+    {
+     "n": 3,
+     "id": "m034_play_t03",
+     "text": "Pixel approves. Pixel approves of nothing. Frame this day."
+    }
+   ]
+  },
+  {
+   "section": "Mission 16",
+   "title": "Scout in the Stands",
+   "file": "Taty - Mission 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_mid2_t01",
+     "text": "PIXEL. That is a man's entire career!"
+    },
+    {
+     "n": 2,
+     "id": "m037_mid2_t02",
+     "text": "Sorry! Sorry! Cat! Sorry!"
+    },
+    {
+     "n": 3,
+     "id": "m037_mid2_t03",
+     "text": "Ref! Don't blow that! She'll run again!"
+    },
+    {
+     "n": 4,
+     "id": "m037_mid2_t04",
+     "text": "She says sorry. She doesn't mean it. She's a cat."
+    },
+    {
+     "n": 5,
+     "id": "m037_mid2_t05",
+     "text": "Jega! It's a bit wet. Left boot first. GO!"
+    },
+    {
+     "n": 6,
+     "id": "m037_play_t01",
+     "text": "Left! She's going left! She always fakes right!"
+    },
+    {
+     "n": 7,
+     "id": "m037_play_t02",
+     "text": "Boards! Jump! Don't think, jump!"
+    },
+    {
+     "n": 8,
+     "id": "m037_play_t03",
+     "text": "I'm not tired. I'm never tired. I'm just very, very angry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 17",
+   "title": "Change-Over",
+   "file": "Taty - Mission 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m038_play_t01",
+     "text": "Who are we chasing? Doesn't matter! Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m038_play_t02",
+     "text": "He's quick for an engineer! Left at the yams!"
+    },
+    {
+     "n": 3,
+     "id": "m038_play_t03",
+     "text": "…Oh. Okay. This one's yours. I'll wait by the road."
+    }
+   ]
+  },
+  {
+   "section": "Mission 18",
+   "title": "New Site Goes Dark",
+   "file": "Taty - Mission 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_play_t01",
+     "text": "I'm not getting in. I'm faster outside. Drive!"
+    },
+    {
+     "n": 2,
+     "id": "m039_play_t02",
+     "text": "Number four, close up! Number six, you're asleep! Bora!"
+    },
+    {
+     "n": 3,
+     "id": "m039_play_t03",
+     "text": "Rain! Finally! I was getting hot."
+    },
+    {
+     "n": 4,
+     "id": "m039_play_t04",
+     "text": "Where were you? I looked back, your lights were gone. How did you get here before the mud dried on me?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 19",
+   "title": "Night Shift",
+   "file": "Taty - Mission 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m042_play_t01",
+     "text": "I've got the far ones. You take them from the corridor. Don't run. I'll run."
+    },
+    {
+     "n": 2,
+     "id": "m042_play_t02",
+     "text": "Can. Next. Can. Next. Don't talk, breathe."
+    },
+    {
+     "n": 3,
+     "id": "m042_play_t03",
+     "text": "Zee. Sit for one minute. I'll shout if anything beeps."
+    },
+    {
+     "n": 4,
+     "id": "m042_play_t04",
+     "text": "…Okay. Now I'm tired. Don't tell anyone. It's never happened before."
+    }
+   ]
+  },
+  {
+   "section": "Mission 20",
+   "title": "The Plan",
+   "file": "Taty - Mission 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_play_t01",
+     "text": "Eleven laps of the mall. Two guards, they swap at the fountain every nine minutes. One of them smokes."
+    },
+    {
+     "n": 2,
+     "id": "m043_play_t02",
+     "text": "Nobody looks at a woman running. It's the best disguise in the world. Also I ran, so, win-win."
+    }
+   ]
+  },
+  {
+   "section": "Mission 21",
+   "title": "Two Papers, One Day",
+   "file": "Taty - Mission 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_play_t01",
+     "text": "Robot coming through! Important robot! Move your feet, he has an exam!"
+    },
+    {
+     "n": 2,
+     "id": "m047_play_t02",
+     "text": "He says 'simple' every bump. I love him. Can I keep him?"
+    },
+    {
+     "n": 3,
+     "id": "m047_play_t03",
+     "text": "Left side, clear! Go go go! Bora!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 22",
+   "title": "Sign-Out, Small",
+   "file": "Taty - Mission 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_play_t01",
+     "text": "I signed forty. Moving. It's a personal best."
+    },
+    {
+     "n": 2,
+     "id": "m048_play_t02",
+     "text": "Zee! Pixel brought you a present. It's a lizard. Don't look. Hug me instead."
+    }
+   ]
+  },
+  {
+   "section": "Mission 23",
+   "title": "Farm Hands",
+   "file": "Taty - Mission 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m054_mid1_t01",
+     "text": "Is this a race? Tell me it's a race. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m054_play_t01",
+     "text": "Bora! I'll take the left. The left is the fast ones. Good."
+    },
+    {
+     "n": 3,
+     "id": "m054_play_t02",
+     "text": "Sheep! Hello! No. No. Other way. I can do this all day, I really can."
+    },
+    {
+     "n": 4,
+     "id": "m054_play_t03",
+     "text": "Pixel has a friend. Pixel, we are not keeping the friend."
+    },
+    {
+     "n": 5,
+     "id": "m054_play_t04",
+     "text": "You're doing great. You're purple, but great."
+    }
+   ]
+  },
+  {
+   "section": "Mission 24",
+   "title": "The Sit-Down",
+   "file": "Taty - Mission 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_play_t01",
+     "text": "One lap. Of the courtyard. I lied, half. Half a lap. Look, we're doing it."
+    },
+    {
+     "n": 2,
+     "id": "m057_play_t02",
+     "text": "We can stop. Stopping is allowed. I do it sometimes. Rarely. But I've heard of it."
+    },
+    {
+     "n": 3,
+     "id": "m057_play_t03",
+     "text": "Pixel chose your foot. You can't move now. Those are the rules."
+    },
+    {
+     "n": 4,
+     "id": "m057_play_t04",
+     "text": "Don't thank me. Just keep opening that curtain."
+    }
+   ]
+  },
+  {
+   "section": "Mission 25",
+   "title": "Injury Time",
+   "file": "Taty - Mission 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m063_mid1_t01",
+     "text": "Ice! Coming through! Nobody touch that leg!"
+    },
+    {
+     "n": 2,
+     "id": "m063_play_t01",
+     "text": "Don't move. Don't be brave. Brave is for later. Ice. Here."
+    },
+    {
+     "n": 3,
+     "id": "m063_play_t02",
+     "text": "Look at me, not the knee. The knee is boring. I'm interesting."
+    },
+    {
+     "n": 4,
+     "id": "m063_play_t03",
+     "text": "I'll run alongside. Drive slow. Slower. A snail is overtaking you. Good."
+    },
+    {
+     "n": 5,
+     "id": "m063_play_t04",
+     "text": "He didn't scream once. He did negotiate with God, a little."
+    }
+   ]
+  },
+  {
+   "section": "Mission 26",
+   "title": "The Idle King",
+   "file": "Taty - Mission 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_open_t01",
+     "text": "I was going somewhere nice. This is nicer. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "m066_play_t01",
+     "text": "Sub? Me? No. Sub him. Sub everyone. I'm fine."
+    },
+    {
+     "n": 3,
+     "id": "m066_play_t02",
+     "text": "I can't see the ball. I can see the moon. I'm chasing the smaller one. Bora!"
+    },
+    {
+     "n": 4,
+     "id": "m066_play_t03",
+     "text": "Meu Deus! In a DRESS! Put it in the newspaper!"
+    },
+    {
+     "n": 5,
+     "id": "m066_play_t04",
+     "text": "Is anyone sitting here? No? Good."
+    }
+   ]
+  },
+  {
+   "section": "Mission 27",
+   "title": "Ranger Lawal's Debt",
+   "file": "Taty - Mission 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m069_open_t01",
+     "text": "Rain is free resistance training! What are we doing?"
+    },
+    {
+     "n": 2,
+     "id": "m069_play_t01",
+     "text": "Together. I take upstream. You take complaining. Bora!"
+    },
+    {
+     "n": 3,
+     "id": "m069_play_t02",
+     "text": "Kick! You're a fish! An ugly fish! Kick!"
+    },
+    {
+     "n": 4,
+     "id": "m069_play_t03",
+     "text": "Hello. You must be the tree man. Lovely forest. Very wet."
+    },
+    {
+     "n": 5,
+     "id": "m069_play_t04",
+     "text": "Again? No? Okay. …We could go again, though."
+    }
+   ]
+  },
+  {
+   "section": "Mission 28",
+   "title": "Rehab",
+   "file": "Taty - Mission 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m078_open_t01",
+     "text": "Bora! Pool is mine. Bring the captain."
+    },
+    {
+     "n": 2,
+     "id": "m078_play_t01",
+     "text": "Bora! [Let's go!] Eight laps. I'm counting. In Portuguese. You can't cheat in Portuguese."
+    },
+    {
+     "n": 3,
+     "id": "m078_play_t02",
+     "text": "That was seven. I don't care what language you said it in, captain."
+    },
+    {
+     "n": 4,
+     "id": "m078_play_t03",
+     "text": "One more lap. …I lied. Two. Your knee loves me, it just doesn't know yet."
+    },
+    {
+     "n": 5,
+     "id": "m078_play_t04",
+     "text": "The cat says your kick is lazy. I'm only translating."
+    },
+    {
+     "n": 6,
+     "id": "m078_play_t05",
+     "text": "Slow is not losing. Slow is how you get to be fast twice."
+    }
+   ]
+  },
+  {
+   "section": "Mission 29",
+   "title": "Comeback",
+   "file": "Taty - Mission 29",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m088_open_t01",
+     "text": "Left, right, who cares? Bora! Run!"
+    },
+    {
+     "n": 2,
+     "id": "m088_play_t01",
+     "text": "Bora! Left boot, right boot, who cares, run! The grass doesn't check."
+    },
+    {
+     "n": 3,
+     "id": "m088_play_t02",
+     "text": "You're breathing like a kettle. Good. Kettles get things done."
+    },
+    {
+     "n": 4,
+     "id": "m088_play_t03",
+     "text": "Captain, twenty minutes. I'll count them. I only lie about laps."
+    },
+    {
+     "n": 5,
+     "id": "m088_play_t04",
+     "text": "The cat is on your seat. She says you can have it back when you score."
+    },
+    {
+     "n": 6,
+     "id": "m088_close_t01",
+     "text": "Wrong foot! He scored with the wrong foot! I'm framing the foot."
+    }
+   ]
+  },
+  {
+   "section": "Mission 30",
+   "title": "The Longest Night",
+   "file": "Taty - Mission 30",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_play_t01",
+     "text": "Bora! Give me fire. I'll take the far end. All of the far end."
+    },
+    {
+     "n": 2,
+     "id": "m111_play_t02",
+     "text": "New Site is lit! I'm not tired! I'm never tired! Don't test it!"
+    },
+    {
+     "n": 3,
+     "id": "m111_play_t03",
+     "text": "One more lap. I lied. It's the whole campus."
+    },
+    {
+     "n": 4,
+     "id": "m111_play_t04",
+     "text": "Pixel won't look away from that garden. Meu Deus, cat, what?"
+    },
+    {
+     "n": 5,
+     "id": "m111_play_t05",
+     "text": "You carry the middle. I'll carry the edges. Go."
+    }
+   ]
+  },
+  {
+   "section": "Mission 31",
+   "title": "Three by Road",
+   "file": "Taty - Mission 31",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_play_t01",
+     "text": "Bora! I'll tell the market you're coming. Race you. I win."
+    },
+    {
+     "n": 2,
+     "id": "m112_play_t02",
+     "text": "This junction? Left. I'm the signpost now."
+    },
+    {
+     "n": 3,
+     "id": "m112_play_t03",
+     "text": "Three sites, no stops. Best night of my life. Don't tell the dark."
+    },
+    {
+     "n": 4,
+     "id": "m112_play_t04",
+     "text": "Pixel says the cats in the Garden have it handled."
+    }
+   ]
+  },
+  {
+   "section": "Mission 32",
+   "title": "Chancellor Null",
+   "file": "Taty - Mission 32",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m115_play_t01",
+     "text": "Bora! Still here. Not even tired."
+    }
+   ]
+  },
+  {
+   "section": "Mission 33",
+   "title": "Gown",
+   "file": "Taty - Mission 33",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m117_play_t01",
+     "text": "With the cat! Pixel, look at the camera. Pixel. PIXEL."
+    }
+   ]
+  },
+  {
+   "section": "Mission 34",
+   "title": "Convocation",
+   "file": "Taty - Mission 34",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_play_t01",
+     "text": "Bora! Five years! That's a long lap!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 35",
+   "title": "Sign-Out",
+   "file": "Taty - Mission 35",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m119_play_t01",
+     "text": "I drew the cat. That's the cat. It IS the cat, don't be rude."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Taty - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_greet_01",
+     "text": "Bora! You're up early. Wait. You're up late."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_greet_02",
+     "text": "Hi hi! Pixel says hi. Pixel's lying, she's asleep."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_greet_03",
+     "text": "There you are! Run with me. Kidding. Unless?"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_greet_04",
+     "text": "Oi! [Hi!] You look rested. Perfect. Run with me."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_greet_05",
+     "text": "Tudo bem? [All good?] Yes? Great. Bora!"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_greet_06",
+     "text": "Bom dia! [Good morning!] I've done ten k. You've done one yawn."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_greet_07",
+     "text": "Hi! Pixel's in my hood. No eye contact. She's tired of fans."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Taty - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_bye_01",
+     "text": "Bye! Stretch tonight. I'll know if you don't."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_bye_02",
+     "text": "Go! I'll catch up. I always catch up."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_bye_03",
+     "text": "Tchau! [Bye!] Drink water!"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_bye_04",
+     "text": "Tchau, tchau! [Bye bye!] Stretch your calves!"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_bye_05",
+     "text": "Até amanhã! [See you tomorrow!] Five thirty. Don't be late."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_bye_06",
+     "text": "Go! I'll jog behind you. Like a coach. A scary coach."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Taty - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_thanks_01",
+     "text": "You're the best. Second best. I'm the best."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_thanks_02",
+     "text": "Obrigada! [Thank you!] Pixel will repay you. In fur."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_thanks_03",
+     "text": "Valeu! [Thanks!] You're officially in the run club now. Sorry."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_thanks_04",
+     "text": "Thank you! Hug! Sweaty hug! Too late, it's happening."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_sorry_01",
+     "text": "Sorry! I lapped you. Again. It's a habit."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_sorry_02",
+     "text": "Oops. Too competitive? I'll hug you after."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_sorry_03",
+     "text": "Desculpa! [Sorry!] I didn't see you. I was going fast."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Taty - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_compliment_01",
+     "text": "Look at that pace! Okay, look at it slower."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_compliment_02",
+     "text": "Nice form. Pixel approves. That's rare."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_compliment_03",
+     "text": "Arrasou! [You smashed it!] Horns up for you!"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_compliment_04",
+     "text": "Your stamina's way up. You only complained once. Twice."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Taty - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_tease_01",
+     "text": "One more lap. I lied, two."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_tease_02",
+     "text": "You run like the floor owes you money."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_tease_03",
+     "text": "I'm competitive, not rude. I'll hug you after I destroy you."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_tease_04",
+     "text": "Tired? Already? I haven't even warmed up."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_tease_05",
+     "text": "Walking? On purpose? Fala sério! [Seriously?!]"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_tease_06",
+     "text": "You stretch like a cat who's never met a cat."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_tease_07",
+     "text": "I'd race you, but I want it fair. So I'll hop."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Taty - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_follow_01",
+     "text": "Keep up! I'm walking. This is walking."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_follow_02",
+     "text": "Vai, vai, vai! [Go, go, go!] I'm right behind you!"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_follow_03",
+     "text": "I'll walk slowly. Look how slowly. This is agony."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_wait_01",
+     "text": "Come on! The cat's faster, and she's asleep."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_wait_02",
+     "text": "I did four laps waiting. Five. Six."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_wait_03",
+     "text": "Hurry! Pixel's already there, and she stopped for a nap."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_wait_04",
+     "text": "Jogging on the spot for ten minutes. My shoes are bored."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_lost_01",
+     "text": "Other way! Bora, turn around!"
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_f_lost_02",
+     "text": "That's the farm. Unless you want to race a goat."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_f_lost_03",
+     "text": "Eita! [Whoa!] Wrong way. Bonus lap, then."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Taty - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_yes_01",
+     "text": "Yes! Bora!"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_yes_02",
+     "text": "Obviously yes. Why are we still standing?"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_yes_03",
+     "text": "Partiu! [Off we go!]"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_yes_04",
+     "text": "Yes yes yes! Vamos! [Let's go!]"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_no_01",
+     "text": "No. But ask me again after a lap."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_no_02",
+     "text": "No. But I'll race you for a yes."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_maybe_01",
+     "text": "Maybe. Race you for it."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_maybe_02",
+     "text": "Hmm. Depends. Is there food after?"
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_f_maybe_03",
+     "text": "Maybe! If you win. You won't. So no. But maybe!"
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_f_confused_01",
+     "text": "Wait, what? Say it slower, I'm still running."
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_f_confused_02",
+     "text": "What? I heard 'run' and stopped listening."
+    },
+    {
+     "n": 12,
+     "id": "bk_taty_f_agree_01",
+     "text": "Deal! Shake. Firmly. Good."
+    },
+    {
+     "n": 13,
+     "id": "bk_taty_f_agree_02",
+     "text": "Beleza! [Cool!] Done. Shake. Now run."
+    },
+    {
+     "n": 14,
+     "id": "bk_taty_f_refuse_01",
+     "text": "No way. Not even for snacks. ...What snacks?"
+    },
+    {
+     "n": 15,
+     "id": "bk_taty_f_refuse_02",
+     "text": "Not even for pão de queijo [cheese bread]. ...Okay, for that."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Taty - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_joke_01",
+     "text": "I'm not fast. Everyone else is just patient."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_joke_02",
+     "text": "Pixel has more followers than me. She can't even read."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_joke_03",
+     "text": "My warm-up is your workout. My workout is a rumour."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_joke_04",
+     "text": "Pixel did a whole lap with me today. Well. On me."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_ask_01",
+     "text": "Did you eat? You look like you skipped."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_ask_02",
+     "text": "Games night, Friday. You're coming. That's not a question."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_ask_03",
+     "text": "Friday: board games, dance machine, arm wrestling. You're ready?"
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_ask_04",
+     "text": "Did you drink water? Drink it now. In front of me."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Taty - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_win_01",
+     "text": "Horns up! Who's next? Anyone? Anyone?"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_win_02",
+     "text": "Bora! Undefeated! Hug time."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_win_03",
+     "text": "Caramba! [Wow!] Did you see that? Again!"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_win_04",
+     "text": "Ganhei! [I won!] Horns up! Who's next?"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_win_05",
+     "text": "Undefeated! Again! Hug queue forms on the left!"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_lose_01",
+     "text": "No! Okay! Okay! Rematch. Now. Don't go home."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_lose_02",
+     "text": "You beat me? I'm so proud. I'm furious."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_lose_03",
+     "text": "Perdi! [I lost!] Okay. Okay! Best of seven."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_f_lose_04",
+     "text": "Nossa! [Wow!] You beat me! Again. Now. Don't go anywhere."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Taty - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_hit_01",
+     "text": "Oof! Sorry, I don't brake. Ever."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_hit_02",
+     "text": "Opa! [Oops!] I don't have brakes. Only a horn."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_fall_01",
+     "text": "Down! Up! See? Never tired."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_fall_02",
+     "text": "I'm fine! The floor's fine! Bora!"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_blackout_01",
+     "text": "Blackout! Great! Night run!"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_blackout_02",
+     "text": "Pixel? Pixel... Two eyes. Found her."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_blackout_03",
+     "text": "Blackout! Torch run! Who's in?"
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_light_back_01",
+     "text": "Light! Okay, everybody up, we go again!"
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_f_light_back_02",
+     "text": "Light! The dance machine lives! Bora!"
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_f_rain_01",
+     "text": "Rain run! Best kind! Bora!"
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_f_rain_02",
+     "text": "Chuva! [Rain!] Puddles are just hurdles that wobble!"
+    },
+    {
+     "n": 12,
+     "id": "bk_taty_f_heat_01",
+     "text": "Water break! Not for me. For you. Drink."
+    },
+    {
+     "n": 13,
+     "id": "bk_taty_f_heat_02",
+     "text": "Que calor! [So hot!] Perfect. Sweat is just effort leaving."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Taty - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_food_01",
+     "text": "I eat like I run. Fast, and twice."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_food_02",
+     "text": "I miss açaí [Brazilian berry bowl]. But this suya? Suya wins today."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_food_03",
+     "text": "Que delícia! [Delicious!] Seconds! Then a lap! Then thirds!"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_money_01",
+     "text": "Money? I paid in push-ups once. It worked."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_money_02",
+     "text": "Broke? Running is free. Hugs are free. Pixel is not. Pixel is expensive."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Taty - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_gift_like_01",
+     "text": "For me? You're sweet. Pixel, look!"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_gift_like_02",
+     "text": "For me? Valeu! [Thanks!] Pixel, don't eat it."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_gift_dislike_01",
+     "text": "Oh! It's very... I'll give it to Pixel."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_gift_love_01",
+     "text": "A cat toy! You get me. You really get me."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_gift_love_02",
+     "text": "New running shoes? Nossa! [Wow!] I'm wearing them to bed."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Taty - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_idle_01",
+     "text": "Pixel! Leave the man's sandwich!"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_idle_02",
+     "text": "Lap forty. Feeling great. Feeling suspicious, actually."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_idle_03",
+     "text": "Who wants to race? Nobody? Cowards. Lovely cowards."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_f_idle_04",
+     "text": "That kitten is tiny! Que fofo! [How cute!]"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_f_idle_05",
+     "text": "Lap sixty! Still fresh! Is something wrong with me? No!"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_f_idle_06",
+     "text": "Pixel! That's not your chicken! Pixel!"
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_f_idle_07",
+     "text": "Air guitar on the cool-down. Nobody saw. Everybody saw."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_f_idle_08",
+     "text": "Que saudade [I miss it so much] of the sea. Kwari Dam will do."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Taty - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_night_01",
+     "text": "Night run. Stars, no traffic, perfect."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_night_02",
+     "text": "Boa noite! [Good night!] Pixel's asleep. Shh. I'm still running."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_night_03",
+     "text": "Midnight jog. The guards just wave now. They've given up asking."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Taty - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_f_callback_01",
+     "text": "The goat's still asking for a rematch."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_f_callback_02",
+     "text": "Twenty torches, four blocks, zero breaks. Best night."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_f_callback_03",
+     "text": "One baby lap. Look at you now."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Taty - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y1_tease_01",
+     "text": "Freshers walk to class. Champions jog to class."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y1_tease_02",
+     "text": "Your matric gown is longer than my run. Lift your feet!"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y1_follow_01",
+     "text": "Matric? I'll jog you there. Sweaty, but early."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y1_greet_01",
+     "text": "Fresher! Found the gym, or are you avoiding it?"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y1_greet_02",
+     "text": "Freshers! New legs! Bom dia! [Good morning!]"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y1_compliment_01",
+     "text": "You lifted! Coach saw it! I'm screaming inside."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y1_compliment_02",
+     "text": "You kept up for one whole lap! Vamos! [Let's go!]"
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y1_ask_01",
+     "text": "First week tired? Normal. Come jog. It helps. Promise."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y1_food_01",
+     "text": "First time at the Spot? Order fast. Eat faster. Lap after."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y1_win_01",
+     "text": "Won my first games night here. Fresher, you're next."
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_y1_rain_01",
+     "text": "First rain of the year! Everybody out! Bora!"
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 1: arriving, to yourself",
+   "file": "Taty - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y1_idle_01",
+     "text": "Dawn run club! Five thirty! Bring your legs."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y1_idle_02",
+     "text": "First week and I already know every stray cat. Priorities."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y1_idle_03",
+     "text": "Pixel walked into the hall like she paid the fees. Respect."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y1_idle_04",
+     "text": "Dawn run club has three members. Me, Pixel and a goat."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y1_callback_01",
+     "text": "You float now! Baba Dam owes me a thank you."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y1_callback_02",
+     "text": "Half-time oranges. They saved the Cup. You're welcome."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y1_callback_03",
+     "text": "Ran the far fence all night. Still not tired. Weird, right?"
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y1_night_01",
+     "text": "Test week? Run ten minutes, then study. Your brain says obrigada [thanks]."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 2: the mall",
+   "file": "Taty - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y2_tease_01",
+     "text": "You bought a gym membership? Go! At least show it your face."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y2_tease_02",
+     "text": "Okada? I beat one on foot once. Don't make me do it again. I will."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y2_ask_01",
+     "text": "Cat Committee meeting, dusk. Are you in? You're in."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y2_ask_02",
+     "text": "Arcade tonight? Some 'MIB' is on every high score. I want him."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y2_money_01",
+     "text": "Prices up again? I'll run to the market. Cheaper on foot."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y2_money_02",
+     "text": "Mall prices? Fala sério! [Seriously?!] I'll stick to the market."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y2_food_01",
+     "text": "Made brigadeiro [chocolate sweets] for the committee. Pixel tried. No."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y2_compliment_01",
+     "text": "You swim now! Baba Dam says you float like a log. A proud log."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y2_lose_01",
+     "text": "Lost arm wrestling to Big Sly. Rematch. Left arm. Bora!"
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y2_joke_01",
+     "text": "Pixel's famous now. She signs autographs. With her face."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 2: the mall, to yourself",
+   "file": "Taty - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y2_callback_01",
+     "text": "'Pixel! Pixel!' I still hear the chant in my dreams."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y2_callback_02",
+     "text": "Diesel relay. Forty minutes. I'd do it again tonight."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y2_callback_03",
+     "text": "Raced your okada to the gate. On foot. I won. Say it."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y2_callback_04",
+     "text": "New Site in the dark, water for the whole convoy. Best run."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y2_callback_05",
+     "text": "Big Sly cut my hair. It's fine. It's fine! I own caps."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y2_idle_01",
+     "text": "Pixel stole a sock on live TV. She's a star now. Unbearable."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y2_idle_02",
+     "text": "The mall has escalators. I take the stairs. Twice."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y2_idle_03",
+     "text": "The mall has a dance machine. I've been banned. For winning."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y2_idle_04",
+     "text": "Cat Committee update: fourteen cats. Pixel is chair. Obviously."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y2_night_01",
+     "text": "Late night? I'll run you snacks. Delivery speed: unreasonable."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 3: the strike",
+   "file": "Taty - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y3_ask_01",
+     "text": "You've been inside for days. Come. Sun. Now."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y3_ask_02",
+     "text": "Come out. Sun's good. One lap. Okay, a walk. Okay, a sit."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y3_food_01",
+     "text": "Garri again? Fine. Garri race. Who soaks fastest?"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y3_food_02",
+     "text": "Garri relay! Soak, sip, pass! Winning team gets more garri!"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y3_follow_01",
+     "text": "Quiet campus is weird. Run with me, make some noise."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y3_tease_01",
+     "text": "You've been horizontal for a week. Even Pixel's worried."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y3_compliment_01",
+     "text": "You came to dawn run. In a strike. I'm going to cry."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y3_win_01",
+     "text": "Ganhei! [I won!] Five rounds of arm wrestling. Who's brave?"
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y3_rain_01",
+     "text": "Rain on a strike day! Free shower! Free fun!"
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y3_joke_01",
+     "text": "No classes, no buses. Good thing my legs never go on strike."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Year 3: the strike, to yourself",
+   "file": "Taty - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y3_idle_01",
+     "text": "No lectures? Perfect. Double training."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y3_idle_02",
+     "text": "Games night every night this strike. Nobody's bored on my watch."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y3_idle_03",
+     "text": "Strike? Then marathon training. Day one!"
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y3_idle_04",
+     "text": "Games night, day thirty. We've invented four new games. All terrible."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y3_callback_01",
+     "text": "One lap. I lied, half. You came outside. That's the win."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y3_callback_02",
+     "text": "A farm cat joined Pixel. They're a gang now."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y3_callback_03",
+     "text": "Whole moonlight match, no sub. My legs said thank you."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y3_callback_04",
+     "text": "Ice, stay still, more ice. Jega is a terrible patient."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y3_callback_05",
+     "text": "Across the line and back. You swim like a hero now."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y3_night_01",
+     "text": "Long strike nights. Bring a torch. We'll walk the ring road."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Year 4: fame",
+   "file": "Taty - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y4_tease_01",
+     "text": "You picked a project partner without racing for it? Shame."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y4_tease_02",
+     "text": "You're famous online? Cute. Can your followers run?"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y4_greet_01",
+     "text": "Bora, senior! Look at you, wearing running shoes."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y4_compliment_01",
+     "text": "You're actually fast now. Okay. I'm scared. A little."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y4_compliment_02",
+     "text": "You beat my lap record! So proud. I'm breaking it back tonight."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y4_ask_01",
+     "text": "Arm wrestle for the last suya? Fine. For half."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y4_ask_02",
+     "text": "Internship tired? Ten minutes on the ring road. No emails out there."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y4_follow_01",
+     "text": "Bora! I'll pace you. In for two, out for two."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y4_food_01",
+     "text": "Cook-off? I'll taste everything. Twice. For science."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y4_win_01",
+     "text": "Nationals energy! Horns up for the whole team!"
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_y4_lose_01",
+     "text": "Lost a race to a bicycle. A bicycle! Rematch. On foot."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Year 4: fame, to yourself",
+   "file": "Taty - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y4_callback_01",
+     "text": "Jega counts his pool laps wrong. I count them for him."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y4_callback_02",
+     "text": "Left boot, right boot, who cares, run!"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y4_idle_01",
+     "text": "Fourth year and I still lap the freshers. Some joys never fade."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y4_idle_02",
+     "text": "Pixel turned four. She had cake. She had my cake."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y4_idle_03",
+     "text": "Freshers call me 'the one who never stops'. Accurate."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y4_idle_04",
+     "text": "Pool laps with Jega. He counts in Hausa, I count in Portuguese. Chaos."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y4_night_01",
+     "text": "Late lab? I'll walk you back. Jog you back. Same thing."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y4_night_02",
+     "text": "Night run past the hackathon. I cheered through the window. They screamed."
+    }
+   ]
+  },
+  {
+   "section": "Common 24",
+   "title": "Year 5: leaving",
+   "file": "Taty - Common 24",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y5_ask_01",
+     "text": "Promise you'll keep running after. Even a little."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y5_ask_02",
+     "text": "Project stress? Run with me. Problems shrink at the far bend."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y5_tease_01",
+     "text": "Graduating? You still owe me a rematch. Forever."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y5_tease_02",
+     "text": "Defence tomorrow and you want a race? ...Yes. Obviously. Bora!"
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y5_compliment_01",
+     "text": "From one baby lap to this. So proud. Horns up."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y5_compliment_02",
+     "text": "Final year and still at dawn run. Força! [Be strong!]"
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_y5_bye_01",
+     "text": "Last dawn run? No. Never last. Just next."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_y5_bye_02",
+     "text": "No tchau [bye]. Only até logo [see you soon]."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_y5_greet_01",
+     "text": "Final years! Bora! One more lap. You know I lied."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_y5_greet_02",
+     "text": "Oi, finalist! [Hi, finalist!] Horns up! Look how far you came."
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_y5_food_01",
+     "text": "Last plate at the Spot? We eat slowly. For once."
+    },
+    {
+     "n": 12,
+     "id": "bk_taty_y5_food_02",
+     "text": "Last plate of suya? Que saudade [I miss it] already."
+    },
+    {
+     "n": 13,
+     "id": "bk_taty_y5_win_01",
+     "text": "Last games night. I won. Of course. Hug queue, please."
+    }
+   ]
+  },
+  {
+   "section": "Common 25",
+   "title": "Year 5: leaving, to yourself",
+   "file": "Taty - Common 25",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_y5_callback_01",
+     "text": "Lantern line, far end, all night. Worth every step."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_y5_callback_02",
+     "text": "Three sites by road. I ran between them. Twice."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_y5_idle_01",
+     "text": "Final year. I'm not crying. It's sweat. From my eyes."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_y5_idle_02",
+     "text": "Final year. Every lap feels like a goodbye. So I'm doing extra."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_y5_idle_03",
+     "text": "Pixel is retired. She retires every afternoon. In the sun."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_y5_night_01",
+     "text": "Last nights here. Let's walk slowly. Just this once."
+    }
+   ]
+  },
+  {
+   "section": "Common 26",
+   "title": "After graduation",
+   "file": "Taty - Common 26",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_post_greet_01",
+     "text": "Oi! [Hi!] You're back! Run with me. For old times."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_post_idle_01",
+     "text": "Dawn run club is forty people now. Pixel still leads."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_post_idle_02",
+     "text": "Pixel adopted three strays while you were gone. Typical."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_post_idle_03",
+     "text": "Games night's still Fridays. Same games. Same winner."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_post_ask_01",
+     "text": "Still running? Even a little? Tell me yes."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_post_win_01",
+     "text": "Homecoming race! I won! Bora! Who's next?"
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_post_compliment_01",
+     "text": "You're fast now. Really fast. I'm faster. But wow."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_post_bye_01",
+     "text": "Até logo! [See you soon!] Keep your legs moving. Your heart too."
+    }
+   ]
+  },
+  {
+   "section": "Common 27",
+   "title": "Special days: term time",
+   "file": "Taty - Common 27",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_ev_ev_freshers_01",
+     "text": "Freshers! New legs! Dawn run club, sign here!"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_ev_freshers_02",
+     "text": "Freshers! Dawn run club! Free water! Free cat!"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_ev_ev_exam_01",
+     "text": "Study an hour, run ten minutes. Your brain loves it. Trust me."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_ev_ev_exam_02",
+     "text": "Exam week? I'll bring snacks and a stopwatch."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_ev_exam_03",
+     "text": "Exam week: sleep, eat, jog, then write. Boa sorte! [Good luck!]"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_ev_ev_results_01",
+     "text": "Good, bad, whatever. We run it off together."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_ev_results_02",
+     "text": "Results! Parabéns! [Congratulations!] Or we run it off. Both work."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_ev_allowance_01",
+     "text": "Allowance day! Shoes or food? ...Both. One shoe."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_ev_allowance_02",
+     "text": "Allowance in? Buy fruit. Buy water. Then dance."
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_ev_ev_market_day_01",
+     "text": "Market day! Race you to Mama Nkechi's. Go!"
+    },
+    {
+     "n": 11,
+     "id": "bk_taty_ev_market_day_02",
+     "text": "Market day! I'll run your shopping home. Fast. Mostly unbroken."
+    },
+    {
+     "n": 12,
+     "id": "bk_taty_ev_market_day_03",
+     "text": "Pixel came to market. She's haggling for fish. She's winning."
+    }
+   ]
+  },
+  {
+   "section": "Common 28",
+   "title": "Special days: the big ones",
+   "file": "Taty - Common 28",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_ev_ev_strike_01",
+     "text": "Strike day? Sports day. Bora!"
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_ev_strike_02",
+     "text": "Strike sports day: sack race, tug of war, cat herding!"
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_ev_strike_03",
+     "text": "Strike? Not me. My legs are working full time."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_ev_ev_cup_01",
+     "text": "Cup day! I'm on the bench with the water and a loud voice."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_ev_cup_02",
+     "text": "GOL! [Goal!] Did you see? I jumped so high!"
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_ev_cup_03",
+     "text": "I'm the water, the cheering and the noise. Bora!"
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_ev_ev_elections_01",
+     "text": "I'd run for office. Literally. Around the office."
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_ev_elections_02",
+     "text": "Vote! Then run. Democracy is cardio."
+    },
+    {
+     "n": 9,
+     "id": "bk_taty_ev_ev_convocation_01",
+     "text": "Can you run in a gown? Let's find out!"
+    },
+    {
+     "n": 10,
+     "id": "bk_taty_ev_convocation_02",
+     "text": "Gowns everywhere! Que lindo! [How lovely!] I'm crying. It's sweat."
+    }
+   ]
+  },
+  {
+   "section": "Common 29",
+   "title": "Special days: seasons and holidays",
+   "file": "Taty - Common 29",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_taty_ev_ev_ramadan_01",
+     "text": "Run club after iftar this month. Easy pace, lots of water."
+    },
+    {
+     "n": 2,
+     "id": "bk_taty_ev_ramadan_02",
+     "text": "Sunset! I'm running dates to every table. Fastest delivery on campus."
+    },
+    {
+     "n": 3,
+     "id": "bk_taty_ev_ev_christmas_01",
+     "text": "Merry Christmas! Pixel has a tiny hat. She hates it."
+    },
+    {
+     "n": 4,
+     "id": "bk_taty_ev_christmas_02",
+     "text": "Feliz Natal! [Merry Christmas!] Pixel's got a bow. She's furious."
+    },
+    {
+     "n": 5,
+     "id": "bk_taty_ev_ev_valentine_01",
+     "text": "Valentine's? Pixel brought me a dead leaf. True love."
+    },
+    {
+     "n": 6,
+     "id": "bk_taty_ev_valentine_02",
+     "text": "Valentine's? Pixel and I have plans. A long run, then fish."
+    },
+    {
+     "n": 7,
+     "id": "bk_taty_ev_ev_harmattan_01",
+     "text": "Harmattan mornings! Cold air, dusty roads, best runs!"
+    },
+    {
+     "n": 8,
+     "id": "bk_taty_ev_harmattan_02",
+     "text": "Cold harmattan air! My lungs say obrigada! [thank you!]"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

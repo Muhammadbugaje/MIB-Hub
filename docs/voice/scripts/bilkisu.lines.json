@@ -1,0 +1,437 @@
+{
+ "character": "Sgt. Bilkisu",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Scout in the Stands",
+   "file": "Sgt. Bilkisu - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m037_mid1_01",
+     "text": "You. Yes, you, the goat. Where were you at noon?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Plan",
+   "file": "Sgt. Bilkisu - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_mid1_01",
+     "text": "I'll check a tyre."
+    },
+    {
+     "n": 2,
+     "id": "m043_mid1_02",
+     "text": "The mall gave us every key. Plant room: brass, red tape."
+    },
+    {
+     "n": 3,
+     "id": "m043_mid1_03",
+     "text": "Don't touch them."
+    },
+    {
+     "n": 4,
+     "id": "m043_close_01",
+     "text": "I count my keys every morning at six. Sixty keys."
+    },
+    {
+     "n": 5,
+     "id": "m043_close_02",
+     "text": "I am a heavy sleeper on Saturdays."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Echo",
+   "file": "Sgt. Bilkisu - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m077_mid1_01",
+     "text": "Court camera. A week before your video. You."
+    },
+    {
+     "n": 2,
+     "id": "m077_mid1_02",
+     "text": "I know. You were in my other camera. Asleep."
+    },
+    {
+     "n": 3,
+     "id": "m077_mid1_03",
+     "text": "Now the boulevard. For completeness."
+    },
+    {
+     "n": 4,
+     "id": "m077_mid1_04",
+     "text": "Who is that you're with?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Sgt. Bilkisu - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_greet_01",
+     "text": "(whistle) You. Yes, you. …Good morning."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_greet_02",
+     "text": "Ina kwana. [Good morning.] ID card. Thank you. Carry on."
+    },
+    {
+     "n": 3,
+     "id": "bk_bilkisu_f_greet_03",
+     "text": "I saw you coming from the gate. I see everything from the gate."
+    },
+    {
+     "n": 4,
+     "id": "bk_bilkisu_f_greet_04",
+     "text": "Walk, don't run. Running makes me curious."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Sgt. Bilkisu - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_bye_01",
+     "text": "Go. Straight to your hall. Straight. Not through the garden."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_bye_02",
+     "text": "Sai anjima. [See you later.] I'll be watching. Kindly."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Sgt. Bilkisu - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_thanks_01",
+     "text": "Thank you. That goes in my good book. It's a small book."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_sorry_01",
+     "text": "Sorry? Write it on the incident form. Two copies."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Sgt. Bilkisu - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_compliment_01",
+     "text": "You returned a lost wallet. I noticed. I notice good things too."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Sgt. Bilkisu - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_tease_01",
+     "text": "You climbed that fence? I saw. The fence saw. We both laughed."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_tease_02",
+     "text": "That's my camera you're waving at. It's not waving back."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Sgt. Bilkisu - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_wait_01",
+     "text": "Stand there. Don't move. I'm counting my keys."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Sgt. Bilkisu - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_yes_01",
+     "text": "Yes. Go. Quickly, before I change my mind."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_no_01",
+     "text": "No. Gate closes at ten. Ten. Not ten-ish."
+    },
+    {
+     "n": 3,
+     "id": "bk_bilkisu_f_refuse_01",
+     "text": "I don't take bribes. I take names."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Sgt. Bilkisu - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_ask_01",
+     "text": "Where were you at noon? Don't think. Answer."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_ask_02",
+     "text": "Whose bicycle is that? Whose? Exactly."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "When something goes wrong",
+   "file": "Sgt. Bilkisu - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_hit_01",
+     "text": "(whistle) Who pushed who? Both of you. Here. Now."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_blackout_01",
+     "text": "Light gone. Torches out. Everybody walk in pairs."
+    },
+    {
+     "n": 3,
+     "id": "bk_bilkisu_f_blackout_02",
+     "text": "Dark? I have three torches and one temper. Move along."
+    },
+    {
+     "n": 4,
+     "id": "bk_bilkisu_f_rain_01",
+     "text": "Rain. My whistle doesn't work wet. I'll just shout."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Sgt. Bilkisu - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_gift_like_01",
+     "text": "Kosai. Hot. …I am still watching you. Thank you."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_gift_dislike_01",
+     "text": "Is this to make me forget something? Take it back."
+    },
+    {
+     "n": 3,
+     "id": "bk_bilkisu_f_gift_love_01",
+     "text": "A new whistle. Silver. I… nobody gives security presents."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Sgt. Bilkisu - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_idle_01",
+     "text": "Sixty keys. Fifty-nine. Who? …Sixty. Found it."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_idle_02",
+     "text": "Somebody's socks again. Jega. Always Jega. I'll wash them."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Late at night",
+   "file": "Sgt. Bilkisu - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_f_night_01",
+     "text": "After ten. What are you doing out? …Reading? Show me the book."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_f_night_02",
+     "text": "The garden's humming again. Don't go in. Just a feeling."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Sgt. Bilkisu - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_y1_idle_01",
+     "text": "A goat in the food court. On my shift. I'm still writing the report."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 2: the mall",
+   "file": "Sgt. Bilkisu - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_y2_callback_01",
+     "text": "I'm a heavy sleeper on Saturdays. Remember that."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_y2_idle_01",
+     "text": "The mall gave us every key. Every key. I count them."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 3: the strike",
+   "file": "Sgt. Bilkisu - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_y3_ev_strike_01",
+     "text": "Strike. Empty campus. Easy shift. I hate it. Too quiet."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_y3_ev_strike_02",
+     "text": "You stayed? Good. I like faces on my rounds."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 4: fame",
+   "file": "Sgt. Bilkisu - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_y4_idle_01",
+     "text": "A video of you at the court? I was in my other camera. Asleep."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_y4_idle_02",
+     "text": "Posters on my gate. Again. Elections are a security matter."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 5: leaving",
+   "file": "Sgt. Bilkisu - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_y5_idle_01",
+     "text": "Five years. Not one incident form. Two. Fine. Two."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_y5_idle_02",
+     "text": "Who is that you're with? …Ah. Never mind. Carry on."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: term time",
+   "file": "Sgt. Bilkisu - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_ev_ev_freshers_01",
+     "text": "Freshers! Hostel is that way. That way! The other that way!"
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_ev_ev_exam_01",
+     "text": "Exam hall. No phones. I can see your pocket glowing."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: the big ones",
+   "file": "Sgt. Bilkisu - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_ev_ev_cup_01",
+     "text": "Cup day. Drums yes, pitch invasion no. (whistle)"
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_ev_ev_elections_01",
+     "text": "Sound systems off at ten. Even for the winner."
+    },
+    {
+     "n": 3,
+     "id": "bk_bilkisu_ev_ev_convocation_01",
+     "text": "Convocation. Every parent wants to park at the Senate. No."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: seasons and holidays",
+   "file": "Sgt. Bilkisu - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bilkisu_ev_ev_valentine_01",
+     "text": "Valentine's. Gate closes at ten. Love can be home by ten."
+    },
+    {
+     "n": 2,
+     "id": "bk_bilkisu_ev_ev_harmattan_01",
+     "text": "Harmattan haze. Can't see the gate from the gate. Walk carefully."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

@@ -1,0 +1,470 @@
+{
+ "character": "Dr. Khadija",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Results Day",
+   "file": "Dr. Khadija - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m013_close_01",
+     "text": "{{PLAYER_NAME}}. I know your name now."
+    },
+    {
+     "n": 2,
+     "id": "m013_close_02",
+     "text": "I will be watching you. In the good sense."
+    },
+    {
+     "n": 3,
+     "id": "m013_close_03",
+     "text": "For now."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Test Week Twist",
+   "file": "Dr. Khadija - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_mid1_01",
+     "text": "The mall basement. After closing. Week nine."
+    },
+    {
+     "n": 2,
+     "id": "m035_mid1_02",
+     "text": "I was told by someone who would know."
+    },
+    {
+     "n": 3,
+     "id": "m035_mid1_03",
+     "text": "A warning. Security will be less patient with you."
+    },
+    {
+     "n": 4,
+     "id": "m035_mid1_04",
+     "text": "Eleven years. I know stupid. I know necessary."
+    },
+    {
+     "n": 5,
+     "id": "m035_mid1_05",
+     "text": "Whatever you are doing: do it where I can't be asked."
+    },
+    {
+     "n": 6,
+     "id": "m035_mid1_06",
+     "text": "Because if I am asked, I will answer."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Log Off",
+   "file": "Dr. Khadija - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_open_01",
+     "text": "'Tuesday: learned a great deal.'"
+    },
+    {
+     "n": 2,
+     "id": "m095_open_02",
+     "text": "What did you learn?"
+    },
+    {
+     "n": 3,
+     "id": "m095_open_03",
+     "text": "Minus. I am borrowing that from a colleague."
+    },
+    {
+     "n": 4,
+     "id": "m095_mid1_01",
+     "text": "Engineer. Can this student be trusted at a live feeder?"
+    },
+    {
+     "n": 5,
+     "id": "m095_mid1_03",
+     "text": "I do not believe in suspense. Your grade."
+    },
+    {
+     "n": 6,
+     "id": "m095_mid1_04",
+     "text": "My office is open. For once, bring nothing."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Project Defence",
+   "file": "Dr. Khadija - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m110_open_04",
+     "text": "Begin. And bring yourself. All of yourself."
+    },
+    {
+     "n": 2,
+     "id": "m110_close_05",
+     "text": "We will let you know."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Dr. Khadija - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_greet_01",
+     "text": "{{PLAYER_NAME}}. I know your name. That is not always good news."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_greet_02",
+     "text": "Ina wuni. [Good afternoon.] Are your courses registered?"
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_f_greet_03",
+     "text": "You greeted first. Good. Manners are on the transcript."
+    },
+    {
+     "n": 4,
+     "id": "bk_khadija_f_greet_04",
+     "text": "Walk with me. Briefly. I have eleven files and one tea."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Dr. Khadija - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_bye_01",
+     "text": "Go. And bring yourself to my office before week six."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_bye_02",
+     "text": "Sai anjima. [See you later.] Read."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Dr. Khadija - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_thanks_01",
+     "text": "Thank you. Noted. In the good column."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_sorry_01",
+     "text": "Sorry is a start. A timetable is the rest of the sentence."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Dr. Khadija - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_compliment_01",
+     "text": "Your GP went up. I am not smiling. This is my thinking face."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Dr. Khadija - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_tease_01",
+     "text": "Your adviser's form says 'adviser: me'. In capital letters. Bold."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_tease_02",
+     "text": "Late again. Is your hostel moving further away each week?"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Dr. Khadija - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_yes_01",
+     "text": "Yes. Signed. Don't make me regret the ink."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_no_01",
+     "text": "No. Bring yourself, not excuses."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_f_no_02",
+     "text": "No. And before you ask again: also no."
+    },
+    {
+     "n": 4,
+     "id": "bk_khadija_f_maybe_01",
+     "text": "Perhaps. Come back with a form, not a feeling."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Dr. Khadija - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_ask_01",
+     "text": "Your carry-over. Is it registered? Don't say 'I think'."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_ask_02",
+     "text": "How many units are you carrying? And how many are carrying you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Dr. Khadija - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_hit_01",
+     "text": "Look where you walk. I have no form for this."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_blackout_01",
+     "text": "Light gone. The files are still here. Unfortunately."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_f_heat_01",
+     "text": "This fan is turning out of courtesy only."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Getting a present",
+   "file": "Dr. Khadija - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_gift_like_01",
+     "text": "Dates. Thank you. This does not change your grade."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_gift_dislike_01",
+     "text": "A keyring. I have keys. Thank you."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_f_gift_love_01",
+     "text": "A good flask. Tea that stays hot through a whole meeting. A miracle."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Talking to yourself",
+   "file": "Dr. Khadija - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_f_idle_01",
+     "text": "Seventeen students. Seventeen versions of 'the portal said'."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_f_idle_02",
+     "text": "Who signed my name on this? My signature has never been this happy."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 1: arriving",
+   "file": "Dr. Khadija - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_y1_idle_01",
+     "text": "Freshers. Everyone wants to change course in week two."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_y1_ask_01",
+     "text": "You've met your adviser? Good. It's me. Sit."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_y1_tease_01",
+     "text": "Results came. You lived. Now let us improve on living."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "Dr. Khadija - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_y2_idle_01",
+     "text": "Week nine. The mall basement. Somebody always ends up in my office."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_y2_callback_01",
+     "text": "After the hearing: you, quiet, for one semester. Can you?"
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_y2_refuse_01",
+     "text": "I will not be asked. So don't make me be asked."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "Dr. Khadija - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_y3_ev_strike_01",
+     "text": "Strike or no strike, my door is open. The office is just quieter."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_y3_ev_strike_02",
+     "text": "Read anyway. The exam does not join unions."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "Dr. Khadija - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_y4_idle_01",
+     "text": "HOD. Same chair, more forms. They gave me a bigger stamp."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_y4_idle_02",
+     "text": "Rumours come to my office too. I file them under 'later'."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "Dr. Khadija - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_y5_idle_01",
+     "text": "Final year. My office is open. For once, bring nothing."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_y5_idle_02",
+     "text": "Clearance forms. All of them. Yes, the blue one too."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_y5_compliment_01",
+     "text": "You brought yourself. All of yourself. I noticed."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: term time",
+   "file": "Dr. Khadija - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_ev_ev_freshers_01",
+     "text": "Freshers! Course forms by Friday. Not Friday night. Friday."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_ev_ev_exam_01",
+     "text": "Exam slip. Ink pen. Your own body, present. Go."
+    },
+    {
+     "n": 3,
+     "id": "bk_khadija_ev_ev_results_01",
+     "text": "Results day. Whatever it says, my office after. Bring yourself."
+    },
+    {
+     "n": 4,
+     "id": "bk_khadija_ev_ev_results_02",
+     "text": "Good result. Enjoy today. Tomorrow we plan."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: the big ones",
+   "file": "Dr. Khadija - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_ev_ev_elections_01",
+     "text": "Campaign posters on my noticeboard. Again. I'm keeping score."
+    },
+    {
+     "n": 2,
+     "id": "bk_khadija_ev_ev_convocation_01",
+     "text": "My students. In gowns. Nobody look at me for one minute."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: seasons and holidays",
+   "file": "Dr. Khadija - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_khadija_ev_ev_ramadan_01",
+     "text": "Office closes early this month. Plan accordingly. Ramadan Kareem."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

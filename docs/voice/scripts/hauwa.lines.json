@@ -1,0 +1,527 @@
+{
+ "character": "Nurse Hauwa",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Doctor's Orders",
+   "file": "Nurse Hauwa - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m009_mid1_01",
+     "text": "Doctor is coming. Sit."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Okada Diploma",
+   "file": "Nurse Hauwa - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m028_mid1_03",
+     "text": "Doctor has eaten. Mark the calendar."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Night Shift",
+   "file": "Nurse Hauwa - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m042_open_04",
+     "text": "Like eggs. Run, and you spill."
+    },
+    {
+     "n": 2,
+     "id": "m042_open_05",
+     "text": "Spill, and you have carried nothing."
+    },
+    {
+     "n": 3,
+     "id": "m042_close_02",
+     "text": "Every night shift. Same sentence."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Sign-Out, Small",
+   "file": "Nurse Hauwa - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m048_mid1_01",
+     "text": "Your twenty best. Typed. Number four is this one's."
+    },
+    {
+     "n": 2,
+     "id": "m048_mid1_04",
+     "text": "{{TOWN}}. General Clinic."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Free Clinic",
+   "file": "Nurse Hauwa - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m058_open_03",
+     "text": "I am not here. It is my day off. Sit them down."
+    },
+    {
+     "n": 2,
+     "id": "m058_open_06",
+     "text": "Snow White, eat first. The queue will keep."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Night Nurse",
+   "file": "Nurse Hauwa - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m064_open_02",
+     "text": "One rule. Keep it noisy. Not loud. Noisy."
+    },
+    {
+     "n": 2,
+     "id": "m064_open_03",
+     "text": "Sit. No. Don't sit. Carry that."
+    },
+    {
+     "n": 3,
+     "id": "m064_open_04",
+     "text": "That is my seat. I don't care what you are."
+    },
+    {
+     "n": 4,
+     "id": "m064_close_01",
+     "text": "Leave that one. That one carried my night."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Seoul or Stay",
+   "file": "Nurse Hauwa - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m094_open_04",
+     "text": "Doctor. Bed four is wheezing."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "The Longest Night",
+   "file": "Nurse Hauwa - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_mid1_04",
+     "text": "It is coming here. It likes where people are waiting."
+    },
+    {
+     "n": 2,
+     "id": "m111_mid2_01",
+     "text": "Visiting hours are over."
+    },
+    {
+     "n": 3,
+     "id": "m111_mid2_02",
+     "text": "I don't care whose chancellor you are."
+    },
+    {
+     "n": 4,
+     "id": "m111_mid2_03",
+     "text": "Good. Stand there. Make noise. Doctor is coming."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Nurse Hauwa - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_greet_01",
+     "text": "Doctor is coming. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_greet_02",
+     "text": "Sannu. [Hello.] What happened? Short version."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_f_greet_03",
+     "text": "You again. Is it the foot or the friend this time?"
+    },
+    {
+     "n": 4,
+     "id": "bk_hauwa_f_greet_04",
+     "text": "Name. Hall. What did you eat. In that order."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Nurse Hauwa - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_bye_01",
+     "text": "Go. Drink water. Not soft drink. Water."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_bye_02",
+     "text": "Sai da safe. [Until morning.] Don't come back tonight."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Nurse Hauwa - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_thanks_01",
+     "text": "Thank me by sleeping before two."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_sorry_01",
+     "text": "Sorry is fine. Sit is better."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Teasing",
+   "file": "Nurse Hauwa - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_tease_01",
+     "text": "Third visit this month. I'm giving you your own chair."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_tease_02",
+     "text": "'It's just a headache.' Said every finalist at 3 a.m."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Walking with the player",
+   "file": "Nurse Hauwa - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_wait_01",
+     "text": "Doctor is coming. Doctor is always coming. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_wait_02",
+     "text": "You are standing. Why are you standing? Sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Nurse Hauwa - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_yes_01",
+     "text": "Yes. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_no_01",
+     "text": "No. You cannot see Doctor first. Nobody sees Doctor first."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_f_confused_01",
+     "text": "Say it again. Slower. I have heard stranger. Last Tuesday."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Nurse Hauwa - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_ask_01",
+     "text": "When did you last eat? Garri doesn't count. Fine, it counts."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_ask_02",
+     "text": "How many hours did you sleep? Don't round up."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Nurse Hauwa - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_hit_01",
+     "text": "You fell. Get up. I'll look at it. It's nothing. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_fall_01",
+     "text": "Ah-ah. In front of a nurse. Brave."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_f_blackout_01",
+     "text": "Light gone. Generator in thirty seconds. Nobody move."
+    },
+    {
+     "n": 4,
+     "id": "bk_hauwa_f_light_back_01",
+     "text": "There. Light. Now I can see what you did to yourself."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Nurse Hauwa - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_food_01",
+     "text": "Eat. Then talk. Then Doctor."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Nurse Hauwa - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_gift_like_01",
+     "text": "Kunu. Still warm. Fine. You can stand for one minute."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_gift_dislike_01",
+     "text": "Energy drink. I'll put it with the others. In the bin."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_f_gift_love_01",
+     "text": "A good torch. For the long corridor. …Thank you. Sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Nurse Hauwa - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_idle_01",
+     "text": "Bed four is wheezing. Bed four is always wheezing."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_idle_02",
+     "text": "Doctor has eaten. Mark the calendar."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Late at night",
+   "file": "Nurse Hauwa - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_f_night_01",
+     "text": "Quiet tonight. Don't say it out loud. It hears."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_f_night_02",
+     "text": "Night shift. The tea is old and so am I."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 1: arriving",
+   "file": "Nurse Hauwa - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_y1_callback_01",
+     "text": "The fresher with the goat bite. I remember. Sit."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_y1_idle_01",
+     "text": "First-years. Malaria or heartbreak. Same queue."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 2: the mall",
+   "file": "Nurse Hauwa - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_y2_idle_01",
+     "text": "Night shift again. Like eggs: run, and you spill."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_y2_compliment_01",
+     "text": "You carried that well. Nothing spilled. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 3: the strike",
+   "file": "Nurse Hauwa - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_y3_ev_strike_01",
+     "text": "Strike? Not for us. Sickness doesn't strike."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_y3_ev_strike_02",
+     "text": "Snow White, eat first. The queue will keep."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_y3_idle_01",
+     "text": "My day off. And yet. Here I am. Sit them down."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 4: fame",
+   "file": "Nurse Hauwa - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_y4_idle_01",
+     "text": "Keep it noisy. Not loud. Noisy. People heal near noise."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_y4_idle_02",
+     "text": "Somebody filmed in my ward. I have confiscated the ring light."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 5: leaving",
+   "file": "Nurse Hauwa - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_y5_idle_01",
+     "text": "That is my seat. I don't care what you are."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_y5_idle_02",
+     "text": "Final year. You still come by. Good. Sit. Just sit."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: term time",
+   "file": "Nurse Hauwa - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_ev_ev_freshers_01",
+     "text": "Freshers' week. Blisters from walking to the wrong theatre."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_ev_ev_exam_01",
+     "text": "Exam week. Panic attacks on the left. Sit."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_ev_ev_exam_02",
+     "text": "Coffee is not blood. Go and sleep."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: the big ones",
+   "file": "Nurse Hauwa - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_ev_ev_cup_01",
+     "text": "Football Saturday. I have prepared ice. And patience."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Special days: seasons and holidays",
+   "file": "Nurse Hauwa - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_hauwa_ev_ev_ramadan_01",
+     "text": "Fasting and fainting? Sit. Dates are in my drawer."
+    },
+    {
+     "n": 2,
+     "id": "bk_hauwa_ev_ev_christmas_01",
+     "text": "Half the campus has travelled. The other half fell off something."
+    },
+    {
+     "n": 3,
+     "id": "bk_hauwa_ev_ev_harmattan_01",
+     "text": "Harmattan. Cracked lips, catarrh. Vaseline is on the table."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

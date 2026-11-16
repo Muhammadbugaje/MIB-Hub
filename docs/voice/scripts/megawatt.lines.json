@@ -1,0 +1,487 @@
+{
+ "character": "Chief Megawatt",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Grand Opening",
+   "file": "Chief Megawatt - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m026_mid1_02",
+     "text": "Kwari Mall! Where the light never blinks!"
+    },
+    {
+     "n": 2,
+     "id": "m026_mid1_03",
+     "text": "A gift! So you will think of me in the dark."
+    },
+    {
+     "n": 3,
+     "id": "m026_close_01",
+     "text": "Beautiful, isn't it? Why is mine so bright?"
+    },
+    {
+     "n": 4,
+     "id": "m026_close_02",
+     "text": "Light is not free, my friend. It never was."
+    },
+    {
+     "n": 5,
+     "id": "m026_close_03",
+     "text": "Somebody always pays. I am simply honest about it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Chief Megawatt - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_close_02",
+     "text": "You have cost me a generator. I named her myself."
+    },
+    {
+     "n": 2,
+     "id": "m044_close_03",
+     "text": "I will not forget it. I mean that kindly."
+    },
+    {
+     "n": 3,
+     "id": "m044_close_04",
+     "text": "I never forget an investment."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Padlock Receipts",
+   "file": "Chief Megawatt - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m068_mid2_03",
+     "text": "The formatting! Who did the formatting?"
+    },
+    {
+     "n": 2,
+     "id": "m068_mid2_04",
+     "text": "Let us not be emotional. Let us be commercial."
+    },
+    {
+     "n": 3,
+     "id": "m068_mid2_05",
+     "text": "I will take the locks back. At cost."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Megawatt's Offer",
+   "file": "Chief Megawatt - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m102_open_02",
+     "text": "Your coil. I will fund all of it. Today."
+    },
+    {
+     "n": 2,
+     "id": "m102_open_03",
+     "text": "The Megawatt Resonator. My meter on it. That is all."
+    },
+    {
+     "n": 3,
+     "id": "m102_open_04",
+     "text": "Somebody always pays. I am offering to be somebody."
+    },
+    {
+     "n": 4,
+     "id": "m102_open_05",
+     "text": "And for the Plug Store: five million. Brand and all."
+    },
+    {
+     "n": 5,
+     "id": "m102_mid1_01",
+     "text": "Let us not be emotional. Let us be commercial."
+    },
+    {
+     "n": 6,
+     "id": "m102_mid1_06",
+     "text": "…He will go far. It is very annoying."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Three by Road",
+   "file": "Chief Megawatt - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_mid2_02",
+     "text": "I am being emotional. Don't look at me."
+    },
+    {
+     "n": 2,
+     "id": "m112_mid2_03",
+     "text": "Where do I plug it?"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Chief Megawatt - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_greet_01",
+     "text": "My friend! Welcome to the light!"
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_greet_02",
+     "text": "Ah, the student who costs me money. Good afternoon!"
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_f_greet_03",
+     "text": "Come, come. Stand in my air-conditioning. It's free. Today."
+    },
+    {
+     "n": 4,
+     "id": "bk_megawatt_f_greet_04",
+     "text": "Sannu da zuwa! [Welcome!] Have you seen the new fountain?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Chief Megawatt - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_bye_01",
+     "text": "Go well. Think of me in the dark. Kindly."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_bye_02",
+     "text": "Bye-bye! Tell your friends. Tell your enemies. Everybody shops."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Chief Megawatt - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_thanks_01",
+     "text": "Thank you! Gratitude is the first investment."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Chief Megawatt - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_compliment_01",
+     "text": "You have a business head. Wasted on honesty, but a business head."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Chief Megawatt - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_tease_01",
+     "text": "Your friend Mubarak. Talented boy. Annoying, but talented."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_tease_02",
+     "text": "You are frowning at my lights. Lights are not a crime, my friend."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Chief Megawatt - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_yes_01",
+     "text": "Yes! Done! Let us shake. Firmly. Commercially."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_no_01",
+     "text": "No. But I say it with love and a discount."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_f_maybe_01",
+     "text": "Maybe. Send it in writing. With formatting."
+    },
+    {
+     "n": 4,
+     "id": "bk_megawatt_f_refuse_01",
+     "text": "Let us not be emotional. Let us be commercial."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Chief Megawatt - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_ask_01",
+     "text": "Tell me. What do students want? Apart from light and food."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_joke_01",
+     "text": "My generator has a name. My wife says I love it too much."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Chief Megawatt - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_blackout_01",
+     "text": "Light gone outside? Not in here. Never blinks!"
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_blackout_02",
+     "text": "Somebody always pays for light. I simply print the receipt."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_f_light_back_01",
+     "text": "NEPA is back. My competitor. We are cordial."
+    },
+    {
+     "n": 4,
+     "id": "bk_megawatt_f_heat_01",
+     "text": "Hot? Come in. The cold is on the house. The drinks are not."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Chief Megawatt - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_money_01",
+     "text": "Money is not evil. It is just loud. I like a quiet profit."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Chief Megawatt - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_gift_like_01",
+     "text": "A gift! I will remember this. I remember everything."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_gift_dislike_01",
+     "text": "A candle. Very funny. Very, very funny."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_f_gift_love_01",
+     "text": "A drawing of my first shop. Where did you… I'm being emotional."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Chief Megawatt - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_f_idle_01",
+     "text": "Kwari Mall. Where the light never blinks!"
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_f_idle_02",
+     "text": "Who did this formatting? It's beautiful. Hire them."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_f_idle_03",
+     "text": "I started with one kiosk and a stubborn generator. Look now."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "Chief Megawatt - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_y2_idle_01",
+     "text": "Grand opening! Free jollof until the jollof says stop!"
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_y2_idle_02",
+     "text": "My locks went missing from the plant room. Curious. Very curious."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_y2_callback_01",
+     "text": "You cost me a generator. I named her myself. No hard feelings."
+    },
+    {
+     "n": 4,
+     "id": "bk_megawatt_y2_tease_01",
+     "text": "Your shop is in a basement. Mine has escalators. Just saying."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "Chief Megawatt - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_y3_ev_strike_01",
+     "text": "Strike! The mall is full. Bored students buy shawarma."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_y3_ev_strike_02",
+     "text": "Tell the lecturers: their families shop here free this week."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "Chief Megawatt - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_y4_idle_01",
+     "text": "An influencer asked for free things. I gave him free advice."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_y4_idle_02",
+     "text": "Your Plug Store has two branches? …He will go far. Annoying."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "Chief Megawatt - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_y5_idle_01",
+     "text": "Your coil. I would fund all of it. My meter on it, that's all."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_y5_idle_02",
+     "text": "I offered. You said no. I respect it. I don't like it. I respect it."
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_y5_callback_01",
+     "text": "Where do I plug it? …I'm asking as a friend."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: term time",
+   "file": "Chief Megawatt - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_ev_ev_allowance_01",
+     "text": "Allowance day! My favourite holiday!"
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_ev_ev_market_day_01",
+     "text": "Market day. Hajiya Ladi's prices. Good. Competition is healthy."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: the big ones",
+   "file": "Chief Megawatt - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_ev_ev_convocation_01",
+     "text": "Graduates! Ten per cent off suits. Twenty if you cry."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: seasons and holidays",
+   "file": "Chief Megawatt - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_megawatt_ev_ev_ramadan_01",
+     "text": "Iftar tables at the mall entrance. Free. Not a promotion. Mostly."
+    },
+    {
+     "n": 2,
+     "id": "bk_megawatt_ev_ev_christmas_01",
+     "text": "Christmas lights! Ten thousand bulbs! Count them!"
+    },
+    {
+     "n": 3,
+     "id": "bk_megawatt_ev_ev_valentine_01",
+     "text": "Valentine's! Two-for-one! Love is commercial too."
+    },
+    {
+     "n": 4,
+     "id": "bk_megawatt_ev_ev_harmattan_01",
+     "text": "Harmattan. Dust on my glass doors. I will sue the wind."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

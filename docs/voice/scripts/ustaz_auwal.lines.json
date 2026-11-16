@@ -1,0 +1,373 @@
+{
+ "character": "Ustaz Auwal",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "The Sit-Down",
+   "file": "Ustaz Auwal - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m057_mid1_03",
+     "text": "Substitute me! I cannot breathe! Ask him!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Cook-Off",
+   "file": "Ustaz Auwal - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m089_open_03",
+     "text": "Ask him."
+    },
+    {
+     "n": 2,
+     "id": "m089_close_01",
+     "text": "We are in agreement…"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Ustaz Auwal - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_greet_01",
+     "text": "Assalamu alaikum. [Peace be upon you.] Have you eaten?"
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_greet_02",
+     "text": "Ina kwana? [Good morning?] How is the reading? Slowly is fine."
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_f_greet_03",
+     "text": "Have you seen Sam? He took my good pot. Again."
+    },
+    {
+     "n": 4,
+     "id": "bk_ustaz_auwal_f_greet_04",
+     "text": "Sannu. [Hello.] Walk with me to the gate. Tell me something good."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Ustaz Auwal - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_bye_01",
+     "text": "Allah ya kiyaye. [God protect you.] Go well."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_bye_02",
+     "text": "Sai anjima. [See you later.] If you see Sam, tell him: the pot."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Ustaz Auwal - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_thanks_01",
+     "text": "Na gode. [Thank you.] Thank the one who cooked, not the one who served."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_sorry_01",
+     "text": "It's forgiven. Forgiving is lighter than carrying."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Ustaz Auwal - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_compliment_01",
+     "text": "You helped without being asked. That is the best kind."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Ustaz Auwal - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_tease_01",
+     "text": "You came for the iftar food and stayed for the washing. Good."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Ustaz Auwal - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_yes_01",
+     "text": "Yes. In sha Allah. [God willing.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_no_01",
+     "text": "No. And if Sam says yes, he is wrong. Lovingly."
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_f_maybe_01",
+     "text": "No, ask him."
+    },
+    {
+     "n": 4,
+     "id": "bk_ustaz_auwal_f_confused_01",
+     "text": "Hm. When Sam is not here I lose half my sentences."
+    },
+    {
+     "n": 5,
+     "id": "bk_ustaz_auwal_f_agree_01",
+     "text": "We agree. Sam will be shocked. Don't tell him yet."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Ustaz Auwal - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_ask_01",
+     "text": "Sam says his jollof is better. Is this true? Speak freely."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_ask_02",
+     "text": "Did you sleep last night? Books are patient. You can rest."
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_f_joke_01",
+     "text": "My suya system? Thirty-one years. He still won't get it."
+    },
+    {
+     "n": 4,
+     "id": "bk_ustaz_auwal_f_joke_02",
+     "text": "Sam played striker once. The ball is still recovering."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Ustaz Auwal - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_heat_01",
+     "text": "Hot today. Shade, water, patience. In that order."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_blackout_01",
+     "text": "No light. We have lanterns and good company. Enough."
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_f_rain_01",
+     "text": "Rain. Rahama ce. [It is a mercy.] Also, my shoes are inside."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Food and money",
+   "file": "Ustaz Auwal - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_food_01",
+     "text": "Masa! Fresh! Sit. Sit. Eat first, talk after."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Getting a present",
+   "file": "Ustaz Auwal - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_gift_like_01",
+     "text": "Dates! The good ones. You have a teacher's heart."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_gift_dislike_01",
+     "text": "Sam's team's scarf. Very funny. He sent you, didn't he?"
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_f_gift_love_01",
+     "text": "A new kettle. Ah. The old one is older than Sam. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Talking to yourself",
+   "file": "Ustaz Auwal - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_f_idle_01",
+     "text": "Thirty mats. Thirty-one. Who brought a mat? …Sam."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_f_idle_02",
+     "text": "If the ball is round, why does Sam's team always run sideways?"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 1: arriving",
+   "file": "Ustaz Auwal - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_y1_idle_01",
+     "text": "New faces. If you are far from home, our door is open."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 2: the mall",
+   "file": "Ustaz Auwal - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_y2_idle_01",
+     "text": "Sam bet a goat on the Cup. I will name it after him."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 3: the strike",
+   "file": "Ustaz Auwal - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_y3_ev_strike_01",
+     "text": "Strike. Come for evening class. Free. Tea included."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_y3_callback_01",
+     "text": "That match. Sam cried 'substitute me!' I ran for two."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 4: fame",
+   "file": "Ustaz Auwal - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_y4_idle_01",
+     "text": "A rumour is a guest you didn't invite. Don't feed it."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 5: leaving",
+   "file": "Ustaz Auwal - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_y5_idle_01",
+     "text": "Final year. Sam and I are praying for you. He's louder."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Ustaz Auwal - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_ev_ev_exam_01",
+     "text": "Exams. Do your part, then rest your heart."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Ustaz Auwal - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_ev_ev_cup_01",
+     "text": "Cup day. Sam brought a drum. I brought earplugs."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_ev_ev_convocation_01",
+     "text": "Convocation. I cry. Sam cries more. Write that down."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Ustaz Auwal - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_ustaz_auwal_ev_ev_ramadan_01",
+     "text": "Ramadan Kareem. Iftar at sunset. Sam's pots are already here."
+    },
+    {
+     "n": 2,
+     "id": "bk_ustaz_auwal_ev_ev_ramadan_02",
+     "text": "Sam is not fasting, but he hides his lunch from me. Good friend."
+    },
+    {
+     "n": 3,
+     "id": "bk_ustaz_auwal_ev_ev_christmas_01",
+     "text": "Christmas. I bring kunu to the carols. Every year. Sam sings flat."
+    },
+    {
+     "n": 4,
+     "id": "bk_ustaz_auwal_ev_ev_harmattan_01",
+     "text": "Harmattan. Cold mornings, early prayers, hot tea. Alhamdulillah. [Praise be to God.]"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

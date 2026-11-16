@@ -1,0 +1,128 @@
+{
+ "character": "Prof. Nwachukwu",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "The Old Site",
+   "file": "Prof. Nwachukwu - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m060_open_01",
+     "text": "Five. Four. Three. Two. One."
+    },
+    {
+     "n": 2,
+     "id": "m060_mid1_02",
+     "text": "We asked nobody."
+    },
+    {
+     "n": 3,
+     "id": "m060_mid1_03",
+     "text": "Ten seals, ten deans, and not one of us knocked on a door."
+    },
+    {
+     "n": 4,
+     "id": "m060_mid1_04",
+     "text": "I gave the seals out myself, in the end."
+    },
+    {
+     "n": 5,
+     "id": "m060_mid1_05",
+     "text": "Like invitations to a wedding nobody was planning."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "The Maker's Secret",
+   "file": "Prof. Nwachukwu - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m061_mid1_01",
+     "text": "…married, in Jos, happier than any of you."
+    },
+    {
+     "n": 2,
+     "id": "m061_mid1_02",
+     "text": "All but one. He said he would keep it warm."
+    },
+    {
+     "n": 3,
+     "id": "m061_mid1_03",
+     "text": "I want it on record that I told him not to."
+    },
+    {
+     "n": 4,
+     "id": "m061_mid1_04",
+     "text": "And that I was proud of him anyway."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "One Left",
+   "file": "Prof. Nwachukwu - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m096_close_01",
+     "text": "Four."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Failure",
+   "file": "Prof. Nwachukwu - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m105_close_01",
+     "text": "Mine burned too. Twice."
+    },
+    {
+     "n": 2,
+     "id": "m105_close_02",
+     "text": "Ask them for help. All of them."
+    },
+    {
+     "n": 3,
+     "id": "m105_close_03",
+     "text": "A.N., still not dead."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "The Longest Night",
+   "file": "Prof. Nwachukwu - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_close_04",
+     "text": "Two."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Maker's Graduation",
+   "file": "Prof. Nwachukwu - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m116_mid1_01",
+     "text": "One."
+    },
+    {
+     "n": 2,
+     "id": "m116_mid1_02",
+     "text": "Go."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

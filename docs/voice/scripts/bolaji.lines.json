@@ -1,0 +1,1007 @@
+{
+ "character": "Bolaji",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Fresher Tax",
+   "file": "Bolaji - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m007_open_01",
+     "text": "Sly has noticed a fresher."
+    },
+    {
+     "n": 2,
+     "id": "m007_open_02",
+     "text": "Has the fresher noticed the toll?"
+    },
+    {
+     "n": 3,
+     "id": "m007_open_03",
+     "text": "…Sorry."
+    },
+    {
+     "n": 4,
+     "id": "m007_close_04",
+     "text": "Sly will remember your face."
+    },
+    {
+     "n": 5,
+     "id": "m007_close_05",
+     "text": "In a good way. Maybe."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Count Entropy",
+   "file": "Bolaji - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_mid2_04",
+     "text": "Sly is not afraid. Sly is… beside you."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Sly's Last Stand",
+   "file": "Bolaji - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_close_01",
+     "text": "Sly keeps his word. No tax. This year."
+    },
+    {
+     "n": 2,
+     "id": "m014_close_03",
+     "text": "That is nothing. That is for… dogs."
+    },
+    {
+     "n": 3,
+     "id": "m014_close_04",
+     "text": "Zobo Max. You'll need it one day. Sly knows things."
+    },
+    {
+     "n": 4,
+     "id": "m014_close_05",
+     "text": "I didn't think anyone would train for it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Sly Goes Straight",
+   "file": "Bolaji - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m034_open_03",
+     "text": "Sly did that. Not the boy. Sly did that."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Change-Over",
+   "file": "Bolaji - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m038_mid1_01",
+     "text": "Sir! Half a haircut is against the profession!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Plan",
+   "file": "Bolaji - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_open_06",
+     "text": "It needs a code name. 'Operation Sly.'"
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Bolaji - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_open_01",
+     "text": "Sly tied it. With feelings. It will hold."
+    },
+    {
+     "n": 2,
+     "id": "m044_mid1_03",
+     "text": "…Sly is not crying. It is dust. From the cellar."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Workshop Nights",
+   "file": "Bolaji - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_mid1_03",
+     "text": "Sly's father had a shop. A small one."
+    },
+    {
+     "n": 2,
+     "id": "m065_mid1_04",
+     "text": "Tell nobody Sly is gentle with wood. Sly has a brand."
+    },
+    {
+     "n": 3,
+     "id": "m065_close_02",
+     "text": "…Sly was holding a rung. In his TEETH."
+    },
+    {
+     "n": 4,
+     "id": "m065_close_03",
+     "text": "Half a tower. Best view on campus. Sly approves."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "The Collab",
+   "file": "Bolaji - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m076_mid1_03",
+     "text": "Sly is not in. Bolaji is in. Shop is closed."
+    },
+    {
+     "n": 2,
+     "id": "m076_mid1_04",
+     "text": "For sterilisation. Sorry, knuckles."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "Rehab",
+   "file": "Bolaji - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m078_open_01",
+     "text": "Sly does not wait for sleep!"
+    },
+    {
+     "n": 2,
+     "id": "m078_open_02",
+     "text": "Bolaji also does not wait. He is just polite."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Fresher Tax, Reversed",
+   "file": "Bolaji - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m099_open_02",
+     "text": "Tradition. Who told him it was tradition?"
+    },
+    {
+     "n": 2,
+     "id": "m099_open_04",
+     "text": "They leave out the part where I cried in a salon."
+    },
+    {
+     "n": 3,
+     "id": "m099_open_05",
+     "text": "Watch my back. And carry one thing."
+    },
+    {
+     "n": 4,
+     "id": "m099_mid1_01",
+     "text": "Sly was a bully. Bolaji is a barber. Sly is retired."
+    },
+    {
+     "n": 5,
+     "id": "m099_mid1_02",
+     "text": "If you see Sly, tell him Big Baby is looking for him."
+    },
+    {
+     "n": 6,
+     "id": "m099_mid1_04",
+     "text": "I'm finished, I'm finished."
+    },
+    {
+     "n": 7,
+     "id": "m099_mid1_05",
+     "text": "Strong hands. I need a boy at the shop. Monday."
+    },
+    {
+     "n": 8,
+     "id": "m099_mid1_08",
+     "text": "Well done, John Carter."
+    },
+    {
+     "n": 9,
+     "id": "m099_close_01",
+     "text": "Sly would have charged for that paint."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Parts from Everywhere",
+   "file": "Bolaji - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_open_02",
+     "text": "Professor. You cannot requisition a favour."
+    },
+    {
+     "n": 2,
+     "id": "m103_open_03",
+     "text": "You have to go and greet people."
+    },
+    {
+     "n": 3,
+     "id": "m103_close_02",
+     "text": "Not me. If I had a sweet, I would have eaten it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Build Week",
+   "file": "Bolaji - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m104_open_04",
+     "text": "Sly has made tea. One of us is useful."
+    },
+    {
+     "n": 2,
+     "id": "m104_close_02",
+     "text": "Professor. Breathe first. Lecture second."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Three by Road",
+   "file": "Bolaji - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_open_01",
+     "text": "Sly does not ride at night. Bolaji rides. Get on."
+    },
+    {
+     "n": 2,
+     "id": "m112_mid1_01",
+     "text": "Shop is closed. No haircut. No entry. Next."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Convocation",
+   "file": "Bolaji - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_mid1_03",
+     "text": "Congratulations… Abbas."
+    },
+    {
+     "n": 2,
+     "id": "m118_mid1_04",
+     "text": "Don't cry, John Car— Abbas. I am practising."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Bolaji - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_greet_01",
+     "text": "Sly sees you. Sly nods. That is a big honour."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_greet_02",
+     "text": "E kaaro! [Good morning!] Sly has been awake since five. Pushing iron."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_greet_03",
+     "text": "Ah, the fresher. Not a fresher. You know what Sly means."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_f_greet_04",
+     "text": "You. Yes, you. …Sly is just greeting. Relax your shoulders."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Bolaji - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_bye_01",
+     "text": "Go well. Walk like Sly. Chest first."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_bye_02",
+     "text": "Bye. Sly will wave. …Sly has waved."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Bolaji - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_thanks_01",
+     "text": "Sly says thank you. Quietly. Tell nobody."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_thanks_02",
+     "text": "You did well. Sly will crack one knuckle for you. Sorry, knuckle."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_sorry_01",
+     "text": "Sly bumped you. Sly is a building. Buildings apologise too."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_f_sorry_02",
+     "text": "Sorry. Sly's voice is loud even when Sly is sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Bolaji - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_compliment_01",
+     "text": "Your shape is improving. Coach Ngozi will be proud. Sly is proud."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_compliment_02",
+     "text": "That haircut is clean. Who did it? …Sly did it. Of course."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Bolaji - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_tease_01",
+     "text": "You walk like a man carrying garri up five floors. Lift the knees."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_tease_02",
+     "text": "Small arms. Big heart. We can fix the arms."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Bolaji - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_follow_01",
+     "text": "Sly is behind you. Like a wardrobe that loves you."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_follow_02",
+     "text": "Walk. Sly will clear the path. Nobody stands in front of a wardrobe."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_wait_01",
+     "text": "Sly has done forty press-ups waiting for you. Forty-one."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_f_wait_02",
+     "text": "Hurry. Sly is patient but Sly's knees are not."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_f_lost_01",
+     "text": "That is the road to Theatre Yamma. You want Gabas. Everybody does that."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Bolaji - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_yes_01",
+     "text": "Sly agrees. Write it down."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_no_01",
+     "text": "No. Sly has spoken. …Unless Big Baby says yes."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_maybe_01",
+     "text": "Maybe. Sly will ask Big Baby and report back."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_f_confused_01",
+     "text": "Sly is thinking. It is loud in there. Give me a minute."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Bolaji - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_joke_01",
+     "text": "Why is the dumbbell sad? Nobody lifts its mood. …Sly wrote that."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_ask_01",
+     "text": "You have eaten? Muscles are built at the Spot, not in the gym."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Bolaji - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_win_01",
+     "text": "SLY! Sorry. Bolaji. …Both of us won."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_lose_01",
+     "text": "Sly lost. Sly will now sit on the bench and reflect. Loudly."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Bolaji - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_hit_01",
+     "text": "Sly is fine. The ground is fine. Everybody is fine."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_hit_02",
+     "text": "You pushed Sly. Brave. Wrong, but brave."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_fall_01",
+     "text": "Sly is not on the floor. Sly is inspecting the floor."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_f_blackout_01",
+     "text": "NEPA has taken the light. Sly will lift in the dark. Sly fears nothing. Mostly."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_f_light_back_01",
+     "text": "Light! Turn on the clippers before it changes its mind!"
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_f_rain_01",
+     "text": "Rain on the court. Today Sly trains in the corridor of Giginya."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_f_heat_01",
+     "text": "This sun. Even Sly's muscles are sweating."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Bolaji - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_food_01",
+     "text": "Mama Nkechi's beans. Protein. And love. Mostly protein."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_money_01",
+     "text": "Sly does not collect money any more. Sly collects compliments."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Bolaji - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_gift_like_01",
+     "text": "For Sly? Sly will keep it on the barber's mirror."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_gift_dislike_01",
+     "text": "Thank you. Sly will give it to Abbas. He likes strange things."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_f_gift_love_01",
+     "text": "Zobo Max, cold. You remembered. …It is dust. In my eye. From the court."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Bolaji - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_idle_01",
+     "text": "One. Two. Three hundred. Sly counts fast."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_idle_02",
+     "text": "Knuckles, crack. …Sorry, knuckles. You have done nothing wrong."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Bolaji - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_night_01",
+     "text": "At night Sly walks softly. Hostel people are sleeping. Or reading. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Bolaji - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_f_callback_01",
+     "text": "You trained for the spar. Nobody trains for Sly. Sly still talks about it."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_f_callback_02",
+     "text": "Here. Zobo Max. Sly said you'd need it one day."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Bolaji - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_y1_greet_01",
+     "text": "Fresher! Have you noticed the toll? …There is no toll. Sly promised."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_y1_greet_02",
+     "text": "This is Sly's court. You can walk on it. Politely."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_y1_idle_01",
+     "text": "Sly has a reputation. Sly is ironing it."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_y1_idle_02",
+     "text": "Hassan says freshers fear Sly. Good. Sly fears Big Baby. That is the chain."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_y1_tease_01",
+     "text": "You paid two hundred? Ah. Sly can't give it back. Sly ate it."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_y1_compliment_01",
+     "text": "You stood up three times. Sly noticed. Sly notices everything."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_y1_callback_01",
+     "text": "Big Baby said one word to Sly that day. Sly is still recovering."
+    },
+    {
+     "n": 8,
+     "id": "bk_bolaji_y1_callback_02",
+     "text": "That night in the dark with the torches. Sly was beside you. Not behind."
+    },
+    {
+     "n": 9,
+     "id": "bk_bolaji_y1_win_01",
+     "text": "Ten seconds on the bench and you came back! Sly respects a comeback."
+    },
+    {
+     "n": 10,
+     "id": "bk_bolaji_y1_night_01",
+     "text": "Sly does not like the dam road at night. Sly is not scared. It is just… long."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Bolaji - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_y2_greet_01",
+     "text": "Welcome to Sly's Cuts. First cut, free. Second cut, also free. Sly is new at this."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_y2_greet_02",
+     "text": "You came back! A returning customer! Sly is crying. It is shaving dust."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_y2_idle_01",
+     "text": "Sly painted the sign himself. The S is backwards. It is a style."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_y2_idle_02",
+     "text": "Three customers today. Malam Garba twice. He only said 'Hm.'"
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_y2_callback_01",
+     "text": "First man in the chair was Malam Garba. Hands like bread. Gentle like bread."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_y2_callback_02",
+     "text": "Abbas gave the fade nine and a half. Sly will frame the score card."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_y2_callback_03",
+     "text": "Half a haircut in a blackout. Sly finished it by phone torch. Never again."
+    },
+    {
+     "n": 8,
+     "id": "bk_bolaji_y2_callback_04",
+     "text": "Operation Sly. Nobody uses the name. Sly uses it. In the mirror."
+    },
+    {
+     "n": 9,
+     "id": "bk_bolaji_y2_compliment_01",
+     "text": "Hold still. Sly is giving you a cut that passes exams."
+    },
+    {
+     "n": 10,
+     "id": "bk_bolaji_y2_tease_01",
+     "text": "Your hairline is going on strike before the lecturers."
+    },
+    {
+     "n": 11,
+     "id": "bk_bolaji_y2_follow_01",
+     "text": "Iron Mama is loud. Sly is louder. Keep walking."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Bolaji - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_y3_greet_01",
+     "text": "Sly is in the workshop. Do not tell people about the sawdust."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_y3_idle_01",
+     "text": "Sly is gentle with wood. Sly has a brand. Keep it between us."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_y3_idle_02",
+     "text": "The foreman says measure twice. Sly measured four times. Sly is nervous."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_y3_idle_03",
+     "text": "My father had a shop. Small. It smelled like this."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_y3_callback_01",
+     "text": "Half a tower. Best view on campus. Sly approves. Sly will not climb it again."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_y3_callback_02",
+     "text": "Sly held a rung in his teeth. You don't forget the taste of a ladder."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_y3_ev_strike_01",
+     "text": "Strike month five. Sly has cut every head on campus twice. Even the goat's."
+    },
+    {
+     "n": 8,
+     "id": "bk_bolaji_y3_tease_01",
+     "text": "You sat down for three weeks. Your chair is shaped like you now."
+    },
+    {
+     "n": 9,
+     "id": "bk_bolaji_y3_blackout_01",
+     "text": "Lamp's working. Sly built the box. Abbas did the wires. Teamwork."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Bolaji - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_y4_greet_01",
+     "text": "Gym. Six o'clock. Sly does not wait for sleep! …Bolaji is polite."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_y4_idle_01",
+     "text": "Jega did one more lap than yesterday. Sly will tell nobody. Sly will tell everybody."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_y4_idle_02",
+     "text": "Helen's exercise sheet has a column for excuses. Sly filled it. Sly was told off."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_y4_follow_01",
+     "text": "Slow is still forward. Coach Ngozi said that. Sly stole it."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_y4_callback_01",
+     "text": "Jega didn't come that morning. You found him. Sly saw. Good man."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_y4_callback_02",
+     "text": "The Lucky boy wanted Sly in his video. Shop was closed. Sly is proud."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_y4_compliment_01",
+     "text": "Your arms have arrived. Welcome, arms."
+    },
+    {
+     "n": 8,
+     "id": "bk_bolaji_y4_heat_01",
+     "text": "Pool today. Too hot for the court. Even Sly melts."
+    },
+    {
+     "n": 9,
+     "id": "bk_bolaji_y4_tease_01",
+     "text": "You lifted that like it owed you money. Good. Again."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Bolaji - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_y5_greet_01",
+     "text": "Ah, final year. Sly will give you a finalist's fade. Very serious. Very employed."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_y5_idle_01",
+     "text": "Sly was a bully. Bolaji is a barber. Sly is retired. Sly visits sometimes."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_y5_idle_02",
+     "text": "If you see Sly, tell him Big Baby is looking for him."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_y5_callback_01",
+     "text": "Five hundred naira from freshers. Who told that boy it was tradition?"
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_y5_callback_02",
+     "text": "The boy works at the shop now. Strong hands. He sweeps like a king."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_y5_callback_03",
+     "text": "Sly made tea for the Build Week. One of us was useful."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_y5_compliment_01",
+     "text": "You don't need Sly to watch your back any more. Sly will watch it anyway."
+    },
+    {
+     "n": 8,
+     "id": "bk_bolaji_y5_tease_01",
+     "text": "Professor Shamsu came for a cut. Sly gave him 'Simple.' It was not simple."
+    },
+    {
+     "n": 9,
+     "id": "bk_bolaji_y5_bye_01",
+     "text": "After convocation, come back. Sly's chair. Free. For life. Don't tell Hassan."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Bolaji - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_ev_ev_freshers_01",
+     "text": "No fresher pays on Sly's court. Not this year. Not any year."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_ev_ev_freshers_02",
+     "text": "Freshers! Your first cut is on Sly. Look sharp for matric."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_ev_ev_exam_01",
+     "text": "Exam week. Sly is reading. The pages are scared of Sly."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_ev_ev_results_01",
+     "text": "Sly has a carry-over. Again. Sly and the carry-over are now family."
+    },
+    {
+     "n": 5,
+     "id": "bk_bolaji_ev_ev_results_02",
+     "text": "Sly passed Thermodynamics! It only took four attempts! Thermodynamics is tired."
+    },
+    {
+     "n": 6,
+     "id": "bk_bolaji_ev_ev_allowance_01",
+     "text": "Allowance week! Every head wants a cut. Sly has three combs ready."
+    },
+    {
+     "n": 7,
+     "id": "bk_bolaji_ev_ev_market_day_01",
+     "text": "Market day. Big Baby's salon, then Sly's chair. One street, all the fashion."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Bolaji - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_ev_ev_cup_01",
+     "text": "Education! Education! Sly does not study Education. Sly shouts for Jega."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_ev_ev_elections_01",
+     "text": "Sly will vote for the person whose hair Sly cut last. That is democracy."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_ev_ev_convocation_01",
+     "text": "Sly practised all week. A-b-b-a-s. Sly can say it now. Mostly."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Bolaji - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_bolaji_ev_ev_ramadan_01",
+     "text": "Sly is carrying pots for the iftar kitchen. Two at once. Ask me for three."
+    },
+    {
+     "n": 2,
+     "id": "bk_bolaji_ev_ev_christmas_01",
+     "text": "Campus is empty. Sly is cutting hair for everyone travelling home. Look fresh for Mama."
+    },
+    {
+     "n": 3,
+     "id": "bk_bolaji_ev_ev_valentine_01",
+     "text": "Sly bought Big Baby one rose. She said 'Bolaji.' Sly is still deciding what it meant."
+    },
+    {
+     "n": 4,
+     "id": "bk_bolaji_ev_ev_harmattan_01",
+     "text": "Harmattan. Sly's skin is dry like a lecture at eight. Pass the shea butter."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

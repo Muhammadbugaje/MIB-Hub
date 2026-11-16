@@ -1,0 +1,376 @@
+{
+ "character": "The Traders",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Traders - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_greet_01",
+     "text": "Customer! Come, come! I'll do you good price!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_f_greet_02",
+     "text": "Fine fresher, come! First buy is for luck!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_f_greet_03",
+     "text": "Sannu da zuwa! [Welcome!] What do you need?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Thank-yous and sorries",
+   "file": "The Traders - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_thanks_01",
+     "text": "Thank you, customer! Come back. Don't go to that other one."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Quick answers",
+   "file": "The Traders - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_no_01",
+     "text": "No. My price has children. They need to eat."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_f_no_02",
+     "text": "Ah! You want to buy it at 1990 price?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "When something goes wrong",
+   "file": "The Traders - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_rain_01",
+     "text": "Rain! Cover the tomatoes! Customers can swim!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_f_blackout_01",
+     "text": "Light don go! [Power's gone!] Candle! Torch! Rechargeable fan!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_f_blackout_02",
+     "text": "Batteries went up this morning. Don't ask me why. I just feel things."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Food and money",
+   "file": "The Traders - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_money_01",
+     "text": "No change. Bring change, I'll give you change."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_f_money_02",
+     "text": "Transfer? Network says 'pending'. Me, I say cash."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Talking to yourself",
+   "file": "The Traders - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_idle_01",
+     "text": "Tomatoes! Pepper! Onions that will make you cry with joy!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_f_idle_02",
+     "text": "Pure water, cold! Ice-cold! Okay, cool. Reasonably cool."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_f_idle_03",
+     "text": "Last price? This one is the last price's last price."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_f_idle_04",
+     "text": "Garri white, garri yellow, garri for exam, garri for strike!"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_traders_f_idle_05",
+     "text": "You want discount? Go and ask NEPA for discount first."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_traders_f_idle_06",
+     "text": "Recharge card! Data! Network is not my department."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_traders_f_idle_07",
+     "text": "Hot akara! Hot! Okay, warm. Come before it's cool."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_traders_f_idle_08",
+     "text": "Suya don ready! [Suya is ready!] Yaji is free. Regret is extra."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_traders_f_idle_09",
+     "text": "Indomie and egg! Two eggs if you greet me well."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Late at night",
+   "file": "The Traders - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_f_night_01",
+     "text": "I'm closing! I'm closing! …Okay, what do you want?"
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 1: arriving",
+   "file": "The Traders - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_y1_idle_01",
+     "text": "Candles are moving faster than bread this year."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_y1_idle_02",
+     "text": "Light goes, candle money comes. I'm not happy. I'm honest."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 2: the mall",
+   "file": "The Traders - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_y2_idle_01",
+     "text": "The mall sells the same thing at double. With air-conditioning."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_y2_idle_02",
+     "text": "They go to the mall to look, then come here to buy."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_y2_idle_03",
+     "text": "They say the mall never blinks. My stall blinks every evening."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_y2_idle_04",
+     "text": "Escalator this, escalator that. Can escalator sell you ugu?"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_traders_y2_idle_05",
+     "text": "Mall security asked me for a permit. To walk past."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 3: the strike",
+   "file": "The Traders - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_y3_idle_01",
+     "text": "Strike? Market is fuller than ever. Everybody is a trader now."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_y3_idle_02",
+     "text": "Students selling to students. Who is buying? Me, I'm watching."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_y3_idle_03",
+     "text": "Sapa combo: garri, sugar, groundnut. Strike price."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_y3_idle_04",
+     "text": "One boy asked for credit till the strike ends. I said, which year?"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 4: fame",
+   "file": "The Traders - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_y4_idle_01",
+     "text": "Did you hear? They said the Plug Store is closing. They said. Who is 'they'?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_y4_idle_02",
+     "text": "Every customer wants to film the bargain. Oya, film my price too."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_y4_idle_03",
+     "text": "Campaign people took my pure water. Free water, paid by me? No."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 5: leaving",
+   "file": "The Traders - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_y5_idle_01",
+     "text": "Five years you've been buying from me. Go and graduate. Come back rich."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_y5_idle_02",
+     "text": "My first customer is finishing. I'll cry. After you pay."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_y5_idle_03",
+     "text": "The market has more lights now. Somebody fixed something. God bless them."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: term time",
+   "file": "The Traders - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_ev_ev_freshers_01",
+     "text": "Fresher! Bucket, mattress, padlock, I have everything. And patience."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_ev_ev_freshers_02",
+     "text": "Welcome to campus! Your first bucket is from me. At a price."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_ev_ev_exam_01",
+     "text": "Brain Booster Tea! You'll remember everything. Even your debts."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_ev_ev_allowance_01",
+     "text": "Allowance day! Everybody remembers my name today."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_traders_ev_ev_market_day_01",
+     "text": "It's Thursday! Everything is moving! Hold your bag!"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_traders_ev_ev_market_day_02",
+     "text": "Market day price is today price. Tomorrow price is a different story."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_traders_ev_ev_market_day_03",
+     "text": "Pickpockets are also shopping today. Keep your phone in front."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: the big ones",
+   "file": "The Traders - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_ev_ev_strike_01",
+     "text": "Strike again. My customers are home. My tomatoes are not."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_ev_ev_cup_01",
+     "text": "Groundnut for the match! It's how they place bets here."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_ev_ev_elections_01",
+     "text": "Posters on my stall again. Who will pay for my paint?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_ev_ev_convocation_01",
+     "text": "Gown photos! Flowers! Small chops! Convocation is our Christmas."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Special days: seasons and holidays",
+   "file": "The Traders - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_traders_ev_ev_ramadan_01",
+     "text": "Dates! Kunu! Kosai! [Bean cakes!] Before sunset, please!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_traders_ev_ev_christmas_01",
+     "text": "Christmas chicken! Christmas lights! Who is travelling?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_traders_ev_ev_valentine_01",
+     "text": "Red balloon, red rose, red face. Valentine is good business."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_traders_ev_ev_harmattan_01",
+     "text": "Vaseline! Lip balm! Harmattan is here and so am I!"
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

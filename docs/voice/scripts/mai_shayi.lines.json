@@ -1,0 +1,484 @@
+{
+ "character": "Mai Shayi",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Mai Shayi Knows",
+   "file": "Mai Shayi - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m006_open_01",
+     "text": "Sit. Tea first, gist second."
+    },
+    {
+     "n": 2,
+     "id": "m006_open_03",
+     "text": "A piano. Double price."
+    },
+    {
+     "n": 3,
+     "id": "m006_open_04",
+     "text": "A corridor that cries. A lecturer who never ages."
+    },
+    {
+     "n": 4,
+     "id": "m006_open_05",
+     "text": "An okada at 3 a.m. with nobody you can describe."
+    },
+    {
+     "n": 5,
+     "id": "m006_open_06",
+     "text": "Go and greet him. If he's sitting, look at WHERE."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Convocation Night",
+   "file": "Mai Shayi - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_mid2_01",
+     "text": "You know who gave that thing a cape?"
+    },
+    {
+     "n": 2,
+     "id": "m024_mid2_02",
+     "text": "Us. First-years. Every year."
+    },
+    {
+     "n": 3,
+     "id": "m024_mid2_03",
+     "text": "We were scared. So we drew it a face."
+    },
+    {
+     "n": 4,
+     "id": "m024_mid2_04",
+     "text": "A thing with a face, you can stand against."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Those Who Stayed",
+   "file": "Mai Shayi - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_close_03",
+     "text": "Those who stayed."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Idle King",
+   "file": "Mai Shayi - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m066_open_02",
+     "text": "Make noise, my children. Tonight noise is medicine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Three by Road",
+   "file": "Mai Shayi - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_mid1_03",
+     "text": "Tea first. Light second. Sit. …No. You, go. Go!"
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Mai Shayi - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_greet_01",
+     "text": "Sit. Tea first, gist second."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_greet_02",
+     "text": "Sannu da zuwa! [Welcome!] The kettle knew you were coming."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_greet_03",
+     "text": "Ah, my customer. Sugar three, problems four?"
+    },
+    {
+     "n": 4,
+     "id": "bk_mai_shayi_f_greet_04",
+     "text": "Ina wuni. [Good afternoon.] Sit before your legs decide."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Mai Shayi - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_bye_01",
+     "text": "Go well. Come back with gist. Tea is free for good gist."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_bye_02",
+     "text": "Sai anjima. [See you later.] Bring back my cup."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Mai Shayi - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_thanks_01",
+     "text": "Don't thank me. Pay me. Then thank me."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Quick answers",
+   "file": "Mai Shayi - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_confused_01",
+     "text": "Who? There was nobody there fa. Drink your tea."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_confused_02",
+     "text": "You are talking to the bench? The heat has entered you."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Jokes and questions",
+   "file": "Mai Shayi - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_ask_01",
+     "text": "Ehen? [And so?] What happened? Start from the middle."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_ask_02",
+     "text": "You heard about the corridor that cries? No? Sit."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_joke_01",
+     "text": "Riddle for tea? A riddle costs double."
+    },
+    {
+     "n": 4,
+     "id": "bk_mai_shayi_f_joke_02",
+     "text": "Lipton is tea. What I make is medicine."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "When something goes wrong",
+   "file": "Mai Shayi - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_blackout_01",
+     "text": "Light don go? [Power's gone?] Good. Bring your stool closer."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_blackout_02",
+     "text": "Charcoal does not need NEPA. Sit."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_light_back_01",
+     "text": "Up NEPA! …Don't clap too loud. They hear."
+    },
+    {
+     "n": 4,
+     "id": "bk_mai_shayi_f_rain_01",
+     "text": "Rain! Under the canopy, all of you. Tea goes up ten."
+    },
+    {
+     "n": 5,
+     "id": "bk_mai_shayi_f_heat_01",
+     "text": "Hot tea in hot weather. It cools you. Don't argue."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Food and money",
+   "file": "Mai Shayi - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_money_01",
+     "text": "Tea is fifty. Gist is free. Credit is a long story."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_money_02",
+     "text": "Transfer? My kettle does not have network."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_food_01",
+     "text": "Bread and tea. Half the degrees in this school ran on it."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Getting a present",
+   "file": "Mai Shayi - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_gift_like_01",
+     "text": "Sugar! You understand business."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_gift_dislike_01",
+     "text": "Coffee? In my house? Take it back, before the kettle sees."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_gift_love_01",
+     "text": "A new kettle? …Hm. The old one will be jealous. Thank you."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Talking to yourself",
+   "file": "Mai Shayi - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_idle_01",
+     "text": "Forty first-years. Forty. And every one sat on that stool."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_f_idle_02",
+     "text": "That radio gets one station. One. I stopped fighting it."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_f_idle_03",
+     "text": "An okada at three. Nobody can describe the rider. Hm."
+    },
+    {
+     "n": 4,
+     "id": "bk_mai_shayi_f_idle_04",
+     "text": "That boy's love life. I need more sugar to discuss it."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Late at night",
+   "file": "Mai Shayi - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_f_night_01",
+     "text": "Last cup. Then go in. The road is darker than it looks."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 1: arriving",
+   "file": "Mai Shayi - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_y1_idle_01",
+     "text": "The cape on the weathervane. Count Entropy. Brr. Drink."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_y1_idle_02",
+     "text": "Wrong theatre? Every fresher. Gabas, Yamma. Twins."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_y1_tease_01",
+     "text": "Fresher, you are holding that note like a lottery ticket."
+    },
+    {
+     "n": 4,
+     "id": "bk_mai_shayi_y1_callback_01",
+     "text": "We drew it a face. Now you know. Sugar?"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "Mai Shayi - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_y2_idle_01",
+     "text": "The mall sells tea for nine hundred. In a paper cup. Haba."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_y2_idle_02",
+     "text": "Your friend's shop. The basement. People talk, you know."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "Mai Shayi - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_y3_idle_01",
+     "text": "Those who stayed. Sit. Tea is on the house till they call it off."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_y3_idle_02",
+     "text": "Empty campus. I still boil the full pot. Habit."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "Mai Shayi - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_y4_idle_01",
+     "text": "You are on the phone screens now. Still owe me twenty."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_y4_idle_02",
+     "text": "The cape is down tonight. Hm. It will be back."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "Mai Shayi - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_y5_idle_01",
+     "text": "Finalists. Every year you go, the bench gets lighter."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_y5_idle_02",
+     "text": "Tea first. Light second. That has always been the order."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "After graduation",
+   "file": "Mai Shayi - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_post_idle_01",
+     "text": "He comes every morning now. Sits down. Drinks it hot."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_post_idle_02",
+     "text": "The clock strikes now. My customers come on time. Terrible."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: term time",
+   "file": "Mai Shayi - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_ev_ev_freshers_01",
+     "text": "New faces! New credit! Allah ya kiyaye. [God protect us.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_ev_ev_exam_01",
+     "text": "Exam tea. Extra strong. No gist, only reading."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: the big ones",
+   "file": "Mai Shayi - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_ev_ev_strike_01",
+     "text": "No lectures, no customers. Only gist. Gist doesn't pay."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_ev_ev_cup_01",
+     "text": "The Cup today. Half my customers are hoarse already."
+    },
+    {
+     "n": 3,
+     "id": "bk_mai_shayi_ev_ev_convocation_01",
+     "text": "Gown on, cup in hand. Don't spill. Your mother is watching."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Special days: seasons and holidays",
+   "file": "Mai Shayi - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mai_shayi_ev_ev_ramadan_01",
+     "text": "Kettle sleeps till sunset. Then: tea for everybody."
+    },
+    {
+     "n": 2,
+     "id": "bk_mai_shayi_ev_ev_harmattan_01",
+     "text": "Harmattan! Best season for tea. Worst season for lips."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

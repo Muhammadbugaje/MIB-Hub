@@ -1,0 +1,733 @@
+{
+ "character": "Lily",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Matric Fit",
+   "file": "Lily - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_mid1_03",
+     "text": "…I said it would be windy."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Six Plaques",
+   "file": "Lily - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m020_open_05",
+     "text": "…I have twine."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Test Week Twist",
+   "file": "Lily - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m035_close_02",
+     "text": "…I was watering a cactus."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "The Eel's Bargain",
+   "file": "Lily - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m090_open_04",
+     "text": "…It will rain."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "Double Booking",
+   "file": "Lily - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m093_mid1_02",
+     "text": "I told her not to laminate it."
+    },
+    {
+     "n": 2,
+     "id": "m093_mid1_05",
+     "text": "…Everybody has a column."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Log Off",
+   "file": "Lily - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m095_close_01",
+     "text": "…Oh."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "One Left",
+   "file": "Lily - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m096_mid1_01",
+     "text": "…They were dry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Convocation",
+   "file": "Lily - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m118_mid2_03",
+     "text": "…She came."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Lily - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_greet_01",
+     "text": "…Hello. You came the long way. Your shoes say so."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_greet_02",
+     "text": "…Oh. Hi. I was just telling the hibiscus about you."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_f_greet_03",
+     "text": "…Good morning. The neem tree says good morning too. Quietly."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_f_greet_04",
+     "text": "…Hi. You look thirsty. So does the bougainvillea. One at a time."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Lily - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_bye_01",
+     "text": "…Go gently. Take water."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_bye_02",
+     "text": "…Bye. Shade on the left side of the road. It's cooler."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Lily - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_thanks_01",
+     "text": "…Thank you. The plants say so too. They're slower about it."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_sorry_01",
+     "text": "…Sorry. I was listening to the leaves. What did you say?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Lily - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_compliment_01",
+     "text": "…You're very patient. Like a cactus. That's a compliment."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_compliment_02",
+     "text": "…You grew this year. Not taller. Better."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Lily - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_tease_01",
+     "text": "…You overwatered your plant. It told me."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_tease_02",
+     "text": "…Lyzzy says you're mysterious. You're just tired."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Lily - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_follow_01",
+     "text": "…I'm coming. Mind the roots."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_wait_01",
+     "text": "…It's all right. I'll wait. Seeds wait for years."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_f_lost_01",
+     "text": "…Not this way. The path by the greenhouse. Follow the tomatoes."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Lily - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_yes_01",
+     "text": "…Yes."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_no_01",
+     "text": "…No. Sorry. No."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_f_maybe_01",
+     "text": "…Maybe. Ask me after it rains."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_f_confused_01",
+     "text": "…Hmm? I was counting leaves. Again, please."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_f_confused_02",
+     "text": "…Who? There was nobody there fa. Only the wind."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_f_agree_01",
+     "text": "…Mm. Yes. You're right. Lyzzy will say it louder."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_f_refuse_01",
+     "text": "…I'd rather not. Thank you for asking first."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Lily - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_joke_01",
+     "text": "…Why was the plant shy? It had a lot of… leaves. Lyzzy, don't laugh."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_ask_01",
+     "text": "…Have you had water today? A whole glass?"
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Lily - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_win_01",
+     "text": "…We won. Oh. That's nice."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_lose_01",
+     "text": "…We lost. Things grow back."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Lily - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_hit_01",
+     "text": "…Oh. I'm fine. You're fine. The fern is upset."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_fall_01",
+     "text": "…I'm sitting. I meant to. The grass is soft here."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_f_blackout_01",
+     "text": "…It's dark. The moonflowers will open now. Come and see."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_f_light_back_01",
+     "text": "…Light. The moonflowers are cross."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_f_rain_01",
+     "text": "…It will rain."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_f_rain_02",
+     "text": "…There. I said."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_f_heat_01",
+     "text": "…Too hot. The leaves are folding. So should we. Shade."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Lily - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_food_01",
+     "text": "…Garden eggs from the greenhouse. I grew them. Don't tell the Dean."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_money_01",
+     "text": "…Seeds are cheap. Waiting is free."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Lily - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_gift_like_01",
+     "text": "…For me? Thank you. I'll put it by the window."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_gift_dislike_01",
+     "text": "…Plastic flowers. That's… thoughtful. They won't need me."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_f_gift_love_01",
+     "text": "…A cutting. From where? It will grow. Thank you. Truly."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Lily - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_idle_01",
+     "text": "…Shh. You're doing well. Just a bit more sun."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_idle_02",
+     "text": "…Lyzzy. Lyzzy. …It's fine. She'll hear in a minute."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Lily - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_night_01",
+     "text": "…At night the gate flowers close. They're listening."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Lily - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_f_callback_01",
+     "text": "…I said it would be windy. You were a kite."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_f_callback_02",
+     "text": "…I had twine. I always have twine."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Lily - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_y1_greet_01",
+     "text": "…You're new. So are the seedlings. Welcome, both."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_y1_idle_01",
+     "text": "…I water the gate flowers every morning. Nobody asked. They asked."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_y1_idle_02",
+     "text": "…The statue by the pond. Her face changes. Or the light does."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_y1_callback_01",
+     "text": "…Six statues. Six gazes. They cross. I just had patience."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_y1_tease_01",
+     "text": "…Lyzzy took your photo. Seven times. You blinked in all."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_y1_compliment_01",
+     "text": "…You helped the girl with the gown pins. I saw."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_y1_rain_01",
+     "text": "…Tomorrow. Bring your umbrella. Lyzzy won't. She never does."
+    },
+    {
+     "n": 8,
+     "id": "bk_lily_y1_night_01",
+     "text": "…The cats in the Engineering Garden. They're sitting in a ring. Shh."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Lily - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_y2_greet_01",
+     "text": "…Hello. The mall took the old mango tree. I'm still a bit cross."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_y2_idle_01",
+     "text": "…Kwari Mall. No plants inside. Only plastic ones. They look so tired."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_y2_idle_02",
+     "text": "…Emily brought strawberries. I brought soil. We traded. Fair."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_y2_callback_01",
+     "text": "…I was watering a cactus. Lyzzy said I missed the whole drama."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_y2_tease_01",
+     "text": "…You ran out in the first rain without me telling you. You learn."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_y2_compliment_01",
+     "text": "…You water the hostel plants when I'm away. They told me."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_y2_rain_01",
+     "text": "…Big rain tonight. The first one. Stay off the long road."
+    },
+    {
+     "n": 8,
+     "id": "bk_lily_y2_follow_01",
+     "text": "…Walk on the grass with me. It likes company."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Lily - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_y3_greet_01",
+     "text": "…You stayed. So did I. The hostel plants needed us."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_y3_idle_01",
+     "text": "…Every plant on the floor. Every one. Alive. Through the strike."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_y3_idle_02",
+     "text": "…No water in Kadanya. I carry it from the tap by the clinic. Two buckets."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_y3_callback_01",
+     "text": "…The farm. The strawberries made it. Emily cried. So did the tractor."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_y3_tease_01",
+     "text": "…Lyzzy video calls to show me her plants. They're plastic. I didn't say."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_y3_ev_strike_01",
+     "text": "…Strike month six. The weeds won't wait for the lecturers."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_y3_compliment_01",
+     "text": "…You never forget the stairs plants. Most people forget the stairs plants."
+    },
+    {
+     "n": 8,
+     "id": "bk_lily_y3_blackout_01",
+     "text": "…Dark again. Good. The greenhouse sleeps better."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Lily - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_y4_greet_01",
+     "text": "…Hello. I got a letter. I won't say who from. It smelled like rain."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_y4_idle_01",
+     "text": "…Lyzzy laminated the wall chart. Laminate is forever. Feelings aren't."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_y4_idle_02",
+     "text": "…There's a column for you. There's a column for everyone. Even the goat."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_y4_callback_01",
+     "text": "…It will rain. It did. The eel listened."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_y4_callback_02",
+     "text": "…They were dry. The gate flowers. That day. I watered them anyway."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_y4_tease_01",
+     "text": "…You and the double booking. Your column was very full."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_y4_compliment_01",
+     "text": "…You stood up for Lyzzy. After the clip. She needed that."
+    },
+    {
+     "n": 8,
+     "id": "bk_lily_y4_night_01",
+     "text": "…Kelechi's last statue. Five hands, and a space. Don't sit in the space."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Lily - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_y5_greet_01",
+     "text": "…Final year. The seedlings we planted in first year are trees now."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_y5_idle_01",
+     "text": "…Tunde drew the greenhouse. He drew a plant I don't have. I'll grow it."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_y5_idle_02",
+     "text": "…Lyzzy is filming everything. I'm watering everything. We're the same."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_y5_callback_01",
+     "text": "…Convocation. I still think about who came. I won't say. You saw."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_y5_compliment_01",
+     "text": "…You grew. Slowly. Properly. Like the good ones."
+    },
+    {
+     "n": 6,
+     "id": "bk_lily_y5_bye_01",
+     "text": "…After convocation, visit the gate flowers. They'll know you."
+    },
+    {
+     "n": 7,
+     "id": "bk_lily_y5_rain_01",
+     "text": "…It will rain at convocation. Only a little. Only after."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Lily - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_ev_ev_freshers_01",
+     "text": "…New freshers. Like seedlings. Mostly water. Lots of noise."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_ev_ev_exam_01",
+     "text": "…Exam week. I read under the neem tree. It hums. Helps."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_ev_ev_results_01",
+     "text": "…I passed. So did the hibiscus. It flowered."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_ev_ev_allowance_01",
+     "text": "…Allowance. Potting soil. Lyzzy says that's not a treat. It is."
+    },
+    {
+     "n": 5,
+     "id": "bk_lily_ev_ev_market_day_01",
+     "text": "…Market day. Seeds from the old woman by the gate. She never charges me."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Lily - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_ev_ev_cup_01",
+     "text": "…Cup final. Lyzzy is screaming. I'm holding her lip gloss."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_ev_ev_convocation_01",
+     "text": "…Everybody's leaving. The trees stay. So will I. For a while."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Lily - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_lily_ev_ev_ramadan_01",
+     "text": "…Iftar under the stars. I brought hibiscus tea. Zobo, from the greenhouse."
+    },
+    {
+     "n": 2,
+     "id": "bk_lily_ev_ev_christmas_01",
+     "text": "…Christmas. I ask the porter to water my plants. He forgets. They forgive."
+    },
+    {
+     "n": 3,
+     "id": "bk_lily_ev_ev_valentine_01",
+     "text": "…Valentine's. Somebody left a rose at the greenhouse. Wrong place. Nice thought."
+    },
+    {
+     "n": 4,
+     "id": "bk_lily_ev_ev_harmattan_01",
+     "text": "…Harmattan. Everything is thirsty. Me too. Mostly the ferns."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

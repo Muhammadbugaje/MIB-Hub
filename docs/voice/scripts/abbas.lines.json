@@ -1,0 +1,847 @@
+{
+ "character": "Abbas",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Fresher Tax",
+   "file": "Abbas - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m007_close_01",
+     "text": "He has pushed. He has also pushed."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Sly's Last Stand",
+   "file": "Abbas - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m014_close_02",
+     "text": "The crowd is pleased. I am also pleased."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Faculty Week: Engineering",
+   "file": "Abbas - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m033_mid1_03",
+     "text": "The wiring is the problem. I will fix the wiring."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Sly Goes Straight",
+   "file": "Abbas - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m034_open_04",
+     "text": "Zero customers. I am holding up a zero."
+    },
+    {
+     "n": 2,
+     "id": "m034_mid1_01",
+     "text": "Nine. …Nine point five. The line is clean."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "The Second Coil",
+   "file": "Abbas - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m041_close_02",
+     "text": "The winding is correct. I am John Carter."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "The Plan",
+   "file": "Abbas - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m043_open_07",
+     "text": "I am John Carter. I do not vote on names."
+    },
+    {
+     "n": 2,
+     "id": "m043_close_03",
+     "text": "It will turn. I have tested it on nothing. It will turn."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Unplug Iron Mama (Heist 1)",
+   "file": "Abbas - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m044_mid1_02",
+     "text": "Two taps. No more. It is seated."
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "Two Papers, One Day",
+   "file": "Abbas - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m047_mid1_03",
+     "text": "I did not programme the salute. Nobody did."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Workshop Nights",
+   "file": "Abbas - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m065_open_04",
+     "text": "My name is Abbas."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "First Day at Work",
+   "file": "Abbas - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m074_mid1_01",
+     "text": "Twenty minutes. The record is two days."
+    },
+    {
+     "n": 2,
+     "id": "m074_mid1_02",
+     "text": "There is also a bucket of earth current."
+    },
+    {
+     "n": 3,
+     "id": "m074_mid1_03",
+     "text": "But that one is heavy."
+    },
+    {
+     "n": 4,
+     "id": "m074_close_03",
+     "text": "My name is Abbas."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Nationals",
+   "file": "Abbas - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m087_mid1_01",
+     "text": "The robot is fine. It is waiting for him."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "Fresher Tax, Reversed",
+   "file": "Abbas - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m099_mid1_07",
+     "text": "My name is Abbas."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "Parts from Everywhere",
+   "file": "Abbas - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m103_open_05",
+     "text": "Yes. It is called 'Good morning'."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Build Week",
+   "file": "Abbas - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m104_mid1_03",
+     "text": "Two thousand turns. I counted. Do not ask again."
+    }
+   ]
+  },
+  {
+   "section": "Mission 15",
+   "title": "Three by Road",
+   "file": "Abbas - Mission 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m112_mid1_04",
+     "text": "Three switches. In order. I am holding the spanner."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Abbas - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_greet_01",
+     "text": "Good morning. My name is Abbas."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_greet_02",
+     "text": "Sannu. [Hello.] You are here. I am also here."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_greet_03",
+     "text": "Yes. It is me. Abbas. Not John Carter."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_f_greet_04",
+     "text": "Hello. I have been holding this spanner since seven. It is fine."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Abbas - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_bye_01",
+     "text": "Go. Check your tyres. Everybody forgets the tyres."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_bye_02",
+     "text": "Goodbye. Close the workshop door. It does not close. Push it anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Abbas - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_thanks_01",
+     "text": "Thank you. That is a correct thing you did."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_thanks_02",
+     "text": "Thanks. I am pleased. This is my pleased face."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_sorry_01",
+     "text": "Sorry. I measured wrongly. It happens once a year. This was the year."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Being nice",
+   "file": "Abbas - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_compliment_01",
+     "text": "Your soldering is clean. I would let you near my meter."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_compliment_02",
+     "text": "Good work. Nine. Nine point five if you sweep up."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Teasing",
+   "file": "Abbas - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_tease_01",
+     "text": "You stripped that wire with your teeth. I saw. I will say nothing. I said something."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_tease_02",
+     "text": "You are holding the screwdriver like a pen. It is not exam week."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Walking with the player",
+   "file": "Abbas - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_follow_01",
+     "text": "I am walking behind you. At a safe distance. From your driving."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_wait_01",
+     "text": "I have waited. I have also waited."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_lost_01",
+     "text": "Wrong building. That is Civil. They have more sand. Turn round."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Quick answers",
+   "file": "Abbas - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_yes_01",
+     "text": "Yes. Tested."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_no_01",
+     "text": "No. I tested it on nothing. It still said no."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_maybe_01",
+     "text": "Maybe. I need a multimeter."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_f_confused_01",
+     "text": "I do not understand. Explain it like a circuit."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_f_confused_02",
+     "text": "Who? There was nobody there fa. Only the generator."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_f_agree_01",
+     "text": "Correct. Write it on the board."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_f_refuse_01",
+     "text": "I do not vote on names. I do not vote on that either."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Jokes and questions",
+   "file": "Abbas - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_joke_01",
+     "text": "Why did the fuse leave? It was blown away. …That was the joke. I am done."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_ask_01",
+     "text": "Did you switch it off at the mains? Say yes. Then go and check."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Winning and losing",
+   "file": "Abbas - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_win_01",
+     "text": "We won. I am excited. Inside."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_lose_01",
+     "text": "We lost. The wiring was not the problem. This time."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "When something goes wrong",
+   "file": "Abbas - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_hit_01",
+     "text": "I have been pushed. I am still standing. Noted."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_fall_01",
+     "text": "I am on the ground. The ground is level. Good to know."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_blackout_01",
+     "text": "NEPA. Phase two is gone. The other two are thinking about it."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_f_light_back_01",
+     "text": "Light. Do not celebrate. It is listening."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_f_rain_01",
+     "text": "Rain. Do not touch the junction box. Do not touch anything. Go inside."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_f_heat_01",
+     "text": "It is hot. The transformer agrees. It is humming about it."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Food and money",
+   "file": "Abbas - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_food_01",
+     "text": "Suya. Measured portions. I will have two measures."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_money_01",
+     "text": "Bill for the repair. Parts at cost. Labour at… Abbas rate. It is low."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Getting a present",
+   "file": "Abbas - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_gift_like_01",
+     "text": "A new fuse set. Thank you. I will name them. No, I will not."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_gift_dislike_01",
+     "text": "Perfume. For a man who smells of grease. Brave."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_f_gift_love_01",
+     "text": "A torque wrench. Calibrated. …I am not crying. Bolaji, do not look."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Talking to yourself",
+   "file": "Abbas - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_idle_01",
+     "text": "Two thousand turns. I counted. Do not ask again."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_idle_02",
+     "text": "Red to red. Black to black. Life is simple. People are not."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Late at night",
+   "file": "Abbas - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_night_01",
+     "text": "At night the cables sing. It is the load. It is not singing."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Remember when",
+   "file": "Abbas - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_f_callback_01",
+     "text": "He pushed. He also pushed. My best commentary. Ever."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_f_callback_02",
+     "text": "Nine. Nine point five. The line was clean. I stand by the score."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Year 1: arriving",
+   "file": "Abbas - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_y1_greet_01",
+     "text": "You are the fresher who fought Bolaji. He is fine. His pride is resting."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_y1_idle_01",
+     "text": "Bolaji calls me John Carter. Every day. Since Year One. My Year One."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_y1_idle_02",
+     "text": "The Engineering Garden lights flicker at dusk. Loose neutral. I will check."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_y1_tease_01",
+     "text": "You came to the court with flip-flops. Bold. Wrong."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_y1_callback_01",
+     "text": "The crowd was pleased. I was also pleased. I said so on the microphone."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_y1_confused_01",
+     "text": "The class photo. That gap in the back. Bad framing. Probably."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_y1_compliment_01",
+     "text": "You took the knock and got up. Correct procedure."
+    },
+    {
+     "n": 8,
+     "id": "bk_abbas_y1_night_01",
+     "text": "The dam road has no lamps. Somebody should fix that. I am somebody. Later."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Year 2: the mall",
+   "file": "Abbas - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_y2_idle_01",
+     "text": "Faculty Week. The wiring was the problem. I fixed the wiring."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_y2_idle_02",
+     "text": "Iron Mama hums at fifty hertz. Plus a little. I don't like the little."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_y2_callback_01",
+     "text": "The winding was correct. I said I am John Carter. I was tired."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_y2_callback_02",
+     "text": "Two taps. No more. It was seated. I still dream about the taps."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_y2_callback_03",
+     "text": "Zero customers that first morning. I held up a zero. Honest scoring."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_y2_greet_01",
+     "text": "Sly's Cuts. I am not a barber. I hold the score cards."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_y2_tease_01",
+     "text": "The escalator. Running down at last. You ran down it anyway. Like a hero."
+    },
+    {
+     "n": 8,
+     "id": "bk_abbas_y2_night_01",
+     "text": "Night shift. If the meter jumps, do not jump with it."
+    },
+    {
+     "n": 9,
+     "id": "bk_abbas_y2_ask_01",
+     "text": "The salute in the exam hall. I did not programme it. Did you?"
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Year 3: the strike",
+   "file": "Abbas - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_y3_greet_01",
+     "text": "Strike. No lectures. I am fixing every fan in Giginya. Nineteen down."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_y3_idle_01",
+     "text": "Workshop nights. Bolaji does wood. I do wire. Shamsu does talking."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_y3_idle_02",
+     "text": "The tower stopped at half. We ran out of wood. Not ideas."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_y3_callback_01",
+     "text": "My name is Abbas. I said it in the workshop. Nobody wrote it down."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_y3_blackout_01",
+     "text": "Your lamp works. I tested it on nothing. Then on darkness. Good."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_y3_ev_strike_01",
+     "text": "Strike week twelve. I have rewired the radio twice. Ring Road FM thanks me."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_y3_tease_01",
+     "text": "Your phone charger is held together by hope. I can fix hope."
+    },
+    {
+     "n": 8,
+     "id": "bk_abbas_y3_heat_01",
+     "text": "No fan, no light, no exam. The strike is very consistent."
+    }
+   ]
+  },
+  {
+   "section": "Common 19",
+   "title": "Year 4: fame",
+   "file": "Abbas - Common 19",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_y4_greet_01",
+     "text": "First day at work. Change-Over's office. The record is two days. I did twenty minutes."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_y4_idle_01",
+     "text": "There is a bucket of earth current. It is heavy. Nobody believes me."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_y4_idle_02",
+     "text": "The robot is fine. It is waiting. Robots are good at waiting. So am I."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_y4_callback_01",
+     "text": "Nationals. The robot waited for him. So did we."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_y4_compliment_01",
+     "text": "You check the earth first now. I taught you that. I am pleased."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_y4_tease_01",
+     "text": "Your clip went viral. The fake one. Your dancing was more accurate in the fake."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_y4_follow_01",
+     "text": "Walk on the left of the cable trench. The right is lying."
+    },
+    {
+     "n": 8,
+     "id": "bk_abbas_y4_ask_01",
+     "text": "Helen's exercise sheet. Do I fill 'excuses'? I have none. That is an excuse."
+    }
+   ]
+  },
+  {
+   "section": "Common 20",
+   "title": "Year 5: leaving",
+   "file": "Abbas - Common 20",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_y5_greet_01",
+     "text": "Good morning. It is called 'Good morning'. Say it to people. It costs nothing."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_y5_idle_01",
+     "text": "Final year. Bolaji is practising my name. I hear him in the shop."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_y5_idle_02",
+     "text": "Three switches. In order. I am still holding the spanner. Spiritually."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_y5_callback_01",
+     "text": "Two thousand turns on the coil. I counted. I will always have counted."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_y5_compliment_01",
+     "text": "You don't need my multimeter now. Keep it. I have three."
+    },
+    {
+     "n": 6,
+     "id": "bk_abbas_y5_tease_01",
+     "text": "Defence next week. Your slides have eleven fonts. Engineers use one."
+    },
+    {
+     "n": 7,
+     "id": "bk_abbas_y5_bye_01",
+     "text": "Convocation. Wear the gown. Check the zip. Everybody forgets the zip."
+    }
+   ]
+  },
+  {
+   "section": "Common 21",
+   "title": "Special days: term time",
+   "file": "Abbas - Common 21",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_ev_ev_freshers_01",
+     "text": "Freshers. Do not plug three kettles into one socket. Giginya remembers."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_ev_ev_exam_01",
+     "text": "Exam week. Calculator, two pens, spare battery. I bring three batteries."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_ev_ev_results_01",
+     "text": "Results. A. Also A. Also C. The C is a misprint. I am appealing calmly."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_ev_ev_allowance_01",
+     "text": "Allowance came. I bought solder. Nobody understands me. The solder does."
+    },
+    {
+     "n": 5,
+     "id": "bk_abbas_ev_ev_market_day_01",
+     "text": "Market day. Chi-Tech sells fuses. Half are fuses. Half are optimism."
+    }
+   ]
+  },
+  {
+   "section": "Common 22",
+   "title": "Special days: the big ones",
+   "file": "Abbas - Common 22",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_ev_ev_cup_01",
+     "text": "Final whistle. I am shouting. This is my shout."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_ev_ev_elections_01",
+     "text": "Election day. I am counting ballots. I count everything. It is relaxing."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_ev_ev_convocation_01",
+     "text": "He said Abbas. Out loud. Five years. …I am pleased. This is my pleased face."
+    }
+   ]
+  },
+  {
+   "section": "Common 23",
+   "title": "Special days: seasons and holidays",
+   "file": "Abbas - Common 23",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_abbas_ev_ev_ramadan_01",
+     "text": "The iftar kitchen needs two more sockets. I have brought four. Safety margin."
+    },
+    {
+     "n": 2,
+     "id": "bk_abbas_ev_ev_christmas_01",
+     "text": "Christmas break. Campus is quiet. The transformer is not. It never rests."
+    },
+    {
+     "n": 3,
+     "id": "bk_abbas_ev_ev_valentine_01",
+     "text": "Valentine. I fixed her generator. That is my rose."
+    },
+    {
+     "n": 4,
+     "id": "bk_abbas_ev_ev_harmattan_01",
+     "text": "Harmattan. Dust in the switchgear. Blow, don't wipe. Never wipe."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

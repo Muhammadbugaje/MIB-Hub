@@ -1,0 +1,406 @@
+{
+ "character": "Muhammad",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Queue Theory",
+   "file": "Muhammad - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m002_mid1_02",
+     "text": "Excuse me. Sorry."
+    },
+    {
+     "n": 2,
+     "id": "m002_mid1_03",
+     "text": "Don't take the shortcut, {{PLAYER_NAME}}."
+    },
+    {
+     "n": 3,
+     "id": "m002_mid1_04",
+     "text": "The gate is locked on Tuesdays."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Test Week, One Lamp",
+   "file": "Muhammad - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_mid1_01",
+     "text": "Excuse me. Sorry."
+    },
+    {
+     "n": 2,
+     "id": "m011_mid1_02",
+     "text": "Question four is the long one. Start there."
+    },
+    {
+     "n": 3,
+     "id": "m011_mid1_03",
+     "text": "Leave one till last. It only looks easy."
+    },
+    {
+     "n": 4,
+     "id": "m011_mid1_04",
+     "text": "Sorry. I shouldn't. You looked worried."
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Dam at Midnight",
+   "file": "Muhammad - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m016_close_01",
+     "text": "You'll be all right. I checked. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Meter Reader",
+   "file": "Muhammad - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m030_mid1_01",
+     "text": "Excuse me. Sorry."
+    },
+    {
+     "n": 2,
+     "id": "m030_mid1_02",
+     "text": "The van turns left. It always turns left."
+    },
+    {
+     "n": 3,
+     "id": "m030_mid1_03",
+     "text": "He doesn't like to. He waits a moment first."
+    },
+    {
+     "n": 4,
+     "id": "m030_mid1_04",
+     "text": "Sorry. You'd better go."
+    }
+   ]
+  },
+  {
+   "section": "Mission 5",
+   "title": "New Site Goes Dark",
+   "file": "Muhammad - Mission 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m039_mid2_01",
+     "text": "They're waiting. Get in. Sorry about the road."
+    },
+    {
+     "n": 2,
+     "id": "m039_mid2_02",
+     "text": "They were meant to have lamps. It was in the drawings."
+    },
+    {
+     "n": 3,
+     "id": "m039_mid2_03",
+     "text": "Someone will get to it."
+    },
+    {
+     "n": 4,
+     "id": "m039_mid2_04",
+     "text": "I'll leave you here. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 6",
+   "title": "Indefinite",
+   "file": "Muhammad - Mission 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m050_mid1_01",
+     "text": "I'm not going anywhere. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 7",
+   "title": "Past the Last Streetlight",
+   "file": "Muhammad - Mission 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m055_mid1_02",
+     "text": "Kaka, ina wuni. [Good evening, grandmother.]"
+    }
+   ]
+  },
+  {
+   "section": "Mission 8",
+   "title": "IT Letter",
+   "file": "Muhammad - Mission 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m073_mid1_04",
+     "text": "Sorry. They never do find it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 9",
+   "title": "Seoul or Stay",
+   "file": "Muhammad - Mission 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m094_mid1_03",
+     "text": "You'll be all right. I checked. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 10",
+   "title": "The Missing Script",
+   "file": "Muhammad - Mission 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m100_mid1_01",
+     "text": "It isn't lost. Sorry."
+    },
+    {
+     "n": 2,
+     "id": "m100_mid1_02",
+     "text": "Third cabinet, behind the 1998 scripts."
+    },
+    {
+     "n": 3,
+     "id": "m100_mid1_03",
+     "text": "He put it there himself. He has been ill about it."
+    }
+   ]
+  },
+  {
+   "section": "Mission 11",
+   "title": "Failure",
+   "file": "Muhammad - Mission 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m105_mid1_01",
+     "text": "I'm a bit tired today. Sorry."
+    },
+    {
+     "n": 2,
+     "id": "m105_mid1_02",
+     "text": "You're nearly there. It was never the windings."
+    }
+   ]
+  },
+  {
+   "section": "Mission 12",
+   "title": "The Longest Night",
+   "file": "Muhammad - Mission 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m111_mid3_01",
+     "text": "He'd rather you didn't. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 13",
+   "title": "The Ten Seals",
+   "file": "Muhammad - Mission 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m114_mid1_01",
+     "text": "Mind the fourth step. It was always loose."
+    },
+    {
+     "n": 2,
+     "id": "m114_mid1_02",
+     "text": "Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Mission 14",
+   "title": "Fresher",
+   "file": "Muhammad - Mission 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m120_mid3_01",
+     "text": "Excuse me. Sorry. Which way is the Senate?"
+    },
+    {
+     "n": 2,
+     "id": "m120_mid3_02",
+     "text": "Thank you. Thank you. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Year 1: arriving",
+   "file": "Muhammad - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_y1_greet_01",
+     "text": "Excuse me. Sorry. Your lace is undone."
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_y1_sorry_01",
+     "text": "Sorry. I just knew."
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_y1_lost_01",
+     "text": "Not that stair. Sorry. The other one."
+    },
+    {
+     "n": 4,
+     "id": "bk_muhammad_y1_rain_01",
+     "text": "It stops at the gate. Sorry. Walk slowly."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Year 2: the mall",
+   "file": "Muhammad - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_y2_thanks_01",
+     "text": "No, no. Thank you. Sorry. Go on."
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_y2_night_01",
+     "text": "Keep to the lamps tonight. Sorry."
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_y2_bye_01",
+     "text": "This is my turning. Go well. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Year 3: the strike",
+   "file": "Muhammad - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_y3_idle_01",
+     "text": "Quiet, isn't it. That's all right."
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_y3_greet_01",
+     "text": "You're carrying too much. Sorry. Give me one."
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_y3_confused_01",
+     "text": "Sorry. I can't say."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Year 4: fame",
+   "file": "Muhammad - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_y4_sorry_01",
+     "text": "Sorry. I shouldn't know that. I just do."
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_y4_hit_01",
+     "text": "Sorry. Sorry. My fault. Up you come."
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_y4_idle_01",
+     "text": "You'll be all right. I checked twice. Sorry."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Year 5: leaving",
+   "file": "Muhammad - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_y5_idle_01",
+     "text": "Nearly there. Sorry. I can't carry this one."
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_y5_night_01",
+     "text": "Your light's still on. Sleep. Sorry."
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_y5_bye_01",
+     "text": "Go on. They're waiting for you."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "After graduation",
+   "file": "Muhammad - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_muhammad_post_greet_01",
+     "text": "Excuse me. Sorry. Is this the way to the Senate?"
+    },
+    {
+     "n": 2,
+     "id": "bk_muhammad_post_ask_01",
+     "text": "Sorry. Where do freshers queue for the Bursary?"
+    },
+    {
+     "n": 3,
+     "id": "bk_muhammad_post_ask_02",
+     "text": "Sorry. Have we met? …No. Sorry."
+    },
+    {
+     "n": 4,
+     "id": "bk_muhammad_post_ask_03",
+     "text": "Excuse me. Which floor is six? The porter said six."
+    },
+    {
+     "n": 5,
+     "id": "bk_muhammad_post_thanks_01",
+     "text": "Thank you. Sorry. Everybody here is so kind."
+    },
+    {
+     "n": 6,
+     "id": "bk_muhammad_post_bye_01",
+     "text": "Sorry. I'm meant to be somewhere. Thank you."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

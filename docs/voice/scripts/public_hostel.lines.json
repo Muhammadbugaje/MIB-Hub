@@ -1,0 +1,352 @@
+{
+ "character": "The Hostel",
+ "sections": [
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Hostel - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_f_greet_01",
+     "text": "Neighbour! You get salt? [Do you have salt?]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_f_greet_02",
+     "text": "Who's knocking? If it's for garri, I'm sleeping."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "When something goes wrong",
+   "file": "The Hostel - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_f_blackout_01",
+     "text": "NEPA! I was ironing! Half my shirt is smart!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_f_blackout_02",
+     "text": "Who has a candle? I'll trade two cubes of Maggi."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_f_light_back_01",
+     "text": "UP NEPA! Everybody charge! Charge! Charge!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_f_light_back_02",
+     "text": "Light don come! [Power's back!] Plug in before it changes its mind!"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_hostel_f_rain_01",
+     "text": "Rain! Pack the clothes! Whose clothes? EVERYBODY'S clothes!"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_hostel_f_heat_01",
+     "text": "The room is an oven. I'm sleeping in the corridor. Don't step on me."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Food and money",
+   "file": "The Hostel - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_f_food_01",
+     "text": "Garri for the room! Who has sugar? Groundnut? Anything?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Talking to yourself",
+   "file": "The Hostel - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_f_idle_01",
+     "text": "Whose bucket is this? It's been in the queue since Monday."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_f_idle_02",
+     "text": "Water came! Bring every bucket! Bring the kettle! Bring the cup!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_f_idle_03",
+     "text": "Who used my stove and left the pot to marinate?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_f_idle_04",
+     "text": "Somebody's alarm has been ringing since five. For nobody."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_hostel_f_idle_05",
+     "text": "Room twelve is cooking egusi. My door is open for no reason."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_hostel_f_idle_06",
+     "text": "I'm not snoring. I'm breathing with confidence."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_hostel_f_idle_07",
+     "text": "Two rings on one stove, ten people waiting. Hostel economics."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_hostel_f_idle_08",
+     "text": "Somebody took my slippers. I'm wearing one of yours. We're even."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_hostel_f_idle_09",
+     "text": "Pass the iron when you're done. When the light is done too."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_hostel_f_idle_10",
+     "text": "This corridor smells like noodles and ambition."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Late at night",
+   "file": "The Hostel - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_f_night_01",
+     "text": "Quiet hours! It's quiet hours! Why are you singing?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_f_night_02",
+     "text": "Who's walking on the sixth landing? We only have five floors."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_f_night_03",
+     "text": "Baba Porter still keeps post for Room 606. Don't ask him."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Year 1: arriving",
+   "file": "The Hostel - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_y1_idle_01",
+     "text": "Third blackout today. My laptop is charging on vibes."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_y1_idle_02",
+     "text": "Freshers knocking on every door for 'small water'."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_y1_idle_03",
+     "text": "A candle on every windowsill. The hall looks like a birthday."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 2: the mall",
+   "file": "The Hostel - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_y2_idle_01",
+     "text": "Our light is weak, mall light is strong. Somebody connected something."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_y2_idle_02",
+     "text": "The fan is turning so slowly. It's just thinking about air."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_y2_idle_03",
+     "text": "He bought a rechargeable lamp from the mall. We all live in his room now."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 3: the strike",
+   "file": "The Hostel - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_y3_idle_01",
+     "text": "Strike. Half the hall went home. The water queue is a dream now."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_y3_idle_02",
+     "text": "Our floor is three people and a lizard. The lizard is the chairman."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_y3_idle_03",
+     "text": "Shared pot of garri on the corridor. Strike solidarity."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_y3_idle_04",
+     "text": "I slept fourteen hours. The strike is a sleeping tournament."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 4: fame",
+   "file": "The Hostel - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_y4_idle_01",
+     "text": "The video from Room 9? Fake. Probably. Send it again."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_y4_idle_02",
+     "text": "The hall candidate is giving out noodles. Democracy smells nice."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_y4_idle_03",
+     "text": "Everybody's practising their 'viral face' in the bathroom mirror."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 5: leaving",
+   "file": "The Hostel - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_y5_idle_01",
+     "text": "Finalists packing. Who's taking the big bucket? I'm claiming it."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_y5_idle_02",
+     "text": "You're leaving? Who will I borrow salt from now?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_y5_idle_03",
+     "text": "This corridor will be so quiet next year."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Special days: term time",
+   "file": "The Hostel - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_ev_ev_freshers_01",
+     "text": "New neighbours! Welcome! The tap works on Tuesdays."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_ev_ev_exam_01",
+     "text": "Exam week. The corridor is a library. Shhh, even your slippers."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_ev_ev_results_01",
+     "text": "Somebody screamed in Room 4. Good scream or bad scream?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_ev_ev_allowance_01",
+     "text": "Allowance! Who owes who? Accounting first, celebration after."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: the big ones",
+   "file": "The Hostel - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_ev_ev_strike_01",
+     "text": "Strike. The water queue is just me and my thoughts."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_ev_ev_cup_01",
+     "text": "Corridor TV! Bring chairs! Bring your faculty voice!"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_ev_ev_elections_01",
+     "text": "Election posters on the bathroom door. Strategic."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_ev_ev_convocation_01",
+     "text": "Convocation tomorrow. The iron is booked till three a.m."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: seasons and holidays",
+   "file": "The Hostel - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_hostel_ev_ev_ramadan_01",
+     "text": "Sahur [pre-dawn meal] in thirty minutes! Who's cooking? Knock knock!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_hostel_ev_ev_ramadan_02",
+     "text": "Iftar plates going round the corridor. Take, take, there's plenty."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_hostel_ev_ev_christmas_01",
+     "text": "Merry Christmas, neighbour! Here, jollof. Don't argue."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_hostel_ev_ev_valentine_01",
+     "text": "Flowers delivered to our corridor. The whole floor is investigating."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_hostel_ev_ev_harmattan_01",
+     "text": "Harmattan. The bucket water is so cold it's basically advice."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

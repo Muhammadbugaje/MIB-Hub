@@ -1,0 +1,474 @@
+{
+ "character": "The Freshers",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Welcome, Fresher",
+   "file": "The Freshers - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m001_mid1_01",
+     "text": "Faaa!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Belle First",
+   "file": "The Freshers - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m003_mid1_01",
+     "text": "Ahn ahn! NEPA!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Matric Fit",
+   "file": "The Freshers - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m004_mid1_01",
+     "text": "I solemnly promise…"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Three Hundred",
+   "file": "The Freshers - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m049_open_01",
+     "text": "Good morning, senior."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Freshers - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_greet_01",
+     "text": "Good morning, senior. Sorry, good afternoon. Is it afternoon?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_greet_02",
+     "text": "Senior, please, is this Theatre Gabas or Theatre Yamma?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_f_greet_03",
+     "text": "Senior! You remember me? From the queue? The long one?"
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Thank-yous and sorries",
+   "file": "The Freshers - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_thanks_01",
+     "text": "Thank you, senior! When I'm a senior, I'll show somebody too."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Walking with the player",
+   "file": "The Freshers - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_lost_01",
+     "text": "Senior, I followed you because you looked like you knew."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_lost_02",
+     "text": "I've passed this goat three times. It's judging me."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_f_lost_03",
+     "text": "Is Giginya that way, or is that way also that way?"
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Jokes and questions",
+   "file": "The Freshers - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_ask_01",
+     "text": "Please, where do they sell the photocopy of the photocopy?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_ask_02",
+     "text": "Senior, how many passport photos is 'enough'?"
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "When something goes wrong",
+   "file": "The Freshers - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_blackout_01",
+     "text": "Ahn ahn! NEPA! On my first week!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_blackout_02",
+     "text": "My mum said 'make sure there's light'. Mummy, I tried."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_f_rain_01",
+     "text": "Nobody told me the rain here has a personality."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Talking to yourself",
+   "file": "The Freshers - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_idle_01",
+     "text": "My mum packed six tins of milk. I have nowhere to put my clothes."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_idle_02",
+     "text": "…and he said 'fresher, where is your file?' I said, what file?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_f_idle_03",
+     "text": "Is it true they lock the library with you inside?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_f_idle_04",
+     "text": "Third queue today. I'm starting to know these people's families."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_freshers_f_idle_05",
+     "text": "Clearance, registry, bursary, then clearance again. It's a circle."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_freshers_f_idle_06",
+     "text": "I wrote my matric number on my hand. Then I washed my hand."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_freshers_f_idle_07",
+     "text": "They said free meat pie at orientation. I came for knowledge. And pie."
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_freshers_f_idle_08",
+     "text": "My phone is on two percent and my map is on zero."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_freshers_f_idle_09",
+     "text": "Which one is the Clock Tower? The one that's not moving? Ah, okay."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Late at night",
+   "file": "The Freshers - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_f_night_01",
+     "text": "Why is everybody's torch pointing at the floor? Is it a rule?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_f_night_02",
+     "text": "My roommate said don't take the garden path at night. He didn't say why."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_f_night_03",
+     "text": "Is the noticeboard always this full at midnight?"
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 1: arriving",
+   "file": "The Freshers - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_y1_idle_01",
+     "text": "Light went three times during orientation. They said it's normal."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_y1_idle_02",
+     "text": "I found The Spot! I'm never leaving. I live here now."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_y1_idle_03",
+     "text": "They said sit on the warm bench and you'll graduate. Or not. They argued."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_y1_idle_04",
+     "text": "First lecture, I sat in the wrong theatre for an hour. Nice course, though."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_freshers_y1_idle_05",
+     "text": "I called a professor 'Mallam'. He said 'Doctor'. I said 'Sorry, Mallam'."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_freshers_y1_blackout_01",
+     "text": "Candle is now two hundred? It was one hundred this morning!"
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 2: the mall",
+   "file": "The Freshers - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_y2_idle_01",
+     "text": "There's a mall now? With escalator? I'm riding it six times."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_y2_idle_02",
+     "text": "The mall has light all night. The hostel has light 'sometimes'. Hmm."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_y2_idle_03",
+     "text": "Senior, the shuttle to New Site: is it today, or is it a feeling?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_y2_idle_04",
+     "text": "I asked how much to charge my phone. He said 'how much do you have?'"
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 3: the strike",
+   "file": "The Freshers - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_y3_idle_01",
+     "text": "I resumed and the lecturers didn't. Is that allowed?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_y3_idle_02",
+     "text": "My dad said 'go back to school'. Daddy, school is not here."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_y3_idle_03",
+     "text": "Freshers in a strike. We matriculated into a waiting room."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_y3_idle_04",
+     "text": "I've learned so much this semester. Mostly how to make garri last."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 4: fame",
+   "file": "The Freshers - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_y4_idle_01",
+     "text": "Is it true about the video? Everybody shared it, so it must be true."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_y4_idle_02",
+     "text": "Which candidate is giving out free biscuits? I'm voting for biscuits."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_y4_idle_03",
+     "text": "A senior said our hall is haunted. Another said it's just the plumbing."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_y4_idle_04",
+     "text": "They said the clock stopped before anybody here was born."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 5: leaving",
+   "file": "The Freshers - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_y5_idle_01",
+     "text": "Senior, you're graduating? Who will show us the shortcuts?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_y5_idle_02",
+     "text": "The campus looks so bright. My cousin said it was dark before."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_y5_idle_03",
+     "text": "Is that clock going to start one day, or is it decoration?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_y5_idle_04",
+     "text": "A finalist gave me her old notes. Full of sweet wrappers. Still a blessing."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: term time",
+   "file": "The Freshers - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_ev_ev_freshers_01",
+     "text": "FREE MEAT PIE! Where? WHERE?"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_ev_ev_freshers_02",
+     "text": "The talk said 'look to your left, look to your right'. I looked. Now what?"
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_ev_ev_freshers_03",
+     "text": "Admission letter, photocopy, photocopy of the photocopy…"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_ev_ev_exam_01",
+     "text": "First exam. I've read the course outline twelve times. Is that reading?"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_freshers_ev_ev_exam_02",
+     "text": "Senior, is it true the invigilator can hear you thinking?"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_freshers_ev_ev_results_01",
+     "text": "I can't look. You look. Tell me with your face."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_freshers_ev_ev_results_02",
+     "text": "I passed! Everything! Even the course I attended once!"
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_freshers_ev_ev_allowance_01",
+     "text": "Allowance came! I have plans. The plans are garri."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_freshers_ev_ev_market_day_01",
+     "text": "Thursday market! I bought a bucket. I don't know why. It was cheap."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: the big ones",
+   "file": "The Freshers - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_ev_ev_strike_01",
+     "text": "Strike? In our first year? We haven't even learned the school song."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_ev_ev_cup_01",
+     "text": "Which faculty are we? I'm shouting for whoever is winning."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_ev_ev_elections_01",
+     "text": "A candidate shook my hand and gave me a pen. I'm loyal now."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_ev_ev_convocation_01",
+     "text": "One day that's me in the gown. Five years. Or six. God willing."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Special days: seasons and holidays",
+   "file": "The Freshers - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_freshers_ev_ev_ramadan_01",
+     "text": "First Ramadan away from home. The iftar here is big. Alhamdulillah. [Praise God.]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_freshers_ev_ev_christmas_01",
+     "text": "Half the hall travelled for Christmas. The corridor echoes now."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_freshers_ev_ev_valentine_01",
+     "text": "One rose is how much? One? Is it made of gold?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_freshers_ev_ev_harmattan_01",
+     "text": "Harmattan has cracked my lips into a map of the campus."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

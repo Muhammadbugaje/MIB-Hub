@@ -1,0 +1,398 @@
+{
+ "character": "Mrs. Adebayo",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Queue Theory",
+   "file": "Mrs. Adebayo - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m002_open_03",
+     "text": "Four passports."
+    },
+    {
+     "n": 2,
+     "id": "m002_mid1_05",
+     "text": "Next."
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "IT Letter",
+   "file": "Mrs. Adebayo - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m073_open_01",
+     "text": "Four passports."
+    },
+    {
+     "n": 2,
+     "id": "m073_open_02",
+     "text": "Hm. A senior. Next window. Four stamps."
+    },
+    {
+     "n": 3,
+     "id": "m073_mid1_01",
+     "text": "Graduated? Withdrew? …It doesn't say."
+    },
+    {
+     "n": 4,
+     "id": "m073_mid1_02",
+     "text": "It doesn't say anything. How odd."
+    },
+    {
+     "n": 5,
+     "id": "m073_mid1_03",
+     "text": "Yes? What were you asking for?"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "The Missing Script",
+   "file": "Mrs. Adebayo - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m100_mid1_04",
+     "text": "Excuse me."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "Mrs. Adebayo - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_greet_01",
+     "text": "Yes? Four passports."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_greet_02",
+     "text": "Next."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_f_greet_03",
+     "text": "E kaaro. [Good morning.] Which form?"
+    },
+    {
+     "n": 4,
+     "id": "bk_mrs_adebayo_f_greet_04",
+     "text": "You've greeted. Lovely. Now the form."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "Mrs. Adebayo - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_bye_01",
+     "text": "Come back Monday."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_bye_02",
+     "text": "Next."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Thank-yous and sorries",
+   "file": "Mrs. Adebayo - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_thanks_01",
+     "text": "Thank you. Next."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "Teasing",
+   "file": "Mrs. Adebayo - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_tease_01",
+     "text": "Your photo looks surprised. Everybody's photo looks surprised."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Walking with the player",
+   "file": "Mrs. Adebayo - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_wait_01",
+     "text": "Join the queue. Yes, that one. All of it."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_wait_02",
+     "text": "I'm on break. My break has started. It started now."
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Quick answers",
+   "file": "Mrs. Adebayo - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_yes_01",
+     "text": "Yes. Sign here. And here. And here."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_no_01",
+     "text": "No. It's not complete."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_f_no_02",
+     "text": "Blue background? No. White. Go back to the studio."
+    },
+    {
+     "n": 4,
+     "id": "bk_mrs_adebayo_f_confused_01",
+     "text": "Which form? There are four forms. Each needs four passports."
+    },
+    {
+     "n": 5,
+     "id": "bk_mrs_adebayo_f_refuse_01",
+     "text": "Don't lean on my glass."
+    },
+    {
+     "n": 6,
+     "id": "bk_mrs_adebayo_f_maybe_01",
+     "text": "Maybe Tuesday. Maybe. Bring four passports anyway."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Jokes and questions",
+   "file": "Mrs. Adebayo - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_ask_01",
+     "text": "Did you bring four passports? White background?"
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_ask_02",
+     "text": "Photocopy of the photocopy? Stamped?"
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_f_joke_01",
+     "text": "The portal is down. The portal has been down since I was a fresher."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "When something goes wrong",
+   "file": "Mrs. Adebayo - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_blackout_01",
+     "text": "No light, no system. Come back Monday."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_light_back_01",
+     "text": "Light is back. System is loading. System is still loading."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_f_heat_01",
+     "text": "The fan is for me. The queue has the sky."
+    },
+    {
+     "n": 4,
+     "id": "bk_mrs_adebayo_f_rain_01",
+     "text": "Rain. Wet forms. Dry them. Bring them back. Four passports."
+    },
+    {
+     "n": 5,
+     "id": "bk_mrs_adebayo_f_hit_01",
+     "text": "Ah-ah! You pushed the queue. Back of the queue. All the way back."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Getting a present",
+   "file": "Mrs. Adebayo - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_gift_like_01",
+     "text": "Puff-puff. …You may stand at the front. Today only."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_gift_dislike_01",
+     "text": "No gifts at the window. Take it. Next."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_f_gift_love_01",
+     "text": "A stapler that works? Ehn! God bless you."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Talking to yourself",
+   "file": "Mrs. Adebayo - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_f_idle_01",
+     "text": "Four passports. Four. Not three. Not 'I'll bring it'."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_f_idle_02",
+     "text": "Who took my pen? It had a string. Who cut the string?"
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 1: arriving",
+   "file": "Mrs. Adebayo - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_y1_idle_01",
+     "text": "Freshers. They bring one passport and hope. Hope is not a passport."
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Year 2: the mall",
+   "file": "Mrs. Adebayo - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_y2_idle_01",
+     "text": "Ah, I know your face. Still need four passports."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Year 3: the strike",
+   "file": "Mrs. Adebayo - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_y3_ev_strike_01",
+     "text": "Strike. Registry is open. Nobody comes. It's beautiful."
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Year 4: fame",
+   "file": "Mrs. Adebayo - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_y4_idle_01",
+     "text": "Hm. A senior. Next window. Four stamps."
+    }
+   ]
+  },
+  {
+   "section": "Common 15",
+   "title": "Year 5: leaving",
+   "file": "Mrs. Adebayo - Common 15",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_y5_idle_01",
+     "text": "Clearance. Twelve signatures. Four passports. Good luck."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_y5_idle_02",
+     "text": "This old file. Graduated? Withdrew? …It doesn't say. How odd."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_y5_compliment_01",
+     "text": "Complete form. First try. In nineteen years. Sit down. I'm shocked."
+    }
+   ]
+  },
+  {
+   "section": "Common 16",
+   "title": "Special days: term time",
+   "file": "Mrs. Adebayo - Common 16",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_ev_ev_freshers_01",
+     "text": "Freshers' week. My queue reaches the gate. My queue has a queue."
+    },
+    {
+     "n": 2,
+     "id": "bk_mrs_adebayo_ev_ev_results_01",
+     "text": "Results are on the board. Not here. The board. Outside."
+    },
+    {
+     "n": 3,
+     "id": "bk_mrs_adebayo_ev_ev_allowance_01",
+     "text": "Bursary is next door. Mr. Clement. Good luck with the network."
+    }
+   ]
+  },
+  {
+   "section": "Common 17",
+   "title": "Special days: the big ones",
+   "file": "Mrs. Adebayo - Common 17",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_ev_ev_convocation_01",
+     "text": "Gown collection? Four passports. Yes, even now."
+    }
+   ]
+  },
+  {
+   "section": "Common 18",
+   "title": "Special days: seasons and holidays",
+   "file": "Mrs. Adebayo - Common 18",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_mrs_adebayo_ev_ev_christmas_01",
+     "text": "Registry closes on the twentieth. I'm going to Ibadan. Bye."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}

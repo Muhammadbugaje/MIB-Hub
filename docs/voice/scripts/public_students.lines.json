@@ -1,0 +1,472 @@
+{
+ "character": "The Students",
+ "sections": [
+  {
+   "section": "Mission 1",
+   "title": "Test Week, One Lamp",
+   "file": "The Students - Mission 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m011_open_04",
+     "text": "Ahn ahn!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 2",
+   "title": "Count Entropy",
+   "file": "The Students - Mission 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m012_close_01",
+     "text": "UP NEPA!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 3",
+   "title": "Convocation Night",
+   "file": "The Students - Mission 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m024_mid1_01",
+     "text": "UP NEPA!"
+    }
+   ]
+  },
+  {
+   "section": "Mission 4",
+   "title": "Those Who Stayed",
+   "file": "The Students - Mission 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "m051_mid1_01",
+     "text": "They'll call it off by Friday. My uncle said."
+    },
+    {
+     "n": 2,
+     "id": "m051_mid1_02",
+     "text": "They'll call it off by Friday. My uncle said."
+    }
+   ]
+  },
+  {
+   "section": "Common 1",
+   "title": "Saying hello",
+   "file": "The Students - Common 1",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_greet_01",
+     "text": "How far? [How are you?]"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_f_greet_02",
+     "text": "Guy, you don chop? [Have you eaten?] Don't lie."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_f_greet_03",
+     "text": "Sannu! [Hi!] Long time. Since yesterday."
+    }
+   ]
+  },
+  {
+   "section": "Common 2",
+   "title": "Saying goodbye",
+   "file": "The Students - Common 2",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_bye_01",
+     "text": "Let me go and read. By read, I mean sleep near my books."
+    }
+   ]
+  },
+  {
+   "section": "Common 3",
+   "title": "Teasing",
+   "file": "The Students - Common 3",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_tease_01",
+     "text": "Look at this one, dressed like results are out."
+    }
+   ]
+  },
+  {
+   "section": "Common 4",
+   "title": "When something goes wrong",
+   "file": "The Students - Common 4",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_blackout_01",
+     "text": "Ahn ahn! I was on the last paragraph!"
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_f_blackout_02",
+     "text": "Who has a power bank? I'll pay in gratitude and pure water."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_f_light_back_01",
+     "text": "UP NEPA!"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_f_light_back_02",
+     "text": "Light don come! [Power is back!] Plug everything! Everything!"
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_f_rain_01",
+     "text": "Rain is falling. Half the class has declared a public holiday."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_students_f_heat_01",
+     "text": "This sun is personal. I didn't offend it."
+    }
+   ]
+  },
+  {
+   "section": "Common 5",
+   "title": "Talking to yourself",
+   "file": "The Students - Common 5",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_idle_01",
+     "text": "…and he said 'see me after class'. I've been after class for three days."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_f_idle_02",
+     "text": "Sapa has entered the chat. Sapa is now group admin."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_f_idle_03",
+     "text": "It's giving garri. It's giving garri with no sugar."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_f_idle_04",
+     "text": "Breaking news: he read. The whole night. Nobody knows why."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_f_idle_05",
+     "text": "Network is showing 'E' again. E for 'Eh, sorry'."
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_students_f_idle_06",
+     "text": "My phone, my power bank and my spirit: all on one bar."
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_students_f_idle_07",
+     "text": "Who carried my bucket? My name is on it in three places!"
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_students_f_idle_08",
+     "text": "I'm hungry fa. Not small hungry. Lecture hungry."
+    },
+    {
+     "n": 9,
+     "id": "bk_pub_students_f_idle_09",
+     "text": "…so if the lecturer doesn't come in fifteen minutes, we go. That's the law."
+    },
+    {
+     "n": 10,
+     "id": "bk_pub_students_f_idle_10",
+     "text": "Photocopy man has the handout. The lecturer doesn't. That's the system."
+    },
+    {
+     "n": 11,
+     "id": "bk_pub_students_f_idle_11",
+     "text": "She said she'll 'see me later'. Later of which day?"
+    }
+   ]
+  },
+  {
+   "section": "Common 6",
+   "title": "Late at night",
+   "file": "The Students - Common 6",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_f_night_01",
+     "text": "Who's at the noticeboard at this hour? …Never mind."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_f_night_02",
+     "text": "The cats sit in a circle by the garden. Don't ask me why."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_f_night_03",
+     "text": "There's an old man in the garden who never seems to sleep. I'm not checking."
+    }
+   ]
+  },
+  {
+   "section": "Common 7",
+   "title": "Year 1: arriving",
+   "file": "The Students - Common 7",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_y1_idle_01",
+     "text": "Light goes every evening at seven. Like it has a lecture."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_y1_idle_02",
+     "text": "Candle sellers are the richest people on campus now."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_y1_idle_03",
+     "text": "Somebody saw a goat in The Spot. It ordered before me."
+    }
+   ]
+  },
+  {
+   "section": "Common 8",
+   "title": "Year 2: the mall",
+   "file": "The Students - Common 8",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_y2_idle_01",
+     "text": "Mall has twenty-four hours light. Our hostel has twenty-four minutes."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_y2_idle_02",
+     "text": "Somebody's tapping our line. My fan is turning like it's tired."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_y2_idle_03",
+     "text": "Escalator! I've climbed it four times. Bought nothing."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_y2_idle_04",
+     "text": "The meter reader came. Nobody had a meter. Everybody had a reader."
+    }
+   ]
+  },
+  {
+   "section": "Common 9",
+   "title": "Year 3: the strike",
+   "file": "The Students - Common 9",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_y3_idle_01",
+     "text": "Strike, day thirty. I've rearranged my room nine times."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_y3_idle_02",
+     "text": "Free class under the tree today. Bring your own shade."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_y3_idle_03",
+     "text": "My uncle said they'll call it off by Friday. He's said it for six Fridays."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_y3_idle_04",
+     "text": "Sapa combo: garri, groundnut, and good attitude."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_y3_idle_05",
+     "text": "The hostel is so empty, I greeted my own echo."
+    }
+   ]
+  },
+  {
+   "section": "Common 10",
+   "title": "Year 4: fame",
+   "file": "The Students - Common 10",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_y4_idle_01",
+     "text": "Did you see the video? Don't send it. …Send it."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_y4_idle_02",
+     "text": "It's not gossip if three people say it. Then it's research."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_y4_idle_03",
+     "text": "Point of order! …Sorry. Election week does this to me."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_y4_idle_04",
+     "text": "Everybody is a campaign manager this week. Nobody is a voter."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_y4_idle_05",
+     "text": "Somebody said the clock moved. Somebody else said they're lying. Gist."
+    }
+   ]
+  },
+  {
+   "section": "Common 11",
+   "title": "Year 5: leaving",
+   "file": "The Students - Common 11",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_y5_idle_01",
+     "text": "Project, project, project. I dream in chapter three."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_y5_idle_02",
+     "text": "Supervisor said 'see me Monday'. Which Monday? He didn't say."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_y5_idle_03",
+     "text": "Is the campus brighter, or am I just going to miss it?"
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_y5_idle_04",
+     "text": "Sign-out sheet: forty signatures. I only know twelve of these offices."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_y5_idle_05",
+     "text": "We came as freshers. Now freshers call us 'senior'. When did that happen?"
+    }
+   ]
+  },
+  {
+   "section": "Common 12",
+   "title": "Special days: term time",
+   "file": "The Students - Common 12",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_ev_ev_freshers_01",
+     "text": "Look at the freshers. So clean. So lost. So many files."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_ev_ev_exam_01",
+     "text": "Library seats are finished. People are reading on the stairs."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_ev_ev_exam_02",
+     "text": "Breaking news: he read."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_ev_ev_exam_03",
+     "text": "The night reader is in the empty theatre again. One lamp. No sound."
+    },
+    {
+     "n": 5,
+     "id": "bk_pub_students_ev_ev_results_01",
+     "text": "Noticeboard crush! Hold my slippers!"
+    },
+    {
+     "n": 6,
+     "id": "bk_pub_students_ev_ev_results_02",
+     "text": "I passed! Call my mum! No, call my dad first!"
+    },
+    {
+     "n": 7,
+     "id": "bk_pub_students_ev_ev_allowance_01",
+     "text": "Allowance landed! Market tonight! Debts tomorrow!"
+    },
+    {
+     "n": 8,
+     "id": "bk_pub_students_ev_ev_market_day_01",
+     "text": "Thursday market: best prices, busiest pickpockets. Hold your phone."
+    }
+   ]
+  },
+  {
+   "section": "Common 13",
+   "title": "Special days: the big ones",
+   "file": "The Students - Common 13",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_ev_ev_strike_01",
+     "text": "Strike or no strike, Mai Shayi Audu is open."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_ev_ev_cup_01",
+     "text": "We lost? Don't talk to me until Monday."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_ev_ev_elections_01",
+     "text": "Free sachet water with every manifesto. I've finished both."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_ev_ev_convocation_01",
+     "text": "Gowns everywhere! Aunties with cameras! Somebody hold my jollof!"
+    }
+   ]
+  },
+  {
+   "section": "Common 14",
+   "title": "Special days: seasons and holidays",
+   "file": "The Students - Common 14",
+   "lines": [
+    {
+     "n": 1,
+     "id": "bk_pub_students_ev_ev_ramadan_01",
+     "text": "Iftar at the mosque grounds. Dates, kunu, and everybody smiling."
+    },
+    {
+     "n": 2,
+     "id": "bk_pub_students_ev_ev_christmas_01",
+     "text": "Carols at the chapel tonight. Even the generator is singing along."
+    },
+    {
+     "n": 3,
+     "id": "bk_pub_students_ev_ev_valentine_01",
+     "text": "Nobody look at me today. I'm single and I have garri."
+    },
+    {
+     "n": 4,
+     "id": "bk_pub_students_ev_ev_harmattan_01",
+     "text": "The dust is so thick, I waved at a pole for a full minute."
+    }
+   ]
+  }
+ ],
+ "pending": []
+}
