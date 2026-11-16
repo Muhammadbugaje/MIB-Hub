@@ -23,7 +23,7 @@
     {
       "binding": "DB",
       "database_name": "mib-hub",
-      "database_id": "PASTE-YOUR-D1-DATABASE-ID-HERE",
+      "database_id": "fa599c3d-a84e-4184-9b56-d9e19c7974b1",
       "migrations_dir": "../../packages/db/migrations",
     },
   ],
@@ -36,7 +36,7 @@
   ],
   // Plain settings (not secret).
   "vars": {
-    "SITE_URL": "https://PASTE-YOUR-SITE-ADDRESS-HERE",
+    "SITE_URL": "https://mib-hub.muhammad-iliyasu2348.workers.dev",
     "MAIL_DRIVER": "console",
     "MAIL_FROM": "MIB-Hub <no-reply@example.com>",
   },

@@ -42,9 +42,30 @@ function main() {
   });
 
   const sqlite = createSqliteDb(dbFile).$sqlite;
-  const tables = (sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all() as { name: string }[])
+  const names = (sqlite.prepare("SELECT name FROM sqlite_master WHERE type = 'table' ORDER BY name").all() as { name: string }[])
     .map((t) => t.name)
     .filter((name) => !SKIP.test(name));
+  // Parents before children: D1 does not reliably honour defer_foreign_keys across a --file import,
+  // so order tables by their foreign keys (a table loads only after every table it points at).
+  const deps = new Map(
+    names.map((n) => [
+      n,
+      new Set(
+        (sqlite.prepare(`PRAGMA foreign_key_list("${n}")`).all() as { table: string }[])
+          .map((f) => f.table)
+          .filter((t) => t !== n && names.includes(t)),
+      ),
+    ]),
+  );
+  const tables: string[] = [];
+  const visit = (n: string, path: Set<string>) => {
+    if (tables.includes(n) || path.has(n)) return;
+    path.add(n);
+    for (const d of deps.get(n) ?? []) visit(d, path);
+    path.delete(n);
+    tables.push(n);
+  };
+  for (const n of names) visit(n, new Set());
 
   // D1 checks foreign keys; deferring them lets tables load in any order.
   const lines = ["PRAGMA defer_foreign_keys = true;"];
