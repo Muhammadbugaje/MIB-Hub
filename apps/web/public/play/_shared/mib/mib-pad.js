@@ -96,8 +96,10 @@
     if (dp) { dp.innerHTML = DPAD_SVG + "<b></b>"; dp.setAttribute("role", "group"); dp.setAttribute("aria-label", "Direction pad"); }
     var bz = (spec.buttons || []).length ? zone("mp-btns", "pad-buttons", "Action buttons", C, C, "right:" + gapR + ";bottom:" + gapB) : null;
     if (bz) bz.innerHTML = spec.buttons.map(function (b) { return btnHtml(b, Math.round(C * 0.13)); }).join("");
-    var n = (spec.extra || []).length, ez = n ? zone("mp-extra", "pad-extra", "Extra buttons", n * E + (n - 1) * 10, E, "right:calc(" + gapR + " + " + Math.round((C - (n * E + (n - 1) * 10)) / 2) + "px);bottom:calc(" + gapB + " + " + (C + 10) + "px)") : null;
-    if (ez) ez.innerHTML = spec.extra.map(function (b, i) { return btnHtml(b, Math.round(E * 0.26), "left:" + (n > 1 ? (i * 100 / n + 0) : 0) + "%;width:" + (n > 1 ? 100 / n - 4 : 100) + "%;"); }).join("");
+    // A row of extras wider than the diamond sits flush with the right gap instead of overhanging the stage edge,
+    // and three or more get a slightly smaller label so words still breathe inside their pills.
+    var n = (spec.extra || []).length, ew = n * E + (n - 1) * 10, ez = n ? zone("mp-extra", "pad-extra", "Extra buttons", ew, E, "right:calc(" + gapR + " + " + Math.max(0, Math.round((C - ew) / 2)) + "px);bottom:calc(" + gapB + " + " + (C + 10) + "px)") : null;
+    if (ez) ez.innerHTML = spec.extra.map(function (b, i) { return btnHtml(b, Math.round(E * (n > 2 ? 0.23 : 0.26)), "left:" + (n > 1 ? (i * 100 / n + 0) : 0) + "%;width:" + (n > 1 ? 100 / n - 4 : 100) + "%;"); }).join("");
     [bz, ez].forEach(function (z) { if (!z) return; z.setAttribute("role", "group"); z.setAttribute("aria-label", "Buttons: " + [].map.call(z.querySelectorAll(".mp-b"), function (b) { return b.textContent; }).join(", ")); });
 
     function setDir(nd) {

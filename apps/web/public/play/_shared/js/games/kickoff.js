@@ -157,14 +157,14 @@
     { id: "jump", label: "Jump", keys: ["KeyW"], touch: { label: "⤒", x: 66, y: 90, s: .85 } },
     { id: "kick", label: "Low kick (25°)", keys: ["KeyS"], touch: { label: "K", x: 79, y: 90, s: .85 } },
     { id: "lob", label: "Lob (55°)", keys: ["KeyQ"], touch: { label: "L", x: 92, y: 90, s: .85 } },
-    { id: "power", label: "Superpower", keys: ["KeyE"], touch: { label: "★", x: 79, y: 75, s: .85 } },
+    { id: "power", label: "Superpower", keys: ["KeyE"], touch: { label: "★", x: 85.5, y: 61, s: .85 } },
     { id: "p2left", label: "Player 2 left", keys: ["ArrowLeft"], touch: { label: "◀", x: 10, y: 10, s: .85 } },
     { id: "p2right", label: "Player 2 right", keys: ["ArrowRight"], touch: { label: "▶", x: 24, y: 10, s: .85 } },
     { id: "p2dash", label: "Player 2 dash", keys: ["ShiftRight"], touch: { label: "»", x: 38, y: 10, s: .85 } },
     { id: "p2jump", label: "Player 2 jump", keys: ["ArrowUp"], touch: { label: "⤒", x: 66, y: 10, s: .85 } },
     { id: "p2kick", label: "Player 2 kick", keys: ["ArrowDown"], touch: { label: "K", x: 79, y: 10, s: .85 } },
     { id: "p2lob", label: "Player 2 lob", keys: ["Slash"], touch: { label: "L", x: 92, y: 10, s: .85 } },
-    { id: "p2power", label: "Player 2 superpower", keys: ["Period"], touch: { label: "★", x: 79, y: 23, s: .85 } }
+    { id: "p2power", label: "Player 2 superpower", keys: ["Period"], touch: { label: "★", x: 85.5, y: 39, s: .85 } }
   ];
 
   /* ---------- kicking ---------- */

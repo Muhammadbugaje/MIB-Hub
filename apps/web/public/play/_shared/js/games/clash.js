@@ -128,7 +128,7 @@
     if (api.usePad) api.usePad({ dpad: { up: "up", down: "down", left: "left", right: "right" },
       buttons: [{ id: "hp", label: "HP", sub: "punch", pos: "top", color: "rgba(59,130,246,.75)" }, { id: "lp", label: "LP", sub: "punch", pos: "left", color: "rgba(56,189,248,.7)" },
         { id: "hk", label: "HK", sub: "kick", pos: "right", color: "rgba(239,68,68,.75)" }, { id: "lk", label: "LK", sub: "kick", pos: "bottom", color: "rgba(249,115,22,.75)" }],
-      extra: [{ id: "dash", label: "DASH", color: "rgba(16,185,129,.75)" }, { id: "block", label: "BLOCK", color: "rgba(100,116,139,.75)" }, { id: "special", label: "★ SP", color: "rgba(234,179,8,.8)" }],
+      extra: [{ id: "dash", label: "DASH", color: "rgba(16,185,129,.75)" }, { id: "block", label: "🛡", color: "rgba(100,116,139,.75)" }, { id: "special", label: "★", color: "rgba(234,179,8,.8)" }],
       keys: duo ? P2_IDS : [], fallback: duo ? P1_IDS.concat(P2_IDS) : P1_IDS });
     else api.useActions(duo ? P1_IDS.concat(P2_IDS) : P1_IDS);
     if (o.mode === "trial") { S.m.dummy = "stand"; S.m.trainMeter = true; S.m.f[1].cpu = null; }
