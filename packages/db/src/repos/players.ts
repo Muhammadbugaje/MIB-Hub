@@ -143,7 +143,8 @@ export function scoresRepo(db: AppDb) {
         .limit(opts.limit ?? 10);
       return rows.map((r) => ({
         profileId: r.profileId,
-        name: leaderboardName(r.displayName || r.userName || ""),
+        // The account name wins: it is what the person edits on their profile page.
+        name: leaderboardName(r.userName || r.displayName || ""),
         score: r.score,
         createdAt: r.createdAt,
       }));
@@ -173,7 +174,7 @@ export function scoresRepo(db: AppDb) {
         .where(conditions.length ? and(...conditions) : undefined)
         .orderBy(desc(score.score), asc(score.createdAt))
         .limit(opts.limit ?? 100);
-      return rows.map((r) => ({ ...r, name: r.displayName || r.userName || "Player", userEmail: r.userEmail ?? "" }));
+      return rows.map((r) => ({ ...r, name: r.userName || r.displayName || "Player", userEmail: r.userEmail ?? "" }));
     },
 
     async getById(id: string): Promise<Score | undefined> {

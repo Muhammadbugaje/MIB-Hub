@@ -41,7 +41,7 @@ interface Item {
 
 const accountNav: Item[] = [
   { href: "/account", title: "My home", icon: "home", keywords: "dashboard me" },
-  { href: "/account/profile", title: "Profile", icon: "user", keywords: "picture photo avatar name bio handle" },
+  { href: "/account/profile", title: "Profile", icon: "user", keywords: "name bio handle avatar initials" },
   { href: "/account/games", title: "Saves & scores", icon: "gamepad", keywords: "progress games best" },
   { href: "/account/tickets", title: "My tickets", icon: "inbox", keywords: "support help complaints" },
   { href: "/account/orders", title: "My orders", icon: "receipt", keywords: "store purchases" },
@@ -85,7 +85,7 @@ const tabs: Item[] = [
       </div>
 
       <a class="hub-whoami" href="/account/profile">
-        <Avatar name={name} src={viewer.user?.image} size={40} />
+        <Avatar name={name} size={40} />
         <span class="hub-whoami__text">
           <span class="hub-whoami__kicker">Signed in as</span>
           <span class="hub-whoami__name">{name}</span>
@@ -170,7 +170,7 @@ const tabs: Item[] = [
           <ThemeToggle client:load />
           <details class="hub-menu">
             <summary class="hub-chip" aria-label="Account menu">
-              <Avatar name={name} src={viewer.user?.image} size={32} />
+              <Avatar name={name} size={32} />
               <span class="hub-chip__text">
                 <span class="hub-chip__kicker">{roleLabel}</span>
                 <span class="hub-chip__name">{firstName}</span>

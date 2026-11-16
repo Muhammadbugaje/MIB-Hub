@@ -1,25 +1,24 @@
 ---
 /**
- * /account/profile: picture, name, @handle, bio and leaderboard choice.
+ * /account/profile: name, @handle, bio and leaderboard choice.
  *
- * The picture is saved with saveImage() (src/lib/uploads.ts) into
- * /uploads/avatars and its URL goes on the account (user.image), which the
- * sidebar, top bar and leaderboards read. Name and picture are updated
- * through Better Auth (auth.api.updateUser) so the session sees them at once;
- * handle and bio live in the player profile's stats.
+ * The name is saved with repos.users.setName(), which writes both the account
+ * (user.name: the session, menus and pages read it on the next request) and
+ * the player profile's display name (leaderboards), so it shows everywhere.
+ * Handle and bio live in the player profile's stats.
+ *
+ * Profile pictures are switched off (no storage for them): everyone gets
+ * coloured initials, and src/lib/uploads.ts refuses the "avatars" folder.
  */
 import AIcon from "../../components/admin/AIcon.astro";
 import Avatar from "../../components/admin/Avatar.astro";
-import ImageField from "../../components/admin/ImageField.tsx";
 import PageHead from "../../components/admin/PageHead.astro";
 import AppLayout from "../../layouts/AppLayout.astro";
 import { done, fBool, fStr, type FormErrors } from "../../lib/admin-kit.ts";
-import { auth } from "../../lib/auth.ts";
 import { repos } from "../../lib/db.ts";
 import { guard } from "../../lib/guard.ts";
 import { PERMISSIONS, ROLE_INFO, isRole } from "../../lib/permissions.ts";
 import { formatDate } from "../../lib/site.ts";
-import { saveImage } from "../../lib/uploads.ts";
 
 const denied = guard(Astro, { signedIn: true });
 if (denied) return denied;
@@ -57,28 +56,14 @@ if (Astro.request.method === "POST") {
     }
   }
 
-  // The picture: a new file, "remove", or keep the current one.
-  let image: string | null | undefined;
-  const file = form.get("avatar__file");
-  if (file instanceof File && file.size > 0) {
-    try {
-      image = await saveImage(file, "avatars");
-    } catch (e) {
-      errors.avatar = e instanceof Error ? e.message : "Upload failed.";
-    }
-  } else if (form.get("avatar__remove") === "on") image = null;
-
   if (Object.keys(errors).length === 0) {
-    await auth.api.updateUser({
-      body: { name: values.name, ...(image !== undefined ? { image } : {}) },
-      headers: Astro.request.headers,
-    });
+    await repos.users.setName(user.id, values.name);
     profile =
       (await repos.profiles.update(profile.id, {
         onLeaderboard: values.onLeaderboard,
         stats: { ...profile.stats, handle: values.handle, bio: values.bio, pronouns: values.pronouns, favourite: values.favourite },
       })) ?? profile;
-    return done(Astro, image ? "Profile picture and details saved." : image === null ? "Picture removed. Details saved." : "Profile saved.");
+    return done(Astro, "Profile saved.");
   }
 }
 
@@ -87,25 +72,14 @@ const account = await repos.users.findById(user.id);
 ---
 
 <AppLayout title="Profile">
-  <PageHead eyebrow="Your account" title="Profile" icon="user" lead="How you appear on leaderboards, in tickets and around the hub." />
+  <PageHead eyebrow="Your account" title="Profile" icon="user" lead="How you appear on leaderboards, in tickets and around the hub. Your picture is your initials." />
 
   <div class="hub-grid hub-grid--main">
-    <form class="hub-card" method="post" enctype="multipart/form-data">
+    <form class="hub-card" method="post">
       <div class="hub-card__head">
-        <h2 class="hub-card__title"><AIcon name="image" size={18} /> Picture and details</h2>
+        <h2 class="hub-card__title"><AIcon name="user" size={18} /> Your details</h2>
       </div>
       <div class="hub-fields">
-        <div class="hub-field hub-field--full">
-          <ImageField
-            client:load
-            name="avatar"
-            label="Profile picture"
-            value={user.image ?? ""}
-            shape="round"
-            hint="A square image works best. PNG, JPEG, WebP or GIF, up to 4 MB."
-            error={errors.avatar}
-          />
-        </div>
         <div class="hub-field">
           <label class="hub-field__label" for="p-name">Name<span class="hub-req" aria-hidden="true">*</span></label>
           <input class="input" id="p-name" name="name" value={values.name} autocomplete="name" required maxlength="80" aria-invalid={errors.name ? "true" : undefined} />
@@ -150,7 +124,7 @@ const account = await repos.users.findById(user.id);
     <div class="hub-stack">
       <section class="hub-card" style="text-align:center;">
         <div style="display:grid; justify-items:center; gap: var(--space-2);">
-          <Avatar name={user.name} src={user.image} size={96} />
+          <Avatar name={user.name} size={96} />
           <strong style="font-size: var(--fs-lg);">{user.name}</strong>
           {values.handle && <span class="hub-muted">@{values.handle}</span>}
           <span class="hub-pill hub-pill--green">{role.label}</span>

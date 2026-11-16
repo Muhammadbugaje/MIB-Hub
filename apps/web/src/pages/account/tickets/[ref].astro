@@ -54,7 +54,7 @@ const game = ticket.gameSlug ? await repos.games.getBySlug(ticket.gameSlug) : un
     <section class="hub-card">
       <div class="hub-thread">
         <div class="hub-msg">
-          <Avatar name={user.name} src={user.image} size={36} />
+          <Avatar name={user.name} size={36} />
           <div class="hub-msg__bubble">
             <div class="hub-msg__meta"><strong>You</strong> {formatDate(ticket.createdAt, { time: true })}</div>
             <div class="hub-msg__body">{ticket.body}</div>
@@ -66,7 +66,7 @@ const game = ticket.gameSlug ? await repos.games.getBySlug(ticket.gameSlug) : un
             const who = m.fromStaff ? `${a?.name.split(/\s+/)[0] ?? "Support"} · MIB-Hub team` : "You";
             return (
               <div class:list={["hub-msg", m.fromStaff && "hub-msg--staff"]}>
-                <Avatar name={a?.name ?? "Support"} src={a?.image} size={36} />
+                <Avatar name={a?.name ?? "Support"} size={36} />
                 <div class="hub-msg__bubble">
                   <div class="hub-msg__meta">
                     <strong>{who}</strong> {formatDate(m.createdAt, { time: true })}

@@ -264,3 +264,50 @@
     margin: 0 -12px;
   }
 }
+
+/* ---------- phones ---------- */
+/* No double-tap zoom or accidental scrolling on the stage; menus inside it still scroll. */
+.mp-stage,
+.play-stage {
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: contain;
+}
+.mp-stage .gm-overlay {
+  touch-action: pan-y;
+}
+.mp-bar,
+.mp-under {
+  touch-action: manipulation;
+}
+/* Short landscape phones (e.g. 844x390): a slimmer title bar so the stage gets the room. */
+@media (orientation: landscape) and (max-height: 500px) {
+  .mp {
+    padding-top: 6px;
+    gap: 8px;
+  }
+  .mp-bar {
+    position: static;
+    padding: 6px 10px;
+    gap: 6px 10px;
+  }
+  .mp-title p,
+  .mp-icon,
+  .mp-vol {
+    display: none;
+  }
+  .mp-tools .btn span:not(.mp-like__n) {
+    display: none;
+  }
+  .mp-stage {
+    max-height: calc(100dvh - 72px);
+  }
+}
+/* Phones held upright: a taller stage for the TypeScript games, so the Play cover fits (they go full screen on Play). */
+@media (orientation: portrait) and (max-width: 720px) {
+  .play-stage {
+    aspect-ratio: auto;
+    height: min(62vh, 120vw);
+  }
+}

@@ -54,3 +54,22 @@ describe("etagMatches (GET /uploads/*)", () => {
     expect(etagMatches(null, '"abc"')).toBe(false);
   });
 });
+
+describe("profile pictures are switched off", () => {
+  const png = () => new File([new Uint8Array([0x89, 0x50, 0x4e, 0x47, 0, 0, 0, 0, 0, 0, 0, 0])], "a.png", { type: "image/png" });
+  it("refuses uploads into the avatars folder (any spelling)", async () => {
+    const { saveImage } = await import("../src/lib/uploads.ts");
+    for (const folder of ["avatars", "Avatars", "avatar", "profile", "av/atars"]) {
+      await expect(saveImage(png(), folder)).rejects.toThrow(/switched off/);
+    }
+  });
+  it("still takes staff folders, and stops serving old avatars", async () => {
+    const { isBlockedUploadPath, uploadFolder } = await import("../src/lib/uploads.ts");
+    expect(uploadFolder("people")).toBe("people");
+    expect(uploadFolder("news-covers")).toBe("news-covers");
+    expect(uploadFolder("")).toBe("misc");
+    expect(isBlockedUploadPath("avatars/abc.png")).toBe(true);
+    expect(isBlockedUploadPath("people/abc.png")).toBe(false);
+    expect(isBlockedUploadPath("news/abc.png")).toBe(false);
+  });
+});

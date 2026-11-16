@@ -86,7 +86,7 @@ const roles = assignableRoles(viewer.role);
     <div class="hub-stack">
       <section class="hub-card" style="text-align:center;">
         <div style="display:grid; justify-items:center; gap: var(--space-2);">
-          <Avatar name={target.name} src={target.image} size={88} />
+          <Avatar name={target.name} size={88} />
           <strong style="font-size: var(--fs-lg);">{target.name}</strong>
           <span class="hub-muted">{target.email}</span>
           {typeof profile?.stats.handle === "string" && profile.stats.handle && <span class="hub-subtle">@{profile.stats.handle}</span>}

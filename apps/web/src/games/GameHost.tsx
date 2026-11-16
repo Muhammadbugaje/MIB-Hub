@@ -6,13 +6,23 @@
  * It looks up `entry` in the registry, imports the game only now (in the
  * browser), and calls mount() inside a sized container. It unmounts the game
  * when the page goes away.
+ *
+ * Full screen: the shared window.MIBFull (public/play/_shared/mib/mib-full.js,
+ * loaded by the play page) puts a "Play" cover on the stage, enters full
+ * screen on that tap, and pauses the game (handle.pause) with a "Resume"
+ * cover when the player leaves full screen. The game also pauses while the
+ * tab is hidden.
  */
 import { useEffect, useRef, useState } from "react";
 import type { GameContext, GameHandle, GamePlatform, GamePlayer } from "./contract.ts";
+import { fullScreen } from "./fullscreen.ts";
 import { gameRegistry, hasGame } from "./registry.ts";
 
 interface Props {
   slug: string;
+  /** Shown on the "Play" cover. */
+  title?: string;
+  icon?: string;
   entry: string;
   assetsPath: string;
   settings: Record<string, unknown>;
@@ -105,7 +115,7 @@ function browserPlatform(slug: string, owner: string): GamePlatform {
   };
 }
 
-export default function GameHost({ slug, entry, assetsPath, settings, player }: Props) {
+export default function GameHost({ slug, title, icon, entry, assetsPath, settings, player }: Props) {
   const box = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<"loading" | "running" | "error">("loading");
   const [message, setMessage] = useState("");
@@ -124,6 +134,20 @@ export default function GameHost({ slug, entry, assetsPath, settings, player }: 
         else {
           handle = h;
           setState("running");
+          const full = fullScreen();
+          if (full && box.current) {
+            full.attach(box.current, {
+              title,
+              icon,
+              landscape: true,
+              pause: () => {
+                handle?.pause?.();
+                return true;
+              },
+              resume: () => handle?.resume?.(),
+            });
+            full.cover("play");
+          }
         }
       })
       .catch((err: unknown) => {
@@ -131,11 +155,19 @@ export default function GameHost({ slug, entry, assetsPath, settings, player }: 
         setMessage(err instanceof Error ? err.message : String(err));
       });
 
+    // Pause while the tab is hidden; carry on when it is back (unless the Resume cover is waiting for a tap).
+    const onVisibility = () => {
+      if (document.hidden) handle?.pause?.();
+      else if (!fullScreen()?.coverOpen()) handle?.resume?.();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
       controller.abort();
       handle?.unmount();
     };
-  }, [slug, entry, assetsPath, settings, player]);
+  }, [slug, title, icon, entry, assetsPath, settings, player]);
 
   if (!hasGame(entry)) return null;
   return (

@@ -42,15 +42,12 @@ const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "nu
     <h1 class="hub-hero__title">{greeting()}, <em>{first}</em></h1>
     <p class="hub-hero__lead">
       {
-        bio ||
-          (user.image
-            ? "Your saves, scores, tickets and orders, all in one place."
-            : "Add a profile picture and a short bio so your friends recognise you on the leaderboards.")
+        bio || "Your saves, scores, tickets and orders, all in one place. Add a short bio on your profile so friends recognise you."
       }
     </p>
     <div class="hub-hero__actions">
       <a class="hub-hero__btn hub-hero__btn--gold" href="/games"><AIcon name="play" size={16} /> Play a game</a>
-      <a class="hub-hero__btn" href="/account/profile"><AIcon name="image" size={16} /> {user.image ? "Edit profile" : "Add a picture"}</a>
+      <a class="hub-hero__btn" href="/account/profile"><AIcon name="user" size={16} /> Edit profile</a>
       {
         isStaff && (
           <a class="hub-hero__btn" href="/admin">
@@ -60,7 +57,7 @@ const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "nu
       }
     </div>
     <div class="hub-hero__side">
-      <Avatar name={user.name} src={user.image} size={112} />
+      <Avatar name={user.name} size={112} />
     </div>
   </section>
 

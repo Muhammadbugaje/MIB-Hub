@@ -65,7 +65,7 @@ describe("profiles and score moderation", () => {
     const s2 = await repos.scores.submit({ profileId: p.id, gameSlug: "g", score: 90 });
     const rows = await repos.scores.listForAdmin({ gameSlug: "g" });
     expect(rows.map((r) => r.score)).toEqual([90, 50]);
-    expect(rows[0]!.name).toBe("Ami");
+    expect(rows[0]!.name).toBe("Amina Bello"); // the account name wins over a stale profile display name
 
     await repos.scores.setCheated(s2.id, true);
     expect((await repos.scores.top("g")).map((r) => r.score)).toEqual([50]);

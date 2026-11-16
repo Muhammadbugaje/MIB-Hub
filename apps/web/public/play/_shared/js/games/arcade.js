@@ -367,6 +367,9 @@
         touchSpec = spec; drawTouch();
       },
       useActions: function (ids) { touchSpec = ids; drawTouch(); },
+      /* MIB-Hub: a round Sega-style pad (public/play/_shared/mib/mib-pad.js) instead of separate buttons.
+         spec: { dpad: { up, down, left, right } (action ids), buttons: [{ id, label, pos, color }], extra: [...], keys: [ids shown as normal buttons], fallback: [ids] } */
+      usePad: function (spec) { touchSpec = spec && window.MIBPad ? { pad: spec } : (spec && spec.fallback) || null; drawTouch(); },
       music: function (sg) { if (typeof sg === "string") sg = SONGS[sg]; Sound.play(sg); },
       panel: function (concept, controls) { document.querySelector("[data-gm-concept]").innerHTML = concept; document.querySelector("[data-gm-controls]").innerHTML = controls + controlsTable(); },
       keyName: function (id) { var b = actions[id] ? bound(id) : [id]; return b.map(keyLabel).join(" / "); }
@@ -377,13 +380,28 @@
       return "<p class='gm-small'>Your current keys (change them in Settings):</p><table>" + list.filter(function (a) { return !a.hidden; }).map(function (a) { return "<tr><td>" + esc(a.label) + "</td><td>" + bound(a.id).map(function (k) { return "<kbd>" + esc(keyLabel(k)) + "</kbd>"; }).join(" ") + "</td></tr>"; }).join("") + "</table>";
     }
     /* touch controls: from actions (movable, resizable) or the legacy pad spec */
-    var touchSpec = null;
+    var touchSpec = null, padUI = null;
+    /* MIB-Hub: a button's centre in % of the stage, kept far enough from the edges (and the phone's safe areas) that the
+       whole button stays on screen on short landscape phones. */
+    function keyPos(pc, sz, a, b) { var h = Math.round(sz / 2) + 4; return "clamp(calc(" + h + "px + env(safe-area-inset-" + a + ", 0px)), " + pc + "%, calc(100% - " + h + "px - env(safe-area-inset-" + b + ", 0px)))"; }
+    function freeKeys(ids) {
+      return ids.map(function (id) { var a = actions[id]; if (!a || !a.touch) return ""; var L = api.layout.get(id), p = L || SET.touch[id] || a.touch, sz = Math.round(62 * (p.s || 1) * SET.touchScale);
+          return '<button type="button" class="gm-key" data-k="@' + id + '" data-id="' + id + '" data-lay="' + id + '" data-lay-label="' + esc(a.label) + '" aria-label="' + esc(a.label) + '" style="left:' + keyPos(p.x, sz, "left", "right") + ';top:' + keyPos(p.y, sz, "top", "bottom") + ';width:' + sz + 'px;height:' + sz + 'px;opacity:' + (L && L.a != null ? L.a : SET.touchAlpha) + (L && L.h ? ';display:none' : '') + '">' + esc(a.touch.label) + "</button>"; }).join("");
+    }
     function drawTouch() {
+      if (padUI) { padUI.destroy(); padUI = null; }
       if (!touchSpec) { touch.innerHTML = ""; return; }
-      if (typeof touchSpec[0] === "string") {
+      if (touchSpec.pad) {
+        var ps = touchSpec.pad, code = function (id) { return "@" + id; }, btn = function (b) { return { code: code(b.id), label: b.label, sub: b.sub, pos: b.pos, color: b.color }; };
         touch.classList.add("gm-touch--free");
-        touch.innerHTML = touchSpec.map(function (id) { var a = actions[id]; if (!a || !a.touch) return ""; var L = api.layout.get(id), p = L || SET.touch[id] || a.touch, sz = Math.round(62 * (p.s || 1) * SET.touchScale);
-          return '<button type="button" class="gm-key" data-k="@' + id + '" data-id="' + id + '" data-lay="' + id + '" data-lay-label="' + esc(a.label) + '" aria-label="' + esc(a.label) + '" style="left:' + p.x + '%;top:' + p.y + '%;width:' + sz + 'px;height:' + sz + 'px;opacity:' + (L && L.a != null ? L.a : SET.touchAlpha) + (L && L.h ? ';display:none' : '') + '">' + esc(a.touch.label) + "</button>"; }).join("");
+        touch.innerHTML = freeKeys(ps.keys || []);
+        padUI = window.MIBPad.build(touch, {
+          dpad: ps.dpad ? { up: code(ps.dpad.up), down: code(ps.dpad.down), left: code(ps.dpad.left), right: code(ps.dpad.right) } : null,
+          buttons: (ps.buttons || []).map(btn), extra: (ps.extra || []).map(btn)
+        }, { press: press, release: function (c) { keys[c] = false; }, buzz: function (ms) { api.buzz(ms); }, scale: SET.touchScale, alpha: SET.touchAlpha, layout: function (id) { return api.layout.get(id); } });
+      } else if (typeof touchSpec[0] === "string") {
+        touch.classList.add("gm-touch--free");
+        touch.innerHTML = freeKeys(touchSpec);
       } else {
         touch.classList.remove("gm-touch--free");
         touch.innerHTML = touchSpec.map(function (pad) { return '<div class="gm-pad">' + pad.map(function (k) { return '<button type="button" class="gm-key" data-k="' + k[1] + '" aria-label="' + esc(k[2] || k[0]) + '" style="opacity:' + SET.touchAlpha + '">' + k[0] + "</button>"; }).join("") + "</div>"; }).join("");
@@ -395,6 +413,8 @@
       scale = Math.min(cv.width / W, cv.height / H); ox = (cv.width - W * scale) / 2; oy = (cv.height - H * scale) / 2;
     }
     window.addEventListener("resize", size); window.addEventListener("orientationchange", function () { setTimeout(size, 200); }); size();
+    var padKey = "", padT = 0; // the round pad is sized from the stage: rebuild it when the stage changes size (rotation, full screen)
+    window.addEventListener("resize", function () { if (!padUI) return; clearTimeout(padT); padT = setTimeout(function () { var r = stage.getBoundingClientRect(), k = Math.round(r.width / 24) + "x" + Math.round(r.height / 24); if (padUI && k !== padKey) { padKey = k; drawTouch(); } }, 160); });
     var BLOCK = { ArrowUp: 1, ArrowDown: 1, ArrowLeft: 1, ArrowRight: 1, Space: 1 }, capture = null;
     function press(code) {
       if (!keys[code]) { pressed[code] = true; var now = performance.now();
@@ -463,7 +483,7 @@
         saveSet(); editing = false; touch.classList.remove("is-editing"); bar.remove(); touch.removeEventListener("pointerdown", dn); window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); done(); });
     }
     var fullBtn = document.querySelector("[data-gm-full]");
-    if (fullBtn) fullBtn.addEventListener("click", function () { try { if (document.fullscreenElement) document.exitFullscreen(); else (stage.requestFullscreen || stage.webkitRequestFullscreen).call(stage); if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(function () {}); } catch (e) {} setTimeout(size, 300); });
+    if (fullBtn && !window.MIBFull) fullBtn.addEventListener("click", function () { /* MIB-Hub: mib-full.js owns full screen when present */ try { if (document.fullscreenElement) document.exitFullscreen(); else (stage.requestFullscreen || stage.webkitRequestFullscreen).call(stage); if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(function () {}); } catch (e) {} setTimeout(size, 300); });
     var setBtn = document.querySelector("[data-gm-settings]"); if (setBtn) setBtn.addEventListener("click", function () { if (!editing) settings(); });
     api.openSettings = settings;
     var skipFrame = false, LAYP = []; // phone-control layout providers (docs/ARCADE_SETTINGS.md)

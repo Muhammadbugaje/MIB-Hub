@@ -62,7 +62,7 @@ const roleTone: Record<string, string> = { owner: "hub-pill hub-pill--gold", adm
                 <tr class:list={[u.banned && "is-off"]}>
                   <td>
                     <span style="display:flex; gap: 12px; align-items:center;">
-                      <Avatar name={u.name} src={u.image} size={36} />
+                      <Avatar name={u.name} size={36} />
                       <span style="min-width:0;">
                         <a class="hub-row-title" href={`/admin/users/${u.id}`}>{u.name}</a>
                         <span class="hub-row-sub">{u.email}</span>

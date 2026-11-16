@@ -77,7 +77,7 @@ const history = player ? (await repos.tickets.forUser(player.id)).filter((t) => 
     <section class="hub-card">
       <div class="hub-thread">
         <div class="hub-msg">
-          <Avatar name={playerName} src={player?.image} size={36} />
+          <Avatar name={playerName} size={36} />
           <div class="hub-msg__bubble">
             <div class="hub-msg__meta"><strong>{playerName}</strong> {formatDate(ticket.createdAt, { time: true })}{ticket.rating && ` · ${"★".repeat(ticket.rating)}`}</div>
             <div class="hub-msg__body">{ticket.body}</div>
@@ -88,7 +88,7 @@ const history = player ? (await repos.tickets.forUser(player.id)).filter((t) => 
             const a = m.authorId ? people.get(m.authorId) : undefined;
             return (
               <div class:list={["hub-msg", m.fromStaff && "hub-msg--staff", m.internal && "hub-msg--internal"]}>
-                <Avatar name={a?.name ?? (m.fromStaff ? "Staff" : playerName)} src={a?.image} size={36} />
+                <Avatar name={a?.name ?? (m.fromStaff ? "Staff" : playerName)} size={36} />
                 <div class="hub-msg__bubble">
                   <div class="hub-msg__meta">
                     <strong>{a?.name ?? (m.fromStaff ? "Staff" : playerName)}</strong>
@@ -151,7 +151,7 @@ const history = player ? (await repos.tickets.forUser(player.id)).filter((t) => 
 
       <section class="hub-card">
         <div style="display:flex; gap: var(--space-3); align-items:center; margin-bottom: var(--space-4);">
-          <Avatar name={playerName} src={player?.image} size={44} />
+          <Avatar name={playerName} size={44} />
           <div style="min-width:0;">
             <strong>{playerName}</strong>
             <div class="hub-subtle">{player ? `Account · ${labelize(player.role)}` : "Not signed in"}</div>

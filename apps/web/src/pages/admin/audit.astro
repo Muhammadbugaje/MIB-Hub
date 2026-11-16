@@ -72,7 +72,7 @@ const show = (v: unknown) => (v === null || v === undefined ? "" : JSON.stringif
                     <td data-label="When" style="white-space:nowrap;">{formatDate(a.createdAt, { time: true })}</td>
                     <td data-label="Who">
                       <span style="display:inline-flex; gap:8px; align-items:center;">
-                        <Avatar name={who?.name ?? "System"} src={who?.image} size={26} /> {who?.name ?? "System"}
+                        <Avatar name={who?.name ?? "System"} size={26} /> {who?.name ?? "System"}
                       </span>
                     </td>
                     <td data-label="Action"><span class="hub-code">{a.action}</span>{a.note && <span class="hub-row-sub">{a.note}</span>}</td>

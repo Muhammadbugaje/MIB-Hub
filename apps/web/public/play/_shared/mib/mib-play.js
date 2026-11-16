@@ -217,6 +217,7 @@
         if (--left === 0 && !failed) {
           booted = true; hook();
           if (bootEl) bootEl.hidden = true;
+          full();
           track("start", { meta: { signedIn: !!C.signedIn } });
           var cv = stage && stage.querySelector("[data-gm-canvas]"); if (cv) try { cv.focus({ preventScroll: true }); } catch { /* ignore */ }
           if (M.cloud.enabled) setTimeout(function () { push(false); }, 4000);
@@ -227,6 +228,21 @@
     });
   }
   pull().then(load, load);
+
+  /* ---------- full screen (mib-full.js): the game waits behind a "Play" cover and runs full screen ----------
+   * Leaving full screen (the X, Esc, back, hiding the tab) presses the game's own Pause and shows "Resume". */
+  function full() {
+    var MF = window.MIBFull; if (!MF || !stage) return;
+    var pb = document.querySelector("[data-gm-pause]"), ov = stage.querySelector("[data-gm-overlay]");
+    function isPaused() { return !!pb && pb.getAttribute("aria-pressed") === "true"; }
+    MF.attach(stage, {
+      title: C.title, icon: C.icon, landscape: true,
+      rotateHint: SLUG !== "samaru-days", // Freshers School Life shows its own "turn your phone" card
+      pause: function () { if (pb && !isPaused() && (!ov || ov.hidden)) pb.click(); return isPaused(); },
+      resume: function () { if (isPaused()) pb.click(); }
+    });
+    MF.cover("play");
+  }
 
   setInterval(function () { if (!document.hidden) push(false); }, 20000);
   document.addEventListener("visibilitychange", function () { if (document.hidden) push(false, true); });

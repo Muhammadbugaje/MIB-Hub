@@ -35,6 +35,13 @@ const { title, description = siteConfig.description, bodyClass, motion = false }
     <meta property="og:title" content={pageTitle(title)} />
     <meta property="og:description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- "Add to Home Screen": the site opens like an app, with no browser bars (true full screen for games on iPhone). -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content={siteConfig.name} />
     <!-- Sets html[data-theme] before the first paint (no white flash). Logic: packages/ui/src/theme.ts -->
     <script is:inline set:html={THEME_INIT_SCRIPT} />
   </head>

@@ -65,6 +65,8 @@ const bridge = {
   savePrefixes: saveKeyPrefixes(game.slug),
   owner,
   guestNote: "Playing as a guest: progress stays on this device",
+  title: game.title,
+  icon: `/games/${game.slug}/icon.png`,
 };
 const contractPlayer = viewer.user
   ? { id: viewer.user.id, displayName: leaderboardName(viewer.user.name), isStaff: viewer.permissions.has("cheats.staff") }
@@ -126,11 +128,11 @@ const topics = Array.isArray(meta.topics) ? (meta.topics as string[]) : [];
                   <span class="sr-only">Volume</span>
                   <input type="range" min="0" max="100" value="60" data-gm-vol aria-label="Volume" />
                 </label>
-                <button type="button" class="btn btn--ghost btn--sm" data-gm-full>
-                  <PlayIcon name="maximize" /> <span>Full screen</span>
-                </button>
               </>
             )}
+            <button type="button" class="btn btn--ghost btn--sm" data-gm-full>
+              <PlayIcon name="maximize" /> <span>Full screen</span>
+            </button>
           </div>
         )
       }
@@ -185,6 +187,8 @@ const topics = Array.isArray(meta.topics) ? (meta.topics as string[]) : [];
         <GameHost
           client:only="react"
           slug={game.slug}
+          title={game.title}
+          icon={`/games/${game.slug}/icon.png`}
           entry={game.entry}
           assetsPath={game.assetsPath}
           settings={effective}
@@ -273,6 +277,10 @@ const topics = Array.isArray(meta.topics) ? (meta.topics as string[]) : [];
     </dialog>
 
     {legacy && gate.ok && <link rel="stylesheet" href={`${LEGACY_BASE}css/games.css`} />}
+    {/* Full screen for every game (Play cover, X, Resume, iPhone fallback): public/play/_shared/mib/mib-full.js */}
+    {gate.ok && <script is:inline src="/play/_shared/mib/mib-full.js" defer />}
+    {/* The round 8-way pad and diamond buttons some arcade games use on phones (arcade.js api.usePad) */}
+    {legacy && gate.ok && <script is:inline src="/play/_shared/mib/mib-pad.js" defer />}
     {legacy && gate.ok && <script type="application/json" id="mib-play-config" set:html={JSON.stringify(bridge).replace(/</g, "\\u003c")} />}
     {legacy && gate.ok && <script is:inline src="/play/_shared/mib/mib-play.js" defer />}
     {!legacy && gate.ok && <script is:inline set:html={CONTRACT_PAGE_JS} />}

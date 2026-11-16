@@ -60,10 +60,17 @@ export interface GameManifest {
 }
 
 /** Every file every offline game needs, whatever the game. */
-export const OFFLINE_CORE = ["/offline/mib-sync.js", "/offline/mib-offline.js", "/offline.html", "/favicon.svg"] as const;
+export const OFFLINE_CORE = [
+  "/offline/mib-sync.js",
+  "/offline/mib-offline.js",
+  "/offline.html",
+  "/favicon.svg",
+  "/manifest.webmanifest",
+  `${LEGACY_BASE}mib/mib-full.js`, // full screen, on every play page
+] as const;
 
 /** The legacy (EE Hub) games also need the play bridge and the games stylesheet. */
-export const LEGACY_PAGE_FILES = [`${LEGACY_BASE}mib/mib-play.js`, `${LEGACY_BASE}css/games.css`] as const;
+export const LEGACY_PAGE_FILES = [`${LEGACY_BASE}mib/mib-play.js`, `${LEGACY_BASE}mib/mib-pad.js`, `${LEGACY_BASE}css/games.css`] as const;
 
 export const SFX_BASE = `${LEGACY_BASE}audio/sfx/`;
 export const THREE_URL = `${LEGACY_BASE}vendor/three@0.158.0/build/three.module.min.js`;

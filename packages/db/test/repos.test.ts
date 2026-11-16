@@ -132,6 +132,26 @@ describe("players, scores and progress", () => {
     await expect(repos.scores.submit({ profileId: a.id, gameSlug: "g", score: -1 })).rejects.toThrow();
   });
 
+  it("renames a person everywhere: account, profile and leaderboards", async () => {
+    await addUser("u1", "Amina Bello", "a@example.test");
+    const p = await repos.profiles.getOrCreateForUser("u1", "Amina Bello");
+    await repos.scores.submit({ profileId: p.id, gameSlug: "g", score: 40 });
+    expect((await repos.scores.top("g"))[0]!.name).toBe("Amina B.");
+
+    expect(await repos.users.setName("u1", "  Zara   Okafor ")).toBe("Zara Okafor");
+    expect((await repos.users.findById("u1"))!.name).toBe("Zara Okafor");
+    expect((await repos.profiles.getForUser("u1"))!.displayName).toBe("Zara Okafor");
+    expect((await repos.scores.top("g"))[0]!.name).toBe("Zara O.");
+    expect((await repos.scores.listForAdmin({ gameSlug: "g" }))[0]!.name).toBe("Zara Okafor");
+  });
+
+  it("shows the account name on leaderboards even when an old profile name is stale", async () => {
+    await addUser("u1", "New Name", "n@example.test");
+    const p = await repos.profiles.getOrCreateForUser("u1", "Old Name");
+    await repos.scores.submit({ profileId: p.id, gameSlug: "g", score: 10 });
+    expect((await repos.scores.top("g"))[0]!.name).toBe("New N.");
+  });
+
   it("saves and overwrites one slot", async () => {
     await addUser("u1", "A", "a@example.test");
     const p = await repos.profiles.getOrCreateForUser("u1", "A");

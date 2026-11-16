@@ -25,13 +25,31 @@ export function sniffImage(bytes: Uint8Array): string | null {
   return null;
 }
 
+/**
+ * Folders that take no uploads. Profile pictures are switched off (there is no
+ * storage for them): players get coloured initials instead (Avatar.astro).
+ * Staff uploads (news covers, people photos, ads...) use other folders.
+ */
+export const BLOCKED_UPLOAD_FOLDERS: ReadonlySet<string> = new Set(["avatars", "avatar", "profile", "profiles"]);
+
+/** The storage folder name for an upload (letters, digits and dashes; "misc" when empty). */
+export function uploadFolder(folder: string): string {
+  return folder.replace(/[^a-z0-9-]/gi, "").toLowerCase() || "misc";
+}
+
+/** True when `path` ("avatars/x.png") is in a folder that is switched off. */
+export function isBlockedUploadPath(path: string): boolean {
+  return BLOCKED_UPLOAD_FOLDERS.has(uploadFolder(path.split("/")[0] ?? ""));
+}
+
 /** Save an uploaded image into a folder (e.g. "people"). Returns its public URL. */
 export async function saveImage(file: File, folder: string): Promise<string> {
+  if (BLOCKED_UPLOAD_FOLDERS.has(uploadFolder(folder))) throw new Error("Profile pictures are switched off.");
   if (file.size > MAX_UPLOAD_BYTES) throw new Error("Images must be 4 MB or smaller.");
   const bytes = new Uint8Array(await file.arrayBuffer());
   const type = sniffImage(bytes);
   if (!type || !IMAGE_TYPES[type]) throw new Error("Upload a PNG, JPEG, WebP or GIF image.");
-  const safeFolder = folder.replace(/[^a-z0-9-]/gi, "").toLowerCase() || "misc";
+  const safeFolder = uploadFolder(folder);
   const name = `${crypto.randomUUID()}.${IMAGE_TYPES[type]}`;
   await blobs.put(`${safeFolder}/${name}`, bytes, type);
   return `/uploads/${safeFolder}/${name}`;
@@ -39,6 +57,7 @@ export async function saveImage(file: File, folder: string): Promise<string> {
 
 /** Read an uploaded image for serving; null when missing or not an image key. */
 export async function readUpload(path: string): Promise<{ bytes: Uint8Array; type: string; etag: string } | null> {
+  if (isBlockedUploadPath(path)) return null; // old profile pictures are no longer shown
   const file = await blobs.get(path);
   if (!file || !IMAGE_TYPES[file.contentType]) return null;
   return { bytes: file.bytes, type: file.contentType, etag: file.etag };
@@ -46,6 +65,7 @@ export async function readUpload(path: string): Promise<{ bytes: Uint8Array; typ
 
 /** An uploaded image's ETag without reading the file; null when missing or not an image. */
 export async function uploadEtag(path: string): Promise<string | null> {
+  if (isBlockedUploadPath(path)) return null;
   const info = await blobs.stat(path);
   return info && IMAGE_TYPES[info.contentType] ? info.etag : null;
 }

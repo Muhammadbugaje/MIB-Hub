@@ -159,6 +159,8 @@
 
   /* ---------- fill the screen: real fullscreen where the browser has it, a fixed full-viewport stage where it has not (iPhone) ---------- */
   T.toggleFill = function (want) {
+    var MF = window.MIBFull; // MIB-Hub: the play page's shared full screen (mib-full.js) owns entering and leaving
+    if (MF && MF.toggle) { if (want === undefined || !!want !== MF.active()) MF.toggle(); autoFill = false; setTimeout(refit, 80); return; }
     var on = want === undefined ? !(T.fill || document.fullscreenElement) : want; autoFill = false;
     if (on) {
       var req = stage.requestFullscreen || stage.webkitRequestFullscreen, done = false;
@@ -196,7 +198,7 @@
     var s = stage.getBoundingClientRect(); if (s.width + "x" + s.height !== sizeKey) layout();
     var port = window.innerHeight > window.innerWidth * 1.05, phone = coarse() || T.forced;
     hint.hidden = !(phone && port && Z.mode === "play" && !portraitOk && !api.overlayOpen());
-    if (autoFill && phone && !port && Z.mode === "play" && !T.fill && !document.fullscreenElement && window.innerHeight < 560 && s.height < window.innerHeight - 24) { cssFill(true); autoFill = true; }
+    if (autoFill && phone && !port && Z.mode === "play" && !T.fill && !document.fullscreenElement && !(window.MIBFull && window.MIBFull.attached) && window.innerHeight < 560 && s.height < window.innerHeight - 24) { cssFill(true); autoFill = true; }
     if (T.fill && autoFill && port) { cssFill(false); autoFill = true; }
     if (mode === "play" && (labelT -= dt) <= 0) { labelT = .2; labels(); }
   };
@@ -212,7 +214,7 @@
     B.attack._a = veh ? "horn" : "attack"; txt(B.attack, veh ? "HORN" : "HIT"); if (B.kick) { B.kick.hidden = veh && !hops; B.kick._a = hops ? "drift" : "kick"; txt(B.kick, hops ? "DRIFT" : "KICK"); } if (B.block) B.block.hidden = !!veh;
     var c = veh ? (me.veh.type === "skate" ? "" : "radio") : P.inv && P.inv.slipper ? "throw" : P.inv && P.inv.torch ? "torch" : "emote1";
     if (c !== ctxId) { ctxId = c; B.ctx._a = c; B.ctx.hidden = !c; txt(B.ctx, { radio: "RADIO", "throw": "THROW", torch: "TORCH", emote1: "WAVE" }[c] || ""); }
-    txt(B.full, T.fill || document.fullscreenElement ? "EXIT" : "FULL");
+    txt(B.full, T.fill || document.fullscreenElement || (window.MIBFull && window.MIBFull.active()) ? "EXIT" : "FULL");
   }
 
   /* ---------- gamepad: left stick moves, right stick looks ---------- */

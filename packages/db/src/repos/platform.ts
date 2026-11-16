@@ -6,7 +6,7 @@
  * apps/web/src/lib/auth.ts.
  */
 import { and, asc, count, desc, eq, gt, isNull, like, or, type SQL } from "drizzle-orm";
-import { auditLog, role, siteSetting, user, userPermissionOverride } from "../schema/index.ts";
+import { auditLog, playerProfile, role, siteSetting, user, userPermissionOverride } from "../schema/index.ts";
 import type { AppDb } from "../types.ts";
 
 export type User = typeof user.$inferSelect;
@@ -56,6 +56,18 @@ export function usersRepo(db: AppDb) {
     },
     async setBanned(id: string, banned: boolean): Promise<void> {
       await db.update(user).set({ banned, updatedAt: new Date() }).where(eq(user.id, id));
+    },
+    /**
+     * Change a person's name everywhere it is stored: the account (user.name,
+     * which the session, menus and pages read) and the player profile's
+     * display name (which leaderboards read). Returns the saved name.
+     */
+    async setName(id: string, name: string): Promise<string> {
+      const clean = name.trim().replace(/\s+/g, " ").slice(0, 80);
+      const now = new Date();
+      await db.update(user).set({ name: clean, updatedAt: now }).where(eq(user.id, id));
+      await db.update(playerProfile).set({ displayName: clean, updatedAt: now }).where(eq(playerProfile.userId, id));
+      return clean;
     },
   };
 }
