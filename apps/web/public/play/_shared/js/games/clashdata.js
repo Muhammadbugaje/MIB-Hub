@@ -333,7 +333,7 @@
       f.prevH[b] = !!h[b];
     });
     var sp = !!(c.p && c.p.SP) || (!!c.sp && !f.prevH.SP); f.prevH.SP = !!c.sp;
-    var k = { fw: fw, bk: bk, u: !!c.u, d: !!c.d, blk: !!c.blk, P: P, R: R, sp: sp, dblF: dblF || !!c.dblF, dblB: dblB || !!c.dblB, spec: c.spec, ex: !!c.ex, fin: !!c.fin, sup: !!c.sup };
+    var k = { fw: fw, bk: bk, u: !!c.u, d: !!c.d, blk: !!c.blk, P: P, R: R, sp: sp, dash: !!c.dash, dblF: dblF || !!c.dblF, dblB: dblB || !!c.dblB, spec: c.spec, ex: !!c.ex, fin: !!c.fin, sup: !!c.sup };
     f.ctrl = k; return k;
   }
   // Does the direction history end with this token sequence (diagonals count for both parts), within the time window?
@@ -465,8 +465,8 @@
       }
       if (f.st !== "run") {
         if (k.u) { f.vy = PHYS.jumpV * f.d.jump; f.vx = (k.fw ? 1 : k.bk ? -1 : 0) * PHYS.jumpVX * f.face * f.d.speed; setSt(f, "air"); f.airAtk = false; f.crouch = false; f.y = 0.001; emit(m, { type: "jump", side: f.side }); }
-        else if (k.dblF) { setSt(f, "run"); emit(m, { type: "dash", side: f.side }); }
-        else if (k.dblB) { setSt(f, "backdash"); f.inv = 0.12; f.vx = -f.face * 4.2; emit(m, { type: "backdash", side: f.side }); }
+        else if (k.dblB || (k.dash && k.bk && !k.fw)) { setSt(f, "backdash"); f.inv = 0.12; f.vx = -f.face * 4.2; emit(m, { type: "backdash", side: f.side }); }
+        else if (k.dash || k.dblF) { setSt(f, "run"); emit(m, { type: "dash", side: f.side }); }
         else if (k.blk) { setSt(f, "block"); f.crouch = k.d; }
         else if (k.d) { setSt(f, "crouch"); f.crouch = true; }
         else if (k.fw || k.bk) { setSt(f, "walk"); f.crouch = false; f.vx = (k.fw ? PHYS.walk : -PHYS.walkBack) * f.face * sp; }

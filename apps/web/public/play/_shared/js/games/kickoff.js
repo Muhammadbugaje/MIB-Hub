@@ -148,21 +148,23 @@
   }
 
   /* ---------- actions ---------- */
+  // Thumb clusters: move + dash under the left thumb, jump/kick/lob under the right, power above them. A dedicated
+  // Dash button replaces the old double-tap, which fired by accident when players nudged a direction twice.
   var ACTIONS = [
-    { id: "left", label: "Move left (double-tap to dash)", keys: ["KeyA"], touch: { label: "◀", x: 8, y: 90, s: .85 } },
-    { id: "right", label: "Move right (double-tap to dash)", keys: ["KeyD"], touch: { label: "▶", x: 22, y: 90, s: .85 } },
-    { id: "jump", label: "Jump", keys: ["KeyW"], touch: { label: "⤒", x: 64, y: 90, s: .85 } },
-    { id: "kick", label: "Low kick (25°)", keys: ["KeyS"], touch: { label: "K", x: 78, y: 90, s: .85 } },
+    { id: "left", label: "Move left", keys: ["KeyA"], touch: { label: "◀", x: 10, y: 90, s: .85 } },
+    { id: "right", label: "Move right", keys: ["KeyD"], touch: { label: "▶", x: 24, y: 90, s: .85 } },
+    { id: "dash", label: "Dash", keys: ["ShiftLeft"], touch: { label: "»", x: 38, y: 90, s: .85 } },
+    { id: "jump", label: "Jump", keys: ["KeyW"], touch: { label: "⤒", x: 66, y: 90, s: .85 } },
+    { id: "kick", label: "Low kick (25°)", keys: ["KeyS"], touch: { label: "K", x: 79, y: 90, s: .85 } },
     { id: "lob", label: "Lob (55°)", keys: ["KeyQ"], touch: { label: "L", x: 92, y: 90, s: .85 } },
-    { id: "dash", label: "Dash", keys: ["ShiftLeft"], touch: { label: "»", x: 36, y: 90, s: .85 } },
-    { id: "power", label: "Superpower", keys: ["KeyE"], touch: { label: "★", x: 92, y: 77, s: .85 } },
-    { id: "p2left", label: "Player 2 left", keys: ["ArrowLeft"], touch: { label: "◀", x: 8, y: 10, s: .85 } },
-    { id: "p2right", label: "Player 2 right", keys: ["ArrowRight"], touch: { label: "▶", x: 22, y: 10, s: .85 } },
-    { id: "p2jump", label: "Player 2 jump", keys: ["ArrowUp"], touch: { label: "⤒", x: 64, y: 10, s: .85 } },
-    { id: "p2kick", label: "Player 2 kick", keys: ["ArrowDown"], touch: { label: "K", x: 78, y: 10, s: .85 } },
+    { id: "power", label: "Superpower", keys: ["KeyE"], touch: { label: "★", x: 79, y: 75, s: .85 } },
+    { id: "p2left", label: "Player 2 left", keys: ["ArrowLeft"], touch: { label: "◀", x: 10, y: 10, s: .85 } },
+    { id: "p2right", label: "Player 2 right", keys: ["ArrowRight"], touch: { label: "▶", x: 24, y: 10, s: .85 } },
+    { id: "p2dash", label: "Player 2 dash", keys: ["ShiftRight"], touch: { label: "»", x: 38, y: 10, s: .85 } },
+    { id: "p2jump", label: "Player 2 jump", keys: ["ArrowUp"], touch: { label: "⤒", x: 66, y: 10, s: .85 } },
+    { id: "p2kick", label: "Player 2 kick", keys: ["ArrowDown"], touch: { label: "K", x: 79, y: 10, s: .85 } },
     { id: "p2lob", label: "Player 2 lob", keys: ["Slash"], touch: { label: "L", x: 92, y: 10, s: .85 } },
-    { id: "p2dash", label: "Player 2 dash", keys: ["ShiftRight"], touch: { label: "»", x: 36, y: 10, s: .85 } },
-    { id: "p2power", label: "Player 2 superpower", keys: ["Period"], touch: { label: "★", x: 92, y: 23, s: .85 } }
+    { id: "p2power", label: "Player 2 superpower", keys: ["Period"], touch: { label: "★", x: 79, y: 23, s: .85 } }
   ];
 
   /* ---------- kicking ---------- */
@@ -218,13 +220,13 @@
   }
 
   function control(api, p, dt) {
-    if (S.state !== "play" || (S.mode === "demo" && false)) { p.vx *= .85; return; }
+    if (S.state !== "play") { p.vx *= .85; return; }
     var L, R, J, K, Q, X, D = false, dl = false, dr = false, pre = p.side === 0 ? "" : "p2";
     if (p.cpu) { var a = ai(p, dt); L = a.l; R = a.r; J = a.j; K = a.k; Q = a.q; X = a.x; dl = a.dl; dr = a.dr; }
     else {
+      /* a dedicated Dash button: a double-tap on a direction fired by accident on a phone */
       L = api.down(pre + "left"); R = api.down(pre + "right"); J = api.hit(pre + "jump"); K = api.hit(pre + "kick"); Q = api.hit(pre + "lob"); X = api.hit(pre + "power"); D = api.hit(pre + "dash");
-      dl = api.double(pre + "left"); dr = api.double(pre + "right");
-      if (S.mode !== "duo" && p.side === 0) { L = L || api.down("p2left"); R = R || api.down("p2right"); J = J || api.hit("p2jump", "Space"); K = K || api.hit("p2kick"); Q = Q || api.hit("p2lob"); X = X || api.hit("p2power"); D = D || api.hit("p2dash"); dl = dl || api.double("p2left"); dr = dr || api.double("p2right"); }
+      if (S.mode !== "duo" && p.side === 0) { L = L || api.down("p2left"); R = R || api.down("p2right"); J = J || api.hit("p2jump", "Space"); K = K || api.hit("p2kick"); Q = Q || api.hit("p2lob"); X = X || api.hit("p2power"); D = D || api.hit("p2dash"); }
     }
     if (p.ko > 0 || p.fx.freeze > 0) { p.vx *= .88; return; }
     if (p.stun > 0) { p.vx *= .95; return; }
@@ -244,7 +246,8 @@
   function ai(p, dt) {
     var b = S.ball, out = {}, s = p.skill, own = p.side ? WM : 0, aim = p.side ? -1 : 1, o = S.p[1 - p.side];
     p.react -= dt; if (p.react > 0) return p.lastAI || out;
-    p.react = Math.max(.03, .2 - s * .15);
+    // 120 ms is the floor: quicker than that reads as the CPU reacting before the ball leaves your boot.
+    p.react = Math.max(.12, .2 - s * .15);
     var t = .32, px = b.x + b.vx * t, behind = px - aim * .7;
     if (Math.abs(b.x - own) < 4.2 && (b.x - p.x) * aim < 0) behind = b.x - aim * 1.0;
     var tx = (b.vy < -2 && b.y > 3) ? px - aim * .5 : behind;
@@ -393,7 +396,7 @@
   }
 
   var TUT = [
-    ["Move and dash", "Walk with your move keys. Double-tap a direction (or press Dash) to dash.", function (p) { return p.dash > 0; }],
+    ["Move and dash", "Walk with your move keys. Press Dash to burst forward, or use it to reach a loose ball.", function (p) { return p.dash > 0; }],
     ["Jump", "Jump. Your big head is the best part of you here.", function (p) { return p.y > .8; }],
     ["Two kicks", "Low kick flies at 25°, lob at 55°. Same speed, different angle: watch the range in the dotted arc.", function () { return S.stats.drive > 0 && S.stats.lob > 0; }],
     ["Score", "Put the ball in the right-hand goal. Watch the net bulge when it goes in.", function () { return false; }]
@@ -960,7 +963,7 @@
       x.font = "700 " + fz(13) + "px system-ui"; x.fillStyle = "#ffe9a8"; x.fillText(S.toss === 0 ? "◀ Ball to " + S.p[0].c.name.split(" ").pop() : "Ball to " + S.p[1].c.name.split(" ").pop() + " ▶", 480, 204); }
     if (S.item) { var it = S.item, ix = sx(it.x), iy = sy(it.y + Math.sin(api.t * 3) * .15); x.fillStyle = it.it.col; x.globalAlpha = .9; x.beginPath(); x.arc(ix, iy, 16, 0, 7); x.fill(); x.globalAlpha = 1; x.fillStyle = "#0b1620"; x.font = "800 " + fz(11) + "px system-ui"; x.textAlign = "center"; x.fillText("?", ix, iy + 4); x.fillStyle = "#fff"; x.fillText(it.it.label, ix, iy - 22); }
   }
-  var HINTS = ["Get under it and head it!", "Lob it! 55° flies higher", "Low kick: 25° goes fast", "Dash! Double-tap", "Use your superpower!", "Defend the goal!", "Power shots knock keepers back!"];
+  var HINTS = ["Get under it and head it!", "Lob it! 55° flies higher", "Low kick: 25° goes fast", "Dash! Tap »", "Use your superpower!", "Defend the goal!", "Power shots knock keepers back!"];
   function crowdHints(api, dt) {
     if (S.mode === "duo" || S.mode === "tut" || S.state !== "play") return;
     S.hintT -= dt; if (S.hint) S.hint.t -= dt;
@@ -980,7 +983,7 @@
         "<p>Each kick launches the ball with speed <span class='gm-eq'>v</span> at angle <span class='gm-eq'>θ</span>. With no air drag the path is a parabola:</p>" +
         "<table><tr><td>Range</td><td><span class='gm-eq'>R = v² sin 2θ / g</span> (m)</td></tr><tr><td>Max height</td><td><span class='gm-eq'>H = v² sin²θ / 2g</span> (m)</td></tr><tr><td>Flight time</td><td><span class='gm-eq'>T = 2v sinθ / g</span> (s)</td></tr><tr><td>Bounce</td><td><span class='gm-eq'>e = v_after / v_before</span></td></tr><tr><td>Kicking a rival</td><td><span class='gm-eq'>Δv = J / m</span> (m/s)</td></tr></table>" +
         "<p class='gm-small'>Model: g = 9.8 m/s², 1 m = 55 px, no air drag or spin, players far heavier than the ball; the turf's bounce and roll change with rain and snow. Range figures assume launch and landing at the same height. Superpowers, power shots and items are labelled game metaphors. Course: PHYS 111, motion in 2D and collisions.</p>",
-        "<p class='gm-small'>After each goal the ball is thrown to the side that conceded. Phones: move the buttons in Settings; turn sideways or use Full screen.</p>");
+        "<p class='gm-small'>After each goal the ball is thrown to the side that conceded. Phones: » dashes, the buttons can be moved in Settings, and sideways or Full screen gives the most room.</p>");
       newMatch(player(A.byId.einstein, 0, true, .5), player(A.byId.curie, 1, true, .5), "demo", { arena: AR.night }); S.state = "play"; S.ball.hold = false;
       setupCheats(api); registerOptions(api); menu(api); S.mode = "demo";
     },

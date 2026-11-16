@@ -7,11 +7,14 @@
   "use strict";
   var A = window.Arcade, D = window.ClashData, PH = D.PHYS, PX = 100, GY = 468, FB = 330, W = 960;
   var store = A.store, esc = A.esc, C = window.ClashCareer;
+  /* Phones get friendlier defaults: assist on, hit readouts off (they cover the fight on a small screen), a 45 s round,
+     and best-of-one. Only new players see these — an explicitly saved choice always wins. */
+  var POCOARSE = false; try { POCOARSE = !!(window.matchMedia && matchMedia("(pointer: coarse)").matches); } catch (e) {}
 
   /* ---------- actions: P1 (keyboard + phone buttons), P2 (keyboard, or top phone buttons in two-player), training keys ---------- */
   var ACTIONS = [
-    { id: "left", label: "Move left (double-tap: dash/back-dash)", keys: ["KeyA", "ArrowLeft"], touch: { label: "◀", x: 9, y: 92, s: 0.9 } },
-    { id: "right", label: "Move right (double-tap: dash/back-dash)", keys: ["KeyD", "ArrowRight"], touch: { label: "▶", x: 40, y: 92, s: 0.9 } },
+    { id: "left", label: "Move left", keys: ["KeyA", "ArrowLeft"], touch: { label: "◀", x: 9, y: 92, s: 0.9 } },
+    { id: "right", label: "Move right", keys: ["KeyD", "ArrowRight"], touch: { label: "▶", x: 40, y: 92, s: 0.9 } },
     { id: "up", label: "Jump", keys: ["KeyW", "ArrowUp"], touch: { label: "▲", x: 24.5, y: 78, s: 0.9 } },
     { id: "down", label: "Crouch", keys: ["KeyS", "ArrowDown"], touch: { label: "▼", x: 24.5, y: 92, s: 0.9 } },
     { id: "lp", label: "Low punch (LP)", keys: ["KeyJ", "KeyF"], touch: { label: "LP", x: 75.5, y: 92, s: 0.9 } },
@@ -20,6 +23,9 @@
     { id: "hk", label: "High kick (HK)", keys: ["KeyI", "KeyT"], touch: { label: "HK", x: 92, y: 78, s: 0.9 } },
     { id: "block", label: "Block (hold; with crouch to block low)", keys: ["KeyL", "KeyH", "Space"], touch: { label: "🛡", x: 59, y: 92, s: 0.9 } },
     { id: "special", label: "Special (with a direction: shortcut; alone: arm Super)", keys: ["KeyO", "KeyY"], touch: { label: "★", x: 59, y: 78, s: 0.9 } },
+    // Dash used to be a double-tap on the direction, which too often fired while simply walking to the other side.
+    // A tap of its own is reliable with a thumb; hold back (away from the rival) and tap it for a back-dash.
+    { id: "dash", label: "Dash (hold back to back-dash)", keys: ["ShiftLeft", "ShiftRight"], touch: { label: "»", x: 47, y: 92, s: 0.9 } },
     { id: "p2left", label: "P2 move left", keys: ["ArrowLeft"], touch: { label: "◀", x: 9, y: 22, s: 0.9 } },
     { id: "p2right", label: "P2 move right", keys: ["ArrowRight"], touch: { label: "▶", x: 40, y: 22, s: 0.9 } },
     { id: "p2up", label: "P2 jump", keys: ["ArrowUp"], touch: { label: "▲", x: 24.5, y: 8, s: 0.9 } },
@@ -30,13 +36,14 @@
     { id: "p2hk", label: "P2 high kick", keys: ["KeyI", "Numpad5"], touch: { label: "HK", x: 92, y: 8, s: 0.9 } },
     { id: "p2block", label: "P2 block", keys: ["KeyL", "Numpad3"], touch: { label: "🛡", x: 59, y: 22, s: 0.9 } },
     { id: "p2special", label: "P2 special", keys: ["KeyO", "Numpad6"], touch: { label: "★", x: 59, y: 8, s: 0.9 } },
+    { id: "p2dash", label: "P2 dash", keys: ["ShiftRight"], touch: { label: "»", x: 47, y: 22, s: 0.9 } },
     { id: "tr1", label: "Training: reset positions", keys: ["Digit1"] },
     { id: "tr2", label: "Training: change dummy", keys: ["Digit2"] },
     { id: "tr3", label: "Training: freeze / unfreeze", keys: ["Digit3"] },
     { id: "tr4", label: "Training: step one frame (while frozen)", keys: ["Digit4"] }
   ];
   var ACT = {}; ACTIONS.forEach(function (a) { ACT[a.id] = a; });
-  var P1_IDS = ["left", "right", "up", "down", "lp", "hp", "lk", "hk", "block", "special"];
+  var P1_IDS = ["left", "right", "up", "down", "lp", "hp", "lk", "hk", "block", "special", "dash"];
   var P2_IDS = P1_IDS.map(function (id) { return "p2" + id; });
   function codes(id) { var s = A.settings && A.settings.keys && A.settings.keys[id]; return s && s.length ? s : ACT[id].keys; }
 
@@ -87,7 +94,7 @@
     if (side === 0 && duo) { excl = []; P2_IDS.forEach(function (id) { excl = excl.concat(codes(id)); }); }
     function dn(i) { var id = ids[i]; if (!excl) return api.down(id); if (api.down("@" + id)) return true; return codes(id).some(function (c) { return excl.indexOf(c) < 0 && api.down(c); }); }
     function ht(i) { var id = ids[i]; if (!excl) return api.hit(id); if (api.hit("@" + id)) return true; return codes(id).some(function (c) { return excl.indexOf(c) < 0 && api.hit(c); }); }
-    var c = { l: dn(0), r: dn(1), u: dn(2), d: dn(3), blk: dn(8), sp: dn(9), h: { LP: dn(4), HP: dn(5), LK: dn(6), HK: dn(7) }, p: { LP: ht(4), HP: ht(5), LK: ht(6), HK: ht(7), SP: ht(9) } };
+    var c = { l: dn(0), r: dn(1), u: dn(2), d: dn(3), blk: dn(8), sp: dn(9), dash: ht(10), h: { LP: dn(4), HP: dn(5), LK: dn(6), HK: dn(7) }, p: { LP: ht(4), HP: ht(5), LK: ht(6), HK: ht(7), SP: ht(9) } };
     if (ht(2)) c.u = true;
     return c;
   }
@@ -106,7 +113,7 @@
     S.mode = o.mode; S.human = [!o.cpu0, !o.cpu1]; S.rung = o.rung || 0; S.ended = false; S.fx = []; S.pops = []; S.cap = null; S.read = null; S.combo = [null, null];
     S.inputs = []; S.frozen = false; S.maxCombo = 0; S.finisherDone = false; S.tutHold = 0;
     var start = o.mode === "circuit" || o.mode === "versus" || o.mode === "survival" ? (S.pick.start && A.owns("wpn-" + S.pick.start) ? S.pick.start : null) : null;
-    var assist = o.mode !== "demo" && !!opt("ia_assist", false), tmr = +opt("ia_timer", 60);
+    var assist = o.mode !== "demo" && !!opt("ia_assist", POCOARSE), tmr = +opt("ia_timer", POCOARSE ? 45 : 60);
     S.m = D.create({ p1: o.p1, p2: o.p2, mode: o.mode === "training" || o.mode === "tutorial" || o.mode === "trial" ? "training" : o.mode, seed: (Date.now() & 0xffff) + 1, weapons: o.weapons && opt("ia_drops", true) !== false,
       rounds: o.rounds || 2, roundTime: o.mode === "demo" ? 60 : tmr,
       p1o: { cpu: !!o.cpu0, skill: o.s0, weapon: start, takeMul: (o.p1take || 1) * (assist && o.mode !== "duo" ? 0.85 : 1) }, p2o: { cpu: !!o.cpu1, skill: o.skill, mirror: o.mirror, takeMul: o.p2take || 1 } });
@@ -121,7 +128,7 @@
     if (api.usePad) api.usePad({ dpad: { up: "up", down: "down", left: "left", right: "right" },
       buttons: [{ id: "hp", label: "HP", sub: "punch", pos: "top", color: "rgba(59,130,246,.75)" }, { id: "lp", label: "LP", sub: "punch", pos: "left", color: "rgba(56,189,248,.7)" },
         { id: "hk", label: "HK", sub: "kick", pos: "right", color: "rgba(239,68,68,.75)" }, { id: "lk", label: "LK", sub: "kick", pos: "bottom", color: "rgba(249,115,22,.75)" }],
-      extra: [{ id: "block", label: "BLOCK", color: "rgba(100,116,139,.75)" }, { id: "special", label: "★ SP", color: "rgba(234,179,8,.8)" }],
+      extra: [{ id: "dash", label: "DASH", color: "rgba(16,185,129,.75)" }, { id: "block", label: "BLOCK", color: "rgba(100,116,139,.75)" }, { id: "special", label: "★ SP", color: "rgba(234,179,8,.8)" }],
       keys: duo ? P2_IDS : [], fallback: duo ? P1_IDS.concat(P2_IDS) : P1_IDS });
     else api.useActions(duo ? P1_IDS.concat(P2_IDS) : P1_IDS);
     if (o.mode === "trial") { S.m.dummy = "stand"; S.m.trainMeter = true; S.m.f[1].cpu = null; }
@@ -522,7 +529,7 @@
     paintFaces();
   }
   function pickArena(p2) { return S.pick.arena === "random" ? D.ARENAS[Math.floor(Math.random() * D.ARENAS.length)].id : S.pick.arena || D.FIGHTERS[p2].arena; }
-  function startVersus(api) { var d = D.DIFFICULTY.filter(function (x) { return x.id === S.pick.diff; })[0] || D.DIFFICULTY[1]; startMatch(api, { mode: "versus", p1: S.pick.p1, p2: S.pick.p2, cpu1: true, skill: d.s, arena: pickArena(S.pick.p2), weapons: S.pick.weapons, rounds: roundsFor(2) }); }
+  function startVersus(api) { var d = D.DIFFICULTY.filter(function (x) { return x.id === S.pick.diff; })[0] || D.DIFFICULTY[1]; startMatch(api, { mode: "versus", p1: S.pick.p1, p2: S.pick.p2, cpu1: true, skill: d.s, arena: pickArena(S.pick.p2), weapons: S.pick.weapons, rounds: roundsFor(POCOARSE ? 1 : 2) }); }
   var HANDI = [[1.5, "60 %"], [1.25, "80 %"], [1, "100 %"], [0.8, "125 %"], [0.67, "150 %"]]; // shown as health; applied as damage taken (×1/health)
   function duo(api) {
     choose(api, "Player 1: choose a fighter", S.pick.p1, function (a) { S.pick.p1 = a;
@@ -536,7 +543,7 @@
       "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='go'>Fight</button><button class='gm-btn' data-act='duo'>Back</button></div>",
       function (a, el) { if (a === "h1" || a === "h2") { S.pick[a] = +el.getAttribute("data-v"); duoHandicap(api); } else if (a === "go") startDuo(api); else menuAct(api)(a); });
   }
-  function startDuo(api) { startMatch(api, { mode: "duo", p1: S.pick.p1, p2: S.pick.p2, arena: pickArena(S.pick.p2), weapons: S.pick.weapons, rounds: roundsFor(2), p1take: S.pick.h1 || 1, p2take: S.pick.h2 || 1 }); }
+  function startDuo(api) { startMatch(api, { mode: "duo", p1: S.pick.p1, p2: S.pick.p2, arena: pickArena(S.pick.p2), weapons: S.pick.weapons, rounds: roundsFor(POCOARSE ? 1 : 2), p1take: S.pick.h1 || 1, p2take: S.pick.h2 || 1 }); }
   function training(api) { choose(api, "Training room: choose a fighter", S.pick.p1, function (id) { S.pick.p1 = id; store("clash-p1", id); startMatch(api, { mode: "training", p1: id, p2: S.pick.p2 === id ? "bohr" : S.pick.p2, arena: "coil", weapons: false }); }, function () { menu(api); }, { go: "Train" }); }
   function moveList(api, id, back) {
     var ids = D.ORDER.concat(D.BOSSES);
@@ -557,7 +564,7 @@
         "<p><b>FINALE! finisher — " + esc(fin.name) + ":</b> <span style='font-family:monospace'>" + esc(glyphs(fin.in)) + "</span> (or ↑ + ★) while the beaten rival is dizzy. " + esc(fin.text) + "</p>" +
         "<h3 style='margin:8px 0 4px'>Everyone's moves</h3><table style='width:100%;border-collapse:collapse'>" + nRows + "</table>" +
         "<p><b>Combo strings:</b> " + D.CHAINS.map(function (ch) { return esc(ch.name) + " (" + ch.seq.map(function (s) { return s.toUpperCase(); }).join(", ") + ")"; }).join(" · ") + ". Press the next button as the hit lands. Damage scales down 10 % per extra hit (to 35 %). Juggle off the uppercut.</p>" +
-        "<p class='gm-small'>Frames are startup/active/recovery at 60 fps. Double-tap → to dash, ← to back-dash. Close + LP throws. ← + LK sweeps. ↓ + HP uppercuts.</p></div>" +
+        "<p class='gm-small'>Frames are startup/active/recovery at 60 fps. Tap » (Shift) to dash, or hold ◀ + » to back-dash. Close + LP throws. ← + LK sweeps. ↓ + HP uppercuts.</p></div>" +
         "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='back'>Back</button></div>",
         function (a, el) { if (a === "who") { id = el.getAttribute("data-id"); draw(); } else if (a === "back") back(); });
     }
@@ -565,8 +572,8 @@
   }
   function how(api) {
     api.show("<h2>How to play</h2><div class='gm-set'><section><h3>Keyboard (one player)</h3><p class='gm-small'>Move <kbd>WASD</kbd>/arrows · <kbd>U</kbd> HP · <kbd>I</kbd> HK · <kbd>J</kbd> LP · <kbd>K</kbd> LK · <kbd>L</kbd>/<kbd>Space</kbd> block · <kbd>O</kbd> special. Two players: P1 <kbd>WASD</kbd> + <kbd>R T Y</kbd>/<kbd>F G H</kbd>, P2 arrows + <kbd>U I O</kbd>/<kbd>J K L</kbd> (or numpad 1–6). Remap in Settings.</p></section>" +
-      "<section><h3>Phone</h3><p class='gm-small'>D-pad on the left, LP/HP/LK/HK on the right, 🛡 block and ★ special. ★ + a direction is a special shortcut; ★ alone arms Super. Drag buttons in Settings → Move buttons.</p></section>" +
-      "<section><h3>Fighting</h3><p class='gm-small'>Standing block stops high, mid and air attacks; crouch-block stops lows. High attacks whiff over crouchers. Close + LP throws (unblockable, but never a blocking rival; press LP the moment you are grabbed to escape). Double-tap to dash. Knock-downs drop weapons. One of your projectiles on screen at a time. Buttons pressed a moment early still come out. Full meter: super (↓→↓→ + HK, or ★ + 🛡).</p></section>" +
+      "<section><h3>Phone</h3><p class='gm-small'>D-pad on the left, LP/HP/LK/HK on the right, » dash, 🛡 block and ★ special above them. ★ + a direction is a special shortcut; ★ alone arms Super. Drag buttons in Settings → Move buttons.</p></section>" +
+      "<section><h3>Fighting</h3><p class='gm-small'>Standing block stops high, mid and air attacks; crouch-block stops lows. High attacks whiff over crouchers. Close + LP throws (unblockable, but never a blocking rival; press LP the moment you are grabbed to escape). Tap » to dash in; hold back and tap » to back-dash. Knock-downs drop weapons. One of your projectiles on screen at a time. Buttons pressed a moment early still come out. Full meter: super (↓→↓→ + HK, or ★ + 🛡).</p></section>" +
       "<section><h3>Modes</h3><p class='gm-small'>Circuit: 10 chapters × 10 rungs with a rival, a mirror match and a chapter boss each, then endless Prestige. Survival: one round each, health carries over. Time attack: 8 fights against the clock. Combo trials: six per fighter. Fighters level up to 50 and open costumes; chapters recruit new fighters.</p></section>" +
       "<section><h3>The physics</h3><p class='gm-small'>Each hit is an impulse J (N·s): Δv = J/m, so heavy fighters fly less. Blocking keeps J but makes Δt 4× longer, so F̄ = J/Δt and damage drop to ¼. Friction a = μg (μ = 0.6) stops slides. Impulses are scaled ~5–10× a real punch so you can see them.</p></section></div>" +
       "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='menu'>Back</button></div>", menuAct(api));
@@ -598,6 +605,7 @@
     { t: "Walk", d: "Walk forward and back: ◀ ▶ (A/D).", ok: function () { return S.tw.l && S.tw.r; } },
     { t: "Jump", d: "Jump with ▲ (W). Hold ◀ or ▶ as you jump to jump forward or back.", ev: function (e) { return e.type === "jump" && e.side === 0; } },
     { t: "Crouch", d: "Hold ▼ (S) to crouch. High attacks pass over you.", ok: function () { return S.m.f[0].st === "crouch" && S.m.f[0].stateT > 0.4; } },
+    { t: "Dash", d: "Tap » (Shift) to dash in. Hold ◀ (back) as you tap it to back-dash away.", ev: function (e) { return (e.type === "dash" || e.type === "backdash") && e.side === 0; } },
     { t: "High punch", d: "Walk up and press HP (U). Watch the readout: J, Δt, F̄ and Δv = J/m.", ev: function (e) { return e.type === "hit" && e.att === 0 && /High punch/.test(e.label); } },
     { t: "Low kick", d: "Press LK (K). Lows must be blocked crouching.", ev: function (e) { return (e.type === "hit" || e.type === "block") && e.att === 0 && /Low kick/.test(e.label); } },
     { t: "Block high", d: "The dummy throws high punches. Hold 🛡 Block (L or Space) to block.", ev: function (e) { return e.type === "block" && e.def === 0; }, dummy: "high" },
@@ -1107,7 +1115,7 @@
       x.globalAlpha = 1;
     }
     // impulse readout
-    if (S.read && S.read.t > 0 && opt("ia_readout", true) !== false) {
+    if (S.read && S.read.t > 0 && opt("ia_readout", !POCOARSE) !== false) {
       var r = S.read; x.globalAlpha = Math.min(1, r.t);
       if ((S.ui || 1) >= 1.3) { var short1 = (r.blocked ? "BLOCKED · " : "") + "Δv = " + r.dv.toFixed(1) + " m/s"; x.font = "800 " + Math.round(15 * S.ui) + "px system-ui"; var tw1 = x.measureText(short1).width + 24; x.fillStyle = "rgba(4,12,18,.8)"; x.fillRect(480 - tw1 / 2, 96, tw1, 30 * Math.min(S.ui, 1.6)); x.fillStyle = r.blocked ? "#7ef0ff" : "#fff"; x.textAlign = "center"; x.fillText(short1, 480, 96 + 22 * Math.min(S.ui, 1.6)); x.globalAlpha = 1; r = null; }
       if (r) {
@@ -1186,19 +1194,19 @@
       if (api.settings && api.settings.add) { // per-game options (docs/ARCADE_SETTINGS.md)
         var G = "Impulse Arena";
         api.settings.add({ id: "ia_rounds", tab: "gameplay", section: G, label: "Rounds", type: "choice", default: "auto", choices: [["auto", "Mode default"], ["1", "Best of 1"], ["2", "Best of 3"], ["3", "Best of 5"]] });
-        api.settings.add({ id: "ia_timer", tab: "gameplay", section: G, label: "Round timer", type: "choice", default: 60, choices: [[30, "30 s"], [60, "60 s"], [99, "99 s"]] });
+        api.settings.add({ id: "ia_timer", tab: "gameplay", section: G, label: "Round timer", type: "choice", default: POCOARSE ? 45 : 60, choices: [[30, "30 s"], [45, "45 s"], [60, "60 s"], [99, "99 s"]] });
         api.settings.add({ id: "ia_diff", tab: "gameplay", section: G, label: "Versus CPU difficulty", type: "choice", default: S.pick.diff, choices: D.DIFFICULTY.map(function (d) { return [d.id, d.name]; }), apply: function (v) { S.pick.diff = v; store("clash-diff", v); } });
         api.settings.add({ id: "ia_drops", tab: "gameplay", section: G, label: "Stage hazards (weapon drops)", type: "toggle", default: true });
-        api.settings.add({ id: "ia_assist", tab: "gameplay", section: G, label: "Assist mode", type: "toggle", default: false, help: "You take 15 % less damage. ★ + a direction still fires each special without the motion." });
+        api.settings.add({ id: "ia_assist", tab: "gameplay", section: G, label: "Assist mode", type: "toggle", default: POCOARSE, help: "You take 15 % less damage. ★ + a direction still fires each special without the motion." });
         api.settings.add({ id: "ia_input", tab: "display", section: G, label: "Show inputs in every fight", type: "toggle", default: false });
-        api.settings.add({ id: "ia_readout", tab: "display", section: G, label: "Physics readouts on hits", type: "toggle", default: true });
+        api.settings.add({ id: "ia_readout", tab: "display", section: G, label: "Physics readouts on hits", type: "toggle", default: !POCOARSE });
       }
       api.panel("<p>Every hit is an <b>impulse</b> <span class='gm-eq'>J</span>: a force acting for a short contact time. It changes the defender's momentum, so a lighter fighter flies further from the same hit.</p>" +
         "<table><tr><td>Impulse</td><td><span class='gm-eq'>J = F̄Δt = mΔv</span> (N·s)</td></tr><tr><td>Knockback</td><td><span class='gm-eq'>Δv = J / m</span> (m/s)</td></tr><tr><td>Average force</td><td><span class='gm-eq'>F̄ = J / Δt</span> (N); a half-sine pulse peaks at πJ/(2Δt)</td></tr>" +
         "<tr><td>Blocking</td><td>same J, Δt ×4 → F̄ ÷4 (damage ∝ F̄)</td></tr><tr><td>Sliding to rest</td><td><span class='gm-eq'>a = μg</span>, μ = 0.6 → 5.9 m/s²</td></tr><tr><td>Falling apple</td><td><span class='gm-eq'>v = √(2gh)</span>, g = 9.8 m/s²</td></tr><tr><td>Half-life cloud</td><td><span class='gm-eq'>A = A₀(½)^(t/T½)</span>, T½ = 1 s in game</td></tr></table>" +
         "<p class='gm-small'>Simplified model: 1 m = 100 px; impulses are about 5–10× a real punch (~20–40 N·s) so the knockback is visible; damage is proportional to the average force; masses are each avatar's game stat. Specials and finishers are labelled game metaphors (no real death rays, time machines or teleporters). Course: PHYS 111, Newton's laws, impulse and momentum.</p>",
         "<table><tr><td>Move · jump · crouch</td><td><kbd>A</kbd><kbd>D</kbd> · <kbd>W</kbd> · <kbd>S</kbd> (or arrows)</td></tr><tr><td>Punches</td><td><kbd>J</kbd> low · <kbd>U</kbd> high</td></tr><tr><td>Kicks</td><td><kbd>K</kbd> low · <kbd>I</kbd> high</td></tr><tr><td>Block / special</td><td><kbd>L</kbd> or <kbd>Space</kbd> / <kbd>O</kbd></td></tr>" +
-        "<tr><td>Dash / back-dash</td><td>double-tap → / ←</td></tr><tr><td>Throw · uppercut · sweep</td><td>close + LP · ↓ + HP · ← + LK</td></tr><tr><td>Specials</td><td>motions such as ↓→ + HP, or ★ + direction</td></tr><tr><td>Pause</td><td><kbd>P</kbd> / <kbd>Esc</kbd></td></tr></table>");
+        "<tr><td>Dash / back-dash</td><td><kbd>Shift</kbd> · hold ← then <kbd>Shift</kbd></td></tr><tr><td>Throw · uppercut · sweep</td><td>close + LP · ↓ + HP · ← + LK</td></tr><tr><td>Specials</td><td>motions such as ↓→ + HP, or ★ + direction</td></tr><tr><td>Pause</td><td><kbd>P</kbd> / <kbd>Esc</kbd></td></tr></table>");
       menu(api);
     },
     update: function (dt, api) {
