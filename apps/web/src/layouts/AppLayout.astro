@@ -1,15 +1,27 @@
 ---
 /**
- * Signed-in pages (profile, admin): sidebar navigation + top bar.
- * Links the viewer lacks permission for are not shown; the pages themselves
- * still check permissions with guard() (hiding a link is not security).
+ * The signed-in shell (account and admin), in EE Hub's portal style:
+ * a frosted sidebar with coloured icon tiles per group, a glass top bar with
+ * a search pill, the theme toggle and the account menu, toasts, and on phones
+ * a drawer plus a floating tab bar.
  *
- * <AppLayout title="Profile"> ...page... </AppLayout>
+ * Links the viewer lacks permission for are not shown; every page still
+ * checks with guard() (hiding a link is not security).
+ *
+ *   <AppLayout title="Profile"> ...page... </AppLayout>
+ *
+ * Small behaviours any page can use (wired by the script at the bottom):
+ *   <form data-confirm="Delete this?">   asks before posting
+ *   <form data-autosubmit>               posts when a checkbox/select inside changes
+ *   flash()/done() in src/lib/admin-kit.ts → a toast on the next page
  */
+import "../styles/admin.css";
 import ThemeToggle from "@mib/ui/components/ThemeToggle.tsx";
-import Icon, { type IconName } from "../components/Icon.astro";
+import AIcon from "../components/admin/AIcon.astro";
+import Avatar from "../components/admin/Avatar.astro";
+import type { AdminIconName } from "../components/admin/icons.ts";
 import Logo from "../components/Logo.astro";
-import type { Permission } from "../lib/permissions.ts";
+import { visibleGroups } from "../lib/admin-sections.ts";
 import { ROLE_INFO, isRole } from "../lib/permissions.ts";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -18,92 +30,336 @@ interface Props {
 }
 const { title } = Astro.props;
 const { viewer } = Astro.locals;
-const path = Astro.url.pathname;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 
-interface NavItem {
+interface Item {
   href: string;
-  label: string;
-  icon: IconName;
-  permission?: Permission;
-  /** Not built yet: shows a small "soon" tag. */
-  todo?: boolean;
+  title: string;
+  icon: AdminIconName;
+  keywords?: string;
 }
 
-const mainNav: NavItem[] = [
-  { href: "/", label: "Home", icon: "home" },
-  { href: "/#games", label: "Games", icon: "gamepad" },
-  { href: "/account/profile", label: "Profile", icon: "user" },
+const accountNav: Item[] = [
+  { href: "/account", title: "My home", icon: "home", keywords: "dashboard me" },
+  { href: "/account/profile", title: "Profile", icon: "user", keywords: "picture photo avatar name bio handle" },
+  { href: "/account/games", title: "Saves & scores", icon: "gamepad", keywords: "progress games best" },
+  { href: "/account/tickets", title: "My tickets", icon: "inbox", keywords: "support help complaints" },
+  { href: "/account/orders", title: "My orders", icon: "receipt", keywords: "store purchases" },
+  { href: "/account/security", title: "Security", icon: "lock", keywords: "password sessions" },
 ];
 
-// The admin area. Each section is a TODO for the admin-panel worker (see docs/ARCHITECTURE.md).
-const adminNav: NavItem[] = [
-  { href: "/admin", label: "Overview", icon: "shield", permission: "admin.access" },
-  { href: "/admin/games", label: "Games", icon: "gamepad", permission: "games.manage", todo: true },
-  { href: "/admin/cheats", label: "Cheats & heroes", icon: "key", permission: "games.manage_settings", todo: true },
-  { href: "/admin/content", label: "Game content", icon: "file", permission: "games.manage_content", todo: true },
-  { href: "/admin/sounds", label: "Sounds", icon: "music", permission: "games.manage_sounds", todo: true },
-  { href: "/admin/users", label: "Users & roles", icon: "users", permission: "users.view", todo: true },
-  { href: "/admin/scores", label: "Leaderboards", icon: "trophy", permission: "scores.moderate", todo: true },
-  { href: "/admin/audit", label: "Audit log", icon: "list", permission: "audit.view", todo: true },
-  { href: "/admin/settings", label: "Site settings", icon: "settings", permission: "site.settings", todo: true },
-];
+const groups = visibleGroups(viewer.permissions);
+const isCurrent = (href: string) =>
+  href === "/admin" || href === "/account" ? path === href : path === href || path.startsWith(href + "/");
 
-const visible = (items: NavItem[]) => items.filter((i) => !i.permission || viewer.permissions.has(i.permission));
-const isCurrent = (href: string) => (href === "/admin" ? path === "/admin" : path === href || path.startsWith(href + "/"));
-const initials = (viewer.user?.name ?? "?")
-  .split(/\s+/)
-  .map((p) => p[0])
-  .join("")
-  .slice(0, 2)
-  .toUpperCase();
+const name = viewer.user?.name ?? "Player";
+const firstName = name.split(/\s+/)[0] ?? name;
 const roleLabel = isRole(viewer.role) ? ROLE_INFO[viewer.role].label : viewer.role;
-const admin = visible(adminNav);
+const isStaff = viewer.permissions.has("admin.access");
+
+// Everything the top-bar search can jump to.
+const searchIndex = [
+  ...accountNav.map((i) => ({ t: i.title, h: i.href, g: "You", k: i.keywords ?? "" })),
+  ...groups.flatMap((g) => g.sections.map((s) => ({ t: s.title, h: s.href, g: g.label, k: `${s.summary} ${s.keywords ?? ""}` }))),
+];
+
+const tabs: Item[] = [
+  { href: "/account", title: "Home", icon: "home" },
+  { href: "/account/profile", title: "Profile", icon: "user" },
+  ...(isStaff ? [{ href: "/admin", title: "Admin", icon: "chart" as const }] : [{ href: "/account/games", title: "Games", icon: "gamepad" as const }]),
+  ...(viewer.permissions.has("support.manage")
+    ? [{ href: "/admin/support", title: "Inbox", icon: "inbox" as const }]
+    : [{ href: "/account/tickets", title: "Help", icon: "help" as const }]),
+];
 ---
 
-<BaseLayout title={title}>
-  <div class="app">
-    <aside class="app-sidebar">
-      <Logo />
-      <nav class="app-nav" aria-label="App">
+<BaseLayout title={title} bodyClass="hub-body">
+  <div class="hub-shell" data-shell>
+    <div class="hub-backdrop" data-close-drawer></div>
+    <aside class="hub-side" id="hub-side" aria-label="Main menu">
+      <div class="hub-side__brand">
+        <Logo href="/" size={34} />
+        <button class="hub-iconbtn hub-side__close" type="button" data-close-drawer aria-label="Close menu">
+          <AIcon name="x" size={18} />
+        </button>
+      </div>
+
+      <a class="hub-whoami" href="/account/profile">
+        <Avatar name={name} src={viewer.user?.image} size={40} />
+        <span class="hub-whoami__text">
+          <span class="hub-whoami__kicker">Signed in as</span>
+          <span class="hub-whoami__name">{name}</span>
+          <span class="hub-whoami__role">{roleLabel}</span>
+        </span>
+      </a>
+
+      <nav class="hub-nav" aria-label="Account and admin">
+        <p class="hub-nav__label">You</p>
+        <ul>
+          {
+            accountNav.map((i) => (
+              <li>
+                <a href={i.href} aria-current={isCurrent(i.href) ? "page" : undefined}>
+                  <span class="hub-tile hub-tile--green">
+                    <AIcon name={i.icon} size={16} />
+                  </span>
+                  {i.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
         {
-          visible(mainNav).map((item) => (
-            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
-              <Icon name={item.icon} />
-              {item.label}
-            </a>
-          ))
-        }
-        {admin.length > 0 && <div class="app-nav__label">Admin</div>}
-        {
-          admin.map((item) => (
-            <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
-              <Icon name={item.icon} />
-              {item.label}
-              {item.todo && <span class="app-nav__todo">soon</span>}
-            </a>
+          groups.map((g) => (
+            <>
+              <p class="hub-nav__label">{g.label}</p>
+              <ul>
+                {g.sections.map((s) => (
+                  <li>
+                    <a href={s.href} aria-current={isCurrent(s.href) ? "page" : undefined}>
+                      <span class={`hub-tile hub-tile--${g.tone}`}>
+                        <AIcon name={s.icon} size={16} />
+                      </span>
+                      {s.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
           ))
         }
       </nav>
-      <div class="app-sidebar__foot">Signed in as {roleLabel}</div>
+
+      <div class="hub-side__foot">
+        <a href="/"><AIcon name="globe" size={16} /> Public website</a>
+        <form method="post" action="/auth/sign-out">
+          <button type="submit"><AIcon name="logout" size={16} /> Sign out</button>
+        </form>
+      </div>
     </aside>
 
-    <div class="app-main">
-      <header class="app-topbar">
-        <div class="app-topbar__title">{title}</div>
-        <ThemeToggle client:load />
-        <a class="user-chip" href="/account/profile">
-          <span class="avatar">{initials}</span>
-          <span>{viewer.user?.name}</span>
-        </a>
-        <form method="post" action="/auth/sign-out">
-          <button class="btn btn--ghost btn--icon" type="submit" aria-label="Sign out" title="Sign out">
-            <Icon name="logout" size={18} />
-          </button>
-        </form>
+    <div class="hub-main">
+      <header class="hub-top" data-top>
+        <button class="hub-iconbtn hub-top__burger" type="button" data-open-drawer aria-label="Open menu" aria-controls="hub-side" aria-expanded="false">
+          <AIcon name="menu" size={20} />
+        </button>
+        <span class="hub-top__title">{title}</span>
+
+        <div class="hub-search" data-search>
+          <AIcon name="search" size={17} class="hub-search__icon" />
+          <input
+            class="hub-search__input"
+            type="search"
+            placeholder="Jump to… (profile, news, cheats)"
+            aria-label="Jump to a page"
+            autocomplete="off"
+            role="combobox"
+            aria-expanded="false"
+            aria-controls="hub-search-list"
+            data-search-input
+          />
+          <kbd class="hub-search__kbd" aria-hidden="true">/</kbd>
+          <ul class="hub-search__list" id="hub-search-list" role="listbox" hidden data-search-list></ul>
+          <script type="application/json" data-search-index set:html={JSON.stringify(searchIndex)} />
+        </div>
+
+        <div class="hub-top__actions">
+          <a class="hub-iconbtn hub-top__site" href="/" title="Open the public website" aria-label="Open the public website">
+            <AIcon name="external" size={18} />
+          </a>
+          <ThemeToggle client:load />
+          <details class="hub-menu">
+            <summary class="hub-chip" aria-label="Account menu">
+              <Avatar name={name} src={viewer.user?.image} size={32} />
+              <span class="hub-chip__text">
+                <span class="hub-chip__kicker">{roleLabel}</span>
+                <span class="hub-chip__name">{firstName}</span>
+              </span>
+              <AIcon name="chevron-down" size={16} class="hub-chip__caret" />
+            </summary>
+            <div class="hub-menu__panel" role="menu">
+              <p class="hub-menu__who">
+                <strong>{name}</strong>
+                <span>{viewer.user?.email}</span>
+              </p>
+              <a role="menuitem" href="/account"><AIcon name="home" size={16} /> My home</a>
+              <a role="menuitem" href="/account/profile"><AIcon name="image" size={16} /> Change picture</a>
+              <a role="menuitem" href="/account/security"><AIcon name="lock" size={16} /> Password</a>
+              {
+                isStaff && (
+                  <a role="menuitem" href="/admin">
+                    <AIcon name="chart" size={16} /> Admin dashboard
+                  </a>
+                )
+              }
+              <form method="post" action="/auth/sign-out">
+                <button role="menuitem" type="submit"><AIcon name="logout" size={16} /> Sign out</button>
+              </form>
+            </div>
+          </details>
+        </div>
       </header>
-      <main id="main" class="app-content page-enter">
+
+      <main id="main" class="hub-content">
         <slot />
       </main>
+      <footer class="hub-foot">
+        <span>© {new Date().getFullYear()} MIB-Hub</span>
+        <a href="/">Public website</a>
+        <a href="/support">Help centre</a>
+      </footer>
     </div>
   </div>
+
+  <nav class="hub-tabbar" aria-label="Quick links" data-tabbar>
+    {
+      tabs.map((t) => (
+        <a href={t.href} aria-current={isCurrent(t.href) ? "page" : undefined}>
+          <AIcon name={t.icon} size={20} />
+          <span>{t.title}</span>
+        </a>
+      ))
+    }
+    <button type="button" data-open-drawer aria-controls="hub-side">
+      <AIcon name="menu" size={20} />
+      <span>Menu</span>
+    </button>
+  </nav>
+
+  <div class="hub-toasts" aria-live="polite" data-toasts></div>
 </BaseLayout>
+
+<script>
+  const shell = document.querySelector<HTMLElement>("[data-shell]");
+  const openers = document.querySelectorAll<HTMLElement>("[data-open-drawer]");
+  function setDrawer(open: boolean) {
+    shell?.classList.toggle("is-open", open);
+    document.body.classList.toggle("hub-locked", open);
+    for (const b of openers) b.setAttribute("aria-expanded", String(open));
+    if (open) document.querySelector<HTMLElement>(".hub-side a")?.focus();
+  }
+  for (const b of openers) b.addEventListener("click", () => setDrawer(true));
+  for (const b of document.querySelectorAll("[data-close-drawer]")) b.addEventListener("click", () => setDrawer(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && shell?.classList.contains("is-open")) setDrawer(false);
+  });
+
+  // Keep the current sidebar link in view.
+  document.querySelector(".hub-nav a[aria-current='page']")?.scrollIntoView({ block: "nearest" });
+
+  // Top bar: a hairline once the page scrolls; tab bar hides while scrolling down.
+  const top = document.querySelector("[data-top]");
+  const tabbar = document.querySelector("[data-tabbar]");
+  let lastY = window.scrollY;
+  window.addEventListener(
+    "scroll",
+    () => {
+      const y = window.scrollY;
+      top?.classList.toggle("is-scrolled", y > 4);
+      tabbar?.classList.toggle("is-hidden", y > lastY && y > 120);
+      lastY = y;
+    },
+    { passive: true },
+  );
+
+  // Close the account menu on outside click.
+  document.addEventListener("click", (e) => {
+    for (const d of document.querySelectorAll<HTMLDetailsElement>("details.hub-menu[open]")) {
+      if (!d.contains(e.target as Node)) d.open = false;
+    }
+  });
+
+  // Confirm before destructive posts.
+  document.addEventListener("submit", (e) => {
+    const form = e.target as HTMLFormElement;
+    const msg = form.dataset.confirm;
+    if (msg && !window.confirm(msg)) e.preventDefault();
+  });
+
+  // Auto-submitting toggles and selects.
+  for (const form of document.querySelectorAll<HTMLFormElement>("form[data-autosubmit]")) {
+    form.addEventListener("change", () => form.requestSubmit());
+  }
+
+  // Toasts: one queued by the server (cookie "mib_flash"), shown once.
+  const toasts = document.querySelector<HTMLElement>("[data-toasts]");
+  function toast(message: string, tone = "success") {
+    if (!toasts) return;
+    const el = document.createElement("div");
+    el.className = `hub-toast hub-toast--${tone}`;
+    el.setAttribute("role", tone === "danger" ? "alert" : "status");
+    el.textContent = message;
+    toasts.append(el);
+    setTimeout(() => el.classList.add("is-leaving"), 4200);
+    setTimeout(() => el.remove(), 4700);
+  }
+  const raw = document.cookie.split("; ").find((c) => c.startsWith("mib_flash="));
+  if (raw) {
+    document.cookie = "mib_flash=; Max-Age=0; path=/; SameSite=Lax";
+    try {
+      const { m, t } = JSON.parse(decodeURIComponent(raw.slice(10))) as { m: string; t: string };
+      if (m) toast(m, t);
+    } catch {
+      /* ignore a malformed cookie */
+    }
+  }
+
+  // Search: jump to any page in the menu.
+  const box = document.querySelector<HTMLElement>("[data-search]");
+  const input = box?.querySelector<HTMLInputElement>("[data-search-input]");
+  const list = box?.querySelector<HTMLUListElement>("[data-search-list]");
+  const index = JSON.parse(box?.querySelector("[data-search-index]")?.textContent ?? "[]") as { t: string; h: string; g: string; k: string }[];
+  let active = 0;
+  let hits: typeof index = [];
+  function render() {
+    if (!input || !list) return;
+    const q = input.value.trim().toLowerCase();
+    hits = q ? index.filter((i) => `${i.t} ${i.g} ${i.k}`.toLowerCase().includes(q)).slice(0, 8) : [];
+    active = Math.min(active, Math.max(0, hits.length - 1));
+    list.hidden = !q;
+    input.setAttribute("aria-expanded", String(!!q));
+    list.replaceChildren(
+      ...(hits.length
+        ? hits.map((h, i) => {
+            const li = document.createElement("li");
+            li.setAttribute("role", "option");
+            li.setAttribute("aria-selected", String(i === active));
+            const a = document.createElement("a");
+            a.href = h.h;
+            a.innerHTML = `<span></span><small></small>`;
+            a.firstElementChild!.textContent = h.t;
+            a.lastElementChild!.textContent = h.g;
+            li.append(a);
+            return li;
+          })
+        : [Object.assign(document.createElement("li"), { className: "hub-search__none", textContent: "No page matches. Try another word." })]),
+    );
+  }
+  input?.addEventListener("input", () => {
+    active = 0;
+    render();
+  });
+  input?.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      active = (active + (e.key === "ArrowDown" ? 1 : -1) + hits.length) % Math.max(1, hits.length);
+      render();
+    } else if (e.key === "Enter" && hits[active]) {
+      e.preventDefault();
+      location.href = hits[active]!.h;
+    } else if (e.key === "Escape") {
+      input.value = "";
+      render();
+      input.blur();
+    }
+  });
+  input?.addEventListener("blur", () => setTimeout(() => list && (list.hidden = true), 150));
+  input?.addEventListener("focus", render);
+  document.addEventListener("keydown", (e) => {
+    const t = e.target as HTMLElement;
+    if (e.key === "/" && !["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName) && !t.isContentEditable) {
+      e.preventDefault();
+      input?.focus();
+    }
+  });
+</script>

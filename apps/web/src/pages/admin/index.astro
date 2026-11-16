@@ -1,90 +1,351 @@
 ---
 /**
- * /admin: the admin shell's overview. Needs "admin.access" (moderator and up).
- * TODO(admin-panel): build each section listed in src/lib/admin-sections.ts.
+ * /admin: the dashboard. Headline numbers, the play tracker (daily trend,
+ * games, hardest and most-liked levels, trending, devices), the inbox and
+ * recent changes. Needs admin.access; the analytics need analytics.view.
+ * "Sample data" fills the tracker with demo rows (marked demo) so the charts
+ * can be seen before real players arrive; one click removes them again.
  */
-import Icon from "../../components/Icon.astro";
+import AIcon from "../../components/admin/AIcon.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import TrendChart from "../../components/admin/TrendChart.tsx";
 import AppLayout from "../../layouts/AppLayout.astro";
+import { buildDemoData } from "../../lib/admin-demo.ts";
+import { audit, compact, done, fStr, greeting, labelize, pct } from "../../lib/admin-kit.ts";
+import { ADMIN_GROUPS } from "../../lib/admin-sections.ts";
 import { repos } from "../../lib/db.ts";
 import { guard } from "../../lib/guard.ts";
-import { ADMIN_SECTIONS } from "../../lib/admin-sections.ts";
+import { formatPrice, siteSwitches, timeAgo } from "../../lib/site.ts";
 
 const denied = guard(Astro, { permission: "admin.access" });
 if (denied) return denied;
 
 const { viewer } = Astro.locals;
-const [games, userCount, audit] = await Promise.all([
+const can = (p: Parameters<typeof viewer.permissions.has>[0]) => viewer.permissions.has(p);
+const canDemo = can("analytics.view") && can("site.settings");
+
+if (Astro.request.method === "POST" && canDemo) {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "demo-generate") {
+    const games = (await repos.games.listAll()).filter((g) => g.enabled).slice(0, 10);
+    const { events, likes } = buildDemoData(games.map((g) => ({ slug: g.slug })), { days: 30 });
+    await repos.analytics.trackMany(events);
+    await repos.likes.addMany(likes);
+    await audit(Astro, "analytics.demo_generate", "analytics", "demo", undefined, { events: events.length, likes: likes.length });
+    return done(Astro, `Added ${events.length.toLocaleString("en-GB")} sample events. Clear them any time.`, "/admin");
+  }
+  if (action === "demo-clear") {
+    await repos.analytics.clearDemo();
+    await audit(Astro, "analytics.demo_clear", "analytics", "demo");
+    return done(Astro, "Sample data removed. Only real plays remain.", "/admin");
+  }
+}
+
+const days = Number(Astro.url.searchParams.get("days")) === 7 ? 7 : Number(Astro.url.searchParams.get("days")) === 90 ? 90 : 30;
+const showStats = can("analytics.view");
+const [games, userCount, ticketCounts, revenue, recent, switches] = await Promise.all([
   repos.games.listAll(),
   repos.users.count(),
-  viewer.permissions.has("audit.view") ? repos.audit.list({ limit: 6 }) : Promise.resolve([]),
+  can("support.manage") ? repos.tickets.counts() : Promise.resolve(null),
+  can("store.manage") ? repos.orders.revenue(days) : Promise.resolve(null),
+  can("audit.view") ? repos.audit.list({ limit: 7 }) : Promise.resolve([]),
+  siteSwitches(),
 ]);
-const live = games.filter((g) => g.status === "live" && g.enabled).length;
-const off = games.filter((g) => !g.enabled).length;
-const sections = ADMIN_SECTIONS.filter((s) => viewer.permissions.has(s.permission));
-const fmt = new Intl.DateTimeFormat("en-GB", { dateStyle: "medium", timeStyle: "short" });
+const stats = showStats
+  ? await Promise.all([
+      repos.analytics.totals(days),
+      repos.analytics.perGame(days),
+      repos.analytics.hardestLevels({ days, limit: 8, minAttempts: 3 }),
+      repos.analytics.mostLikedLevels(8),
+      repos.analytics.daily(days),
+      repos.analytics.trending(5),
+      repos.analytics.devices(days),
+      repos.analytics.hasDemoData(),
+    ])
+  : null;
+const [totals, perGame, hardest, liked, daily, trending, devices, hasDemo] = stats ?? [];
+const title = new Map(games.map((g) => [g.slug, g.title]));
+const gameName = (s: string) => title.get(s) ?? labelize(s);
+const maxPlays = Math.max(1, ...(perGame ?? []).map((g) => g.plays));
+const deviceTotal = (devices ?? []).reduce((s, d) => s + d.plays, 0);
+const offGames = games.filter((g) => !g.enabled).length;
+const live = games.filter((g) => g.enabled && g.status === "live").length;
+const actorIds = [...new Set(recent.map((a) => a.actorId).filter((x): x is string => !!x))];
+const actors = new Map((await Promise.all(actorIds.map((id) => repos.users.findById(id)))).filter((u) => !!u).map((u) => [u!.id, u!.name]));
+const first = viewer.user!.name.split(/\s+/)[0];
+const offSwitches = (Object.entries(switches) as [string, boolean][]).filter(([k, v]) => (k === "maintenance" ? v : !v) && k !== "payments");
+const shortcuts = ADMIN_GROUPS.flatMap((g) => g.sections.filter((s) => s.key !== "dashboard" && can(s.permission)).map((s) => ({ ...s, tone: g.tone })));
 ---
 
-<AppLayout title="Admin">
-  <div class="page-head">
-    <span class="eyebrow">Admin</span>
-    <h1>Overview</h1>
-    <p>Everything that runs the hub. Sections marked “soon” are being built.</p>
-  </div>
+<AppLayout title="Dashboard">
+  <section class="hub-hero">
+    <p class="hub-hero__kicker">Admin · last {days} days</p>
+    <h1 class="hub-hero__title">{greeting()}, <em>{first}</em></h1>
+    <p class="hub-hero__lead">
+      {live} of {games.length} games are live{offGames ? `, ${offGames} switched off` : ""}.
+      {ticketCounts && ` ${ticketCounts.open} open ${ticketCounts.open === 1 ? "ticket" : "tickets"} in the inbox.`}
+    </p>
+    <div class="hub-hero__actions">
+      {can("content.manage") && <a class="hub-hero__btn hub-hero__btn--gold" href="/admin/news?new=1"><AIcon name="plus" size={16} /> New post</a>}
+      {ticketCounts && <a class="hub-hero__btn" href="/admin/support"><AIcon name="inbox" size={16} /> Inbox</a>}
+      {can("games.manage") && <a class="hub-hero__btn" href="/admin/games"><AIcon name="gamepad" size={16} /> Games</a>}
+      {can("site.settings") && <a class="hub-hero__btn" href="/admin/settings"><AIcon name="sliders" size={16} /> Switches</a>}
+    </div>
+  </section>
 
-  <div class="stat-grid stagger">
-    <div class="card stat"><div class="stat__value">{games.length}</div><div class="stat__label">Games in the catalogue</div></div>
-    <div class="card stat"><div class="stat__value">{live}</div><div class="stat__label">Live and switched on</div></div>
-    <div class="card stat"><div class="stat__value">{off}</div><div class="stat__label">Switched off</div></div>
-    <div class="card stat"><div class="stat__value">{userCount}</div><div class="stat__label">Accounts</div></div>
-  </div>
+  {
+    offSwitches.length > 0 && (
+      <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+        <AIcon name="power" size={16} />
+        <span>
+          {offSwitches.map(([k]) => (k === "maintenance" ? "Maintenance mode is ON" : `${labelize(k)} is off`)).join(" · ")}.{" "}
+          {can("site.settings") && <a href="/admin/settings">Change in Settings</a>}
+        </span>
+      </div>
+    )
+  }
 
-  <h2 style="font-size: var(--fs-xl);">Sections</h2>
-  <div class="todo-grid" style="margin-bottom: var(--space-7);">
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Period">
+      {[7, 30, 90].map((d) => <a href={`/admin?days=${d}`} aria-current={d === days ? "page" : undefined}>{d} days</a>)}
+    </nav>
     {
-      sections.map((s) => (
-        <a class="card todo-card lift" href={`/admin/${s.key}`}>
-          <h3>
-            {s.title} <span class="badge badge--muted">soon</span>
-          </h3>
-          <p>{s.summary}</p>
+      canDemo && (
+        <form method="post" class="hub-inline-form" style="margin-left:auto;" data-confirm={hasDemo ? "Remove all sample data? Real plays are kept." : undefined}>
+          <input type="hidden" name="action" value={hasDemo ? "demo-clear" : "demo-generate"} />
+          <button class="btn btn--sm" type="submit">
+            <AIcon name={hasDemo ? "trash" : "sparkles"} size={15} /> {hasDemo ? "Clear sample data" : "Fill with sample data"}
+          </button>
+        </form>
+      )
+    }
+  </div>
+
+  <div class="hub-stats">
+    {
+      totals && (
+        <>
+          <div class="hub-stat">
+            <div class="hub-stat__top">Plays <AIcon name="play" size={18} /></div>
+            <div class="hub-stat__value">{compact(totals.plays)}</div>
+            <div class="hub-stat__note">{totals.completions.toLocaleString("en-GB")} levels cleared</div>
+          </div>
+          <div class="hub-stat hub-stat--volt">
+            <div class="hub-stat__top">Players <AIcon name="users" size={18} /></div>
+            <div class="hub-stat__value">{compact(totals.players)}</div>
+            <div class="hub-stat__note">{compact(totals.minutes)} minutes played</div>
+          </div>
+        </>
+      )
+    }
+    <a class="hub-stat hub-stat--gold" href={can("users.view") ? "/admin/users" : undefined}>
+      <div class="hub-stat__top">Accounts <AIcon name="user" size={18} /></div>
+      <div class="hub-stat__value">{compact(userCount)}</div>
+      <div class="hub-stat__note">All time</div>
+    </a>
+    {
+      ticketCounts && (
+        <a class="hub-stat hub-stat--rose" href="/admin/support">
+          <div class="hub-stat__top">Open tickets <AIcon name="inbox" size={18} /></div>
+          <div class="hub-stat__value">{ticketCounts.open}</div>
+          <div class="hub-stat__note">{ticketCounts.pending} waiting on players</div>
         </a>
-      ))
+      )
+    }
+    {
+      revenue !== null && (
+        <a class="hub-stat hub-stat--violet" href="/admin/store?tab=orders">
+          <div class="hub-stat__top">Revenue <AIcon name="coins" size={18} /></div>
+          <div class="hub-stat__value">{formatPrice(revenue)}</div>
+          <div class="hub-stat__note">Paid orders, {days} days</div>
+        </a>
+      )
     }
   </div>
 
   {
-    viewer.permissions.has("audit.view") && (
-      <section class="card">
-        <h2 class="card__title" style="display:flex; align-items:center; gap: var(--space-2);">
-          <Icon name="list" size={18} /> Recent activity
-        </h2>
-        {audit.length === 0 ? (
-          <p class="card__meta">Nothing yet. Admin changes will be listed here.</p>
-        ) : (
-          <table class="table">
-            <thead>
-              <tr>
-                <th>When</th>
-                <th>Action</th>
-                <th>Target</th>
-              </tr>
-            </thead>
-            <tbody>
-              {audit.map((a) => (
-                <tr>
-                  <td>{fmt.format(a.createdAt)}</td>
-                  <td>
-                    <code>{a.action}</code>
-                  </td>
-                  <td>
-                    {a.targetType} {a.targetId}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </section>
+    stats && daily && perGame && hardest && liked && trending && devices && (
+      <>
+        <section class="hub-card" style="margin-top: var(--space-5);">
+          <div class="hub-card__head">
+            <div>
+              <h2 class="hub-card__title"><AIcon name="chart" size={18} /> Plays per day</h2>
+              <p class="hub-card__sub">Game starts and distinct players{hasDemo ? " (includes sample data)" : ""}.</p>
+            </div>
+          </div>
+          {totals && totals.plays === 0 ? (
+            <EmptyState icon="chart" title="No plays recorded yet" text="Plays appear here as soon as people start games (the play tracker records starts, level results and quits). Use “Fill with sample data” to preview the charts." />
+          ) : (
+            <TrendChart client:visible points={daily} />
+          )}
+        </section>
+
+        <div class="hub-grid hub-grid--main">
+          <section class="hub-card hub-card--flush">
+            <div class="hub-card__head">
+              <h2 class="hub-card__title"><AIcon name="gamepad" size={18} /> Games</h2>
+              {can("games.manage") && <a class="hub-card__link" href="/admin/games">Manage <AIcon name="arrow-right" size={14} /></a>}
+            </div>
+            {perGame.length === 0 ? (
+              <EmptyState icon="gamepad" title="No plays in this period" text="Each game's plays, players, average session and likes will be ranked here." />
+            ) : (
+              <div class="hub-table-wrap">
+                <table class="hub-table">
+                  <thead>
+                    <tr><th>Game</th><th style="width:28%">Share</th><th class="hub-num">Plays</th><th class="hub-num">Players</th><th class="hub-num">Avg min</th><th class="hub-num">Likes</th></tr>
+                  </thead>
+                  <tbody>
+                    {perGame.slice(0, 10).map((g) => (
+                      <tr>
+                        <td><span class="hub-row-title">{gameName(g.gameSlug)}</span></td>
+                        <td><div class="hub-meter"><i style={`width:${(g.plays / maxPlays) * 100}%`} /></div></td>
+                        <td class="hub-num">{g.plays.toLocaleString("en-GB")}</td>
+                        <td class="hub-num">{g.players.toLocaleString("en-GB")}</td>
+                        <td class="hub-num">{g.avgMinutes}</td>
+                        <td class="hub-num">{g.likes}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+
+          <div class="hub-stack">
+            <section class="hub-card">
+              <div class="hub-card__head"><h2 class="hub-card__title"><AIcon name="flame" size={18} /> Trending this week</h2></div>
+              {trending.length === 0 ? (
+                <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">Nothing yet. Games with the most plays this week, compared with last week, show here.</p>
+              ) : (
+                <ul class="hub-list">
+                  {trending.map((t, i) => (
+                    <li>
+                      <span class="hub-list__icon hub-list__icon--gold">{i + 1}</span>
+                      <span class="hub-list__body">
+                        <span class="hub-list__title">{gameName(t.gameSlug)}</span>
+                        <span class="hub-list__meta">{t.thisWeek} plays · {t.lastWeek} last week</span>
+                      </span>
+                      <span class={`hub-pill ${t.growth >= 0 ? "hub-pill--green" : "hub-pill--red"} hub-pill--plain`}>
+                        <AIcon name={t.growth >= 0 ? "arrow-up" : "arrow-down"} size={12} /> {pct(Math.abs(t.growth))}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+            <section class="hub-card">
+              <div class="hub-card__head"><h2 class="hub-card__title"><AIcon name="device" size={18} /> Devices</h2></div>
+              {deviceTotal === 0 ? (
+                <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">Phone, tablet and desktop share of plays will show here.</p>
+              ) : (
+                <>
+                  <div class="hub-share" role="img" aria-label={devices.map((d) => `${d.device || "unknown"} ${pct(d.plays / deviceTotal)}`).join(", ")}>
+                    {devices.map((d) => <i style={`width:${(d.plays / deviceTotal) * 100}%`} />)}
+                  </div>
+                  <div class="hub-legend" style="margin-top: var(--space-3);">
+                    {devices.map((d, i) => (
+                      <span><i class={`hub-legend__swatch hub-legend__swatch--${i + 1}`} /> {labelize(d.device || "unknown")} {pct(d.plays / deviceTotal)}</span>
+                    ))}
+                  </div>
+                </>
+              )}
+            </section>
+          </div>
+        </div>
+
+        <div class="hub-grid hub-grid--2">
+          <section class="hub-card">
+            <div class="hub-card__head">
+              <div>
+                <h2 class="hub-card__title"><AIcon name="alert" size={18} /> Hardest levels</h2>
+                <p class="hub-card__sub">Highest fail rate, at least 3 tries.</p>
+              </div>
+            </div>
+            {hardest.length === 0 ? (
+              <EmptyState icon="flag" title="No level results yet" text="When games report level starts, wins and fails, the levels players struggle with most are ranked here." />
+            ) : (
+              <ul class="hub-list">
+                {hardest.map((l) => (
+                  <li>
+                    <span class="hub-list__body">
+                      <span class="hub-list__title">{gameName(l.gameSlug)} · level {l.level}</span>
+                      <span class="hub-list__meta">{l.fails} fails of {l.attempts} tries · {l.completions} cleared</span>
+                    </span>
+                    <span class="hub-list__end" style="min-width: 130px;">
+                      <span class="hub-meter hub-meter--danger" style="flex:1"><i style={`width:${l.failRate * 100}%`} /></span>
+                      <strong>{pct(l.failRate)}</strong>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+          <section class="hub-card">
+            <div class="hub-card__head">
+              <div>
+                <h2 class="hub-card__title"><AIcon name="heart" size={18} /> Most-liked levels</h2>
+                <p class="hub-card__sub">Likes from players, all time.</p>
+              </div>
+            </div>
+            {liked.length === 0 ? (
+              <EmptyState icon="heart" title="No level likes yet" text="Players can like levels they enjoy; the favourites are ranked here." />
+            ) : (
+              <ul class="hub-list">
+                {liked.map((l, i) => (
+                  <li>
+                    <span class="hub-list__icon hub-list__icon--rose">{i + 1}</span>
+                    <span class="hub-list__body">
+                      <span class="hub-list__title">{gameName(l.gameSlug)} · level {l.level}</span>
+                    </span>
+                    <span class="hub-list__end"><AIcon name="heart" size={14} /> {l.likes}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        </div>
+      </>
     )
   }
+
+  <div class="hub-grid hub-grid--main">
+    <section class="hub-card">
+      <div class="hub-card__head"><h2 class="hub-card__title"><AIcon name="sparkles" size={18} /> Shortcuts</h2></div>
+      <div class="hub-cards" style="grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: var(--space-2);">
+        {
+          shortcuts.map((s) => (
+            <a class="hub-whoami" style="margin:0;" href={s.href} title={s.summary}>
+              <span class={`hub-tile hub-tile--${s.tone}`}><AIcon name={s.icon} size={16} /></span>
+              <span class="hub-whoami__name">{s.title}</span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+    {
+      can("audit.view") && (
+        <section class="hub-card">
+          <div class="hub-card__head">
+            <h2 class="hub-card__title"><AIcon name="list" size={18} /> Recent changes</h2>
+            <a class="hub-card__link" href="/admin/audit">All <AIcon name="arrow-right" size={14} /></a>
+          </div>
+          {recent.length === 0 ? (
+            <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">Nothing yet. Every change made in admin is listed here.</p>
+          ) : (
+            <ul class="hub-list">
+              {recent.map((a) => (
+                <li>
+                  <span class="hub-list__body">
+                    <span class="hub-list__title"><span class="hub-code">{a.action}</span></span>
+                    <span class="hub-list__meta">{(a.actorId && actors.get(a.actorId)) || "System"} · {timeAgo(a.createdAt)}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      )
+    }
+  </div>
 </AppLayout>

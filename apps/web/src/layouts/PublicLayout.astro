@@ -1,89 +1,440 @@
 ---
 /**
- * Public pages (home, games, devlog...): glass header, content, footer.
- * <PublicLayout title="Games"> ...page... </PublicLayout>
+ * Public pages (home, games, news...): EE Hub's public shell. A floating
+ * glass pill header with dropdown menus, search, the theme toggle and the
+ * gold Sign in button (an avatar menu when signed in); a drawer on phones;
+ * the search panel; a rich dark footer.
+ *
+ *   <PublicLayout title="Games" description="..."> ...page... </PublicLayout>
+ *
+ * `overlay` is for pages that start with a dark hero (the home page): the
+ * header floats over it instead of taking its own row.
  */
-import ThemeToggle from "@mib/ui/components/ThemeToggle.tsx";
+import "../styles/public.css";
+import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { initials } from "../components/shell/art.ts";
+import { repos } from "../lib/db.ts";
+import { siteSwitches } from "../lib/site.ts";
 import { siteConfig } from "../site.config.ts";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   title?: string;
   description?: string;
+  overlay?: boolean;
 }
-const { title, description } = Astro.props;
+const { title, description, overlay = false } = Astro.props;
 const { viewer } = Astro.locals;
+const user = viewer.user;
 const path = Astro.url.pathname;
 const year = new Date().getFullYear();
+
+const [games, settings, switches] = await Promise.all([repos.games.listPublic(), repos.siteSettings.all(), siteSwitches()]);
+const topGames = games.slice(0, 4);
+const isStaff = viewer.permissions.has("admin.access");
+const firstName = user ? (user.name.trim().split(/\s+/)[0] ?? "Player") : "";
+const signInHref = path === "/" || path.startsWith("/auth") ? "/auth/sign-in" : `/auth/sign-in?next=${encodeURIComponent(path)}`;
+
+const isCurrent = (href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(`${href}/`));
+const navLinks = siteConfig.navLinks.filter((l) => l.href !== "/store" || switches.store);
+
+// Social links are set in Admin > Settings ("social.links": { youtube: "https://..." }).
+const SOCIAL_ICON: Record<string, string> = {
+  x: "x-social",
+  twitter: "x-social",
+  youtube: "youtube",
+  instagram: "instagram",
+  facebook: "facebook",
+  github: "github",
+  discord: "chat",
+  telegram: "chat",
+  whatsapp: "chat",
+  email: "mail",
+};
+const rawSocial = settings["social.links"];
+const social = Object.entries(rawSocial && typeof rawSocial === "object" ? (rawSocial as Record<string, unknown>) : {})
+  .filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^(https:\/\/|mailto:)/.test(entry[1]))
+  .map(([name, url]) => ({ name, url, icon: SOCIAL_ICON[name.toLowerCase()] ?? "globe" }));
 ---
 
-<BaseLayout title={title} description={description}>
-  <header class="site-header">
-    <div class="container site-header__bar">
-      <Logo />
-      <nav class="site-nav" aria-label="Main">
+<BaseLayout title={title} description={description} bodyClass={`pub${overlay ? " pub-home" : ""}`} motion>
+  <header class:list={["pub-nav", overlay && "pub-nav--overlay"]} data-pub-nav>
+    <div class="pub-nav__bar">
+      <Logo lockup size={46} />
+
+      <nav class="pub-links" aria-label="Main">
+        <a class="pub-link" href="/" aria-current={path === "/" ? "page" : undefined}>Home</a>
         {
-          siteConfig.nav.map((item) => (
-            <a href={item.href} aria-current={item.href === path ? "page" : undefined}>
+          siteConfig.navGroups.map((group) => (
+            <div class="pub-menu">
+              <button
+                class="pub-link"
+                type="button"
+                aria-expanded="false"
+                aria-haspopup="true"
+                aria-current={group.items.some((i) => isCurrent(i.href)) ? "page" : undefined}
+                data-pub-menu
+              >
+                {group.label}
+                <Icon name="chevron-down" size={14} />
+              </button>
+              <div class="pub-menu__panel">
+                {group.items.map((item) => (
+                  <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+                    <span class="pub-menu__ic">
+                      <Icon name={item.icon} size={17} />
+                    </span>
+                    <span class="pub-menu__tx">
+                      {item.label}
+                      {item.hint && <small>{item.hint}</small>}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+        {
+          navLinks.map((item) => (
+            <a class="pub-link" href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
               {item.label}
             </a>
           ))
         }
       </nav>
-      <div class="site-header__actions">
-        <ThemeToggle client:load />
+
+      <div class="pub-actions">
+        <a class="pub-searchbtn" href="/search" aria-label="Search" title="Search (press /)" data-search-open>
+          <Icon name="search" size={18} />
+          <span>Search games, news…</span>
+          <kbd aria-hidden="true">/</kbd>
+        </a>
+        <ThemeToggle class="pub-icon-btn" />
         {
-          viewer.user ? (
-            <a class="btn btn--primary btn--sm" href="/account/profile">
-              Your account
-            </a>
+          user ? (
+            <div class="pub-menu pub-menu--end">
+              <button class="pub-user" type="button" aria-expanded="false" aria-haspopup="true" aria-label={`Account menu for ${user.name}`} data-pub-menu>
+                {user.image ? (
+                  <img class="pub-user__av" src={user.image} alt="" width="32" height="32" />
+                ) : (
+                  <span class="pub-user__av">{initials(user.name)}</span>
+                )}
+                <span class="pub-user__name">{firstName}</span>
+                <Icon name="chevron-down" size={14} />
+              </button>
+              <div class="pub-menu__panel">
+                <div class="pub-menu__who">
+                  {user.image ? (
+                    <img class="pub-user__av pub-user__av--lg" src={user.image} alt="" width="42" height="42" />
+                  ) : (
+                    <span class="pub-user__av pub-user__av--lg">{initials(user.name)}</span>
+                  )}
+                  <span>
+                    <b>{user.name}</b>
+                    <small>{user.email}</small>
+                  </span>
+                </div>
+                <div class="pub-menu__sep" />
+                <a href="/account/profile">
+                  <span class="pub-menu__ic">
+                    <Icon name="user-circle" size={17} />
+                  </span>
+                  <span class="pub-menu__tx">
+                    Profile<small>Your name, picture and bio</small>
+                  </span>
+                </a>
+                <a href="/account">
+                  <span class="pub-menu__ic">
+                    <Icon name="dashboard" size={17} />
+                  </span>
+                  <span class="pub-menu__tx">
+                    My account<small>Games, orders, tickets, security</small>
+                  </span>
+                </a>
+                {isStaff && (
+                  <a href="/admin">
+                    <span class="pub-menu__ic">
+                      <Icon name="shield" size={17} />
+                    </span>
+                    <span class="pub-menu__tx">
+                      Admin<small>Run the hub</small>
+                    </span>
+                  </a>
+                )}
+                <div class="pub-menu__sep" />
+                <form method="post" action="/auth/sign-out">
+                  <button type="submit">
+                    <span class="pub-menu__ic">
+                      <Icon name="logout" size={17} />
+                    </span>
+                    <span class="pub-menu__tx">Sign out</span>
+                  </button>
+                </form>
+              </div>
+            </div>
           ) : (
-            <>
-              <a class="btn btn--ghost btn--sm" href="/auth/sign-in">
-                Sign in
-              </a>
-              <a class="btn btn--primary btn--sm" href="/auth/register">
-                Create account
-              </a>
-            </>
+            <a class="pub-signin" href={signInHref}>
+              <Icon name="login" size={16} />
+              <span>Sign in</span>
+            </a>
           )
         }
+        <button
+          class="pub-icon-btn pub-burger"
+          type="button"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="pub-drawer"
+          data-pub-drawer-open
+        >
+          <Icon name="menu" size={20} />
+        </button>
+      </div>
+    </div>
+
+    <!-- Phone drawer -->
+    <div class="pub-drawer" id="pub-drawer" aria-hidden="true" data-pub-drawer>
+      <div class="pub-drawer__panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="pub-drawer__head">
+          <Logo size={38} href={null} />
+          <span class="pub-drawer__head-actions">
+            <ThemeToggle class="pub-icon-btn" />
+            <button class="pub-icon-btn" type="button" aria-label="Close menu" data-pub-drawer-close>
+              <Icon name="x" size={20} />
+            </button>
+          </span>
+        </div>
+        <div class="pub-drawer__body">
+          <a class="pub-drawer__search" href="/search">
+            <Icon name="search" size={18} />
+            Search games, news, help…
+          </a>
+          <a class="pub-drawer__link" href="/"><Icon name="home" size={18} />Home</a>
+          {
+            siteConfig.navGroups.map((group) => (
+              <>
+                <p class="pub-drawer__group">{group.label}</p>
+                {group.items.map((item) => (
+                  <a class="pub-drawer__link" href={item.href}>
+                    <Icon name={item.icon} size={18} />
+                    {item.label}
+                  </a>
+                ))}
+              </>
+            ))
+          }
+          <p class="pub-drawer__group">More</p>
+          {
+            navLinks.map((item) => (
+              <a class="pub-drawer__link" href={item.href}>
+                <Icon name={item.icon} size={18} />
+                {item.label}
+              </a>
+            ))
+          }
+          {
+            user && (
+              <>
+                <p class="pub-drawer__group">{user.name}</p>
+                <a class="pub-drawer__link" href="/account/profile">
+                  <Icon name="user-circle" size={18} />
+                  Profile
+                </a>
+                <a class="pub-drawer__link" href="/account">
+                  <Icon name="dashboard" size={18} />
+                  My account
+                </a>
+                {isStaff && (
+                  <a class="pub-drawer__link" href="/admin">
+                    <Icon name="shield" size={18} />
+                    Admin
+                  </a>
+                )}
+              </>
+            )
+          }
+        </div>
+        <div class="pub-drawer__foot">
+          {
+            user ? (
+              <form method="post" action="/auth/sign-out">
+                <button class="pub-btn pub-btn--ghost pub-btn--block" type="submit">
+                  <Icon name="logout" size={18} />
+                  Sign out
+                </button>
+              </form>
+            ) : (
+              <>
+                <a class="pub-btn pub-btn--gold pub-btn--block" href={signInHref}>
+                  <Icon name="login" size={18} />
+                  Sign in to {siteConfig.name}
+                </a>
+                {switches.registration && (
+                  <a class="pub-btn pub-btn--ghost pub-btn--block" href="/auth/register">
+                    Create a free account
+                  </a>
+                )}
+              </>
+            )
+          }
+        </div>
       </div>
     </div>
   </header>
 
-  <main id="main" class="page-enter">
+  <main id="main" class:list={["pub-main", !overlay && "pub-main--inner"]} tabindex="-1">
     <slot />
   </main>
 
-  <footer class="site-footer">
-    <div class="container site-footer__grid">
-      <div>
-        <Logo />
-        <p class="muted" style="margin-top: var(--space-3); max-width: 42ch; font-size: var(--fs-sm);">
-          {siteConfig.description}
-        </p>
+  <footer class="pub-footer">
+    <svg class="pub-footer__wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 30 C120 0 240 0 360 30 S600 60 720 30 960 0 1080 30 1320 60 1440 30" fill="none" stroke="#c8a951" stroke-width="1.5"
+      ></path>
+      <path d="M0 30 C120 60 240 60 360 30 S600 0 720 30 960 60 1080 30 1320 0 1440 30" fill="none" stroke="#38e1f5" stroke-width="1.5"
+      ></path>
+    </svg>
+    <div class="pub-wrap">
+      <div class="pub-footer__grid">
+        <div class="pub-footer__about">
+          <Logo lockup size={56} />
+          <p class="pub-footer__text">{siteConfig.description}</p>
+          <div class="pub-footer__facts">
+            <span><Icon name="gamepad" size={14} />{games.length} games</span>
+            <span><Icon name="zap" size={14} />Free to play</span>
+            <span><Icon name="device" size={14} />Phone, tablet, desktop</span>
+          </div>
+          {
+            social.length > 0 && (
+              <div class="pub-footer__social">
+                {social.map((s) => (
+                  <a href={s.url} rel="noopener" aria-label={s.name}>
+                    <Icon name={s.icon} size={18} />
+                  </a>
+                ))}
+              </div>
+            )
+          }
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Play</h2>
+          <a href="/games">All games</a>
+          {topGames.map((g) => <a href={`/games/${g.slug}`}>{g.title}</a>)}
+          {switches.leaderboards && <a href="/leaderboards">Leaderboards</a>}
+        </div>
+        <div>
+          <h2 class="pub-footer__h">The hub</h2>
+          <a href="/news">News</a>
+          <a href="/events">Events</a>
+          <a href="/characters">Characters</a>
+          <a href="/community">Community &amp; credits</a>
+          <a href="/about">About &amp; history</a>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Help</h2>
+          <a href="/support">Support</a>
+          {switches.store && <a href="/store">Store</a>}
+          <a href="/search">Search</a>
+        </div>
+        <div>
+          <h2 class="pub-footer__h">Your account</h2>
+          {
+            user ? (
+              <>
+                <p class="pub-footer__text" style="margin-top: 0;">
+                  Signed in as {user.name}.
+                </p>
+                <a class="pub-btn pub-btn--gold pub-btn--sm" href="/account">
+                  <Icon name="dashboard" size={16} />
+                  My account
+                </a>
+              </>
+            ) : (
+              <>
+                <p class="pub-footer__text" style="margin-top: 0;">
+                  One free account keeps your progress and scores on every device.
+                </p>
+                <a class="pub-btn pub-btn--gold pub-btn--sm" href={signInHref}>
+                  <Icon name="login" size={16} />
+                  Sign in
+                </a>
+                <a class="pub-footer__muted" href="/auth/forgot-password">
+                  Forgot your password?
+                </a>
+              </>
+            )
+          }
+        </div>
       </div>
-      <div>
-        <h2>Play</h2>
-        <ul>
-          <li><a href="/#games">All games</a></li>
-          <!-- TODO(public-pages): Devlog, Credits, Press kit, Community (Discord) -->
-        </ul>
+      <div class="pub-footer__bottom">
+        <span>© {year} {siteConfig.name}. Created by {siteConfig.creator}.</span>
+        <span>{siteConfig.footerNote}</span>
+        <ThemeToggle />
       </div>
-      <div>
-        <h2>Account</h2>
-        <ul>
-          <li><a href="/auth/sign-in">Sign in</a></li>
-          <li><a href="/auth/register">Create an account</a></li>
-          <li><a href="/auth/forgot-password">Forgot your password?</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="container site-footer__bottom">
-      <span>© {year} {siteConfig.name}. Created by {siteConfig.creator}.</span>
-      <span>{siteConfig.footerNote}</span>
     </div>
   </footer>
+
+  <!-- Search panel (opened by the header's search button, "/" or Ctrl/Cmd+K) -->
+  <div class="pub-search" id="pub-search" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Search" data-pub-search>
+    <div class="pub-search__panel">
+      <form class="pub-search__form" action="/search" method="get" role="search">
+        <Icon name="search" size={20} />
+        <input
+          type="search"
+          name="q"
+          placeholder="Search games, news, characters, help…"
+          aria-label="Search the site"
+          autocomplete="off"
+          autocapitalize="none"
+          spellcheck="false"
+        />
+        <button class="pub-search__esc" type="button" data-search-close aria-label="Close search">Esc</button>
+      </form>
+      <div class="pub-search__body">
+        <div data-search-results hidden></div>
+        <div class="pub-sr" data-search-idle>
+          <section class="pub-sr__group">
+            <h2 class="pub-sr__h">Popular games</h2>
+            {
+              topGames.map((g) => (
+                <a class="pub-sr__item" href={`/games/${g.slug}`}>
+                  <span class="pub-sr__ic">
+                    <img src={`/games/${g.slug}/icon.png`} alt="" width="42" height="42" loading="lazy" />
+                  </span>
+                  <span class="pub-sr__tx">
+                    <b>{g.title}</b>
+                    <small>{g.meta.genre ?? g.description}</small>
+                  </span>
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              ))
+            }
+          </section>
+          <section class="pub-sr__group">
+            <h2 class="pub-sr__h">Jump to</h2>
+            {
+              [...siteConfig.navGroups.flatMap((g) => g.items), ...navLinks].slice(0, 5).map((item) => (
+                <a class="pub-sr__item" href={item.href}>
+                  <span class="pub-sr__ic">
+                    <Icon name={item.icon} size={19} />
+                  </span>
+                  <span class="pub-sr__tx">
+                    <b>{item.label}</b>
+                    <small>{item.hint}</small>
+                  </span>
+                  <Icon name="arrow-right" size={16} />
+                </a>
+              ))
+            }
+          </section>
+        </div>
+      </div>
+      <p class="pub-search__hint">
+        <span><kbd>↵</kbd>all results</span>
+        <span><kbd>/</kbd>open search</span>
+        <span><kbd>Esc</kbd>close</span>
+      </p>
+    </div>
+  </div>
 </BaseLayout>

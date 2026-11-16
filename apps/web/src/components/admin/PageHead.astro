@@ -1,0 +1,42 @@
+---
+/**
+ * The heading block at the top of every signed-in page.
+ * <PageHead eyebrow="Content" title="News" lead="…"><a slot="actions" …>New post</a></PageHead>
+ */
+import AIcon from "./AIcon.astro";
+import type { AdminIconName } from "./icons.ts";
+
+interface Props {
+  title: string;
+  eyebrow?: string;
+  lead?: string;
+  icon?: AdminIconName;
+  back?: { href: string; label: string };
+}
+const { title, eyebrow, lead, icon, back } = Astro.props;
+---
+
+<header class="hub-head">
+  {
+    back && (
+      <a class="hub-head__back" href={back.href}>
+        <AIcon name="arrow-left" size={16} /> {back.label}
+      </a>
+    )
+  }
+  <div class="hub-head__row">
+    {
+      icon && (
+        <span class="hub-head__icon" aria-hidden="true">
+          <AIcon name={icon} size={22} />
+        </span>
+      )
+    }
+    <div class="hub-head__text">
+      {eyebrow && <p class="hub-eyebrow">{eyebrow}</p>}
+      <h1 class="hub-head__title">{title}</h1>
+      {lead && <p class="hub-head__lead">{lead}</p>}
+    </div>
+    <div class="hub-head__actions"><slot name="actions" /></div>
+  </div>
+</header>

@@ -1,0 +1,19 @@
+---
+/**
+ * An animated canvas scene behind a section (EE Hub's fx_scene.html).
+ * public/fx/reveal.js loads public/fx/scenes.js, which adds the <canvas> and
+ * runs the scene only while it is on screen, the tab is visible, motion is
+ * allowed and the visitor has not pressed "Pause motion". Without JavaScript
+ * the CSS background of .fx-scene shows instead.
+ *
+ *   <FxScene kind="arcade" />     kinds: arcade | galaxy | waves | electric_field
+ */
+interface Props {
+  kind: "arcade" | "galaxy" | "waves" | "electric_field";
+  palette?: "brand" | "electric" | "ember" | "campus";
+  class?: string;
+}
+const { kind, palette = "brand", class: className } = Astro.props;
+---
+
+<div class:list={["fx-scene", className]} aria-hidden="true" data-fx-scene={kind} data-fx-palette={palette}></div>

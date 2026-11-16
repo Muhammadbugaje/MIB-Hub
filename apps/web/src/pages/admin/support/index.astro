@@ -1,0 +1,120 @@
+---
+/**
+ * /admin/support: the inbox for feedback, bug reports, complaints and help
+ * requests. Filter by status and type, search, quick status change.
+ * Needs support.manage.
+ */
+import { TICKET_KINDS, TICKET_STATUSES, type Ticket } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import EmptyState from "../../../components/admin/EmptyState.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize, pillClass } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { timeAgo } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "support.manage" });
+if (denied) return denied;
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const ref = fStr(form, "ref", 40);
+  const status = fStr(form, "status", 20) as Ticket["status"];
+  const t = await repos.tickets.getByRef(ref);
+  if (t && (TICKET_STATUSES as readonly string[]).includes(status)) {
+    await repos.tickets.update(t.id, { status });
+    await audit(Astro, "ticket.status", "ticket", t.id, { status: t.status }, { status });
+    return done(Astro, `${t.ref} marked ${labelize(status).toLowerCase()}.`);
+  }
+}
+
+const q = Astro.url.searchParams;
+const status = q.get("status") ?? "active";
+const kind = q.get("kind") ?? "";
+const search = (q.get("q") ?? "").trim().toLowerCase();
+const [all, counts] = await Promise.all([repos.tickets.list({ limit: 500 }), repos.tickets.counts()]);
+const PRI = { urgent: 0, high: 1, normal: 2, low: 3 } as const;
+const shown = all
+  .filter((t) => (status === "active" ? t.status === "open" || t.status === "pending" : status === "all" || t.status === status))
+  .filter((t) => !kind || t.kind === kind)
+  .filter((t) => !search || `${t.ref} ${t.subject} ${t.body} ${t.email} ${t.name}`.toLowerCase().includes(search))
+  .sort((a, b) => (status === "active" ? PRI[a.priority] - PRI[b.priority] : 0) || +b.updatedAt - +a.updatedAt);
+const replies = await repos.tickets.messageCounts(shown.map((t) => t.id));
+const tabs = [
+  ["active", "Needs action", counts.open + counts.pending],
+  ["open", "Open", counts.open],
+  ["pending", "Waiting on player", counts.pending],
+  ["resolved", "Resolved", counts.resolved],
+  ["closed", "Closed", counts.closed],
+  ["all", "All", all.length],
+] as const;
+const link = (k: string, v: string) => {
+  const u = new URLSearchParams(q);
+  if (v) u.set(k, v);
+  else u.delete(k);
+  return `?${u}`;
+};
+const kindIcon = (k: string) => (k === "bug" ? "alert" : k === "idea" ? "sparkles" : k === "payment" ? "receipt" : k === "complaint" ? "flag" : k === "feedback" ? "star" : "help");
+---
+
+<AppLayout title="Support inbox">
+  <PageHead eyebrow="Players" title="Support inbox" icon="inbox" lead="Feedback, bug reports, complaints and help requests. Reply, add private notes, and close the loop." />
+
+  <div class="hub-stats" style="margin-bottom: var(--space-5);">
+    <a class="hub-stat hub-stat--rose" href="?status=open"><div class="hub-stat__top">Open <AIcon name="inbox" size={18} /></div><div class="hub-stat__value">{counts.open}</div><div class="hub-stat__note">Need a reply</div></a>
+    <a class="hub-stat hub-stat--gold" href="?status=pending"><div class="hub-stat__top">Waiting <AIcon name="clock" size={18} /></div><div class="hub-stat__value">{counts.pending}</div><div class="hub-stat__note">On the player</div></a>
+    <a class="hub-stat" href="?status=resolved"><div class="hub-stat__top">Resolved <AIcon name="check" size={18} /></div><div class="hub-stat__value">{counts.resolved}</div><div class="hub-stat__note">All time</div></a>
+  </div>
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Status">
+      {tabs.map(([k, label, n]) => <a href={link("status", k)} aria-current={status === k ? "page" : undefined}>{label} <span class="hub-tabs__n">{n}</span></a>)}
+    </nav>
+    <form method="get" class="hub-actions hub-toolbar__grow">
+      <input type="hidden" name="status" value={status} />
+      <select class="input" name="kind" aria-label="Type" style="max-width: 170px;">
+        <option value="">All types</option>
+        {TICKET_KINDS.map((k) => <option value={k} selected={k === kind}>{labelize(k)}</option>)}
+      </select>
+      <input class="input" type="search" name="q" value={q.get("q") ?? ""} placeholder="Search subject, email, ref" aria-label="Search tickets" style="flex:1; min-width: 160px;" />
+      <button class="btn" type="submit"><AIcon name="search" size={15} /> Search</button>
+    </form>
+  </div>
+
+  <section class="hub-card hub-card--flush">
+    {
+      shown.length === 0 ? (
+        <EmptyState
+          icon="inbox"
+          title={all.length === 0 ? "The inbox is empty" : "Nothing here"}
+          text={all.length === 0 ? "Tickets arrive from the help centre's contact form and from players' account pages. When one comes in, it shows here with its priority." : "No ticket matches these filters. Try another tab or clear the search."}
+        />
+      ) : (
+        <ul class="hub-list" style="padding: 0 var(--space-5);">
+          {shown.map((t) => (
+            <li>
+              <span class="hub-list__icon hub-list__icon--rose"><AIcon name={kindIcon(t.kind)} size={18} /></span>
+              <span class="hub-list__body">
+                <a class="hub-list__title" href={`/admin/support/${t.ref}`}>{t.subject}</a>
+                <span class="hub-list__meta">
+                  {t.ref} · {labelize(t.kind)} · {t.name || t.email || "Visitor"} · {replies[t.id] ?? 0} {replies[t.id] === 1 ? "reply" : "replies"} · {timeAgo(t.updatedAt)}
+                </span>
+              </span>
+              <span class="hub-list__end">
+                {t.priority !== "normal" && <span class={pillClass(t.priority)}>{labelize(t.priority)}</span>}
+                <form method="post" class="hub-inline-form" data-autosubmit>
+                  <input type="hidden" name="ref" value={t.ref} />
+                  <select class="input" name="status" aria-label={`Status of ${t.ref}`} style="min-height: 34px; padding-block: 0; font-size: var(--fs-sm);">
+                    {TICKET_STATUSES.map((s) => <option value={s} selected={s === t.status}>{labelize(s)}</option>)}
+                  </select>
+                  <noscript><button class="btn btn--sm" type="submit">Set</button></noscript>
+                </form>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</AppLayout>

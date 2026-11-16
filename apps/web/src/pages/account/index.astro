@@ -1,0 +1,241 @@
+---
+/**
+ * /account: "My home". A greeting, the player's numbers, recent saves and
+ * runs, their tickets and orders, and (for staff) a shortcut into admin.
+ */
+import AIcon from "../../components/admin/AIcon.astro";
+import Avatar from "../../components/admin/Avatar.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { compact, greeting, labelize, pillClass } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate, formatPrice, timeAgo } from "../../lib/site.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const { viewer } = Astro.locals;
+const user = viewer.user!;
+const profile = await repos.profiles.getOrCreateForUser(user.id, user.name);
+const [games, saves, runs, tickets, orders, ticketCounts] = await Promise.all([
+  repos.games.listAll(),
+  repos.progress.forProfile(profile.id),
+  repos.scores.forProfile(profile.id, 6),
+  repos.tickets.forUser(user.id),
+  repos.orders.forUser(user.id),
+  viewer.permissions.has("support.manage") ? repos.tickets.counts() : Promise.resolve(null),
+]);
+const title = new Map(games.map((g) => [g.slug, g.title]));
+const gameName = (slug: string) => title.get(slug) ?? labelize(slug);
+const first = user.name.split(/\s+/)[0] ?? user.name;
+const handle = typeof profile.stats.handle === "string" ? profile.stats.handle : "";
+const bio = typeof profile.stats.bio === "string" ? profile.stats.bio : "";
+const openTickets = tickets.filter((t) => t.status === "open" || t.status === "pending").length;
+const isStaff = viewer.permissions.has("admin.access");
+const today = new Date().toLocaleDateString("en-GB", { weekday: "long", day: "numeric", month: "long" });
+---
+
+<AppLayout title="My home">
+  <section class="hub-hero">
+    <p class="hub-hero__kicker">{today}</p>
+    <h1 class="hub-hero__title">{greeting()}, <em>{first}</em></h1>
+    <p class="hub-hero__lead">
+      {
+        bio ||
+          (user.image
+            ? "Your saves, scores, tickets and orders, all in one place."
+            : "Add a profile picture and a short bio so your friends recognise you on the leaderboards.")
+      }
+    </p>
+    <div class="hub-hero__actions">
+      <a class="hub-hero__btn hub-hero__btn--gold" href="/games"><AIcon name="play" size={16} /> Play a game</a>
+      <a class="hub-hero__btn" href="/account/profile"><AIcon name="image" size={16} /> {user.image ? "Edit profile" : "Add a picture"}</a>
+      {
+        isStaff && (
+          <a class="hub-hero__btn" href="/admin">
+            <AIcon name="chart" size={16} /> Admin dashboard
+          </a>
+        )
+      }
+    </div>
+    <div class="hub-hero__side">
+      <Avatar name={user.name} src={user.image} size={112} />
+    </div>
+  </section>
+
+  <div class="hub-stats">
+    <div class="hub-stat">
+      <div class="hub-stat__top">XP <AIcon name="star" size={18} /></div>
+      <div class="hub-stat__value">{compact(profile.xp)}</div>
+      <div class="hub-stat__note">{handle ? `@${handle}` : "Earned by playing"}</div>
+    </div>
+    <div class="hub-stat hub-stat--gold">
+      <div class="hub-stat__top">Coins <AIcon name="coins" size={18} /></div>
+      <div class="hub-stat__value">{compact(profile.coins)}</div>
+      <div class="hub-stat__note">In-game naira</div>
+    </div>
+    <div class="hub-stat hub-stat--volt">
+      <div class="hub-stat__top">Cloud saves <AIcon name="database" size={18} /></div>
+      <div class="hub-stat__value">{saves.length}</div>
+      <div class="hub-stat__note">Across {new Set(saves.map((s) => s.gameSlug)).size} games</div>
+    </div>
+    <div class="hub-stat hub-stat--rose">
+      <div class="hub-stat__top">Badges <AIcon name="trophy" size={18} /></div>
+      <div class="hub-stat__value">{profile.badges.length}</div>
+      <div class="hub-stat__note">{profile.onLeaderboard ? "Shown on leaderboards" : "Hidden from leaderboards"}</div>
+    </div>
+  </div>
+
+  {
+    ticketCounts && (
+      <div class="hub-note" style="margin-top: var(--space-5);">
+        <AIcon name="inbox" size={18} />
+        <span>
+          Support inbox: <strong>{ticketCounts.open}</strong> open and <strong>{ticketCounts.pending}</strong> waiting.{" "}
+          <a href="/admin/support">Open the inbox</a>
+        </span>
+      </div>
+    )
+  }
+
+  <div class="hub-grid hub-grid--2">
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="database" size={18} /> Recent saves</h2>
+        <a class="hub-card__link" href="/account/games">All <AIcon name="arrow-right" size={14} /></a>
+      </div>
+      {
+        saves.length === 0 ? (
+          <EmptyState icon="gamepad" title="No cloud saves yet" text="Games that support cloud saves keep your progress here when you are signed in, so you can carry on from any device.">
+            <a slot="action" class="btn btn--sm btn--primary" href="/games">
+              Browse games
+            </a>
+          </EmptyState>
+        ) : (
+          <ul class="hub-list">
+            {saves.slice(0, 5).map((s) => (
+              <li>
+                <span class="hub-list__icon hub-list__icon--volt">
+                  <AIcon name="gamepad" size={18} />
+                </span>
+                <span class="hub-list__body">
+                  <a class="hub-list__title" href={`/play/${s.gameSlug}`}>
+                    {gameName(s.gameSlug)}
+                  </a>
+                  <span class="hub-list__meta">
+                    {s.slot === "auto" ? "Autosave" : `Slot ${s.slot}`}
+                    {s.summary && ` · ${s.summary}`} · {timeAgo(s.updatedAt)}
+                  </span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="trophy" size={18} /> Recent runs</h2>
+        <a class="hub-card__link" href="/account/games#scores">All <AIcon name="arrow-right" size={14} /></a>
+      </div>
+      {
+        runs.length === 0 ? (
+          <EmptyState icon="trophy" title="No scores yet" text="Finish a run in any arcade game while signed in and your score lands here and on the leaderboard." />
+        ) : (
+          <ul class="hub-list">
+            {runs.map((r) => (
+              <li>
+                <span class="hub-list__icon hub-list__icon--gold">
+                  <AIcon name="trophy" size={18} />
+                </span>
+                <span class="hub-list__body">
+                  <span class="hub-list__title">{gameName(r.gameSlug)}</span>
+                  <span class="hub-list__meta">{timeAgo(r.createdAt)}</span>
+                </span>
+                <span class="hub-list__end">
+                  <strong>{r.score.toLocaleString("en-GB")}</strong>
+                  {r.cheated && <span class="hub-pill hub-pill--red">flagged</span>}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title">
+          <AIcon name="inbox" size={18} /> My tickets {openTickets > 0 && <span class="hub-count">{openTickets}</span>}
+        </h2>
+        <a class="hub-card__link" href="/account/tickets">All <AIcon name="arrow-right" size={14} /></a>
+      </div>
+      {
+        tickets.length === 0 ? (
+          <EmptyState icon="help" title="No tickets" text="Found a bug, have an idea or need help? Send us a ticket and follow the reply here.">
+            <a slot="action" class="btn btn--sm" href="/account/tickets#new">
+              New ticket
+            </a>
+          </EmptyState>
+        ) : (
+          <ul class="hub-list">
+            {tickets.slice(0, 4).map((t) => (
+              <li>
+                <span class="hub-list__icon hub-list__icon--rose">
+                  <AIcon name="inbox" size={18} />
+                </span>
+                <span class="hub-list__body">
+                  <a class="hub-list__title" href={`/account/tickets/${t.ref}`}>
+                    {t.subject}
+                  </a>
+                  <span class="hub-list__meta">
+                    {t.ref} · {labelize(t.kind)} · updated {timeAgo(t.updatedAt)}
+                  </span>
+                </span>
+                <span class={pillClass(t.status)}>{labelize(t.status)}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="receipt" size={18} /> My orders</h2>
+        <a class="hub-card__link" href="/account/orders">All <AIcon name="arrow-right" size={14} /></a>
+      </div>
+      {
+        orders.length === 0 ? (
+          <EmptyState icon="cart" title="No orders" text="Boosts, cosmetics and supporter tiers you buy or claim are listed here.">
+            <a slot="action" class="btn btn--sm" href="/store">
+              Visit the store
+            </a>
+          </EmptyState>
+        ) : (
+          <ul class="hub-list">
+            {orders.slice(0, 4).map((o) => (
+              <li>
+                <span class="hub-list__icon">
+                  <AIcon name="receipt" size={18} />
+                </span>
+                <span class="hub-list__body">
+                  <span class="hub-list__title">{o.productSku}</span>
+                  <span class="hub-list__meta">
+                    {o.ref} · {formatDate(o.createdAt)}
+                  </span>
+                </span>
+                <span class="hub-list__end">
+                  {formatPrice(o.amountKobo, o.currency)}
+                  <span class={pillClass(o.status)}>{labelize(o.status)}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+  </div>
+</AppLayout>

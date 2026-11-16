@@ -79,6 +79,17 @@ export function cheatsRepo(db: AppDb) {
       await db.update(cheat).set({ enabled, updatedAt: new Date() }).where(eq(cheat.id, id));
     },
 
+    async get(id: string): Promise<CheatInfo | undefined> {
+      const row = (await db.select().from(cheat).where(eq(cheat.id, id)).limit(1))[0];
+      return row ? hideSecret(row) : undefined;
+    },
+
+    /** Change a cheat's non-secret fields (label, hint, access, effect). Use setCode for the code. */
+    async update(id: string, changes: Partial<Pick<Cheat, "label" | "how" | "access" | "effect" | "enabled">>): Promise<CheatInfo | undefined> {
+      const rows = await db.update(cheat).set({ ...changes, updatedAt: new Date() }).where(eq(cheat.id, id)).returning();
+      return rows[0] ? hideSecret(rows[0]) : undefined;
+    },
+
     async remove(id: string): Promise<void> {
       await db.delete(cheat).where(eq(cheat.id, id));
     },
@@ -146,6 +157,32 @@ export function cheatsRepo(db: AppDb) {
     async listAll(): Promise<CheatInfo[]> {
       const rows = await db.select().from(cheat).orderBy(asc(cheat.gameSlug), asc(cheat.key));
       return rows.map(hideSecret);
+    },
+
+    /** Ids of cheats still on an imported (unsalted) legacy hash; they upgrade on first correct use. */
+    async legacyIds(): Promise<string[]> {
+      const rows = await db.select({ id: cheat.id }).from(cheat).where(eq(cheat.codeSalt, LEGACY_SALT));
+      return rows.map((r) => r.id);
+    },
+
+    /**
+     * For the play page of a legacy (EE Hub) game: every enabled cheat of the
+     * game with its old unsalted hash when it is still on one (the old browser
+     * check, sha256(slug + ":" + code), keeps working), or `legacyHash: null`
+     * when the code was changed or upgraded (then only the server can check it).
+     */
+    async pageCodes(gameSlug: string): Promise<{ key: string; channel: Cheat["channel"]; access: Cheat["access"]; legacyHash: string | null }[]> {
+      const rows = await db
+        .select()
+        .from(cheat)
+        .where(and(eq(cheat.gameSlug, gameSlug), eq(cheat.enabled, true)))
+        .orderBy(asc(cheat.key));
+      return rows.map((r) => ({
+        key: r.key,
+        channel: r.channel,
+        access: r.access,
+        legacyHash: r.codeSalt === LEGACY_SALT ? r.codeHash : null,
+      }));
     },
   };
 }
@@ -237,6 +274,30 @@ export function heroesRepo(db: AppDb, hasher: PasswordHasher) {
         passwordHash: input.djangoHash,
       });
       return true;
+    },
+
+    async get(id: string): Promise<HeroInfo | undefined> {
+      const row = (await db.select().from(hero).where(eq(hero.id, id)).limit(1))[0];
+      return row ? hide(row) : undefined;
+    },
+
+    /** Change a hero's non-secret fields. Use setCode for the code. */
+    async update(
+      id: string,
+      changes: Partial<Pick<Hero, "name" | "fullName" | "access" | "allowedUserIds" | "enabled" | "details">>,
+    ): Promise<HeroInfo | undefined> {
+      const rows = await db.update(hero).set({ ...changes, updatedAt: new Date() }).where(eq(hero.id, id)).returning();
+      return rows[0] ? hide(rows[0]) : undefined;
+    },
+
+    async remove(id: string): Promise<void> {
+      await db.delete(hero).where(eq(hero.id, id));
+    },
+
+    /** True while the stored hash is still the old Django one (upgrades on first correct use). */
+    async isLegacy(id: string): Promise<boolean> {
+      const row = (await db.select({ h: hero.passwordHash }).from(hero).where(eq(hero.id, id)).limit(1))[0];
+      return row ? isDjangoHash(row.h) : false;
     },
 
     /** Every hero (admin overview), without the hash. */

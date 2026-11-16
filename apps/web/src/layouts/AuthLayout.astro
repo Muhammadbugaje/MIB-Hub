@@ -1,75 +1,62 @@
 ---
 /**
- * Sign-in, register and password pages: brand art on the left, form on the
- * right (stacks on phones). Ported from EE Hub's base_auth.html.
- * <AuthLayout title="Sign in"> ...form... </AuthLayout>
+ * Sign-in, register and password pages (EE Hub's base_auth.html): an
+ * always-dark art panel with the live arcade scene on the left, the form
+ * card on the right. On phones the art becomes a short banner on top.
+ *
+ *   <AuthLayout title="Sign in" headline="Welcome" accent="back." icon="login"> ...form... </AuthLayout>
  */
-import ThemeToggle from "@mib/ui/components/ThemeToggle.tsx";
+import "../styles/public.css";
+import FxScene from "../components/FxScene.astro";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import { repos } from "../lib/db.ts";
 import { siteConfig } from "../site.config.ts";
 import BaseLayout from "./BaseLayout.astro";
 
 interface Props {
   title: string;
+  /** The plain part of the big line on the art panel. */
   headline?: string;
+  /** The gradient part that follows it. */
+  accent?: string;
+  /** Icon in the badge above the form heading. */
+  icon?: string;
 }
-const { title, headline = "Every game, one account." } = Astro.props;
-
-// Decorative constellation of dots for the art panel (fixed, so renders are stable).
-const dots = Array.from({ length: 42 }, (_, i) => ({
-  x: (i * 137.5) % 100,
-  y: (i * 61.8) % 100,
-  r: 0.6 + ((i * 7) % 5) * 0.35,
-  o: 0.15 + ((i * 3) % 7) * 0.08,
-}));
+const { title, headline = "Every game,", accent = "one account.", icon = "key" } = Astro.props;
+const games = await repos.games.listPublic();
 ---
 
-<BaseLayout title={title} bodyClass="auth">
-  <div class="auth__art" aria-hidden="true">
-    <svg class="auth__scene" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <radialGradient id="auth-glow-a" cx="0.8" cy="0.15" r="0.6">
-          <stop offset="0" stop-color="#d9be6e" stop-opacity="0.45"></stop>
-          <stop offset="1" stop-color="#d9be6e" stop-opacity="0"></stop>
-        </radialGradient>
-        <radialGradient id="auth-glow-b" cx="0.1" cy="0.9" r="0.7">
-          <stop offset="0" stop-color="#2fa36b" stop-opacity="0.55"></stop>
-          <stop offset="1" stop-color="#2fa36b" stop-opacity="0"></stop>
-        </radialGradient>
-        <linearGradient id="auth-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#0f3d2e"></stop>
-          <stop offset="1" stop-color="#020a06"></stop>
-        </linearGradient>
-        <pattern id="auth-grid" width="6" height="6" patternUnits="userSpaceOnUse">
-          <path d="M6 0H0V6" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="0.15"></path>
-        </pattern>
-      </defs>
-      <rect width="100" height="100" fill="url(#auth-bg)"></rect>
-      <rect width="100" height="100" fill="url(#auth-grid)"></rect>
-      <rect width="100" height="100" fill="url(#auth-glow-a)"></rect>
-      <rect width="100" height="100" fill="url(#auth-glow-b)"></rect>
-      {dots.map((d) => <circle cx={d.x} cy={d.y} r={d.r * 0.25} fill="#ffffff" fill-opacity={d.o} />)}
-      <!-- A big, faint play mark -->
-      <path d="M58 22v34a2 2 0 0 0 3 1.7l27-17a2 2 0 0 0 0-3.4l-27-17a2 2 0 0 0-3 1.7z" fill="#ffffff" fill-opacity="0.05"></path>
-      <circle cx="84" cy="18" r="3.4" fill="#d9be6e" fill-opacity="0.9"></circle>
-    </svg>
+<BaseLayout title={title} bodyClass="auth pub" motion>
+  <div class="auth__art">
+    <FxScene kind="arcade" />
+    <Logo lockup size={46} />
     <div class="auth__art-copy">
-      <Logo />
-      <p class="auth__kicker">{siteConfig.tagline}</p>
-      <h2 class="auth__headline">{headline}</h2>
-      <p>Your progress, scores and unlocks follow you to every game on {siteConfig.name}.</p>
+      <p class="auth__kicker"><i aria-hidden="true"></i>{games.length} games, free to play</p>
+      <h2 class="auth__headline">{headline} <em>{accent}</em></h2>
+      <p class="auth__lead">Your progress, scores and unlocks follow you to every game on {siteConfig.name}, on every device.</p>
+      <ul class="auth__perks">
+        <li style="--c: #e6c867"><Icon name="cloud" size={16} />Saves that follow you</li>
+        <li style="--c: #38e1f5"><Icon name="trophy" size={16} />A place on the leaderboards</li>
+        <li style="--c: #a78bfa"><Icon name="shield" size={16} />No adverts, no tracking sold</li>
+      </ul>
     </div>
+    <button class="pub-calm" type="button" aria-pressed="false" aria-label="Pause motion" data-calm-toggle title="Pause or play the animation">
+      <span class="pub-calm__pause"><Icon name="pause" size={14} /><span>Pause motion</span></span>
+      <span class="pub-calm__play"><Icon name="play" size={14} /><span>Play motion</span></span>
+    </button>
   </div>
 
   <main class="auth__main" id="main">
     <div class="auth__top">
-      <a class="auth__back" href="/"><Icon name="arrow-left" /> Back to {siteConfig.name}</a>
-      <ThemeToggle client:load />
+      <a class="auth__back" href="/"><Icon name="arrow-left" size={16} />Back to {siteConfig.name}</a>
+      <ThemeToggle />
     </div>
     <div class="auth__card">
+      <div class="auth__badge"><Icon name={icon} size={24} /></div>
       <slot />
     </div>
-    <p class="auth__foot">{siteConfig.name} · {siteConfig.footerNote}</p>
+    <p class="auth__foot">{siteConfig.name} · {siteConfig.footerNote} · <a href="/support">Need help?</a></p>
   </main>
 </BaseLayout>

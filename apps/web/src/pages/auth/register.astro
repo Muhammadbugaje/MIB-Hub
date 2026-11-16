@@ -43,7 +43,7 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<AuthLayout title="Create account" headline="Join the hub.">
+<AuthLayout title="Create account" headline="Join" accent="the hub." icon="user-plus">
   <h1>Create your account</h1>
   <p class="lead">Free, and it saves your progress across every game on {siteConfig.name}.</p>
   {error && <Alert tone="danger">{error}</Alert>}
@@ -62,7 +62,7 @@ if (Astro.request.method === "POST") {
       required
     />
     <Field name="confirm" label="Type it again" type="password" autocomplete="new-password" error={errors.confirm} required />
-    <button class="btn btn--primary btn--lg btn--block" type="submit">Create account</button>
+    <button class="pub-btn pub-btn--gold auth__submit" type="submit">Create account</button>
   </form>
   <p class="auth__switch">Already have an account? <a href={`/auth/sign-in?next=${encodeURIComponent(next)}`}>Sign in</a></p>
 </AuthLayout>

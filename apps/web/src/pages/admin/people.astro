@@ -1,0 +1,248 @@
+---
+/**
+ * /admin/people: community & credits: founders, team, supporters,
+ * contributors, voices, testers and partners, with photos.
+ * Needs content.manage.
+ *
+ * Privacy (READ-CLAUDE §5): first names only for real people, and a person
+ * is only visible once they have given consent. Without consent the
+ * "visible" switch is forced off, so they never reach a public page.
+ */
+import { PERSON_GROUPS, type NewPerson, type Person } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import Avatar from "../../components/admin/Avatar.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, labelize, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+type Group = (typeof PERSON_GROUPS)[number];
+const GROUP_LABEL: Record<Group, string> = {
+  founder: "Founders",
+  team: "Team",
+  supporter: "Supporters",
+  contributor: "Contributors",
+  voice: "Voices",
+  tester: "Testers",
+  partner: "Partners",
+};
+
+const FIELDS: FieldDef[] = [
+  { name: "name", label: "Name", type: "text", required: true, maxLength: 80, hint: "First name only for real people, unless they ask otherwise." },
+  { name: "group", label: "Group", type: "select", required: true, options: PERSON_GROUPS.map((g) => ({ value: g, label: GROUP_LABEL[g] })) },
+  { name: "title", label: "Credit line", type: "text", placeholder: "Voice of Jega · Gold supporter · Founder & creator" },
+  { name: "tier", label: "Supporter tier", type: "text", placeholder: "Gold", hint: "For supporters." },
+  { name: "since", label: "Since", type: "text", placeholder: "2024" },
+  { name: "sort", label: "Order", type: "number", hint: "Lower shows first. You can also use the arrows on each card." },
+  { name: "bio", label: "Short bio", type: "textarea", rows: 3, maxLength: 600, full: true },
+  { name: "links", label: "Links", type: "json", rows: 3, hint: 'Optional, e.g. { "x": "https://x.com/…", "site": "https://…" }' },
+  { name: "consent", label: "Has agreed to appear", type: "switch", hint: "Their name and photo may be shown. Without this they stay hidden." },
+  { name: "visible", label: "Visible on the site", type: "switch" },
+  { name: "photoUrl", label: "Photo", type: "image", folder: "people", hint: "Only with the person's consent. Square works best. Stored outside git." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: Person | undefined = editId ? await repos.people.getById(editId) : undefined;
+const groupParam = Astro.url.searchParams.get("group");
+const group: Group | "all" = (PERSON_GROUPS as readonly string[]).includes(groupParam ?? "") ? (groupParam as Group) : "all";
+let values: FormValues = editing ?? { group: group === "all" ? "supporter" : group, consent: false, visible: false, sort: 0, links: {} };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    const links = (values.links ?? {}) as Record<string, unknown>;
+    for (const [k, v] of Object.entries(links)) {
+      if (typeof v !== "string" || !/^(https:\/\/|\/|mailto:)/.test(v)) errors.links = `The "${k}" link must be a text link starting with https://.`;
+    }
+    if (!values.consent) values.visible = false;
+    if (id) editing = await repos.people.getById(id);
+    if (!hasErrors(errors)) {
+      const data = values as Partial<NewPerson>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.people.update(editing.id, data);
+        await audit(Astro, "person.update", "person", editing.id, diff.before, diff.after);
+        return done(Astro, values.consent ? "Saved." : "Saved. Hidden until they give consent.", `/admin/people?group=${values.group}`);
+      }
+      const row = await repos.people.create(data as NewPerson);
+      await audit(Astro, "person.create", "person", row.id, undefined, row);
+      return done(Astro, `${row.name} added${row.consent ? "" : " (hidden until they give consent)"}.`, `/admin/people?group=${row.group}`);
+    }
+  } else if (action === "toggle") {
+    const field = fStr(form, "field", 20);
+    const on = fBool(form, "value");
+    const before = await repos.people.getById(id);
+    if (before && (field === "visible" || field === "consent")) {
+      if (field === "visible" && on && !before.consent) return done(Astro, "Record their consent first; then they can be shown.", undefined, "warning");
+      const changes: Partial<NewPerson> = field === "consent" ? { consent: on, ...(on ? {} : { visible: false }) } : { visible: on };
+      await repos.people.update(id, changes);
+      await audit(Astro, `person.${field}`, "person", id, { consent: before.consent, visible: before.visible }, changes);
+      return done(Astro, field === "consent" ? (on ? "Consent recorded." : "Consent withdrawn; they are now hidden.") : on ? "Now visible." : "Hidden.");
+    }
+  } else if (action === "move") {
+    const me = await repos.people.getById(id);
+    if (me) {
+      const list = (await repos.people.listAll()).filter((p) => p.group === me.group).sort((a, b) => a.sort - b.sort || a.name.localeCompare(b.name));
+      // Renumber in steps of 10 so every swap has room, then swap with the neighbour.
+      const i = list.findIndex((p) => p.id === me.id);
+      const j = fStr(form, "dir", 4) === "up" ? i - 1 : i + 1;
+      if (i >= 0 && j >= 0 && j < list.length) {
+        [list[i], list[j]] = [list[j]!, list[i]!];
+        for (const [n, p] of list.entries()) if (p.sort !== n * 10) await repos.people.update(p.id, { sort: n * 10 });
+        await audit(Astro, "person.reorder", "person", me.id, { position: i + 1 }, { position: j + 1 });
+      }
+    }
+    return done(Astro, "Order changed.");
+  } else if (action === "delete") {
+    const before = await repos.people.getById(id);
+    await repos.people.remove(id);
+    await audit(Astro, "person.delete", "person", id, before);
+    return done(Astro, "Removed from the credits.");
+  }
+}
+
+const all = await repos.people.listAll();
+const counts = Object.fromEntries(PERSON_GROUPS.map((g) => [g, all.filter((p) => p.group === g).length])) as Record<Group, number>;
+const shown = (group === "all" ? all : all.filter((p) => p.group === group)).sort(
+  (a, b) => PERSON_GROUPS.indexOf(a.group) - PERSON_GROUPS.indexOf(b.group) || a.sort - b.sort || a.name.localeCompare(b.name),
+);
+const noConsent = all.filter((p) => !p.consent).length;
+const groupFirst = new Map<string, string>();
+const groupLast = new Map<string, string>();
+for (const p of shown) {
+  if (!groupFirst.has(p.group)) groupFirst.set(p.group, p.id);
+  groupLast.set(p.group, p.id);
+}
+---
+
+<AppLayout title="Community & credits">
+  <PageHead eyebrow="Content" title="Community & credits" icon="users" lead="The people behind MIB-Hub: founders, team, supporters, voices, testers and partners.">
+    <a slot="actions" class="btn btn--primary" href={`?${group === "all" ? "" : `group=${group}&`}new=1#editor`}><AIcon name="plus" size={16} /> Add a person</a>
+  </PageHead>
+
+  <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+    <AIcon name="shield" size={16} />
+    <span>
+      <strong>Privacy:</strong> use first names only for real people, and upload a photo only when they have agreed. People without consent stay hidden from every public page.
+      {noConsent > 0 && <> {noConsent} {noConsent === 1 ? "person is" : "people are"} waiting for consent.</>}
+    </span>
+  </div>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Add a person to the credits"
+    editLabel={`Edit: ${editing?.name ?? ""}`}
+    cancelHref={`/admin/people${group === "all" ? "" : `?group=${group}`}`}
+  />
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Groups">
+      <a href="/admin/people" aria-current={group === "all" ? "page" : undefined}>All <span class="hub-tabs__n">{all.length}</span></a>
+      {
+        PERSON_GROUPS.map((g) => (
+          <a href={`?group=${g}`} aria-current={g === group ? "page" : undefined}>
+            {GROUP_LABEL[g]} <span class="hub-tabs__n">{counts[g]}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+
+  {
+    shown.length === 0 ? (
+      <section class="hub-card">
+        <EmptyState
+          icon="users"
+          title={group === "all" ? "No one in the credits yet" : `No ${GROUP_LABEL[group].toLowerCase()} yet`}
+          text="Add the founders first, then supporters, voice actors and testers as they join. Each gets a credit line, an optional photo and links."
+        >
+          <a slot="action" class="btn btn--primary btn--sm" href={`?${group === "all" ? "" : `group=${group}&`}new=1#editor`}>
+            Add a person
+          </a>
+        </EmptyState>
+      </section>
+    ) : (
+      <div class="hub-cards">
+        {shown.map((p) => (
+          <article class:list={["hub-mcard person", !p.visible && "is-off"]}>
+            <div class="hub-mcard__body person__body">
+              <div class="person__top">
+                <Avatar name={p.name} src={p.photoUrl || null} size={56} />
+                <div style="min-width:0;">
+                  <h2 class="hub-mcard__title">{p.name}</h2>
+                  <span class="hub-subtle">{p.title || GROUP_LABEL[p.group]}</span>
+                </div>
+              </div>
+              <div class="hub-actions" style="margin-top: 6px;">
+                <span class="hub-pill hub-pill--plain hub-pill--blue">{labelize(p.group)}</span>
+                {p.tier && <span class="hub-pill hub-pill--plain hub-pill--gold">{p.tier}</span>}
+                {p.since && <span class="hub-subtle">since {p.since}</span>}
+                {!p.consent && <span class="hub-pill hub-pill--red">No consent: hidden from public</span>}
+              </div>
+              {p.bio && <p class="hub-mcard__text">{p.bio}</p>}
+            </div>
+            <div class="hub-mcard__foot person__foot">
+              <span class="person__sw">
+                <span class="hub-subtle">Consent</span>
+                <ToggleForm id={p.id} action="toggle" field="consent" checked={p.consent} label={`${p.name} has given consent`} />
+              </span>
+              <span class="person__sw">
+                <span class="hub-subtle">Visible</span>
+                <ToggleForm id={p.id} action="toggle" field="visible" checked={p.visible} label={`Show ${p.name}`} disabled={!p.consent} />
+              </span>
+              <span class="hub-push hub-actions">
+                <form method="post" class="hub-inline-form">
+                  <input type="hidden" name="action" value="move" />
+                  <input type="hidden" name="id" value={p.id} />
+                  <input type="hidden" name="dir" value="up" />
+                  <button class="btn btn--sm btn--icon" type="submit" aria-label={`Move ${p.name} up`} title="Move up" disabled={groupFirst.get(p.group) === p.id}>
+                    <AIcon name="arrow-up" size={15} />
+                  </button>
+                </form>
+                <form method="post" class="hub-inline-form">
+                  <input type="hidden" name="action" value="move" />
+                  <input type="hidden" name="id" value={p.id} />
+                  <input type="hidden" name="dir" value="down" />
+                  <button class="btn btn--sm btn--icon" type="submit" aria-label={`Move ${p.name} down`} title="Move down" disabled={groupLast.get(p.group) === p.id}>
+                    <AIcon name="arrow-down" size={15} />
+                  </button>
+                </form>
+                <a class="btn btn--sm btn--icon" href={`?group=${p.group}&edit=${p.id}#editor`} aria-label={`Edit ${p.name}`} title="Edit">
+                  <AIcon name="edit" size={15} />
+                </a>
+                <DeleteButton id={p.id} what={`${p.name} from the credits`} compact />
+              </span>
+            </div>
+          </article>
+        ))}
+      </div>
+    )
+  }
+</AppLayout>
+
+<style>
+  .person__body { gap: 8px; }
+  .person__top { display: flex; align-items: center; gap: 12px; }
+  .person__foot { gap: 10px 14px; }
+  .person__sw { display: inline-flex; align-items: center; gap: 6px; }
+  .person.is-off { opacity: 0.8; }
+</style>

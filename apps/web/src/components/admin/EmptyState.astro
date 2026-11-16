@@ -1,0 +1,19 @@
+---
+/** A friendly empty state. <EmptyState icon="inbox" title="No tickets" text="…"><a slot="action">…</a></EmptyState> */
+import AIcon from "./AIcon.astro";
+import type { AdminIconName } from "./icons.ts";
+
+interface Props {
+  icon?: AdminIconName;
+  title: string;
+  text?: string;
+}
+const { icon = "sparkles", title, text } = Astro.props;
+---
+
+<div class="hub-empty">
+  <span class="hub-empty__icon" aria-hidden="true"><AIcon name={icon} size={26} /></span>
+  <p class="hub-empty__title">{title}</p>
+  {text && <p class="hub-empty__text">{text}</p>}
+  <slot name="action" />
+</div>

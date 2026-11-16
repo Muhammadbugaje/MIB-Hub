@@ -1,0 +1,42 @@
+---
+/**
+ * The heading block of a public section (EE Hub's sec_head.html): a small
+ * eyebrow label, a big heading whose last words take the gold-to-cyan
+ * gradient, an optional lead line and an optional "more" button on the right.
+ *
+ *   <SectionHead eyebrow="The arcade" pre="Pick a game," hl="press play" sub="..." moreHref="/games" moreLabel="All games" />
+ *   <SectionHead ...><Fragment slot="more">custom buttons</Fragment></SectionHead>
+ */
+import Icon from "./Icon.astro";
+
+interface Props {
+  eyebrow: string;
+  /** The plain part of the heading. */
+  pre: string;
+  /** The highlighted part of the heading. */
+  hl?: string;
+  sub?: string;
+  moreHref?: string;
+  moreLabel?: string;
+  /** Heading id, for aria-labelledby on the section. */
+  id?: string;
+}
+const { eyebrow, pre, hl, sub, moreHref, moreLabel, id } = Astro.props;
+---
+
+<div class="pub-sh">
+  <div>
+    <p class="pub-eyebrow">{eyebrow}</p>
+    <h2 id={id}>{pre}{hl && " "}{hl && <span class="pub-hl">{hl}</span>}</h2>
+    {sub && <p>{sub}</p>}
+  </div>
+  {
+    moreHref && (
+      <a class="pub-btn pub-btn--ghost pub-sh__more" href={moreHref}>
+        {moreLabel}
+        <Icon name="arrow-right" size={16} />
+      </a>
+    )
+  }
+  <slot name="more" />
+</div>

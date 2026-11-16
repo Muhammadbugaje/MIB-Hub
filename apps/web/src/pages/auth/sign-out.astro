@@ -14,11 +14,11 @@ if (Astro.request.method === "POST") {
 if (!Astro.locals.viewer.user) return Astro.redirect("/");
 ---
 
-<AuthLayout title="Sign out" headline="See you soon.">
+<AuthLayout title="Sign out" headline="See you" accent="soon." icon="logout">
   <h1>Sign out?</h1>
   <p class="lead">You are signed in as {Astro.locals.viewer.user.email}.</p>
   <form method="post" class="form">
-    <button class="btn btn--primary btn--lg btn--block" type="submit">Sign out</button>
-    <a class="btn btn--ghost btn--block" href="/account/profile">Stay signed in</a>
+    <button class="pub-btn pub-btn--gold auth__submit" type="submit">Sign out</button>
+    <a class="pub-btn pub-btn--ghost auth__alt" href="/account">Stay signed in</a>
   </form>
 </AuthLayout>

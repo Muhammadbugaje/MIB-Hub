@@ -19,20 +19,45 @@ interface Props {
   player: GamePlayer | null;
 }
 
+/** POST JSON to a site API and return the reply (throws with the server's message on failure). */
+async function call(url: string, body?: unknown): Promise<Record<string, unknown>> {
+  const res = await fetch(url, {
+    method: body === undefined ? "GET" : "POST",
+    credentials: "same-origin",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: body === undefined ? null : JSON.stringify(body),
+  });
+  const json = (await res.json().catch(() => ({}))) as Record<string, unknown>;
+  if (!res.ok) throw new Error(typeof json.error === "string" ? json.error : `Request failed (${res.status}).`);
+  return json;
+}
+
 /**
- * The browser side of the platform services.
- * TODO(games-port): build the matching API routes under src/pages/api/games/[slug]/
- * (progress, score, cheat, hero) using repos.progress / scores / cheats / heroes,
- * each protected with guardApi(). Until then these calls reject.
+ * The browser side of the platform services, backed by the API routes in
+ * src/pages/api/games/ (save, score, cheat) and /api/games/arcade/hero/.
  */
 function browserPlatform(slug: string): GamePlatform {
-  const notYet = (what: string) => Promise.reject(new Error(`${what} is not built yet (game "${slug}").`));
+  const base = `/api/games/${encodeURIComponent(slug)}`;
   return {
-    saveProgress: () => notYet("saveProgress"),
-    loadProgress: () => notYet("loadProgress"),
-    submitScore: () => notYet("submitScore"),
-    checkCheat: () => notYet("checkCheat"),
-    checkHero: () => notYet("checkHero"),
+    async saveProgress(slot, data, opts) {
+      await call(`${base}/save`, { slot, data, saveVersion: opts?.saveVersion, summary: opts?.summary });
+    },
+    async loadProgress(slot) {
+      const r = await call(`${base}/save?slot=${encodeURIComponent(slot)}`);
+      const save = r.save as { data: unknown; saveVersion: number } | null;
+      return save ? { data: save.data, saveVersion: save.saveVersion } : null;
+    },
+    async submitScore(score, opts) {
+      await call(`${base}/score`, { score, cheated: opts?.cheated ?? false, details: opts?.details ?? {} });
+    },
+    async checkCheat(code, channel) {
+      const r = await call(`${base}/cheat`, { code, channel });
+      return typeof r.key === "string" ? { key: r.key, effect: (r.effect as Record<string, unknown>) ?? {} } : null;
+    },
+    async checkHero(code) {
+      const r = await call("/api/games/arcade/hero/", { slug, code });
+      return r.ok === true && typeof r.name === "string" ? { name: r.name, details: {} } : null;
+    },
   };
 }
 

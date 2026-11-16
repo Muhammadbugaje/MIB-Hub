@@ -1,0 +1,166 @@
+---
+/**
+ * /admin/sounds: replacement sounds every player of a game hears (e.g. a new
+ * "goal" cheer). Upload under a sound name the game uses; uploading the same
+ * name again replaces it (the version goes up). Needs games.manage_sounds.
+ */
+import { SOUND_MAX_SECONDS, SOUND_MIN_SECONDS, SOUND_NAME_RE } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize } from "../../lib/admin-kit.ts";
+import { deleteSound, saveSound } from "../../lib/admin-sounds.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { timeAgo } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "games.manage_sounds" });
+if (denied) return denied;
+
+const games = await repos.games.listAll();
+const title = new Map(games.map((g) => [g.slug, g.title]));
+const gameName = (s: string) => title.get(s) ?? labelize(s);
+let error = "";
+let draft = { gameSlug: Astro.url.searchParams.get("game") ?? "", name: "", duration: "" };
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "upload") {
+    draft = { gameSlug: fStr(form, "gameSlug", 80), name: fStr(form, "name", 80).toLowerCase(), duration: fStr(form, "duration", 20) };
+    const file = form.get("file");
+    const duration = Number(draft.duration);
+    if (!title.has(draft.gameSlug)) error = "Choose a game.";
+    else if (!SOUND_NAME_RE.test(draft.name)) error = "Sound names use lower-case letters, digits and _ . : - (like goal or crowd.cheer).";
+    else if (!(file instanceof File) || file.size === 0) error = "Choose a sound file.";
+    else if (!Number.isFinite(duration) || duration < SOUND_MIN_SECONDS || duration > SOUND_MAX_SECONDS) error = `The sound must be between ${SOUND_MIN_SECONDS} and ${SOUND_MAX_SECONDS} seconds long. Enter its length in seconds.`;
+    else {
+      try {
+        const saved = await saveSound(file);
+        const { sound, previousFileKey } = await repos.sounds.save({
+          gameSlug: draft.gameSlug,
+          name: draft.name,
+          ...saved,
+          duration,
+          originalName: file.name.slice(0, 200),
+          uploadedBy: Astro.locals.viewer.user?.id ?? null,
+        });
+        await deleteSound(previousFileKey);
+        await audit(Astro, previousFileKey ? "sound.replace" : "sound.create", "game_sound", sound.id, previousFileKey ? { fileKey: previousFileKey } : undefined, sound);
+        return done(Astro, `${previousFileKey ? "Replaced" : "Uploaded"} “${sound.name}” for ${gameName(sound.gameSlug)}.`, `/admin/sounds?game=${sound.gameSlug}`);
+      } catch (e) {
+        error = e instanceof Error ? e.message : "Upload failed.";
+      }
+    }
+  } else if (action === "delete") {
+    const removed = await repos.sounds.remove(fStr(form, "id", 80));
+    if (removed) {
+      await deleteSound(removed.fileKey);
+      await audit(Astro, "sound.delete", "game_sound", removed.id, removed, undefined);
+      return done(Astro, `Deleted “${removed.name}”. Players hear the game's own sound again.`);
+    }
+  }
+}
+
+const filter = Astro.url.searchParams.get("game") ?? "";
+const sounds = await repos.sounds.list(filter || undefined);
+const kb = (n: number) => `${Math.max(1, Math.round(n / 1024))} KB`;
+---
+
+<AppLayout title="Sounds">
+  <PageHead eyebrow="Games" title="Sounds" icon="music" lead="Replace a game's sound for every player. Upload under the sound's name in the game; the same name again replaces it." />
+
+  <div class="hub-grid hub-grid--side">
+    <form class="hub-card" method="post" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="upload" />
+      <div class="hub-card__head">
+        <div>
+          <h2 class="hub-card__title"><AIcon name="upload" size={18} /> Upload a sound</h2>
+          <p class="hub-card__sub">WAV, MP3 or M4A, up to 2 MB and {SOUND_MAX_SECONDS} seconds.</p>
+        </div>
+      </div>
+      {error && <div class="hub-note hub-note--danger" role="alert" style="margin-bottom: var(--space-4);"><AIcon name="alert" size={16} /> {error}</div>}
+      <div class="hub-fields" style="grid-template-columns: 1fr;">
+        <div class="hub-field">
+          <label class="hub-field__label" for="s-game">Game<span class="hub-req">*</span></label>
+          <select class="input" id="s-game" name="gameSlug" required>
+            <option value="">Choose a game</option>
+            {games.map((g) => <option value={g.slug} selected={g.slug === draft.gameSlug}>{g.title}</option>)}
+          </select>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="s-name">Sound name<span class="hub-req">*</span></label>
+          <input class="input hub-mono" id="s-name" name="name" value={draft.name} required maxlength="80" pattern="[a-z0-9_][a-z0-9_.:\-]*" placeholder="goal" />
+          <p class="hub-field__hint">The name the game uses, e.g. goal, jump, crowd.cheer.</p>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="s-file">File<span class="hub-req">*</span></label>
+          <input class="input" id="s-file" name="file" type="file" accept="audio/wav,audio/x-wav,audio/mpeg,audio/mp4,audio/x-m4a,.wav,.mp3,.m4a" required data-sound-file />
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="s-dur">Length (seconds)<span class="hub-req">*</span></label>
+          <input class="input" id="s-dur" name="duration" type="number" step="0.01" min={SOUND_MIN_SECONDS} max={SOUND_MAX_SECONDS} value={draft.duration} required data-sound-duration />
+          <p class="hub-field__hint">Filled in for you when you choose the file.</p>
+        </div>
+      </div>
+      <div class="hub-btn-row"><button class="btn btn--primary" type="submit"><AIcon name="upload" size={16} /> Upload</button></div>
+    </form>
+
+    <section class="hub-card hub-card--flush">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="music" size={18} /> Replacement sounds</h2>
+        <form method="get" style="margin-left:auto;">
+          <select class="input" name="game" aria-label="Filter by game" onchange="this.form.submit()" style="min-height:36px;">
+            <option value="">All games</option>
+            {games.map((g) => <option value={g.slug} selected={g.slug === filter}>{g.title}</option>)}
+          </select>
+        </form>
+      </div>
+      {
+        sounds.length === 0 ? (
+          <EmptyState icon="music" title="No replacement sounds" text="Every game plays its own built-in sounds. Upload one on the left to replace a sound for everyone." />
+        ) : (
+          <ul class="hub-list" style="padding: 0 var(--space-5);">
+            {sounds.map((s) => (
+              <li style="flex-wrap: wrap;">
+                <span class="hub-list__icon hub-list__icon--volt"><AIcon name="wave" size={18} /></span>
+                <span class="hub-list__body">
+                  <span class="hub-list__title"><span class="hub-code">{s.name}</span> · {gameName(s.gameSlug)}</span>
+                  <span class="hub-list__meta">
+                    v{s.version} · {s.duration.toFixed(2)} s · {kb(s.size)} · {s.originalName || s.contentType} · {timeAgo(s.updatedAt)}
+                  </span>
+                </span>
+                <audio controls preload="none" src={`/api/admin/sound/${s.id}?v=${s.version}`} class="snd-audio"></audio>
+                <DeleteButton id={s.id} what={`the sound “${s.name}”`} compact />
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+  </div>
+</AppLayout>
+
+<style>
+  .snd-audio { height: 34px; max-width: 220px; }
+</style>
+
+<script>
+  // Read the chosen file's length so the admin need not type it.
+  const file = document.querySelector<HTMLInputElement>("[data-sound-file]");
+  const dur = document.querySelector<HTMLInputElement>("[data-sound-duration]");
+  file?.addEventListener("change", () => {
+    const f = file.files?.[0];
+    if (!f || !dur) return;
+    const url = URL.createObjectURL(f);
+    const a = new Audio();
+    a.preload = "metadata";
+    a.onloadedmetadata = () => {
+      if (Number.isFinite(a.duration)) dur.value = a.duration.toFixed(2);
+      URL.revokeObjectURL(url);
+    };
+    a.src = url;
+  });
+</script>

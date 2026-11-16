@@ -1,0 +1,192 @@
+---
+/**
+ * /admin/support/<ref>: one ticket. The full conversation including private
+ * staff notes, a reply box (reply to the player, or a private note), and
+ * the ticket's status, priority and assignee. Needs support.manage.
+ */
+import { TICKET_STATUSES, type Ticket } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import Avatar from "../../../components/admin/Avatar.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, labelize, pillClass } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { formatDate } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "support.manage" });
+if (denied) return denied;
+
+const me = Astro.locals.viewer.user!;
+const ticket = await repos.tickets.getByRef(String(Astro.params.ref ?? ""));
+if (!ticket) return Astro.rewrite("/404");
+const PRIORITIES = ["low", "normal", "high", "urgent"] as const;
+
+let error = "";
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "reply") {
+    const body = fStr(form, "body", 8000);
+    const internal = fBool(form, "internal");
+    const next = fStr(form, "then", 20) as Ticket["status"];
+    if (body.length < 2) error = "Write a message first.";
+    else {
+      const msg = await repos.tickets.reply({ ticketId: ticket.id, authorId: me.id, fromStaff: true, internal, body });
+      await audit(Astro, internal ? "ticket.note" : "ticket.reply", "ticket", ticket.id, undefined, { messageId: msg.id, internal });
+      if (!internal && (TICKET_STATUSES as readonly string[]).includes(next) && next !== ticket.status) {
+        await repos.tickets.update(ticket.id, { status: next });
+        await audit(Astro, "ticket.status", "ticket", ticket.id, { status: ticket.status }, { status: next });
+      }
+      if (!ticket.assigneeId) await repos.tickets.update(ticket.id, { assigneeId: me.id });
+      return done(Astro, internal ? "Private note added." : "Reply sent to the player.");
+    }
+  } else if (action === "meta") {
+    const status = fStr(form, "status", 20) as Ticket["status"];
+    const priority = fStr(form, "priority", 20) as Ticket["priority"];
+    const assigneeId = fStr(form, "assigneeId", 80) || null;
+    if ((TICKET_STATUSES as readonly string[]).includes(status) && (PRIORITIES as readonly string[]).includes(priority)) {
+      const next = { status, priority, assigneeId };
+      const diff = changed(ticket as unknown as Record<string, unknown>, next);
+      await repos.tickets.update(ticket.id, next);
+      await audit(Astro, "ticket.update", "ticket", ticket.id, diff.before, diff.after);
+      return done(Astro, "Ticket updated.");
+    }
+  }
+}
+
+const messages = await repos.tickets.messages(ticket.id, { includeInternal: true });
+const staff = (await Promise.all(["owner", "admin", "moderator"].map((role) => repos.users.search({ role, limit: 100 })))).flatMap((r) => r.rows);
+const ids = [...new Set([ticket.userId, ...messages.map((m) => m.authorId)].filter((x): x is string => !!x))];
+const people = new Map((await Promise.all(ids.map((id) => repos.users.findById(id)))).filter((u) => !!u).map((u) => [u!.id, u!]));
+const player = ticket.userId ? people.get(ticket.userId) : undefined;
+const playerName = player?.name ?? (ticket.name || ticket.email || "Visitor");
+const game = ticket.gameSlug ? await repos.games.getBySlug(ticket.gameSlug) : undefined;
+const history = player ? (await repos.tickets.forUser(player.id)).filter((t) => t.id !== ticket.id).slice(0, 5) : [];
+---
+
+<AppLayout title={`Ticket ${ticket.ref}`}>
+  <PageHead eyebrow={`${ticket.ref} · ${labelize(ticket.kind)}`} title={ticket.subject} back={{ href: "/admin/support", label: "Support inbox" }}>
+    <span slot="actions" class="hub-actions">
+      <span class={pillClass(ticket.priority)}>{labelize(ticket.priority)}</span>
+      <span class={pillClass(ticket.status)}>{labelize(ticket.status)}</span>
+    </span>
+  </PageHead>
+
+  <div class="hub-grid hub-grid--main">
+    <section class="hub-card">
+      <div class="hub-thread">
+        <div class="hub-msg">
+          <Avatar name={playerName} src={player?.image} size={36} />
+          <div class="hub-msg__bubble">
+            <div class="hub-msg__meta"><strong>{playerName}</strong> {formatDate(ticket.createdAt, { time: true })}{ticket.rating && ` · ${"★".repeat(ticket.rating)}`}</div>
+            <div class="hub-msg__body">{ticket.body}</div>
+          </div>
+        </div>
+        {
+          messages.map((m) => {
+            const a = m.authorId ? people.get(m.authorId) : undefined;
+            return (
+              <div class:list={["hub-msg", m.fromStaff && "hub-msg--staff", m.internal && "hub-msg--internal"]}>
+                <Avatar name={a?.name ?? (m.fromStaff ? "Staff" : playerName)} src={a?.image} size={36} />
+                <div class="hub-msg__bubble">
+                  <div class="hub-msg__meta">
+                    <strong>{a?.name ?? (m.fromStaff ? "Staff" : playerName)}</strong>
+                    {m.internal && <span class="hub-pill hub-pill--gold">Private note</span>}
+                    {formatDate(m.createdAt, { time: true })}
+                  </div>
+                  <div class="hub-msg__body">{m.body}</div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+
+      <form method="post" class="hub-btn-row" style="display:grid; gap: var(--space-3);" id="reply">
+        <input type="hidden" name="action" value="reply" />
+        <label class="hub-field__label" for="r-body">Reply</label>
+        <textarea class="input hub-textarea" id="r-body" name="body" rows="5" maxlength="8000" required placeholder={`Hi ${playerName.split(/\s+/)[0]}, …`} aria-invalid={error ? "true" : undefined} />
+        {error && <p class="hub-field__error">{error}</p>}
+        <div class="hub-actions">
+          <label class="hub-check"><input type="checkbox" name="internal" /> Private note (the player never sees it)</label>
+          <span class="hub-actions" style="margin-left:auto;">
+            <label class="hub-subtle" for="r-then">Then mark</label>
+            <select class="input" id="r-then" name="then" style="min-height: 38px; width:auto;">
+              <option value="pending" selected>Waiting on player</option>
+              <option value="resolved">Resolved</option>
+              <option value="open">Still open</option>
+              <option value="closed">Closed</option>
+            </select>
+            <button class="btn btn--primary" type="submit"><AIcon name="send" size={16} /> Send</button>
+          </span>
+        </div>
+        {!ticket.userId && <p class="hub-field__hint">This visitor was signed out. They will not see replies on the site; email them at <a href={`mailto:${ticket.email}?subject=${encodeURIComponent(`Re: ${ticket.subject} [${ticket.ref}]`)}`}>{ticket.email}</a>.</p>}
+      </form>
+    </section>
+
+    <aside class="hub-stack">
+      <form class="hub-card" method="post" data-autosubmit>
+        <input type="hidden" name="action" value="meta" />
+        <h2 class="hub-card__title" style="margin-bottom: var(--space-4);"><AIcon name="sliders" size={18} /> Ticket</h2>
+        <div class="hub-fields" style="grid-template-columns: 1fr;">
+          <div class="hub-field">
+            <label class="hub-field__label" for="m-status">Status</label>
+            <select class="input" id="m-status" name="status">{TICKET_STATUSES.map((s) => <option value={s} selected={s === ticket.status}>{labelize(s)}</option>)}</select>
+          </div>
+          <div class="hub-field">
+            <label class="hub-field__label" for="m-pri">Priority</label>
+            <select class="input" id="m-pri" name="priority">{PRIORITIES.map((s) => <option value={s} selected={s === ticket.priority}>{labelize(s)}</option>)}</select>
+          </div>
+          <div class="hub-field">
+            <label class="hub-field__label" for="m-who">Assigned to</label>
+            <select class="input" id="m-who" name="assigneeId">
+              <option value="">Nobody</option>
+              {staff.map((u) => <option value={u.id} selected={u.id === ticket.assigneeId}>{u.name}</option>)}
+            </select>
+          </div>
+        </div>
+        <noscript><button class="btn btn--sm" type="submit" style="margin-top: var(--space-3);">Save</button></noscript>
+      </form>
+
+      <section class="hub-card">
+        <div style="display:flex; gap: var(--space-3); align-items:center; margin-bottom: var(--space-4);">
+          <Avatar name={playerName} src={player?.image} size={44} />
+          <div style="min-width:0;">
+            <strong>{playerName}</strong>
+            <div class="hub-subtle">{player ? `Account · ${labelize(player.role)}` : "Not signed in"}</div>
+          </div>
+        </div>
+        <dl class="hub-kv">
+          <dt>Email</dt><dd>{ticket.email ? <a href={`mailto:${ticket.email}`}>{ticket.email}</a> : "None given"}</dd>
+          {game && (<><dt>Game</dt><dd>{game.title}</dd></>)}
+          {ticket.pageUrl && (<><dt>Page</dt><dd><span class="hub-code">{ticket.pageUrl}</span></dd></>)}
+          {ticket.userAgent && (<><dt>Browser</dt><dd class="hub-subtle">{ticket.userAgent}</dd></>)}
+          <dt>Opened</dt><dd>{formatDate(ticket.createdAt, { time: true })}</dd>
+        </dl>
+        {player && Astro.locals.viewer.permissions.has("users.view") && (
+          <div class="hub-card__foot"><a class="btn btn--sm" href={`/admin/users/${player.id}`}><AIcon name="user" size={15} /> Open account</a></div>
+        )}
+      </section>
+
+      {
+        history.length > 0 && (
+          <section class="hub-card">
+            <h2 class="hub-card__title" style="margin-bottom: var(--space-3);"><AIcon name="clock" size={18} /> Earlier tickets</h2>
+            <ul class="hub-list">
+              {history.map((t) => (
+                <li>
+                  <span class="hub-list__body">
+                    <a class="hub-list__title" href={`/admin/support/${t.ref}`}>{t.subject}</a>
+                    <span class="hub-list__meta">{t.ref} · {formatDate(t.createdAt)}</span>
+                  </span>
+                  <span class={pillClass(t.status)}>{labelize(t.status)}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </aside>
+  </div>
+</AppLayout>

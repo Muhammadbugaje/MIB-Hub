@@ -1,0 +1,154 @@
+---
+/**
+ * /account/tickets: the player's feedback, bug reports, complaints and help
+ * requests, and a form to open a new one.
+ */
+import { TICKET_KINDS } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import EmptyState from "../../../components/admin/EmptyState.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { done, fStr, labelize, pillClass, type FormErrors } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { clientKey, rateLimited } from "../../../lib/http.ts";
+import { siteSwitches, timeAgo } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const user = Astro.locals.viewer.user!;
+const switches = await siteSwitches();
+const errors: FormErrors = {};
+let draft = { kind: "help", subject: "", body: "", gameSlug: "" };
+
+const KIND_HINT: Record<string, string> = {
+  feedback: "Tell us what you think",
+  bug: "Something is broken",
+  complaint: "Something was not fair or right",
+  help: "I need help",
+  idea: "An idea or a wish",
+  account: "Sign-in or account trouble",
+  payment: "A payment or order",
+};
+
+if (Astro.request.method === "POST" && switches.tickets) {
+  const form = await Astro.request.formData();
+  draft = { kind: fStr(form, "kind", 20), subject: fStr(form, "subject", 160), body: fStr(form, "body", 8000), gameSlug: fStr(form, "gameSlug", 80) };
+  if (!(TICKET_KINDS as readonly string[]).includes(draft.kind)) errors.kind = "Choose a type.";
+  if (draft.subject.length < 3) errors.subject = "Write a short subject (3 letters or more).";
+  if (draft.body.length < 10) errors.body = "Tell us a little more (10 letters or more).";
+  if (rateLimited(`ticket:${clientKey(Astro.request)}`, 5, 10 * 60_000)) errors.body = "You have sent several tickets just now. Please wait a few minutes.";
+  if (Object.keys(errors).length === 0) {
+    const t = await repos.tickets.create({
+      kind: draft.kind as (typeof TICKET_KINDS)[number],
+      subject: draft.subject,
+      body: draft.body,
+      userId: user.id,
+      name: user.name,
+      email: user.email,
+      gameSlug: draft.gameSlug || null,
+      userAgent: (Astro.request.headers.get("user-agent") ?? "").slice(0, 300),
+      priority: draft.kind === "payment" || draft.kind === "account" ? "high" : "normal",
+    });
+    return done(Astro, `Ticket ${t.ref} sent. We will reply here.`, `/account/tickets/${t.ref}`);
+  }
+}
+
+const [tickets, games] = await Promise.all([repos.tickets.forUser(user.id), repos.games.listPublic()]);
+const counts = await repos.tickets.messageCounts(tickets.map((t) => t.id));
+---
+
+<AppLayout title="My tickets">
+  <PageHead eyebrow="Help & support" title="My tickets" icon="inbox" lead="Feedback, bug reports, complaints and help requests. Replies from the team appear in each ticket." />
+
+  <div class="hub-grid hub-grid--main">
+    <section class="hub-card hub-card--flush">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="inbox" size={18} /> Your tickets</h2>
+        <span class="hub-subtle">{tickets.length} in total</span>
+      </div>
+      {
+        tickets.length === 0 ? (
+          <EmptyState icon="help" title="No tickets yet" text="When you send one, you can follow the conversation and reply from here." />
+        ) : (
+          <ul class="hub-list" style="padding: 0 var(--space-5);">
+            {tickets.map((t) => (
+              <li>
+                <span class="hub-list__icon hub-list__icon--rose">
+                  <AIcon name={t.kind === "bug" ? "alert" : t.kind === "idea" ? "sparkles" : t.kind === "payment" ? "receipt" : "inbox"} size={18} />
+                </span>
+                <span class="hub-list__body">
+                  <a class="hub-list__title" href={`/account/tickets/${t.ref}`}>
+                    {t.subject}
+                  </a>
+                  <span class="hub-list__meta">
+                    {t.ref} · {labelize(t.kind)} · {counts[t.id] ?? 0} {counts[t.id] === 1 ? "reply" : "replies"} · updated {timeAgo(t.updatedAt)}
+                  </span>
+                </span>
+                <span class={pillClass(t.status)}>{t.status === "pending" ? "Waiting for you" : labelize(t.status)}</span>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section class="hub-card" id="new">
+      <div class="hub-card__head">
+        <div>
+          <h2 class="hub-card__title"><AIcon name="plus" size={18} /> New ticket</h2>
+          <p class="hub-card__sub">We read every one. Most get a reply within a day.</p>
+        </div>
+      </div>
+      {
+        !switches.tickets ? (
+          <div class="hub-note hub-note--warn">
+            <AIcon name="alert" size={16} /> Support tickets are paused right now. Please try again later.
+          </div>
+        ) : (
+          <form method="post" class="hub-fields" style="grid-template-columns: 1fr;">
+            <div class="hub-field">
+              <label class="hub-field__label" for="t-kind">Type</label>
+              <select class="input" id="t-kind" name="kind" required>
+                {TICKET_KINDS.map((k) => (
+                  <option value={k} selected={k === draft.kind}>
+                    {labelize(k)}: {KIND_HINT[k]}
+                  </option>
+                ))}
+              </select>
+              {errors.kind && <p class="hub-field__error">{errors.kind}</p>}
+            </div>
+            <div class="hub-field">
+              <label class="hub-field__label" for="t-game">Game (optional)</label>
+              <select class="input" id="t-game" name="gameSlug">
+                <option value="">Not about a game</option>
+                {games.map((g) => (
+                  <option value={g.slug} selected={g.slug === draft.gameSlug}>
+                    {g.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div class="hub-field">
+              <label class="hub-field__label" for="t-subject">Subject</label>
+              <input class="input" id="t-subject" name="subject" value={draft.subject} maxlength="160" required aria-invalid={errors.subject ? "true" : undefined} />
+              {errors.subject && <p class="hub-field__error">{errors.subject}</p>}
+            </div>
+            <div class="hub-field">
+              <label class="hub-field__label" for="t-body">Message</label>
+              <textarea class="input hub-textarea" id="t-body" name="body" rows="5" maxlength="8000" required aria-invalid={errors.body ? "true" : undefined}>{draft.body}</textarea>
+              <p class="hub-field__hint">For bugs: what you did, what you expected, and what happened.</p>
+              {errors.body && <p class="hub-field__error">{errors.body}</p>}
+            </div>
+            <div>
+              <button class="btn btn--primary" type="submit">
+                <AIcon name="send" size={16} /> Send ticket
+              </button>
+            </div>
+          </form>
+        )
+      }
+    </section>
+  </div>
+</AppLayout>

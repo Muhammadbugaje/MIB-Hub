@@ -1,0 +1,182 @@
+---
+/**
+ * /admin/settings: site switches (feature flags and kill switches, see
+ * SWITCH_INFO in src/lib/site.ts), the special characters' kill switches,
+ * the announcement bar, branding text and social links. Stored in
+ * site_setting. Needs site.settings. Every change is audited.
+ */
+import AIcon from "../../components/admin/AIcon.astro";
+import FormFields from "../../components/admin/FormFields.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, labelize, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { SWITCH_DEFAULTS, SWITCH_INFO, siteSwitches, specialSwitches, type SwitchKey } from "../../lib/site.ts";
+import { siteConfig } from "../../site.config.ts";
+
+const denied = guard(Astro, { permission: "site.settings" });
+if (denied) return denied;
+
+const actor = Astro.locals.viewer.user!.id;
+const FIELDS: FieldDef[] = [
+  { name: "announcement", label: "Announcement", type: "text", maxLength: 160, full: true, hint: "A short line shown in the site's announcement pill. Leave blank to hide it.", placeholder: "Football Arena season 2 is live!" },
+  { name: "announcementUrl", label: "Announcement link", type: "url", placeholder: "/news/season-2" },
+  { name: "announcementTone", label: "Announcement style", type: "select", options: ["info", "success", "warning", "promo"] },
+  { name: "brandName", label: "Site name", type: "text", maxLength: 40, placeholder: siteConfig.name, hint: "Blank uses the default." },
+  { name: "brandTagline", label: "Tagline", type: "text", maxLength: 120, placeholder: siteConfig.tagline },
+  { name: "maintenanceMessage", label: "Maintenance message", type: "textarea", rows: 2, maxLength: 300, full: true, hint: "Shown to visitors while maintenance mode is on." },
+  { name: "social", label: "Social links", type: "json", rows: 5, full: true, hint: 'Like { "x": "https://x.com/…", "youtube": "https://…", "whatsapp": "https://…" }' },
+];
+// Field name -> site_setting key.
+const KEYS: Record<string, string> = {
+  announcement: "site.announcement",
+  announcementUrl: "site.announcement_url",
+  announcementTone: "site.announcement_tone",
+  brandName: "brand.name",
+  brandTagline: "brand.tagline",
+  maintenanceMessage: "site.maintenance_message",
+  social: "social.links",
+};
+
+const stored = await repos.siteSettings.all();
+let values: FormValues = Object.fromEntries(Object.entries(KEYS).map(([f, k]) => [f, stored[k] ?? (f === "announcementTone" ? "info" : f === "social" ? {} : "")]));
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "switch") {
+    const key = fStr(form, "id", 40);
+    const on = fBool(form, "value");
+    if (key in SWITCH_DEFAULTS) {
+      await repos.siteSettings.set(`switch.${key}`, on, actor);
+      await audit(Astro, "setting.switch", "setting", `switch.${key}`, { value: !on }, { value: on });
+      return done(Astro, `${SWITCH_INFO[key as SwitchKey].label}: ${on ? "on" : "off"}.`, undefined, key === "maintenance" && on ? "warning" : "success");
+    }
+  } else if (action === "special") {
+    const name = fStr(form, "id", 40).toLowerCase();
+    const on = fBool(form, "value");
+    if (/^[a-z0-9_-]+$/.test(name)) {
+      await repos.siteSettings.set(`switch.special.${name}`, on, actor);
+      await audit(Astro, "setting.special", "setting", `switch.special.${name}`, { value: !on }, { value: on });
+      return done(Astro, `${labelize(name)} is ${on ? "switched on" : "hidden everywhere"}.`);
+    }
+  } else if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (!hasErrors(errors)) {
+      const before = Object.fromEntries(Object.values(KEYS).map((k) => [k, stored[k]]));
+      const after = Object.fromEntries(Object.entries(KEYS).map(([f, k]) => [k, values[f]]));
+      const diff = changed(before, after);
+      for (const k of Object.keys(diff.after)) await repos.siteSettings.set(k, after[k], actor);
+      await audit(Astro, "setting.update", "setting", "site", diff.before, diff.after);
+      return done(Astro, Object.keys(diff.after).length ? "Settings saved." : "Nothing changed.");
+    }
+  }
+}
+
+const [switches, specials, characters] = await Promise.all([siteSwitches(), specialSwitches(), repos.characters.listAll()]);
+const specialChars = characters.filter((c) => c.kind === "special");
+const specialName = (key: string) => key.replace(/^special\./, "");
+const SWITCH_ICON: Record<SwitchKey, Parameters<typeof AIcon>[0]["name"]> = {
+  registration: "user",
+  guestPlay: "gamepad",
+  tickets: "inbox",
+  store: "cart",
+  payments: "coins",
+  ads: "megaphone",
+  leaderboards: "trophy",
+  likes: "heart",
+  tracking: "chart",
+  maintenance: "alert",
+};
+---
+
+<AppLayout title="Settings & switches">
+  <PageHead eyebrow="System" title="Settings & switches" icon="sliders" lead="Turn site features on and off instantly, hide special characters, and set the announcement and branding." />
+
+  {switches.maintenance && <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);"><AIcon name="alert" size={16} /> Maintenance mode is on. Visitors see the maintenance notice; staff can still use the site.</div>}
+
+  <div class="hub-grid hub-grid--2">
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <div>
+          <h2 class="hub-card__title"><AIcon name="power" size={18} /> Site switches</h2>
+          <p class="hub-card__sub">Each one saves the moment you flip it.</p>
+        </div>
+      </div>
+      <ul class="hub-list">
+        {
+          (Object.keys(SWITCH_INFO) as SwitchKey[]).map((k) => (
+            <li>
+              <span class:list={["hub-list__icon", k === "maintenance" && "hub-list__icon--rose"]}><AIcon name={SWITCH_ICON[k]} size={18} /></span>
+              <span class="hub-list__body">
+                <span class="hub-list__title">{SWITCH_INFO[k].label}</span>
+                <span class="hub-list__meta" style="white-space: normal;">{SWITCH_INFO[k].help}</span>
+              </span>
+              <form method="post" class="hub-inline-form" data-autosubmit>
+                <input type="hidden" name="action" value="switch" />
+                <input type="hidden" name="id" value={k} />
+                <input type="hidden" name="value" value={switches[k] ? "off" : "on"} />
+                <input class="hub-switch" type="checkbox" role="switch" checked={switches[k]} aria-label={SWITCH_INFO[k].label} />
+                <noscript><button class="btn btn--sm" type="submit">{switches[k] ? "Turn off" : "Turn on"}</button></noscript>
+              </form>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="hub-card">
+      <div class="hub-card__head">
+        <div>
+          <h2 class="hub-card__title"><AIcon name="mask" size={18} /> Special characters</h2>
+          <p class="hub-card__sub">Kill switches. Off hides the character everywhere at once (the game uses its fallback).</p>
+        </div>
+        <a class="hub-card__link" href="/admin/characters">Characters <AIcon name="arrow-right" size={14} /></a>
+      </div>
+      <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-3);"><AIcon name="shield" size={16} /> Special characters need the real person's signed consent before anything public uses them.</div>
+      {
+        specialChars.length === 0 ? (
+          <p class="hub-muted" style="font-size: var(--fs-sm);">No special characters in the cast yet.</p>
+        ) : (
+          <ul class="hub-list">
+            {specialChars.map((c) => {
+              const name = specialName(c.key);
+              const on = specials[name] ?? true;
+              return (
+                <li>
+                  <span class="hub-list__body">
+                    <span class="hub-list__title">{c.name}</span>
+                    <span class="hub-list__meta">{c.role || c.key} · {c.approved ? "Approved by the person" : "Not yet approved"}</span>
+                  </span>
+                  {!c.approved && <span class="hub-pill hub-pill--gold">Needs consent</span>}
+                  <form method="post" class="hub-inline-form" data-autosubmit>
+                    <input type="hidden" name="action" value="special" />
+                    <input type="hidden" name="id" value={name} />
+                    <input type="hidden" name="value" value={on ? "off" : "on"} />
+                    <input class="hub-switch" type="checkbox" role="switch" checked={on} aria-label={`Show ${c.name}`} />
+                    <noscript><button class="btn btn--sm" type="submit">{on ? "Turn off" : "Turn on"}</button></noscript>
+                  </form>
+                </li>
+              );
+            })}
+          </ul>
+        )
+      }
+    </section>
+  </div>
+
+  <form class="hub-card" method="post" style="margin-top: var(--space-5);">
+    <input type="hidden" name="action" value="save" />
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="megaphone" size={18} /> Announcement, branding and social</h2>
+    </div>
+    <FormFields fields={FIELDS} values={values} errors={errors} idPrefix="s" />
+    <div class="hub-btn-row">
+      <button class="btn btn--primary" type="submit"><AIcon name="check" size={16} /> Save settings</button>
+    </div>
+  </form>
+</AppLayout>

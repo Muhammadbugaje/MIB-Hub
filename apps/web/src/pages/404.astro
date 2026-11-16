@@ -1,16 +1,27 @@
 ---
+/** Page not found. Offers the search box and the busiest pages instead of a dead end. */
+import Icon from "../components/Icon.astro";
 import PublicLayout from "../layouts/PublicLayout.astro";
 
 Astro.response.status = 404;
 ---
 
 <PublicLayout title="Not found">
-  <section class="container error-page">
+  <section class="pub-wrap pub-err">
     <div>
-      <div class="error-page__code">404</div>
-      <h1>We could not find that page</h1>
-      <p class="muted">It may have moved while we rebuild the site.</p>
-      <a class="btn btn--primary" href="/">Back home</a>
+      <p class="pub-err__hud"><span>LEVEL <b>404</b></span><span>LIVES <b>∞</b></span></p>
+      <div class="pub-err__code" aria-hidden="true"><i>4</i><i>0</i><i>4</i></div>
+      <h1>This level does not exist</h1>
+      <p>The page may have moved, or the link was mistyped. Nothing is lost: search for it, or head back to the games.</p>
+      <form class="pub-sbox" action="/search" method="get" role="search" style="margin-inline: auto; max-width: 520px;">
+        <Icon name="search" size={20} />
+        <input type="search" name="q" placeholder="Search games, news, help…" aria-label="Search the site" />
+        <button class="pub-btn pub-btn--gold" type="submit">Search</button>
+      </form>
+      <div class="pub-err__cta">
+        <a class="pub-btn pub-btn--primary" href="/games"><Icon name="gamepad" size={16} />Browse the games</a>
+        <a class="pub-btn pub-btn--ghost" href="/"><Icon name="home" size={16} />Back home</a>
+      </div>
     </div>
   </section>
 </PublicLayout>

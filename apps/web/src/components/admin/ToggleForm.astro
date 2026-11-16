@@ -1,0 +1,25 @@
+---
+/**
+ * An on/off switch that saves as soon as it is flipped (a tiny form that
+ * auto-submits; without JS a "Save" button appears). Posts action, id, value.
+ * <ToggleForm id={row.id} action="toggle" checked={row.active} label="Active" />
+ */
+interface Props {
+  id: string;
+  action: string;
+  checked: boolean;
+  label: string;
+  field?: string;
+  disabled?: boolean;
+}
+const { id, action, checked, label, field = "", disabled = false } = Astro.props;
+---
+
+<form method="post" class="hub-inline-form" data-autosubmit>
+  <input type="hidden" name="action" value={action} />
+  <input type="hidden" name="id" value={id} />
+  {field && <input type="hidden" name="field" value={field} />}
+  <input type="hidden" name="value" value={checked ? "off" : "on"} />
+  <input class="hub-switch hub-switch--sm" type="checkbox" role="switch" checked={checked} aria-label={label} title={label} disabled={disabled} />
+  <noscript><button class="btn btn--sm" type="submit">{checked ? "Turn off" : "Turn on"}</button></noscript>
+</form>

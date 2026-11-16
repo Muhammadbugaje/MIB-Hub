@@ -42,7 +42,7 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<AuthLayout title="Sign in" headline="Welcome back.">
+<AuthLayout title="Sign in" headline="Welcome" accent="back." icon="login">
   <h1>Sign in</h1>
   <p class="lead">Pick up where you left off.</p>
   {reset && <Alert tone="success">Your password was changed. Sign in with the new one.</Alert>}
@@ -55,7 +55,7 @@ if (Astro.request.method === "POST") {
       <label class="checkbox"><input type="checkbox" name="remember" checked /> Keep me signed in</label>
       <a href="/auth/forgot-password">Forgot password?</a>
     </div>
-    <button class="btn btn--primary btn--lg btn--block" type="submit">Sign in</button>
+    <button class="pub-btn pub-btn--gold auth__submit" type="submit">Sign in</button>
   </form>
   <p class="auth__switch">New here? <a href={`/auth/register?next=${encodeURIComponent(next)}`}>Create an account</a></p>
 </AuthLayout>

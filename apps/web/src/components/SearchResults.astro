@@ -1,0 +1,61 @@
+---
+/**
+ * Grouped search results. Used by the /search page and (as a fragment) by the
+ * header's search panel, so both look the same.
+ */
+import Icon from "./Icon.astro";
+import { highlight, type SearchGroup } from "./shell/search.ts";
+
+interface Props {
+  groups: SearchGroup[];
+  query: string;
+  /** Show a "see all results" link at the end (the header panel). */
+  moreHref?: string;
+}
+const { groups, query, moreHref } = Astro.props;
+const total = groups.reduce((n, g) => n + g.total, 0);
+---
+
+<div class="pub-sr">
+  {
+    groups.length === 0 ? (
+      <div class="pub-sr__none">
+        <b>Nothing found for “{query}”</b>
+        Try a game name, a character, or a word like “account” or “leaderboard”.
+      </div>
+    ) : (
+      groups.map((g) => (
+        <section class="pub-sr__group" aria-label={g.label}>
+          <h2 class="pub-sr__h">
+            {g.label} <span>{g.total}</span>
+          </h2>
+          {g.hits.map((hit) => (
+            <a class="pub-sr__item" href={hit.href}>
+              <span class="pub-sr__ic">
+                {hit.icon.startsWith("/") ? (
+                  <img src={hit.icon} alt="" width="42" height="42" loading="lazy" />
+                ) : (
+                  <Icon name={hit.icon} size={19} />
+                )}
+              </span>
+              <span class="pub-sr__tx">
+                <b>{highlight(hit.title, query).map((p) => (p.hit ? <mark>{p.text}</mark> : p.text))}</b>
+                <small>{highlight(hit.summary, query).map((p) => (p.hit ? <mark>{p.text}</mark> : p.text))}</small>
+              </span>
+              {hit.tag && <span class="pub-badge">{hit.tag}</span>}
+              <Icon name="arrow-right" size={16} />
+            </a>
+          ))}
+        </section>
+      ))
+    )
+  }
+  {
+    moreHref && total > 0 && (
+      <a class="pub-sr__more" href={moreHref}>
+        See all {total} results
+        <Icon name="arrow-right" size={15} />
+      </a>
+    )
+  }
+</div>

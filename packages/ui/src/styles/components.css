@@ -125,23 +125,38 @@
 .badge--volt { background: var(--volt-subtle); color: var(--volt); }
 .badge--muted { background: var(--surface-sunken); color: var(--text-muted); }
 
-/* ---- Theme toggle (React island: packages/ui/src/components/ThemeToggle.tsx) */
+/* ---- Theme toggle -------------------------------------------------------
+   EE Hub's toggle: one button holding both a sun and a moon; CSS shows the
+   one that matches the current theme, so it is right before any script runs.
+   Markup: React island (packages/ui/src/components/ThemeToggle.tsx) or the
+   plain Astro button (apps/web/src/components/ThemeToggle.astro). */
 .theme-toggle {
   position: relative;
   display: inline-grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  flex: none;
+  width: 42px;
+  height: 42px;
+  padding: 0;
   border: 1px solid var(--border);
-  border-radius: var(--radius-pill);
+  border-radius: 12px;
   background: var(--surface);
-  color: var(--text);
+  color: var(--text-muted);
   cursor: pointer;
-  transition: background-color var(--dur) var(--ease-standard), border-color var(--dur) var(--ease-standard), transform var(--dur-fast) var(--ease-standard);
+  overflow: hidden;
+  transition: background-color var(--dur) var(--ease-standard), border-color var(--dur) var(--ease-standard), color var(--dur) var(--ease-standard), transform var(--dur-fast) var(--ease-standard);
 }
-.theme-toggle:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.theme-toggle:hover { color: var(--text); border-color: var(--border-strong); }
 .theme-toggle:active { transform: scale(0.94); }
-.theme-toggle svg { width: 18px; height: 18px; animation: theme-spin var(--dur-slow) var(--ease-spring); }
+.theme-toggle svg { grid-area: 1 / 1; width: 18px; height: 18px; transition: transform var(--dur-slow) var(--ease-spring), opacity var(--dur) var(--ease-standard); }
+/* Light theme: show the sun (EE Hub shows the current theme's icon). */
+.theme-toggle .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+:root[data-theme="dark"] .theme-toggle .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+:root[data-theme="dark"] .theme-toggle .icon-moon { opacity: 1; transform: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.5); }
+  :root:not([data-theme="light"]) .theme-toggle .icon-moon { opacity: 1; transform: none; }
+}
 
 /* ---- Empty state and skeleton ------------------------------------------ */
 .empty {

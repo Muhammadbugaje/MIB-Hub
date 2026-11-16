@@ -1,0 +1,95 @@
+---
+/**
+ * The add / edit form used by the simple admin lists (events, deals, FAQs...).
+ * When `editing` is true it is a card ("Edit …") with a Cancel link; otherwise
+ * it is a collapsible "Add …" panel, opened when `open` (e.g. ?new=1 or the
+ * last post had errors). It posts action=save (+ id when editing) as
+ * multipart, so image fields upload. Extra markup (a preview) goes in the slot.
+ *
+ * <CrudForm fields={FIELDS} values={values} errors={errors} id={editing?.id}
+ *   editing={!!editing} open={open} addLabel="Add an event" editLabel="Edit event" cancelHref="/admin/events" />
+ */
+import AIcon from "./AIcon.astro";
+import FormFields from "./FormFields.astro";
+import type { FieldDef, FormErrors, FormValues } from "../../lib/admin-kit.ts";
+
+interface Props {
+  fields: FieldDef[];
+  values: FormValues;
+  errors: FormErrors;
+  id?: string | undefined;
+  editing: boolean;
+  open?: boolean;
+  addLabel: string;
+  editLabel: string;
+  cancelHref: string;
+  saveLabel?: string;
+  /** Extra hidden inputs (e.g. the current tab). */
+  hidden?: Record<string, string>;
+}
+const { fields, values, errors, id, editing, open = false, addLabel, editLabel, cancelHref, saveLabel = "Save", hidden = {} } = Astro.props;
+const errorCount = Object.keys(errors).length;
+---
+
+{
+  editing ? (
+    <section class="hub-card" id="editor" style="margin-bottom: var(--space-5);">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title">
+          <span class="hub-tile hub-tile--gold">
+            <AIcon name="edit" size={15} />
+          </span>
+          {editLabel}
+        </h2>
+      </div>
+      {errorCount > 0 && (
+        <div class="hub-note hub-note--danger" role="alert" style="margin-bottom: var(--space-4);">
+          <AIcon name="alert" size={16} /> Please fix {errorCount === 1 ? "the field" : `the ${errorCount} fields`} marked below.
+        </div>
+      )}
+      <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="save" />
+        <input type="hidden" name="id" value={id ?? ""} />
+        {Object.entries(hidden).map(([k, v]) => <input type="hidden" name={k} value={v} />)}
+        <FormFields fields={fields} values={values} errors={errors} idPrefix="e" />
+        <slot />
+        <div class="hub-btn-row">
+          <button class="btn btn--primary" type="submit">
+            <AIcon name="check" size={16} /> {saveLabel}
+          </button>
+          <a class="btn btn--ghost" href={cancelHref}>
+            Cancel
+          </a>
+        </div>
+      </form>
+    </section>
+  ) : (
+    <details class="hub-disclose" open={open || errorCount > 0} id="editor">
+      <summary>
+        <span class="hub-tile hub-tile--green">
+          <AIcon name="plus" size={16} />
+        </span>
+        {addLabel}
+      </summary>
+      <div class="hub-disclose__body">
+        {errorCount > 0 && (
+          <div class="hub-note hub-note--danger" role="alert" style="margin-bottom: var(--space-4);">
+            <AIcon name="alert" size={16} /> Please fix {errorCount === 1 ? "the field" : `the ${errorCount} fields`} marked below.
+          </div>
+        )}
+        <form method="post" enctype="multipart/form-data">
+          <input type="hidden" name="action" value="save" />
+          <input type="hidden" name="id" value="" />
+          {Object.entries(hidden).map(([k, v]) => <input type="hidden" name={k} value={v} />)}
+          <FormFields fields={fields} values={values} errors={errors} idPrefix="n" />
+          <slot />
+          <div class="hub-btn-row">
+            <button class="btn btn--primary" type="submit">
+              <AIcon name="plus" size={16} /> {saveLabel}
+            </button>
+          </div>
+        </form>
+      </div>
+    </details>
+  )
+}

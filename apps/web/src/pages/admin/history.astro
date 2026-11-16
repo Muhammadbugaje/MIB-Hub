@@ -1,0 +1,134 @@
+---
+/**
+ * /admin/history: the timeline on the About page. Needs content.manage.
+ * Entries sort by `date`; `dateLabel` is what visitors see ("Nov 2026").
+ */
+import type { HistoryEntry, NewHistoryEntry } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import { renderMarkdown } from "../../components/admin/markdown.ts";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Title", type: "text", required: true, placeholder: "The arcade opens" },
+  { name: "dateLabel", label: "Date shown", type: "text", required: true, placeholder: "Nov 2026", hint: "What visitors read, e.g. “2024” or “Nov 2026”." },
+  { name: "date", label: "Sort date", type: "datetime", required: true, hint: "Any moment inside that period; puts the entry in order." },
+  { name: "visible", label: "Visible", type: "switch", hint: "Show it on the About page." },
+  { name: "body", label: "Story", type: "markdown", rows: 6 },
+  { name: "imageUrl", label: "Picture", type: "image", folder: "history", hint: "Optional. Never a real person's photo without their consent." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: HistoryEntry | undefined = editId ? await repos.history.getById(editId) : undefined;
+let values: FormValues = editing ?? { visible: true };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (id) editing = await repos.history.getById(id);
+    if (!hasErrors(errors)) {
+      const data = parsed.values as Partial<NewHistoryEntry>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.history.update(editing.id, data);
+        await audit(Astro, "history.update", "history", editing.id, diff.before, diff.after);
+        return done(Astro, "Timeline entry saved.", "/admin/history");
+      }
+      const row = await repos.history.create(data as NewHistoryEntry);
+      await audit(Astro, "history.create", "history", row.id, undefined, row);
+      return done(Astro, "Timeline entry added.", "/admin/history");
+    }
+  } else if (action === "toggle") {
+    const on = fBool(form, "value");
+    await repos.history.update(id, { visible: on });
+    await audit(Astro, "history.visible", "history", id, { visible: !on }, { visible: on });
+    return done(Astro, on ? "Shown on the About page." : "Hidden.");
+  } else if (action === "delete") {
+    const before = await repos.history.getById(id);
+    await repos.history.remove(id);
+    await audit(Astro, "history.delete", "history", id, before);
+    return done(Astro, "Timeline entry deleted.", "/admin/history");
+  }
+}
+
+const rows = (await repos.history.listAll()).slice().reverse(); // newest first for editing
+---
+
+<AppLayout title="History">
+  <PageHead eyebrow="Content" title="History" icon="clock" lead="The story of MIB-Hub, shown as a timeline on the About page. Newest at the top here.">
+    <a slot="actions" class="btn" href="/about" target="_blank" rel="noopener"><AIcon name="external" size={15} /> About page</a>
+  </PageHead>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Add a moment to the timeline"
+    editLabel={`Edit: ${editing?.title ?? ""}`}
+    cancelHref="/admin/history"
+  />
+
+  <section class="hub-card">
+    {
+      rows.length === 0 ? (
+        <EmptyState icon="clock" title="The timeline is empty" text="Add the big moments: the first game, the first thousand players, launches and tournaments. Each gets a date, a title and a short story.">
+          <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+            Add the first moment
+          </a>
+        </EmptyState>
+      ) : (
+        <ol class="hub-timeline">
+          {rows.map((h) => (
+            <li class:list={["tl-item", !h.visible && "is-off"]}>
+              <div class="tl-row">
+                {h.imageUrl && <img class="tl-img" src={h.imageUrl} alt="" loading="lazy" />}
+                <div class="tl-body">
+                  <p class="hub-eyebrow">{h.dateLabel}</p>
+                  <h3 class="tl-title">
+                    {h.title} {!h.visible && <span class="hub-pill">Hidden</span>}
+                  </h3>
+                  {h.body && <div class="hub-prose tl-text" set:html={renderMarkdown(h.body)} />}
+                </div>
+                <div class="hub-actions">
+                  <ToggleForm id={h.id} action="toggle" checked={h.visible} label={`Show "${h.title}"`} />
+                  <a class="btn btn--sm btn--icon" href={`?edit=${h.id}#editor`} aria-label={`Edit "${h.title}"`} title="Edit">
+                    <AIcon name="edit" size={15} />
+                  </a>
+                  <DeleteButton id={h.id} what={`"${h.title}"`} compact />
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </section>
+</AppLayout>
+
+<style>
+  .tl-row { display: flex; gap: var(--space-4); align-items: flex-start; flex-wrap: wrap; }
+  .tl-body { flex: 1 1 260px; min-width: 0; }
+  .tl-title { margin: 0 0 4px; font-size: var(--fs-md); display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .tl-text { font-size: var(--fs-sm); color: var(--text-muted); }
+  .tl-img { width: 120px; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 12px; }
+  .tl-item.is-off .tl-body { opacity: 0.6; }
+</style>

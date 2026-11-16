@@ -1,0 +1,25 @@
+---
+/** A round profile picture, or coloured initials when there is none. <Avatar name="Amina" src={url} size={40} /> */
+import { initials } from "../../lib/admin-kit.ts";
+
+interface Props {
+  name: string;
+  src?: string | null;
+  size?: number;
+  class?: string;
+}
+const { name, src, size = 36, class: className } = Astro.props;
+// A stable hue per name, so each person keeps their colour.
+let h = 0;
+for (const ch of name) h = (h * 31 + ch.charCodeAt(0)) % 360;
+---
+
+{
+  src ? (
+    <img class:list={["hub-avatar", className]} src={src} alt="" width={size} height={size} style={`--s:${size}px`} loading="lazy" />
+  ) : (
+    <span class:list={["hub-avatar hub-avatar--initials", className]} style={`--s:${size}px; --h:${h}`} aria-hidden="true">
+      {initials(name)}
+    </span>
+  )
+}

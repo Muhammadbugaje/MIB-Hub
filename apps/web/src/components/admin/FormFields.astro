@@ -1,0 +1,136 @@
+---
+/**
+ * Renders form inputs from field definitions (src/lib/admin-kit.ts), with
+ * values and error messages. Image and Markdown fields are small React
+ * islands (preview); everything else is plain HTML and works without JS.
+ *
+ * <FormFields fields={FIELDS} values={values} errors={errors} />
+ */
+import { displayValue, optionList, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import ImageField from "./ImageField.tsx";
+import MarkdownField from "./MarkdownField.tsx";
+
+interface Props {
+  fields: FieldDef[];
+  values?: FormValues;
+  errors?: FormErrors;
+  /** Prefix for input ids, when two forms share a page. */
+  idPrefix?: string;
+}
+const { fields, values = {}, errors = {}, idPrefix = "f" } = Astro.props;
+const inputType = (t: FieldDef["type"]) =>
+  t === "email" ? "email" : t === "url" ? "url" : t === "number" || t === "money" ? "number" : t === "datetime" ? "datetime-local" : "text";
+---
+
+<div class="hub-fields">
+  {
+    fields.map((f) => {
+      const id = `${idPrefix}-${f.name}`;
+      const err = errors[f.name];
+      const v = values[f.name];
+      const shown = displayValue(f, v);
+      const describedBy = [f.hint && `${id}-hint`, err && `${id}-err`].filter(Boolean).join(" ") || undefined;
+      const full = f.full || ["textarea", "markdown", "json", "image"].includes(f.type);
+      return (
+        <div class:list={["hub-field", full && "hub-field--full", f.type === "switch" && "hub-field--switch"]}>
+          {f.type === "switch" ? (
+            <label class="hub-switch-row" for={id}>
+              <span class="hub-switch-row__text">
+                <span class="hub-field__label">{f.label}</span>
+                {f.hint && (
+                  <span class="hub-field__hint" id={`${id}-hint`}>
+                    {f.hint}
+                  </span>
+                )}
+              </span>
+              <input class="hub-switch" type="checkbox" role="switch" id={id} name={f.name} checked={v === true} aria-describedby={describedBy} />
+            </label>
+          ) : f.type === "image" ? (
+            <ImageField client:visible name={f.name} label={f.label} value={typeof v === "string" ? v : ""} hint={f.hint} error={err} required={f.required} />
+          ) : f.type === "markdown" ? (
+            <MarkdownField client:visible name={f.name} label={f.label} value={shown} hint={f.hint} error={err} rows={f.rows ?? 14} required={f.required} />
+          ) : (
+            <>
+              <label class="hub-field__label" for={id}>
+                {f.label}
+                {f.required && (
+                  <span class="hub-req" aria-hidden="true">
+                    *
+                  </span>
+                )}
+              </label>
+              {f.type === "select" ? (
+                <select class="input hub-select" id={id} name={f.name} required={f.required} aria-invalid={err ? "true" : undefined} aria-describedby={describedBy}>
+                  {f.allowEmpty && <option value="">{typeof f.allowEmpty === "string" ? f.allowEmpty : "None"}</option>}
+                  {optionList(f).map((o) => (
+                    <option value={o.value} selected={o.value === shown}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              ) : f.type === "textarea" || f.type === "json" ? (
+                <textarea
+                  class:list={["input hub-textarea", f.type === "json" && "hub-mono"]}
+                  id={id}
+                  name={f.name}
+                  rows={f.rows ?? (f.type === "json" ? 8 : 4)}
+                  required={f.required}
+                  placeholder={f.placeholder}
+                  spellcheck={f.type === "json" ? "false" : undefined}
+                  aria-invalid={err ? "true" : undefined}
+                  aria-describedby={describedBy}
+                >
+                  {shown}
+                </textarea>
+              ) : f.type === "color" ? (
+                <div class="hub-color">
+                  <input type="color" value={shown || "#1a6b45"} aria-label={`${f.label} picker`} data-color-for={id} />
+                  <input class="input hub-mono" id={id} name={f.name} value={shown} placeholder="#1a6b45" required={f.required} aria-invalid={err ? "true" : undefined} aria-describedby={describedBy} />
+                </div>
+              ) : (
+                <input
+                  class:list={["input", f.type === "slug" && "hub-mono"]}
+                  id={id}
+                  name={f.name}
+                  type={inputType(f.type)}
+                  value={shown}
+                  required={f.required}
+                  placeholder={f.placeholder}
+                  min={f.min}
+                  max={f.max}
+                  step={f.type === "money" ? "0.01" : undefined}
+                  inputmode={f.type === "money" ? "decimal" : undefined}
+                  aria-invalid={err ? "true" : undefined}
+                  aria-describedby={describedBy}
+                />
+              )}
+              {f.hint && (
+                <p class="hub-field__hint" id={`${id}-hint`}>
+                  {f.hint}
+                </p>
+              )}
+              {err && (
+                <p class="hub-field__error" id={`${id}-err`}>
+                  {err}
+                </p>
+              )}
+            </>
+          )}
+          {f.type === "switch" && err && <p class="hub-field__error">{err}</p>}
+        </div>
+      );
+    })
+  }
+</div>
+
+<script>
+  // Keep a colour picker and its text box in step.
+  for (const picker of document.querySelectorAll<HTMLInputElement>("input[data-color-for]")) {
+    const text = document.getElementById(picker.dataset.colorFor ?? "") as HTMLInputElement | null;
+    if (!text) continue;
+    picker.addEventListener("input", () => (text.value = picker.value));
+    text.addEventListener("input", () => {
+      if (/^#[0-9a-f]{6}$/i.test(text.value)) picker.value = text.value;
+    });
+  }
+</script>

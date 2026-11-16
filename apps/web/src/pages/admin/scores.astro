@@ -1,0 +1,115 @@
+---
+/**
+ * /admin/scores: leaderboard moderation. See the best runs of a game, mark a
+ * run as cheated (it leaves the public board but is kept) or delete it.
+ * Needs scores.moderate.
+ */
+import AIcon from "../../components/admin/AIcon.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "scores.moderate" });
+if (denied) return denied;
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  const s = await repos.scores.getById(id);
+  if (!s) return done(Astro, "That score no longer exists.", undefined, "danger");
+  if (action === "cheated") {
+    const cheated = fStr(form, "value") === "on";
+    await repos.scores.setCheated(id, cheated);
+    await audit(Astro, "score.cheated", "score", id, { cheated: s.cheated }, { cheated });
+    return done(Astro, cheated ? "Run marked as cheated. It no longer shows on the leaderboard." : "Run counts again.");
+  }
+  if (action === "delete") {
+    await repos.scores.remove(id);
+    await audit(Astro, "score.delete", "score", id, s, undefined);
+    return done(Astro, "Score deleted.");
+  }
+}
+
+const games = await repos.games.listAll();
+const title = new Map(games.map((g) => [g.slug, g.title]));
+const game = Astro.url.searchParams.get("game") ?? "";
+const flag = Astro.url.searchParams.get("show") ?? "";
+const rows = await repos.scores.listForAdmin({
+  ...(game ? { gameSlug: game } : {}),
+  ...(flag === "cheated" ? { cheated: true } : flag === "clean" ? { cheated: false } : {}),
+  limit: 200,
+});
+const qs = (o: Record<string, string>) => {
+  const p = new URLSearchParams({ ...(game ? { game } : {}), ...(flag ? { show: flag } : {}), ...o });
+  for (const [k, v] of [...p.entries()]) if (!v) p.delete(k);
+  const s = p.toString();
+  return s ? `?${s}` : "/admin/scores";
+};
+---
+
+<AppLayout title="Leaderboards">
+  <PageHead eyebrow="Games" title="Leaderboards" icon="trophy" lead="Best runs first. Mark a run as cheated to take it off the public board (it is kept for the record), or delete it." />
+
+  <div class="hub-toolbar">
+    <form method="get">
+      {flag && <input type="hidden" name="show" value={flag} />}
+      <select class="input" name="game" aria-label="Game" onchange="this.form.submit()" style="min-height:40px;">
+        <option value="">All games</option>
+        {games.map((g) => <option value={g.slug} selected={g.slug === game}>{g.title}</option>)}
+      </select>
+    </form>
+    <nav class="hub-tabs" aria-label="Which runs">
+      <a href={qs({ show: "" })} aria-current={!flag ? "page" : undefined}>All runs</a>
+      <a href={qs({ show: "clean" })} aria-current={flag === "clean" ? "page" : undefined}>Counted</a>
+      <a href={qs({ show: "cheated" })} aria-current={flag === "cheated" ? "page" : undefined}>Cheated</a>
+    </nav>
+  </div>
+
+  <section class="hub-card hub-card--flush">
+    {
+      rows.length === 0 ? (
+        <EmptyState icon="trophy" title={flag === "cheated" ? "No cheated runs" : "No scores yet"} text={flag === "cheated" ? "Nothing has been flagged. Flag a suspicious run from the All runs list." : "Scores appear here as soon as signed-in players finish runs."} />
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th class="hub-num">#</th>
+                <th>Player</th>
+                {!game && <th>Game</th>}
+                <th class="hub-num">Score</th>
+                <th>When</th>
+                <th>Cheated</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr class:list={[r.cheated && "is-off"]}>
+                  <td class="hub-num">{i + 1}</td>
+                  <td>
+                    <span class="hub-row-title">{r.name}</span>
+                    <span class="hub-row-sub">{r.userEmail || "Guest"}{!r.onLeaderboard && " · hidden by the player"}</span>
+                  </td>
+                  {!game && <td data-label="Game"><a href={qs({ game: r.gameSlug })}>{title.get(r.gameSlug) ?? labelize(r.gameSlug)}</a></td>}
+                  <td class="hub-num" data-label="Score"><strong>{r.score.toLocaleString("en-GB")}</strong></td>
+                  <td data-label="When">{formatDate(r.createdAt, { time: true })}</td>
+                  <td data-label="Cheated"><ToggleForm id={r.id} action="cheated" checked={r.cheated} label={`Run by ${r.name} cheated`} /></td>
+                  <td class="hub-actions-cell"><DeleteButton id={r.id} what={`this run by ${r.name}`} compact /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+  <p class="hub-subtle" style="margin-top: var(--space-3);"><AIcon name="alert" size={13} /> Shows up to 200 runs. Choose a game to narrow it down.</p>
+</AppLayout>

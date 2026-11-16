@@ -1,0 +1,101 @@
+---
+/**
+ * /admin/characters/<key>: edit one character of the open-world cast.
+ * Needs games.manage_content.
+ */
+import { CHARACTER_KINDS } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import Avatar from "../../../components/admin/Avatar.astro";
+import FormFields from "../../../components/admin/FormFields.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, changed, done, hasErrors, labelize, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { formatDate } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "games.manage_content" });
+if (denied) return denied;
+
+const key = decodeURIComponent(String(Astro.params.key ?? ""));
+const ch = await repos.characters.getByKey(key);
+if (!ch) return Astro.rewrite("/404");
+const isSpecial = ch.kind === "special";
+
+const FIELDS: FieldDef[] = [
+  { name: "portraitUrl", label: "Portrait", type: "image", folder: "characters", hint: "A drawn portrait of the character (never a photo of a real person)." },
+  { name: "name", label: "Name", type: "text", required: true, maxLength: 80 },
+  { name: "role", label: "Role", type: "text", maxLength: 120, placeholder: "The footballer" },
+  { name: "kind", label: "Kind", type: "select", options: [...CHARACTER_KINDS] },
+  { name: "sort", label: "Order", type: "number", min: -1000, max: 10000 },
+  { name: "bio", label: "Bio", type: "textarea", rows: 4, maxLength: 3000, full: true },
+  { name: "voice", label: "Voice notes", type: "textarea", rows: 3, maxLength: 2000, full: true, hint: "Direction for the voice actor: accent, pace, mood." },
+  { name: "catchphrases", label: "Catchphrases", type: "tags", full: true, hint: "Separate with commas." },
+  { name: "power", label: "Power", type: "text", maxLength: 120, placeholder: "Legal Immunity" },
+  { name: "unlock", label: "How it unlocks", type: "text", maxLength: 200, placeholder: "Finish Year 1, or a code" },
+  { name: "playable", label: "Playable", type: "switch", hint: "Players can choose this character." },
+  { name: "lockedByDefault", label: "Locked at the start", type: "switch", hint: "Needs unlocking before it can be played." },
+  { name: "enabled", label: "Shown", type: "switch", hint: "Off hides the character everywhere at once." },
+  { name: "approved", label: "Approved", type: "switch", hint: isSpecial ? "The real person has signed consent and approved their look and lines." : "Look and lines are final." },
+];
+
+let values: FormValues = { ...ch };
+let errors: FormErrors = {};
+if (Astro.request.method === "POST") {
+  const parsed = await parseFields(FIELDS, await Astro.request.formData());
+  values = parsed.values;
+  errors = parsed.errors;
+  if (!hasErrors(errors)) {
+    const changes = values as Parameters<typeof repos.characters.update>[1];
+    await repos.characters.update(key, changes);
+    const diff = changed(ch as unknown as Record<string, unknown>, values);
+    await audit(Astro, "character.update", "character", key, diff.before, diff.after);
+    return done(Astro, `${String(values.name)} saved.`, "/admin/characters");
+  }
+}
+---
+
+<AppLayout title={ch.name}>
+  <PageHead eyebrow={`Characters · ${labelize(ch.kind)}`} title={ch.name} back={{ href: "/admin/characters", label: "All characters" }}>
+    <Fragment slot="actions">
+      {!ch.enabled && <span class="hub-pill hub-pill--red">Hidden</span>}
+      {ch.approved ? <span class="hub-pill hub-pill--green">Approved</span> : <span class="hub-pill hub-pill--gold">Not approved</span>}
+    </Fragment>
+  </PageHead>
+
+  {
+    isSpecial && (
+      <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+        <AIcon name="alert" size={16} />
+        <span>
+          A special character, based on a real person. Their scenes have their own switch on the <a href="/admin/characters">Characters</a> page. Never upload a real photo as the portrait.
+        </span>
+      </div>
+    )
+  }
+
+  <div class="hub-grid hub-grid--main">
+    <form class="hub-card" method="post" enctype="multipart/form-data">
+      <FormFields fields={FIELDS} values={values} errors={errors} idPrefix="ch" />
+      <div class="hub-btn-row">
+        <button class="btn btn--primary" type="submit"><AIcon name="check" size={16} /> Save character</button>
+        <a class="btn btn--ghost" href="/admin/characters">Cancel</a>
+      </div>
+    </form>
+    <aside class="hub-stack">
+      <section class="hub-card" style="text-align:center;">
+        <div style="display:grid; justify-items:center; gap: var(--space-2);">
+          <Avatar name={ch.name} src={ch.portraitUrl || null} size={96} />
+          <strong style="font-size: var(--fs-lg);">{ch.name}</strong>
+          <span class="hub-muted">{ch.role}</span>
+        </div>
+        <dl class="hub-kv" style="margin-top: var(--space-4); text-align:left;">
+          <dt>Key</dt><dd><span class="hub-code">{ch.key}</span></dd>
+          <dt>Game</dt><dd>{ch.gameSlug}</dd>
+          <dt>Voice lines</dt><dd>{ch.lineCount.toLocaleString("en-GB")}</dd>
+          <dt>Updated</dt><dd>{formatDate(ch.updatedAt, { time: true })}</dd>
+        </dl>
+      </section>
+    </aside>
+  </div>
+</AppLayout>

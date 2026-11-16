@@ -1,0 +1,325 @@
+---
+/**
+ * /admin/cheats: cheat codes and secret characters ("heroes").
+ * Codes are hashed by the repository and never shown, not even here: to
+ * change one, type a new one. Needs games.manage_settings.
+ */
+import { ACCESS_MODES } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "games.manage_settings" });
+if (denied) return denied;
+
+const CHANNELS = ["any", "typed", "dial"] as const;
+const HERO_ACCESS = ["code", "signed", "staff", "named"] as const;
+const ACCESS_LABEL: Record<string, string> = { everyone: "Everyone", signed: "Signed-in players", staff: "Staff only", named: "Named accounts" };
+const games = await repos.games.listAll();
+const gameSlugs = new Set(games.map((g) => g.slug));
+const title = new Map(games.map((g) => [g.slug, g.title]));
+const gameName = (s: string) => (s === "*" ? "Every game" : (title.get(s) ?? labelize(s)));
+
+let formError = "";
+let draft = { gameSlug: Astro.url.searchParams.get("game") ?? "", key: "", label: "", channel: "any", access: "", how: "" };
+let heroDraft = { name: "", fullName: "", gameSlug: "*", access: "code" };
+let heroError = "";
+const codeErrors: Record<string, string> = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 30);
+  const id = fStr(form, "id", 80);
+  if (action === "create") {
+    draft = { gameSlug: fStr(form, "gameSlug", 80), key: fStr(form, "key", 60), label: fStr(form, "label", 120), channel: fStr(form, "channel", 10), access: fStr(form, "access", 10), how: fStr(form, "how", 500) };
+    const code = String(form.get("code") ?? "");
+    if (!gameSlugs.has(draft.gameSlug)) formError = "Choose a game.";
+    else if (!/^[a-z0-9_.-]{1,60}$/.test(draft.key)) formError = "The key uses lower-case letters, digits, _ . - (e.g. infinite_money). The game uses it to know what the cheat does.";
+    else if (draft.label.length < 2) formError = "Give the cheat a name.";
+    else if (!(CHANNELS as readonly string[]).includes(draft.channel)) formError = "Choose where it is typed.";
+    else {
+      try {
+        const c = await repos.cheats.create({
+          gameSlug: draft.gameSlug,
+          key: draft.key,
+          label: draft.label,
+          code,
+          channel: draft.channel as (typeof CHANNELS)[number],
+          how: draft.how,
+          access: (ACCESS_MODES as readonly string[]).includes(draft.access) ? (draft.access as (typeof ACCESS_MODES)[number]) : null,
+        });
+        await audit(Astro, "cheat.create", "cheat", c.id, undefined, { ...c, code: "(set)" });
+        return done(Astro, `Cheat “${c.label}” added.`, `/admin/cheats?game=${c.gameSlug}`);
+      } catch (e) {
+        formError = e instanceof Error && /UNIQUE/i.test(e.message) ? "This game already has a cheat with that key and channel." : e instanceof Error ? e.message : "Could not add it.";
+      }
+    }
+  } else if (action === "toggle") {
+    const c = await repos.cheats.get(id);
+    if (c) {
+      const enabled = fStr(form, "value") === "on";
+      await repos.cheats.setEnabled(id, enabled);
+      await audit(Astro, "cheat.enabled", "cheat", id, { enabled: c.enabled }, { enabled });
+      return done(Astro, `${c.label} switched ${enabled ? "on" : "off"}.`);
+    }
+  } else if (action === "access") {
+    const c = await repos.cheats.get(id);
+    const a = fStr(form, "access", 10);
+    if (c) {
+      const access = (ACCESS_MODES as readonly string[]).includes(a) ? (a as (typeof ACCESS_MODES)[number]) : null;
+      await repos.cheats.update(id, { access });
+      await audit(Astro, "cheat.access", "cheat", id, { access: c.access }, { access });
+      return done(Astro, `${c.label}: access saved.`);
+    }
+  } else if (action === "code") {
+    const c = await repos.cheats.get(id);
+    if (c) {
+      try {
+        await repos.cheats.setCode(id, String(form.get("code") ?? ""));
+        await audit(Astro, "cheat.code", "cheat", id, { code: "(hidden)" }, { code: "(changed)" });
+        return done(Astro, `New code saved for ${c.label}.`);
+      } catch (e) {
+        codeErrors[id] = e instanceof Error ? e.message : "Could not save the code.";
+      }
+    }
+  } else if (action === "delete") {
+    const c = await repos.cheats.get(id);
+    if (c) {
+      await repos.cheats.remove(id);
+      await audit(Astro, "cheat.delete", "cheat", id, c, undefined);
+      return done(Astro, `Cheat “${c.label}” deleted.`);
+    }
+  } else if (action === "hero-create") {
+    heroDraft = { name: fStr(form, "name", 60), fullName: fStr(form, "fullName", 120), gameSlug: fStr(form, "gameSlug", 80) || "*", access: fStr(form, "access", 10) };
+    if (heroDraft.name.length < 2) heroError = "Give the character a name.";
+    else if (heroDraft.gameSlug !== "*" && !gameSlugs.has(heroDraft.gameSlug)) heroError = "Choose a game.";
+    else {
+      try {
+        const h = await repos.heroes.create({
+          name: heroDraft.name,
+          fullName: heroDraft.fullName,
+          gameSlug: heroDraft.gameSlug,
+          access: (HERO_ACCESS as readonly string[]).includes(heroDraft.access) ? (heroDraft.access as (typeof HERO_ACCESS)[number]) : "code",
+          code: String(form.get("code") ?? ""),
+        });
+        await audit(Astro, "hero.create", "hero", h.id, undefined, { ...h, code: "(set)" });
+        return done(Astro, `Secret character ${h.name} added.`);
+      } catch (e) {
+        heroError = e instanceof Error ? e.message : "Could not add it.";
+      }
+    }
+  } else if (action === "hero-toggle") {
+    const h = await repos.heroes.get(id);
+    if (h) {
+      const enabled = fStr(form, "value") === "on";
+      await repos.heroes.update(id, { enabled });
+      await audit(Astro, "hero.enabled", "hero", id, { enabled: h.enabled }, { enabled });
+      return done(Astro, `${h.name} switched ${enabled ? "on" : "off"}.`);
+    }
+  } else if (action === "hero-delete") {
+    const h = await repos.heroes.get(id);
+    if (h) {
+      await repos.heroes.remove(id);
+      await audit(Astro, "hero.delete", "hero", id, h, undefined);
+      return done(Astro, `${h.name} deleted.`);
+    }
+  }
+}
+
+const game = Astro.url.searchParams.get("game") ?? "";
+const q = (Astro.url.searchParams.get("q") ?? "").trim().toLowerCase();
+const [allCheats, legacyIds, heroes] = await Promise.all([game ? repos.cheats.list(game) : repos.cheats.listAll(), repos.cheats.legacyIds(), repos.heroes.listAll()]);
+const legacy = new Set(legacyIds);
+const cheats = q ? allCheats.filter((c) => `${c.label} ${c.key} ${c.how}`.toLowerCase().includes(q)) : allCheats;
+const shown = cheats.slice(0, 300);
+const perGame = new Map<string, number>();
+for (const c of await repos.cheats.listAll()) perGame.set(c.gameSlug, (perGame.get(c.gameSlug) ?? 0) + 1);
+---
+
+<AppLayout title="Cheats & heroes">
+  <PageHead eyebrow="Games" title="Cheats & heroes" icon="key" lead="Cheat codes and secret characters. Codes are stored hashed and never shown; to change one, type a new code." />
+
+  <form class="hub-toolbar" method="get">
+    <select class="input" name="game" aria-label="Game" onchange="this.form.submit()" style="max-width: 260px;">
+      <option value="">All games ({[...perGame.values()].reduce((a, b) => a + b, 0)})</option>
+      {
+        games.map((g) => (
+          <option value={g.slug} selected={g.slug === game}>
+            {g.title} ({perGame.get(g.slug) ?? 0})
+          </option>
+        ))
+      }
+    </select>
+    <input class="input hub-toolbar__grow" type="search" name="q" value={q} placeholder="Search by name, key or hint" aria-label="Search cheats" />
+    <button class="btn" type="submit"><AIcon name="search" size={16} /> Search</button>
+  </form>
+
+  <details class="hub-disclose" open={!!formError || undefined}>
+    <summary><span class="hub-tile hub-tile--volt"><AIcon name="plus" size={16} /></span> Add a cheat code</summary>
+    <form class="hub-disclose__body" method="post">
+      <input type="hidden" name="action" value="create" />
+      {formError && <div class="hub-note hub-note--danger" role="alert" style="margin-bottom: var(--space-4);"><AIcon name="alert" size={16} /> {formError}</div>}
+      <div class="hub-fields">
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-game">Game<span class="hub-req">*</span></label>
+          <select class="input" id="c-game" name="gameSlug" required>
+            <option value="">Choose a game</option>
+            {games.map((g) => <option value={g.slug} selected={g.slug === draft.gameSlug}>{g.title}</option>)}
+          </select>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-label">Name<span class="hub-req">*</span></label>
+          <input class="input" id="c-label" name="label" value={draft.label} required maxlength="120" placeholder="Infinite money" />
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-key">Key<span class="hub-req">*</span></label>
+          <input class="input hub-mono" id="c-key" name="key" value={draft.key} required maxlength="60" placeholder="infinite_money" />
+          <p class="hub-field__hint">What the game does; must match the game's code.</p>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-code">Code<span class="hub-req">*</span></label>
+          <input class="input" id="c-code" name="code" type="password" autocomplete="new-password" required minlength="4" />
+          <p class="hub-field__hint">At least 4 letters or digits. Stored hashed; you cannot see it again.</p>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-channel">Typed where</label>
+          <select class="input" id="c-channel" name="channel">
+            {CHANNELS.map((c) => <option value={c} selected={c === draft.channel}>{c === "any" ? "Anywhere" : c === "typed" ? "Typed on the keyboard" : "Phone dial pad"}</option>)}
+          </select>
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="c-access">Who can use it</label>
+          <select class="input" id="c-access" name="access">
+            <option value="">Game default</option>
+            {ACCESS_MODES.map((a) => <option value={a} selected={a === draft.access}>{ACCESS_LABEL[a]}</option>)}
+          </select>
+        </div>
+        <div class="hub-field hub-field--full">
+          <label class="hub-field__label" for="c-how">Hint (optional)</label>
+          <input class="input" id="c-how" name="how" value={draft.how} maxlength="500" placeholder="Type it on the pause screen" />
+        </div>
+      </div>
+      <div class="hub-btn-row"><button class="btn btn--primary" type="submit"><AIcon name="plus" size={16} /> Add cheat</button></div>
+    </form>
+  </details>
+
+  <section class="hub-card hub-card--flush">
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="key" size={18} /> Cheat codes</h2>
+      <span class="hub-subtle">{cheats.length} {game ? `in ${gameName(game)}` : "in all games"}{cheats.length > shown.length && ` · showing the first ${shown.length}; choose a game to see the rest`}</span>
+    </div>
+    {
+      shown.length === 0 ? (
+        <EmptyState icon="key" title={q ? "No cheat matches" : "No cheats here yet"} text={q ? "Try another word, or clear the search." : "Add the first code with the form above. The game's key must match what its code expects."} />
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Cheat</th>
+                {!game && <th>Game</th>}
+                <th>Who can use it</th>
+                <th>On</th>
+                <th>New code</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {shown.map((c) => (
+                <tr class:list={[!c.enabled && "is-off"]}>
+                  <td>
+                    <span class="hub-row-title">{c.label}</span>
+                    {legacy.has(c.id) && <span class="hub-pill hub-pill--gold" style="margin-left:6px;" title="Imported from the old site; upgrades to a salted hash on first correct use">old hash</span>}
+                    <span class="hub-row-sub">
+                      <span class="hub-code">{c.key}</span> · {c.channel === "any" ? "anywhere" : c.channel}{c.how && ` · ${c.how}`}
+                    </span>
+                  </td>
+                  {!game && <td data-label="Game"><a href={`?game=${c.gameSlug}`}>{gameName(c.gameSlug)}</a></td>}
+                  <td data-label="Access">
+                    <form method="post" class="hub-inline-form" data-autosubmit>
+                      <input type="hidden" name="action" value="access" />
+                      <input type="hidden" name="id" value={c.id} />
+                      <select class="input cheat-sel" name="access" aria-label={`Who can use ${c.label}`}>
+                        <option value="">Game default</option>
+                        {ACCESS_MODES.map((a) => <option value={a} selected={a === c.access}>{ACCESS_LABEL[a]}</option>)}
+                      </select>
+                    </form>
+                  </td>
+                  <td data-label="On"><ToggleForm id={c.id} action="toggle" checked={c.enabled} label={`${c.label} on`} /></td>
+                  <td>
+                    <form method="post" class="hub-actions">
+                      <input type="hidden" name="action" value="code" />
+                      <input type="hidden" name="id" value={c.id} />
+                      <input class="input cheat-code" type="password" name="code" autocomplete="new-password" minlength="4" required placeholder="New code" aria-label={`New code for ${c.label}`} />
+                      <button class="btn btn--sm" type="submit">Set</button>
+                    </form>
+                    {codeErrors[c.id] && <p class="hub-field__error">{codeErrors[c.id]}</p>}
+                  </td>
+                  <td class="hub-actions-cell"><DeleteButton id={c.id} what={`the cheat “${c.label}”`} compact /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="hub-card hub-card--flush" style="margin-top: var(--space-5);">
+    <div class="hub-card__head">
+      <div>
+        <h2 class="hub-card__title"><AIcon name="mask" size={18} /> Secret characters</h2>
+        <p class="hub-card__sub">Heroes unlocked by a code. Change a hero's code or who can reveal it on the game's page.</p>
+      </div>
+    </div>
+    {
+      heroes.length === 0 ? (
+        <EmptyState icon="mask" title="No secret characters" text="Add one below. A site-wide hero works in every game that supports heroes." />
+      ) : (
+        <ul class="hub-list" style="padding: 0 var(--space-5);">
+          {heroes.map((h) => (
+            <li>
+              <span class="hub-list__icon hub-list__icon--gold"><AIcon name="mask" size={18} /></span>
+              <span class="hub-list__body">
+                <span class="hub-list__title">{h.name}{h.fullName && <span class="hub-muted"> · {h.fullName}</span>}</span>
+                <span class="hub-list__meta">{gameName(h.gameSlug)} · reveal: {h.access}</span>
+              </span>
+              <span class="hub-list__end">
+                {h.gameSlug !== "*" && <a class="btn btn--sm btn--ghost" href={`/admin/games/${h.gameSlug}`}>Edit</a>}
+                <ToggleForm id={h.id} action="hero-toggle" checked={h.enabled} label={`${h.name} on`} />
+                <DeleteButton id={h.id} action="hero-delete" what={h.name} compact />
+              </span>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+    <form method="post" class="hub-card__foot" style="padding: var(--space-4) var(--space-5); margin: 0;">
+      <input type="hidden" name="action" value="hero-create" />
+      {heroError && <p class="hub-field__error" role="alert" style="width:100%;">{heroError}</p>}
+      <input class="input hero-in" name="name" value={heroDraft.name} placeholder="Name (e.g. HERO)" required maxlength="60" aria-label="Hero name" />
+      <input class="input hero-in" name="fullName" value={heroDraft.fullName} placeholder="Full name (optional)" maxlength="120" aria-label="Full name" />
+      <select class="input hero-in" name="gameSlug" aria-label="Game">
+        <option value="*">Every game</option>
+        {games.map((g) => <option value={g.slug} selected={g.slug === heroDraft.gameSlug}>{g.title}</option>)}
+      </select>
+      <select class="input hero-in" name="access" aria-label="Who can reveal it">
+        {HERO_ACCESS.map((a) => <option value={a} selected={a === heroDraft.access}>{a === "code" ? "Anyone with the code" : a === "signed" ? "Signed-in players" : a === "staff" ? "Staff only" : "Named accounts"}</option>)}
+      </select>
+      <input class="input hero-in" name="code" type="password" autocomplete="new-password" required minlength="4" placeholder="Code" aria-label="Code" />
+      <button class="btn btn--primary btn--sm" type="submit"><AIcon name="plus" size={15} /> Add character</button>
+    </form>
+  </section>
+</AppLayout>
+
+<style>
+  .cheat-sel { min-height: 34px; padding-block: 0; font-size: var(--fs-xs); width: auto; }
+  .cheat-code { min-height: 34px; max-width: 140px; font-size: var(--fs-xs); }
+  .hero-in { min-height: 38px; flex: 1 1 150px; width: auto; }
+</style>

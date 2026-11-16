@@ -1,127 +1,759 @@
 ---
 /**
- * Home page (minimal for now).
- * TODO(public-pages): trailer, devlog, latest event, creator spotlight,
- * community link (V3 §12.1). Keep it fast on 3G: no game code loads here.
+ * Home page. EE Hub's landing page, rebuilt for a games hub: an animated
+ * hero, the LIVE ticker, then sections that each read from the database
+ * (games, numbers, news, events, deals, the cast, the people, the story,
+ * quick answers). A section with nothing to show is left out.
+ *
+ * No game code loads here; the page stays light on slow connections.
  */
+import FxScene from "../components/FxScene.astro";
+import GameCard from "../components/GameCard.astro";
 import Icon from "../components/Icon.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Ticker from "../components/Ticker.astro";
+import { categoryLabel, initials, specialAllowed, toneFor } from "../components/shell/art.ts";
 import PublicLayout from "../layouts/PublicLayout.astro";
 import { repos } from "../lib/db.ts";
+import { formatDate, siteSwitches, specialSwitches } from "../lib/site.ts";
 import { siteConfig } from "../site.config.ts";
 
-const games = await repos.games.listPublic();
-const showcase = games.slice(0, 3);
-const fills = ["72%", "48%", "86%"];
-const glyph = (title: string) =>
-  title
-    .split(/\s+/)
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
 const { viewer } = Astro.locals;
+const [switches, specials, settings] = await Promise.all([siteSwitches(), specialSwitches(), repos.siteSettings.all()]);
+const [games, posts, events, deals, founders, voices, history, faqs, allCharacters, totals, trending] = await Promise.all([
+  repos.games.listPublic(),
+  repos.posts.listPublished({ limit: 5 }),
+  repos.events.upcoming(4),
+  repos.deals.listLive(),
+  repos.people.listVisible("founder"),
+  repos.people.listVisible("voice"),
+  repos.history.listVisible(),
+  repos.faqs.listPublished(),
+  repos.characters.listPublic(),
+  repos.analytics.totals(30),
+  repos.analytics.trending(3),
+]);
+const [heroAd, stripAd] = switches.ads
+  ? await Promise.all([repos.ads.pick("home_hero"), repos.ads.pick("home_strip")])
+  : [undefined, undefined];
+
+/* ---- Games ------------------------------------------------------------- */
+const bySlug = new Map(games.map((g) => [g.slug, g]));
+const trendingGame = trending.map((t) => bySlug.get(t.gameSlug)).find(Boolean);
+const featured = trendingGame ?? games[0];
+const shelf = games.filter((g) => g !== featured).slice(0, 8);
+const categories = [...new Set(games.map((g) => g.category))].map((c) => ({
+  key: c,
+  label: categoryLabel(c),
+  count: games.filter((g) => g.category === c).length,
+}));
+
+/* ---- The cast (special characters only while their switch is on) --------- */
+const characters = allCharacters.filter(
+  (c) => (c.kind !== "special" || c.approved) && specialAllowed(c.name, specials) && specialAllowed(c.key, specials),
+);
+// Named leads and friends only (the player's own roommate slot has no name of its own).
+const cast = characters.filter((c) => (c.kind === "lead" || c.kind === "friend") && !/^your /i.test(c.name)).slice(0, 12);
+const castGame = cast[0] ? bySlug.get(cast[0].gameSlug) : undefined;
+const voicedLines = characters.reduce((n, c) => n + c.lineCount, 0);
+const KIND_LABEL: Record<string, string> = { lead: "Lead", friend: "Friend", recurring: "Regular", staff: "Staff", family: "Family", special: "Guest" };
+
+/* ---- People --------------------------------------------------------------- */
+const allowed = (p: { name: string; consent: boolean }) => p.consent && specialAllowed(p.name, specials);
+const founder = founders.find(allowed);
+const voiceCast = voices.filter(allowed).slice(0, 4);
+
+/* ---- Numbers ---------------------------------------------------------------- */
+const fmt = (n: number) => n.toLocaleString("en-NG");
+const modes = games.reduce((n, g) => n + (g.meta.modes?.length ?? 0), 0);
+interface Stat {
+  icon: string;
+  value: number;
+  label: string;
+  note?: string;
+  suffix?: string;
+}
+// Catalogue facts are always true; play statistics join in once there are enough to mean something.
+const statPool: Stat[] = [
+  { icon: "gamepad", value: games.length, label: "Games to play", note: "free, in your browser" },
+  ...(totals.plays >= 50 ? [{ icon: "play", value: totals.plays, label: "Plays", note: "in the last 30 days" }] : []),
+  ...(totals.players >= 10 ? [{ icon: "users", value: totals.players, label: "Players", note: "in the last 30 days" }] : []),
+  { icon: "user-circle", value: characters.length, label: "Characters", note: "in the open-world cast" },
+  ...(totals.minutes >= 600 ? [{ icon: "timer", value: Math.round(totals.minutes / 60), label: "Hours played", note: "in the last 30 days" }] : []),
+  { icon: "mic", value: voicedLines, label: "Voiced lines", note: "written for the cast" },
+  { icon: "layers", value: modes, label: "Game modes", note: "career, versus, puzzles and more" },
+  { icon: "compass", value: categories.length, label: "Ways to play", note: categories.map((c) => c.label.toLowerCase()).join(", ") },
+].filter((s) => s.value > 0);
+const heroStats = statPool.slice(0, 4);
+const bandStats = statPool.slice(0, 6);
+const STAT_COLOURS = ["#e6c867", "#38e1f5", "#a78bfa", "#4ade80", "#fb923c", "#f472b6"];
+
+/* ---- Hero ---------------------------------------------------------------------- */
+const nextEvent = events[0];
+const latest = posts[0];
+const typewriter = games.slice(0, 6).map((g) => `${g.title}.`);
+const announcement = typeof settings["brand.announcement"] === "string" ? settings["brand.announcement"].trim() : "";
+const adGame = heroAd ? bySlug.get(heroAd.linkUrl.match(/^\/games\/([a-z0-9-]+)/)?.[1] ?? "") : undefined;
+
+/* ---- News, events, deals --------------------------------------------------------- */
+const POST_KIND: Record<string, { label: string; icon: string }> = {
+  news: { label: "News", icon: "newspaper" },
+  devlog: { label: "Devlog", icon: "book" },
+  update: { label: "Update", icon: "megaphone" },
+  press: { label: "Press", icon: "quote" },
+  promo: { label: "Store", icon: "bag" },
+};
+const EVENT_KIND: Record<string, { label: string; icon: string; tone: string }> = {
+  tournament: { label: "Tournament", icon: "trophy", tone: "k-gold" },
+  launch: { label: "Launch", icon: "rocket", tone: "k-volt" },
+  community: { label: "Community", icon: "heart", tone: "k-green" },
+  live: { label: "Live", icon: "mic", tone: "k-plum" },
+  season: { label: "Season", icon: "gift", tone: "k-gold" },
+};
+const eventKind = (kind: string) => EVENT_KIND[kind] ?? EVENT_KIND.community!;
+const postKind = (kind: string) => POST_KIND[kind] ?? POST_KIND.news!;
+const dayNum = (d: Date) => d.toLocaleDateString("en-GB", { day: "numeric" });
+const monthShort = (d: Date) => d.toLocaleDateString("en-GB", { month: "short" }).toUpperCase();
+const stamp = (d: Date | null) => (d ? d.toLocaleDateString("en-GB", { day: "numeric", month: "short" }) : "");
+const liveDeals = deals.slice(0, 3);
+const dealWindow = (d: { startsAt: Date | null; endsAt: Date | null }) =>
+  d.startsAt && d.endsAt
+    ? `${formatDate(d.startsAt)} to ${formatDate(d.endsAt)}`
+    : d.endsAt
+      ? `Until ${formatDate(d.endsAt)}`
+      : d.startsAt
+        ? `From ${formatDate(d.startsAt)}`
+        : "Open now";
+
+/* ---- Quick answers: the first question of each category, up to five ---------------- */
+const seen = new Set<string>();
+const quick = faqs.filter((f) => !seen.has(f.category) && seen.add(f.category)).slice(0, 5);
 ---
 
-<PublicLayout>
-  <section class="hero">
-    <div class="hero__orb hero__orb--a" aria-hidden="true"></div>
-    <div class="hero__orb hero__orb--b" aria-hidden="true"></div>
-    <div class="container hero__grid">
-      <div>
-        <span class="eyebrow">{siteConfig.name} · {games.length} games and counting</span>
-        <h1 class="hero__title">Games worth <em>staying up</em> for.</h1>
-        <p class="hero__lead">{siteConfig.description}</p>
-        <div class="hero__cta">
-          <a class="btn btn--primary btn--lg" href="#games"><Icon name="play" size={18} /> Browse the games</a>
+<PublicLayout overlay>
+  <!-- ================================================================ HERO -->
+  <section class="pub-hero pub-hero--fx pub-hero--fx-arcade" aria-label="Welcome" data-hero>
+    <div class="pub-hero__fx"><FxScene kind="arcade" /></div>
+
+    <div class="pub-hero__inner pub-wrap">
+      <div class="pub-hero__copy">
+        <p class="pub-pill">
+          <span class="pub-pill__tag">{games.length} games</span>
+          <span class="pub-pill__live" aria-hidden="true"></span>
+          {
+            nextEvent ? (
+              <span>
+                <a href={`/events/${nextEvent.slug}`}>
+                  Next: {nextEvent.title} · {formatDate(nextEvent.startsAt)}
+                </a>
+              </span>
+            ) : latest ? (
+              <span>
+                <a href={`/news/${latest.slug}`}>{latest.title}</a>
+              </span>
+            ) : (
+              <span>Free to play, right in your browser</span>
+            )
+          }
+        </p>
+
+        <h1 class="pub-hero__title">
+          Original games. <br class="pub-only-wide" />No downloads. <br class="pub-only-wide" />Just <span class="pub-grad">press play.</span>
+        </h1>
+
+        {
+          typewriter.length > 0 && (
+            <p class="pub-type">
+              <span class="sr-only">Now playing: {games.slice(0, 6).map((g) => g.title).join(", ")}</span>
+              <span class="pub-type__prompt" aria-hidden="true">
+                &gt;_
+              </span>
+              <span class="pub-type__words" aria-hidden="true" data-typewriter={JSON.stringify(typewriter)}>
+                <span class="w1">{typewriter[0]}</span>
+              </span>
+              <span class="pub-type__caret" aria-hidden="true" />
+            </p>
+          )
+        }
+
+        <p class="pub-hero__lead pub-only-wide">{siteConfig.description}</p>
+        <p class="pub-hero__lead pub-only-narrow">Arcade classics, puzzles and an open-world adventure, all playable in your browser.</p>
+
+        <div class="pub-hero__ctas">
+          <a class="pub-btn pub-btn--gold pub-btn--lg" href="/games">
+            <span>
+              <span class="pub-only-wide">Browse the games</span>
+              <span class="pub-only-narrow">All games</span>
+            </span>
+            <Icon name="arrow-right" size={18} />
+          </a>
           {
             viewer.user ? (
-              <a class="btn btn--lg" href="/account/profile">
-                Your profile
+              <a class="pub-btn pub-btn--glass pub-btn--lg" href="/account">
+                <span class="pub-btn__dot">
+                  <Icon name="dashboard" size={14} />
+                </span>
+                <span class="pub-only-wide">Open my account</span>
+                <span class="pub-only-narrow">My account</span>
+              </a>
+            ) : switches.registration ? (
+              <a class="pub-btn pub-btn--glass pub-btn--lg" href="/auth/register">
+                <span class="pub-btn__dot">
+                  <Icon name="user-plus" size={14} />
+                </span>
+                <span class="pub-only-wide">Create a free account</span>
+                <span class="pub-only-narrow">Join free</span>
               </a>
             ) : (
-              <a class="btn btn--lg" href="/auth/register">
-                Create a free account
+              <a class="pub-btn pub-btn--glass pub-btn--lg" href="/auth/sign-in">
+                <span class="pub-btn__dot">
+                  <Icon name="login" size={14} />
+                </span>
+                Sign in
+              </a>
+            )
+          }
+          {
+            switches.guestPlay && (
+              <a class="pub-hero__note" href="/support">
+                No account needed to play. <b>How it works</b>
               </a>
             )
           }
         </div>
-        <p class="hero__note">No downloads. Runs in your browser, on phones too.</p>
       </div>
 
-      <div class="showcase" aria-hidden="true">
+      <ul class="pub-counters" aria-label="At a glance">
         {
-          showcase.map((g, i) => (
-            <div class="showcase__card" style={`--card-accent: ${g.accent}; --fill: ${fills[i]}`}>
-              <div class="showcase__glyph">{glyph(g.title)}</div>
-              <h3>{g.title}</h3>
-              <p>{g.meta.genre}</p>
-              <div class="showcase__bar">
-                <span />
-              </div>
-            </div>
+          heroStats.map((s, i) => (
+            <li class="pub-counter" style={`--c: ${STAT_COLOURS[i % STAT_COLOURS.length]}`}>
+              <span class="pub-counter__ic">
+                <Icon name={s.icon} size={18} />
+              </span>
+              <b>
+                <span data-countup={s.value}>{fmt(s.value)}</span>
+              </b>
+              <span>{s.label}</span>
+            </li>
           ))
         }
-      </div>
+      </ul>
     </div>
-  </section>
 
-  <section class="section container" id="games">
-    <div class="section__head">
-      <div>
-        <span class="eyebrow">The games</span>
-        <h2>Pick one and press play</h2>
-      </div>
-      <p>Every game keeps your scores and saves on your account, so you can switch devices and carry on.</p>
-    </div>
     {
-      games.length === 0 ? (
-        <div class="empty">
-          <Icon name="gamepad" size={28} />
-          <strong>No games yet</strong>
-          <span>Run <code>npm run db:seed</code> to load the catalogue.</span>
-        </div>
-      ) : (
-        <div class="card-grid stagger">
-          {games.map((g) => (
-            <a class="card game-card lift" href={`/play/${g.slug}`} style={`--card-accent: ${g.accent}`}>
-              <div class="game-card__art">
-                <span>{glyph(g.title)}</span>
-              </div>
-              <div class="game-card__body">
-                <span class="eyebrow">{g.meta.genre ?? g.category}</span>
-                <h3>{g.title}</h3>
-                <p>{g.description}</p>
-              </div>
-              <div class="game-card__foot">
-                <span>{g.meta.sessionLength}</span>
-                <span class="game-card__play">
-                  Play <Icon name="arrow-right" size={14} />
-                </span>
-              </div>
-            </a>
-          ))}
-        </div>
+      latest && (
+        <a class="pub-sheet" href={`/news/${latest.slug}`}>
+          <span class="pub-sheet__grab" aria-hidden="true" />
+          <span class="pub-sheet__hd">
+            <Icon name="megaphone" size={14} />
+            Latest<span>All news →</span>
+          </span>
+          <span class="pub-sheet__row">
+            <span class="pub-sheet__ic">
+              <Icon name={postKind(latest.kind).icon} size={18} />
+            </span>
+            <span>
+              <b>{latest.title}</b>
+              <small>
+                {postKind(latest.kind).label} · {stamp(latest.publishedAt)}
+              </small>
+            </span>
+          </span>
+        </a>
       )
     }
+
+    {
+      heroAd && (
+        <a class="pub-spot" href={`/go/ad/${heroAd.id}`} rel={heroAd.source === "house" ? undefined : "sponsored noopener"}>
+          <span class="pub-spot__art">
+            {adGame ? <img src={`/games/${adGame.slug}/icon.png`} alt="" width="62" height="62" /> : <Icon name="megaphone" size={26} />}
+          </span>
+          <span class="pub-spot__lab">{heroAd.source === "house" ? "Featured" : "Sponsored"}</span>
+          <b>{heroAd.title}</b>
+          <small>
+            {heroAd.ctaLabel || "Take a look"}
+            <Icon name="arrow-right" size={13} />
+          </small>
+        </a>
+      )
+    }
+
+    <div class="pub-scope" aria-hidden="true">
+      {
+        categories.slice(0, 4).map((c, i) => (
+          <span>
+            <i style={`color: ${STAT_COLOURS[i]}`}>{c.label.toUpperCase()}</i> <b>{String(c.count).padStart(2, "0")}</b>
+          </span>
+        ))
+      }
+    </div>
+    <button class="pub-calm" type="button" aria-pressed="false" aria-label="Pause motion" data-calm-toggle title="Pause or play the animation">
+      <span class="pub-calm__pause"><Icon name="pause" size={14} /><span>Pause motion</span></span>
+      <span class="pub-calm__play"><Icon name="play" size={14} /><span>Play motion</span></span>
+    </button>
+    <a class="pub-scroll-cue" href="#home-sections" aria-label="Scroll to the games"><span></span></a>
   </section>
 
-  <section class="section container">
-    <div class="feature-grid">
-      <div class="card feature">
-        <div class="feature__icon"><Icon name="device" /></div>
-        <h3>Play anywhere</h3>
-        <p>Built for the browser and for phones on slow data. Nothing to install.</p>
+  <Ticker announcement={announcement} />
+
+  <div id="home-sections">
+    <!-- ============================================================= GAMES -->
+    {
+      featured && (
+        <section class="pub-sec" aria-labelledby="sec-games">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-games"
+              eyebrow="The arcade"
+              pre="Pick a game,"
+              hl="press play"
+              sub="Head-football with superpowers, lab duels, laser puzzles and a whole city to switch back on. Every game opens in a second and saves your progress."
+              moreHref="/games"
+              moreLabel={`All ${games.length} games`}
+            />
+            <div class="pub-games">
+              <GameCard game={featured} feature kicker={trendingGame ? "Trending this week" : "Start here"} eager />
+              {shelf.map((g) => <GameCard game={g} />)}
+            </div>
+            <div class="pub-games__foot">
+              {
+                categories.map((c) => (
+                  <span class="pub-chip">
+                    {c.label} <b>{String(c.count).padStart(2, "0")}</b>
+                  </span>
+                ))
+              }
+              {
+                switches.leaderboards && (
+                  <a class="pub-btn pub-btn--primary pub-sh__more" href="/leaderboards">
+                    <Icon name="trophy" size={16} />
+                    Leaderboards
+                  </a>
+                )
+              }
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- =========================================================== NUMBERS -->
+    <section class="pub-numbers" aria-labelledby="sec-numbers">
+      <div class="pub-wrap">
+        <div class="pub-numbers__head">
+          <p class="pub-eyebrow pub-eyebrow--light">{siteConfig.name} in numbers</p>
+          <h2 id="sec-numbers">Small team. Big catalogue.</h2>
+          <p>Counted from the hub itself, so these move as the games do.</p>
+        </div>
+        <ul class="pub-numbers__grid">
+          {
+            bandStats.map((s, i) => (
+              <li class="pub-num" style={`--c: ${STAT_COLOURS[i % STAT_COLOURS.length]}`}>
+                <span class="pub-num__ic">
+                  <Icon name={s.icon} size={22} />
+                </span>
+                <b data-countup={s.value}>{fmt(s.value)}</b>
+                <span class="pub-num__lbl">{s.label}</span>
+                {s.note && <small>{s.note}</small>}
+              </li>
+            ))
+          }
+        </ul>
       </div>
-      <div class="card feature">
-        <div class="feature__icon"><Icon name="cloud" /></div>
-        <h3>Your progress, saved</h3>
-        <p>Saves stay on your device first and sync to your account when you are online.</p>
-      </div>
-      <div class="card feature">
-        <div class="feature__icon"><Icon name="trophy" /></div>
-        <h3>Fair leaderboards</h3>
-        <p>Runs that used cheat codes are kept off the boards, and you choose whether your name appears.</p>
-      </div>
-    </div>
-  </section>
+    </section>
+
+    <!-- ============================================================== NEWS -->
+    {
+      posts.length > 0 && (
+        <section class="pub-sec" aria-labelledby="sec-news">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-news"
+              eyebrow="News and devlog"
+              pre="What we are"
+              hl="building this week"
+              sub="Launch notes, devlogs and store news, written by the people making the games."
+              moreHref="/news"
+              moreLabel="All news"
+            />
+            <div class="pub-posts">
+              {posts.map((p, i) => (
+                <a class:list={["pub-post", `pub-post--${p.kind}`, i === 0 && "pub-post--lead"]} href={`/news/${p.slug}`}>
+                  <div class="pub-post__art">
+                    <Icon name={postKind(p.kind).icon} size={120} strokeWidth={1} />
+                    {p.coverUrl && <img src={p.coverUrl} alt="" loading="lazy" decoding="async" data-art />}
+                    {p.pinned && (
+                      <span class="pub-badge pub-badge--glassgold pub-post__pin">
+                        <Icon name="star" size={12} />
+                        Pinned
+                      </span>
+                    )}
+                    <span class="pub-post__stamp">
+                      {postKind(p.kind).label} · {stamp(p.publishedAt)}
+                    </span>
+                  </div>
+                  <div class="pub-post__body">
+                    <h3>{p.title}</h3>
+                    <p>{p.excerpt}</p>
+                    <div class="pub-post__foot">
+                      <span>{p.gameSlug && bySlug.get(p.gameSlug) ? bySlug.get(p.gameSlug)!.title : siteConfig.name}</span>
+                      <span>
+                        Read
+                        <Icon name="arrow-right" size={14} />
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- ============================================================ EVENTS -->
+    {
+      nextEvent && (
+        <section class="pub-sec pub-sec--tint" aria-labelledby="sec-events">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-events"
+              eyebrow="Events"
+              pre="Tournaments, streams and"
+              hl="things to win"
+              sub="Put a date in your diary. Every event is free to join."
+              moreHref="/events"
+              moreLabel="All events"
+            />
+            <div class:list={["pub-news", events.length === 1 && "no-feature"]}>
+              <article class="pub-feat">
+                <Icon name={eventKind(nextEvent.kind).icon} size={260} strokeWidth={0.8} class="pub-feat__glyph" />
+                <span class="pub-badge pub-badge--glassgold">
+                  <Icon name={eventKind(nextEvent.kind).icon} size={13} />
+                  Next up · {eventKind(nextEvent.kind).label}
+                </span>
+                <h3>
+                  <a href={`/events/${nextEvent.slug}`}>{nextEvent.title}</a>
+                </h3>
+                <p>{nextEvent.summary}</p>
+                <div class="pub-feat__meta">
+                  <span>
+                    <Icon name="calendar" size={15} />
+                    {formatDate(nextEvent.startsAt, { time: true })}
+                  </span>
+                  {nextEvent.location && (
+                    <span>
+                      <Icon name="map-pin" size={15} />
+                      {nextEvent.location}
+                    </span>
+                  )}
+                  {nextEvent.prize && (
+                    <span>
+                      <Icon name="award" size={15} />
+                      {nextEvent.prize}
+                    </span>
+                  )}
+                </div>
+                <div class="pub-cd" data-countdown={nextEvent.startsAt.toISOString()} aria-label="Time until it starts">
+                  <div>
+                    <b data-cd="d">{Math.max(0, Math.floor((nextEvent.startsAt.getTime() - Date.now()) / 86400000))}</b>
+                    <small>days</small>
+                  </div>
+                  <span class="pub-cd__sep" aria-hidden="true">
+                    :
+                  </span>
+                  <div>
+                    <b data-cd="h">00</b>
+                    <small>hours</small>
+                  </div>
+                  <span class="pub-cd__sep" aria-hidden="true">
+                    :
+                  </span>
+                  <div>
+                    <b data-cd="m">00</b>
+                    <small>min</small>
+                  </div>
+                  <a class="pub-btn pub-btn--gold pub-cd__cta" href={`/events/${nextEvent.slug}`}>
+                    Event details
+                    <Icon name="arrow-right" size={16} />
+                  </a>
+                </div>
+              </article>
+              {events.length > 1 && (
+                <div class="pub-nlist">
+                  {events.slice(1).map((e) => (
+                    <a class="pub-ni" href={`/events/${e.slug}`}>
+                      <span class:list={["pub-ni__dt", eventKind(e.kind).tone]}>
+                        <b>{dayNum(e.startsAt)}</b>
+                        <small>{monthShort(e.startsAt)}</small>
+                      </span>
+                      <span class="pub-ni__body">
+                        <span class:list={["pub-badge", eventKind(e.kind).tone]}>{eventKind(e.kind).label}</span>
+                        <h3>{e.title}</h3>
+                        <p>{[e.location, e.prize].filter(Boolean).join(" · ") || e.summary}</p>
+                      </span>
+                      <Icon name="chevron-right" size={18} />
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- ============================================================= DEALS -->
+    {
+      (liveDeals.length > 0 || stripAd) && (
+        <section class="pub-sec" aria-labelledby="sec-deals">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-deals"
+              eyebrow="Deals and promotions"
+              pre="Boosts, bundles and"
+              hl="free things"
+              sub="Offers from the in-game store and ways to back the hub. Supporter tiers only say thank you; they never make you stronger."
+              {...(switches.store ? { moreHref: "/store", moreLabel: "Open the store" } : {})}
+            />
+            {liveDeals.length > 0 && (
+              <div class="pub-deals">
+                {liveDeals.map((d) => (
+                  <article class:list={["pub-deal", `pub-deal--${d.kind}`]}>
+                    <div class="pub-deal__stub">
+                      {d.percentOff > 0 ? (
+                        <>
+                          <b>{d.percentOff}%</b>
+                          <small>off</small>
+                        </>
+                      ) : d.kind === "free" ? (
+                        <>
+                          <Icon name="gift" size={30} />
+                          <small>Free</small>
+                        </>
+                      ) : (
+                        <>
+                          <Icon name={d.kind === "bundle" ? "crown" : "tag"} size={30} />
+                          <small>{d.kind === "bundle" ? "Supporter" : categoryLabel(d.kind)}</small>
+                        </>
+                      )}
+                    </div>
+                    <div class="pub-deal__body">
+                      <h3>{d.title}</h3>
+                      <p>{d.description}</p>
+                      <div class="pub-deal__row">
+                        {d.code && <span class="pub-deal__code">{d.code}</span>}
+                        <span class="pub-deal__when">
+                          <Icon name="clock" size={13} />
+                          {dealWindow(d)}
+                        </span>
+                        {d.ctaUrl && (
+                          <a href={d.ctaUrl}>
+                            {d.ctaLabel || "See the offer"}
+                            <Icon name="arrow-right" size={14} />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+            {stripAd && (
+              <a class="pub-promo" href={`/go/ad/${stripAd.id}`} rel={stripAd.source === "house" ? undefined : "sponsored noopener"} data-fx-item>
+                <span class="pub-promo__ic">
+                  <Icon name="megaphone" size={24} />
+                </span>
+                <span class="pub-promo__tx">
+                  <small>{stripAd.source === "house" ? "From the hub" : "Sponsored"}</small>
+                  <b>{stripAd.title}</b>
+                  {stripAd.body && <span>{stripAd.body}</span>}
+                </span>
+                <span class="pub-btn pub-btn--gold">
+                  {stripAd.ctaLabel || "Take a look"}
+                  <Icon name="arrow-right" size={16} />
+                </span>
+              </a>
+            )}
+          </div>
+        </section>
+      )
+    }
+
+    <!-- ============================================================== CAST -->
+    {
+      cast.length > 0 && (
+        <section class="pub-sec pub-sec--tint" aria-labelledby="sec-cast">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-cast"
+              eyebrow={castGame ? castGame.title : "The cast"}
+              pre={`${characters.length} characters,`}
+              hl="one campus"
+              sub="Roommates, rivals, lecturers and the people who really run the place. Every one of them has a voice and something to say about you."
+            >
+              <div class="pub-carnav pub-sh__more" slot="more">
+                <button type="button" aria-label="Previous characters" data-scroll-prev="home-cast">
+                  <Icon name="chevron-left" size={18} />
+                </button>
+                <button type="button" class="is-primary" aria-label="More characters" data-scroll-next="home-cast">
+                  <Icon name="chevron-right" size={18} />
+                </button>
+              </div>
+            </SectionHead>
+          </div>
+          <div class="pub-cast pub-scroll-pad" id="home-cast" data-scroller tabindex="0" aria-label="Characters">
+            {cast.map((c, i) => (
+              <a class="pub-char" href="/characters" data-fx-item>
+                <span class="pub-char__no">#{String(i + 1).padStart(2, "0")}</span>
+                <span class="pub-char__av" style={`--tone: ${toneFor(c.name)}`}>
+                  {c.portraitUrl ? <img src={c.portraitUrl} alt="" loading="lazy" /> : initials(c.name, 1)}
+                </span>
+                <b>{c.name}</b>
+                <small>{c.role.replace(/\s*\(.*\)$/, "") || KIND_LABEL[c.kind] || "Cast"}</small>
+                {c.lineCount > 0 && (
+                  <p>
+                    <Icon name="mic" size={12} />
+                    {fmt(c.lineCount)} lines
+                  </p>
+                )}
+              </a>
+            ))}
+            <a class="pub-char pub-char--more" href="/characters" data-fx-item>
+              <Icon name="users" size={30} />
+              <b>The full cast</b>
+              <p>All {characters.length} characters</p>
+            </a>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- ============================================================ PEOPLE -->
+    {
+      (founder || voiceCast.length > 0) && (
+        <section class="pub-sec" aria-labelledby="sec-people">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-people"
+              eyebrow="Community"
+              pre="Made by people,"
+              hl="not a studio"
+              sub={`${siteConfig.name} is built in the open by a very small team and the players who lend it their voices.`}
+              moreHref="/community"
+              moreLabel="Community and credits"
+            />
+            <div class="pub-people">
+              {founder && (
+                <article class="pub-founder" data-fx-item>
+                  <span class="pub-founder__av">
+                    {founder.photoUrl ? <img src={founder.photoUrl} alt="" loading="lazy" /> : initials(founder.name, 3)}
+                  </span>
+                  <small>{founder.title}</small>
+                  <h3>{founder.name}</h3>
+                  <p>{founder.bio}</p>
+                  <div class="pub-founder__sig">
+                    <i>{siteConfig.initials}</i>
+                    {founder.since && <span>making games here since {founder.since}</span>}
+                  </div>
+                </article>
+              )}
+              {voiceCast.map((p) => (
+                <article class="pub-voice" data-fx-item>
+                  <span class="pub-voice__av" style={`--tone: ${toneFor(p.name)}`}>
+                    {p.photoUrl ? <img src={p.photoUrl} alt="" loading="lazy" /> : initials(p.name, 1)}
+                  </span>
+                  <div>
+                    <b>{p.name}</b>
+                    <small>{p.title}</small>
+                    <p>{p.bio}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- =========================================================== HISTORY -->
+    {
+      history.length > 0 && (
+        <section class="pub-band" aria-labelledby="sec-story">
+          <div class="pub-wrap">
+            <SectionHead
+              id="sec-story"
+              eyebrow="Our story"
+              pre="From a learning arcade"
+              hl="to a hub of its own"
+              sub="The short version. The long one, with every milestone, is on the About page."
+              moreHref="/about"
+              moreLabel="Read the story"
+            />
+          </div>
+          <ol class="pub-tl pub-scroll-pad" data-scroller tabindex="0" aria-label="Timeline" style="list-style: none; margin: 0;">
+            {history.map((h, i) => (
+              <li class:list={["pub-tl__item", i === history.length - 1 && "is-current"]}>
+                <span class="pub-tl__dot" aria-hidden="true" />
+                <div class="pub-tl__card" data-fx-item>
+                  <span class="pub-tl__when">{h.dateLabel}</span>
+                  <h3>{h.title}</h3>
+                  <p>{h.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      )
+    }
+
+    <!-- =============================================================== FAQ -->
+    {
+      quick.length > 0 && (
+        <section class="pub-sec" aria-labelledby="sec-faq">
+          <div class="pub-wrap pub-faq">
+            <div>
+              <SectionHead
+                id="sec-faq"
+                eyebrow="Quick answers"
+                pre="Questions,"
+                hl="answered"
+                sub="The things people ask first. The help centre has the rest."
+              />
+              {switches.tickets && (
+                <div class="pub-help" data-fx-item>
+                  <span class="pub-help__ic k-gold">
+                    <Icon name="life-buoy" size={22} />
+                  </span>
+                  <span class="pub-help__tx">
+                    <b>Still stuck?</b>
+                    <span>A real person reads every message.</span>
+                  </span>
+                  <a class="pub-btn pub-btn--primary" href="/support">
+                    Ask us
+                    <Icon name="arrow-right" size={16} />
+                  </a>
+                </div>
+              )}
+            </div>
+            <div class="pub-qa">
+              {quick.map((f, i) => (
+                <details class="pub-q" open={i === 0} data-fx-item>
+                  <summary>
+                    {f.question}
+                    <i aria-hidden="true">
+                      <Icon name="plus" size={16} />
+                    </i>
+                  </summary>
+                  <small>{f.category}</small>
+                  <p>{f.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+  </div>
 </PublicLayout>

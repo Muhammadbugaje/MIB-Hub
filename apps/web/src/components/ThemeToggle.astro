@@ -1,0 +1,63 @@
+---
+/**
+ * The light/dark toggle as a plain button (no React needed): a sun and a
+ * moon; CSS shows the one for the current theme, so it is right before any
+ * script runs. One small script handles every toggle on the page and shares
+ * its logic with packages/ui/src/theme.ts.
+ *
+ *   <ThemeToggle />
+ *   <ThemeToggle class="pub-icon-btn" />
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<button
+  class:list={["theme-toggle", className]}
+  type="button"
+  aria-label="Switch between light and dark theme"
+  aria-pressed="false"
+  data-theme-toggle
+>
+  <svg
+    class="icon-sun"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2m-7.07-14.07 1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+    ></path>
+  </svg>
+  <svg
+    class="icon-moon"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+  </svg>
+</button>
+
+<script>
+  import { applyTheme, currentTheme, toggleTheme, watchTheme } from "@mib/ui/theme";
+
+  // One listener for every toggle on the page (header, drawer, footer).
+  document.addEventListener("click", (e) => {
+    const target = e.target as Element | null;
+    if (target?.closest("[data-theme-toggle]")) toggleTheme();
+  });
+  watchTheme();
+  // Set aria-pressed and the label to match the theme the page loaded with.
+  applyTheme(currentTheme());
+</script>

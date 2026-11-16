@@ -1,0 +1,227 @@
+---
+/**
+ * /admin/users/<id>: one account. Role and ban (users.manage, and only for
+ * someone ranked below you), single-permission grants and revokes
+ * (roles.manage), plus the player's numbers, tickets, orders and the audit
+ * trail about them. Needs users.view to look.
+ */
+import AIcon from "../../../components/admin/AIcon.astro";
+import Avatar from "../../../components/admin/Avatar.astro";
+import DeleteButton from "../../../components/admin/DeleteButton.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize, parseLocalInput, pillClass } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { PERMISSIONS, ROLE_INFO, assignableRoles, canManageRole, effectivePermissions, isPermission, isRole } from "../../../lib/permissions.ts";
+import { formatDate, formatPrice, timeAgo } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "users.view" });
+if (denied) return denied;
+
+const { viewer } = Astro.locals;
+const target = await repos.users.findById(String(Astro.params.id ?? ""));
+if (!target) return Astro.rewrite("/404");
+const isSelf = target.id === viewer.user!.id;
+const canManage = viewer.permissions.has("users.manage") && !isSelf && canManageRole(viewer.role, target.role);
+const canGrant = viewer.permissions.has("roles.manage") && !isSelf && canManageRole(viewer.role, target.role);
+let error = "";
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "role" && canManage) {
+    const role = fStr(form, "role", 20);
+    if (isRole(role) && assignableRoles(viewer.role).includes(role)) {
+      await repos.users.setRole(target.id, role);
+      await audit(Astro, "user.role", "user", target.id, { role: target.role }, { role });
+      return done(Astro, `${target.name} is now ${ROLE_INFO[role].label.toLowerCase()}.`);
+    }
+    error = "You cannot give that role.";
+  } else if (action === "ban" && canManage) {
+    const banned = !target.banned;
+    await repos.users.setBanned(target.id, banned);
+    await audit(Astro, banned ? "user.ban" : "user.unban", "user", target.id, { banned: target.banned }, { banned }, fStr(form, "reason", 300));
+    return done(Astro, banned ? `${target.name} is banned and can no longer sign in.` : `${target.name} can sign in again.`, undefined, banned ? "warning" : "success");
+  } else if (action === "grant" && canGrant) {
+    const permission = fStr(form, "permission", 60);
+    const effect = fStr(form, "effect", 10) === "revoke" ? "revoke" : "grant";
+    const expiresAt = parseLocalInput(fStr(form, "expiresAt", 30));
+    if (!isPermission(permission)) error = "Choose a permission.";
+    else {
+      const row = await repos.permissionOverrides.add({ userId: target.id, permission, effect, expiresAt, reason: fStr(form, "reason", 300), createdBy: viewer.user!.id });
+      await audit(Astro, `user.permission_${effect}`, "user", target.id, undefined, { permission, effect, expiresAt, overrideId: row.id });
+      return done(Astro, `${effect === "grant" ? "Granted" : "Revoked"}: ${PERMISSIONS[permission]}.`);
+    }
+  } else if (action === "delete" && canGrant) {
+    const id = fStr(form, "id", 80);
+    await repos.permissionOverrides.remove(id);
+    await audit(Astro, "user.permission_remove", "user", target.id, { overrideId: id });
+    return done(Astro, "Override removed.");
+  }
+}
+
+const [overrides, profile, tickets, orders, trail] = await Promise.all([
+  repos.permissionOverrides.listActive(target.id),
+  repos.profiles.getForUser(target.id),
+  repos.tickets.forUser(target.id),
+  repos.orders.forUser(target.id),
+  viewer.permissions.has("audit.view") ? repos.audit.list({ targetType: "user", targetId: target.id, limit: 10 }) : Promise.resolve([]),
+]);
+const perms = effectivePermissions(target.role, overrides);
+const runs = profile ? await repos.scores.forProfile(profile.id, 200) : [];
+const roles = assignableRoles(viewer.role);
+---
+
+<AppLayout title={target.name}>
+  <PageHead eyebrow="Users & roles" title={target.name} back={{ href: "/admin/users", label: "All users" }}>
+    <span slot="actions" class="hub-actions">
+      {target.banned && <span class="hub-pill hub-pill--red">Banned</span>}
+      <span class="hub-pill hub-pill--green">{labelize(target.role)}</span>
+    </span>
+  </PageHead>
+  {error && <div class="hub-note hub-note--danger" role="alert" style="margin-bottom: var(--space-5);"><AIcon name="alert" size={16} /> {error}</div>}
+
+  <div class="hub-grid hub-grid--side">
+    <div class="hub-stack">
+      <section class="hub-card" style="text-align:center;">
+        <div style="display:grid; justify-items:center; gap: var(--space-2);">
+          <Avatar name={target.name} src={target.image} size={88} />
+          <strong style="font-size: var(--fs-lg);">{target.name}</strong>
+          <span class="hub-muted">{target.email}</span>
+          {typeof profile?.stats.handle === "string" && profile.stats.handle && <span class="hub-subtle">@{profile.stats.handle}</span>}
+        </div>
+        <dl class="hub-kv" style="margin-top: var(--space-5); text-align:left;">
+          <dt>Joined</dt><dd>{formatDate(target.createdAt)}</dd>
+          <dt>Email</dt><dd>{target.emailVerified ? "Verified" : "Not verified"}</dd>
+          <dt>XP / coins</dt><dd>{profile ? `${profile.xp} / ${profile.coins}` : "No profile yet"}</dd>
+          <dt>Runs</dt><dd>{runs.length}{runs.some((r) => r.cheated) && ` (${runs.filter((r) => r.cheated).length} flagged)`}</dd>
+          <dt>Leaderboards</dt><dd>{profile?.onLeaderboard === false ? "Hidden by choice" : "Shown"}</dd>
+        </dl>
+      </section>
+
+      <section class="hub-card">
+        <h2 class="hub-card__title" style="margin-bottom: var(--space-4);"><AIcon name="shield" size={18} /> Role and access</h2>
+        {
+          isSelf ? (
+            <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">This is your own account. Another admin ranked above you must change your role.</p>
+          ) : !canManage ? (
+            <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">You can only change people ranked below you, and you need the “users.manage” permission.</p>
+          ) : (
+            <>
+              <form method="post" class="hub-actions" data-confirm="Change this person's role?">
+                <input type="hidden" name="action" value="role" />
+                <label class="hub-visually-hidden" for="u-role">Role</label>
+                <select class="input" id="u-role" name="role" style="flex:1;">
+                  {roles.map((r) => <option value={r} selected={r === target.role}>{ROLE_INFO[r].label}: {ROLE_INFO[r].description}</option>)}
+                </select>
+                <button class="btn" type="submit">Set role</button>
+              </form>
+              <form method="post" class="hub-card__foot" data-confirm={target.banned ? "Let this person sign in again?" : "Ban this account? They are signed out and cannot sign in."}>
+                <input type="hidden" name="action" value="ban" />
+                {!target.banned && <input class="input" name="reason" placeholder="Reason (for the audit log)" maxlength="300" style="flex:1;" />}
+                <button class={target.banned ? "btn" : "btn hub-btn-danger"} type="submit">
+                  <AIcon name={target.banned ? "check" : "power"} size={15} /> {target.banned ? "Unban" : "Ban account"}
+                </button>
+              </form>
+            </>
+          )
+        }
+      </section>
+    </div>
+
+    <div class="hub-stack">
+      <section class="hub-card">
+        <div class="hub-card__head">
+          <div>
+            <h2 class="hub-card__title"><AIcon name="key" size={18} /> Permissions</h2>
+            <p class="hub-card__sub">From the {labelize(target.role).toLowerCase()} role, plus personal grants, minus revokes.</p>
+          </div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap: 6px;">
+          {Object.keys(PERMISSIONS).map((p) => <span class={perms.has(p as keyof typeof PERMISSIONS) ? "hub-pill hub-pill--green" : "hub-pill hub-pill--plain"} title={PERMISSIONS[p as keyof typeof PERMISSIONS]} style={perms.has(p as keyof typeof PERMISSIONS) ? undefined : "opacity:.55"}>{p}</span>)}
+        </div>
+        {
+          overrides.length > 0 && (
+            <ul class="hub-list" style="margin-top: var(--space-4);">
+              {overrides.map((o) => (
+                <li>
+                  <span class={o.effect === "grant" ? "hub-pill hub-pill--green" : "hub-pill hub-pill--red"}>{o.effect}</span>
+                  <span class="hub-list__body">
+                    <span class="hub-list__title">{isPermission(o.permission) ? PERMISSIONS[o.permission] : o.permission}</span>
+                    <span class="hub-list__meta">{o.reason || "No reason given"} · {o.expiresAt ? `until ${formatDate(o.expiresAt, { time: true })}` : "no end date"}</span>
+                  </span>
+                  {canGrant && <DeleteButton id={o.id} what="this override" label="Remove" compact />}
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        {
+          canGrant && (
+            <form method="post" class="hub-card__foot" style="display:grid; gap: var(--space-3);">
+              <input type="hidden" name="action" value="grant" />
+              <div class="hub-fields">
+                <div class="hub-field">
+                  <label class="hub-field__label" for="g-perm">Permission</label>
+                  <select class="input" id="g-perm" name="permission" required>
+                    {Object.entries(PERMISSIONS).map(([k, v]) => <option value={k}>{v}</option>)}
+                  </select>
+                </div>
+                <div class="hub-field">
+                  <label class="hub-field__label" for="g-eff">Grant or revoke</label>
+                  <select class="input" id="g-eff" name="effect"><option value="grant">Grant (add)</option><option value="revoke">Revoke (take away)</option></select>
+                </div>
+                <div class="hub-field">
+                  <label class="hub-field__label" for="g-exp">Until (optional)</label>
+                  <input class="input" id="g-exp" type="datetime-local" name="expiresAt" />
+                </div>
+                <div class="hub-field">
+                  <label class="hub-field__label" for="g-why">Reason</label>
+                  <input class="input" id="g-why" name="reason" maxlength="300" placeholder="Helping with the tournament" />
+                </div>
+              </div>
+              <div><button class="btn btn--primary btn--sm" type="submit"><AIcon name="plus" size={15} /> Add override</button></div>
+            </form>
+          )
+        }
+      </section>
+
+      <div class="hub-grid hub-grid--2">
+        <section class="hub-card">
+          <h2 class="hub-card__title" style="margin-bottom: var(--space-3);"><AIcon name="inbox" size={18} /> Tickets</h2>
+          {tickets.length === 0 ? <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">No tickets.</p> : (
+            <ul class="hub-list">
+              {tickets.slice(0, 6).map((t) => (
+                <li><span class="hub-list__body"><a class="hub-list__title" href={`/admin/support/${t.ref}`}>{t.subject}</a><span class="hub-list__meta">{t.ref} · {timeAgo(t.updatedAt)}</span></span><span class={pillClass(t.status)}>{labelize(t.status)}</span></li>
+              ))}
+            </ul>
+          )}
+        </section>
+        <section class="hub-card">
+          <h2 class="hub-card__title" style="margin-bottom: var(--space-3);"><AIcon name="receipt" size={18} /> Orders</h2>
+          {orders.length === 0 ? <p class="hub-muted" style="margin:0; font-size: var(--fs-sm);">No orders.</p> : (
+            <ul class="hub-list">
+              {orders.slice(0, 6).map((o) => (
+                <li><span class="hub-list__body"><span class="hub-list__title">{o.productSku}</span><span class="hub-list__meta">{o.ref} · {formatPrice(o.amountKobo, o.currency)}</span></span><span class={pillClass(o.status)}>{labelize(o.status)}</span></li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
+
+      {
+        trail.length > 0 && (
+          <section class="hub-card">
+            <h2 class="hub-card__title" style="margin-bottom: var(--space-3);"><AIcon name="list" size={18} /> Changes to this account</h2>
+            <ul class="hub-list">
+              {trail.map((a) => (
+                <li><span class="hub-list__body"><span class="hub-list__title"><span class="hub-code">{a.action}</span></span><span class="hub-list__meta">{formatDate(a.createdAt, { time: true })}{a.note && ` · ${a.note}`}</span></span></li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </div>
+</AppLayout>

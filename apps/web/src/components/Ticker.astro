@@ -1,0 +1,63 @@
+---
+/**
+ * The scrolling LIVE strip (EE Hub's ticker section), fed by the latest posts
+ * and the next events. public/js/public.js makes it move; without JavaScript
+ * (or with reduced motion) it is a plain row of links that scrolls sideways.
+ *
+ *   <Ticker />                      loads its own items
+ *   <Ticker announcement="..." />   adds a first item from site settings
+ */
+import { repos } from "../lib/db.ts";
+
+interface Props {
+  announcement?: string;
+  label?: string;
+}
+const { announcement, label = "Live" } = Astro.props;
+
+const [posts, events] = await Promise.all([repos.posts.listPublished({ limit: 5 }), repos.events.upcoming(4)]);
+const KIND: Record<string, string> = { news: "News", devlog: "Devlog", update: "Update", promo: "Store" };
+const day = (d: Date) => d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+
+interface Item {
+  href: string;
+  lead: string;
+  text: string;
+  tail?: string;
+}
+const items: Item[] = [];
+// Interleave: an event, then a post, so the strip never reads as one long list of the same thing.
+const max = Math.max(posts.length, events.length);
+for (let i = 0; i < max; i++) {
+  const e = events[i];
+  if (e) items.push({ href: `/events/${e.slug}`, lead: day(e.startsAt), text: e.title, tail: e.location || undefined });
+  const p = posts[i];
+  if (p) items.push({ href: `/news/${p.slug}`, lead: KIND[p.kind] ?? "News", text: p.title });
+}
+---
+
+{
+  (items.length > 0 || announcement) && (
+    <section class="pub-ticker" aria-label="Latest news and events">
+      <div class="pub-ticker__lab">
+        <span class="pub-ticker__dot" aria-hidden="true" />
+        {label}
+      </div>
+      <div class="pub-ticker__viewport">
+        <div class="pub-ticker__run" data-ticker>
+          {announcement && (
+            <a class="pub-ticker__item" href="/news">
+              <b>Announcement:</b> {announcement}
+            </a>
+          )}
+          {items.map((item) => (
+            <a class="pub-ticker__item" href={item.href}>
+              <b>{item.lead}:</b> {item.text}
+              {item.tail && <small>· {item.tail}</small>}
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,81 @@
+---
+/**
+ * One game on a shelf. The art is layered so it always looks finished:
+ * the game's accent colour fading to night, a big line icon for its category
+ * and its square icon; the cover photo (public/games/<slug>/cover.jpg or
+ * tile.jpg) sits on top when it exists.
+ *
+ *   <GameCard game={game} />
+ *   <GameCard game={game} feature kicker="Featured" />
+ */
+import type { Game } from "@mib/db";
+import Icon from "./Icon.astro";
+import { categoryIcon, categoryLabel, gameArt } from "./shell/art.ts";
+
+interface Props {
+  game: Game;
+  /** The large card: art fills the card, with the description and buttons. */
+  feature?: boolean;
+  kicker?: string;
+  /** Load the art eagerly (cards above the fold). */
+  eager?: boolean;
+}
+const { game, feature = false, kicker, eager = false } = Astro.props;
+const art = gameArt(game.slug);
+const photo = feature ? (art.cover ?? art.tile) : (art.cover ?? art.tile);
+const tags = (game.meta.modes ?? []).slice(0, 3);
+---
+
+<article class:list={["pub-game", feature && "pub-game--feature"]} style={`--g: ${game.accent}`}>
+  <div class="pub-game__art">
+    <Icon name={categoryIcon(game.category)} size={160} strokeWidth={0.9} class="pub-game__glyph" />
+    <img class="pub-game__icon" src={art.icon} alt="" width="60" height="60" loading={eager ? "eager" : "lazy"} decoding="async" />
+    {
+      photo && (
+        <img class="pub-game__cover" src={photo} alt="" loading={eager ? "eager" : "lazy"} decoding="async" data-art />
+      )
+    }
+    <span class="pub-game__cat">{categoryLabel(game.category)}</span>
+    {
+      !feature && (
+        <a class="pub-game__go" href={`/play/${game.slug}`} aria-label={`Play ${game.title}`}>
+          <Icon name="play" size={18} />
+        </a>
+      )
+    }
+  </div>
+  <div class="pub-game__body">
+    {feature && kicker && <span class="pub-game__kicker"><Icon name="flame" size={14} />{kicker}</span>}
+    <h3><a href={`/games/${game.slug}`}>{game.title}</a></h3>
+    <p>{feature ? game.description : (game.meta.genre ?? game.description)}</p>
+    {
+      feature ? (
+        <>
+          {tags.length > 0 && (
+            <div class="pub-game__tags">
+              {tags.map((t) => (
+                <span>{t}</span>
+              ))}
+            </div>
+          )}
+          <div class="pub-game__cta">
+            <a class="pub-btn pub-btn--gold" href={`/play/${game.slug}`}>
+              <Icon name="play" size={16} />
+              Play now
+            </a>
+            <a class="pub-btn pub-btn--glass" href={`/games/${game.slug}`}>
+              About the game
+            </a>
+          </div>
+        </>
+      ) : (
+        game.meta.sessionLength && (
+          <span class="pub-game__meta">
+            <Icon name="clock" size={13} />
+            {game.meta.sessionLength}
+          </span>
+        )
+      )
+    }
+  </div>
+</article>

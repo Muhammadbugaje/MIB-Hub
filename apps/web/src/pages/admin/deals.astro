@@ -1,0 +1,170 @@
+---
+/**
+ * /admin/deals: discounts, bundles, boosts, freebies and partner offers,
+ * with optional promo codes and a schedule. Needs content.manage.
+ * Status is worked out from the switch and the dates: live, scheduled,
+ * expired or off.
+ */
+import { DEAL_KINDS, type Deal, type NewDeal } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, labelize, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const [games, products] = await Promise.all([repos.games.listAll(), repos.products.listAll()]);
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Title", type: "text", required: true, placeholder: "Double XP weekend" },
+  { name: "kind", label: "Kind", type: "select", required: true, options: DEAL_KINDS },
+  { name: "description", label: "Description", type: "textarea", rows: 3, maxLength: 600, full: true },
+  { name: "percentOff", label: "Percent off", type: "number", min: 0, max: 100, hint: "0 when it is not a percentage deal." },
+  { name: "code", label: "Promo code", type: "text", maxLength: 40, placeholder: "SAMARU50", hint: "Optional. Players type it at checkout or in a game." },
+  { name: "startsAt", label: "Starts", type: "datetime", hint: "Blank = straight away." },
+  { name: "endsAt", label: "Ends", type: "datetime", hint: "Blank = until you switch it off." },
+  { name: "gameSlug", label: "Game", type: "select", allowEmpty: "Any game", options: games.map((g) => ({ value: g.slug, label: g.title })) },
+  { name: "productSku", label: "Store item", type: "select", allowEmpty: "No store item", options: products.map((p) => ({ value: p.sku, label: p.title })) },
+  { name: "ctaLabel", label: "Button text", type: "text", placeholder: "Get it" },
+  { name: "ctaUrl", label: "Button link", type: "url", placeholder: "/store" },
+  { name: "sort", label: "Order", type: "number", hint: "Lower shows first." },
+  { name: "active", label: "Switched on", type: "switch" },
+  { name: "imageUrl", label: "Image", type: "image", folder: "deals" },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: Deal | undefined = editId ? await repos.deals.getById(editId) : undefined;
+let values: FormValues = editing ?? { kind: "discount", ctaLabel: "Get it", active: true, sort: 0, percentOff: 0 };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    values.code = String(values.code ?? "").toUpperCase().replace(/\s+/g, "");
+    if (values.code && !/^[A-Z0-9_-]{3,40}$/.test(values.code as string)) errors.code = "Use 3 or more letters, digits, - or _.";
+    const s = values.startsAt as Date | null;
+    const e = values.endsAt as Date | null;
+    if (s && e && e < s) errors.endsAt = "The end must be after the start.";
+    if (id) editing = await repos.deals.getById(id);
+    if (!hasErrors(errors)) {
+      const data = { ...values, ctaLabel: (values.ctaLabel as string) || "Get it" } as Partial<NewDeal>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.deals.update(editing.id, data);
+        await audit(Astro, "deal.update", "deal", editing.id, diff.before, diff.after);
+        return done(Astro, "Deal saved.", "/admin/deals");
+      }
+      const row = await repos.deals.create(data as NewDeal);
+      await audit(Astro, "deal.create", "deal", row.id, undefined, row);
+      return done(Astro, "Deal added.", "/admin/deals");
+    }
+  } else if (action === "toggle") {
+    const on = fBool(form, "value");
+    await repos.deals.update(id, { active: on });
+    await audit(Astro, "deal.active", "deal", id, { active: !on }, { active: on });
+    return done(Astro, on ? "Deal switched on." : "Deal switched off.");
+  } else if (action === "delete") {
+    const before = await repos.deals.getById(id);
+    await repos.deals.remove(id);
+    await audit(Astro, "deal.delete", "deal", id, before);
+    return done(Astro, "Deal deleted.", "/admin/deals");
+  }
+}
+
+const deals = await repos.deals.listAll();
+const now = new Date();
+function state(d: Deal): { label: string; cls: string } {
+  if (!d.active) return { label: "Off", cls: "hub-pill" };
+  if (d.endsAt && d.endsAt < now) return { label: "Expired", cls: "hub-pill hub-pill--red" };
+  if (d.startsAt && d.startsAt > now) return { label: "Scheduled", cls: "hub-pill hub-pill--blue" };
+  return { label: "Live", cls: "hub-pill hub-pill--green" };
+}
+const liveCount = deals.filter((d) => state(d).label === "Live").length;
+const gameTitle = new Map(games.map((g) => [g.slug, g.title]));
+---
+
+<AppLayout title="Deals">
+  <PageHead eyebrow="Content" title="Deals" icon="tag" lead={`Discounts, bundles, boosts and free gifts. ${liveCount} live right now.`}>
+    <a slot="actions" class="btn btn--primary" href="?new=1#editor"><AIcon name="plus" size={16} /> New deal</a>
+  </PageHead>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Create a deal"
+    editLabel={`Edit: ${editing?.title ?? ""}`}
+    cancelHref="/admin/deals"
+  />
+
+  {
+    deals.length === 0 ? (
+      <section class="hub-card">
+        <EmptyState icon="tag" title="No deals yet" text="Run a weekend discount, bundle two boosts, or give everyone a free item. Live deals show on the store and home page.">
+          <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+            Create a deal
+          </a>
+        </EmptyState>
+      </section>
+    ) : (
+      <div class="hub-cards">
+        {deals.map((d) => {
+          const st = state(d);
+          return (
+            <article class:list={["hub-mcard", st.label !== "Live" && "is-off"]}>
+              <div class="hub-mcard__art" style="--a:#b08622">
+                {d.imageUrl ? (
+                  <img src={d.imageUrl} alt="" loading="lazy" />
+                ) : (
+                  <span class="deal-big">{d.percentOff > 0 ? `${d.percentOff}%` : labelize(d.kind)}</span>
+                )}
+                <div class="hub-mcard__badges">
+                  <span class={st.cls}>{st.label}</span>
+                  {d.code && <span class="hub-pill hub-pill--plain hub-pill--gold">{d.code}</span>}
+                </div>
+              </div>
+              <div class="hub-mcard__body">
+                <h2 class="hub-mcard__title">{d.title}</h2>
+                {d.description && <p class="hub-mcard__text">{d.description}</p>}
+                <span class="hub-subtle">
+                  {labelize(d.kind)}
+                  {d.gameSlug && ` · ${gameTitle.get(d.gameSlug) ?? d.gameSlug}`}
+                  {d.startsAt && ` · from ${formatDate(d.startsAt)}`}
+                  {d.endsAt && ` · until ${formatDate(d.endsAt)}`}
+                </span>
+              </div>
+              <div class="hub-mcard__foot">
+                <ToggleForm id={d.id} action="toggle" checked={d.active} label={`Switch "${d.title}" on`} />
+                <span class="hub-push hub-actions">
+                  <a class="btn btn--sm btn--icon" href={`?edit=${d.id}#editor`} aria-label={`Edit ${d.title}`} title="Edit">
+                    <AIcon name="edit" size={15} />
+                  </a>
+                  <DeleteButton id={d.id} what={`the deal "${d.title}"`} compact />
+                </span>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    )
+  }
+</AppLayout>
+
+<style>
+  .deal-big { font-family: var(--font-display); font-weight: 800; font-size: 2.6rem; letter-spacing: -0.04em; color: #fff; text-shadow: 0 4px 18px rgba(0, 0, 0, 0.3); }
+</style>

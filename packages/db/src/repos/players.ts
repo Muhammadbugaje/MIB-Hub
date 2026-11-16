@@ -1,7 +1,7 @@
 /**
  * Player profiles, scores and save progress.
  */
-import { and, asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, sql } from "drizzle-orm";
 import { playerProfile, progress, score, user } from "../schema/index.ts";
 import type { AppDb } from "../types.ts";
 
@@ -36,6 +36,29 @@ export function profilesRepo(db: AppDb) {
       return (await this.getForUser(userId))!;
     },
 
+    /** Change the player-editable parts of a profile (name, leaderboard opt-out, stats such as bio). */
+    async update(
+      profileId: string,
+      changes: Partial<Pick<PlayerProfile, "displayName" | "onLeaderboard" | "stats">>,
+    ): Promise<PlayerProfile | undefined> {
+      const rows = await db
+        .update(playerProfile)
+        .set({ ...changes, updatedAt: new Date() })
+        .where(eq(playerProfile.id, profileId))
+        .returning();
+      return rows[0];
+    },
+
+    /** The profile whose public handle (stats.handle) is `handle`, case-insensitive. */
+    async findByHandle(handle: string): Promise<PlayerProfile | undefined> {
+      const rows = await db
+        .select()
+        .from(playerProfile)
+        .where(sql`lower(json_extract(${playerProfile.stats}, '$.handle')) = ${handle.toLowerCase()}`)
+        .limit(1);
+      return rows[0];
+    },
+
     /** Add (or, with a negative number, remove) coins and XP. Never below zero. */
     async addRewards(profileId: string, rewards: { coins?: number; xp?: number }): Promise<PlayerProfile> {
       const rows = await db.select().from(playerProfile).where(eq(playerProfile.id, profileId)).limit(1);
@@ -59,6 +82,18 @@ export interface LeaderboardRow {
   profileId: string;
   name: string;
   score: number;
+  createdAt: Date;
+}
+
+export interface AdminScoreRow {
+  id: string;
+  profileId: string;
+  gameSlug: string;
+  name: string;
+  userEmail: string;
+  score: number;
+  cheated: boolean;
+  onLeaderboard: boolean;
   createdAt: Date;
 }
 
@@ -114,6 +149,50 @@ export function scoresRepo(db: AppDb) {
       }));
     },
 
+    /** Scores for moderation: every run of a game (cheated ones too), best first, with ids. */
+    async listForAdmin(opts: { gameSlug?: string; cheated?: boolean; limit?: number } = {}): Promise<AdminScoreRow[]> {
+      const conditions = [];
+      if (opts.gameSlug) conditions.push(eq(score.gameSlug, opts.gameSlug));
+      if (opts.cheated !== undefined) conditions.push(eq(score.cheated, opts.cheated));
+      const rows = await db
+        .select({
+          id: score.id,
+          profileId: score.profileId,
+          gameSlug: score.gameSlug,
+          score: score.score,
+          cheated: score.cheated,
+          createdAt: score.createdAt,
+          displayName: playerProfile.displayName,
+          userName: user.name,
+          userEmail: user.email,
+          onLeaderboard: playerProfile.onLeaderboard,
+        })
+        .from(score)
+        .innerJoin(playerProfile, eq(playerProfile.id, score.profileId))
+        .leftJoin(user, eq(user.id, playerProfile.userId))
+        .where(conditions.length ? and(...conditions) : undefined)
+        .orderBy(desc(score.score), asc(score.createdAt))
+        .limit(opts.limit ?? 100);
+      return rows.map((r) => ({ ...r, name: r.displayName || r.userName || "Player", userEmail: r.userEmail ?? "" }));
+    },
+
+    async getById(id: string): Promise<Score | undefined> {
+      return (await db.select().from(score).where(eq(score.id, id)).limit(1))[0];
+    },
+
+    async setCheated(id: string, cheated: boolean): Promise<void> {
+      await db.update(score).set({ cheated }).where(eq(score.id, id));
+    },
+
+    async remove(id: string): Promise<void> {
+      await db.delete(score).where(eq(score.id, id));
+    },
+
+    /** A player's own recent runs (all games), newest first. */
+    async forProfile(profileId: string, limit = 20): Promise<Score[]> {
+      return db.select().from(score).where(eq(score.profileId, profileId)).orderBy(desc(score.createdAt)).limit(limit);
+    },
+
     async bestFor(profileId: string, gameSlug: string): Promise<number | null> {
       const rows = await db
         .select({ score: score.score })
@@ -163,6 +242,15 @@ export function progressRepo(db: AppDb) {
         .where(and(eq(progress.profileId, profileId), eq(progress.gameSlug, gameSlug), eq(progress.slot, slot)))
         .limit(1);
       return rows[0];
+    },
+
+    /** Every save of a player across all games, most recently updated first. */
+    async forProfile(profileId: string): Promise<Progress[]> {
+      return db.select().from(progress).where(eq(progress.profileId, profileId)).orderBy(desc(progress.updatedAt));
+    },
+
+    async remove(profileId: string, id: string): Promise<void> {
+      await db.delete(progress).where(and(eq(progress.id, id), eq(progress.profileId, profileId)));
     },
 
     async list(profileId: string, gameSlug: string): Promise<Progress[]> {

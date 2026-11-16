@@ -1,0 +1,208 @@
+---
+/**
+ * /admin/promotions: house promotions and sponsor slots (the `ad` table).
+ * Each has a placement, schedule, weight and on/off switch; impressions and
+ * clicks are counted by repos.ads.pick and /go/ad/<id>. Needs content.manage.
+ */
+import { AD_PLACEMENTS, type Ad, type NewAd } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, compact, done, fBool, fStr, hasErrors, labelize, parseFields, pct, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate, siteSwitches } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const PLACE_INFO: Record<(typeof AD_PLACEMENTS)[number], string> = {
+  home_hero: "Big banner under the home page hero",
+  home_strip: "Thin strip on the home page",
+  arcade_top: "Top of the games list",
+  game_side: "Beside a game's page",
+  news_inline: "Inside news articles",
+};
+
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Headline", type: "text", required: true, maxLength: 120 },
+  { name: "placement", label: "Where it shows", type: "select", required: true, options: AD_PLACEMENTS.map((p) => ({ value: p, label: `${labelize(p)}: ${PLACE_INFO[p]}` })) },
+  { name: "body", label: "Text", type: "textarea", rows: 2, maxLength: 300, full: true },
+  { name: "linkUrl", label: "Link", type: "url", required: true, placeholder: "/games/football-arena or https://…", hint: "Clicks go through /go/ad/<id> so they are counted." },
+  { name: "ctaLabel", label: "Button text", type: "text", placeholder: "Learn more" },
+  { name: "source", label: "Type", type: "select", required: true, options: [{ value: "house", label: "House promotion (ours)" }, { value: "partner", label: "Sponsor (shows “Sponsored”)" }] },
+  { name: "weight", label: "Weight", type: "number", min: 1, max: 100, hint: "Higher shows more often when promotions share a slot." },
+  { name: "startsAt", label: "Starts", type: "datetime", hint: "Blank = now." },
+  { name: "endsAt", label: "Ends", type: "datetime", hint: "Blank = until switched off." },
+  { name: "active", label: "Switched on", type: "switch" },
+  { name: "imageUrl", label: "Image", type: "image", folder: "ads", hint: "Wide images work best (e.g. 1600×500 for the home banner)." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: Ad | undefined = editId ? await repos.ads.getById(editId) : undefined;
+let values: FormValues = editing ?? { placement: "home_strip", source: "house", weight: 1, active: true, ctaLabel: "Learn more" };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    const s = values.startsAt as Date | null;
+    const e = values.endsAt as Date | null;
+    if (s && e && e < s) errors.endsAt = "The end must be after the start.";
+    if (id) editing = await repos.ads.getById(id);
+    if (!hasErrors(errors)) {
+      const data = { ...values, weight: Math.max(1, Number(values.weight) || 1), ctaLabel: (values.ctaLabel as string) || "Learn more" } as Partial<NewAd>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.ads.update(editing.id, data);
+        await audit(Astro, "ad.update", "ad", editing.id, diff.before, diff.after);
+        return done(Astro, "Promotion saved.", "/admin/promotions");
+      }
+      const row = await repos.ads.create(data as NewAd);
+      await audit(Astro, "ad.create", "ad", row.id, undefined, row);
+      return done(Astro, "Promotion added.", "/admin/promotions");
+    }
+  } else if (action === "toggle") {
+    const on = fBool(form, "value");
+    await repos.ads.update(id, { active: on });
+    await audit(Astro, "ad.active", "ad", id, { active: !on }, { active: on });
+    return done(Astro, on ? "Promotion switched on." : "Promotion switched off.");
+  } else if (action === "delete") {
+    const before = await repos.ads.getById(id);
+    await repos.ads.remove(id);
+    await audit(Astro, "ad.delete", "ad", id, before);
+    return done(Astro, "Promotion deleted.", "/admin/promotions");
+  }
+}
+
+const [ads, switches] = await Promise.all([repos.ads.listAll(), siteSwitches()]);
+const now = new Date();
+const running = (a: Ad) => a.active && (!a.startsAt || a.startsAt <= now) && (!a.endsAt || a.endsAt >= now);
+const totals = ads.reduce((t, a) => ({ i: t.i + a.impressions, c: t.c + a.clicks }), { i: 0, c: 0 });
+const ctr = (a: { impressions: number; clicks: number }) => (a.impressions ? pct(a.clicks / a.impressions, 1) : "–");
+const byPlace = AD_PLACEMENTS.map((p) => ({ p, rows: ads.filter((a) => a.placement === p) }));
+---
+
+<AppLayout title="Promotions">
+  <PageHead eyebrow="Content" title="Promotions" icon="megaphone" lead="House promotions and sponsor slots across the site, with their reach and clicks.">
+    <a slot="actions" class="btn btn--primary" href="?new=1#editor"><AIcon name="plus" size={16} /> New promotion</a>
+  </PageHead>
+
+  {
+    !switches.ads && (
+      <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+        <AIcon name="alert" size={16} />
+        <span>
+          The <strong>Promotions</strong> switch is off, so none of these show on the site. Turn it on in <a href="/admin/settings">Settings & switches</a>.
+        </span>
+      </div>
+    )
+  }
+
+  <div class="hub-stats" style="margin-bottom: var(--space-5);">
+    <div class="hub-stat"><div class="hub-stat__top">Running now</div><div class="hub-stat__value">{ads.filter(running).length}</div><div class="hub-stat__note">of {ads.length} promotions</div></div>
+    <div class="hub-stat hub-stat--volt"><div class="hub-stat__top">Impressions</div><div class="hub-stat__value">{compact(totals.i)}</div><div class="hub-stat__note">All time</div></div>
+    <div class="hub-stat hub-stat--gold"><div class="hub-stat__top">Clicks</div><div class="hub-stat__value">{compact(totals.c)}</div><div class="hub-stat__note">All time</div></div>
+    <div class="hub-stat hub-stat--violet"><div class="hub-stat__top">Click rate</div><div class="hub-stat__value">{ctr({ impressions: totals.i, clicks: totals.c })}</div><div class="hub-stat__note">Clicks ÷ impressions</div></div>
+  </div>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Create a promotion"
+    editLabel={`Edit: ${editing?.title ?? ""}`}
+    cancelHref="/admin/promotions"
+  />
+
+  {
+    ads.length === 0 ? (
+      <section class="hub-card">
+        <EmptyState icon="megaphone" title="No promotions yet" text="Promote a new game, an event or the store in one of five slots. Add a sponsor only when you have an agreement; it shows a “Sponsored” label.">
+          <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+            Create a promotion
+          </a>
+        </EmptyState>
+      </section>
+    ) : (
+      <div class="hub-stack">
+        {byPlace.map(({ p, rows }) => (
+          <section class="hub-card hub-card--flush">
+            <div class="hub-card__head">
+              <div>
+                <h2 class="hub-card__title">
+                  <AIcon name="megaphone" size={18} /> {labelize(p)}
+                </h2>
+                <p class="hub-card__sub">{PLACE_INFO[p]}</p>
+              </div>
+              <span class="hub-subtle" style="margin-left:auto;">
+                {rows.filter(running).length} running
+              </span>
+            </div>
+            {rows.length === 0 ? (
+              <p class="hub-subtle" style="padding: var(--space-4) var(--space-5); margin:0;">
+                Empty slot. <a href="?new=1#editor">Add a promotion</a> to fill it.
+              </p>
+            ) : (
+              <ul class="hub-list" style="padding: 0 var(--space-5);">
+                {rows.map((a) => (
+                  <li class="ad-row">
+                    <div class:list={["ad-preview", !running(a) && "is-off"]}>
+                      {a.imageUrl && <img src={a.imageUrl} alt="" loading="lazy" />}
+                      <div class="ad-preview__text">
+                        {a.source === "partner" && <span class="ad-preview__sp">Sponsored</span>}
+                        <strong>{a.title}</strong>
+                        {a.body && <span>{a.body}</span>}
+                      </div>
+                      <span class="ad-preview__cta">{a.ctaLabel}</span>
+                    </div>
+                    <div class="ad-meta">
+                      <span class={running(a) ? "hub-pill hub-pill--green" : "hub-pill"}>{running(a) ? "Running" : a.active ? "Scheduled / ended" : "Off"}</span>
+                      <span class="hub-subtle">
+                        {compact(a.impressions)} views · {compact(a.clicks)} clicks · {ctr(a)} CTR · weight {a.weight}
+                        {a.startsAt && ` · from ${formatDate(a.startsAt)}`}
+                        {a.endsAt && ` · until ${formatDate(a.endsAt)}`}
+                      </span>
+                      <span class="hub-actions" style="margin-left:auto;">
+                        <ToggleForm id={a.id} action="toggle" checked={a.active} label={`Switch "${a.title}" on`} />
+                        <a class="btn btn--sm btn--icon" href={`?edit=${a.id}#editor`} aria-label={`Edit ${a.title}`} title="Edit">
+                          <AIcon name="edit" size={15} />
+                        </a>
+                        <DeleteButton id={a.id} what={`the promotion "${a.title}"`} compact />
+                      </span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))}
+      </div>
+    )
+  }
+</AppLayout>
+
+<style>
+  .ad-row { display: grid !important; gap: 10px; }
+  .ad-preview { display: flex; align-items: center; gap: 14px; padding: 12px 14px; border-radius: 14px; color: #fff; background: linear-gradient(120deg, #0b2a1f, #17694f); min-width: 0; }
+  .ad-preview.is-off { filter: grayscale(0.8); opacity: 0.7; }
+  .ad-preview img { width: 92px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; flex: none; }
+  .ad-preview__text { display: grid; gap: 2px; flex: 1; min-width: 0; font-size: var(--fs-sm); }
+  .ad-preview__text span { color: rgba(255, 255, 255, 0.78); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ad-preview__sp { font-size: 10px !important; text-transform: uppercase; letter-spacing: 0.08em; color: #e9d48f !important; }
+  .ad-preview__cta { flex: none; padding: 6px 14px; border-radius: 99px; background: var(--grad-gold); color: #1a1200; font-size: var(--fs-xs); font-weight: 700; }
+  .ad-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  @media (max-width: 560px) { .ad-preview__cta { display: none; } }
+</style>

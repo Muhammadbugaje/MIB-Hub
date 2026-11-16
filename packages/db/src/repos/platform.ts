@@ -5,7 +5,7 @@
  * Creating users and checking passwords is Better Auth's job, not ours: see
  * apps/web/src/lib/auth.ts.
  */
-import { and, asc, count, desc, eq, gt, isNull, or } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, isNull, like, or, type SQL } from "drizzle-orm";
 import { auditLog, role, siteSetting, user, userPermissionOverride } from "../schema/index.ts";
 import type { AppDb } from "../types.ts";
 
@@ -32,6 +32,24 @@ export function usersRepo(db: AppDb) {
     },
     async count(): Promise<number> {
       return (await db.select({ n: count() }).from(user))[0]?.n ?? 0;
+    },
+    /** Admin search: name or email contains `q`; optional role and banned filters. Newest first. */
+    async search(opts: { q?: string; role?: string; banned?: boolean; limit?: number; offset?: number } = {}): Promise<{ rows: User[]; total: number }> {
+      const where: SQL[] = [];
+      const q = opts.q?.trim().toLowerCase();
+      if (q) where.push(or(like(user.name, `%${q}%`), like(user.email, `%${q}%`))!);
+      if (opts.role) where.push(eq(user.role, opts.role));
+      if (opts.banned !== undefined) where.push(eq(user.banned, opts.banned));
+      const cond = where.length ? and(...where) : undefined;
+      const rows = await db
+        .select()
+        .from(user)
+        .where(cond)
+        .orderBy(desc(user.createdAt))
+        .limit(opts.limit ?? 50)
+        .offset(opts.offset ?? 0);
+      const total = (await db.select({ n: count() }).from(user).where(cond))[0]?.n ?? 0;
+      return { rows, total };
     },
     async setRole(id: string, roleKey: string): Promise<void> {
       await db.update(user).set({ role: roleKey, updatedAt: new Date() }).where(eq(user.id, id));
@@ -144,16 +162,26 @@ export function auditRepo(db: AppDb) {
         .returning();
       return rows[0]!;
     },
-    async list(opts: { limit?: number; targetType?: string; targetId?: string } = {}): Promise<AuditEntry[]> {
+    async list(
+      opts: { limit?: number; offset?: number; targetType?: string; targetId?: string; actorId?: string; actionPrefix?: string } = {},
+    ): Promise<AuditEntry[]> {
       const conditions = [];
       if (opts.targetType) conditions.push(eq(auditLog.targetType, opts.targetType));
       if (opts.targetId) conditions.push(eq(auditLog.targetId, opts.targetId));
+      if (opts.actorId) conditions.push(eq(auditLog.actorId, opts.actorId));
+      if (opts.actionPrefix) conditions.push(like(auditLog.action, `${opts.actionPrefix.replace(/[%_]/g, "")}%`));
       return db
         .select()
         .from(auditLog)
         .where(conditions.length ? and(...conditions) : undefined)
         .orderBy(desc(auditLog.createdAt))
-        .limit(opts.limit ?? 50);
+        .limit(opts.limit ?? 50)
+        .offset(opts.offset ?? 0);
+    },
+    /** The distinct target types seen so far (for the audit filter). */
+    async targetTypes(): Promise<string[]> {
+      const rows = await db.selectDistinct({ t: auditLog.targetType }).from(auditLog).orderBy(asc(auditLog.targetType));
+      return rows.map((r) => r.t).filter(Boolean);
     },
   };
 }

@@ -378,6 +378,16 @@ export function ticketsRepo(db: AppDb) {
     async getByRef(ref: string): Promise<Ticket | undefined> {
       return (await db.select().from(ticket).where(eq(ticket.ref, ref)).limit(1))[0];
     },
+    /** Message counts per ticket (public messages only), for inbox lists. */
+    async messageCounts(ticketIds: string[]): Promise<Record<string, number>> {
+      if (!ticketIds.length) return {};
+      const rows = await db
+        .select({ id: ticketMessage.ticketId, n: count() })
+        .from(ticketMessage)
+        .where(and(inArray(ticketMessage.ticketId, ticketIds), eq(ticketMessage.internal, false)))
+        .groupBy(ticketMessage.ticketId);
+      return Object.fromEntries(rows.map((r) => [r.id, r.n]));
+    },
     async update(id: string, changes: Partial<NewTicket>): Promise<Ticket | undefined> {
       return (await db.update(ticket).set({ ...changes, updatedAt: new Date() }).where(eq(ticket.id, id)).returning())[0];
     },
@@ -442,6 +452,9 @@ export function charactersRepo(db: AppDb) {
           .where(eq(character.key, key))
           .returning()
       )[0];
+    },
+    async remove(key: string): Promise<void> {
+      await db.delete(character).where(eq(character.key, key));
     },
   };
 }
@@ -698,6 +711,9 @@ export function productsRepo(db: AppDb) {
     },
     async update(sku: string, changes: Partial<NewProduct>): Promise<Product | undefined> {
       return (await db.update(product).set({ ...changes, updatedAt: new Date() }).where(eq(product.sku, sku)).returning())[0];
+    },
+    async remove(sku: string): Promise<void> {
+      await db.delete(product).where(eq(product.sku, sku));
     },
   };
 }

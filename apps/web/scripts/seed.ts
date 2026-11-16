@@ -95,8 +95,14 @@ async function main() {
       await auth.api.signUpEmail({ body: { name, email, password } });
       owner = await repos.users.findByEmail(email);
       console.log(`  owner: created ${email}`);
+    } else if (process.env.RESET_OWNER_PASSWORD === "1") {
+      // Opt-in: `RESET_OWNER_PASSWORD=1 npm run db:seed` sets the owner's password to OWNER_PASSWORD.
+      const ctx = await auth.$context;
+      await ctx.internalAdapter.updatePassword(owner.id, await ctx.password.hash(password));
+      await repos.audit.record({ actorId: null, action: "user.password_reset", targetType: "user", targetId: owner.id, note: "seed: reset from .env" });
+      console.log(`  owner: ${email} password reset from .env`);
     } else {
-      console.log(`  owner: ${email} already exists (password left unchanged)`);
+      console.log(`  owner: ${email} already exists (password left unchanged; RESET_OWNER_PASSWORD=1 resets it from .env)`);
     }
     if (owner && owner.role !== "owner") {
       await repos.users.setRole(owner.id, "owner");

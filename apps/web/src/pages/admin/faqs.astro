@@ -1,0 +1,147 @@
+---
+/**
+ * /admin/faqs: help-centre questions and answers, grouped by category.
+ * Needs content.manage. Every write is audited.
+ */
+import type { Faq, NewFaq } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, parseFields, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { renderMarkdown } from "../../components/admin/markdown.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const all = await repos.faqs.listAll();
+const categories = [...new Set(all.map((f) => f.category))].sort();
+
+const FIELDS: FieldDef[] = [
+  { name: "question", label: "Question", type: "text", required: true, full: true, maxLength: 300 },
+  { name: "answer", label: "Answer", type: "markdown", required: true, rows: 8 },
+  { name: "category", label: "Category", type: "text", required: true, placeholder: "General", hint: categories.length ? `Existing: ${categories.join(", ")}` : "e.g. General, Accounts, Payments" },
+  { name: "sort", label: "Order", type: "number", hint: "Lower numbers show first." },
+  { name: "published", label: "Published", type: "switch", hint: "Show it in the help centre." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: Faq | undefined = editId ? await repos.faqs.getById(editId) : undefined;
+let values: FormValues = editing ?? { category: "General", sort: 0, published: true };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (id) editing = await repos.faqs.getById(id);
+    if (!hasErrors(errors)) {
+      const data = parsed.values as Partial<NewFaq>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.faqs.update(editing.id, data);
+        await audit(Astro, "faq.update", "faq", editing.id, diff.before, diff.after);
+        return done(Astro, "Question saved.", "/admin/faqs");
+      }
+      const row = await repos.faqs.create(data as NewFaq);
+      await audit(Astro, "faq.create", "faq", row.id, undefined, row);
+      return done(Astro, "Question added.", "/admin/faqs");
+    }
+  } else if (action === "toggle") {
+    const on = fBool(form, "value");
+    await repos.faqs.update(id, { published: on });
+    await audit(Astro, "faq.publish", "faq", id, { published: !on }, { published: on });
+    return done(Astro, on ? "Published." : "Hidden from the help centre.");
+  } else if (action === "delete") {
+    const before = await repos.faqs.getById(id);
+    await repos.faqs.remove(id);
+    await audit(Astro, "faq.delete", "faq", id, before);
+    return done(Astro, "Question deleted.", "/admin/faqs");
+  }
+}
+
+const groups = categories.map((c) => ({ c, rows: all.filter((f) => f.category === c).sort((a, b) => a.sort - b.sort) }));
+const published = all.filter((f) => f.published).length;
+---
+
+<AppLayout title="FAQs">
+  <PageHead eyebrow="Content" title="FAQs" icon="help" lead={`Questions and answers for the help centre. ${all.length} in total, ${published} published.`}>
+    <a slot="actions" class="btn" href="/support" target="_blank" rel="noopener"><AIcon name="external" size={15} /> Help centre</a>
+  </PageHead>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Add a question"
+    editLabel={`Edit: ${editing?.question ?? ""}`}
+    cancelHref="/admin/faqs"
+  />
+
+  {
+    all.length === 0 ? (
+      <section class="hub-card">
+        <EmptyState icon="help" title="No questions yet" text="Add the questions players ask most (how to save, how to reset a password, how payments work). They appear in the help centre straight away.">
+          <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+            Add the first question
+          </a>
+        </EmptyState>
+      </section>
+    ) : (
+      <div class="hub-stack">
+        {groups.map((g) => (
+          <section class="hub-card hub-card--flush">
+            <div class="hub-card__head">
+              <h2 class="hub-card__title">
+                <AIcon name="list" size={18} /> {g.c}
+              </h2>
+              <span class="hub-subtle">{g.rows.length}</span>
+            </div>
+            <ul class="hub-list" style="padding: 0 var(--space-5);">
+              {g.rows.map((f) => (
+                <li class:list={[!f.published && "is-off"]}>
+                  <details class="faq-item">
+                    <summary>
+                      <span class="hub-list__title">{f.question}</span>
+                      <span class="hub-list__meta">
+                        Order {f.sort} · {f.published ? "Published" : "Hidden"}
+                      </span>
+                    </summary>
+                    <div class="hub-prose faq-answer" set:html={renderMarkdown(f.answer)} />
+                  </details>
+                  <span class="hub-list__end">
+                    <ToggleForm id={f.id} action="toggle" checked={f.published} label={`Publish "${f.question}"`} />
+                    <a class="btn btn--sm btn--icon" href={`?edit=${f.id}#editor`} aria-label={`Edit "${f.question}"`} title="Edit">
+                      <AIcon name="edit" size={15} />
+                    </a>
+                    <DeleteButton id={f.id} what={`the question "${f.question}"`} compact />
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+      </div>
+    )
+  }
+</AppLayout>
+
+<style>
+  .faq-item { flex: 1; min-width: 0; }
+  .faq-item summary { cursor: pointer; list-style: none; display: grid; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-answer { margin-top: var(--space-2); font-size: var(--fs-sm); color: var(--text-muted); }
+  li.is-off .hub-list__title { color: var(--text-muted); }
+</style>

@@ -1,0 +1,1649 @@
+{
+ "built": "2026-11-12",
+ "built3": "2026-11-14",
+ "core": {
+  "applause": {
+   "bus": "world",
+   "f": [
+    "core/applause"
+   ],
+   "g": 0.6,
+   "lazy": 1,
+   "max": 1
+  },
+  "back": {
+   "bus": "ui",
+   "f": [
+    "core/back_1",
+    "core/back_2"
+   ],
+   "g": 0.8
+  },
+  "bell": {
+   "bus": "world",
+   "f": [
+    "core/bell_1",
+    "core/bell_2"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "p": 0.02
+  },
+  "block": {
+   "bus": "ui",
+   "f": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "g": 0.8
+  },
+  "boom": {
+   "bus": "impacts",
+   "f": [
+    "core/boom_1",
+    "core/boom_2",
+    "core/boom_3"
+   ],
+   "g": 1,
+   "lazy": 1,
+   "p": 0.08
+  },
+  "bounce": {
+   "bus": "impacts",
+   "f": [
+    "core/spring_1",
+    "core/spring_2",
+    "core/spring_3"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "p": 0.08
+  },
+  "click": {
+   "bus": "ui",
+   "f": [
+    "core/click_1",
+    "core/click_2",
+    "core/click_3"
+   ],
+   "g": 0.8,
+   "p": 0.04
+  },
+  "coin": {
+   "bus": "ui",
+   "f": [
+    "core/coin_1",
+    "core/coin_2",
+    "core/coin_3",
+    "core/coin_4"
+   ],
+   "g": 0.9,
+   "p": 0.08
+  },
+  "confirm": {
+   "bus": "ui",
+   "f": [
+    "core/confirm_1",
+    "core/confirm_2"
+   ],
+   "g": 0.8
+  },
+  "dash": {
+   "bus": "impacts",
+   "f": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "g": 0.7,
+   "p": 0.1
+  },
+  "error": {
+   "bus": "ui",
+   "f": [
+    "core/error_1",
+    "core/error_2",
+    "core/error_3"
+   ],
+   "g": 0.8
+  },
+  "glass": {
+   "bus": "impacts",
+   "f": [
+    "core/glass_1",
+    "core/glass_2",
+    "core/glass_3"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "p": 0.06
+  },
+  "goal": {
+   "synth": 1
+  },
+  "guard": {
+   "bus": "impacts",
+   "f": [
+    "core/guard_1",
+    "core/guard_2",
+    "core/guard_3"
+   ],
+   "g": 0.8,
+   "p": 0.08
+  },
+  "heavy": {
+   "bus": "impacts",
+   "f": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "g": 1,
+   "p": 0.07
+  },
+  "hit": {
+   "bus": "impacts",
+   "f": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "g": 1,
+   "p": 0.08
+  },
+  "hover": {
+   "bus": "ui",
+   "f": [
+    "core/hover_1",
+    "core/hover_2"
+   ],
+   "g": 0.5
+  },
+  "jump": {
+   "synth": 1
+  },
+  "kick": {
+   "bus": "impacts",
+   "f": [
+    "core/punch_1",
+    "core/punch_2",
+    "core/punch_3",
+    "core/punch_4"
+   ],
+   "g": 1,
+   "p": 0.08
+  },
+  "ko": {
+   "bus": "impacts",
+   "f": [
+    "core/punch_heavy_1",
+    "core/punch_heavy_2",
+    "core/punch_heavy_3",
+    "core/punch_heavy_4"
+   ],
+   "g": 1,
+   "p": 0.07,
+   "r": 0.8
+  },
+  "laser": {
+   "bus": "impacts",
+   "f": [
+    "core/laser_1",
+    "core/laser_2",
+    "core/laser_3"
+   ],
+   "g": 0.6,
+   "lazy": 1,
+   "p": 0.08
+  },
+  "lose": {
+   "synth": 1
+  },
+  "metal": {
+   "bus": "impacts",
+   "f": [
+    "core/metal_1",
+    "core/metal_2",
+    "core/metal_3"
+   ],
+   "g": 0.9,
+   "p": 0.08
+  },
+  "metal_heavy": {
+   "bus": "impacts",
+   "f": [
+    "core/metal_heavy_1",
+    "core/metal_heavy_2",
+    "core/metal_heavy_3"
+   ],
+   "g": 1,
+   "lazy": 1,
+   "p": 0.07
+  },
+  "pluck": {
+   "bus": "ui",
+   "f": [
+    "core/pluck_1",
+    "core/pluck_2"
+   ],
+   "g": 0.9,
+   "p": 0.08
+  },
+  "pop": {
+   "bus": "ui",
+   "f": [
+    "core/pop_1",
+    "core/pop_2"
+   ],
+   "g": 0.8,
+   "lazy": 1,
+   "p": 0.1
+  },
+  "power": {
+   "bus": "ui",
+   "f": [
+    "core/powerup_1",
+    "core/powerup_2",
+    "core/powerup_3"
+   ],
+   "g": 0.55,
+   "lazy": 1,
+   "p": 0.04
+  },
+  "special": {
+   "bus": "ui",
+   "f": [
+    "core/special_1",
+    "core/special_2"
+   ],
+   "g": 0.55,
+   "lazy": 1,
+   "p": 0.04
+  },
+  "stomp": {
+   "bus": "impacts",
+   "f": [
+    "core/thud_1",
+    "core/thud_2",
+    "core/thud_3"
+   ],
+   "g": 1,
+   "p": 0.08
+  },
+  "swish": {
+   "bus": "impacts",
+   "f": [
+    "core/swish_1",
+    "core/swish_2",
+    "core/swish_3",
+    "core/swish_4"
+   ],
+   "g": 0.7,
+   "p": 0.1
+  },
+  "thump": {
+   "bus": "impacts",
+   "f": [
+    "core/thump_1",
+    "core/thump_2",
+    "core/thump_3"
+   ],
+   "g": 0.9,
+   "p": 0.08
+  },
+  "toggle": {
+   "bus": "ui",
+   "f": [
+    "core/toggle_1",
+    "core/toggle_2",
+    "core/toggle_3"
+   ],
+   "g": 0.8
+  },
+  "whistle": {
+   "bus": "world",
+   "f": [
+    "core/whistle"
+   ],
+   "g": 0.7,
+   "p": 0.03
+  },
+  "whistle_long": {
+   "bus": "world",
+   "f": [
+    "core/whistle_long"
+   ],
+   "g": 0.7,
+   "lazy": 1
+  },
+  "win": {
+   "synth": 1
+  },
+  "wood": {
+   "bus": "impacts",
+   "f": [
+    "core/wood_1",
+    "core/wood_2",
+    "core/wood_3"
+   ],
+   "g": 0.9,
+   "lazy": 1,
+   "p": 0.08
+  },
+  "zap": {
+   "bus": "impacts",
+   "f": [
+    "core/zap_1",
+    "core/zap_2",
+    "core/zap_3"
+   ],
+   "g": 0.55,
+   "lazy": 1,
+   "p": 0.08
+  }
+ },
+ "formats": [
+  "ogg",
+  "m4a"
+ ],
+ "packs": {
+  "circuit-forge": {
+   "click": {
+    "bus": "ui",
+    "f": [
+     "puzzle/snap_1",
+     "puzzle/snap_2",
+     "puzzle/snap_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "coin": {
+    "bus": "ui",
+    "f": [
+     "puzzle/drop_1",
+     "puzzle/drop_2",
+     "puzzle/drop_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "power": {
+    "bus": "ui",
+    "f": [
+     "core/confirm_1",
+     "core/confirm_2"
+    ],
+    "g": 0.8
+   },
+   "zap": {
+    "bus": "ui",
+    "f": [
+     "puzzle/spark_1",
+     "puzzle/spark_2"
+    ],
+    "g": 0.4,
+    "p": 0.12
+   }
+  },
+  "impulse-arena": {
+   "block": {
+    "bus": "impacts",
+    "f": [
+     "core/guard_1",
+     "core/guard_2",
+     "core/guard_3"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "dash": {
+    "bus": "impacts",
+    "f": [
+     "core/swish_1",
+     "core/swish_2",
+     "core/swish_3",
+     "core/swish_4"
+    ],
+    "g": 0.7,
+    "p": 0.1
+   },
+   "heavy": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07
+   },
+   "hit": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_1",
+     "core/punch_2",
+     "core/punch_3",
+     "core/punch_4"
+    ],
+    "g": 1,
+    "p": 0.08
+   },
+   "kick": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07,
+    "r": 0.92
+   },
+   "ko": {
+    "both": 1,
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07,
+    "r": 0.75
+   },
+   "stomp": {
+    "bus": "impacts",
+    "f": [
+     "core/thud_1",
+     "core/thud_2",
+     "core/thud_3"
+    ],
+    "g": 1,
+    "p": 0.08
+   },
+   "whistle": {
+    "bus": "world",
+    "f": [
+     "core/bell_1",
+     "core/bell_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.02
+   }
+  },
+  "induction-dash": {
+   "boom": {
+    "bus": "impacts",
+    "f": [
+     "core/metal_heavy_1",
+     "core/metal_heavy_2",
+     "core/metal_heavy_3"
+    ],
+    "g": 1,
+    "lazy": 1,
+    "p": 0.07
+   },
+   "coin": {
+    "bus": "ui",
+    "f": [
+     "core/pluck_1",
+     "core/pluck_2"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "dash": {
+    "bus": "impacts",
+    "f": [
+     "core/swish_1",
+     "core/swish_2",
+     "core/swish_3",
+     "core/swish_4"
+    ],
+    "g": 0.7,
+    "p": 0.1
+   },
+   "hit": {
+    "bus": "impacts",
+    "f": [
+     "core/metal_1",
+     "core/metal_2",
+     "core/metal_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   }
+  },
+  "kinetic-kingdom": {
+   "bounce": {
+    "bus": "impacts",
+    "f": [
+     "core/spring_1",
+     "core/spring_2",
+     "core/spring_3"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.08
+   },
+   "hit": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_1",
+     "core/punch_2",
+     "core/punch_3",
+     "core/punch_4"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "land": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "stomp": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   }
+  },
+  "light-bender": {
+   "click": {
+    "bus": "ui",
+    "f": [
+     "puzzle/snap_1",
+     "puzzle/snap_2",
+     "puzzle/snap_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "coin": {
+    "bus": "ui",
+    "f": [
+     "core/pluck_1",
+     "core/pluck_2"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "power": {
+    "bus": "ui",
+    "f": [
+     "core/confirm_1",
+     "core/confirm_2"
+    ],
+    "g": 0.8
+   },
+   "zap": {
+    "bus": "ui",
+    "f": [
+     "puzzle/spark_1",
+     "puzzle/spark_2"
+    ],
+    "g": 0.4,
+    "p": 0.12
+   }
+  },
+  "logic-labyrinth": {
+   "click": {
+    "bus": "ui",
+    "f": [
+     "puzzle/snap_1",
+     "puzzle/snap_2",
+     "puzzle/snap_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "coin": {
+    "bus": "ui",
+    "f": [
+     "puzzle/drop_1",
+     "puzzle/drop_2",
+     "puzzle/drop_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "power": {
+    "bus": "ui",
+    "f": [
+     "core/confirm_1",
+     "core/confirm_2"
+    ],
+    "g": 0.8
+   },
+   "zap": {
+    "bus": "ui",
+    "f": [
+     "puzzle/spark_1",
+     "puzzle/spark_2"
+    ],
+    "g": 0.4,
+    "p": 0.12
+   }
+  },
+  "momentum-cup": {
+   "_amb": {
+    "bus": "ambience",
+    "f": [
+     "cup/crowd"
+    ],
+    "g": 0.16,
+    "lazy": 1,
+    "loop": 1
+   },
+   "bounce": {
+    "bus": "impacts",
+    "f": [
+     "cup/post_1",
+     "cup/post_2",
+     "cup/post_3"
+    ],
+    "g": 1,
+    "p": 0.06
+   },
+   "cheer": {
+    "bus": "world",
+    "f": [
+     "cup/cheer"
+    ],
+    "g": 0.7,
+    "max": 1
+   },
+   "goal": {
+    "both": 1,
+    "bus": "world",
+    "f": [
+     "cup/cheer"
+    ],
+    "g": 0.7,
+    "max": 1
+   },
+   "kick": {
+    "bus": "impacts",
+    "f": [
+     "cup/ball_1",
+     "cup/ball_2",
+     "cup/ball_3"
+    ],
+    "g": 1,
+    "p": 0.1
+   },
+   "net": {
+    "bus": "impacts",
+    "f": [
+     "cup/net_1",
+     "cup/net_2"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "stomp": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "whistle": {
+    "bus": "world",
+    "f": [
+     "core/whistle"
+    ],
+    "g": 0.7,
+    "p": 0.03
+   }
+  },
+  "samaru-days": {
+   "amb_birds": {
+    "bus": "ambience",
+    "f": [
+     "fslg/amb_birds"
+    ],
+    "g": 0.35,
+    "lazy": 1,
+    "loop": 1
+   },
+   "amb_crickets": {
+    "bus": "ambience",
+    "f": [
+     "fslg/amb_crickets"
+    ],
+    "g": 0.3,
+    "lazy": 1,
+    "loop": 1
+   },
+   "amb_crowd": {
+    "bus": "ambience",
+    "f": [
+     "fslg/amb_crowd"
+    ],
+    "g": 0.22,
+    "lazy": 1,
+    "loop": 1
+   },
+   "amb_water": {
+    "bus": "ambience",
+    "f": [
+     "fslg/amb_water"
+    ],
+    "g": 0.35,
+    "lazy": 1,
+    "loop": 1
+   },
+   "bike_tick": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/bike_tick"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1
+   },
+   "book": {
+    "bus": "world",
+    "f": [
+     "fslg/book_1",
+     "fslg/book_2",
+     "fslg/book_3"
+    ],
+    "g": 0.7,
+    "lazy": 1
+   },
+   "brake": {
+    "synth": 1
+   },
+   "bubbles": {
+    "bus": "world",
+    "f": [
+     "fslg_water/bubbles_1",
+     "fslg_water/bubbles_2"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.1
+   },
+   "car_door_close": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/car_door_close"
+    ],
+    "g": 0.8,
+    "lazy": 1
+   },
+   "car_door_open": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/car_door_open"
+    ],
+    "g": 0.8,
+    "lazy": 1
+   },
+   "car_off": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/car_off"
+    ],
+    "g": 0.5,
+    "lazy": 1
+   },
+   "car_start": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/car_start"
+    ],
+    "g": 0.6,
+    "lazy": 1
+   },
+   "class_bell": {
+    "bus": "world",
+    "f": [
+     "fslg/class_bell_1",
+     "fslg/class_bell_2"
+    ],
+    "g": 0.7,
+    "lazy": 1
+   },
+   "crash_bicycle": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_bicycle_1",
+     "fslg3/crash_bicycle_2",
+     "fslg3/crash_bicycle_3"
+    ],
+    "g": 0.85,
+    "max": 2,
+    "p": 0.08
+   },
+   "crash_bus": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_bus_1",
+     "fslg3/crash_bus_2"
+    ],
+    "g": 1,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.05
+   },
+   "crash_car": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_car_1",
+     "fslg3/crash_car_2",
+     "fslg3/crash_car_3"
+    ],
+    "g": 1,
+    "max": 2,
+    "p": 0.07
+   },
+   "crash_car_light": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_car_light_1",
+     "fslg3/crash_car_light_2",
+     "fslg3/crash_car_light_3"
+    ],
+    "g": 0.85,
+    "max": 2,
+    "p": 0.08
+   },
+   "crash_heavy": {
+    "bus": "impacts",
+    "f": [
+     "fslg/crash"
+    ],
+    "g": 1,
+    "lazy": 1,
+    "p": 0.08
+   },
+   "crash_light": {
+    "bus": "impacts",
+    "f": [
+     "core/metal_1",
+     "core/metal_2",
+     "core/metal_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "crash_metal": {
+    "bus": "impacts",
+    "f": [
+     "core/metal_heavy_1",
+     "core/metal_heavy_2",
+     "core/metal_heavy_3"
+    ],
+    "g": 1,
+    "lazy": 1,
+    "p": 0.07
+   },
+   "crash_moto": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_moto_1",
+     "fslg3/crash_moto_2",
+     "fslg3/crash_moto_3"
+    ],
+    "g": 0.95,
+    "max": 2,
+    "p": 0.07
+   },
+   "crash_pole": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_pole_1",
+     "fslg3/crash_pole_2",
+     "fslg3/crash_pole_3"
+    ],
+    "g": 0.95,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.07
+   },
+   "crash_skate": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_skate_1",
+     "fslg3/crash_skate_2",
+     "fslg3/crash_skate_3"
+    ],
+    "g": 0.85,
+    "max": 2,
+    "p": 0.08
+   },
+   "crash_wall": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/crash_wall_1",
+     "fslg3/crash_wall_2",
+     "fslg3/crash_wall_3"
+    ],
+    "g": 1,
+    "max": 2,
+    "p": 0.07
+   },
+   "crops": {
+    "bus": "world",
+    "f": [
+     "fslg3/crops_1",
+     "fslg3/crops_2"
+    ],
+    "g": 0.7,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.1
+   },
+   "dial": {
+    "bus": "ui",
+    "f": [
+     "fslg/dial_1",
+     "fslg/dial_2",
+     "fslg/dial_3"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.12
+   },
+   "door_close": {
+    "bus": "world",
+    "f": [
+     "fslg/door_close_1",
+     "fslg/door_close_2",
+     "fslg/door_close_3"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.05
+   },
+   "door_open": {
+    "bus": "world",
+    "f": [
+     "fslg/door_open_1",
+     "fslg/door_open_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.05
+   },
+   "eng_car": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_car"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1
+   },
+   "eng_keke": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_moto"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1,
+    "r": 0.72
+   },
+   "eng_okada": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_moto"
+    ],
+    "g": 0.45,
+    "lazy": 1,
+    "loop": 1
+   },
+   "eng_plane": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_plane"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1
+   },
+   "eng_scooter": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_moto"
+    ],
+    "g": 0.35,
+    "lazy": 1,
+    "loop": 1,
+    "r": 1.3
+   },
+   "eng_sport": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/eng_sport"
+    ],
+    "g": 0.4,
+    "lazy": 1,
+    "loop": 1
+   },
+   "fall": {
+    "bus": "impacts",
+    "f": [
+     "core/thud_1",
+     "core/thud_2",
+     "core/thud_3"
+    ],
+    "g": 1,
+    "p": 0.08
+   },
+   "gasp": {
+    "bus": "world",
+    "f": [
+     "fslg_water/gasp_1"
+    ],
+    "g": 0.45,
+    "lazy": 1,
+    "max": 1,
+    "p": 0.06
+   },
+   "getup": {
+    "bus": "feet",
+    "f": [
+     "fslg/cloth_1",
+     "fslg/cloth_2",
+     "fslg/cloth_3"
+    ],
+    "g": 0.6,
+    "lazy": 1,
+    "p": 0.08
+   },
+   "glass": {
+    "bus": "impacts",
+    "f": [
+     "core/glass_1",
+     "core/glass_2",
+     "core/glass_3"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "p": 0.06
+   },
+   "guard": {
+    "bus": "impacts",
+    "f": [
+     "core/guard_1",
+     "core/guard_2",
+     "core/guard_3"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "handbrake": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/handbrake"
+    ],
+    "g": 0.7,
+    "lazy": 1
+   },
+   "heavy": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07
+   },
+   "hit": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_1",
+     "core/punch_2",
+     "core/punch_3",
+     "core/punch_4"
+    ],
+    "g": 1,
+    "p": 0.08
+   },
+   "hit_person": {
+    "bus": "impacts",
+    "f": [
+     "core/thud_1",
+     "core/thud_2",
+     "core/thud_3"
+    ],
+    "g": 1,
+    "p": 0.08,
+    "r": 0.9
+   },
+   "horn_bike": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_bike"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.03
+   },
+   "horn_bus": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_car_1",
+     "fslg/horn_car_2"
+    ],
+    "g": 0.9,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.02,
+    "r": 0.74
+   },
+   "horn_car": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_car_1",
+     "fslg/horn_car_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.02
+   },
+   "horn_keke": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_car_1",
+     "fslg/horn_car_2"
+    ],
+    "g": 0.65,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.02,
+    "r": 1.6
+   },
+   "horn_okada": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_car_1",
+     "fslg/horn_car_2"
+    ],
+    "g": 0.7,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.02,
+    "r": 1.35
+   },
+   "horn_scooter": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_squeeze"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.03
+   },
+   "horn_skate": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_squeeze"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.03
+   },
+   "horn_sport": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/horn_car_1",
+     "fslg/horn_car_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.02,
+    "r": 1.12
+   },
+   "jump": {
+    "bus": "impacts",
+    "f": [
+     "core/swish_1",
+     "core/swish_2",
+     "core/swish_3",
+     "core/swish_4"
+    ],
+    "g": 0.45,
+    "p": 0.1,
+    "r": 1.15
+   },
+   "kerb": {
+    "bus": "impacts",
+    "f": [
+     "core/wood_1",
+     "core/wood_2",
+     "core/wood_3"
+    ],
+    "g": 0.9,
+    "lazy": 1,
+    "p": 0.08
+   },
+   "kick": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07,
+    "r": 0.9
+   },
+   "land": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.7,
+    "p": 0.08
+   },
+   "phone_close": {
+    "bus": "ui",
+    "f": [
+     "fslg/phone_close_1",
+     "fslg/phone_close_2"
+    ],
+    "g": 0.8,
+    "lazy": 1
+   },
+   "phone_open": {
+    "bus": "ui",
+    "f": [
+     "fslg/phone_open_1",
+     "fslg/phone_open_2"
+    ],
+    "g": 0.8,
+    "lazy": 1
+   },
+   "pickup": {
+    "bus": "ui",
+    "f": [
+     "core/pluck_1",
+     "core/pluck_2"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "punch": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_1",
+     "core/punch_2",
+     "core/punch_3",
+     "core/punch_4"
+    ],
+    "g": 1,
+    "p": 0.08
+   },
+   "punch_heavy": {
+    "bus": "impacts",
+    "f": [
+     "core/punch_heavy_1",
+     "core/punch_heavy_2",
+     "core/punch_heavy_3",
+     "core/punch_heavy_4"
+    ],
+    "g": 1,
+    "p": 0.07
+   },
+   "rustle": {
+    "bus": "world",
+    "f": [
+     "fslg3/rustle_1",
+     "fslg3/rustle_2",
+     "fslg3/rustle_3"
+    ],
+    "g": 0.7,
+    "max": 3,
+    "p": 0.1
+   },
+   "rustle_big": {
+    "bus": "world",
+    "f": [
+     "fslg3/rustle_big_1",
+     "fslg3/rustle_big_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.08
+   },
+   "scrape": {
+    "bus": "impacts",
+    "f": [
+     "fslg3/scrape_1",
+     "fslg3/scrape_2"
+    ],
+    "g": 0.8,
+    "lazy": 1,
+    "max": 1,
+    "p": 0.06
+   },
+   "screech": {
+    "synth": 1
+   },
+   "shove": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "siren": {
+    "bus": "world",
+    "f": [
+     "fslg/siren"
+    ],
+    "g": 0.35,
+    "lazy": 1,
+    "loop": 1
+   },
+   "skate_roll": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/roll"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1
+   },
+   "skid_dirt": {
+    "synth": 1
+   },
+   "slap": {
+    "bus": "impacts",
+    "f": [
+     "fslg/slap_1",
+     "fslg/slap_2",
+     "fslg/slap_3"
+    ],
+    "g": 0.9,
+    "lazy": 1,
+    "p": 0.1
+   },
+   "splash": {
+    "bus": "world",
+    "f": [
+     "fslg_water/splash_1",
+     "fslg_water/splash_2"
+    ],
+    "g": 0.85,
+    "max": 2,
+    "p": 0.06
+   },
+   "splash_small": {
+    "bus": "world",
+    "f": [
+     "fslg_water/splash_small_1",
+     "fslg_water/splash_small_2",
+     "fslg_water/splash_small_3"
+    ],
+    "g": 0.6,
+    "max": 3,
+    "p": 0.1
+   },
+   "step_floor": {
+    "bus": "feet",
+    "f": [
+     "fslg/step_floor_1",
+     "fslg/step_floor_2",
+     "fslg/step_floor_3",
+     "fslg/step_floor_4",
+     "fslg/step_floor_5"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "max": 3,
+    "p": 0.1
+   },
+   "step_grass": {
+    "bus": "feet",
+    "f": [
+     "fslg/step_grass_1",
+     "fslg/step_grass_2",
+     "fslg/step_grass_3",
+     "fslg/step_grass_4",
+     "fslg/step_grass_5"
+    ],
+    "g": 0.55,
+    "max": 3,
+    "p": 0.1
+   },
+   "step_road": {
+    "bus": "feet",
+    "f": [
+     "fslg/step_road_1",
+     "fslg/step_road_2",
+     "fslg/step_road_3",
+     "fslg/step_road_4",
+     "fslg/step_road_5"
+    ],
+    "g": 0.5,
+    "max": 3,
+    "p": 0.1
+   },
+   "step_wood": {
+    "bus": "feet",
+    "f": [
+     "fslg/step_wood_1",
+     "fslg/step_wood_2",
+     "fslg/step_wood_3",
+     "fslg/step_wood_4",
+     "fslg/step_wood_5"
+    ],
+    "g": 0.55,
+    "lazy": 1,
+    "max": 3,
+    "p": 0.1
+   },
+   "stomp": {
+    "bus": "impacts",
+    "f": [
+     "core/thump_1",
+     "core/thump_2",
+     "core/thump_3"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "swim_stroke": {
+    "bus": "world",
+    "f": [
+     "fslg_water/swim_stroke_1",
+     "fslg_water/swim_stroke_2",
+     "fslg_water/swim_stroke_3"
+    ],
+    "g": 0.42,
+    "max": 2,
+    "p": 0.08
+   },
+   "swim_under": {
+    "bus": "world",
+    "f": [
+     "fslg_water/swim_under_1",
+     "fslg_water/swim_under_2"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "max": 2,
+    "p": 0.08
+   },
+   "till": {
+    "bus": "ui",
+    "f": [
+     "core/coin_1",
+     "core/coin_2",
+     "core/coin_3",
+     "core/coin_4"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "water_out": {
+    "bus": "world",
+    "f": [
+     "fslg_water/water_out_1",
+     "fslg_water/water_out_2"
+    ],
+    "g": 0.6,
+    "lazy": 1,
+    "max": 1,
+    "p": 0.05
+   },
+   "whoosh": {
+    "bus": "impacts",
+    "f": [
+     "core/swish_1",
+     "core/swish_2",
+     "core/swish_3",
+     "core/swish_4"
+    ],
+    "g": 0.7,
+    "p": 0.1
+   },
+   "wind": {
+    "bus": "vehicles",
+    "f": [
+     "fslg/wind"
+    ],
+    "g": 0.5,
+    "lazy": 1,
+    "loop": 1
+   }
+  },
+  "volt-city": {
+   "click": {
+    "bus": "ui",
+    "f": [
+     "puzzle/snap_1",
+     "puzzle/snap_2",
+     "puzzle/snap_3"
+    ],
+    "g": 0.8,
+    "p": 0.06
+   },
+   "coin": {
+    "bus": "ui",
+    "f": [
+     "core/pluck_1",
+     "core/pluck_2"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "power": {
+    "bus": "ui",
+    "f": [
+     "core/confirm_1",
+     "core/confirm_2"
+    ],
+    "g": 0.8
+   },
+   "zap": {
+    "bus": "ui",
+    "f": [
+     "puzzle/spark_1",
+     "puzzle/spark_2"
+    ],
+    "g": 0.4,
+    "p": 0.12
+   }
+  },
+  "wavefront": {
+   "block": {
+    "bus": "impacts",
+    "f": [
+     "wave/shield_1",
+     "wave/shield_2"
+    ],
+    "g": 0.6,
+    "p": 0.04
+   },
+   "boom": {
+    "bus": "impacts",
+    "f": [
+     "wave/boom_1",
+     "wave/boom_2",
+     "wave/boom_3"
+    ],
+    "g": 0.9,
+    "p": 0.08
+   },
+   "hit": {
+    "bus": "impacts",
+    "f": [
+     "wave/hit_1",
+     "wave/hit_2",
+     "wave/hit_3"
+    ],
+    "g": 0.8,
+    "p": 0.08
+   },
+   "laser": {
+    "bus": "impacts",
+    "f": [
+     "wave/shot_1",
+     "wave/shot_2",
+     "wave/shot_3",
+     "wave/shot_4"
+    ],
+    "g": 0.5,
+    "max": 5,
+    "p": 0.08
+   },
+   "power": {
+    "bus": "ui",
+    "f": [
+     "core/powerup_1",
+     "core/powerup_2",
+     "core/powerup_3"
+    ],
+    "g": 0.55,
+    "lazy": 1,
+    "p": 0.04
+   }
+  }
+ },
+ "v": 1
+}

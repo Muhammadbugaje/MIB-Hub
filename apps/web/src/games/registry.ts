@@ -7,8 +7,9 @@
  *
  *   kickoff: () => import("@mib/game-momentum-cup"),
  *
- * TODO(games-port): add each ported game here. Games without an entry show
- * the "coming soon" panel on their play page.
+ * The 16 games from the old site do not go through this registry: they run
+ * as their original scripts (see legacy.ts). A game that is in neither has no
+ * play page (404), so nothing half-built is ever shown.
  */
 import type { GameLoader } from "./contract.ts";
 

@@ -1,0 +1,165 @@
+---
+/**
+ * Search: games, news, events, characters and help answers.
+ *   /search?q=cup               the full page
+ *   /search?q=cup&fragment=1    only the results (the header's search panel
+ *                               fetches this as you type; see public/js/public.js)
+ * The ranking is a pure function in components/shell/search.ts.
+ */
+import Icon from "../components/Icon.astro";
+import SearchResults from "../components/SearchResults.astro";
+import { categoryIcon, categoryLabel, specialAllowed } from "../components/shell/art.ts";
+import { countHits, searchDocs, type SearchDoc } from "../components/shell/search.ts";
+import PublicLayout from "../layouts/PublicLayout.astro";
+import { repos } from "../lib/db.ts";
+import { formatDate, specialSwitches } from "../lib/site.ts";
+
+const query = (Astro.url.searchParams.get("q") ?? "").trim().slice(0, 80);
+const fragment = Astro.url.searchParams.has("fragment");
+
+const [games, posts, upcoming, past, characters, faqs, specials] = await Promise.all([
+  repos.games.listPublic(),
+  repos.posts.listPublished({ limit: 200 }),
+  repos.events.upcoming(50),
+  repos.events.past(50),
+  repos.characters.listPublic(),
+  repos.faqs.listPublished(),
+  specialSwitches(),
+]);
+
+const POST_KIND: Record<string, string> = { news: "News", devlog: "Devlog", update: "Update", press: "Press", promo: "Store" };
+const docs: SearchDoc[] = [
+  ...games.map((g) => ({
+    kind: "game" as const,
+    href: `/games/${g.slug}`,
+    title: g.title,
+    summary: g.description,
+    keywords: [g.category, g.meta.genre, ...(g.meta.tags ?? []), ...(g.meta.topics ?? [])].filter(Boolean).join(" "),
+    body: [g.meta.howToPlay, ...(g.meta.modes ?? [])].filter(Boolean).join(" "),
+    icon: `/games/${g.slug}/icon.png`,
+    tag: categoryLabel(g.category),
+  })),
+  ...posts.map((p) => ({
+    kind: "post" as const,
+    href: `/news/${p.slug}`,
+    title: p.title,
+    summary: p.excerpt,
+    keywords: `${p.kind} ${(p.tags ?? []).join(" ")}`,
+    body: p.body,
+    icon: "newspaper",
+    tag: POST_KIND[p.kind] ?? "News",
+  })),
+  ...[...upcoming, ...past].map((e) => ({
+    kind: "event" as const,
+    href: `/events/${e.slug}`,
+    title: e.title,
+    summary: e.summary,
+    keywords: `${e.kind} ${e.location} ${e.prize}`,
+    body: e.body,
+    icon: "calendar",
+    tag: formatDate(e.startsAt),
+  })),
+  ...characters
+    .filter((c) => (c.kind !== "special" || c.approved) && specialAllowed(c.name, specials) && specialAllowed(c.key, specials))
+    .map((c) => ({
+      kind: "character" as const,
+      href: "/characters",
+      title: c.name,
+      summary: c.role || c.bio,
+      keywords: c.kind,
+      body: c.bio,
+      icon: "user-circle",
+    })),
+  ...faqs.map((f) => ({
+    kind: "faq" as const,
+    href: "/support",
+    title: f.question,
+    summary: f.answer,
+    keywords: f.category,
+    icon: "help",
+    tag: f.category,
+  })),
+];
+
+const groups = searchDocs(docs, query, fragment ? 4 : 12);
+const total = countHits(groups);
+const ideas = [...games.slice(0, 5).map((g) => g.title), "leaderboard", "account", "voice"];
+const categories = [...new Set(games.map((g) => g.category))];
+---
+
+{
+  fragment ? (
+    <div data-search-fragment>
+      <SearchResults groups={groups} query={query} moreHref={`/search?q=${encodeURIComponent(query)}`} />
+    </div>
+  ) : (
+    <PublicLayout title={query ? `Search: ${query}` : "Search"} description="Search every game, news post, event, character and help answer on MIB-Hub.">
+      <section class="pub-wrap pub-phero">
+        <p class="pub-eyebrow">Search</p>
+        <h1>
+          Find a game, a story or <span class="pub-hl">an answer</span>
+        </h1>
+        <form class="pub-sbox" action="/search" method="get" role="search">
+          <Icon name="search" size={20} />
+          <input type="search" name="q" value={query} placeholder="Try “cup”, “puzzle” or “password”" aria-label="Search the site" autofocus={!query} />
+          <button class="pub-btn pub-btn--gold" type="submit">
+            Search
+          </button>
+        </form>
+      </section>
+
+      <section class="pub-wrap pub-spage">
+        <div>
+          {query.length >= 2 ? (
+            <>
+              <p class="pub-spage__tally" role="status">
+                <b>{total}</b>{" "}
+                {total === 1 ? "result" : "results"} for “{query}”
+              </p>
+              <SearchResults groups={groups} query={query} />
+            </>
+          ) : (
+            <div class="pub-sr">
+              <section class="pub-sr__group">
+                <h2 class="pub-sr__h">Start with a game</h2>
+                {games.slice(0, 6).map((g) => (
+                  <a class="pub-sr__item" href={`/games/${g.slug}`}>
+                    <span class="pub-sr__ic">
+                      <img src={`/games/${g.slug}/icon.png`} alt="" width="42" height="42" loading="lazy" />
+                    </span>
+                    <span class="pub-sr__tx">
+                      <b>{g.title}</b>
+                      <small>{g.description}</small>
+                    </span>
+                    <span class="pub-badge">{categoryLabel(g.category)}</span>
+                    <Icon name="arrow-right" size={16} />
+                  </a>
+                ))}
+              </section>
+            </div>
+          )}
+        </div>
+        <aside>
+          <h2>Try searching for</h2>
+          <div class="pub-tags">
+            {ideas.map((w) => (
+              <a href={`/search?q=${encodeURIComponent(w)}`}>
+                <Icon name="search" size={13} />
+                {w}
+              </a>
+            ))}
+          </div>
+          <h2 style="margin-top: 22px;">Kinds of game</h2>
+          <div class="pub-tags">
+            {categories.map((c) => (
+              <a href={`/search?q=${encodeURIComponent(c.replace(/-/g, " "))}`}>
+                <Icon name={categoryIcon(c)} size={13} />
+                {categoryLabel(c)}
+              </a>
+            ))}
+          </div>
+        </aside>
+      </section>
+    </PublicLayout>
+  )
+}

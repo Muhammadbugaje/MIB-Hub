@@ -1,0 +1,181 @@
+---
+/**
+ * /admin/news: news, updates, devlogs, press releases and promos.
+ * Markdown body with preview, cover upload, publish / unpublish, pin.
+ * Needs content.manage. Every write is audited.
+ */
+import { POST_KINDS, PUBLISH_STATUSES, slugify, type NewPost, type Post } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fStr, hasErrors, labelize, parseFields, pillClass, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const games = await repos.games.listAll();
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Title", type: "text", required: true, full: true, maxLength: 160 },
+  { name: "kind", label: "Type", type: "select", options: POST_KINDS, required: true },
+  { name: "status", label: "Status", type: "select", options: PUBLISH_STATUSES, required: true, hint: "Draft is only visible here." },
+  { name: "excerpt", label: "Summary", type: "textarea", rows: 2, maxLength: 300, hint: "One or two sentences for cards and link previews." },
+  { name: "body", label: "Story", type: "markdown", rows: 16 },
+  { name: "coverUrl", label: "Cover image", type: "image", folder: "covers", hint: "16:9 works best (e.g. 1600 × 900)." },
+  { name: "gameSlug", label: "About a game", type: "select", options: games.map((g) => ({ value: g.slug, label: g.title })), allowEmpty: "Not about one game" },
+  { name: "tags", label: "Tags", type: "tags", placeholder: "update, football" },
+  { name: "slug", label: "Web address", type: "slug", hint: "Leave blank to make one from the title.", placeholder: "big-update" },
+  { name: "publishedAt", label: "Publish date", type: "datetime", hint: "Blank = now, when published. A future date schedules it." },
+  { name: "pinned", label: "Pinned", type: "switch", hint: "Keep it at the top of the news page." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: Post | undefined = editId ? await repos.posts.getById(editId) : undefined;
+let values: FormValues = editing ?? { kind: "news", status: "draft", tags: [], pinned: false };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (id) editing = await repos.posts.getById(id);
+    const slug = (values.slug as string) || slugify(String(values.title ?? ""));
+    if (!slug) errors.slug = "Give the post a title or a web address.";
+    const clash = slug ? await repos.posts.getBySlug(slug) : undefined;
+    if (clash && clash.id !== editing?.id) errors.slug = "Another post already uses this address.";
+    if (!hasErrors(errors)) {
+      const data = { ...(values as Partial<NewPost>), slug };
+      if (data.status === "published" && !data.publishedAt) data.publishedAt = editing?.publishedAt ?? new Date();
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.posts.update(editing.id, data);
+        await audit(Astro, "post.update", "post", editing.id, diff.before, diff.after);
+        return done(Astro, data.status === "published" ? "Post saved and live." : "Post saved.", "/admin/news");
+      }
+      const row = await repos.posts.upsertBySlug({ ...(data as NewPost), authorId: Astro.locals.viewer.user!.id });
+      await audit(Astro, "post.create", "post", row.id, undefined, { title: row.title, slug: row.slug, status: row.status });
+      return done(Astro, row.status === "published" ? "Post published." : "Draft saved.", "/admin/news");
+    }
+  } else if (action === "publish" || action === "unpublish") {
+    const post = await repos.posts.getById(id);
+    if (post) {
+      const on = action === "publish";
+      await repos.posts.update(id, { status: on ? "published" : "draft", publishedAt: on ? (post.publishedAt ?? new Date()) : post.publishedAt });
+      await audit(Astro, `post.${action}`, "post", id, { status: post.status }, { status: on ? "published" : "draft" });
+      return done(Astro, on ? "Published." : "Moved back to drafts.");
+    }
+  } else if (action === "pin") {
+    const post = await repos.posts.getById(id);
+    if (post) {
+      await repos.posts.update(id, { pinned: !post.pinned });
+      await audit(Astro, "post.pin", "post", id, { pinned: post.pinned }, { pinned: !post.pinned });
+      return done(Astro, post.pinned ? "Unpinned." : "Pinned to the top.");
+    }
+  } else if (action === "delete") {
+    const before = await repos.posts.getById(id);
+    await repos.posts.remove(id);
+    await audit(Astro, "post.delete", "post", id, before ? { title: before.title, slug: before.slug } : undefined);
+    return done(Astro, "Post deleted.", "/admin/news");
+  }
+}
+
+const all = await repos.posts.listAll();
+const tab = Astro.url.searchParams.get("tab") ?? "all";
+const now = Date.now();
+const isScheduled = (p: Post) => p.status === "published" && !!p.publishedAt && p.publishedAt.getTime() > now;
+const shown = all
+  .filter((p) => tab === "all" || p.status === tab || (tab === "scheduled" && isScheduled(p)))
+  .sort((a, b) => Number(b.pinned) - Number(a.pinned) || +(b.publishedAt ?? b.createdAt) - +(a.publishedAt ?? a.createdAt));
+const count = (s: string) => all.filter((p) => p.status === s).length;
+const tabs = [
+  ["all", "All", all.length],
+  ["published", "Published", count("published")],
+  ["draft", "Drafts", count("draft")],
+  ["scheduled", "Scheduled", all.filter(isScheduled).length],
+  ["archived", "Archived", count("archived")],
+] as const;
+---
+
+<AppLayout title="News & posts">
+  <PageHead eyebrow="Content" title="News & posts" icon="news" lead="News, updates, devlogs, press and promos. Write in Markdown, add a cover, publish now or schedule.">
+    <a slot="actions" class="btn" href="/news" target="_blank" rel="noopener"><AIcon name="external" size={15} /> News page</a>
+  </PageHead>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Write a new post"
+    editLabel={`Edit: ${editing?.title ?? ""}`}
+    cancelHref="/admin/news"
+    saveLabel="Save post"
+  />
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Filter posts">
+      {tabs.map(([k, label, n]) => <a href={`?tab=${k}`} aria-current={tab === k ? "page" : undefined}>{label} <span class="hub-tabs__n">{n}</span></a>)}
+    </nav>
+  </div>
+
+  <section class="hub-card hub-card--flush">
+    {
+      shown.length === 0 ? (
+        <EmptyState icon="news" title={all.length ? "Nothing in this view" : "No posts yet"} text="Announce a new game, share a devlog, or promote an update. Posts appear on the news page when published.">
+          <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">Write a post</a>
+        </EmptyState>
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead><tr><th>Post</th><th>Type</th><th>Status</th><th>Date</th><th class="hub-num">Views</th><th /></tr></thead>
+            <tbody>
+              {shown.map((p) => (
+                <tr>
+                  <td>
+                    <span style="display:flex; gap: 12px; align-items:center;">
+                      {p.coverUrl ? <img src={p.coverUrl} alt="" width="64" height="36" style="border-radius:8px; object-fit:cover; flex:none;" /> : <span class="hub-list__icon"><AIcon name="news" size={18} /></span>}
+                      <span style="min-width:0;">
+                        <a class="hub-row-title" href={`?edit=${p.id}#editor`}>{p.pinned && <AIcon name="pin" size={13} />} {p.title}</a>
+                        <span class="hub-row-sub">/news/{p.slug}{p.excerpt && ` · ${p.excerpt}`}</span>
+                      </span>
+                    </span>
+                  </td>
+                  <td data-label="Type">{labelize(p.kind)}</td>
+                  <td data-label="Status"><span class={isScheduled(p) ? "hub-pill hub-pill--blue" : pillClass(p.status)}>{isScheduled(p) ? "Scheduled" : labelize(p.status)}</span></td>
+                  <td data-label="Date">{formatDate(p.publishedAt ?? p.updatedAt)}</td>
+                  <td class="hub-num" data-label="Views">{p.views}</td>
+                  <td class="hub-actions-cell">
+                    <form method="post" class="hub-inline-form">
+                      <input type="hidden" name="id" value={p.id} />
+                      <input type="hidden" name="action" value={p.status === "published" ? "unpublish" : "publish"} />
+                      <button class="btn btn--sm" type="submit">{p.status === "published" ? "Unpublish" : "Publish"}</button>
+                    </form>
+                    <form method="post" class="hub-inline-form">
+                      <input type="hidden" name="id" value={p.id} />
+                      <input type="hidden" name="action" value="pin" />
+                      <button class="btn btn--sm btn--icon" type="submit" title={p.pinned ? "Unpin" : "Pin"} aria-label={`${p.pinned ? "Unpin" : "Pin"} ${p.title}`}><AIcon name="pin" size={15} /></button>
+                    </form>
+                    <a class="btn btn--sm btn--icon" href={`?edit=${p.id}#editor`} title="Edit" aria-label={`Edit ${p.title}`}><AIcon name="edit" size={15} /></a>
+                    {p.status === "published" && <a class="btn btn--sm btn--icon" href={`/news/${p.slug}`} target="_blank" rel="noopener" title="View" aria-label={`View ${p.title}`}><AIcon name="eye" size={15} /></a>}
+                    <DeleteButton id={p.id} what={`the post "${p.title}"`} compact />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+</AppLayout>

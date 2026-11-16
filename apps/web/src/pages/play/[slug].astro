@@ -2,89 +2,268 @@
 /**
  * /play/<slug>: the page that runs one game.
  *
- * Rules (from the old site's games/views.py):
- *   - unknown slug -> 404
- *   - hidden or switched-off game -> 404, unless the viewer has games.preview
- *   - the game's code loads only here, through GameHost (see src/games/)
+ * Rules:
+ *   - unknown slug, or a hidden / switched-off game -> 404 (staff with
+ *     games.preview can still open it, with a "preview" note)
+ *   - maintenance switch on -> a maintenance notice (staff still play)
+ *   - signed out and the "guest play" switch off -> a sign-in prompt
  *
- * TODO(games-port): per-game access rules (levels, guests), cheats/hero
- * access modes, leaderboard panel, install-as-app manifest per game.
+ * The 16 games from EE Hub (src/games/legacy.ts) run as their original
+ * scripts from public/play/_shared/, started by the bridge
+ * public/play/_shared/mib/mib-play.js. Games built on the TypeScript
+ * contract (src/games/contract.ts) run through GameHost instead.
  */
-import { leaderboardName } from "@mib/db";
+import "../../components/games/play.css";
 import GameHost from "../../games/GameHost.tsx";
+import PlayIcon from "../../components/games/PlayIcon.astro";
+import { cheatsSettings, pageConfig, playGate } from "../../games/arcade-api.ts";
+import { LEGACY_BASE, isLegacyGame, legacyScripts, saveKeyPrefixes } from "../../games/legacy.ts";
 import { hasGame } from "../../games/registry.ts";
-import PublicLayout from "../../layouts/PublicLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 import { repos } from "../../lib/db.ts";
+import { guestId } from "../../lib/http.ts";
+import { siteSwitches } from "../../lib/site.ts";
+import { leaderboardName } from "@mib/db";
 
 const slug = Astro.params.slug ?? "";
 const game = await repos.games.getBySlug(slug);
 const { viewer } = Astro.locals;
-const canPreview = viewer.permissions.has("games.preview");
-const playable = game && game.enabled && game.status !== "hidden";
+const switches = await siteSwitches();
+const legacy = !!game && isLegacyGame(game.slug);
+const runnable = !!game && (legacy || hasGame(game.entry));
+const gate = playGate(game, viewer, switches);
 
-if (!game || (!playable && !canPreview)) return Astro.rewrite("/404");
+if (!game || !runnable || (!gate.ok && gate.status === 404)) return Astro.rewrite("/404");
 
-const settings = await repos.gameSettings.effective(game.slug, game.settings);
-const player = viewer.user
+const preview = !game.enabled || game.status === "hidden";
+const meta = game.meta;
+const signInHref = `/auth/sign-in?next=${encodeURIComponent(`/play/${game.slug}`)}`;
+const backHref = `/games/${game.slug}`;
+
+const siteAll = await repos.siteSettings.all();
+const effective = await repos.gameSettings.effective(game.slug, game.settings);
+const cs = cheatsSettings(effective, siteAll["games.cheatsOnLeaderboards"]);
+
+let likes = { on: switches.likes, total: 0, liked: false };
+if (switches.likes) {
+  const voter = viewer.user?.id ?? `guest:${guestId(Astro.cookies)}`;
+  likes = { on: true, total: await repos.likes.count(game.slug), liked: await repos.likes.hasLiked(game.slug, voter) };
+}
+const board = switches.leaderboards ? await repos.scores.top(game.slug, { limit: 5, includeCheated: cs.cheatsOnBoards }) : [];
+
+const canSave = !!viewer.user && viewer.permissions.has("progress.save");
+const stageConfig = legacy ? JSON.stringify(pageConfig(await repos.cheats.pageCodes(game.slug), cs, viewer)) : "";
+const bridge = {
+  slug: game.slug,
+  scripts: legacy ? legacyScripts(game.slug, game.entry, meta.dependencies) : [],
+  signedIn: !!viewer.user,
+  canSave,
+  tracking: switches.tracking,
+  savePrefixes: saveKeyPrefixes(game.slug),
+  guestNote: "Playing as a guest: progress stays on this device",
+};
+const contractPlayer = viewer.user
   ? { id: viewer.user.id, displayName: leaderboardName(viewer.user.name), isStaff: viewer.permissions.has("cheats.staff") }
   : null;
-const ready = hasGame(game.entry);
+const needsThree = legacy && game.slug === "samaru-days";
+const modes = Array.isArray(meta.modes) ? meta.modes : [];
+/** Help dialog and like button for contract games (legacy games get these from mib-play.js). */
+const CONTRACT_PAGE_JS = `(() => {
+  const dlg = document.querySelector("[data-mib-help-dialog]");
+  document.querySelector("[data-mib-help]")?.addEventListener("click", () => dlg?.showModal());
+  dlg?.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-mib-close]")) dlg.close(); });
+  const like = document.querySelector("[data-mib-like]");
+  like?.addEventListener("click", async () => {
+    const r = await fetch("/api/likes", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ gameSlug: ${JSON.stringify(slug)} }) });
+    if (!r.ok) return;
+    const j = await r.json();
+    like.setAttribute("aria-pressed", String(j.liked));
+    like.querySelector("[data-mib-like-n]").textContent = String(j.total);
+    like.querySelector("[data-mib-like-label]").textContent = j.liked ? "Liked" : "Like";
+  });
+})();`;
+const topics = Array.isArray(meta.topics) ? (meta.topics as string[]) : [];
 ---
 
-<PublicLayout title={game.title} description={game.description}>
-  <section class="container section" style={`--card-accent: ${game.accent}`}>
-    <a href="/#games" class="muted" style="font-size: var(--fs-sm);">← All games</a>
-    <div class="section__head" style="margin-top: var(--space-3);">
-      <div>
-        <span class="eyebrow">{game.meta.genre ?? game.category}</span>
-        <h1 style="margin-top: var(--space-2);">{game.title}</h1>
-        <p>{game.description}</p>
+<BaseLayout title={`Play ${game.title}`} description={game.description} bodyClass="mp-body">
+  <main id="main" class="mp" style={`--gm-a: ${game.accent}`}>
+    <header class="mp-bar">
+      <a class="btn btn--ghost btn--sm mp-back" href={backHref}><PlayIcon name="back" /> <span>Back</span></a>
+      <img class="mp-icon" src={`/games/${game.slug}/icon.png`} alt="" width="36" height="36" />
+      <div class="mp-title">
+        <h1>{game.title}</h1>
+        <p>{meta.genre ?? game.category}{preview && <span class="mp-preview"> · Preview: hidden from players</span>}</p>
       </div>
-      {!playable && <span class="badge badge--accent">Preview: hidden from players</span>}
-    </div>
+      {
+        gate.ok && (
+          <div class="mp-tools">
+            {likes.on && (
+              <button type="button" class="btn btn--ghost btn--sm mp-like" data-mib-like aria-pressed={likes.liked ? "true" : "false"}>
+                <PlayIcon name="heart" />
+                <span data-mib-like-label>{likes.liked ? "Liked" : "Like"}</span>
+                <span class="mp-like__n" data-mib-like-n>{likes.total}</span>
+              </button>
+            )}
+            <button type="button" class="btn btn--ghost btn--sm" data-mib-help>
+              <PlayIcon name="help" /> <span>How to play</span>
+            </button>
+            {legacy && (
+              <>
+                <button type="button" class="btn btn--ghost btn--sm" data-gm-pause aria-pressed="false">
+                  <PlayIcon name="pause" /> <span>Pause</span>
+                </button>
+                <button type="button" class="btn btn--ghost btn--sm" data-gm-settings>
+                  <PlayIcon name="settings" /> <span>Settings</span>
+                </button>
+                <button type="button" class="btn btn--ghost btn--sm" data-gm-mute aria-pressed="true">
+                  <PlayIcon name="sound" /> <span>Sound off</span>
+                </button>
+                <label class="mp-vol">
+                  <span class="sr-only">Volume</span>
+                  <input type="range" min="0" max="100" value="60" data-gm-vol aria-label="Volume" />
+                </label>
+                <button type="button" class="btn btn--ghost btn--sm" data-gm-full>
+                  <PlayIcon name="maximize" /> <span>Full screen</span>
+                </button>
+              </>
+            )}
+          </div>
+        )
+      }
+    </header>
 
     {
-      ready ? (
+      !gate.ok && gate.status === 503 && (
+        <section class="mp-notice">
+          <h2>We're tuning things up</h2>
+          <p>{gate.error}</p>
+          <a class="btn btn--primary" href="/">Back to the home page</a>
+        </section>
+      )
+    }
+    {
+      !gate.ok && gate.status === 401 && (
+        <section class="mp-notice">
+          <h2>Sign in to play {game.title}</h2>
+          <p>Playing without an account is switched off right now. Sign in (or create a free account) and you'll go straight to the game.</p>
+          <a class="btn btn--primary" href={signInHref}>Sign in</a>
+        </section>
+      )
+    }
+
+    {
+      gate.ok && legacy && (
+        <div
+          class="gm-stage mp-stage"
+          data-gm-stage
+          data-gm-slug={game.slug}
+          data-gm-user={viewer.user ? `u${viewer.user.id}` : "guest"}
+          data-gm-api="/api/games/arcade/"
+          data-csrf=""
+          data-gm-locked="[]"
+          data-gm-config={stageConfig}
+          data-gm-three={needsThree ? `${LEGACY_BASE}vendor/three@0.158.0/build/three.module.min.js` : undefined}
+        >
+          <canvas class="gm-canvas" data-gm-canvas tabindex="0" aria-label={`${game.title} game area`} />
+          <div class="gm-hud" data-gm-hud aria-live="polite" />
+          <div class="gm-overlay" data-gm-overlay hidden />
+          <div class="gm-touch" data-gm-touch />
+          <div class="mp-boot" data-mib-boot>
+            <img src={`/games/${game.slug}/icon.png`} alt="" width="72" height="72" />
+            <p data-mib-boot-msg>Loading {game.title}…</p>
+            <noscript><p>This game needs JavaScript turned on.</p></noscript>
+          </div>
+        </div>
+      )
+    }
+    {
+      gate.ok && !legacy && (
         <GameHost
           client:only="react"
           slug={game.slug}
           entry={game.entry}
           assetsPath={game.assetsPath}
-          settings={settings}
-          player={player}
+          settings={effective}
+          player={contractPlayer}
         />
-      ) : (
-        <div class="play-stage" data-game-slug={game.slug} data-game-entry={game.entry}>
-          <div>
-            <span class="badge badge--volt">Coming soon</span>
-            <h2 style="margin-top: var(--space-3);">This game is being moved to its new home</h2>
-            <p>It will appear right here as soon as it is ported. Your account is ready for it.</p>
-          </div>
-        </div>
       )
     }
 
     {
-      game.meta.howToPlay && (
-        <div class="card-grid" style="margin-top: var(--space-6);">
-          <div class="card">
-            <h2 class="card__title">How to play</h2>
-            <p class="card__meta">{game.meta.howToPlay}</p>
-          </div>
-          {game.meta.controls && (
-            <div class="card">
-              <h2 class="card__title">Controls</h2>
-              <p class="card__meta">{game.meta.controls}</p>
-            </div>
+      gate.ok && (
+        <p class="mp-status">
+          <PlayIcon name="cloud" />
+          <span data-mib-cloud data-state={viewer.user ? "" : "guest"}>
+            {viewer.user ? "Cloud save on" : "Playing as a guest: progress stays on this device"}
+          </span>
+          {!viewer.user && (
+            <a href={signInHref}>Sign in to save your progress and get on the leaderboard</a>
           )}
-          {game.meta.modes && game.meta.modes.length > 0 && (
-            <div class="card">
-              <h2 class="card__title">Modes</h2>
-              <p class="card__meta">{game.meta.modes.join(" · ")}</p>
-            </div>
+        </p>
+      )
+    }
+
+    {
+      gate.ok && (
+        <div class="mp-under">
+          {legacy && (
+            <section class="gm-panel">
+              <h2><PlayIcon name="zap" /> The physics</h2>
+              <div data-gm-concept><p>{meta.howToPlay}</p></div>
+            </section>
+          )}
+          {legacy && (
+            <section class="gm-panel">
+              <h2><PlayIcon name="gamepad" /> Controls</h2>
+              <div data-gm-controls><p>{meta.controls}</p></div>
+              {topics.length > 0 && <p class="gm-small">Topics: {topics.join(", ")}.</p>}
+            </section>
+          )}
+          {switches.leaderboards && (
+            <section class="gm-panel mp-board">
+              <h2><PlayIcon name="trophy" /> Top scores</h2>
+              {board.length > 0 ? (
+                <ol>
+                  {board.map((r) => (
+                    <li><span>{r.name}</span><b>{r.score.toLocaleString("en-GB")}</b></li>
+                  ))}
+                </ol>
+              ) : (
+                <p>No scores yet. Finish a level while signed in and yours will be first.</p>
+              )}
+            </section>
           )}
         </div>
       )
     }
-  </section>
-</PublicLayout>
+
+    <dialog class="mp-dialog" data-mib-help-dialog aria-labelledby="mp-help-title">
+      <div class="mp-dialog__head">
+        <h2 id="mp-help-title">How to play {game.title}</h2>
+        <button type="button" class="btn btn--ghost btn--sm btn--icon" data-mib-close aria-label="Close"><PlayIcon name="x" /></button>
+      </div>
+      {meta.howToPlay && <p>{meta.howToPlay}</p>}
+      {meta.controls && (
+        <>
+          <h3>Controls</h3>
+          <p>{meta.controls}</p>
+          <p class="mp-dialog__small">On a phone or tablet, use the on-screen buttons. Settings lets you change keys and move the buttons.</p>
+        </>
+      )}
+      {modes.length > 0 && (
+        <>
+          <h3>Modes</h3>
+          <ul>{modes.map((m) => <li>{m}</li>)}</ul>
+        </>
+      )}
+      {meta.sessionLength && <p class="mp-dialog__small">A session takes about {meta.sessionLength}.</p>}
+      <p class="mp-dialog__small">P or Esc pauses. Your progress saves on this device{viewer.user ? " and to your account" : ""}.</p>
+      <button type="button" class="btn btn--primary" data-mib-close>Got it</button>
+    </dialog>
+
+    {legacy && gate.ok && <link rel="stylesheet" href={`${LEGACY_BASE}css/games.css`} />}
+    {legacy && gate.ok && <script type="application/json" id="mib-play-config" set:html={JSON.stringify(bridge).replace(/</g, "\\u003c")} />}
+    {legacy && gate.ok && <script is:inline src="/play/_shared/mib/mib-play.js" defer />}
+    {!legacy && gate.ok && <script is:inline set:html={CONTRACT_PAGE_JS} />}
+  </main>
+</BaseLayout>

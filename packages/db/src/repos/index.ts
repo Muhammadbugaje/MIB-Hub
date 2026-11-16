@@ -12,6 +12,7 @@ import type { AppDb, PasswordHasher } from "../types.ts";
 import { cheatsRepo, heroesRepo } from "./cheats.ts";
 import { gameSettingsRepo, gamesRepo } from "./games.ts";
 import { profilesRepo, progressRepo, scoresRepo } from "./players.ts";
+import { gameSoundsRepo } from "./sounds.ts";
 import {
   adsRepo,
   analyticsRepo,
@@ -56,6 +57,7 @@ export function createRepos(db: AppDb, deps: { hasher: PasswordHasher }) {
     likes: likesRepo(db),
     products: productsRepo(db),
     orders: ordersRepo(db),
+    sounds: gameSoundsRepo(db),
   };
 }
 
@@ -66,3 +68,4 @@ export * from "./games.ts";
 export * from "./players.ts";
 export * from "./platform.ts";
 export * from "./community.ts";
+export * from "./sounds.ts";

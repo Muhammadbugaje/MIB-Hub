@@ -1,0 +1,306 @@
+---
+/**
+ * /admin/store: products (boosts, cosmetics, characters, supporter tiers,
+ * donations) and orders. Needs store.manage.
+ *   ?tab=products (default)   add / edit / switch off / delete products
+ *   ?tab=orders&status=…      orders, with their status changed by hand
+ * Prices are stored in kobo (₦1 = 100 kobo); the form takes naira.
+ */
+import { ORDER_STATUSES, PRODUCT_KINDS, type NewProduct, type Order, type Product } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import ToggleForm from "../../components/admin/ToggleForm.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fBool, fStr, hasErrors, labelize, parseFields, pillClass, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate, formatPrice, siteSwitches } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "store.manage" });
+if (denied) return denied;
+
+const tab = Astro.url.searchParams.get("tab") === "orders" ? "orders" : "products";
+const games = await repos.games.listAll();
+
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Name", type: "text", required: true, placeholder: "Double coins (30 min)" },
+  { name: "sku", label: "Code (SKU)", type: "slug", required: true, placeholder: "boost-double-coins-30", hint: "A unique code, lower-case with dashes. It cannot change later." },
+  { name: "kind", label: "Kind", type: "select", required: true, options: PRODUCT_KINDS },
+  { name: "currency", label: "Currency", type: "select", required: true, options: [{ value: "NGN", label: "Naira (real money)" }, { value: "GAME", label: "In-game naira (coins)" }] },
+  { name: "priceKobo", label: "Price (₦)", type: "money", min: 0, hint: "0 makes it free to claim." },
+  { name: "durationMin", label: "Lasts (minutes of play)", type: "number", min: 0, hint: "For boosts. 0 = permanent." },
+  { name: "gameSlug", label: "Game", type: "select", allowEmpty: "Any game", options: games.map((g) => ({ value: g.slug, label: g.title })) },
+  { name: "sort", label: "Order", type: "number", hint: "Lower shows first." },
+  { name: "description", label: "Description", type: "textarea", rows: 3, maxLength: 800, full: true },
+  { name: "active", label: "On sale", type: "switch", hint: "Show it in the store." },
+  { name: "imageUrl", label: "Image", type: "image", folder: "products" },
+];
+
+const editSku = Astro.url.searchParams.get("edit");
+let editing: Product | undefined = editSku ? await repos.products.getBySku(editSku) : undefined;
+let values: FormValues = editing ?? { kind: "boost", currency: "NGN", priceKobo: 0, durationMin: 0, sort: 0, active: true };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 120);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (id) editing = await repos.products.getBySku(id);
+    if (editing && values.sku !== editing.sku) errors.sku = `The code cannot change (it is ${editing.sku}). Delete the product and add a new one instead.`;
+    if (!editing && values.sku && (await repos.products.getBySku(values.sku as string))) errors.sku = "Another product already uses this code.";
+    if (!hasErrors(errors)) {
+      const data = values as Partial<NewProduct>;
+      if (editing) {
+        const { sku: _sku, ...rest } = data;
+        const diff = changed(editing as unknown as Record<string, unknown>, rest as Record<string, unknown>);
+        await repos.products.update(editing.sku, rest);
+        await audit(Astro, "product.update", "product", editing.sku, diff.before, diff.after);
+        return done(Astro, "Product saved.", "/admin/store");
+      }
+      const row = await repos.products.upsertBySku(data as NewProduct);
+      await audit(Astro, "product.create", "product", row.sku, undefined, row);
+      return done(Astro, "Product added.", "/admin/store");
+    }
+  } else if (action === "toggle") {
+    const on = fBool(form, "value");
+    await repos.products.update(id, { active: on });
+    await audit(Astro, "product.active", "product", id, { active: !on }, { active: on });
+    return done(Astro, on ? "Back on sale." : "Taken off sale.");
+  } else if (action === "delete") {
+    const before = await repos.products.getBySku(id);
+    await repos.products.remove(id);
+    await audit(Astro, "product.delete", "product", id, before);
+    return done(Astro, "Product deleted. Past orders keep their record.");
+  } else if (action === "status") {
+    const ref = fStr(form, "ref", 60);
+    const status = fStr(form, "status", 20) as Order["status"];
+    const before = await repos.orders.getByRef(ref);
+    if (before && (ORDER_STATUSES as readonly string[]).includes(status) && before.status !== status) {
+      await repos.orders.setStatus(ref, status);
+      await audit(Astro, "order.status", "order", ref, { status: before.status }, { status });
+      return done(Astro, `Order ${ref} marked ${status}.`);
+    }
+    return done(Astro, "Nothing changed.", undefined, "info");
+  }
+}
+
+const [products, orders, switches, revenue30] = await Promise.all([repos.products.listAll(), repos.orders.list(500), siteSwitches(), repos.orders.revenue(30)]);
+const productBySku = new Map(products.map((p) => [p.sku, p]));
+const statusParam = Astro.url.searchParams.get("status");
+const status = (ORDER_STATUSES as readonly string[]).includes(statusParam ?? "") ? (statusParam as Order["status"]) : null;
+const shownOrders = status ? orders.filter((o) => o.status === status) : orders;
+const countBy = Object.fromEntries(ORDER_STATUSES.map((s) => [s, orders.filter((o) => o.status === s).length])) as Record<Order["status"], number>;
+const monthAgo = Date.now() - 30 * 86_400_000;
+const naira30 = orders.filter((o) => o.status === "paid" && o.currency === "NGN" && o.createdAt.getTime() >= monthAgo).reduce((n, o) => n + o.amountKobo, 0);
+---
+
+<AppLayout title="Store & orders">
+  <PageHead eyebrow="Players" title="Store & orders" icon="cart" lead="What players can buy or claim, and every order placed.">
+    <a slot="actions" class="btn" href="/store" target="_blank" rel="noopener"><AIcon name="external" size={15} /> Open the store</a>
+    {tab === "products" && <a slot="actions" class="btn btn--primary" href="?new=1#editor"><AIcon name="plus" size={16} /> New product</a>}
+  </PageHead>
+
+  {
+    !switches.payments && (
+      <div class="hub-note" style="margin-bottom: var(--space-5);">
+        <AIcon name="alert" size={16} />
+        <span>
+          Online payments are <strong>off</strong>, so orders arrive as “pending” and are confirmed by hand here once you have received the money. Switch payments on in{" "}
+          <a href="/admin/settings">Settings & switches</a> when a payment provider is set up.
+        </span>
+      </div>
+    )
+  }
+  {
+    !switches.store && (
+      <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+        <AIcon name="eye-off" size={16} /> The store switch is off: visitors cannot see the store right now.
+      </div>
+    )
+  }
+
+  <div class="hub-stats" style="margin-bottom: var(--space-5);">
+    <a class="hub-stat hub-stat--gold" href="?tab=orders&status=paid"><div class="hub-stat__top">Paid, last 30 days <AIcon name="coins" size={18} /></div><div class="hub-stat__value">{formatPrice(naira30)}</div><div class="hub-stat__note">Real money only{revenue30 !== naira30 && ` · ${formatPrice(revenue30 - naira30, "GAME")} more`}</div></a>
+    <a class="hub-stat hub-stat--rose" href="?tab=orders&status=pending"><div class="hub-stat__top">Waiting <AIcon name="clock" size={18} /></div><div class="hub-stat__value">{countBy.pending}</div><div class="hub-stat__note">Pending orders</div></a>
+    <a class="hub-stat" href="?tab=orders"><div class="hub-stat__top">Orders <AIcon name="receipt" size={18} /></div><div class="hub-stat__value">{orders.length}</div><div class="hub-stat__note">{countBy.paid} paid · {countBy.refunded} refunded</div></a>
+    <a class="hub-stat hub-stat--volt" href="?tab=products"><div class="hub-stat__top">Products <AIcon name="tag" size={18} /></div><div class="hub-stat__value">{products.filter((p) => p.active).length}</div><div class="hub-stat__note">on sale of {products.length}</div></a>
+  </div>
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Store sections">
+      <a href="?tab=products" aria-current={tab === "products" ? "page" : undefined}>Products <span class="hub-tabs__n">{products.length}</span></a>
+      <a href="?tab=orders" aria-current={tab === "orders" ? "page" : undefined}>Orders <span class="hub-tabs__n">{orders.length}</span></a>
+    </nav>
+    {
+      tab === "orders" && (
+        <nav class="hub-tabs" aria-label="Order status">
+          <a href="?tab=orders" aria-current={!status ? "page" : undefined}>All</a>
+          {ORDER_STATUSES.map((s) => (
+            <a href={`?tab=orders&status=${s}`} aria-current={s === status ? "page" : undefined}>
+              {labelize(s)} <span class="hub-tabs__n">{countBy[s]}</span>
+            </a>
+          ))}
+        </nav>
+      )
+    }
+  </div>
+
+  {
+    tab === "products" ? (
+      <>
+        <CrudForm
+          fields={FIELDS}
+          values={values}
+          errors={errors}
+          id={editing?.sku}
+          editing={!!editing}
+          open={Astro.url.searchParams.has("new")}
+          addLabel="Add a product"
+          editLabel={`Edit: ${editing?.title ?? ""}`}
+          cancelHref="/admin/store"
+        />
+        <section class="hub-card hub-card--flush">
+          {products.length === 0 ? (
+            <EmptyState icon="cart" title="The store is empty" text="Add boosts (paid in in-game naira), cosmetics, or supporter tiers in real naira. Free items can be claimed with one click.">
+              <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+                Add a product
+              </a>
+            </EmptyState>
+          ) : (
+            <div class="hub-table-wrap">
+              <table class="hub-table hub-table--stack">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Kind</th>
+                    <th class="hub-num">Price</th>
+                    <th class="hub-num">Sold</th>
+                    <th>On sale</th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody>
+                  {products.map((p) => (
+                    <tr class:list={[!p.active && "is-off"]}>
+                      <td>
+                        <div class="st-title">
+                          {p.imageUrl ? (
+                            <img class="st-thumb" src={p.imageUrl} alt="" loading="lazy" />
+                          ) : (
+                            <span class="hub-tile hub-tile--gold">
+                              <AIcon name={p.kind === "supporter" || p.kind === "donation" ? "heart" : p.kind === "boost" ? "flame" : "tag"} size={15} />
+                            </span>
+                          )}
+                          <span>
+                            <span class="hub-row-title">{p.title}</span>
+                            <span class="hub-row-sub">
+                              <span class="hub-code">{p.sku}</span>
+                              {p.durationMin > 0 && ` · ${p.durationMin} min`}
+                            </span>
+                          </span>
+                        </div>
+                      </td>
+                      <td data-label="Kind">{labelize(p.kind)}</td>
+                      <td class="hub-num" data-label="Price">
+                        {formatPrice(p.priceKobo, p.currency)}
+                      </td>
+                      <td class="hub-num" data-label="Sold">
+                        {orders.filter((o) => o.productSku === p.sku && o.status === "paid").length}
+                      </td>
+                      <td>
+                        <ToggleForm id={p.sku} action="toggle" checked={p.active} label={`${p.title} on sale`} />
+                      </td>
+                      <td class="hub-actions-cell">
+                        <a class="btn btn--sm btn--icon" href={`?edit=${encodeURIComponent(p.sku)}#editor`} aria-label={`Edit ${p.title}`} title="Edit">
+                          <AIcon name="edit" size={15} />
+                        </a>
+                        <DeleteButton id={p.sku} what={`the product "${p.title}"`} compact />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </section>
+      </>
+    ) : (
+      <section class="hub-card hub-card--flush">
+        {shownOrders.length === 0 ? (
+          <EmptyState
+            icon="receipt"
+            title={status ? `No ${status} orders` : "No orders yet"}
+            text="Orders appear here as soon as a player buys or claims something in the store. You can mark them paid, refunded or cancelled."
+          />
+        ) : (
+          <div class="hub-table-wrap">
+            <table class="hub-table hub-table--stack">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Buyer</th>
+                  <th>Date</th>
+                  <th class="hub-num">Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {shownOrders.map((o) => (
+                  <tr>
+                    <td>
+                      <span class="hub-row-title">{productBySku.get(o.productSku)?.title ?? o.productSku}</span>
+                      <span class="hub-row-sub">
+                        <span class="hub-code">{o.ref}</span>
+                        {o.quantity > 1 && ` · ×${o.quantity}`}
+                        {o.dealCode && ` · code ${o.dealCode}`}
+                        {o.provider !== "manual" && ` · ${o.provider} ${o.providerRef}`}
+                      </span>
+                    </td>
+                    <td data-label="Buyer">{o.email || <span class="hub-subtle">Guest</span>}</td>
+                    <td data-label="Date">{formatDate(o.createdAt, { time: true })}</td>
+                    <td class="hub-num" data-label="Amount">
+                      {formatPrice(o.amountKobo, o.currency)}
+                    </td>
+                    <td>
+                      <form method="post" class="hub-inline-form st-status" data-autosubmit>
+                        <input type="hidden" name="action" value="status" />
+                        <input type="hidden" name="ref" value={o.ref} />
+                        <span class={pillClass(o.status)}>{labelize(o.status)}</span>
+                        <select class="input st-select" name="status" aria-label={`Change status of order ${o.ref}`}>
+                          {ORDER_STATUSES.map((s) => (
+                            <option value={s} selected={s === o.status}>
+                              {labelize(s)}
+                            </option>
+                          ))}
+                        </select>
+                        <noscript>
+                          <button class="btn btn--sm" type="submit">
+                            Save
+                          </button>
+                        </noscript>
+                      </form>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
+    )
+  }
+</AppLayout>
+
+<style>
+  .st-title { display: flex; align-items: center; gap: 12px; }
+  .st-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: 10px; flex: none; }
+  .st-status { align-items: center; gap: 8px; }
+  .st-select { min-height: 34px; padding-block: 0; width: auto; font-size: var(--fs-sm); }
+</style>

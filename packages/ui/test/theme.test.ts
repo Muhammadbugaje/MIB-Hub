@@ -4,6 +4,7 @@ import {
   THEME_INIT_SCRIPT,
   THEME_KEY,
   THEME_OS_KEY,
+  followDevice,
   nextTheme,
   readTheme,
   resolveTheme,
@@ -122,5 +123,26 @@ describe("THEME_INIT_SCRIPT (the inline <head> script)", () => {
   it("applies the reduced-motion switch", () => {
     expect(runInit({ [MOTION_KEY]: "reduce" }, false).motion).toBe("reduce");
     expect(runInit({}, false).motion).toBeNull();
+  });
+});
+
+describe("followDevice (the device wins when it changes)", () => {
+  it("forgets a saved choice and returns the device theme", () => {
+    const s = memoryStorage({ [THEME_KEY]: "dark", [THEME_OS_KEY]: "light" });
+    expect(followDevice(s, "light")).toBe("light");
+    expect(s.data).toEqual({});
+    expect(readTheme(s, "light")).toBe("light");
+  });
+
+  it("works without storage or with blocked storage", () => {
+    expect(followDevice(null, "dark")).toBe("dark");
+    const broken: ThemeStorage = {
+      getItem: () => null,
+      setItem: () => undefined,
+      removeItem: () => {
+        throw new Error("blocked");
+      },
+    };
+    expect(followDevice(broken, "light")).toBe("light");
   });
 });

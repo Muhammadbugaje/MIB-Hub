@@ -1,0 +1,87 @@
+---
+/** /account/orders: everything the player has bought, claimed or donated. */
+import AIcon from "../../components/admin/AIcon.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { labelize, pillClass } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate, formatPrice } from "../../lib/site.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const user = Astro.locals.viewer.user!;
+const [orders, products] = await Promise.all([repos.orders.forUser(user.id), repos.products.listAll()]);
+const product = new Map(products.map((p) => [p.sku, p]));
+const pending = orders.filter((o) => o.status === "pending").length;
+---
+
+<AppLayout title="My orders">
+  <PageHead eyebrow="Your account" title="My orders" icon="receipt" lead="Boosts, cosmetics, supporter tiers and donations.">
+    <a slot="actions" class="btn btn--primary" href="/store"><AIcon name="cart" size={16} /> Visit the store</a>
+  </PageHead>
+
+  {
+    pending > 0 && (
+      <div class="hub-note" style="margin-bottom: var(--space-5);">
+        <AIcon name="clock" size={16} />
+        <span>
+          {pending} {pending === 1 ? "order is" : "orders are"} waiting for payment confirmation. Questions about a payment?{" "}
+          <a href="/account/tickets#new">Open a payment ticket</a> and quote the order reference.
+        </span>
+      </div>
+    )
+  }
+
+  <section class="hub-card hub-card--flush">
+    {
+      orders.length === 0 ? (
+        <EmptyState icon="cart" title="No orders yet" text="When you buy a boost, claim a free item or become a supporter, the order and its status show here.">
+          <a slot="action" class="btn btn--sm btn--primary" href="/store">
+            Browse the store
+          </a>
+        </EmptyState>
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Reference</th>
+                <th>Date</th>
+                <th class="hub-num">Amount</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((o) => {
+                const p = product.get(o.productSku);
+                return (
+                  <tr>
+                    <td>
+                      <span class="hub-row-title">{p?.title ?? o.productSku}</span>
+                      {o.quantity > 1 && <span class="hub-subtle"> × {o.quantity}</span>}
+                      {p && <span class="hub-row-sub">{labelize(p.kind)}</span>}
+                    </td>
+                    <td data-label="Ref">
+                      <span class="hub-code">{o.ref}</span>
+                    </td>
+                    <td data-label="Date">{formatDate(o.createdAt, { time: true })}</td>
+                    <td class="hub-num" data-label="Amount">
+                      {formatPrice(o.amountKobo, o.currency)}
+                    </td>
+                    <td>
+                      <span class={pillClass(o.status)}>{labelize(o.status)}</span>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+</AppLayout>

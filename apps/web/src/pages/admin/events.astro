@@ -1,0 +1,209 @@
+---
+/**
+ * /admin/events: tournaments, launches, community nights, live streams and
+ * seasons. Tabs: upcoming, past, drafts. Needs content.manage.
+ */
+import { EVENT_KINDS, PUBLISH_STATUSES, slugify, type GameEvent, type NewGameEvent } from "@mib/db";
+import AIcon from "../../components/admin/AIcon.astro";
+import CrudForm from "../../components/admin/CrudForm.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { audit, changed, done, fStr, hasErrors, labelize, parseFields, pillClass, type FieldDef, type FormErrors, type FormValues } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "content.manage" });
+if (denied) return denied;
+
+const games = await repos.games.listAll();
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Title", type: "text", required: true, placeholder: "Football Arena cup, round 1" },
+  { name: "slug", label: "Web address", type: "slug", hint: "Lower-case words with dashes. Leave blank to make one from the title.", placeholder: "football-cup-round-1" },
+  { name: "kind", label: "Kind", type: "select", required: true, options: EVENT_KINDS },
+  { name: "status", label: "Status", type: "select", required: true, options: PUBLISH_STATUSES, hint: "Only published events appear on the site." },
+  { name: "startsAt", label: "Starts", type: "datetime", required: true },
+  { name: "endsAt", label: "Ends", type: "datetime", hint: "Optional. Without it the event counts as past one day after it starts." },
+  { name: "gameSlug", label: "Game", type: "select", allowEmpty: "Not about one game", options: games.map((g) => ({ value: g.slug, label: g.title })) },
+  { name: "location", label: "Where", type: "text", placeholder: "Online" },
+  { name: "prize", label: "Prize or entry line", type: "text", placeholder: "Winner gets 5,000 coins", full: true },
+  { name: "summary", label: "Summary", type: "textarea", rows: 2, maxLength: 400, hint: "One or two sentences for the event card." },
+  { name: "body", label: "Details", type: "markdown", rows: 10 },
+  { name: "coverUrl", label: "Cover image", type: "image", folder: "covers", hint: "16:9 works best (1600×900)." },
+];
+
+const editId = Astro.url.searchParams.get("edit");
+let editing: GameEvent | undefined = editId ? await repos.events.getById(editId) : undefined;
+let values: FormValues = editing ?? { kind: "community", status: "draft", location: "Online" };
+let errors: FormErrors = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const id = fStr(form, "id", 80);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (id) editing = await repos.events.getById(id);
+    const slug = (values.slug as string) || slugify(String(values.title ?? ""));
+    values.slug = slug;
+    if (!slug) errors.slug = "Give the event a title or a web address.";
+    else {
+      const other = await repos.events.getBySlug(slug);
+      if (other && other.id !== editing?.id) errors.slug = "Another event already uses this web address.";
+    }
+    const s = values.startsAt as Date | null;
+    const e = values.endsAt as Date | null;
+    if (s && e && e < s) errors.endsAt = "The end must be after the start.";
+    if (!hasErrors(errors)) {
+      const data = { ...values, location: (values.location as string) || "Online" } as Partial<NewGameEvent>;
+      if (editing) {
+        const diff = changed(editing as unknown as Record<string, unknown>, data as Record<string, unknown>);
+        await repos.events.update(editing.id, data);
+        await audit(Astro, "event.update", "event", editing.id, diff.before, diff.after);
+        return done(Astro, "Event saved.", "/admin/events");
+      }
+      const row = await repos.events.upsertBySlug(data as NewGameEvent);
+      await audit(Astro, "event.create", "event", row.id, undefined, row);
+      return done(Astro, row.status === "published" ? "Event published." : "Event saved as a draft.", "/admin/events");
+    }
+  } else if (action === "publish" || action === "unpublish") {
+    const status = action === "publish" ? "published" : "draft";
+    const before = await repos.events.getById(id);
+    await repos.events.update(id, { status });
+    await audit(Astro, `event.${action}`, "event", id, { status: before?.status }, { status });
+    return done(Astro, action === "publish" ? "Event published." : "Event moved to drafts.");
+  } else if (action === "delete") {
+    const before = await repos.events.getById(id);
+    await repos.events.remove(id);
+    await audit(Astro, "event.delete", "event", id, before);
+    return done(Astro, "Event deleted.", "/admin/events");
+  }
+}
+
+const all = await repos.events.listAll();
+const now = Date.now();
+const endOf = (e: GameEvent) => (e.endsAt ?? new Date(e.startsAt.getTime() + 86_400_000)).getTime();
+const tabs = {
+  upcoming: all.filter((e) => e.status === "published" && endOf(e) >= now).sort((a, b) => +a.startsAt - +b.startsAt),
+  past: all.filter((e) => e.status === "published" && endOf(e) < now),
+  drafts: all.filter((e) => e.status !== "published"),
+};
+type Tab = keyof typeof tabs;
+const tabParam = Astro.url.searchParams.get("tab");
+const tab: Tab = tabParam === "past" || tabParam === "drafts" ? tabParam : "upcoming";
+const rows = tabs[tab];
+const gameTitle = new Map(games.map((g) => [g.slug, g.title]));
+const live = (e: GameEvent) => e.status === "published" && e.startsAt.getTime() <= now && endOf(e) >= now;
+---
+
+<AppLayout title="Events">
+  <PageHead eyebrow="Content" title="Events" icon="calendar" lead="Tournaments, launches, community nights, live streams and seasons.">
+    <a slot="actions" class="btn btn--primary" href="?new=1#editor"><AIcon name="plus" size={16} /> New event</a>
+  </PageHead>
+
+  <CrudForm
+    fields={FIELDS}
+    values={values}
+    errors={errors}
+    id={editing?.id}
+    editing={!!editing}
+    open={Astro.url.searchParams.has("new")}
+    addLabel="Create an event"
+    editLabel={`Edit: ${editing?.title ?? ""}`}
+    cancelHref="/admin/events"
+  />
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Event lists">
+      {
+        (["upcoming", "past", "drafts"] as Tab[]).map((t) => (
+          <a href={`?tab=${t}`} aria-current={t === tab ? "page" : undefined}>
+            {labelize(t)} <span class="hub-tabs__n">{tabs[t].length}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+
+  <section class="hub-card hub-card--flush">
+    {
+      rows.length === 0 ? (
+        <EmptyState
+          icon="calendar"
+          title={tab === "upcoming" ? "Nothing coming up" : tab === "past" ? "No past events yet" : "No drafts"}
+          text={
+            tab === "upcoming"
+              ? "Plan a tournament or a launch night. Published events with a future date show on the Events page and the home page."
+              : tab === "past"
+                ? "Events move here by themselves once they end."
+                : "Save an event as a draft to finish it later; only you and other staff see drafts."
+          }
+        >
+          {tab !== "past" && (
+            <a slot="action" class="btn btn--primary btn--sm" href="?new=1#editor">
+              Create an event
+            </a>
+          )}
+        </EmptyState>
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Event</th>
+                <th>When</th>
+                <th>Game</th>
+                <th>Status</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((e) => (
+                <tr>
+                  <td>
+                    <div class="ev-title">
+                      {e.coverUrl ? <img class="ev-thumb" src={e.coverUrl} alt="" loading="lazy" /> : <span class="hub-tile hub-tile--gold"><AIcon name="calendar" size={15} /></span>}
+                      <span>
+                        <span class="hub-row-title">{e.title}</span>
+                        <span class="hub-row-sub">
+                          {labelize(e.kind)} · {e.location}
+                          {e.prize && ` · ${e.prize}`}
+                        </span>
+                      </span>
+                    </div>
+                  </td>
+                  <td data-label="When">
+                    {formatDate(e.startsAt, { time: true })}
+                    {e.endsAt && <span class="hub-row-sub">to {formatDate(e.endsAt, { time: true })}</span>}
+                  </td>
+                  <td data-label="Game">{e.gameSlug ? (gameTitle.get(e.gameSlug) ?? e.gameSlug) : <span class="hub-subtle">Any</span>}</td>
+                  <td>{live(e) ? <span class="hub-pill hub-pill--red">Live now</span> : <span class={pillClass(e.status)}>{labelize(e.status)}</span>}</td>
+                  <td class="hub-actions-cell">
+                    <form method="post" class="hub-inline-form">
+                      <input type="hidden" name="action" value={e.status === "published" ? "unpublish" : "publish"} />
+                      <input type="hidden" name="id" value={e.id} />
+                      <button class="btn btn--sm" type="submit">{e.status === "published" ? "Unpublish" : "Publish"}</button>
+                    </form>
+                    <a class="btn btn--sm btn--icon" href={`?edit=${e.id}#editor`} aria-label={`Edit ${e.title}`} title="Edit">
+                      <AIcon name="edit" size={15} />
+                    </a>
+                    <DeleteButton id={e.id} what={`the event "${e.title}"`} compact />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+</AppLayout>
+
+<style>
+  .ev-title { display: flex; align-items: center; gap: 12px; min-width: 0; }
+  .ev-thumb { width: 64px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px; flex: none; }
+</style>

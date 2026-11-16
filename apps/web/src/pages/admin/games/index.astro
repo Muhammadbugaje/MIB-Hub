@@ -1,0 +1,133 @@
+---
+/**
+ * /admin/games: the catalogue. Every game as a card: art, status, the
+ * on/off kill switch, a quick status change, sort order and a link to edit.
+ * Needs games.manage.
+ */
+import { GAME_STATUSES, type GameStatus } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import EmptyState from "../../../components/admin/EmptyState.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import ToggleForm from "../../../components/admin/ToggleForm.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, done, fStr, labelize, pillClass } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "games.manage" });
+if (denied) return denied;
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  const slug = fStr(form, "id", 80);
+  const game = await repos.games.getBySlug(slug);
+  if (!game) return done(Astro, "That game no longer exists.", undefined, "danger");
+  if (action === "toggle") {
+    const enabled = fStr(form, "value") === "on";
+    await repos.games.update(slug, { enabled });
+    await audit(Astro, "game.enabled", "game", slug, { enabled: game.enabled }, { enabled });
+    return done(Astro, `${game.title} switched ${enabled ? "on" : "off"}.`);
+  }
+  if (action === "status") {
+    const status = fStr(form, "status", 20);
+    if (!(GAME_STATUSES as readonly string[]).includes(status)) return done(Astro, "Unknown status.", undefined, "danger");
+    await repos.games.update(slug, { status: status as GameStatus });
+    await audit(Astro, "game.status", "game", slug, { status: game.status }, { status });
+    return done(Astro, `${game.title} is now ${status}.`);
+  }
+  if (action === "sort") {
+    const sort = Math.round(Number(fStr(form, "sort", 10)));
+    if (Number.isFinite(sort)) {
+      await repos.games.update(slug, { sort });
+      await audit(Astro, "game.sort", "game", slug, { sort: game.sort }, { sort });
+      return done(Astro, `Order of ${game.title} saved.`);
+    }
+  }
+}
+
+const filter = Astro.url.searchParams.get("status") ?? "";
+const all = await repos.games.listAll();
+const games = filter ? all.filter((g) => (filter === "off" ? !g.enabled : g.status === filter)) : all;
+const count = (s: string) => all.filter((g) => (s === "off" ? !g.enabled : g.status === s)).length;
+const tabs = [
+  { key: "", label: "All", n: all.length },
+  ...GAME_STATUSES.map((s) => ({ key: s, label: labelize(s), n: count(s) })),
+  { key: "off", label: "Switched off", n: count("off") },
+];
+---
+
+<AppLayout title="Games">
+  <PageHead eyebrow="Games" title="Games" icon="gamepad" lead="The catalogue. Live games show in the arcade, demo games show with a Demo label, hidden games are staff-only. The switch is a kill switch: off hides a game everywhere at once." />
+
+  <div class="hub-toolbar">
+    <nav class="hub-tabs" aria-label="Filter by status">
+      {
+        tabs.map((t) => (
+          <a href={t.key ? `?status=${t.key}` : "/admin/games"} aria-current={filter === t.key ? "page" : undefined}>
+            {t.label} <span class="hub-tabs__n">{t.n}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+
+  {
+    games.length === 0 ? (
+      <div class="hub-card">
+        <EmptyState icon="gamepad" title="No games here" text="No game matches this filter. Choose All to see the whole catalogue." />
+      </div>
+    ) : (
+      <div class="hub-cards">
+        {games.map((g) => (
+          <article class:list={["hub-mcard", !g.enabled && "is-off"]} style={`--a:${g.accent}`}>
+            <div class="hub-mcard__art">
+              <img class="hub-mcard__icon" src={`/games/${g.slug}/icon.png`} alt="" loading="lazy" onerror="this.style.display='none'" />
+              <div class="hub-mcard__badges">
+                <span class={pillClass(g.status)}>{labelize(g.status)}</span>
+                {!g.enabled && <span class="hub-pill hub-pill--red">Off</span>}
+              </div>
+            </div>
+            <div class="hub-mcard__body">
+              <h2 class="hub-mcard__title">{g.title}</h2>
+              <p class="hub-mcard__text">{g.description || "No description yet."}</p>
+              <span class="hub-subtle">
+                {labelize(g.category)} · <span class="hub-code">{g.slug}</span>
+              </span>
+            </div>
+            <div class="hub-mcard__foot">
+              <ToggleForm id={g.slug} action="toggle" checked={g.enabled} label={`${g.title} switched on`} />
+              <form method="post" class="hub-inline-form" data-autosubmit>
+                <input type="hidden" name="action" value="status" />
+                <input type="hidden" name="id" value={g.slug} />
+                <select class="input game-select" name="status" aria-label={`Status of ${g.title}`}>
+                  {GAME_STATUSES.map((s) => (
+                    <option value={s} selected={s === g.status}>
+                      {labelize(s)}
+                    </option>
+                  ))}
+                </select>
+                <noscript>
+                  <button class="btn btn--sm" type="submit">Set</button>
+                </noscript>
+              </form>
+              <form method="post" class="hub-inline-form" title="Order in the arcade (lower first)">
+                <input type="hidden" name="action" value="sort" />
+                <input type="hidden" name="id" value={g.slug} />
+                <input class="input game-sort" type="number" name="sort" value={g.sort} aria-label={`Order of ${g.title}`} onchange="this.form.requestSubmit()" />
+              </form>
+              <a class="btn btn--sm hub-push" href={`/admin/games/${g.slug}`}>
+                <AIcon name="edit" size={15} /> Edit
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    )
+  }
+</AppLayout>
+
+<style>
+  .game-select { min-height: 34px; padding-block: 0; width: auto; font-size: var(--fs-xs); }
+  .game-sort { min-height: 34px; width: 64px; padding: 0 8px; font-size: var(--fs-xs); }
+</style>

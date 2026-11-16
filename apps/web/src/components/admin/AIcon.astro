@@ -1,0 +1,31 @@
+---
+/**
+ * A line icon for the signed-in area. <AIcon name="bell" size={18} />
+ * Path data lives in ./icons.ts (shared with the React islands).
+ */
+import { ADMIN_ICONS, type AdminIconName } from "./icons.ts";
+
+interface Props {
+  name: AdminIconName;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+const { name, size = 20, label, class: className } = Astro.props;
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  role={label ? "img" : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : "true"}
+  focusable="false"><path d={ADMIN_ICONS[name]}></path></svg
+>

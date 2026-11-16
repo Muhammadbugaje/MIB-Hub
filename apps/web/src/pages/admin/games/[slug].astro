@@ -1,0 +1,263 @@
+---
+/**
+ * /admin/games/<slug>: edit one game: its card and status, its settings
+ * overrides (JSON, needs games.manage_settings) and its secret characters
+ * ("heroes"): reveal access, on/off and a new code. Codes are stored hashed
+ * and never shown. Needs games.manage.
+ */
+import { GAME_STATUSES } from "@mib/db";
+import AIcon from "../../../components/admin/AIcon.astro";
+import EmptyState from "../../../components/admin/EmptyState.astro";
+import FormFields from "../../../components/admin/FormFields.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import ToggleForm from "../../../components/admin/ToggleForm.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { audit, changed, done, fStr, hasErrors, labelize, parseFields, pillClass, type FieldDef, type FormErrors, type FormValues } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { formatDate } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "games.manage" });
+if (denied) return denied;
+
+const slug = String(Astro.params.slug ?? "");
+const game = await repos.games.getBySlug(slug);
+if (!game) return Astro.rewrite("/404");
+const canSettings = Astro.locals.viewer.permissions.has("games.manage_settings");
+
+const HERO_ACCESS = ["code", "signed", "staff", "named"] as const;
+const FIELDS: FieldDef[] = [
+  { name: "title", label: "Title", type: "text", required: true, maxLength: 120 },
+  { name: "category", label: "Category", type: "text", required: true, maxLength: 40, hint: "e.g. arcade, puzzle, sports, open-world" },
+  { name: "description", label: "Description", type: "textarea", rows: 3, maxLength: 600, full: true },
+  { name: "status", label: "Status", type: "select", options: [...GAME_STATUSES], hint: "Live = in the arcade. Demo = shown with a Demo label. Hidden = staff only." },
+  { name: "sort", label: "Order", type: "number", min: -1000, max: 1000, hint: "Lower numbers show first." },
+  { name: "accent", label: "Accent colour", type: "color", hint: "Used for the card gradient and highlights." },
+  { name: "enabled", label: "Switched on", type: "switch", hint: "Off hides the game everywhere at once (kill switch)." },
+  { name: "genre", label: "Genre", type: "text", maxLength: 60 },
+  { name: "controls", label: "Controls", type: "text", maxLength: 200, placeholder: "Arrow keys to move, Space to jump" },
+  { name: "howToPlay", label: "How to play", type: "textarea", rows: 3, maxLength: 1000, full: true },
+];
+const SETTINGS: FieldDef[] = [{ name: "settings", label: "Settings overrides (JSON)", type: "json", rows: 10, hint: "Overrides on top of the game's defaults, e.g. { \"lives\": 5 }. Use {} for none." }];
+
+let values: FormValues = { ...game, ...game.meta };
+let errors: FormErrors = {};
+let settingsValues: FormValues = { settings: await repos.gameSettings.get(slug) };
+let settingsErrors: FormErrors = {};
+const heroErrors: Record<string, string> = {};
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 30);
+  if (action === "save") {
+    const parsed = await parseFields(FIELDS, form);
+    values = parsed.values;
+    errors = parsed.errors;
+    if (!hasErrors(errors)) {
+      const { genre, controls, howToPlay, ...card } = values;
+      const changes = {
+        title: card.title as string,
+        category: card.category as string,
+        description: card.description as string,
+        status: card.status as (typeof GAME_STATUSES)[number],
+        sort: card.sort as number,
+        accent: (card.accent as string) || game.accent,
+        enabled: card.enabled as boolean,
+        meta: { ...game.meta, genre: genre as string, controls: controls as string, howToPlay: howToPlay as string },
+      };
+      await repos.games.update(slug, changes);
+      const diff = changed(game as unknown as Record<string, unknown>, changes);
+      await audit(Astro, "game.update", "game", slug, diff.before, diff.after);
+      return done(Astro, `${changes.title} saved.`);
+    }
+  } else if (action === "settings" && canSettings) {
+    const parsed = await parseFields(SETTINGS, form);
+    settingsValues = { settings: fStr(form, "settings", 20000) };
+    settingsErrors = parsed.errors;
+    if (!hasErrors(settingsErrors)) {
+      const before = await repos.gameSettings.get(slug);
+      const next = parsed.values.settings as Record<string, unknown>;
+      // Keys missing from the new JSON are removed (null removes a key in the repo).
+      const patch: Record<string, unknown> = { ...next };
+      for (const k of Object.keys(before)) if (!(k in next)) patch[k] = null;
+      await repos.gameSettings.update(slug, patch, Astro.locals.viewer.user?.id ?? null);
+      await audit(Astro, "game.settings", "game", slug, before, next);
+      return done(Astro, "Settings saved.");
+    }
+  } else if (action.startsWith("hero-") && canSettings) {
+    const id = fStr(form, "id", 80);
+    const hero = await repos.heroes.get(id);
+    if (!hero) return done(Astro, "That character no longer exists.", undefined, "danger");
+    if (action === "hero-toggle") {
+      const enabled = fStr(form, "value") === "on";
+      await repos.heroes.update(id, { enabled });
+      await audit(Astro, "hero.enabled", "hero", id, { enabled: hero.enabled }, { enabled });
+      return done(Astro, `${hero.name} switched ${enabled ? "on" : "off"}.`);
+    }
+    if (action === "hero-access") {
+      const access = fStr(form, "access", 20);
+      if ((HERO_ACCESS as readonly string[]).includes(access)) {
+        await repos.heroes.update(id, { access: access as (typeof HERO_ACCESS)[number] });
+        await audit(Astro, "hero.access", "hero", id, { access: hero.access }, { access });
+        return done(Astro, `${hero.name}: who can reveal it saved.`);
+      }
+    }
+    if (action === "hero-code") {
+      const code = String(form.get("code") ?? "");
+      try {
+        await repos.heroes.setCode(id, code);
+        await audit(Astro, "hero.code", "hero", id, { code: "(hidden)" }, { code: "(changed)" });
+        return done(Astro, `New code saved for ${hero.name}.`);
+      } catch (e) {
+        heroErrors[id] = e instanceof Error ? e.message : "Could not save the code.";
+      }
+    }
+  }
+}
+
+const heroes = await repos.heroes.list(slug);
+const legacy = new Map(await Promise.all(heroes.map(async (h) => [h.id, await repos.heroes.isLegacy(h.id)] as const)));
+const cheatCount = (await repos.cheats.list(slug)).length;
+const ACCESS_HELP: Record<string, string> = {
+  code: "Anyone with the code",
+  signed: "Signed-in players with the code",
+  staff: "Staff only",
+  named: "Only named accounts",
+};
+---
+
+<AppLayout title={game.title}>
+  <PageHead eyebrow="Games" title={game.title} back={{ href: "/admin/games", label: "All games" }}>
+    <Fragment slot="actions">
+      <span class={pillClass(game.status)}>{labelize(game.status)}</span>
+      {!game.enabled && <span class="hub-pill hub-pill--red">Switched off</span>}
+      <a class="btn btn--sm" href={`/play/${slug}`} target="_blank" rel="noopener"><AIcon name="play" size={15} /> Play</a>
+      {canSettings && <a class="btn btn--sm" href={`/admin/cheats?game=${slug}`}><AIcon name="key" size={15} /> Cheats ({cheatCount})</a>}
+    </Fragment>
+  </PageHead>
+
+  <div class="hub-grid hub-grid--main">
+    <form class="hub-card" method="post">
+      <input type="hidden" name="action" value="save" />
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="edit" size={18} /> Card and status</h2>
+        <span class="hub-subtle" style="margin-left:auto;">Updated {formatDate(game.updatedAt, { time: true })}</span>
+      </div>
+      <FormFields fields={FIELDS} values={values} errors={errors} idPrefix="g" />
+      <div class="hub-btn-row">
+        <button class="btn btn--primary" type="submit"><AIcon name="check" size={16} /> Save game</button>
+        <a class="btn btn--ghost" href="/admin/games">Cancel</a>
+      </div>
+    </form>
+
+    <div class="hub-stack">
+      <section class="hub-card hub-card--flush">
+        <div class="hub-mcard__art" style={`--a:${game.accent}`}>
+          <img class="hub-mcard__icon" src={`/games/${slug}/icon.png`} alt="" onerror="this.style.display='none'" />
+        </div>
+        <dl class="hub-kv" style="padding: var(--space-4) var(--space-5);">
+          <dt>Slug</dt><dd><span class="hub-code">{slug}</span></dd>
+          <dt>Entry</dt><dd>{game.entry || "—"}</dd>
+          <dt>Assets</dt><dd>{game.assetsPath || "—"}</dd>
+          <dt>Added</dt><dd>{formatDate(game.createdAt)}</dd>
+        </dl>
+      </section>
+
+      <form class="hub-card" method="post">
+        <input type="hidden" name="action" value="settings" />
+        <div class="hub-card__head">
+          <div>
+            <h2 class="hub-card__title"><AIcon name="sliders" size={18} /> Game settings</h2>
+            <p class="hub-card__sub">Rules every player of this game gets.</p>
+          </div>
+        </div>
+        {
+          canSettings ? (
+            <>
+              <FormFields fields={SETTINGS} values={settingsValues} errors={settingsErrors} idPrefix="gs" />
+              <div class="hub-btn-row">
+                <button class="btn btn--primary btn--sm" type="submit">Save settings</button>
+              </div>
+            </>
+          ) : (
+            <>
+              <pre class="hub-json">{JSON.stringify(settingsValues.settings, null, 2)}</pre>
+              <p class="hub-subtle" style="margin-top: var(--space-2);">Changing these needs the “edit game rules” permission.</p>
+            </>
+          )
+        }
+      </form>
+    </div>
+  </div>
+
+  <section class="hub-card hub-card--flush" style="margin-top: var(--space-5);">
+    <div class="hub-card__head">
+      <div>
+        <h2 class="hub-card__title"><AIcon name="mask" size={18} /> Secret characters</h2>
+        <p class="hub-card__sub">Heroes revealed by a code in this game (and the site-wide ones). Codes are stored hashed; set a new one to change it.</p>
+      </div>
+    </div>
+    {
+      heroes.length === 0 ? (
+        <EmptyState icon="mask" title="No secret characters" text="Add one from Cheats & heroes. It can be for this game only or for every game." />
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Character</th>
+                <th>Who can reveal it</th>
+                <th>On</th>
+                <th>New code</th>
+              </tr>
+            </thead>
+            <tbody>
+              {heroes.map((h) => (
+                <tr class:list={[!h.enabled && "is-off"]}>
+                  <td>
+                    <span class="hub-row-title">{h.name}</span>
+                    <span class="hub-row-sub">
+                      {h.fullName || "—"} · {h.gameSlug === "*" ? "every game" : "this game"}
+                      {legacy.get(h.id) && " · old Django code (upgrades on first use)"}
+                    </span>
+                  </td>
+                  <td data-label="Access">
+                    {canSettings ? (
+                      <form method="post" class="hub-inline-form" data-autosubmit>
+                        <input type="hidden" name="action" value="hero-access" />
+                        <input type="hidden" name="id" value={h.id} />
+                        <select class="input" name="access" aria-label={`Who can reveal ${h.name}`}>
+                          {HERO_ACCESS.map((a) => (
+                            <option value={a} selected={a === h.access}>
+                              {ACCESS_HELP[a]}
+                            </option>
+                          ))}
+                        </select>
+                      </form>
+                    ) : (
+                      ACCESS_HELP[h.access]
+                    )}
+                  </td>
+                  <td data-label="On">
+                    <ToggleForm id={h.id} action="hero-toggle" checked={h.enabled} label={`${h.name} on`} disabled={!canSettings} />
+                  </td>
+                  <td>
+                    {canSettings && (
+                      <form method="post" class="hub-actions">
+                        <input type="hidden" name="action" value="hero-code" />
+                        <input type="hidden" name="id" value={h.id} />
+                        <input class="input" type="password" name="code" autocomplete="new-password" placeholder="New code" minlength="4" required aria-label={`New code for ${h.name}`} style="max-width: 180px;" />
+                        <button class="btn btn--sm" type="submit">Set</button>
+                        {heroErrors[h.id] && <p class="hub-field__error">{heroErrors[h.id]}</p>}
+                      </form>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+</AppLayout>

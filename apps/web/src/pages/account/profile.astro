@@ -1,109 +1,185 @@
 ---
 /**
- * The signed-in user's profile: name, password, role and game stats.
- * Two small forms post back here with a hidden "action" field.
+ * /account/profile: picture, name, @handle, bio and leaderboard choice.
+ *
+ * The picture is saved with saveImage() (src/lib/uploads.ts) into
+ * /uploads/avatars and its URL goes on the account (user.image), which the
+ * sidebar, top bar and leaderboards read. Name and picture are updated
+ * through Better Auth (auth.api.updateUser) so the session sees them at once;
+ * handle and bio live in the player profile's stats.
  */
-import Alert from "../../components/Alert.astro";
-import Field from "../../components/Field.astro";
+import AIcon from "../../components/admin/AIcon.astro";
+import Avatar from "../../components/admin/Avatar.astro";
+import ImageField from "../../components/admin/ImageField.tsx";
+import PageHead from "../../components/admin/PageHead.astro";
 import AppLayout from "../../layouts/AppLayout.astro";
-import { MIN_PASSWORD_LENGTH, auth, authErrorMessage } from "../../lib/auth.ts";
+import { done, fBool, fStr, type FormErrors } from "../../lib/admin-kit.ts";
+import { auth } from "../../lib/auth.ts";
 import { repos } from "../../lib/db.ts";
 import { guard } from "../../lib/guard.ts";
 import { PERMISSIONS, ROLE_INFO, isRole } from "../../lib/permissions.ts";
+import { formatDate } from "../../lib/site.ts";
+import { saveImage } from "../../lib/uploads.ts";
 
 const denied = guard(Astro, { signedIn: true });
 if (denied) return denied;
 
 const { viewer } = Astro.locals;
 const user = viewer.user!;
-let notice = "";
-let error = "";
-const errors: Record<string, string> = {};
-let name = user.name;
+let profile = await repos.profiles.getOrCreateForUser(user.id, user.name);
+const errors: FormErrors = {};
+const stat = (k: string) => (typeof profile.stats[k] === "string" ? (profile.stats[k] as string) : "");
+let values = {
+  name: user.name,
+  handle: stat("handle"),
+  bio: stat("bio"),
+  pronouns: stat("pronouns"),
+  favourite: stat("favourite"),
+  onLeaderboard: profile.onLeaderboard,
+};
 
 if (Astro.request.method === "POST") {
   const form = await Astro.request.formData();
-  const action = String(form.get("action") ?? "");
-  if (action === "name") {
-    name = String(form.get("name") ?? "").trim();
-    if (name.length < 2) errors.name = "Use 2 letters or more.";
+  values = {
+    name: fStr(form, "name", 80),
+    handle: fStr(form, "handle", 40).replace(/^@/, ""),
+    bio: fStr(form, "bio", 400),
+    pronouns: fStr(form, "pronouns", 30),
+    favourite: fStr(form, "favourite", 80),
+    onLeaderboard: fBool(form, "onLeaderboard"),
+  };
+  if (values.name.length < 2) errors.name = "Use 2 letters or more.";
+  if (values.handle) {
+    if (!/^[a-z0-9_]{3,20}$/i.test(values.handle)) errors.handle = "3 to 20 letters, digits or _ (like amina_99).";
     else {
-      await auth.api.updateUser({ body: { name }, headers: Astro.request.headers });
-      notice = "Your name was saved.";
+      const other = await repos.profiles.findByHandle(values.handle);
+      if (other && other.id !== profile.id) errors.handle = "That handle is taken. Try another.";
     }
-  } else if (action === "password") {
-    const current = String(form.get("current") ?? "");
-    const next = String(form.get("new") ?? "");
-    if (next.length < MIN_PASSWORD_LENGTH) errors.new = `Use at least ${MIN_PASSWORD_LENGTH} characters.`;
-    else {
-      const res = await auth.api.changePassword({
-        body: { currentPassword: current, newPassword: next, revokeOtherSessions: true },
-        headers: Astro.request.headers,
-        asResponse: true,
-      });
-      if (res.ok) notice = "Password changed. Your other devices were signed out.";
-      else error = await authErrorMessage(res);
+  }
+
+  // The picture: a new file, "remove", or keep the current one.
+  let image: string | null | undefined;
+  const file = form.get("avatar__file");
+  if (file instanceof File && file.size > 0) {
+    try {
+      image = await saveImage(file, "avatars");
+    } catch (e) {
+      errors.avatar = e instanceof Error ? e.message : "Upload failed.";
     }
+  } else if (form.get("avatar__remove") === "on") image = null;
+
+  if (Object.keys(errors).length === 0) {
+    await auth.api.updateUser({
+      body: { name: values.name, ...(image !== undefined ? { image } : {}) },
+      headers: Astro.request.headers,
+    });
+    profile =
+      (await repos.profiles.update(profile.id, {
+        onLeaderboard: values.onLeaderboard,
+        stats: { ...profile.stats, handle: values.handle, bio: values.bio, pronouns: values.pronouns, favourite: values.favourite },
+      })) ?? profile;
+    return done(Astro, image ? "Profile picture and details saved." : image === null ? "Picture removed. Details saved." : "Profile saved.");
   }
 }
 
-const profile = await repos.profiles.getOrCreateForUser(user.id, name);
 const role = isRole(viewer.role) ? ROLE_INFO[viewer.role] : { label: viewer.role, description: "" };
-const initials = name
-  .split(/\s+/)
-  .map((p) => p[0])
-  .join("")
-  .slice(0, 2)
-  .toUpperCase();
+const account = await repos.users.findById(user.id);
 ---
 
 <AppLayout title="Profile">
-  <div class="page-head" style="display:flex; gap: var(--space-4); align-items:center;">
-    <span class="avatar avatar--lg">{initials}</span>
-    <div>
-      <h1>{name}</h1>
-      <p>{user.email} · <span class="badge">{role.label}</span></p>
+  <PageHead eyebrow="Your account" title="Profile" icon="user" lead="How you appear on leaderboards, in tickets and around the hub." />
+
+  <div class="hub-grid hub-grid--main">
+    <form class="hub-card" method="post" enctype="multipart/form-data">
+      <div class="hub-card__head">
+        <h2 class="hub-card__title"><AIcon name="image" size={18} /> Picture and details</h2>
+      </div>
+      <div class="hub-fields">
+        <div class="hub-field hub-field--full">
+          <ImageField
+            client:load
+            name="avatar"
+            label="Profile picture"
+            value={user.image ?? ""}
+            shape="round"
+            hint="A square image works best. PNG, JPEG, WebP or GIF, up to 4 MB."
+            error={errors.avatar}
+          />
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="p-name">Name<span class="hub-req" aria-hidden="true">*</span></label>
+          <input class="input" id="p-name" name="name" value={values.name} autocomplete="name" required maxlength="80" aria-invalid={errors.name ? "true" : undefined} />
+          <p class="hub-field__hint">Leaderboards show your first name and last initial.</p>
+          {errors.name && <p class="hub-field__error">{errors.name}</p>}
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="p-handle">Handle</label>
+          <input class="input hub-mono" id="p-handle" name="handle" value={values.handle} placeholder="amina_99" maxlength="21" autocomplete="username" aria-invalid={errors.handle ? "true" : undefined} />
+          <p class="hub-field__hint">Optional. Your @name for friends and tournaments.</p>
+          {errors.handle && <p class="hub-field__error">{errors.handle}</p>}
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="p-pronouns">Pronouns</label>
+          <input class="input" id="p-pronouns" name="pronouns" value={values.pronouns} maxlength="30" placeholder="she/her" />
+        </div>
+        <div class="hub-field">
+          <label class="hub-field__label" for="p-fav">Favourite game</label>
+          <input class="input" id="p-fav" name="favourite" value={values.favourite} maxlength="80" placeholder="Football Arena" />
+        </div>
+        <div class="hub-field hub-field--full">
+          <label class="hub-field__label" for="p-bio">Bio</label>
+          <textarea class="input hub-textarea" id="p-bio" name="bio" rows="3" maxlength="400" placeholder="A line about you.">{values.bio}</textarea>
+          <p class="hub-field__hint">Up to 400 characters. Shown on your home page.</p>
+        </div>
+        <div class="hub-field hub-field--full hub-field--switch">
+          <label class="hub-switch-row" for="p-lb">
+            <span class="hub-switch-row__text">
+              <span class="hub-field__label">Show me on leaderboards</span>
+              <span class="hub-field__hint">Turn off to keep your scores private. Your saves are not affected.</span>
+            </span>
+            <input class="hub-switch" type="checkbox" role="switch" id="p-lb" name="onLeaderboard" checked={values.onLeaderboard} />
+          </label>
+        </div>
+      </div>
+      <div class="hub-btn-row">
+        <button class="btn btn--primary" type="submit"><AIcon name="check" size={16} /> Save profile</button>
+        <a class="btn btn--ghost" href="/account">Cancel</a>
+      </div>
+    </form>
+
+    <div class="hub-stack">
+      <section class="hub-card" style="text-align:center;">
+        <div style="display:grid; justify-items:center; gap: var(--space-2);">
+          <Avatar name={user.name} src={user.image} size={96} />
+          <strong style="font-size: var(--fs-lg);">{user.name}</strong>
+          {values.handle && <span class="hub-muted">@{values.handle}</span>}
+          <span class="hub-pill hub-pill--green">{role.label}</span>
+        </div>
+        <dl class="hub-kv" style="margin-top: var(--space-5); text-align:left;">
+          <dt>Email</dt><dd>{user.email}</dd>
+          <dt>Member since</dt><dd>{formatDate(account?.createdAt)}</dd>
+          <dt>XP / coins</dt><dd>{profile.xp} / {profile.coins}</dd>
+        </dl>
+        <div class="hub-card__foot" style="justify-content:center;">
+          <a class="btn btn--sm" href="/account/security"><AIcon name="lock" size={15} /> Change password</a>
+        </div>
+      </section>
+
+      <section class="hub-card">
+        <div class="hub-card__head">
+          <h2 class="hub-card__title"><AIcon name="shield" size={18} /> What you can do</h2>
+        </div>
+        <p class="hub-card__sub" style="margin-bottom: var(--space-3);">{role.description}</p>
+        <ul class="hub-list">
+          {
+            [...viewer.permissions].map((p) => (
+              <li style="padding: 6px 0; font-size: var(--fs-sm);">
+                <AIcon name="check" size={15} class="hub-muted" /> {PERMISSIONS[p]}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
     </div>
   </div>
-
-  {notice && <Alert tone="success">{notice}</Alert>}
-  {error && <Alert tone="danger">{error}</Alert>}
-
-  <div class="stat-grid" style="margin-top: var(--space-5);">
-    <div class="card stat"><div class="stat__value">{profile.xp}</div><div class="stat__label">XP</div></div>
-    <div class="card stat"><div class="stat__value">{profile.coins}</div><div class="stat__label">Coins</div></div>
-    <div class="card stat"><div class="stat__value">{profile.badges.length}</div><div class="stat__label">Badges</div></div>
-  </div>
-
-  <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-    <section class="card">
-      <h2 class="card__title">Your name</h2>
-      <p class="card__meta" style="margin-bottom: var(--space-4);">Shown on leaderboards as first name and initial.</p>
-      <form class="form" method="post">
-        <input type="hidden" name="action" value="name" />
-        <Field name="name" label="Name" value={name} autocomplete="name" error={errors.name} required />
-        <button class="btn btn--primary" type="submit">Save name</button>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2 class="card__title">Password</h2>
-      <p class="card__meta" style="margin-bottom: var(--space-4);">Changing it signs out your other devices.</p>
-      <form class="form" method="post">
-        <input type="hidden" name="action" value="password" />
-        <Field name="current" label="Current password" type="password" autocomplete="current-password" required />
-        <Field name="new" label="New password" type="password" autocomplete="new-password" minlength={MIN_PASSWORD_LENGTH} error={errors.new} required />
-        <button class="btn btn--primary" type="submit">Change password</button>
-      </form>
-    </section>
-
-    <section class="card">
-      <h2 class="card__title">What you can do</h2>
-      <p class="card__meta" style="margin-bottom: var(--space-3);">{role.description}</p>
-      <ul style="margin:0; padding-left: 1.1rem; font-size: var(--fs-sm); color: var(--text-muted); display:grid; gap: 4px;">
-        {[...viewer.permissions].map((p) => <li>{PERMISSIONS[p]}</li>)}
-      </ul>
-    </section>
-  </div>
-  <!-- TODO(games-port): list cloud saves (repos.progress.list) and best scores per game here. -->
 </AppLayout>

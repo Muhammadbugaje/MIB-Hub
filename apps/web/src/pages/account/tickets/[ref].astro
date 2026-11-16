@@ -1,0 +1,126 @@
+---
+/**
+ * /account/tickets/<ref>: one of the player's tickets: the conversation
+ * (staff-only notes are never shown) and a reply box. Replying to a
+ * resolved or waiting ticket re-opens it for the team.
+ */
+import AIcon from "../../../components/admin/AIcon.astro";
+import Avatar from "../../../components/admin/Avatar.astro";
+import PageHead from "../../../components/admin/PageHead.astro";
+import AppLayout from "../../../layouts/AppLayout.astro";
+import { done, fStr, labelize, pillClass } from "../../../lib/admin-kit.ts";
+import { repos } from "../../../lib/db.ts";
+import { guard } from "../../../lib/guard.ts";
+import { formatDate } from "../../../lib/site.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const user = Astro.locals.viewer.user!;
+const ticket = await repos.tickets.getByRef(String(Astro.params.ref ?? ""));
+if (!ticket || ticket.userId !== user.id) return Astro.rewrite("/404");
+
+let error = "";
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = fStr(form, "action", 20);
+  if (action === "reply") {
+    const body = fStr(form, "body", 8000);
+    if (body.length < 2) error = "Write a message first.";
+    else if (ticket.status === "closed") error = "This ticket is closed. Open a new one if you still need help.";
+    else {
+      await repos.tickets.reply({ ticketId: ticket.id, authorId: user.id, fromStaff: false, body });
+      if (ticket.status !== "open") await repos.tickets.update(ticket.id, { status: "open" });
+      return done(Astro, "Reply sent.");
+    }
+  } else if (action === "resolve" && ticket.status !== "closed") {
+    await repos.tickets.update(ticket.id, { status: "resolved" });
+    return done(Astro, "Marked as solved. Thank you!");
+  }
+}
+
+const messages = await repos.tickets.messages(ticket.id);
+const authorIds = [...new Set(messages.map((m) => m.authorId).filter((x): x is string => !!x))];
+const authors = new Map((await Promise.all(authorIds.map((id) => repos.users.findById(id)))).filter((u) => !!u).map((u) => [u!.id, u!]));
+const game = ticket.gameSlug ? await repos.games.getBySlug(ticket.gameSlug) : undefined;
+---
+
+<AppLayout title={`Ticket ${ticket.ref}`}>
+  <PageHead eyebrow={`${ticket.ref} · ${labelize(ticket.kind)}`} title={ticket.subject} back={{ href: "/account/tickets", label: "My tickets" }}>
+    <span slot="actions" class={pillClass(ticket.status)}>{ticket.status === "pending" ? "Waiting for you" : labelize(ticket.status)}</span>
+  </PageHead>
+
+  <div class="hub-grid hub-grid--main">
+    <section class="hub-card">
+      <div class="hub-thread">
+        <div class="hub-msg">
+          <Avatar name={user.name} src={user.image} size={36} />
+          <div class="hub-msg__bubble">
+            <div class="hub-msg__meta"><strong>You</strong> {formatDate(ticket.createdAt, { time: true })}</div>
+            <div class="hub-msg__body">{ticket.body}</div>
+          </div>
+        </div>
+        {
+          messages.map((m) => {
+            const a = m.authorId ? authors.get(m.authorId) : undefined;
+            const who = m.fromStaff ? `${a?.name.split(/\s+/)[0] ?? "Support"} · MIB-Hub team` : "You";
+            return (
+              <div class:list={["hub-msg", m.fromStaff && "hub-msg--staff"]}>
+                <Avatar name={a?.name ?? "Support"} src={a?.image} size={36} />
+                <div class="hub-msg__bubble">
+                  <div class="hub-msg__meta">
+                    <strong>{who}</strong> {formatDate(m.createdAt, { time: true })}
+                  </div>
+                  <div class="hub-msg__body">{m.body}</div>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+
+      {
+        ticket.status === "closed" ? (
+          <div class="hub-note" style="margin-top: var(--space-5);">
+            <AIcon name="check" size={16} /> This ticket is closed. <a href="/account/tickets#new">Open a new one</a> if you need more help.
+          </div>
+        ) : (
+          <form method="post" class="hub-btn-row" style="display:grid; gap: var(--space-3);">
+            <input type="hidden" name="action" value="reply" />
+            <label class="hub-field__label" for="r-body">Your reply</label>
+            <textarea class="input hub-textarea" id="r-body" name="body" rows="4" maxlength="8000" required aria-invalid={error ? "true" : undefined} />
+            {error && <p class="hub-field__error">{error}</p>}
+            <div class="hub-actions">
+              <button class="btn btn--primary" type="submit">
+                <AIcon name="send" size={16} /> Send reply
+              </button>
+            </div>
+          </form>
+        )
+      }
+    </section>
+
+    <aside class="hub-stack">
+      <section class="hub-card">
+        <h2 class="hub-card__title" style="margin-bottom: var(--space-4);"><AIcon name="note" size={18} /> Details</h2>
+        <dl class="hub-kv">
+          <dt>Reference</dt><dd><span class="hub-code">{ticket.ref}</span></dd>
+          <dt>Type</dt><dd>{labelize(ticket.kind)}</dd>
+          {game && (<><dt>Game</dt><dd>{game.title}</dd></>)}
+          <dt>Opened</dt><dd>{formatDate(ticket.createdAt, { time: true })}</dd>
+          <dt>Updated</dt><dd>{formatDate(ticket.updatedAt, { time: true })}</dd>
+        </dl>
+        {
+          (ticket.status === "open" || ticket.status === "pending") && (
+            <form method="post" class="hub-card__foot">
+              <input type="hidden" name="action" value="resolve" />
+              <button class="btn btn--sm" type="submit">
+                <AIcon name="check" size={15} /> My problem is solved
+              </button>
+            </form>
+          )
+        }
+      </section>
+    </aside>
+  </div>
+</AppLayout>

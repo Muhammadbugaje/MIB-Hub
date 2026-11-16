@@ -1,42 +1,90 @@
 ---
 /**
- * The MIB-Hub logo: a rounded mark (brand green with a gold spark and a
- * play shape) plus the site name from site.config.ts.
- * <Logo />  or  <Logo href="/admin" />  or  <Logo markOnly />
+ * The MIB-Hub logo. The mark is an arcade token: a gold coin with a notched
+ * rim (MIB-Hub's answer to EE Hub's gear), a deep green-to-night disc inside
+ * a dashed cyan ring, and a cyan "play" glyph with a gold spark.
+ *
+ *   <Logo />                      mark + "MIB-Hub" (sidebar, auth)
+ *   <Logo lockup />               mark + name + small tagline (public header)
+ *   <Logo markOnly size={28} />   just the mark
+ *   <Logo href="/admin" />
  */
 import { siteConfig } from "../site.config.ts";
 
 interface Props {
-  href?: string;
+  href?: string | null;
   markOnly?: boolean;
+  lockup?: boolean;
+  size?: number;
+  class?: string;
 }
-const { href = "/", markOnly = false } = Astro.props;
+const { href = "/", markOnly = false, lockup = false, size = 36, class: className } = Astro.props;
 
-// Split "MIB-Hub" into "MIB" and "-Hub" so the second part can take the accent colour.
+// Unique gradient ids per instance: a gradient defined inside a hidden copy
+// (e.g. the closed mobile drawer) would otherwise blank out the visible ones.
+const uid = `mib${Math.random().toString(36).slice(2, 8)}`;
+
+// The token's notched rim: 18 rounded notches around a circle (deterministic).
+const N = 18;
+const outer = 19.2;
+const inner = 17.4;
+const pts: string[] = [];
+for (let i = 0; i < N * 4; i++) {
+  const a = (i / (N * 4)) * Math.PI * 2 - Math.PI / 2;
+  const r = i % 4 === 0 || i % 4 === 3 ? outer : inner + (i % 4 === 1 ? 0.35 : 0);
+  pts.push(`${(20 + Math.cos(a) * r).toFixed(2)},${(20 + Math.sin(a) * r).toFixed(2)}`);
+}
+const rim = `M${pts.join("L")}Z`;
+
+// "MIB-Hub" -> "MIB" + "-Hub" so the second part can take the gradient.
 const dash = siteConfig.name.indexOf("-");
 const first = dash > 0 ? siteConfig.name.slice(0, dash) : siteConfig.name;
 const rest = dash > 0 ? siteConfig.name.slice(dash) : "";
-const gid = "logo-grad";
+const Tag = href ? "a" : "span";
 ---
 
-<a class="logo" href={href} aria-label={`${siteConfig.name}, home`}>
-  <svg class="logo__mark" viewBox="0 0 40 40" aria-hidden="true">
+<Tag
+  class:list={["logo", lockup && "logo--lockup", markOnly && "logo--mark", className]}
+  href={href ?? undefined}
+  aria-label={href ? `${siteConfig.name}, home` : undefined}
+>
+  <svg class="logo__mark" viewBox="0 0 40 40" width={size} height={size} aria-hidden="true">
     <defs>
-      <linearGradient id={gid} x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#2fa36b"></stop>
-        <stop offset="1" stop-color="#0f3d2e"></stop>
+      <linearGradient id={`${uid}-gold`} x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#f0dc9c"></stop>
+        <stop offset="0.55" stop-color="#c8a951"></stop>
+        <stop offset="1" stop-color="#a88a35"></stop>
+      </linearGradient>
+      <radialGradient id={`${uid}-disc`} cx="0.35" cy="0.3" r="0.85">
+        <stop offset="0" stop-color="#1a6b45"></stop>
+        <stop offset="0.6" stop-color="#0a2b20"></stop>
+        <stop offset="1" stop-color="#061423"></stop>
+      </radialGradient>
+      <linearGradient id={`${uid}-volt`} x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#7ef0ff"></stop>
+        <stop offset="1" stop-color="#13c4dc"></stop>
       </linearGradient>
     </defs>
-    <rect x="1" y="1" width="38" height="38" rx="12" fill={`url(#${gid})`}></rect>
-    <rect x="1.5" y="1.5" width="37" height="37" rx="11.5" fill="none" stroke="rgba(255,255,255,.18)"></rect>
-    <path d="M15 12.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 15 12.5z" fill="#fff"></path>
-    <circle cx="30.5" cy="9.5" r="3.2" fill="#d9be6e"></circle>
+    <path d={rim} fill={`url(#${uid}-gold)`}></path>
+    <circle cx="20" cy="20" r="14.6" fill={`url(#${uid}-disc)`}></circle>
+    <circle cx="20" cy="20" r="12.2" fill="none" stroke="#7ef0ff" stroke-opacity="0.38" stroke-width="0.7" stroke-dasharray="1.2 2.4"></circle>
+    <path
+      d="M16.4 13.6v12.8a1 1 0 0 0 1.52.86l10.1-6.4a1 1 0 0 0 0-1.72l-10.1-6.4a1 1 0 0 0-1.52.86z"
+      fill={`url(#${uid}-volt)`}
+      stroke="#e8fdff"
+      stroke-width="0.7"
+      stroke-linejoin="round"></path>
+    <path d="M28.6 9.2l.75 1.75 1.75.75-1.75.75-.75 1.75-.75-1.75-1.75-.75 1.75-.75z" fill="#f3dc8e"></path>
   </svg>
   {
-    !markOnly && (
-      <span>
-        {first}<span class="logo__accent">{rest}</span>
-      </span>
-    )
+    !markOnly &&
+      (lockup ? (
+        <span class="logo__lock">
+          <b>{first}<span class="logo__accent">{rest}</span></b>
+          <small>{siteConfig.lockupTagline}</small>
+        </span>
+      ) : (
+        <span class="logo__name">{first}<span class="logo__accent">{rest}</span></span>
+      ))
   }
-</a>
+</Tag>

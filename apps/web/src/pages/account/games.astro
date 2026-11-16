@@ -1,0 +1,152 @@
+---
+/**
+ * /account/games: the player's cloud saves (with delete) and their runs,
+ * with a personal best per game.
+ */
+import AIcon from "../../components/admin/AIcon.astro";
+import DeleteButton from "../../components/admin/DeleteButton.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { done, fStr, labelize } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate, timeAgo } from "../../lib/site.ts";
+
+const denied = guard(Astro, { signedIn: true });
+if (denied) return denied;
+
+const user = Astro.locals.viewer.user!;
+const profile = await repos.profiles.getOrCreateForUser(user.id, user.name);
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  if (fStr(form, "action") === "delete") {
+    await repos.progress.remove(profile.id, fStr(form, "id", 80));
+    return done(Astro, "Save deleted.");
+  }
+}
+
+const [games, saves, runs] = await Promise.all([repos.games.listAll(), repos.progress.forProfile(profile.id), repos.scores.forProfile(profile.id, 200)]);
+const bySlug = new Map(games.map((g) => [g.slug, g]));
+const gameName = (slug: string) => bySlug.get(slug)?.title ?? labelize(slug);
+const best = new Map<string, { score: number; at: Date; runs: number }>();
+for (const r of runs) {
+  if (r.cheated) continue;
+  const b = best.get(r.gameSlug);
+  if (!b) best.set(r.gameSlug, { score: r.score, at: r.createdAt, runs: 1 });
+  else {
+    b.runs++;
+    if (r.score > b.score) Object.assign(b, { score: r.score, at: r.createdAt });
+  }
+}
+const bests = [...best.entries()].sort((a, b) => b[1].runs - a[1].runs);
+---
+
+<AppLayout title="Saves & scores">
+  <PageHead eyebrow="Your account" title="Saves & scores" icon="gamepad" lead="Progress kept in the cloud and every run you have finished while signed in." />
+
+  {
+    bests.length > 0 && (
+      <div class="hub-cards" style="margin-bottom: var(--space-5);">
+        {bests.map(([slug, b]) => (
+          <a class="hub-mcard" href={`/play/${slug}`} style={`--a:${bySlug.get(slug)?.accent ?? "#1a6b45"}; color: var(--text);`}>
+            <div class="hub-mcard__body">
+              <span class="hub-subtle">Personal best</span>
+              <h2 class="hub-mcard__title">{gameName(slug)}</h2>
+              <span class="hub-stat__value">{b.score.toLocaleString("en-GB")}</span>
+              <span class="hub-subtle">
+                {b.runs} {b.runs === 1 ? "run" : "runs"} · best on {formatDate(b.at)}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    )
+  }
+
+  <section class="hub-card hub-card--flush">
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="database" size={18} /> Cloud saves</h2>
+      <span class="hub-subtle">{saves.length} {saves.length === 1 ? "save" : "saves"}</span>
+    </div>
+    {
+      saves.length === 0 ? (
+        <EmptyState icon="database" title="No cloud saves yet" text="Play a game that supports saves while signed in. Your progress appears here and follows you to any device.">
+          <a slot="action" class="btn btn--sm btn--primary" href="/games">
+            Browse games
+          </a>
+        </EmptyState>
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th>Slot</th>
+                <th>Progress</th>
+                <th>Saved</th>
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              {saves.map((s) => (
+                <tr>
+                  <td>
+                    <a class="hub-row-title" href={`/play/${s.gameSlug}`}>
+                      {gameName(s.gameSlug)}
+                    </a>
+                  </td>
+                  <td data-label="Slot">{s.slot === "auto" ? <span class="hub-pill hub-pill--volt">Autosave</span> : `Slot ${s.slot}`}</td>
+                  <td data-label="Progress">{s.summary || <span class="hub-subtle">Saved game (v{s.saveVersion})</span>}</td>
+                  <td data-label="Saved">{timeAgo(s.updatedAt)}</td>
+                  <td class="hub-actions-cell">
+                    <DeleteButton id={s.id} what={`the ${gameName(s.gameSlug)} save`} compact />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+
+  <section class="hub-card hub-card--flush" id="scores">
+    <div class="hub-card__head">
+      <h2 class="hub-card__title"><AIcon name="trophy" size={18} /> Recent runs</h2>
+      <a class="hub-card__link" href="/leaderboards">Leaderboards <AIcon name="arrow-right" size={14} /></a>
+    </div>
+    {
+      runs.length === 0 ? (
+        <EmptyState icon="trophy" title="No runs yet" text="Finish a game while signed in and your score is recorded here and on its leaderboard." />
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead>
+              <tr>
+                <th>Game</th>
+                <th class="hub-num">Score</th>
+                <th>When</th>
+              </tr>
+            </thead>
+            <tbody>
+              {runs.slice(0, 50).map((r) => (
+                <tr>
+                  <td>
+                    <span class="hub-row-title">{gameName(r.gameSlug)}</span>
+                    {r.cheated && <span class="hub-pill hub-pill--red" style="margin-left:8px;">Not counted</span>}
+                  </td>
+                  <td class="hub-num" data-label="Score">
+                    <strong>{r.score.toLocaleString("en-GB")}</strong>
+                  </td>
+                  <td data-label="When">{formatDate(r.createdAt, { time: true })}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+  </section>
+</AppLayout>

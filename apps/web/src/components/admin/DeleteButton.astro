@@ -1,0 +1,24 @@
+---
+/**
+ * A small form that posts a delete action after a confirm() prompt.
+ * <DeleteButton id={row.id} what="this post" />   (posts action=delete, id=…)
+ */
+import AIcon from "./AIcon.astro";
+
+interface Props {
+  id: string;
+  what: string;
+  action?: string;
+  label?: string;
+  compact?: boolean;
+}
+const { id, what, action = "delete", label = "Delete", compact = false } = Astro.props;
+---
+
+<form method="post" data-confirm={`Delete ${what}? This cannot be undone.`} class="hub-inline-form">
+  <input type="hidden" name="action" value={action} />
+  <input type="hidden" name="id" value={id} />
+  <button class:list={["btn btn--sm hub-btn-danger", compact && "btn--icon"]} type="submit" aria-label={`${label} ${what}`} title={label}>
+    <AIcon name="trash" size={15} />{!compact && <span>{label}</span>}
+  </button>
+</form>

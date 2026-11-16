@@ -1,0 +1,110 @@
+---
+/**
+ * /admin/audit: who changed what, newest first, with before/after values
+ * (secrets are redacted by the repo). Filter by area, person and action.
+ * Needs audit.view. Read-only.
+ */
+import AIcon from "../../components/admin/AIcon.astro";
+import Avatar from "../../components/admin/Avatar.astro";
+import EmptyState from "../../components/admin/EmptyState.astro";
+import PageHead from "../../components/admin/PageHead.astro";
+import AppLayout from "../../layouts/AppLayout.astro";
+import { labelize } from "../../lib/admin-kit.ts";
+import { repos } from "../../lib/db.ts";
+import { guard } from "../../lib/guard.ts";
+import { formatDate } from "../../lib/site.ts";
+
+const denied = guard(Astro, { permission: "audit.view" });
+if (denied) return denied;
+
+const PER = 40;
+const sp = Astro.url.searchParams;
+const type = sp.get("type") ?? "";
+const actor = sp.get("actor") ?? "";
+const action = (sp.get("action") ?? "").trim();
+const page = Math.max(1, Number(sp.get("page")) || 1);
+const [rows, types, staff] = await Promise.all([
+  repos.audit.list({ limit: PER + 1, offset: (page - 1) * PER, targetType: type || undefined, actorId: actor || undefined, actionPrefix: action || undefined }),
+  repos.audit.targetTypes(),
+  Promise.all(["owner", "admin", "moderator"].map((role) => repos.users.search({ role, limit: 100 }))).then((r) => r.flatMap((x) => x.rows)),
+]);
+const more = rows.length > PER;
+const list = rows.slice(0, PER);
+const ids = [...new Set(list.map((a) => a.actorId).filter((x): x is string => !!x))];
+const people = new Map((await Promise.all(ids.map((id) => repos.users.findById(id)))).filter((u) => !!u).map((u) => [u!.id, u!]));
+const link = (p: number) => {
+  const u = new URLSearchParams(sp);
+  u.set("page", String(p));
+  return `?${u}`;
+};
+const show = (v: unknown) => (v === null || v === undefined ? "" : JSON.stringify(v, null, 1));
+---
+
+<AppLayout title="Audit log">
+  <PageHead eyebrow="System" title="Audit log" icon="list" lead="Every change made in admin: who, when, from where, and what it was before and after. Codes and passwords are never stored here." />
+
+  <form method="get" class="hub-toolbar">
+    <select class="input" name="type" aria-label="Area" style="width:auto;">
+      <option value="">Every area</option>
+      {types.map((t) => <option value={t} selected={t === type}>{labelize(t)}</option>)}
+    </select>
+    <select class="input" name="actor" aria-label="Person" style="width:auto;">
+      <option value="">Everyone</option>
+      {staff.map((u) => <option value={u.id} selected={u.id === actor}>{u.name}</option>)}
+    </select>
+    <input class="input hub-toolbar__grow" name="action" value={action} placeholder="Action starts with… (post., user.ban)" aria-label="Action" />
+    <button class="btn" type="submit"><AIcon name="filter" size={15} /> Filter</button>
+  </form>
+
+  <section class="hub-card hub-card--flush">
+    {
+      list.length === 0 ? (
+        <EmptyState icon="list" title="No changes recorded" text={type || actor || action ? "Nothing matches these filters." : "As soon as anyone changes something in admin, it is recorded here."} />
+      ) : (
+        <div class="hub-table-wrap">
+          <table class="hub-table hub-table--stack">
+            <thead><tr><th>When</th><th>Who</th><th>Action</th><th>Target</th><th>Change</th></tr></thead>
+            <tbody>
+              {list.map((a) => {
+                const who = a.actorId ? people.get(a.actorId) : undefined;
+                return (
+                  <tr>
+                    <td data-label="When" style="white-space:nowrap;">{formatDate(a.createdAt, { time: true })}</td>
+                    <td data-label="Who">
+                      <span style="display:inline-flex; gap:8px; align-items:center;">
+                        <Avatar name={who?.name ?? "System"} src={who?.image} size={26} /> {who?.name ?? "System"}
+                      </span>
+                    </td>
+                    <td data-label="Action"><span class="hub-code">{a.action}</span>{a.note && <span class="hub-row-sub">{a.note}</span>}</td>
+                    <td data-label="Target">{labelize(a.targetType || "-")}<span class="hub-row-sub hub-mono">{a.targetId}</span></td>
+                    <td style="min-width: 220px;">
+                      {a.before == null && a.after == null ? (
+                        <span class="hub-subtle">No details</span>
+                      ) : (
+                        <details>
+                          <summary class="hub-subtle" style="cursor:pointer;">Show values</summary>
+                          {a.before != null && (<><p class="hub-subtle" style="margin: 6px 0 2px;">Before</p><pre class="hub-json">{show(a.before)}</pre></>)}
+                          {a.after != null && (<><p class="hub-subtle" style="margin: 6px 0 2px;">After</p><pre class="hub-json">{show(a.after)}</pre></>)}
+                          {a.ip && <p class="hub-subtle" style="margin-top:6px;">From {a.ip}</p>}
+                        </details>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )
+    }
+    {
+      (page > 1 || more) && (
+        <div class="hub-pager">
+          {page > 1 ? <a class="btn btn--sm" href={link(page - 1)}><AIcon name="arrow-left" size={14} /> Newer</a> : <span />}
+          <span>Page {page}</span>
+          {more ? <a class="btn btn--sm" href={link(page + 1)}>Older <AIcon name="arrow-right" size={14} /></a> : <span />}
+        </div>
+      )
+    }
+  </section>
+</AppLayout>
