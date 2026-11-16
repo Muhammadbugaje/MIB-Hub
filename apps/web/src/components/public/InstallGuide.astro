@@ -342,7 +342,8 @@ import Icon from "../Icon.astro";
               : event.key === "End"
                 ? tabs.length - 1
                 : (index + step + tabs.length) % tabs.length;
-          choose(tabs[next].dataset.installTab ?? "iphone", true);
+          const nextTab = tabs[next];
+          if (nextTab) choose(nextTab.dataset.installTab ?? "iphone", true);
         });
       });
     }
