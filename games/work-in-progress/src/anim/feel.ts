@@ -51,7 +51,13 @@ export const FEEL = {
   lod: { full: 15, mid: 35, far: 75, reactive: 6 },
 
   /** Camera, plan §5.3 (on foot). */
-  camera: { arm: 3.2, armIndoor: 2.4, pivot: 1.55, fov: 60, fovSprint: 68, posLag: 0.08, rotLag: 0.05, recentreAfter: 1.5, probe: 0.25, easeOut: 0.4, pitchMin: -35, pitchMax: 60, mouse: 0.12, touch: 0.25, pad: 240 },
+  camera: {
+    arm: 3.2, armIndoor: 2.4, pivot: 1.55, fov: 60, fovSprint: 68, posLag: 0.08, rotLag: 0.05,
+    // Recentre: only after the player has held one direction for `settle` seconds, never for a glance or a
+    // small correction (`deadzone`), and never while they steer the camera (`recentreAfter`).
+    recentreAfter: 1.5, settle: 0.9, deadzone: 0.32, maxOff: 2.1, rate: 1.8,
+    probe: 0.25, easeOut: 0.4, pitchMin: -35, pitchMax: 60, mouse: 0.12, touch: 0.25, pad: 240,
+  },
 };
 
 export type Feel = typeof FEEL;

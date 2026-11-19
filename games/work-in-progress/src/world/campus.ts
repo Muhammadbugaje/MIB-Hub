@@ -162,14 +162,12 @@ export function buildCampus(b: Builder, signs: SignAtlas, col: CollisionWorld): 
       b.at(gx, z0, 0, 0).tint(hex("#454b50")).box("metal", 0, 0, 0, 0.18, 2.1, 0.18);
       b.at(gx, z0, 0, 0).cylinder("metal", 0, 2.1, 0, 0.12, 0, 0.25, 4, false, false);
     }
-    // The coil: a stone plinth, a copper winding as tall as a man, a crown ring that glows.
-    const c = b.at(G.x, G.z, 0, 0);
-    c.tint(STONE).cylinder("stone", 0, 0, 0, 1.0, 0.9, 0.7, 16);
-    c.tint(hex("#5a4a3a")).cylinder("metal", 0, 0.7, 0, 0.32, 0.32, 1.7, 14);
-    for (let k = 0; k < 16; k++) c.tint(hex(k % 2 ? "#b87333" : "#c98a46")).cylinder("metal", 0, 0.75 + k * 0.1, 0, 0.42, 0.42, 0.06, 18, false);
-    c.tint(hex("#7fd6c8")).cylinder("glow", 0, 2.42, 0, 0.62, 0.62, 0.08, 20);
-    c.tint(hex("#b87333")).dome("metal", 0, 2.4, 0, 0.3, 14, 4);
-    col.add({ kind: "circle", x: G.x, z: G.z, r: 1.05, h: 2.6 });
+    // The coil itself is a dynamic hero prop (world/tesla-coil.ts, built by the story game); its solid parts:
+    // the plinth, the strike rod on its insulator, the spark-gap box.
+    // (Positions are tesla-coil.ts's, times its scale of 1.3.)
+    col.add({ kind: "circle", x: G.x, z: G.z, r: 1.62, h: 4.6 });
+    col.add({ kind: "circle", x: G.x + 2.21, z: G.z + 1.17, r: 0.16, h: 3.4 });
+    col.add({ kind: "circle", x: G.x - 1.37, z: G.z + 1.24, r: 0.42, h: 0.8 });
     // The stone bench (always empty) and the upturned crate beside it.
     const sb = b.at(-73.0, -228.6, 0, 0);
     sb.tint(STONE).box("stone", 0, 0.38, 0, 1.6, 0.1, 0.45, 1);

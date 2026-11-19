@@ -23,6 +23,7 @@ export interface BodyShape {
   heavy?: number;
   lean?: number;
   fit?: number;
+  tired?: number;
 }
 
 export interface BodyKit {

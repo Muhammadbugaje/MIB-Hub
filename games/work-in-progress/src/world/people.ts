@@ -26,6 +26,7 @@
 import * as pc from "playcanvas";
 import { Animator } from "../anim/animator.ts";
 import { MotionSense } from "../anim/motion-sense.ts";
+import { MORPH_NAMES } from "../anim/meshops.ts";
 import { FEEL } from "../anim/feel.ts";
 import { AnimLibrary, type AnimIndex } from "../anim/library.ts";
 import { B, BONE_COUNT, MIB_BONES, Skeleton } from "../anim/skeleton.ts";
@@ -36,7 +37,8 @@ import type { Rng } from "../sim/rng.ts";
 import { type GestureName } from "./rig.ts";
 import { surfaceHeight } from "./surface.ts";
 import { HIJAB_STYLES, buildHeadwear, type HijabStyle } from "./headwear.ts";
-import { DEFAULT_BODY, buildBody, type BodyKit, type BodyShape } from "./bodymesh.ts";
+import { DEFAULT_BODY, type BodyShape } from "./bodymesh.ts";
+import { STYLES, type BaseKit, loadBases, outfitOf, skinTint } from "./basebody.ts";
 
 export const HUMAN_HEIGHT = 1.74;
 
@@ -51,16 +53,16 @@ export interface ModelInfo {
 }
 
 export interface CharModel {
+  /** The outfit style key (casual, hoodie, womandress...: the cast, crowd and menu use these). */
   key: string;
   info: ModelInfo;
-  container: pc.ContainerResource;
   female: boolean;
   /** Model scale (1: bodies are built at 1.74 m). */
   scale: number;
   /** mib_rig proportions of this body. */
   skeleton: Skeleton;
-  /** The smooth close-up mesh, the crowd mesh, the skin and the body morphs (built at load). */
-  kit: BodyKit;
+  /** The realistic base body this style dresses (world/basebody.ts). */
+  base: BaseKit;
   /** Ground speed (m/s) of a natural walk and run on this body (stride-matched). */
   walkSpeed: number;
   runSpeed: number;
@@ -79,6 +81,10 @@ export interface Look {
   hijabStyle?: HijabStyle;
   /** Body shape (morph weights 0..1); omitted = the natural default. */
   body?: BodyShape;
+  /** Hairstyle on the base (long, buns, simpleparted, buzzed, buzzedfemale, beard...); omitted = picked per person. */
+  hairStyle?: string;
+  /** Expression (smile, tired, blink, talk). */
+  expression?: { smile?: number; tired?: number; blink?: number; talk?: number };
 }
 
 export const FEMALE_MODELS = ["animwoman", "womandress", "womancasual"];
@@ -172,37 +178,23 @@ export function paletteFor(device: pc.GraphicsDevice, model: Pick<CharModel, "in
 export let ANIM: AnimLibrary = new AnimLibrary();
 
 export async function loadPeople(app: pc.AppBase, base: string, onProgress: (f: number) => void): Promise<CharModel[]> {
-  const [index, animIndex] = await Promise.all([
-    fetch(`${base}people/index.json`).then((r) => r.json() as Promise<Record<string, ModelInfo>>),
-    fetch(`${base}anim/index.json`).then((r) => r.json() as Promise<AnimIndex>),
-  ]);
+  const animIndex = (await (await fetch(`${base}anim/index.json`)).json()) as AnimIndex;
   ANIM = new AnimLibrary(animIndex, (file) => fetch(`${base}anim/${file}`).then((r) => {
     if (!r.ok) throw new Error(`anim pack ${file}: ${r.status}`);
     return r.arrayBuffer();
   }));
   // The core pack before anyone moves; the social pack right after (cutscenes need it soon).
   const loco = ANIM.loadPack("locomotion");
-  const keys = Object.keys(index);
-  let done = 0;
-  const models = await Promise.all(
-    keys.map(
-      (key) =>
-        new Promise<CharModel>((resolve, reject) => {
-          const url = `${base}people/${index[key]!.file}`;
-          // The bytes for our own mesh build (the browser cache serves the container load the same file).
-          const bytes = fetch(url).then((r) => r.arrayBuffer());
-          app.assets.loadFromUrl(url, "container", (err, asset) => {
-            if (err || !asset) return reject(new Error(String(err)));
-            const container = asset.resource as pc.ContainerResource;
-            const info = index[key]!;
-            bytes.then((buf) => {
-              onProgress(++done / (keys.length + 1));
-              resolve({ key, info, container, kit: buildBody(app.graphicsDevice, buf), female: FEMALE_MODELS.includes(key), scale: 1, skeleton: skeletonOf(container), walkSpeed: 1.9, runSpeed: 5.2 });
-            }, reject);
-          });
-        }),
-    ),
-  );
+  onProgress(0.2);
+  const kits = await loadBases(app, base, ANIM.refHipHeight);
+  onProgress(0.7);
+  const models: CharModel[] = Object.entries(STYLES).map(([key, st]) => {
+    const kit = kits.get(st.base)!;
+    const info: ModelInfo = {
+      file: kit.info.file, slots: st.slots.map((name) => ({ name, color: [0.5, 0.5, 0.5] })), height: HUMAN_HEIGHT, hipHeight: kit.info.hipHeight, rig: "mib_rig", fit: kit.info.fit,
+    };
+    return { key, info, female: kit.info.female, scale: 1, skeleton: kit.skeleton, base: kit, walkSpeed: 1.9, runSpeed: 5.2 };
+  });
   await loco;
   onProgress(1);
   void ANIM.loadPack("social");
@@ -214,21 +206,6 @@ export async function loadPeople(app: pc.AppBase, base: string, onProgress: (f: 
   }
   startTicker(app);
   return models;
-}
-
-/** Read a body's mib_rig rest pose from its GLB nodes. */
-function skeletonOf(container: pc.ContainerResource): Skeleton {
-  const e = container.instantiateRenderEntity();
-  const rot = new Float32Array(BONE_COUNT * 4), pos = new Float32Array(BONE_COUNT * 3);
-  MIB_BONES.forEach(([n], i) => {
-    const node = e.findByName(n);
-    const q = node?.getLocalRotation() ?? new pc.Quat();
-    const p = node?.getLocalPosition() ?? new pc.Vec3();
-    rot.set([q.x, q.y, q.z, q.w], i * 4);
-    pos.set([p.x, p.y, p.z], i * 3);
-  });
-  e.destroy();
-  return new Skeleton(rot, pos, ANIM.refHipHeight);
 }
 
 const clampN = (v: number, a: number, b: number) => (v < a ? a : v > b ? b : v);
@@ -320,6 +297,51 @@ function capMeshFor(device: pc.GraphicsDevice): pc.Mesh {
   return capMesh;
 }
 
+/* ---------------------------------------------------------------- shared materials */
+
+const hairMats = new Map<string, pc.StandardMaterial>();
+/** Hair and eyebrows: the base's strand texture tinted to the colour; matte (rule C2: roughness >= 0.55, no glint). */
+function hairMaterial(kit: BaseKit, color: string): pc.StandardMaterial {
+  const key = `${kit.key}|${color}`;
+  let m = hairMats.get(key);
+  if (m) return m;
+  m = new pc.StandardMaterial();
+  m.diffuseMap = kit.tex.hair;
+  const c = new pc.Color().fromString(color);
+  // The strand texture is light grey: lift the tint so dark hair stays rich, not flat black.
+  m.diffuse = new pc.Color(Math.min(1, c.r * 1.25 + 0.03), Math.min(1, c.g * 1.25 + 0.025), Math.min(1, c.b * 1.25 + 0.02));
+  m.normalMap = kit.tex.hairNormal;
+  m.bumpiness = 0.8;
+  m.useMetalness = true;
+  m.metalness = 0;
+  m.gloss = 0.36;
+  m.specularityFactor = 0.3;
+  m.useSheen = true;
+  m.sheen = new pc.Color(0.1, 0.08, 0.07);
+  m.sheenGloss = 0.45;
+  m.cull = pc.CULLFACE_NONE;
+  (m as unknown as { ambientSH: Float32Array }).ambientSH = SH;
+  m.update();
+  hairMats.set(key, m);
+  return m;
+}
+
+const eyeMats = new Map<string, pc.StandardMaterial>();
+function eyeMaterial(kit: BaseKit): pc.StandardMaterial {
+  let m = eyeMats.get(kit.key);
+  if (m) return m;
+  m = new pc.StandardMaterial();
+  m.diffuseMap = kit.tex.eye;
+  m.useMetalness = true;
+  m.metalness = 0;
+  m.gloss = 0.75;
+  m.specularityFactor = 0.5;
+  (m as unknown as { ambientSH: Float32Array }).ambientSH = SH;
+  m.update();
+  eyeMats.set(kit.key, m);
+  return m;
+}
+
 /* ---------------------------------------------------------------- person */
 
 /** The FORMAT.md `actor.anim` names (and a few more the scripts use). */
@@ -385,6 +407,8 @@ export class Person {
   forceLod: 0 | 1 | 2 | 3 | null = null;
   private lods: pc.Entity[] = [];
   private meshInstances: pc.MeshInstance[] = [];
+  /** Eyes and eyebrows: drawn close up only. */
+  private detail: pc.Entity[] = [];
   private lodShown = -1;
   private acc = 0;
   private readonly sense = new MotionSense();
@@ -396,47 +420,90 @@ export class Person {
   driven = false;
   /** Feet follow the town's ground (off for riders on vehicles and people in interiors' props). */
   footIK = true;
+  heightScale = 1;
+  widthScale = 1;
+  bodyShape: BodyShape = {};
+  expression = { blink: 0, smile: 0, talk: 0, tired: 0 };
+  private blinkTimer = 2.0 + Math.random() * 2.5;
+  private blinkPhase = 0;
+  isSpeaking = false;
+  private speakTimer = 0;
+  private breathPhase = Math.random() * Math.PI * 2;
 
-  constructor(app: pc.AppBase, cm: CharModel, look: Look, parent: pc.Entity, opts: { shadows?: boolean } = {}) {
+  constructor(app: pc.AppBase, cm: CharModel, look: Look, parent: pc.Entity, opts: { shadows?: boolean; extras?: string[] } = {}) {
     this.cm = cm;
     this.root = new pc.Entity("person");
-    this.model = cm.container.instantiateRenderEntity();
+    // The skeleton: mib_rig bones at this base's rest pose.
+    const kit = cm.base;
+    this.model = new pc.Entity("model");
+    const ents: pc.Entity[] = MIB_BONES.map(([n], b) => {
+      const e = new pc.Entity(n);
+      e.setLocalRotation(kit.geo.rest.rot[b * 4]!, kit.geo.rest.rot[b * 4 + 1]!, kit.geo.rest.rot[b * 4 + 2]!, kit.geo.rest.rot[b * 4 + 3]!);
+      e.setLocalPosition(kit.geo.rest.pos[b * 3]!, kit.geo.rest.pos[b * 3 + 1]!, kit.geo.rest.pos[b * 3 + 2]!);
+      return e;
+    });
+    MIB_BONES.forEach(([, par], b) => (par ? ents[MIB_BONES.findIndex(([n]) => n === par)]! : this.model).addChild(ents[b]!));
     this.root.addChild(this.model);
     parent.addChild(this.root);
-    this.nodes = MIB_BONES.map(([n]) => this.model.findByName(n));
-
+    this.nodes = ents;
+    const device = app.graphicsDevice;
+    const outfit = outfitOf(device, kit, cm.key);
+    // Skin: the base's skin-detail texture tinted by this person's tone; soft, never glossy (rule C2).
+    const skin = new pc.StandardMaterial();
+    skin.diffuseMap = kit.tex.albedo;
+    skin.diffuse = skinTint(look.skin);
+    skin.normalMap = kit.tex.normal;
+    skin.bumpiness = 0.7;
+    skin.useMetalness = true;
+    skin.metalness = 0;
+    skin.glossMap = kit.tex.rough;
+    skin.glossInvert = true;
+    skin.gloss = 0.42;
+    skin.specularityFactor = 0.32;
+    skin.useSheen = true;
+    skin.sheen = new pc.Color(0.18, 0.1, 0.08);
+    skin.sheenGloss = 0.3;
+    (skin as unknown as { ambientSH: Float32Array }).ambientSH = SH;
+    skin.update();
+    // Clothes: one mesh for all garments, coloured from the palette (soft fabric with a little sheen).
     const mat = new pc.StandardMaterial();
     mat.useMetalness = true;
     mat.metalness = 0;
-    // Soft skin and cloth: roughness 0.68 (never glossy, rule C2), low specular, a warm soft sheen at
-    // grazing angles (cheap stand-in for light scattering in skin and fabric fuzz).
-    mat.gloss = 0.32;
-    mat.specularityFactor = 0.28;
+    mat.gloss = 0.2;
+    mat.specularityFactor = 0.2;
     mat.useSheen = true;
-    mat.sheen = new pc.Color(0.16, 0.11, 0.09);
+    mat.sheen = new pc.Color(0.12, 0.12, 0.12);
     mat.sheenGloss = 0.35;
-    mat.diffuseMap = paletteFor(app.graphicsDevice, cm, look);
-    mat.opacityMap = mat.diffuseMap;
-    mat.opacityMapChannel = "a";
-    mat.alphaTest = 0.5;
+    mat.diffuseMap = paletteFor(device, cm, look);
     (mat as unknown as { ambientSH: Float32Array }).ambientSH = SH;
     mat.update();
     this.material = mat;
-    // The container's own mesh is replaced by our two LODs (smooth close-up and crowd), skinned to its nodes.
-    for (const r of this.model.findComponents("render") as pc.RenderComponent[]) r.entity.removeComponent("render");
-    const kit = cm.kit;
-    const bones = kit.boneNames.map((n) => this.model.findByName(n)!);
-    for (const [name, mesh] of [["lod0", kit.lod0], ["lod1", kit.lod1]] as const) {
+    const add = (name: string, mesh: pc.Mesh | null, m: pc.Material, shadows = opts.shadows ?? true): pc.Entity | null => {
+      if (!mesh) return null;
       const e = new pc.Entity(name);
       this.model.addChild(e);
-      const mi = new pc.MeshInstance(mesh, mat);
+      const mi = new pc.MeshInstance(mesh, m);
       const si = new pc.SkinInstance(kit.skin);
-      si.bones = bones;
+      si.bones = ents;
       si.rootBone = this.model;
       mi.skinInstance = si;
-      e.addComponent("render", { meshInstances: [mi], castShadows: opts.shadows ?? true, receiveShadows: true });
-      this.lods.push(e);
-      this.meshInstances.push(mi);
+      e.addComponent("render", { meshInstances: [mi], castShadows: shadows, receiveShadows: true });
+      if (mesh.morph) this.meshInstances.push(mi);
+      return e;
+    };
+    add("body", outfit.body, skin);
+    add("clothes", outfit.clothes, mat);
+    // Face details only close up (LOD0).
+    const eyes = add("eyes", kit.meshes.eyes, eyeMaterial(kit), false);
+    const brows = add("brows", kit.meshes.brows, hairMaterial(kit, look.hair), false);
+    this.detail = [eyes, brows].filter((e): e is pc.Entity => !!e);
+    // Hair (none under a hijab: the hijab covers it completely).
+    if (look.headwear !== "hijab") {
+      const st = STYLES[cm.key]!;
+      const options = [...kit.meshes.hair.keys()].filter((h) => h !== "beard");
+      const want = look.hairStyle && kit.meshes.hair.has(look.hairStyle) ? look.hairStyle : st.hair[(personSeed + 1) % st.hair.length] ?? options[0];
+      if (want) add("hair", kit.meshes.hair.get(want) ?? null, hairMaterial(kit, look.hair));
+      if (look.hairStyle === "beard" || (!kit.info.female && look.hairStyle === undefined && (personSeed % 5 === 0))) add("beard", kit.meshes.hair.get("beard") ?? null, hairMaterial(kit, look.hair));
     }
     if (look.body) this.setBody(look.body);
     this.anim = new Animator(ANIM, cm.skeleton);
@@ -656,7 +723,7 @@ export class Person {
       const morph = mi.mesh?.morph;
       if (!morph) continue;
       if (!mi.morphInstance) mi.morphInstance = new pc.MorphInstance(morph);
-      this.cm.kit.morphs.forEach((name, i) => mi.morphInstance!.setWeight(i, (want[name] ?? 0) - (DEFAULT_BODY[name] ?? 0)));
+      MORPH_NAMES.forEach((name, i) => mi.morphInstance!.setWeight(i, (want[name] ?? 0) - (DEFAULT_BODY[name] ?? 0)));
     }
   }
 
@@ -669,13 +736,11 @@ export class Person {
   }
 
   private showLod(i: number): void {
-    if (this.lods.length < 2 || i === this.lodShown) {
-      this.lodShown = i;
-      return;
-    }
+    if (i === this.lodShown) return;
     this.lodShown = i;
-    this.lods.forEach((e, k) => (e.enabled = k === i));
+    for (const e of this.detail) e.enabled = i === 0;
   }
+
 
   /** Bone rotations (and the hips' translation) onto the engine's nodes. */
   private applyPose(): void {

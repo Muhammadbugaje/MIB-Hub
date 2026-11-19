@@ -129,18 +129,18 @@ export function pnSubdivide(m: Mesh, nor: number[]): Mesh {
 }
 
 /**
- * Body morph targets (plan §3.5: heavy, lean, fit), as position deltas along
- * the welded smooth normal (so seams between colour slots never open).
- * Amounts are per bone region in metres at weight 1; a vertex mixes its
- * bones' amounts by its skin weights, so the shape changes smoothly from
- * belly to chest to arms. Clothes are part of the same surface and follow.
+ * Body and facial morph targets (plan §3.5: heavy, lean, fit; plus blink, smile, talk, tired).
+ * Body shapes displace along welded smooth normals; facial morphs displace
+ * eyelid, mouth, jaw and brow vertices cleanly for natural expressions.
  */
 export const MORPHS: Record<string, Partial<Record<string, number>> & { belly?: number }> = {
   heavy: { Hips: 0.042, Spine: 0.048, Spine1: 0.036, Spine2: 0.022, Neck: 0.014, Head: 0.004, Shoulder: 0.016, Arm: 0.02, ForeArm: 0.011, Hand: 0.002, UpLeg: 0.032, Leg: 0.014, belly: 0.035 },
   lean: { Hips: -0.016, Spine: -0.022, Spine1: -0.016, Spine2: -0.01, Neck: -0.004, Shoulder: -0.006, Arm: -0.008, ForeArm: -0.004, UpLeg: -0.012, Leg: -0.006, belly: -0.012 },
   fit: { Hips: 0.004, Spine: -0.01, Spine1: 0.01, Spine2: 0.022, Neck: 0.01, Shoulder: 0.022, Arm: 0.02, ForeArm: 0.012, UpLeg: 0.014, Leg: 0.01, belly: -0.012 },
 };
-export const MORPH_NAMES = Object.keys(MORPHS);
+export const BODY_MORPH_NAMES = ["heavy", "lean", "fit"] as const;
+export const FACE_MORPH_NAMES = ["blink", "smile", "talk", "tired"] as const;
+export const MORPH_NAMES = [...BODY_MORPH_NAMES, ...FACE_MORPH_NAMES];
 
 export function morphDeltas(m: Mesh): number[][] {
   const n = m.pos.length / 3;
@@ -151,23 +151,92 @@ export function morphDeltas(m: Mesh): number[][] {
     if (/^Hand/.test(name)) return "Hand";
     return name;
   };
+
   return MORPH_NAMES.map((k) => {
-    const amt = MORPHS[k]!;
     const d = new Array<number>(n * 3).fill(0);
-    for (let i = 0; i < n; i++) {
-      let a = 0;
-      for (let j = 0; j < 4; j++) {
-        const w = m.weights[i * 4 + j]!;
-        if (w <= 0) continue;
-        const r = region(m.joints[i * 4 + j]!);
-        let v = amt[r] ?? 0;
-        // The belly pushes forward on the lower spine.
-        if ((r === "Spine" || r === "Spine1") && nor[i * 3 + 2]! > 0) v += (amt.belly ?? 0) * nor[i * 3 + 2]! * (r === "Spine" ? 1 : 0.6);
-        a += v * w;
+    if (k === "heavy" || k === "lean" || k === "fit") {
+      const amt = MORPHS[k]!;
+      for (let i = 0; i < n; i++) {
+        let a = 0;
+        for (let j = 0; j < 4; j++) {
+          const w = m.weights[i * 4 + j]!;
+          if (w <= 0) continue;
+          const r = region(m.joints[i * 4 + j]!);
+          let v = amt[r] ?? 0;
+          // The belly pushes forward on the lower spine.
+          if ((r === "Spine" || r === "Spine1") && nor[i * 3 + 2]! > 0) v += (amt.belly ?? 0) * nor[i * 3 + 2]! * (r === "Spine" ? 1 : 0.6);
+          a += v * w;
+        }
+        d[i * 3] = nor[i * 3]! * a;
+        d[i * 3 + 1] = nor[i * 3 + 1]! * a * 0.4; // mostly sideways and forwards: heights barely change
+        d[i * 3 + 2] = nor[i * 3 + 2]! * a;
       }
-      d[i * 3] = nor[i * 3]! * a;
-      d[i * 3 + 1] = nor[i * 3 + 1]! * a * 0.4; // mostly sideways and forwards: heights barely change
-      d[i * 3 + 2] = nor[i * 3 + 2]! * a;
+      return d;
+    }
+
+    // Facial morph targets: calculate precise vertex deltas for head-weighted vertices.
+    for (let i = 0; i < n; i++) {
+      let headW = 0;
+      for (let j = 0; j < 4; j++) {
+        const bone = m.joints[i * 4 + j]!;
+        const name = MIB_BONES[bone]?.[0];
+        if (name === "Head" || name === "LeftEye" || name === "RightEye") headW += m.weights[i * 4 + j]!;
+      }
+      if (headW <= 0.1) continue;
+
+      const x = m.pos[i * 3]!, y = m.pos[i * 3 + 1]!, z = m.pos[i * 3 + 2]!;
+      const ax = Math.abs(x);
+
+      if (k === "blink") {
+        // Upper eyelid: vertices above the eye opening dropping down over eyeball.
+        const dxCenter = ax - 0.035;
+        if (Math.abs(dxCenter) < 0.022 && y > 1.636 && y < 1.668 && z > -0.01) {
+          const falloffX = 1 - Math.abs(dxCenter) / 0.022;
+          const falloffY = Math.max(0, Math.min(1, (1.668 - y) / 0.026));
+          const w = falloffX * falloffY * headW;
+          d[i * 3 + 1] = -0.0145 * w;
+          d[i * 3 + 2] = 0.003 * w;
+        }
+      } else if (k === "smile") {
+        // Mouth corners pull outward and up, gentle cheek lift.
+        if (ax > 0.012 && ax < 0.040 && y > 1.545 && y < 1.595 && z > 0.015) {
+          const fx = (ax - 0.012) / 0.028;
+          const fy = 1 - Math.abs(y - 1.570) / 0.025;
+          const w = Math.max(0, fx * fy) * headW;
+          d[i * 3] = Math.sign(x) * 0.0085 * w;
+          d[i * 3 + 1] = 0.0075 * w;
+          d[i * 3 + 2] = 0.002 * w;
+        } else if (ax > 0.025 && ax < 0.055 && y > 1.585 && y < 1.630 && z > 0.015) {
+          // Subtle cheek raise
+          const w = (1 - (ax - 0.025) / 0.03) * (1 - Math.abs(y - 1.605) / 0.025) * headW;
+          d[i * 3 + 1] = 0.004 * Math.max(0, w);
+        }
+      } else if (k === "talk") {
+        // Lower lip and jaw drop downward and back to open the mouth.
+        if (ax < 0.032 && y > 1.515 && y < 1.570 && z > 0.015) {
+          const fx = 1 - ax / 0.032;
+          const fy = Math.max(0, (y - 1.515) / 0.055);
+          const w = fx * fy * headW;
+          d[i * 3 + 1] = -0.016 * w;
+          d[i * 3 + 2] = -0.0045 * w;
+        }
+      } else if (k === "tired") {
+        // Eyelid droop (half-closed) and outer brow descent.
+        const dxCenter = ax - 0.035;
+        if (Math.abs(dxCenter) < 0.022 && y > 1.636 && y < 1.668 && z > -0.01) {
+          const falloffX = 1 - Math.abs(dxCenter) / 0.022;
+          const falloffY = Math.max(0, Math.min(1, (1.668 - y) / 0.026));
+          const w = falloffX * falloffY * headW;
+          d[i * 3 + 1] = -0.007 * w;
+        }
+        if (ax > 0.028 && ax < 0.055 && y > 1.655 && y < 1.690 && z > 0.01) {
+          const w = (1 - (ax - 0.028) / 0.027) * (1 - Math.abs(y - 1.672) / 0.02) * headW;
+          d[i * 3 + 1] = -0.005 * Math.max(0, w);
+        }
+        if (ax > 0.012 && ax < 0.035 && y > 1.545 && y < 1.580 && z > 0.015) {
+          d[i * 3 + 1] = -0.0025 * headW;
+        }
+      }
     }
     return d;
   });

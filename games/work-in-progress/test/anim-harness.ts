@@ -14,6 +14,7 @@ import { B, BONE_COUNT, BONE_INDEX, Skeleton, fk, wpos } from "../src/anim/skele
 import type { Ground } from "../src/sim/controller.ts";
 import { Locomotor, type LocoInput } from "../src/sim/locomotor.ts";
 import { MotionSense } from "../src/anim/motion-sense.ts";
+import { STYLES } from "../src/world/basebody.ts";
 
 const GAME = resolve(__dirname, "..");
 
@@ -23,9 +24,10 @@ export function library(): AnimLibrary {
   return lib;
 }
 
-/** A body's mib_rig rest pose from its GLB nodes. */
+/** A body's mib_rig rest pose from its GLB nodes (an outfit style key maps to its base body). */
 export function bodySkeleton(key: string): Skeleton {
-  const buf = readFileSync(resolve(GAME, `assets/people/${key}.glb`));
+  const base = STYLES[key]?.base ?? key;
+  const buf = readFileSync(resolve(GAME, `assets/people2/${base}.glb`));
   const jl = buf.readUInt32LE(12);
   const json = JSON.parse(buf.subarray(20, 20 + jl).toString("utf8")) as { nodes: { name?: string; rotation?: number[]; translation?: number[] }[] };
   const rot = new Float32Array(BONE_COUNT * 4), pos = new Float32Array(BONE_COUNT * 3);
@@ -74,7 +76,11 @@ export class Sim {
     this.loco = new Locomotor(this.anim, 0, 0, 0, 0);
     const rw = fk(this.anim.sk, this.anim.sk.restPose());
     this.rest = { toe: Math.min(wpos(rw, B.LToe)[1], wpos(rw, B.RToe)[1]), ankle: Math.min(wpos(rw, B.LFoot)[1], wpos(rw, B.RFoot)[1]) };
+    this.heels = heelPoints(this.anim.sk);
   }
+
+  /** The back of each sole in its foot bone's own frame (the heel touches the ground here). */
+  readonly heels: [V3, V3];
 
   /** Rest heights of the ball-of-foot and ankle joints above the sole. */
   readonly rest: { toe: number; ankle: number };
@@ -103,12 +109,11 @@ export class Sim {
       return [r[0] + c.x, r[1] + this.loco.renderY, r[2] + c.z];
     };
     const tl = toW(wpos(w, B.LToe)), tr = toW(wpos(w, B.RToe));
-    const al = toW(wpos(w, B.LFoot)), ar = toW(wpos(w, B.RFoot));
     return {
       t: this.t, speed: c.speed, dominant: a.dominant, state: a.state, x: c.x, z: c.z, yaw: c.yaw,
       // Lowest point of each foot: the sole under the ball (toe joint minus its rest height) or under the heel
       // (ankle minus its rest height), so 0 = touching the ground, below 0 = sinking.
-      toeL: tl, toeR: tr, lowL: Math.min(tl[1] - this.rest.toe, al[1] - this.rest.ankle), lowR: Math.min(tr[1] - this.rest.toe, ar[1] - this.rest.ankle),
+      toeL: tl, toeR: tr, lowL: Math.min(tl[1] - this.rest.toe, toW(heelWorld(w, B.LFoot, this.heels[0]))[1]), lowR: Math.min(tr[1] - this.rest.toe, toW(heelWorld(w, B.RFoot, this.heels[1]))[1]),
       rot: Float32Array.from(a.pose.rot),
     };
   }
@@ -185,7 +190,11 @@ export class NpcSim {
     this.anim.groundAt = () => 0;
     const rw = fk(this.anim.sk, this.anim.sk.restPose());
     this.rest = { toe: Math.min(wpos(rw, B.LToe)[1], wpos(rw, B.RToe)[1]), ankle: Math.min(wpos(rw, B.LFoot)[1], wpos(rw, B.RFoot)[1]) };
+    this.heels = heelPoints(this.anim.sk);
   }
+
+  /** The back of each sole in its foot bone's own frame (the heel touches the ground here). */
+  readonly heels: [V3, V3];
 
   /** Move with a velocity (m/s) for `secs`, turning to face the way it goes, 60 frames per second. */
   move(secs: number, vel: (t: number) => [number, number]): this {
@@ -221,8 +230,9 @@ export class NpcSim {
         const r = rotV(q, 0, p);
         return [r[0] + this.x, r[1], r[2] + this.z];
       };
-      const tl = toW(wpos(w, B.LToe)), tr = toW(wpos(w, B.RToe)), al = toW(wpos(w, B.LFoot)), ar = toW(wpos(w, B.RFoot));
-      this.frames.push({ t: this.t, speed: this.sense.speed, dominant: a.dominant, state: a.state, x: this.x, z: this.z, yaw: this.yaw, toeL: tl, toeR: tr, lowL: Math.min(tl[1] - this.rest.toe, al[1] - this.rest.ankle), lowR: Math.min(tr[1] - this.rest.toe, ar[1] - this.rest.ankle), rot: Float32Array.from(a.pose.rot) });
+      const tl = toW(wpos(w, B.LToe)), tr = toW(wpos(w, B.RToe));
+      const hl = toW(heelWorld(w, B.LFoot, this.heels[0])), hr = toW(heelWorld(w, B.RFoot, this.heels[1]));
+      this.frames.push({ t: this.t, speed: this.sense.speed, dominant: a.dominant, state: a.state, x: this.x, z: this.z, yaw: this.yaw, toeL: tl, toeR: tr, lowL: Math.min(tl[1] - this.rest.toe, hl[1]), lowR: Math.min(tr[1] - this.rest.toe, hr[1]), rot: Float32Array.from(a.pose.rot) });
     }
     return this;
   }
@@ -236,4 +246,24 @@ export class NpcSim {
   maxPop(from: number, to: number): number {
     return Sim.prototype.maxPop.call(this as unknown as Sim, from, to);
   }
+}
+
+
+/** Heel points (the back of the sole, on the ground at rest) in each foot bone's frame. */
+export function heelPoints(sk: Skeleton): [V3, V3] {
+  const rw = fk(sk, sk.restPose());
+  const out: V3[] = [];
+  for (const f of [B.LFoot, B.RFoot]) {
+    const a = wpos(rw, f);
+    const heel: V3 = [a[0], 0, a[2] - 0.035];
+    const q = [rw.rot[f * 4]!, rw.rot[f * 4 + 1]!, rw.rot[f * 4 + 2]!, rw.rot[f * 4 + 3]!] as [number, number, number, number];
+    out.push(rotV([-q[0], -q[1], -q[2], q[3]], 0, [heel[0] - a[0], heel[1] - a[1], heel[2] - a[2]]));
+  }
+  return [out[0]!, out[1]!];
+}
+
+/** A heel point in model space for the current pose. */
+export function heelWorld(w: { rot: Float32Array; pos: Float32Array }, foot: number, local: V3): V3 {
+  const r = rotV(w.rot, foot * 4, local);
+  return [w.pos[foot * 3]! + r[0], w.pos[foot * 3 + 1]! + r[1], w.pos[foot * 3 + 2]! + r[2]];
 }

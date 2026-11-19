@@ -162,15 +162,21 @@ describe("vehicle models (the classic game's complaints)", () => {
 });
 
 describe("people assets", () => {
-  const index = JSON.parse(readFileSync(resolve(__dirname, "../assets/people/index.json"), "utf8")) as Record<string, { height: number; hipHeight: number; rig: string; fit?: unknown }>;
+  const index = JSON.parse(readFileSync(resolve(__dirname, "../assets/people2/index.json"), "utf8")) as Record<string, { height: number; hipHeight: number; rig: string; fit?: unknown; female: boolean; meshes: { name: string; tris: number }[] }>;
   const anim = JSON.parse(readFileSync(resolve(__dirname, "../assets/anim/index.json"), "utf8")) as { clips: Record<string, { speed?: number }> };
-  it("every character is on mib_rig at one human height, with headwear fit data", () => {
+  it("a male and a female base on mib_rig at one human height, with eyes, brows, hair and headwear fit data", () => {
+    expect(Object.values(index).map((b) => b.female).sort()).toEqual([false, true]);
     for (const [k, m] of Object.entries(index)) {
       expect(m.rig, k).toBe("mib_rig");
-      expect(m.height, k).toBeCloseTo(1.74, 3);
-      expect(m.hipHeight, k).toBeGreaterThan(0.7);
-      expect(m.hipHeight, k).toBeLessThan(1.1);
+      expect(m.height, k).toBeCloseTo(1.74, 2);
+      expect(m.hipHeight, k).toBeGreaterThan(0.8);
+      expect(m.hipHeight, k).toBeLessThan(1.05);
       expect(m.fit, k).toBeTruthy();
+      const names = m.meshes.map((x) => x.name);
+      expect(names, k).toEqual(expect.arrayContaining(["body", "eyes", "brows"]));
+      expect(names.filter((n) => n.startsWith("hair_")).length, k).toBeGreaterThanOrEqual(2);
+      // Budget: about 12-13k triangles for the body.
+      expect(m.meshes.find((x) => x.name === "body")!.tris, k).toBeLessThan(16000);
     }
   });
   it("the shared clip set has idle, walk, jog, run and sprint with measured strides", () => {

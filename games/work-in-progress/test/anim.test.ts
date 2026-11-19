@@ -10,15 +10,15 @@ import { describe, expect, it } from "vitest";
 import { FEEL } from "../src/anim/feel.ts";
 import { morphDeltas, pnSubdivide, smoothNormals, type Mesh } from "../src/anim/meshops.ts";
 import { B, fk } from "../src/anim/skeleton.ts";
-import { parseBody } from "../src/world/bodymesh.ts";
+import { parseBase } from "../src/world/basebody.ts";
 import type { Ground } from "../src/sim/controller.ts";
 import type { LocoInput } from "../src/sim/locomotor.ts";
 import { NpcSim, Sim, bodySkeleton } from "./anim-harness.ts";
 
 const BODIES = ["casual", "hoodie", "business", "farmer", "man", "manlong", "mansuit", "animwoman", "womandress", "womancasual"];
 const body = (k: string) => {
-  const b = readFileSync(resolve(__dirname, `../assets/people/${k}.glb`));
-  return parseBody(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength));
+  const b = readFileSync(resolve(__dirname, `../assets/people2/${k === "casual" ? "base_m" : "base_f"}.glb`));
+  return parseBase(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength)).meshes.get("body")!;
 };
 
 describe("step 1: rig and body", () => {

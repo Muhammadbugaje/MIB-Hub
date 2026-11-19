@@ -99,9 +99,9 @@ class CardLayer {
 }
 
 const SHAPE: Partial<Record<TreeInfo["kind"], { flat: number; cards: number; bloom: number }>> = {
-  neem: { flat: 0.62, cards: 90, bloom: 0 },
-  mango: { flat: 0.85, cards: 100, bloom: 0 },
-  flame: { flat: 0.42, cards: 120, bloom: 0.5 },
+  neem: { flat: 0.62, cards: 170, bloom: 0 },
+  mango: { flat: 0.85, cards: 190, bloom: 0 },
+  flame: { flat: 0.42, cards: 210, bloom: 0.5 },
 };
 
 export class TreeCards {
@@ -117,8 +117,8 @@ export class TreeCards {
   constructor(app: pc.AppBase, private trees: TreeInfo[], private ground: (x: number, z: number) => number, enabled: boolean) {
     if (!enabled) return;
     const mesh = cardMesh(app.graphicsDevice);
-    this.green = new CardLayer(app, mesh, leafTexture(app.graphicsDevice, ["#4f8a34", "#5f9a3c", "#3f7a2c", "#6fa846", "#2f5a24"], 11), 3600);
-    this.bloom = new CardLayer(app, mesh, leafTexture(app.graphicsDevice, ["#e8452a", "#f05a28", "#ff7a30", "#d83a20", "#5f9a3c"], 12), 900);
+    this.green = new CardLayer(app, mesh, leafTexture(app.graphicsDevice, ["#4f8a34", "#5f9a3c", "#3f7a2c", "#6fa846", "#2f5a24"], 11), 7000);
+    this.bloom = new CardLayer(app, mesh, leafTexture(app.graphicsDevice, ["#e8452a", "#f05a28", "#ff7a30", "#d83a20", "#5f9a3c"], 12), 1800);
   }
 
   update(camX: number, camZ: number): void {
@@ -147,15 +147,17 @@ export class TreeCards {
       for (let i = 0; i < n; i++) {
         // A point on the crown's (flattened) surface, more on top and round the sides than underneath.
         const a = rng.range(0, Math.PI * 2);
-        const up = Math.pow(rng.next(), 0.7) * 1.25 - 0.35;
+        const up = Math.pow(rng.next(), 0.8) * 1.8 - 0.8;
         const ring = Math.sqrt(Math.max(0, 1 - up * up));
         const rr = t.crownR * rng.range(0.8, 1.06);
         const x = t.x + Math.cos(a) * ring * rr, z = t.z + Math.sin(a) * ring * rr;
-        const y = gy + t.crownY + up * rr * sh.flat;
+        let y = gy + t.crownY + up * rr * sh.flat;
+        // A share of the cards hang below the clusters (seen from under the tree, with sky between).
+        if (up < -0.3 && rng.chance(0.45)) y -= rng.range(0.2, 0.8) * (t.crownR / 3.4);
         const flower = sh.bloom > 0 && rng.chance(sh.bloom);
         const L = flower ? F : G;
         if (L.n >= L.max) continue;
-        const sc = rng.range(0.9, 1.5) * (t.crownR / 3.4) * fade;
+        const sc = rng.range(1.0, 1.7) * (t.crownR / 3.4) * fade;
         this.v.set(x, y, z);
         this.q.setFromEulerAngles(rng.range(-25, 25), rng.range(0, 360), rng.range(-25, 25));
         this.s.set(sc, sc, sc);

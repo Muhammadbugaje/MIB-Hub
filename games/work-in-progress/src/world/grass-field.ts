@@ -43,7 +43,7 @@ function clumpMesh(device: pc.GraphicsDevice, flowers: boolean): pc.Mesh {
     const h = rng.range(0.07, 0.2) * (r < 0.12 ? 1.25 : 1), w = rng.range(0.012, 0.022);
     const yaw = rng.range(0, Math.PI), lean = rng.range(0.02, 0.08), la = rng.range(0, Math.PI * 2);
     const cx = Math.cos(yaw) * w, cz = Math.sin(yaw) * w;
-    const g = rng.range(0.82, 1.12), dry = rng.chance(0.08);
+    const g = rng.range(0.82, 1.12) * 0.8, dry = rng.chance(0.08);
     const base: RGBA = dry ? [Math.round(70 * g), Math.round(78 * g), Math.round(34 * g), 255] : [Math.round(40 * g), Math.round(72 * g), Math.round(22 * g), 255];
     const tip: RGBA = dry ? [Math.round(118 * g), Math.round(116 * g), Math.round(58 * g), 255] : [Math.round(66 * g), Math.round(106 * g), Math.round(34 * g), 255];
     const i0 = vert(x - cx, 0, z - cz, base), i1 = vert(x + cx, 0, z + cz, base), i2 = vert(x + Math.cos(la) * lean, h, z + Math.sin(la) * lean, tip);

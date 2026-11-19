@@ -25,7 +25,7 @@
 import { Clip } from "./clip.ts";
 import { FEEL } from "./feel.ts";
 import { armIK, lookAt, rotateBoneWorld, twoBone, handShape } from "./ik.ts";
-import { axisAngle, clamp, conj, mulQ, nlerpInto, smooth01, type V3 } from "./math.ts";
+import { axisAngle, clamp, conj, mulQ, nlerpInto, rotV, smooth01, type V3 } from "./math.ts";
 import { AnimLibrary } from "./library.ts";
 import { Ragdoll } from "./ragdoll.ts";
 import { B, BONE_COUNT, MASKS, type MaskName, type Pose, Skeleton, copyPose, fk, newPose, newWorld, type World, wpos } from "./skeleton.ts";
@@ -154,6 +154,7 @@ export class Animator {
   readonly soleLift: number;
   /** Height of the ankle joint above the sole at rest (m). */
   readonly restAnkle: number;
+  private readonly heels: [V3, V3];
   private time = 0;
 
   constructor(lib: AnimLibrary, sk: Skeleton) {
@@ -167,6 +168,14 @@ export class Animator {
     const rw = fk(sk, sk.restPose());
     this.soleLift = Math.max(0, Math.min(0.06, Math.min(rw.pos[B.LToe * 3 + 1]!, rw.pos[B.RToe * 3 + 1]!)));
     this.restAnkle = Math.min(rw.pos[B.LFoot * 3 + 1]!, rw.pos[B.RFoot * 3 + 1]!);
+    // Heel points: the back of each sole (on the ground at rest) in its foot bone's own frame.
+    this.heels = [B.LFoot, B.RFoot].map((f) => {
+      const ax = rw.pos[f * 3]!, ay = rw.pos[f * 3 + 1]!, az = rw.pos[f * 3 + 2]!;
+      const q = rw.rot.subarray(f * 4, f * 4 + 4);
+      const inv = new Float32Array([-q[0]!, -q[1]!, -q[2]!, q[3]!]);
+      const sole = Math.min(rw.pos[(f === B.LFoot ? B.LToe : B.RToe) * 3 + 1]!, ay);
+      return rotV(inv, 0, [0, sole - ay, -0.035 + 0 * ax * az]) as V3;
+    }) as [V3, V3];
     const idle = lib.get("idle_breathe");
     if (idle) idle.sample(0, this.pose);
     copyPose(this.pose, this.basePose);
@@ -800,6 +809,7 @@ export class Animator {
     if (this.base.k === "loco" && (this.warp > 1.001 || this.warpDrop > 0.0005)) this.applyStrideWarp();
     // Foot locking: a planted foot stays exactly where it landed (rule A1).
     this.footLock(dt);
+
     // Pedals: feet on the crank by IK (exact, rule A3), hands on the bars.
     if (this.pedals && this.base.k === "cycle") {
       const pd = this.pedals;
@@ -826,6 +836,9 @@ export class Animator {
         this.legTo(1, [ar[0], ar[1] + gr, ar[2]]);
       }
     }
+    // Safety: no sole (ball or heel) ever below the ground: stairs, kerbs, a foot rolled onto its heel.
+    // Safety: no sole (ball or heel) sunk into the ground: stairs, kerbs, a foot rolled onto its heel.
+    if (this.groundAt && this.input.grounded) this.footFloor();
     if (this.hands.w > 0.001) {
       if (this.hands.L) armIK(sk, p, w, "L", this.hands.L, this.hands.w, null, hs);
       if (this.hands.R) armIK(sk, p, w, "R", this.hands.R, this.hands.w, null, hs);
@@ -911,7 +924,11 @@ export class Animator {
    * re-balancing. Blends out over 0.12 s when the clip lifts the foot.
    */
   private footLock(dt: number): void {
-    const active = this.input.grounded && (this.base.k === "loco" || this.base.k === "stop");
+    // Running and sprinting need no lock (stride matching keeps those feet within millimetres, and a lock on a
+    // short sprint contact only snaps the knee): walking, stopping, turning and standing do. The moment the
+    // player lets go of a sprint, the lock engages at once: otherwise the planted foot slides for the two or
+    // three frames it takes the stop clip to take over.
+    const active = this.input.grounded && (this.base.k === "stop" || (this.base.k === "loco" && (this.input.speed < 3.5 || this.input.stopping)));
     const w = this.world;
     const mv = this.input.moved;
     const dx = mv ? mv.x : 0, dz = mv ? mv.z : this.input.speed * dt, dyaw = mv ? mv.yaw : this.input.turnRate * dt;
@@ -930,7 +947,13 @@ export class Animator {
       }
       const ball = wpos(w, toe);
       const ank = wpos(w, f);
-      const planted = active && ball[1] < this.soleLift + 0.016;
+      // The sole is the lower of the ball of the foot and the heel: a foot rolled onto its heel is planted
+      // even while the toes are up (and vice versa), so both the harness and the lock agree on contact.
+      const hr = rotV(w.rot, f * 4, this.heels[i]!);
+      const heelY = ank[1] + hr[1];
+      const lowest = Math.min(ball[1] - this.soleLift, heelY);
+      const fg = this.groundAt ? this.footGround(f) : 0;
+      const planted = active && lowest < fg + 0.02;
       if (planted && !L.on && !L.wait) {
         L.on = true;
         // Re-locking while the last lock is still fading: start from where the foot visibly is.
@@ -950,7 +973,12 @@ export class Animator {
         const far = Math.hypot(L.pos[0] - ball[0], L.pos[2] - ball[2]);
         // While walking or running a stretched lock simply lets go (the gait itself steps); when stopping or
         // standing, the foot takes a small corrective step instead of sliding.
-        if (L.step < 0 && far > (this.input.speed > 0.6 ? 0.12 : 0.06) && other.step < 0) {
+        if (this.input.speed > 3 && far > 0.1 && !this.input.stopping) {
+          // At a run the gait itself steps: a stretched lock simply lets go until this foot lifts again.
+          L.on = false;
+          L.wait = true;
+          L.step = -1;
+        } else if (L.step < 0 && far > (this.input.speed > 0.6 ? 0.12 : 0.06) && other.step < 0) {
           L.step = 0;
           L.from = L.pos;
         }
@@ -968,8 +996,9 @@ export class Animator {
         if (!active) L.w = 0;
         return;
       }
-      // The ball of the foot stays on its spot; the ankle keeps its height and its offset from the ball (heel roll).
-      const target: V3 = [L.pos[0] + (ank[0] - ball[0]), ank[1] + lift, L.pos[2] + (ank[2] - ball[2])];
+      // The ball of the foot stays on its spot; the ankle keeps its offset from the ball (heel roll) and the sole
+      // sits on the ground (blends between poses would otherwise float or sink a planted foot by a centimetre or two).
+      const target: V3 = [L.pos[0] + (ank[0] - ball[0]), ank[1] - lowest + fg + lift, L.pos[2] + (ank[2] - ball[2])];
       this.legTo(i as 0 | 1, target, smooth01(L.w));
     });
   }
@@ -992,6 +1021,20 @@ export class Animator {
     rotateBoneWorld(this.sk, this.pose, w, f, mulQ(before, conj(after)), this.hipScale);
   }
 
+  /** Lift any foot whose sole (under the ball or the heel) would be below the ground, by leg IK. */
+  private footFloor(): void {
+    const w = this.world;
+    for (const [i, f, toe] of [[0, B.LFoot, B.LToe], [1, B.RFoot, B.RToe]] as const) {
+      const a = wpos(w, f), b = wpos(w, toe);
+      const hr = rotV(w.rot, f * 4, this.heels[i]!);
+      const heel = a[1] + hr[1];
+      const g = this.groundAt ? this.footGround(f) : 0;
+      const need = Math.max(g - (a[1] - this.restAnkle), g - (b[1] - this.soleLift), g - heel);
+      // Only a real sink is lifted: a millimetre or two of clip noise is not worth touching the pose for.
+      if (need > 0.012) this.legTo(i, [a[0], a[1] + need, a[2]]);
+    }
+  }
+
   /** Raise the body so the lowest point of either foot is at or above the ground under it. */
   private clearGround(): void {
     const w = this.world;
@@ -1004,6 +1047,9 @@ export class Animator {
       }
       const a = wpos(w, f);
       need = Math.max(need, this.groundAt!(a[0], a[2]) - (a[1] - this.restAnkle));
+      // The heel can be the lowest point of a foot that is toe-up (a landing, a high step).
+      const hr = rotV(w.rot, f * 4, this.heels[f === B.LFoot ? 0 : 1]!);
+      need = Math.max(need, this.groundAt!(a[0] + hr[0], a[2] + hr[2]) - (a[1] + hr[1]));
     }
     if (need > 0.0005) {
       this.pose.hips[1] = this.pose.hips[1]! + Math.min(0.4, need) / this.hipScale;

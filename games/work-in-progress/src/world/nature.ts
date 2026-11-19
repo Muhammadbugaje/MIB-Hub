@@ -28,15 +28,34 @@ function model(build: (b: Builder) => void): Parts {
 
 const hex = (h: string): RGBA => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16), 255];
 
-function crown(b: Builder, seed: number, centre: V3, radius: number, count: number, top: RGBA, bottom: RGBA, flat = 0.75, extra?: { color: RGBA; share: number }) {
+/**
+ * A crown as separate leaf clusters round an open middle (not one hull): from
+ * underneath you see clusters with sky between them, darker inside and
+ * below (cheap ambient occlusion), each cluster on its own branch from the
+ * trunk. The triangle count matches the old single-hull crown (smaller
+ * clusters use fewer segments).
+ */
+function crown(b: Builder, seed: number, centre: V3, radius: number, count: number, top: RGBA, bottom: RGBA, flat = 0.75, extra?: { color: RGBA; share: number }, trunkTop = 0) {
   const rng = makeRng(seed);
-  for (let i = 0; i < count; i++) {
-    const a = rng.range(0, Math.PI * 2), r = i === 0 ? 0 : rng.range(radius * 0.35, radius * 0.75);
-    const c: V3 = [centre[0] + Math.cos(a) * r, centre[1] + rng.range(-radius * 0.25, radius * 0.3) - (r / radius) * radius * 0.2, centre[2] + Math.sin(a) * r];
+  const n = count + 4;
+  const shade = (c: RGBA, k: number): RGBA => [c[0] * k, c[1] * k, c[2] * k, 255];
+  for (let i = 0; i < n; i++) {
+    // Two rings of clusters (a lower, wider one and an upper, tighter one) and a cap on top.
+    const cap = i === n - 1;
+    const upper = !cap && i % 3 === 2;
+    const a = (i / n) * Math.PI * 2 * 2.6 + rng.range(-0.35, 0.35);
+    const r = cap ? 0 : upper ? rng.range(radius * 0.25, radius * 0.45) : rng.range(radius * 0.5, radius * 0.78);
+    const y = centre[1] + (cap ? radius * 0.42 * flat + 0.3 : upper ? rng.range(radius * 0.1, radius * 0.35) : rng.range(-radius * 0.18, radius * 0.08));
+    const c: V3 = [centre[0] + Math.cos(a) * r, y, centre[2] + Math.sin(a) * r];
     const useExtra = extra && rng.chance(extra.share);
     const t = useExtra ? extra.color : top;
-    const bt: RGBA = useExtra ? [extra.color[0] * 0.55, extra.color[1] * 0.5, extra.color[2] * 0.5, 255] : bottom;
-    b.blob("leaves", c, (i === 0 ? radius * 0.7 : rng.range(radius * 0.4, radius * 0.6)), seed + i * 1.37, t, bt, flat, 14, 9, 0.16);
+    // Clusters lower and further in are darker underneath (light gets in from above and outside).
+    const occl = cap ? 0.95 : upper ? 0.8 : 0.62;
+    const bt: RGBA = shade(useExtra ? [extra.color[0] * 0.55, extra.color[1] * 0.5, extra.color[2] * 0.5, 255] : bottom, occl);
+    const size = cap ? radius * 0.5 : upper ? rng.range(radius * 0.36, radius * 0.48) : rng.range(radius * 0.3, radius * 0.44);
+    b.blob("leaves", c, size, seed + i * 1.37, t, bt, flat + 0.12, 12, 7, 0.2);
+    // A branch from the top of the trunk into each lower cluster.
+    if (!cap && !upper && trunkTop > 0) b.tint(hex("#7d6c5a")).limb("bark", [0, trunkTop - 0.4, 0], [c[0] * 0.85, c[1] - size * flat * 0.4, c[2] * 0.85], 0.11 * (radius / 3.4), 0.04, 5);
   }
 }
 
@@ -49,27 +68,38 @@ function branches(b: Builder, seed: number, trunkTop: number, spread: number, n:
   }
 }
 
+/** A trunk with more sides and a flared foot (roots spreading into the ground). */
+function trunk(b: Builder, col: RGBA, r0: number, r1: number, h: number): void {
+  b.tint([col[0] * 0.85, col[1] * 0.85, col[2] * 0.85, 255]).cylinder("bark", 0, -0.05, 0, r0 * 1.55, r0 * 1.05, 0.45, 12, false);
+  b.tint(col).cylinder("bark", 0, 0.4, 0, r0 * 1.05, r1, h - 0.4, 12, false);
+  // Root flares.
+  for (let k = 0; k < 5; k++) {
+    const a = (k / 5) * Math.PI * 2 + 0.4;
+    b.tint([col[0] * 0.8, col[1] * 0.8, col[2] * 0.8, 255]).limb("bark", [Math.cos(a) * r0 * 0.6, 0.55, Math.sin(a) * r0 * 0.6], [Math.cos(a) * r0 * 2.1, -0.02, Math.sin(a) * r0 * 2.1], r0 * 0.32, r0 * 0.08, 5);
+  }
+}
+
 /** Two shape variants per kind so neighbouring trees differ. */
 function makeModel(kind: TreeKind, v: number): Parts {
   return model((b) => {
     const s = v * 101 + 7;
     switch (kind) {
       case "neem": {
-        b.tint(hex("#9a8a76")).cylinder("bark", 0, 0, 0, 0.32, 0.22, 3.6, 8, false);
+        trunk(b, hex("#9a8a76"), 0.32, 0.22, 3.6);
         branches(b, s, 3.6, 1.8, 4, 0.16);
-        crown(b, s, [0, 5.6, 0], 3.4, 9, v ? hex("#7fb04a") : hex("#86b84f"), hex("#2f5a28"), 0.62);
+        crown(b, s, [0, 5.6, 0], 3.4, 9, v ? hex("#7fb04a") : hex("#86b84f"), hex("#2f5a28"), 0.62, undefined, 3.6);
         break;
       }
       case "mango": {
-        b.tint(hex("#6e5a48")).cylinder("bark", 0, 0, 0, 0.42, 0.3, 2.4, 8, false);
+        trunk(b, hex("#6e5a48"), 0.42, 0.3, 2.4);
         branches(b, s, 2.4, 1.6, 5, 0.22);
-        crown(b, s, [0, 4.6, 0], 3.9, 10, v ? hex("#4f8f3a") : hex("#5a9a40"), hex("#1e4220"), 0.85);
+        crown(b, s, [0, 4.6, 0], 3.9, 10, v ? hex("#4f8f3a") : hex("#5a9a40"), hex("#1e4220"), 0.85, undefined, 2.4);
         break;
       }
       case "flame": {
-        b.tint(hex("#8c7b6a")).cylinder("bark", 0, 0, 0, 0.36, 0.26, 3.0, 8, false);
+        trunk(b, hex("#8c7b6a"), 0.36, 0.26, 3.0);
         branches(b, s, 3.0, 3.2, 6, 0.18);
-        crown(b, s, [0, 5.0, 0], 5.2, 11, hex("#79ad4a"), hex("#335c2a"), 0.42, { color: v ? hex("#e8452a") : hex("#f05a28"), share: 0.55 });
+        crown(b, s, [0, 5.0, 0], 5.2, 11, hex("#79ad4a"), hex("#335c2a"), 0.42, { color: v ? hex("#e8452a") : hex("#f05a28"), share: 0.55 }, 3.0);
         break;
       }
       case "palm": {

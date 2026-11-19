@@ -44,10 +44,12 @@ interface Fit {
 }
 
 const STYLE: Record<HijabStyle, { pad: number; hem: number; flare: number; fold: number; foldK: number; back: number; tail: number; band: boolean; open: number }> = {
-  wrap: { pad: 0.014, hem: 0.12, flare: 0.03, fold: 0.006, foldK: 14, back: 0.02, tail: 0, band: false, open: 1 },
-  gyale: { pad: 0.026, hem: 0.24, flare: 0.07, fold: 0.012, foldK: 11, back: 0.08, tail: 0.16, band: false, open: 1.05 },
-  undercap: { pad: 0.012, hem: 0.11, flare: 0.025, fold: 0.005, foldK: 16, back: 0.02, tail: 0, band: true, open: 0.97 },
-  khimar: { pad: 0.018, hem: 0.36, flare: 0.09, fold: 0.01, foldK: 12, back: 0.05, tail: 0, band: false, open: 1 },
+  // pad clears the ears (the base mesh's ears stick out a centimetre past the skull; too thin a wrap let them
+  // poke through as skin-coloured patches at the temples). open trims the face oval so it frames the cheeks.
+  wrap: { pad: 0.028, hem: 0.09, flare: 0.03, fold: 0.003, foldK: 9, back: 0.02, tail: 0, band: false, open: 0.92 },
+  gyale: { pad: 0.03, hem: 0.24, flare: 0.07, fold: 0.006, foldK: 8, back: 0.08, tail: 0.16, band: false, open: 0.98 },
+  undercap: { pad: 0.019, hem: 0.11, flare: 0.025, fold: 0.003, foldK: 11, back: 0.02, tail: 0, band: true, open: 0.9 },
+  khimar: { pad: 0.024, hem: 0.36, flare: 0.09, fold: 0.005, foldK: 8, back: 0.05, tail: 0, band: false, open: 0.93 },
 };
 
 const meshCache = new Map<string, pc.Mesh>();
@@ -69,10 +71,13 @@ function profile(f: Fit, st: (typeof STYLE)[HijabStyle]): [number, number, numbe
   const nk = f.neck.max[0] != null ? { r: Math.max(0.045, ((f.neck.max[0] as number) - (f.neck.min[0] as number)) / 2), cz: ((f.neck.max[2] as number) + (f.neck.min[2] as number)) / 2 } : { r: 0.055, cz: f.joints.neck[2]! };
   const shoulderY = f.joints.lArm[1]!;
   const chW = Math.min(0.3, Math.max(0.16, Math.abs(f.joints.lArm[0]!) + 0.05));
-  const chZ = (f.chest.max[2]! - f.chest.min[2]!) / 2;
   const chC = (f.chest.max[2]! + f.chest.min[2]!) / 2;
   const p = st.pad;
   const sx = hx + p, sz = hz + p;
+  // Width of the shoulder drape. A wrap ends just past the jaw on the collarbones; capes fall over the
+  // shoulders, so only they use the chest width.
+  const cape = st.hem > 0.2;
+  const dw = (k: number) => (cape ? chW * k : nk.r * 1.8 + st.flare * (k / 0.62));
   return [
     [top + 0.004, 0.012, 0.012, hc],
     [top - 0.01, sx * 0.45, sz * 0.5, hc],
@@ -81,12 +86,18 @@ function profile(f: Fit, st: (typeof STYLE)[HijabStyle]): [number, number, numbe
     [top - hh * 0.5, sx, sz, hc],
     [top - hh * 0.7, sx * 0.97, sz * 0.97, hc + 0.004],
     [chinY + 0.035, sx * 0.88, sz * 0.9, hc + 0.008],
-    [chinY - 0.01, nk.r + 0.05 + p, sz * 0.78, hc + 0.0],
-    [chinY - 0.045, nk.r + 0.04 + p, nk.r + 0.05 + p, nk.cz + 0.012],
-    [shoulderY + 0.035, nk.r + 0.06 + p, nk.r + 0.06 + p, nk.cz + 0.01],
-    [shoulderY - 0.005, chW * 0.72 + p, chZ * 0.95 + p, chC + 0.005],
-    [shoulderY - st.hem * 0.5, chW * 0.95 + p + st.flare * 0.5, chZ + p + st.flare * 0.4, chC + 0.01],
-    [shoulderY - st.hem, chW + p + st.flare, chZ + p + st.flare * 0.6, chC + 0.015],
+    // Under the chin the cloth hugs the neck (the old +5 cm made a stiff collar round the jaw).
+    [chinY - 0.01, nk.r + 0.014 + p, sz * 0.72, hc + 0.0],
+    [chinY - 0.045, nk.r + 0.018 + p, nk.r + 0.022 + p, nk.cz + 0.012],
+    [shoulderY + 0.035, nk.r + 0.026 + p, nk.r + 0.03 + p, nk.cz + 0.01],
+    // The drape: a wrap hugs the collarbones and falls a little way onto the chest. Using the chest half-width
+    // here made a flat shoulder-wide disc (a poncho, not a hijab). Cape styles (gyale, khimar) stay wider.
+    [shoulderY - 0.005, dw(0.62) + p, dw(0.55) + p, chC + 0.005],
+    [shoulderY - st.hem * 0.5, dw(0.78) + p + st.flare * 0.4, dw(0.68) + p + st.flare * 0.3, chC + 0.01],
+    [shoulderY - st.hem * 0.94, dw(0.86) + p + st.flare, dw(0.76) + p + st.flare * 0.5, chC + 0.015],
+    // Final row turned gently back in, so the hem falls away instead of ending in a flat cut. (A flat final
+    // ring was the "poncho shelf" the owner saw.)
+    [shoulderY - st.hem, dw(0.72) + p + st.flare * 0.8, dw(0.64) + p + st.flare * 0.4, chC + 0.016],
   ];
 }
 
@@ -137,19 +148,20 @@ function hijabMesh(device: pc.GraphicsDevice, cm: CharModel, sk: Skeleton, style
     for (let c = 0; c <= N; c++) {
       const th = e + ((2 * Math.PI - 2 * e) * c) / N;
       const s = Math.sin(th), co = Math.cos(th);
-      // A slightly squared head section (cartoon heads are boxy); round below the chin.
-      const ex = y > chinY ? 2.6 : 2.1;
-      const sxp = Math.sign(s) * Math.pow(Math.abs(s), 2 / ex), czp = Math.sign(co) * Math.pow(Math.abs(co), 2 / ex);
+      // A round section: squaring it (the old cartoon head) pinched the cloth in at the temples and let the
+      // ears cut through as skin-coloured patches.
+      const sxp = s, czp = co;
       // Folds grow towards the hem; the back hangs a little lower and fuller.
       const drape = smooth(shoulderY + 0.06, shoulderY - 0.2, y);
       const fold = st.fold * drape * (Math.sin(th * st.foldK + y * 30) + 0.4 * Math.sin(th * st.foldK * 2.3 + 1.7));
       const back = st.back * drape * Math.max(0, -co);
       // Gyale tail: one end hangs longer over the left shoulder.
       const tail = st.tail * drape * Math.exp(-(((th - 1.9) / 0.5) ** 2));
-      // Rolled edge at the face: tuck the first and last columns in by a few millimetres.
-      const tuck = inFace && (c === 0 || c === N) ? -0.004 : 0;
-      const x = sxp * (rx + fold + tuck);
-      const z = cz + czp * (rz + fold + tuck) - back * 0.4;
+      // The face opening's edge sits a hair (2 mm) above the cloth so it reads as a hem, not a cut. A dent
+      // here made a visible notch at each temple.
+      const lift = inFace && (c === 0 || c === N) ? 0.002 : 0;
+      const x = sxp * (rx + fold + lift);
+      const z = cz + czp * (rz + fold + lift) - back * 0.4;
       const yy = y - back - tail;
       row.push(pos.length / 3);
       pos.push(x, yy, z);
@@ -224,10 +236,12 @@ function fabric(color: string): pc.StandardMaterial {
   m.metalness = 0;
   m.gloss = 0.18; // roughness 0.82: matte fabric (rule C2: never glossy)
   m.specularityFactor = 0.18;
+  // A whisper of sheen only. The old values (0.25+0.3c at gloss 0.4) painted broad grey highlights on dark
+  // hijabs — they read as skin-coloured patches at the temples.
   m.useSheen = true;
   const c = new pc.Color().fromString(color);
-  m.sheen = new pc.Color(0.25 + c.r * 0.3, 0.25 + c.g * 0.3, 0.25 + c.b * 0.3);
-  m.sheenGloss = 0.4;
+  m.sheen = new pc.Color(0.05 + c.r * 0.06, 0.05 + c.g * 0.06, 0.05 + c.b * 0.06);
+  m.sheenGloss = 0.85;
   m.cull = pc.CULLFACE_NONE;
   m.twoSidedLighting = true;
   (m as unknown as { ambientSH: Float32Array }).ambientSH = SH;

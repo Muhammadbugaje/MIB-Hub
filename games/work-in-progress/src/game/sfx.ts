@@ -13,7 +13,7 @@
 
 export const SFX_CUES = [
   "cock_crow_wrong_time", "goat_bell_fast", "clock_strike_single_far", "rubber_stamp", "power_down_whine", "hostel_groan_wave", "knock_three",
-  "radio_static", "three_notes", "wind_gust", "knuckle_crack", "ball_miss_whoosh", "goalpost_clang", "book_shut", "kettle_boil", "coil_hum_low",
+  "radio_static", "three_notes", "wind_gust", "knuckle_crack", "ball_miss_whoosh", "goalpost_clang", "book_shut", "kettle_boil", "coil_hum_low", "coil_crack",
   "locker_creak_grand", "locker_slam", "keys_jingle_stairs", "phone_ring", "phone_text", "bank_alert", "pickup", "mission_pass", "door", "whistle", "kick", "light_back",
 ] as const;
 export const MUSIC_CUES = ["main_theme_dawn", "queue_theme", "anthem_brass", "mystery_thread", "plug_theme", "dark_quiet"] as const;
@@ -178,6 +178,12 @@ export class Sfx {
       case "coil_hum_low":
         this.humOn(55, 6);
         break;
+      case "coil_crack":
+        // A sharp crack, a fizzing tail and a low thump.
+        this.noise(t, 0.05, 0.9, 4000, 1500, 0.6);
+        this.noise(t + 0.03, 0.4, 0.25, 6000, 3000, 3);
+        this.tone(90, t, 0.25, "sine", 0.35, 0.4);
+        break;
       case "locker_creak_grand":
         this.tone(180, t, 1.1, "sawtooth", 0.05, 1.6);
         this.noise(t, 1.1, 0.05, 900, 1400, 6);
@@ -220,6 +226,46 @@ export class Sfx {
         break;
     }
   }
+
+  /**
+   * The Garden coil's standing hum: two detuned low oscillators (55 Hz and its
+   * fifth) through one gain, started once and only ever turned up or down.
+   * level 0..1 (the caller applies distance falloff and the coil's state);
+   * pitch rises a little when the coil is lit.
+   */
+  coilHum(level: number, lit: boolean): void {
+    if (!this.ctx || !this.out) return;
+    const c = this.ctx;
+    if (!this.coil) {
+      if (level <= 0.001) return;
+      const g = c.createGain();
+      g.gain.value = 0;
+      const a = c.createOscillator(), b = c.createOscillator();
+      a.type = "sine";
+      b.type = "triangle";
+      a.frequency.value = 55;
+      b.frequency.value = 82.6;
+      const bg = c.createGain();
+      bg.gain.value = 0.25;
+      a.connect(g);
+      b.connect(bg).connect(g);
+      g.connect(this.out);
+      a.start();
+      b.start();
+      this.coil = { g, a, b, level: 0 };
+    }
+    const target = Math.max(0, Math.min(1, level)) * 0.28;
+    if (Math.abs(target - this.coil.level) > 0.002) {
+      this.coil.level = target;
+      this.coil.g.gain.setTargetAtTime(target, c.currentTime, 0.25);
+    }
+    const f = lit ? 61 : 55;
+    if (Math.abs(this.coil.a.frequency.value - f) > 0.5) {
+      this.coil.a.frequency.setTargetAtTime(f, c.currentTime, 0.6);
+      this.coil.b.frequency.setTargetAtTime(f * 1.502, c.currentTime, 0.6);
+    }
+  }
+  private coil: { g: GainNode; a: OscillatorNode; b: OscillatorNode; level: number } | null = null;
 
   private humOn(freq: number, secs: number): void {
     const c = this.ctx!;

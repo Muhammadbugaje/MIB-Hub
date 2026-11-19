@@ -39,6 +39,7 @@ import { clockText, hemisphereSH, skyAt, type RGB } from "./sim/daynight.ts";
 import { makeRng } from "./sim/rng.ts";
 import type { Obstacle } from "./sim/traffic.ts";
 import { Ambience } from "./game/audio.ts";
+import { CAST } from "./game/cast.ts";
 import { GAME_NAME, Hud, loadLook, saveLook } from "./game/hud.ts";
 import { Input } from "./game/input.ts";
 import { FollowCamera, ShowcaseCamera } from "./game/player.ts";
@@ -51,7 +52,7 @@ import { buildBuilding } from "./world/buildings.ts";
 import { buildCampus } from "./world/campus.ts";
 import { Crowd } from "./world/crowd-view.ts";
 import { buildInteriors, INTERIOR_SIGNS } from "./world/interiors.ts";
-import { GENERATORS, SHOP_NAMES, SUYA, VIEWPOINTS, buildings, walkLines } from "./world/layout.ts";
+import { GENERATORS, PLACES, SHOP_NAMES, SUYA, VIEWPOINTS, buildings, walkLines } from "./world/layout.ts";
 import { buildNature } from "./world/nature.ts";
 import { ANIM, ANIM_STATS, type Look, Person, loadPeople, tickPeople } from "./world/people.ts";
 import { buildProps, type LightSpot } from "./world/props.ts";
@@ -145,6 +146,8 @@ async function boot(): Promise<void> {
   // Every door people pass through (entrances, interior exits, room doorways): models and the leaves that stand open.
   const doorList = doorSpecs(surfaceAt);
   for (const c of doorColliders(doorList)) col.add(c);
+  // The entrance lamps light the doorstep at night (they join the street lamps' shared light pool).
+  for (const d of doorList) if (d.place === "world" && d.rest === "closed") lightSpots.push({ x: d.x + Math.sin(d.yaw) * 0.9, y: d.y + Math.min(d.h, 2.6) + 0.3, z: d.z + Math.cos(d.yaw) * 0.9, color: [1, 0.82, 0.58], range: 7 });
   const stats = world.finalize(app, mats, worldRoot, new Set(["grass", "asphalt", "marking", "paver", "brickpave", "kerb", "laterite", "glass", "signs", "water", "daywin", "ilamp"]));
   await tick();
   hud.progress(0.45, "Planting trees…");
@@ -170,7 +173,7 @@ async function boot(): Promise<void> {
   // Leaf cards on the crowns near the camera (off on phones).
   const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
   // Grass blades round the camera: off on phones, a smaller patch on medium.
-  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 16 : 24, (x, z) => (navGrid.isBaked(x, z) ? navGrid.kindAt(x, z) === "lawn" : null), surfaceAt);
+  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 16 : 24, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) ? navGrid.kindAt(x, z) === "lawn" : null), surfaceAt);
   const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW, clearLines(walkLines, navGrid), navGrid);
   // The camera never passes through people or vehicles (upright cylinders around them).
   FollowCamera.moving = () => {
@@ -185,7 +188,7 @@ async function boot(): Promise<void> {
   setStory(story.missions);
   const ambience = new Ambience();
   const g = new StoryGame({
-    app, cam, mats, people, col, nav: navGrid, doors, interiors, hudRoot: hud.root, story,
+    app, cam, mats, people, col, nav: navGrid, doors, low: LOW, interiors, hudRoot: hud.root, story,
     carEntity: (k, c) => traffic.carEntity(k, c),
     setAmbience: (inside) => ambience.setMuted(inside || settings.soundVolume === 0),
     letterbox: (on) => hud.letterbox(on),
@@ -470,16 +473,25 @@ async function boot(): Promise<void> {
 
   // Pose check (tools/shot.py): ?shot=1&pose=man,casual,womandress&anim=sit&yaw=0.6 lines people up on the quad lawn
   // (&clip=walk_fwd plays a clip id, &speed=5.8 runs the blend space in place, &t= seconds to advance).
-  if (params.has("pose")) {
+  // ?cast=npc.jiya,special.taty dresses each placeholder as the real cast member (look, height, extras).
+  if (params.has("pose") || params.has("cast")) {
     hud.hideLoading();
-    const models = params.get("pose")!.split(",");
+    const castMode = params.has("cast");
+    const models = (params.get(castMode ? "cast" : "pose")!).split(",");
     const anim = (params.get("anim") ?? "idle") as import("./world/people.ts").AnimName;
+    const gap = num("gap", 1.3);
     const ps = models.map((k, i) => {
-      const cm = people.find((p) => p.key === k) ?? people[0]!;
-      const look = { model: cm.key, skin: "#a06a46", hair: "#141010", outfit: ["#2a5fa8", "#e0a526", "#2b2b2b", "#f4f1ea", "#a83232"], headwear: "none" as const, headwearColor: "#fff" };
-      const p = new Person(app, cm, look, app.root);
+      const member = castMode ? CAST[k] : undefined;
+      const cm = people.find((p) => p.key === (member ? member.look.model : k)) ?? people[0]!;
+      const look = member ? { ...member.look } : { model: cm.key, skin: "#a06a46", hair: "#141010", outfit: ["#2a5fa8", "#e0a526", "#2b2b2b", "#f4f1ea", "#a83232"], headwear: "none" as const, headwearColor: "#fff" };
+      // Debug: &headwear=none hides the hijab/cap (checks what belongs to the headwear mesh).
+      if (params.get("headwear") === "none") look.headwear = "none";
+      const p = new Person(app, cm, look, app.root, { extras: member?.extras });
       p.forceLod = params.get("lod") === "1" ? 1 : 0; // full detail (the showcase camera moves before the pose camera each frame)
-      p.place(-16 + (i - (models.length - 1) / 2) * 1.3, surfaceAt(-16, -172), -172, num("yaw", 0.4));
+      // Height and build from the cast sheet (plan rule C6: within a few per cent).
+      const h = member?.height ?? 1;
+      p.root.setLocalScale(h * (member?.width ?? 1), h, h * (member?.width ?? 1));
+      p.place(-16 + (i - (models.length - 1) / 2) * gap, surfaceAt(-16, -172), -172, num("yaw", 0.4));
       return p;
     });
     g.hours = 11;
@@ -570,6 +582,10 @@ async function boot(): Promise<void> {
       g.teleport({ pos: [num("px", 0), 0, num("pz", -40)], where: "world" }, num("pyaw", Math.PI));
       // The campaign's opening sets its own hour: the URL's wins in free roam.
       if (params.has("time")) g.hours = num("time", g.hours);
+      // &coil=dormant|humming|lit and &cats=1 (to see the Garden coil), &seals=n.
+      if (params.has("coil")) g.coilOverride = params.get("coil") as "lit";
+      if (params.get("cats") === "1") g.showPropPublic("prop.cats_ring", true);
+      if (params.has("seals")) for (let i = 0; i < num("seals", 0); i++) g.progress.flags[`seal_${i}`] = true;
       // &gx=..&gz=..: an objective there (to see the ground arrows).
       if (params.has("gx")) g.setObjective("Test", "Go here", { pos: [num("gx", 0), 0, num("gz", 0)], where: params.get("gw") ?? "world", label: "here" });
       if (params.has("cyaw")) g.follow.yaw = num("cyaw", Math.PI);

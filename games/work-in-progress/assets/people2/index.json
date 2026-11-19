@@ -1,0 +1,236 @@
+{
+ "base_m": {
+  "file": "base_m.glb",
+  "female": false,
+  "height": 1.744,
+  "hipHeight": 0.9184,
+  "rig": "mib_rig",
+  "meshes": [
+   {
+    "name": "brows",
+    "tris": 984
+   },
+   {
+    "name": "eyes",
+    "tris": 768
+   },
+   {
+    "name": "body",
+    "tris": 12566
+   },
+   {
+    "name": "hair_simpleparted",
+    "tris": 1301
+   },
+   {
+    "name": "hair_buzzed",
+    "tris": 830
+   },
+   {
+    "name": "hair_beard",
+    "tris": 1034
+   }
+  ],
+  "textures": {
+   "albedo": "m_albedo.jpg",
+   "normal": "m_normal.jpg",
+   "rough": "m_rough.jpg",
+   "eye": "eye.jpg",
+   "hair": "hair1"
+  },
+  "fit": {
+   "head": {
+    "min": [
+     -0.0867,
+     1.5296,
+     -0.1509
+    ],
+    "max": [
+     0.0867,
+     1.7442,
+     0.0677
+    ]
+   },
+   "hair": {
+    "min": [
+     null,
+     null,
+     null
+    ],
+    "max": [
+     null,
+     1.7764,
+     null
+    ]
+   },
+   "neck": {
+    "min": [
+     -0.0885,
+     1.4593,
+     -0.1444
+    ],
+    "max": [
+     0.0885,
+     1.5508,
+     -0.0003
+    ]
+   },
+   "chest": {
+    "min": [
+     -0.2103,
+     1.2297,
+     -0.1952
+    ],
+    "max": [
+     0.2103,
+     1.5018,
+     0.072
+    ]
+   },
+   "joints": {
+    "head": [
+     0,
+     1.5429,
+     -0.0516
+    ],
+    "neck": [
+     0,
+     1.4649,
+     -0.0653
+    ],
+    "spine2": [
+     0,
+     1.2607,
+     -0.0403
+    ],
+    "headTop": [
+     0,
+     1.7304,
+     -0.0743
+    ],
+    "lArm": [
+     0.2027,
+     1.3954,
+     -0.0911
+    ]
+   }
+  }
+ },
+ "base_f": {
+  "file": "base_f.glb",
+  "female": true,
+  "height": 1.743,
+  "hipHeight": 0.9231,
+  "rig": "mib_rig",
+  "meshes": [
+   {
+    "name": "brows",
+    "tris": 1480
+   },
+   {
+    "name": "eyes",
+    "tris": 768
+   },
+   {
+    "name": "body",
+    "tris": 12812
+   },
+   {
+    "name": "hair_long",
+    "tris": 2906
+   },
+   {
+    "name": "hair_buns",
+    "tris": 3284
+   },
+   {
+    "name": "hair_buzzedfemale",
+    "tris": 830
+   }
+  ],
+  "textures": {
+   "albedo": "f_albedo.jpg",
+   "normal": "f_normal.jpg",
+   "rough": "f_rough.jpg",
+   "eye": "eye.jpg",
+   "hair": "hair2"
+  },
+  "fit": {
+   "head": {
+    "min": [
+     -0.0871,
+     1.5253,
+     -0.1908
+    ],
+    "max": [
+     0.0871,
+     1.7428,
+     0.0394
+    ]
+   },
+   "hair": {
+    "min": [
+     null,
+     null,
+     null
+    ],
+    "max": [
+     null,
+     1.7543,
+     null
+    ]
+   },
+   "neck": {
+    "min": [
+     -0.0671,
+     1.4612,
+     -0.1331
+    ],
+    "max": [
+     0.0671,
+     1.5264,
+     -0.034
+    ]
+   },
+   "chest": {
+    "min": [
+     -0.1516,
+     1.247,
+     -0.1675
+    ],
+    "max": [
+     0.1516,
+     1.466,
+     0.0896
+    ]
+   },
+   "joints": {
+    "head": [
+     0,
+     1.5331,
+     -0.0605
+    ],
+    "neck": [
+     0,
+     1.4644,
+     -0.0725
+    ],
+    "spine2": [
+     0,
+     1.2716,
+     -0.0489
+    ],
+    "headTop": [
+     0,
+     1.694,
+     -0.1028
+    ],
+    "lArm": [
+     0.1486,
+     1.3948,
+     -0.0901
+    ]
+   }
+  }
+ }
+}

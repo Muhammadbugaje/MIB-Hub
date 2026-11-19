@@ -33,6 +33,7 @@ import { PLACES } from "../world/layout.ts";
 import { type AnimName, type CharModel, FEMALE_MODELS, type Look, Person, randomLook } from "../world/people.ts";
 import { Bicycle, BIKE, Goat, makeCandle, makeCats, makeCrate, makeGown, makeKeke, makeNote, makePlugSign, makeShade, makeSneakers, makeTin } from "../world/story-props.ts";
 import { surfaceHeight } from "../world/surface.ts";
+import { type CoilState, TeslaCoil } from "../world/tesla-coil.ts";
 import { makeRng } from "../sim/rng.ts";
 import { CAST, castKey } from "./cast.ts";
 import { type A3, type CamAnchor, Director, type PlayerCtx, type StageActor, type StageWorld } from "./director.ts";
@@ -74,6 +75,8 @@ export interface GameDeps {
   nav?: NavGrid;
   /** The doors (entrances, exits, room doorways) that swing as people pass. */
   doors?: Doors;
+  /** Phone quality (fewer arcs, no extras). */
+  low?: boolean;
   interiors: BuiltInterior[];
   hudRoot: HTMLElement;
   story: StoryBundle;
@@ -148,6 +151,31 @@ export class StoryGame implements StageWorld {
   private torchLight!: pc.Entity;
   private candleLight!: pc.Entity;
   private coilLight!: pc.Entity;
+  /** The Garden coil. */
+  coil!: TeslaCoil;
+  /** Story override for the coil ("lit" in a scene, say); null: from the flags and the hour. */
+  coilOverride: CoilState | null = null;
+  /** Camera micro-shake (seconds left) when the coil cracks near you. */
+  private shakeT = 0;
+
+  /**
+   * The coil's state from the story: lit (lightning) only once coil 1 has been lit at the
+   * end of Year 1 (flag coil1_lit), after dark and in its scenes; humming whenever the Maker
+   * keeps it alive (evenings, nights, its Year 1 scenes); dormant by day.
+   */
+  coilState(): CoilState {
+    if (this.coilOverride) return this.coilOverride;
+    // Its scenes in Year 1 (coil_glow) show it humming: it is not lit until the end of the year.
+    if (this.lightPreset === "coil_glow") return this.progress?.flags.coil1_lit ? "lit" : "humming";
+    const night = this.hours > 18.6 || this.hours < 5.6;
+    if (night && this.progress?.flags.coil1_lit) return "lit";
+    return night ? "humming" : "dormant";
+  }
+
+  /** Seals won so far (flags seal_engineering, seal_education...; ten in all). */
+  sealCount(): number {
+    return Math.min(10, Object.keys(this.progress?.flags ?? {}).filter((k) => k.startsWith("seal_") && this.progress.flags[k]).length);
+  }
   private flicker = 0;
   // Boosts and stamina.
   boosts: { turbo: number; zobo: number; kola: number } = { turbo: 0, zobo: 0, kola: 0 };
@@ -286,6 +314,12 @@ export class StoryGame implements StageWorld {
     this.candleLight = light("candle", [1, 0.66, 0.3], 6);
     this.coilLight = light("coil", [0.45, 1, 0.9], 9);
     this.coilLight.setPosition(PLACES.engGarden.x, 2.6, PLACES.engGarden.z);
+    // The Garden coil (hero prop): its state follows the story (see coilState()).
+    this.coil = new TeslaCoil(app, this.d.mats, PLACES.engGarden.x, PLACES.engGarden.z, 0.02, !!this.d.low);
+    this.coil.onCrack = (dist) => {
+      if (dist < 22) this.sfxs.play("coil_crack");
+      if (dist < 9) this.shakeT = 0.18;
+    };
     // Crowd extras for scenes (queues, the lawn, the lecture theatres).
     const rng = makeRng(606);
     for (let i = 0; i < 30; i++) {
@@ -415,7 +449,7 @@ export class StoryGame implements StageWorld {
         this.plugSign.enabled = show;
         break;
       case "prop.cats_ring":
-        if (show && !this.cats) this.cats = makeCats(this.d.app, this.d.mats, PLACES.engGarden.x, PLACES.engGarden.z, 1.75, this.ctx.specials.taty ? 12 : 11, 0.02);
+        if (show && !this.cats) this.cats = makeCats(this.d.app, this.d.mats, PLACES.engGarden.x, PLACES.engGarden.z, 3.3, this.ctx.specials.taty ? 12 : 11, 0.02);
         if (this.cats) this.cats.enabled = show;
         break;
       case "prop.statue_fish_girl_turned":
@@ -1352,7 +1386,7 @@ export class StoryGame implements StageWorld {
         const dx = this.autoWalkOnce.x - this.player.x, dz = this.autoWalkOnce.z - this.player.z;
         this.player.step(dt, { ...inp, moveX: 0, moveY: 1, run: false }, Math.atan2(dx, dz));
         this.autoWalkOnce = null;
-      } else this.player.step(dt, free ? { ...inp, run } : { ...inp, moveX: 0, moveY: 0, run: false }, this.follow?.yaw ?? 0);
+      } else this.player.step(dt, free ? { ...inp, run } : { ...inp, moveX: 0, moveY: 0, run: false }, this.follow ? (free ? this.follow.moveYaw(inp) : this.follow.yaw) : 0);
       // Stamina: running drains, walking refills; Zobo Max freezes it.
       if (this.boosts.zobo > 0) this.stamina = 1;
       else if (run && this.player.speed > 2.5) this.stamina = Math.max(0, this.stamina - dt * (0.07 + this.progress.stats.stamina * -0.004));
@@ -1424,6 +1458,12 @@ export class StoryGame implements StageWorld {
       const speed = this.mode === "bike" ? this.bikeS.speed : this.player.speed;
       this.follow.update(dt, this.mode === "mini" ? { ...inp, lookDX: 0, lookDY: 0, zoom: 0 } : inp, pos, speed, this.player.yaw);
       this.keepCamInside();
+      // The coil cracked close by: a small, quick camera shake.
+      if (this.shakeT > 0) {
+        this.shakeT -= dt;
+        const c = this.d.cam.getPosition(), k = this.shakeT * 0.22;
+        this.d.cam.setPosition(c.x + (Math.random() - 0.5) * k, c.y + (Math.random() - 0.5) * k, c.z + (Math.random() - 0.5) * k);
+      }
     } else if (this.mode === "ride" && this.follow) {
       const pos = this.player.pos(1, this.tmpV);
       this.follow.update(dt, inp, pos, 4, this.player.yaw);
@@ -1497,7 +1537,21 @@ export class StoryGame implements StageWorld {
       const c = this.candle.getPosition();
       this.candleLight.setPosition(c.x, c.y + 0.35, c.z);
     }
-    this.coilLight.light!.intensity = this.lightPreset === "coil_glow" ? 2.6 + Math.sin(this.time * 2) * 0.4 : this.hours > 19 || this.hours < 5.5 ? 0.9 : 0;
+    // The old point light only fills in for the coil's crown now (the coil has its own arc light).
+    this.coilLight.light!.intensity = this.coil.state === "dormant" && (this.hours > 19 || this.hours < 5.5) ? 0.5 : 0;
+    this.coil.setState(this.coilState());
+    this.coil.setSeals(this.sealCount());
+    this.coil.cats = this.cats;
+    this.coil.update(dt, this.d.cam.getPosition());
+    // Its hum: by state, falling off with distance (inaudible past ~35 m; silent indoors).
+    {
+      const c = this.d.cam.getPosition();
+      const d = Math.hypot(c.x - this.coil.x, c.z - this.coil.z);
+      const st = this.coil.state;
+      const base = st === "lit" ? 1 : st === "humming" ? 0.55 : 0.12;
+      const fall = this.place !== "world" ? 0 : 1 / (1 + (d / 6) * (d / 6));
+      this.sfxs.coilHum(base * fall, st === "lit");
+    }
     // Interior lights follow the preset (off in a blackout; a flicker on cue).
     if (this.flicker > 0) this.flicker = Math.max(0, this.flicker - dt);
     const on = !blackout && !(this.flicker > 0 && Math.sin(this.time * 40) > -0.2 && this.flicker < 1.4);

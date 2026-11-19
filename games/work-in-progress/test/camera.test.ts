@@ -79,14 +79,16 @@ describe("camera_clip: the camera never ends up inside anything", () => {
   it("backed against a wall: the camera pulls in, never through it, and eases back out when clear", () => {
     // In the alley with its left wall right behind (camera looks +x, sits at -x), back into the wall (-x; with the
     // stick read against heading 0, moveX = +1 walks to -x), then walk out of the alley (+z).
-    const { frames } = run({ secs: 7, at: [-1.6, 10], startYaw: Math.PI / 2, worldMove: true, move: (t) => (t < 1 ? [1, 0] : t < 3 ? [0, 0] : [0, 1]) });
+    const { frames } = run({ secs: 8, at: [-1.6, 10], startYaw: Math.PI / 2, worldMove: true, move: (t) => (t < 1 ? [1, 0] : t < 3 ? [0, 0] : [0, 1]) });
     expect(frames.some((f) => f.inside)).toBe(false);
     const armAt = (t: number) => {
       const f = frames.find((x) => x.t >= t)!;
       return Math.hypot(f.cam.x - f.pivot.x, f.cam.z - f.pivot.z);
     };
     expect(armAt(2.5)).toBeLessThan(1.5);
-    expect(armAt(6.9)).toBeGreaterThan(2.5);
+    // The swing waits until the player has held the new direction (settle), then eases behind; by 7.4 s the
+    // alley corner is behind them and the arm is out again.
+    expect(armAt(7.4)).toBeGreaterThan(2.5);
   });
 
   it("people and vehicles passing between the camera and the player are never entered", () => {
@@ -124,5 +126,34 @@ describe("recentre: the camera swings behind when you move, unless you steer it"
     const a = frames.find((f) => f.t >= 2)!, b = frames.find((f) => f.t >= 3)!;
     const rate = Math.atan2(Math.sin(b.yaw - a.yaw), Math.cos(b.yaw - a.yaw));
     expect(rate).toBeCloseTo(-2 * 0.0042 * 60, 2);
+  });
+
+  it("nothing moves until the player has held one direction (a glance or a short sidestep is not a course)", () => {
+    const { frames } = run({ secs: 5, worldMove: true, move: (t) => (t < 0.5 ? [0, 0] : t < 1.1 ? [1, 0] : t < 1.7 ? [0, 1] : t < 2.3 ? [-1, 0] : [0, 0]) });
+    // Every leg is shorter than the settle time, so the camera never starts a swing.
+    for (const f of frames) expect(Math.abs(f.yaw)).toBeLessThan(1e-6);
+  });
+
+  it("a sustained direction eases the view behind, smoothly, and stops there", () => {
+    const { frames, loco } = run({ secs: 6, worldMove: true, move: (t) => (t < 0.5 ? [0, 0] : [1, 0]) });
+    const start = 0.5 + FEEL.camera.settle;
+    // Still exactly where it was while the player settles into the direction.
+    for (const f of frames) if (f.t < start - 2 / 60) expect(Math.abs(f.yaw)).toBeLessThan(1e-6);
+    // Smooth: no frame turns it more than 3 degrees (no snap, no wobble).
+    const step = (3 * Math.PI) / 180;
+    for (let i = 1; i < frames.length; i++) {
+      const d = Math.abs(Math.atan2(Math.sin(frames[i]!.yaw - frames[i - 1]!.yaw), Math.cos(frames[i]!.yaw - frames[i - 1]!.yaw)));
+      expect(d).toBeLessThanOrEqual(step);
+    }
+    // It ends behind the travel direction, and then holds still (no perpetual creep).
+    const end = frames[frames.length - 1]!;
+    expect(behind(end, loco.c.yaw)).toBeLessThan(0.06);
+    const tail = frames.filter((f) => f.t > 4.6);
+    expect(Math.max(...tail.map((f) => f.yaw)) - Math.min(...tail.map((f) => f.yaw))).toBeLessThan(1e-4);
+  });
+
+  it("a small drift near the centre never twitches the camera (deadzone)", () => {
+    const { frames } = run({ secs: 5, worldMove: true, move: () => [0.1763, 1] });
+    for (const f of frames) expect(Math.abs(f.yaw)).toBeLessThan(1e-6);
   });
 });

@@ -154,6 +154,9 @@ export class FollowCamera {
   private solids: CamSolids;
   private lastYaw = 0;
   private turn = 0;
+  /** Yaw that movement is read against (see moveYaw()). */
+  private steerYaw = 0;
+  private hadInput = false;
 
   constructor(private cam: pc.Entity, private col: CollisionWorld) {
     this.rig.lookScale = 0.0042;
@@ -187,6 +190,22 @@ export class FollowCamera {
   reset(at: pc.Vec3, yaw: number): void {
     this.rig.reset({ x: at.x, y: at.y, z: at.z, moveYaw: yaw, speed: 0, turnRate: 0, indoors: at.x > 1500 }, yaw);
     this.lastYaw = yaw;
+    this.hadInput = false;
+  }
+
+  /**
+   * The heading movement is read against. Normally the live camera (forward is
+   * away from the camera), but while the player holds one direction the
+   * camera's own settling must never steer them: it does not feed back into
+   * the controls, so a held stick walks a straight line while the view eases
+   * behind it. A manual look still steers, exactly as before.
+   */
+  moveYaw(inp: InputState): number {
+    const moving = Math.hypot(inp.moveX, inp.moveY) > 0.05;
+    const looking = Math.abs(inp.lookDX) + Math.abs(inp.lookDY) > 1e-4;
+    if (!moving || looking || !this.hadInput) this.steerYaw = this.rig.yaw;
+    this.hadInput = moving;
+    return this.steerYaw;
   }
 
   update(dt: number, inp: InputState, playerPos: pc.Vec3, playerSpeed: number, playerYaw: number): void {

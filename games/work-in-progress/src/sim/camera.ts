@@ -15,10 +15,12 @@
  *     point itself outside everything and above the ground (the near plane
  *     never enters geometry, even with the player backed against a wall);
  *   - indoors: a shorter arm;
- *   - auto-recentre: after 1.2 s without look input, and only while the
- *     player is moving, the camera swings smoothly behind the direction of
- *     travel with a little look-ahead into turns; any look input cancels it
- *     until the player lets go again; standing still never recentres;
+ *   - auto-recentre: smart and calm. It waits until the player has held one
+ *     direction for `settle` seconds (a glance, a strafe or a turn never
+ *     moves it), leaves the view alone when the camera is already close
+ *     (`deadzone`), and then eases behind the direction of travel at a gentle
+ *     rate. Any look input, any stop and any change of direction resets the
+ *     wait, so the camera never chases the player around.
  *   - FOV widens with speed (60 -> 68 degrees at a sprint).
  */
 import { FEEL } from "../anim/feel.ts";
@@ -65,6 +67,12 @@ export class CameraRig {
   arm = 4.2;
   /** Seconds since the last look input (recentre waits for FEEL.camera.recentreAfter). */
   lookIdle = 99;
+  /** Seconds the player has held one travel direction (recentre waits for FEEL.camera.settle). */
+  travelFor = 0;
+  /** The anchored direction of travel: a real change of course resets the wait. */
+  private travelYaw = 0;
+  /** A swing that has started finishes (a deadzone only decides whether one starts at all). */
+  private recentring = false;
   fov = 60;
   readonly pos = { x: 0, y: 0, z: 0 };
   readonly pivot = { x: 0, y: 0, z: 0 };
@@ -80,6 +88,9 @@ export class CameraRig {
     this.pv = [0, 0, 0];
     this.yaw = yaw;
     this.arm = this.dist;
+    this.travelYaw = t.moveYaw;
+    this.travelFor = 0;
+    this.recentring = false;
     this.init = true;
   }
 
@@ -93,15 +104,30 @@ export class CameraRig {
     this.yaw = wrap(this.yaw - inp.lookDX * this.lookScale);
     this.pitch = Math.max((C.pitchMin * Math.PI) / 180, Math.min((C.pitchMax * Math.PI) / 180, this.pitch + inp.lookDY * this.lookScale * 0.8));
     if (inp.zoom) this.dist = Math.max(2.2, Math.min(12, this.dist * (1 + inp.zoom * 0.1)));
-    // Auto-recentre behind the travel direction (only while moving, only when the player is not steering the camera).
-    // (Not when walking towards the camera: the view stays, as in most third-person games.)
-    if (t.speed > 0.6 && this.lookIdle > C.recentreAfter && Math.abs(wrap(t.moveYaw - this.yaw)) < 2.1) {
-      const ahead = Math.max(-0.5, Math.min(0.5, t.turnRate * 0.25));
-      const want = wrap(t.moveYaw + ahead);
-      // Faster when the camera is far off and the player is fast; eased in over the first half second.
-      const ramp = Math.min(1, (this.lookIdle - C.recentreAfter) / 0.5);
-      const rate = (1.6 + Math.min(2, t.speed * 0.3)) * ramp;
-      this.yaw = wrap(this.yaw + wrap(want - this.yaw) * (1 - Math.exp(-rate * dt)));
+    // Auto-recentre: only for a direction the player has actually held, and only then. A stop, a turn, a
+    // strafe or a glance at the look stick resets the wait, so the camera sits still while the player is
+    // steering and moves smoothly once they have settled on a way to go.
+    const travelling = t.speed > 0.6;
+    if (!travelling) {
+      this.travelFor = 0;
+      this.travelYaw = t.moveYaw;
+    } else if (Math.abs(wrap(t.moveYaw - this.travelYaw)) > C.deadzone) {
+      // A different way to go (or a corner): wait again.
+      this.travelYaw = t.moveYaw;
+      this.travelFor = 0;
+    } else this.travelFor += dt;
+    const off = wrap(t.moveYaw - this.yaw);
+    const settled = this.travelFor > C.settle && this.lookIdle > C.recentreAfter && Math.abs(off) < C.maxOff;
+    // The deadzone only decides whether a swing starts; once started it finishes (so the view truly ends up
+    // behind the player, and never twitches around the edge of the zone).
+    if (!settled || Math.abs(off) < 0.06) this.recentring = false;
+    else if (Math.abs(off) > C.deadzone) this.recentring = true;
+    if (this.recentring) {
+      // Ease in over the first half second after the wait, then a calm, steady swing: no look-ahead and no
+      // overshoot.
+      const ramp = Math.min(1, (this.travelFor - C.settle) / 0.5);
+      const rate = C.rate * ramp;
+      this.yaw = wrap(this.yaw + off * (1 - Math.exp(-rate * dt)));
     }
     // Pivot: critically damped follow of the head.
     const goal = [t.x, t.y + (t.indoors ? C.pivot - 0.05 : C.pivot), t.z];
