@@ -91,6 +91,9 @@
   C.byId = BY;
   C.STARTERS = ["k0", "k1", "k2"];
   C.ORIGINALS = ["newton", "faraday", "curie", "tesla", "einstein", "bohr", "groove", "kai"]; // the classic cast: one joins after each completed season
+  // Economy rates from the owner's Game Studio (1 = as designed). setRates keeps them in one place.
+  C.COIN_RATE = 1; C.XP_RATE = 1;
+  C.setRates = function (coins, xp) { C.COIN_RATE = +coins > 0 ? +coins : 1; C.XP_RATE = +xp > 0 ? +xp : 1; };
   C.rating = function (p, lvl) { var m = 1 + .02 * ((lvl || 1) - 1); return Math.round(((p.speed + p.jump + p.shot + p.header + p.defence + p.stamina) / 6) * m * 80); };
 
   /* ---------- special events and Legends modifiers ---------- */
@@ -101,6 +104,98 @@
   };
   var MKEYS = Object.keys(C.MODS);
 
+  /* ---------- club upgrades: bought once, kept for ever. They lift your whole squad, not one player. ---------- */
+  C.UPGRADES = [
+    { id: "power", name: "Boot tech", desc: "Harder kicks: +4% shot speed a level", per: .04, max: 5, base: 300 },
+    { id: "speed", name: "Sprint coach", desc: "Faster running: +3% speed a level", per: .03, max: 5, base: 300 },
+    { id: "jump", name: "Springboard", desc: "Higher jumps: +3% jump a level", per: .03, max: 5, base: 250 },
+    { id: "header", name: "Heading drill", desc: "Bouncier headers: +4% a level", per: .04, max: 5, base: 280 },
+    { id: "defence", name: "Defence unit", desc: "Shrug off hits: +4% defence a level", per: .04, max: 5, base: 280 },
+    { id: "stamina", name: "Fitness lab", desc: "Superpowers charge 5% faster a level", per: .05, max: 5, base: 350 }
+  ];
+  C.upgrades = function (P) { var out = {}; C.UPGRADES.forEach(function (u) { out[u.id] = Math.max(0, Math.min(u.max, (P.upgrades || {})[u.id] || 0)); }); return out; };
+  C.upgradeLevel = function (P, id) { return C.upgrades(P)[id]; };
+  C.upgradeCost = function (P, id) { var u = C.UPGRADES.filter(function (q) { return q.id === id; })[0], l = C.upgradeLevel(P, id); if (!u || l >= u.max) return 0; return Math.round(u.base * Math.pow(l + 1, 1.35) / 10) * 10; };
+  C.buyUpgrade = function (P, id) {
+    var c = C.upgradeCost(P, id); if (!c || P.coins < c) return false;
+    P.coins -= c; P.upgrades = P.upgrades || {}; P.upgrades[id] = C.upgradeLevel(P, id) + 1; return true;
+  };
+  // one multiplier per stat, for the match engine's character build
+  C.upgradeMult = function (P, stat) {
+    var out = 1, u = C.UPGRADES.filter(function (q) { return q.id === stat; })[0];
+    if (!u) return out; return +(1 + u.per * C.upgradeLevel(P, stat)).toFixed(4);
+  };
+
+  /* ---------- outfits: club kits bought once, then swapped whenever you like ---------- */
+  C.KITS = [
+    { id: "k0", name: "Home green", c1: "#22c55e", c2: "#ffffff", price: 0 },
+    { id: "k1", name: "Royal blue", c1: "#2563eb", c2: "#facc15", price: 250 },
+    { id: "k2", name: "Crimson", c1: "#dc2626", c2: "#ffffff", price: 400 },
+    { id: "k3", name: "Ultraviolet", c1: "#7c3aed", c2: "#f0abfc", price: 600 },
+    { id: "k4", name: "Midnight gold", c1: "#0f172a", c2: "#f6c445", price: 900 },
+    { id: "k5", name: "Sunset orange", c1: "#f97316", c2: "#1f2937", price: 900 },
+    { id: "k6", name: "Ice teal", c1: "#0891b2", c2: "#ecfeff", price: 1200 },
+    { id: "k7", name: "Away white", c1: "#ffffff", c2: "#16a34a", price: 1500 }
+  ];
+  C.kitById = function (id) { return C.KITS.filter(function (k) { return k.id === id; })[0] || null; };
+  C.ownsKit = function (P, id) { return ((P && P.kits) || ["k0"]).indexOf(id) >= 0; };
+  C.buyKit = function (P, id) { var k = C.kitById(id); if (!k || C.ownsKit(P, id) || P.coins < k.price) return false; P.coins -= k.price; P.kits = (P.kits || ["k0"]).concat([id]); return true; };
+  C.equipKit = function (P, id) { var k = C.kitById(id); if (!k || !C.ownsKit(P, id)) return false; P.club.c1 = k.c1; P.club.c2 = k.c2; return true; };
+
+  /* ---------- custom players: designed by the manager, signed with coins or a secret code ---------- */
+  C.SKINS = ["#4a2e1c", "#6b4226", "#8d5a3b", "#a8714a", "#c68642", "#dcab80", "#e8c193"];
+  C.HAIRS = ["#151515", "#2b1b12", "#3d2414", "#5a3a22", "#1a1a2e", "#7a4a2a", "#d9c07a"];
+  C.CUSTOM_STYLES = ["band", "bun", "coily", "dj", "receding", "slick", "whiskers", "wig", "wild"];
+  C.CUSTOM_MAX = 8; C.CUSTOM_NAME_MAX = 22; C.CUSTOM_BIO_MAX = 160;
+  function onList(v, list, dflt) { return list.indexOf(v) >= 0 ? v : dflt; }
+  function money(v, lo, hi) { v = Math.round(+v || 0); return Math.max(lo, Math.min(hi, v)); }
+  C.customSpec = function (o) {
+    o = o || {};
+    var name = String(o.name || "New Signing").replace(/[<>]/g, "").slice(0, C.CUSTOM_NAME_MAX) || "New Signing";
+    var power = C.POWERS[o.power] ? o.power : "curve";
+    return { id: String(o.id || "").replace(/[^a-z0-9:_-]/gi, "").slice(0, 32), name: name,
+      skin: onList(o.skin, C.SKINS, C.SKINS[2]), hair: onList(o.hair, C.HAIRS, C.HAIRS[0]), style: onList(o.style, C.CUSTOM_STYLES, "slick"),
+      power: power, bio: String(o.bio || "").replace(/[<>]/g, "").slice(0, C.CUSTOM_BIO_MAX),
+      price: money(o.price, 0, 20000), unlocked: !!o.unlocked, studio: !!o.studio,
+      unlockHash: /^[0-9a-f]{64}$/.test(o.unlockHash || "") ? o.unlockHash : "" };
+  };
+  // a custom player as a match char: better with a bigger price tag, so signing feels worth it
+  C.customPlayer = function (spec) {
+    var base = .9 + Math.min(.34, (spec.price || 0) / 12000), m = C.POWERS[spec.power] || C.POWERS.curve;
+    return { id: spec.id, name: spec.name, short: spec.name.split(" ")[0], nick: "Custom", fem: false, rarity: spec.studio ? "signature" : "custom",
+      skin: spec.skin, hair: spec.hair, style: spec.style, eye: "#1a1010", coat: "#3b82f6", trim: "#ffffff", mass: 70,
+      speed: base, jump: base, shot: base, header: base, defence: base, stamina: base, power: base, pw: spec.power,
+      powerName: m.name, powerIdea: m.idea, cost: spec.price, need: 0, bio: spec.bio, custom: true, engine: m.engine };
+  };
+  C.custom = function (P, id) { var list = (P && P.custom) || []; for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; };
+  C.customPlayerOf = function (P, id) { var s = C.custom(P, id); return s ? C.customPlayer(s) : null; };
+  C.customList = function (P) { return ((P && P.custom) || []).slice(); };
+  C.makeCustom = function (P, o) {
+    P.custom = P.custom || [];
+    if (P.custom.length >= C.CUSTOM_MAX) return null;
+    o = o || {};
+    var id = "x" + (P.custom.length + 1) + "-" + (hash(String(o.name || "") + (P.seed || 0) + P.custom.length) % 46656).toString(36);
+    var spec = C.customSpec(Object.assign({}, o, { id: id })); P.custom.push(spec); return spec;
+  };
+  // the owner's studio characters: the look and the price can change, a signed player stays signed
+  C.syncStudio = function (P, list) {
+    if (!list || !list.length) return 0; P.custom = P.custom || [];
+    list.forEach(function (o) {
+      if (!o || !o.id) return;
+      var had = C.custom(P, o.id), spec = C.customSpec(Object.assign({}, o, { id: o.id, studio: true }));
+      if (had) { var keep = had.unlocked; for (var k in spec) had[k] = spec[k]; had.studio = true; if (keep) had.unlocked = true; }
+      else P.custom.push(spec);
+    });
+    return P.custom.length;
+  };
+  C.customPrice = function (P, id) { var s = C.custom(P, id); return s && !s.unlocked ? s.price : 0; };
+  C.signCustom = function (P, id) {
+    var s = C.custom(P, id); if (!s || s.unlocked) return false;
+    if (P.coins < (s.price || 0)) return false; P.coins -= s.price || 0; s.unlocked = true; return true;
+  };
+  C.unlockCustom = function (P, id) { var s = C.custom(P, id); if (!s) return false; s.unlocked = true; return true; };
+  C.customOwned = function (P, id) { var s = C.custom(P, id); return !!(s && s.unlocked); };
+
   /* ---------- profile ---------- */
   C.VERSION = 1;
   C.create = function (o) {
@@ -108,8 +203,8 @@
     var P = { v: C.VERSION, seed: seed, name: String(o.name || "Manager").slice(0, 24), club: { name: String(o.club || "My Club FC").slice(0, 28), c1: o.c1 || "#22c55e", c2: o.c2 || "#ffffff", crest: o.crest || "shield" },
       level: 1, xp: 0, coins: 400, tier: 0, seasonNo: 0, matches: 0,
       stats: { played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, streak: 0, bestStreak: 0, seasonPts: 0, bestSeasonPts: 0 },
-      cabinet: [], roster: {}, squad: C.STARTERS.slice(), originals: [], season: null, finalWon: false, legends: { rung: 0, best: 0, open: false },
-      options: { len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true }, history: [] };
+      cabinet: [], roster: {}, squad: C.STARTERS.slice(), originals: [], custom: [], kits: ["k0"], season: null, finalWon: false, legends: { rung: 0, best: 0, open: false },
+      options: { len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true, guide: true }, upgrades: {}, history: [] };
     C.STARTERS.forEach(function (id) { P.roster[id] = { lvl: 1 }; });
     C.startSeason(P); return P;
   };
@@ -118,9 +213,11 @@
     old = old || {};
     if (!P || typeof P !== "object") P = C.create({ name: old.name || "Manager", club: old.club });
     if (!P.v || P.v < 1) { P.v = 1; }
-    P.options = Object.assign({ len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true }, P.options || {});
+    P.options = Object.assign({ len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true, guide: true }, P.options || {});
+    P.upgrades = Object.assign({}, P.upgrades || {});
     P.legends = Object.assign({ rung: 0, best: 0, open: false }, P.legends || {});
-    P.originals = P.originals || []; P.cabinet = P.cabinet || []; P.history = P.history || [];
+    P.originals = P.originals || []; P.cabinet = P.cabinet || []; P.history = P.history || []; P.custom = (P.custom || []).map(C.customSpec);
+    P.kits = (P.kits || ["k0"]).filter(function (id) { return !!C.kitById(id); }); if (!P.kits.length) P.kits = ["k0"];
     if (old.cupBest >= 6 && !P.cabinet.some(function (t) { return t.id === "classic"; })) { P.cabinet.push({ id: "classic", name: "Classic Momentum Cup", season: 0, tier: -1 }); P.coins += 500; }
     if (old.fav && C.ORIGINALS.indexOf(old.fav) >= 0 && P.originals.indexOf(old.fav) < 0) P.originals.push(old.fav);
     if (!P.season) C.startSeason(P);
@@ -155,9 +252,12 @@
   };
   C.squadPower = function (P) {
     var ps = P.squad.map(function (id) { return C.player(P, id); }).filter(Boolean);
-    if (!ps.length) return 1; var sum = 0; ps.forEach(function (p) { sum += C.rating(p, (P.roster[p.id] || {}).lvl) / 80; }); return sum / ps.length;
+    if (!ps.length) return 1; var sum = 0; ps.forEach(function (p) { sum += C.rating(p, (P.roster[p.id] || {}).lvl) / 80; });
+    var up = C.upgrades(P), bonus = 0; C.UPGRADES.forEach(function (u) { bonus += up[u.id]; });
+    return (sum / ps.length) * (1 + bonus * .01); // club upgrades lift the whole squad, so they show in the odds
   };
-  C.player = function (P, id) { return BY[id] || (C.ORIGINALS.indexOf(id) >= 0 && P.originals.indexOf(id) >= 0 ? { id: id, original: true } : null); };
+  C.upgradeTotal = function (P) { var up = C.upgrades(P), n = 0; C.UPGRADES.forEach(function (u) { n += up[u.id]; }); return n; };
+  C.player = function (P, id) { return BY[id] || C.customPlayerOf(P, id) || (C.ORIGINALS.indexOf(id) >= 0 && P.originals.indexOf(id) >= 0 ? { id: id, original: true } : null); };
   // what the match engine needs for a fixture: opponent club, its player, skill, stat multiplier, modifiers and arena
   C.opponent = function (P, f) {
     var club = clubById(f.opp), t = C.TIERS[Math.min(4, P.tier)], leg = f.type === "legends", grand = f.type === "grand";
@@ -186,7 +286,9 @@
   C.record = function (P, f, gf, ga, o) {
     o = o || {}; var s = P.season, t = C.TIERS[Math.min(4, P.tier)], win = gf > ga, draw = gf === ga, ev = [];
     var mult = f.type === "legends" ? Math.min(2.5, 1.5 + f.rung * .02) : f.type === "grand" ? 4 : f.type === "cup" ? 1.2 + f.round * .15 : f.type === "event" ? 1.3 : 1;
-    var coins = Math.round(t.coins * mult * (win ? 1 + Math.min(4, gf - ga) * .1 : draw ? .45 : .2)), xp = Math.round((40 + gf * 12 + (win ? 30 : 0)) * (1 + P.tier * .15));
+    var coins = Math.round(t.coins * mult * (win ? 1 + Math.min(4, gf - ga) * .1 : draw ? .45 : .2)) * C.COIN_RATE;
+    coins = Math.round(coins / 10) * 10;
+    var xp = Math.round((40 + gf * 12 + (win ? 30 : 0)) * (1 + P.tier * .15) * C.XP_RATE);
     if (o.cheated && !o.boards) { coins = Math.round(coins * .25); }
     P.coins += coins; P.xp += xp; var lv = C.levelFor(P.xp); if (lv > P.level) { ev.push({ kind: "level", level: lv }); P.level = lv; }
     var S = P.stats; S.played++; S.gf += gf; S.ga += ga; P.matches++;
@@ -240,7 +342,7 @@
   C.scout = function (P, id) { var p = BY[id]; if (!p || !C.scoutable(P, p) || P.coins < p.cost) return false; P.coins -= p.cost; P.roster[id] = { lvl: 1 }; return true; };
   C.trainCost = function (P, id) { var p = BY[id], r = P.roster[id]; if (!p || !r || r.lvl >= 10) return 0; return Math.round(150 * r.lvl * RARITY[p.rarity].mult / 10) * 10; };
   C.train = function (P, id) { var c = C.trainCost(P, id); if (!c || P.coins < c) return false; P.coins -= c; P.roster[id].lvl++; return true; };
-  C.setSquad = function (P, ids) { ids = ids.filter(function (id, i) { return ids.indexOf(id) === i && (P.roster[id] || P.originals.indexOf(id) >= 0); }).slice(0, 3); if (!ids.length) return false; P.squad = ids; return true; };
+  C.setSquad = function (P, ids) { ids = ids.filter(function (id, i) { return ids.indexOf(id) === i && (P.roster[id] || P.originals.indexOf(id) >= 0 || C.customOwned(P, id)); }).slice(0, 3); if (!ids.length) return false; P.squad = ids; return true; };
   // world ranking: every club by tier and rating, with the player's club placed by its tier, level and trophies
   C.ranking = function (P) {
     var me = { id: "you", name: P.club.name, score: P.tier * 100 + C.squadPower(P) * 40 + P.cabinet.length * 6 + P.level };

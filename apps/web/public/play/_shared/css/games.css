@@ -60,6 +60,25 @@
 .gm-dlg { width: min(720px, 100%); display: grid; gap: 14px; text-align: center; animation: gm-pop .35s cubic-bezier(.2,.9,.3,1.2) both; }
 .gm-dlg h2 { color: #fff; margin: 0; font-size: clamp(22px, 4vw, 34px); letter-spacing: -.02em; }
 .gm-dlg p { margin: 0 auto; max-width: 56ch; color: rgba(234,252,255,.82); line-height: 1.5; }
+/* Sections inside a dialog (the career club form, the outfit shop). Unstyled, they came out dark on a dark panel
+   with the browser's default margins, which pushed the primary button below the stage. */
+.gm-dlg h3, .gm-dlg h4 { color: #fff; margin: 0; font-size: 15px; letter-spacing: -.01em; }
+.gm-dlg h4 { font-size: 13.5px; color: rgba(234,252,255,.72); }
+/* Long shops (kits, upgrades) ran past the bottom of the stage, so the way back was off-screen.
+   Two columns on anything wider than a phone; the list still scrolls inside the overlay. */
+.gm-dlg .gm-grid2 { display: grid; gap: 8px; text-align: left; }
+@media (min-width: 760px) { .gm-dlg .gm-grid2 { grid-template-columns: 1fr 1fr; } }
+.gm-dlg .gm-grid2 > div { flex-wrap: nowrap; }
+/* Portrait hint: a phone on its side shows far more of a wide pitch. */
+.gm-rotate { position: absolute; left: 50%; transform: translateX(-50%); top: 10px; z-index: 7; width: min(340px, calc(100% - 20px));
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; padding: 10px 12px; border-radius: 14px;
+  background: rgba(4,12,18,.88); border: 1px solid rgba(126,240,255,.35); box-shadow: 0 10px 30px -12px #000; color: #fff; text-align: left; }
+.gm-rotate[hidden] { display: none; }
+.gm-rotate .gm-rotate__ic { flex: none; transform: rotate(90deg); }
+.gm-rotate b { display: block; font-size: 13.5px; line-height: 1.2; }
+.gm-rotate small { display: block; font-size: 11.5px; line-height: 1.3; color: rgba(234,252,255,.72); }
+.gm-rotate > div { flex: 1 1 150px; min-width: 0; }
+.gm-rotate .gm-btn { flex: none; margin-left: auto; }
 .gm-dlg .gm-formula { font-family: var(--font-mono, ui-monospace, monospace); background: rgba(255,255,255,.07); padding: 10px 14px;
   border-radius: 10px; display: inline-block; color: #fff; }
 .gm-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }

@@ -66,7 +66,15 @@
     ".mp-btns .mp-b{width:40%;height:40%}" +
     ".mp-b[data-pos=top]{left:30%;top:2%}.mp-b[data-pos=bottom]{left:30%;bottom:2%}.mp-b[data-pos=left]{left:2%;top:30%}.mp-b[data-pos=right]{right:2%;top:30%}" +
     ".mp-b.is-down{transform:scale(.9);filter:brightness(1.35);border-color:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.25),0 2px 6px rgba(0,0,0,.4)}" +
-    ".mp-extra .mp-b{top:0;bottom:0;border-radius:999px}";
+    ".mp-extra .mp-b{top:0;bottom:0;border-radius:999px}" +
+    // the row's buttons sit in a full-stage shell: percentages are then percentages of the stage, the same space
+    // the layout editor saves, so a saved position survives a rebuild
+    ".mp-btns-shell{position:absolute;inset:0;pointer-events:none}" +
+    ".mp-btns-shell .mp-b{position:absolute;width:auto;height:auto}" +
+    // A button the game has not unlocked yet: no colour, no press. Ready: the club colour comes back and it breathes.
+    ".mp-b.is-off{filter:grayscale(1) brightness(.72);opacity:.42!important;border-color:rgba(255,255,255,.28)!important}" +
+    ".mp-b.is-ready{--c:rgba(246,196,69,.9);box-shadow:0 0 0 3px rgba(246,196,69,.5),0 0 16px rgba(246,196,69,.55);animation:mp-ready 1.2s ease-in-out infinite}" +
+    "@keyframes mp-ready{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}";
   // A cross with four arrows, drawn in a 100x100 box (scales with the disc).
   var DPAD_SVG = "<svg viewBox='0 0 100 100' aria-hidden='true'><path class='x' d='M37 4h26a4 4 0 0 1 4 4v25h25a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H67v25a4 4 0 0 1-4 4H37a4 4 0 0 1-4-4V67H8a4 4 0 0 1-4-4V37a4 4 0 0 1 4-4h25V8a4 4 0 0 1 4-4z'/>" +
     "<path class='a' data-d='up' d='M50 10l11 14H39z'/><path class='a' data-d='down' d='M50 90L39 76h22z'/><path class='a' data-d='left' d='M10 50l14-11v22z'/><path class='a' data-d='right' d='M90 50L76 61V39z'/></svg>";
@@ -83,8 +91,9 @@
     var gapX = "max(14px, env(safe-area-inset-left, 0px) + 8px)", gapR = "max(14px, env(safe-area-inset-right, 0px) + 8px)", gapB = "max(12px, env(safe-area-inset-bottom, 0px) + 6px)";
     var parts = [], ptrs = {}, down = {}, dir = { up: false, down: false, left: false, right: false };
 
-    function zone(cls, id, label, w, h, css) {
-      var z = doc.createElement("div"); z.className = "mp-pz " + cls; z.setAttribute("data-lay", id); z.setAttribute("data-lay-label", label);
+    function zone(cls, id, label, w, h, css, noLay) {
+      var z = doc.createElement("div"); z.className = "mp-pz " + cls;
+      if (!noLay) { z.setAttribute("data-lay", id); z.setAttribute("data-lay-label", label); }
       z.style.cssText = "width:" + w + "px;height:" + h + "px;opacity:" + alpha + ";" + css;
       var L = io.layout ? io.layout(id) : null;
       if (L) { z.style.left = L.x + "%"; z.style.top = L.y + "%"; z.style.right = "auto"; z.style.bottom = "auto"; z.style.transform = "translate(-50%,-50%)"; z.style.width = Math.round(w * (L.s || 1)) + "px"; z.style.height = Math.round(h * (L.s || 1)) + "px"; if (L.a != null) z.style.opacity = L.a; if (L.h) z.setAttribute("data-lay-hidden", ""); }
@@ -94,13 +103,55 @@
 
     var dp = spec.dpad ? zone("mp-dpad", "pad-dpad", "Direction pad", D, D, "left:" + gapX + ";bottom:" + gapB) : null;
     if (dp) { dp.innerHTML = DPAD_SVG + "<b></b>"; dp.setAttribute("role", "group"); dp.setAttribute("aria-label", "Direction pad"); }
-    var bz = (spec.buttons || []).length ? zone("mp-btns", "pad-buttons", "Action buttons", C, C, "right:" + gapR + ";bottom:" + gapB) : null;
-    if (bz) bz.innerHTML = spec.buttons.map(function (b) { return btnHtml(b, Math.round(C * 0.13)); }).join("");
+    // Two ways to lay the action buttons out. The default is a diamond; "row" puts them in a horizontal
+    // row with a "top" button above the right-most one, which keeps them off the goal mouth.
+    var rowMode = spec.layout === "row";
+    var bz, rowS = 0, btnHost = null;
+    if ((spec.buttons || []).length) {
+      if (rowMode) {
+        var rowB = spec.buttons.filter(function (b) { return b.pos !== "top"; });
+        // Kept small on purpose: a phone thumb still hits 48 px, but four big circles covered too much of the pitch.
+        rowS = Math.round(clamp(Math.min(D * 0.62, sr.width * 0.093), 40, 58));
+        var rgap = Math.round(rowS * 0.16);
+        // An invisible thumb area over the right of the stage: it catches presses even in the gaps.
+        bz = zone("mp-btns mp-btns--row", "pad-buttons", "Action buttons", 0, 0, "right:0;bottom:0;width:52%;height:66%", true);
+        // The buttons themselves live in a full-stage shell, so a saved layout (a percentage of the stage, the same
+        // space Settings uses) lands in the same place after a rebuild instead of being a percentage of this box.
+        // .mp-btns is also what gives the buttons their round look, so the shell carries that class too.
+        var shell = doc.createElement("div"); shell.className = "mp-btns mp-btns-shell";
+        layer.appendChild(shell); parts.push(shell); bz.shell = shell; btnHost = shell;
+        // one [data-lay] per button, so Settings can drag, resize, fade or hide each of them on its own
+        function rowBtn(b, css) {
+          var laid = "pad-" + String(b.code).replace(/^@/, "");
+          return "<span class='mp-b' data-code='" + esc(b.code) + "' data-lay='" + esc(laid) + "' data-lay-label='" + esc(b.sub || b.label || laid) + "' style='" + css + "--c:" + esc(b.color || "rgba(80,100,120,.6)") + ";--fs:" + Math.round(rowS * 0.26) + "px' aria-hidden='true'>" + esc(b.label) + (b.sub ? "<small>" + esc(b.sub) + "</small>" : "") + "</span>";
+        }
+        shell.innerHTML = spec.buttons.map(function (b) {
+          var box = "width:" + rowS + "px;height:" + rowS + "px;";
+          if (b.pos === "top") return rowBtn(b, box + "right:14px;bottom:" + (14 + rowS + rgap) + "px;");
+          return rowBtn(b, box + "right:" + (14 + (rowB.length - 1 - rowB.indexOf(b)) * (rowS + rgap)) + "px;bottom:14px;");
+        }).join("");
+      } else {
+        bz = zone("mp-btns", "pad-buttons", "Action buttons", C, C, "right:" + gapR + ";bottom:" + gapB);
+        if (bz) bz.innerHTML = spec.buttons.map(function (b) { return btnHtml(b, Math.round(C * 0.13)); }).join("");
+        btnHost = bz;
+      }
+    }
     // A row of extras wider than the diamond sits flush with the right gap instead of overhanging the stage edge,
     // and three or more get a slightly smaller label so words still breathe inside their pills.
     var n = (spec.extra || []).length, ew = n * E + (n - 1) * 10, ez = n ? zone("mp-extra", "pad-extra", "Extra buttons", ew, E, "right:calc(" + gapR + " + " + Math.max(0, Math.round((C - ew) / 2)) + "px);bottom:calc(" + gapB + " + " + (C + 10) + "px)") : null;
     if (ez) ez.innerHTML = spec.extra.map(function (b, i) { return btnHtml(b, Math.round(E * (n > 2 ? 0.23 : 0.26)), "left:" + (n > 1 ? (i * 100 / n + 0) : 0) + "%;width:" + (n > 1 ? 100 / n - 4 : 100) + "%;"); }).join("");
-    [bz, ez].forEach(function (z) { if (!z) return; z.setAttribute("role", "group"); z.setAttribute("aria-label", "Buttons: " + [].map.call(z.querySelectorAll(".mp-b"), function (b) { return b.textContent; }).join(", ")); });
+    [btnHost || bz, ez].forEach(function (z) { if (!z) return; z.setAttribute("role", "group"); z.setAttribute("aria-label", "Buttons: " + [].map.call(z.querySelectorAll(".mp-b"), function (b) { return b.textContent; }).join(", ")); });
+    // Each action button is its own layout item. Remember the size it was designed at, then put back anything
+    // the player moved, resized, faded or hid in Settings > Layout (saved per orientation, per game).
+    [].forEach.call(layer.querySelectorAll(".mp-b[data-lay]"), function (el) {
+      el.setAttribute("data-bs", el.getAttribute("data-bs") || Math.round(parseFloat(el.style.width) || rowS || C * 0.4));
+      var L = io.layout && io.layout(el.getAttribute("data-lay")); if (!L) return;
+      var bs = +el.getAttribute("data-bs") || 60;
+      el.style.left = L.x + "%"; el.style.top = L.y + "%"; el.style.right = "auto"; el.style.bottom = "auto"; el.style.transform = "translate(-50%,-50%)";
+      el.style.width = Math.round(bs * (L.s || 1)) + "px"; el.style.height = Math.round(bs * (L.s || 1)) + "px";
+      if (L.a != null) el.style.opacity = L.a;
+      if (L.h) el.setAttribute("data-lay-hidden", "");
+    });
 
     function setDir(nd) {
       ["up", "down", "left", "right"].forEach(function (d) {
@@ -119,7 +170,7 @@
 
     function centres() {
       var out = [];
-      [bz, ez].forEach(function (z) { if (!z || z.hasAttribute("data-lay-hidden")) return; [].forEach.call(z.querySelectorAll(".mp-b"), function (el) { var r = el.getBoundingClientRect(); out.push({ id: el.getAttribute("data-code"), x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2, el: el }); }); });
+      [btnHost || bz, ez].forEach(function (z) { if (!z || z.hasAttribute("data-lay-hidden")) return;          [].forEach.call(z.querySelectorAll(".mp-b"), function (el) { if (el.hasAttribute("data-lay-hidden") || el.classList.contains("is-off")) return; var r = el.getBoundingClientRect(); out.push({ id: el.getAttribute("data-code"), x: r.left + r.width / 2, y: r.top + r.height / 2, r: r.width / 2, el: el }); }); });
       return out;
     }
     function count(code) { var c = 0; for (var p in ptrs) if (ptrs[p].codes && ptrs[p].codes.indexOf(code) >= 0) c++; return c; }
@@ -155,7 +206,12 @@
 
     return {
       destroy: function () { releaseAll(); root.removeEventListener("blur", releaseAll); parts.forEach(function (z) { if (z.parentNode) z.parentNode.removeChild(z); }); parts = []; },
-      parts: function () { return parts.slice(); }
+      parts: function () { return parts.slice(); },
+      /* state from the game: { off } = locked and dim, { ready } = unlocked and lit */
+      setBtn: function (laid, st) {
+        var el = layer.querySelector("[data-lay='" + laid + "']"); if (!el) return;
+        el.classList.toggle("is-off", !!(st && st.off)); el.classList.toggle("is-ready", !!(st && st.ready));
+      }
     };
   };
 

@@ -372,7 +372,9 @@
       usePad: function (spec) { touchSpec = spec && window.MIBPad ? { pad: spec } : (spec && spec.fallback) || null; drawTouch(); },
       music: function (sg) { if (typeof sg === "string") sg = SONGS[sg]; Sound.play(sg); },
       panel: function (concept, controls) { document.querySelector("[data-gm-concept]").innerHTML = concept; document.querySelector("[data-gm-controls]").innerHTML = controls + controlsTable(); },
-      keyName: function (id) { var b = actions[id] ? bound(id) : [id]; return b.map(keyLabel).join(" / "); }
+      keyName: function (id) { var b = actions[id] ? bound(id) : [id]; return b.map(keyLabel).join(" / "); },
+      /* the game tells the pad that a button is locked or ready, e.g. the power shot before the meter is full */
+      padButton: function (id, st) { padBtnState["pad-" + id] = st || {}; if (padUI && padUI.setBtn) padUI.setBtn("pad-" + id, st || {}); }
     };
     function keyLabel(c) { return { Space: "Space", ArrowLeft: "←", ArrowRight: "→", ArrowUp: "↑", ArrowDown: "↓", Enter: "Enter", ShiftLeft: "Shift", ShiftRight: "R-Shift", Slash: "/", Period: ".", Comma: ",", Semicolon: ";", Backspace: "⌫", Escape: "Esc" }[c] || c.replace(/^Key|^Digit/, ""); }
     function controlsTable() {
@@ -388,8 +390,10 @@
       return ids.map(function (id) { var a = actions[id]; if (!a || !a.touch) return ""; var L = api.layout.get(id), p = L || SET.touch[id] || a.touch, sz = Math.round(62 * (p.s || 1) * SET.touchScale);
           return '<button type="button" class="gm-key" data-k="@' + id + '" data-id="' + id + '" data-lay="' + id + '" data-lay-label="' + esc(a.label) + '" aria-label="' + esc(a.label) + '" style="left:' + keyPos(p.x, sz, "left", "right") + ';top:' + keyPos(p.y, sz, "top", "bottom") + ';width:' + sz + 'px;height:' + sz + 'px;opacity:' + (L && L.a != null ? L.a : SET.touchAlpha) + (L && L.h ? ';display:none' : '') + '">' + esc(a.touch.label) + "</button>"; }).join("");
     }
+    var padBtnState = {}; // pad button id -> { off, ready }, kept across rebuilds
     function drawTouch() {
-      if (padUI) { padUI.destroy(); padUI = null; }
+      // While the layout editor is open it holds live references to these elements, so do not rebuild under it.
+      if (padUI) { if (stage.classList.contains("gms-editing")) return; padUI.destroy(); padUI = null; }
       if (!touchSpec) { touch.innerHTML = ""; return; }
       if (touchSpec.pad) {
         var ps = touchSpec.pad, code = function (id) { return "@" + id; }, btn = function (b) { return { code: code(b.id), label: b.label, sub: b.sub, pos: b.pos, color: b.color }; };
@@ -397,8 +401,10 @@
         touch.innerHTML = freeKeys(ps.keys || []);
         padUI = window.MIBPad.build(touch, {
           dpad: ps.dpad ? { up: code(ps.dpad.up), down: code(ps.dpad.down), left: code(ps.dpad.left), right: code(ps.dpad.right) } : null,
+          layout: ps.layout, // "row" = a flat row with a "top" button above the right-most one
           buttons: (ps.buttons || []).map(btn), extra: (ps.extra || []).map(btn)
         }, { press: press, release: function (c) { keys[c] = false; }, buzz: function (ms) { api.buzz(ms); }, scale: SET.touchScale, alpha: SET.touchAlpha, layout: function (id) { return api.layout.get(id); } });
+        for (var pk in padBtnState) if (padUI.setBtn) padUI.setBtn(pk, padBtnState[pk]); // a rebuild keeps the locked/ready look
       } else if (typeof touchSpec[0] === "string") {
         touch.classList.add("gm-touch--free");
         touch.innerHTML = freeKeys(touchSpec);
@@ -482,6 +488,16 @@
         if (b.getAttribute("data-e") === "reset") { SET.touch = {}; drawTouch(); return; }
         saveSet(); editing = false; touch.classList.remove("is-editing"); bar.remove(); touch.removeEventListener("pointerdown", dn); window.removeEventListener("pointermove", mv); window.removeEventListener("pointerup", up); done(); });
     }
+    // A phone held upright leaves a wide pitch in a short strip. Say so once, and let them carry on if they want.
+    var rotOff = false, rot = document.createElement("div");
+    rot.className = "gm-rotate"; rot.hidden = true;
+    rot.innerHTML = "<svg class='gm-rotate__ic' width='24' height='24' viewBox='0 0 24 24' aria-hidden='true'><rect x='8' y='2.5' width='8' height='19' rx='2.2' fill='none' stroke='#7ef0ff' stroke-width='1.8'/><rect x='10.6' y='18.4' width='2.8' height='1.4' rx='.7' fill='#7ef0ff'/></svg>" +
+      "<div><b>Turn your phone sideways</b><small>This pitch is wide, so it fills the screen better on its side.</small></div><button type='button' class='gm-btn gm-btn--sm' data-rot='x'>Play like this</button>";
+    stage.appendChild(rot);
+    function rotateHint() { var w = window.innerWidth, h = window.innerHeight; rot.hidden = rotOff || !(w < 820 && h > w * 1.1); }
+    rot.addEventListener("click", function (e) { if (e.target.closest("[data-rot]")) { rotOff = true; rot.hidden = true; } });
+    window.addEventListener("resize", rotateHint); window.addEventListener("orientationchange", function () { setTimeout(rotateHint, 250); });
+    setTimeout(rotateHint, 400);
     var fullBtn = document.querySelector("[data-gm-full]");
     if (fullBtn && !window.MIBFull) fullBtn.addEventListener("click", function () { /* MIB-Hub: mib-full.js owns full screen when present */ try { if (document.fullscreenElement) document.exitFullscreen(); else (stage.requestFullscreen || stage.webkitRequestFullscreen).call(stage); if (screen.orientation && screen.orientation.lock) screen.orientation.lock("landscape").catch(function () {}); } catch (e) {} setTimeout(size, 300); });
     var setBtn = document.querySelector("[data-gm-settings]"); if (setBtn) setBtn.addEventListener("click", function () { if (!editing) settings(); });

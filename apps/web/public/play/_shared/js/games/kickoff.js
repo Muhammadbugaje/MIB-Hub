@@ -9,6 +9,21 @@
   function deg(d) { return d * Math.PI / 180; }
   function sx(m) { return m * PX; } function sy(m) { return GY - m * PX; }
   var S = { mode: "menu", state: "menu" };
+  /* Deep settings from the owner's Game Studio (admin → game → Studio). They arrive as api.config.rules and are
+   * clamped here, so a bad number can never make the match unplayable. 1 is always "as designed". */
+  var RULES = { gravity: 1, ball: 1, len: 1, coins: 1, xp: 1, dashWindow: .26, power: 1, studio: [] };
+  function readRules(api) {
+    var r = (api && api.config && api.config.rules) || {};
+    // the Game Studio writes a labelled block under `mc`; older hand-written settings used top-level keys
+    var mc = (r.mc && typeof r.mc === "object") ? r.mc : r;
+    function n(v, lo, hi, d) { v = +v; return isFinite(v) ? Math.max(lo, Math.min(hi, v)) : d; }
+    RULES.gravity = n(mc.gravity, .5, 1.6, 1); RULES.ball = n(mc.ballSize, .7, 1.6, 1); RULES.len = n(mc.matchLength, .5, 2, 1);
+    RULES.coins = n(mc.coinRate, .25, 5, 1); RULES.xp = n(mc.xpRate, .25, 5, 1);
+    RULES.dashWindow = n(mc.dashWindow, .12, .45, .26); RULES.power = n(mc.powerRate, .5, 2.5, 1);
+    RULES.studio = Array.isArray(r.studioCharacters) ? r.studioCharacters : [];
+    if (window.MomentumCareer && window.MomentumCareer.setRates) window.MomentumCareer.setRates(RULES.coins, RULES.xp);
+    return RULES;
+  }
 
   /* ---------- arenas ---------- */
   var ARENAS = [
@@ -63,7 +78,8 @@
     var key = c.pw || c.id, P0 = POWERS[key] || POWERS.newton, P = c.powerName ? Object.assign({}, P0, { name: c.powerName, idea: c.powerIdea || P0.idea }) : P0;
     return { c: c, P: P, pk: key, v: VOICE[c.voice || c.id] || VOICE.newton, side: side, imm: 0, face: side ? -1 : 1, x: side ? WM - 3.4 : 3.4, y: 0, vx: 0, vy: 0, cpu: cpu, skill: skill || 0,
       leg: 0, kcool: 0, meter: 0, power: 0, powerMax: 1, fx: {}, react: 0, daze: 0, stun: 0, ko: 0, bleed: 0, dash: 0, dashCool: 0, hurt: 0, goals: 0,
-      wobble: 0, mouth: 0, expr: "", jumpBuf: 0, coyote: 0, celebrate: 0, shots: 0, breath: Math.random() * 6 };
+      wobble: 0, mouth: 0, expr: "", jumpBuf: 0, coyote: 0, celebrate: 0, shots: 0, breath: Math.random() * 6,
+      tapDir: 0, tapT: 0, kickBuf: null, dashDir: 1 };
   }
   function pw(p) { return p ? p.pk || p.c.pw || p.c.id : ""; }
   function zm(api, a, b, c) { if (!S.camStatic) api.zoom(a, b, c); }
@@ -96,7 +112,7 @@
   }
 
   function resetPositions(toss) {
-    S.p.forEach(function (p) { if (!p) return; p.x = p.side ? WM - 3.4 : 3.4; p.y = 0; p.vx = p.vy = 0; p.stun = 0; p.ko = 0; p.dash = 0; p.celebrate = 0; p.expr = ""; p.fx.freeze = 0; });
+    S.p.forEach(function (p) { if (!p) return; p.x = p.side ? WM - 3.4 : 3.4; p.y = 0; p.vx = p.vy = 0; p.stun = 0; p.ko = 0; p.dash = 0; p.celebrate = 0; p.expr = ""; p.fx.freeze = 0; p.kickBuf = null; p.tapDir = 0; p.tapT = 0; });
     S.ball = { x: WM / 2, y: 2.7, vx: 0, vy: 0, spin: 0, squash: 0, sqv: 0, nx: 0, ny: 1, trail: [], photon: 0, glow: 0, shot: null, hold: true };
     S.toss = toss == null ? (Math.random() < .5 ? 0 : 1) : toss; S.lastTouch = null; S.item = null; S.itemT = 12;
   }
@@ -106,13 +122,14 @@
     o = o || {}; if (API0 && mode !== "demo") API0.hero.use(!!(a && a.c && a.c.id === "mib" && mode !== "duo"));
     S.matchId = (S.matchId || 0) + 1; S.mode = mode; S.round = o.round || 0; S.p = [a, b]; S.score = [0, 0]; S.time = mode === "tut" ? Infinity : (o.len || 75);
     S.arena = o.arena || AR.campus; S.golden = false; S.excite = .3; S.hintT = 6; S.hint = null; S.lastScorer = null; S.goalLog = [];
-    S.stats = { longest: 0, headers: 0, kicks: 0, lob: 0, drive: 0, shots: 0 }; S.over = false; S.post = null; S.len = S.time; S.halfDone = false; S.apple = null; S.ray = null; S.bolts = []; S.ghost = null; S.flash = null; resetPositions(null);
+    S.stats = { longest: 0, headers: 0, kicks: 0, lob: 0, drive: 0, shots: 0 }; S.padPow = -1; S.over = false; S.post = null; S.len = S.time; S.halfDone = false; S.apple = null; S.ray = null; S.bolts = []; S.ghost = null; S.flash = null; resetPositions(null);
     S.state = "kickoff"; S.stateT = 1.3;
     // match modifiers (career events and the Legends ladder) and per-player options
     var MD = window.MomentumCareer ? window.MomentumCareer.MODS : {}, mods = o.mods || [], opt = o.opt || {};
-    S.mods = mods; S.g = G; S.wind = 0; S.kickMul = 1; BR = .24; S.drawOK = !!o.draws; S.fixture = o.fixture || null;
-    mods.forEach(function (m) { var d = MD[m]; if (!d) return; if (d.g) S.g = G * d.g; if (d.ball) BR = .24 * d.ball; if (d.wind) S.wind = d.wind * (Math.random() < .5 ? -1 : 1); if (d.kick) S.kickMul = d.kick; if (d.len && isFinite(S.time)) S.time = Math.round(S.time * d.len); if (d.golden) S.goldenStart = true; });
-    S.len = S.time; S.noPowers = opt.powers === false; S.assist = opt.assists !== false; S.camStatic = opt.camera === "static"; S.comm = null; S.commOn = opt.commentary !== false && mode === "career";
+    S.mods = mods; S.g = G * RULES.gravity; S.wind = 0; S.kickMul = 1; BR = .24 * RULES.ball; S.drawOK = !!o.draws; S.fixture = o.fixture || null;
+    mods.forEach(function (m) { var d = MD[m]; if (!d) return; if (d.g) S.g = S.g * d.g; if (d.ball) BR = .24 * RULES.ball * d.ball; if (d.wind) S.wind = d.wind * (Math.random() < .5 ? -1 : 1); if (d.kick) S.kickMul = d.kick; if (d.len && isFinite(S.time)) S.time = Math.round(S.time * d.len); if (d.golden) S.goldenStart = true; });
+    if (RULES.len !== 1 && isFinite(S.time)) S.time = Math.max(15, Math.round(S.time * RULES.len));
+    S.len = S.time; S.noPowers = opt.powers === false; S.assist = opt.assists !== false; S.guide = OPT.guide !== false && S.mode !== "tut"; S.camStatic = opt.camera === "static"; S.comm = null; S.commOn = opt.commentary !== false && mode === "career";
     if (S.goldenStart) { S.golden = true; S.goldenStart = false; }
     if (mode === "tut") { S.p[1] = null; S.tut = 0; S.state = "play"; S.ball.hold = false; S.ball.x = 6; }
     S.weather = []; buildCrowd(); buildNets(); S.bg = null; S.crowdCv = null; S.front = null;
@@ -148,19 +165,19 @@
   }
 
   /* ---------- actions ---------- */
-  // Thumb clusters: move + dash under the left thumb, jump/kick/lob under the right, power above them. A dedicated
-  // Dash button replaces the old double-tap, which fired by accident when players nudged a direction twice.
+  // Thumb clusters: move under the left thumb, jump/kick/lob under the right, power above them. A dash is a second
+  // tap of the direction you are already holding, so the pad stays clean and the thumb never leaves the movement key.
   var ACTIONS = [
-    { id: "left", label: "Move left", keys: ["KeyA"], touch: { label: "◀", x: 10, y: 90, s: .85 } },
-    { id: "right", label: "Move right", keys: ["KeyD"], touch: { label: "▶", x: 24, y: 90, s: .85 } },
-    { id: "dash", label: "Dash", keys: ["ShiftLeft"], touch: { label: "»", x: 38, y: 90, s: .85 } },
+    { id: "left", label: "Move left (tap twice to dash)", keys: ["KeyA"], touch: { label: "◀", x: 10, y: 90, s: .95 } },
+    { id: "right", label: "Move right (tap twice to dash)", keys: ["KeyD"], touch: { label: "▶", x: 26, y: 90, s: .95 } },
+    { id: "dash", label: "Dash (or double-tap a direction)", keys: ["ShiftLeft"], touch: null },
     { id: "jump", label: "Jump", keys: ["KeyW"], touch: { label: "⤒", x: 66, y: 90, s: .85 } },
     { id: "kick", label: "Low kick (25°)", keys: ["KeyS"], touch: { label: "K", x: 79, y: 90, s: .85 } },
     { id: "lob", label: "Lob (55°)", keys: ["KeyQ"], touch: { label: "L", x: 92, y: 90, s: .85 } },
     { id: "power", label: "Superpower", keys: ["KeyE"], touch: { label: "★", x: 85.5, y: 61, s: .85 } },
-    { id: "p2left", label: "Player 2 left", keys: ["ArrowLeft"], touch: { label: "◀", x: 10, y: 10, s: .85 } },
-    { id: "p2right", label: "Player 2 right", keys: ["ArrowRight"], touch: { label: "▶", x: 24, y: 10, s: .85 } },
-    { id: "p2dash", label: "Player 2 dash", keys: ["ShiftRight"], touch: { label: "»", x: 38, y: 10, s: .85 } },
+    { id: "p2left", label: "Player 2 left (tap twice to dash)", keys: ["ArrowLeft"], touch: { label: "◀", x: 10, y: 10, s: .95 } },
+    { id: "p2right", label: "Player 2 right (tap twice to dash)", keys: ["ArrowRight"], touch: { label: "▶", x: 26, y: 10, s: .95 } },
+    { id: "p2dash", label: "Player 2 dash (or double-tap)", keys: ["ShiftRight"], touch: null },
     { id: "p2jump", label: "Player 2 jump", keys: ["ArrowUp"], touch: { label: "⤒", x: 66, y: 10, s: .85 } },
     { id: "p2kick", label: "Player 2 kick", keys: ["ArrowDown"], touch: { label: "K", x: 79, y: 10, s: .85 } },
     { id: "p2lob", label: "Player 2 lob", keys: ["Slash"], touch: { label: "L", x: 92, y: 10, s: .85 } },
@@ -168,24 +185,30 @@
   ];
 
   /* ---------- kicking ---------- */
-  function kick(api, p, lob) {
+  // You aim with your feet: hold a direction while you kick and the ball goes that way, so a ball behind you can be
+  // cleared instead of being kicked towards your own goal. With no direction held the kick follows your facing.
+  function kickDir(p) { return p.cpu ? p.face : ((p.aimDir || 0) || p.face); }
+  function inReach(p, dir, b) { // could this boot reach the ball, kicking towards `dir`?
+    var wide = S.assist && !p.cpu, dx = (b.x - p.x) * dir, dy = b.y - p.y;
+    return !b.hold && dx >= (wide ? -.8 : -.55) && dx <= (wide ? 1.7 : 1.45) && dy <= 1.7 && dy >= -.6;
+  }
+  function kickV(p) { return KICK_V * p.c.power * (p.fx.superkick > 0 ? 1.4 : 1) * (S.kickMul || 1); }
+  function kick(api, p, lob, aim) {
     if (p.kcool > 0 || p.stun > 0 || p.ko > 0) return false;
-    p.leg = .24; p.kcool = .28; speak(api, p, p.power > 0 ? "shoot" : "kick");
+    var b = S.ball, dir = (!p.cpu && aim) ? aim : p.face;
+    if (!inReach(p, dir, b)) return false;
+    p.face = dir; p.leg = .24; p.kickKind = lob ? "lob" : "low"; p.kcool = .28; speak(api, p, p.power > 0 ? "shoot" : "kick");
     var o = S.p[1 - p.side];
-    if (o && o.ko <= 0) { var odx = (o.x - p.x) * p.face; if (odx > 0 && odx < 1.15 && Math.abs(o.y - p.y) < 1.1) hitRival(api, p, o, lob ? 1.2 : 1, false); }
-    var b = S.ball, dx = (b.x - p.x) * p.face, dy = b.y - p.y;
-    var wide = S.assist && !p.cpu;
-    if (b.hold || dx < (wide ? -.8 : -.55) || dx > (wide ? 1.7 : 1.45) || dy > 1.7 || dy < -.6) return false;
-    b.shot = null; S.lastKick = p;
-    var th = lob ? LOB : DRIVE, v = KICK_V * p.c.power * (p.fx.superkick > 0 ? 1.4 : 1) * (S.kickMul || 1);
+    if (o && o.ko <= 0) { var odx = (o.x - p.x) * dir; if (odx > 0 && odx < 1.15 && Math.abs(o.y - p.y) < 1.1) hitRival(api, p, o, lob ? 1.2 : 1, false); }
+    var th = lob ? LOB : DRIVE, v = kickV(p);
     if (p.power > 0) { // power shot
       var P = p.P; v *= 1.45; th = lob ? 38 : 14; b.shot = { type: P.shot, t: 1.6, owner: p.side, col: P.col, jumped: false }; S.stats.shots += p.cpu ? 0 : 1;
       if (P.shot === "fire") { b.photon = .5; p.vx -= p.face * 7; p.vy = Math.max(p.vy, 1.5); }
       api.sound.sfx("boom"); api.kick(9); api.hitstop(.07); zm(api, .06, sx(b.x), sy(b.y)); if (!p.cpu) api.buzz([15, 20, 40]);
-    } else { api.sound.sfx("kick"); api.kick(2); if (!p.cpu) api.buzz(12); }
-    b.vx = Math.cos(deg(th)) * v * p.face; b.vy = Math.sin(deg(th)) * v; b.y = Math.max(b.y, BR + .01); squash(b, -p.face, 0, v / 20); S.lastTouch = p;
+    } else { api.sound.sfx("kick"); if (p.fx.superkick > 0) { api.sound.sfx("stomp"); api.kick(5); } else api.kick(2); if (!p.cpu) api.buzz(12); }
+    b.vx = Math.cos(deg(th)) * v * dir; b.vy = Math.sin(deg(th)) * v; b.y = Math.max(b.y, BR + .01); squash(b, -dir, 0, v / 20); S.lastTouch = p;
     var R = v * v * Math.sin(deg(2 * th)) / G, Hm = Math.pow(v * Math.sin(deg(th)), 2) / (2 * G);
-    S.ghost = { x: b.x, y: b.y, vx: b.vx, vy: b.vy, life: 1.4, v: v, th: th, R: R, H: Hm, photon: b.photon > 0, power: !!b.shot };
+    S.ghost = { x: b.x, y: b.y, vx: b.vx, vy: b.vy, life: 1.4, v: v, th: th, R: R, H: Hm, photon: b.photon > 0, power: !!b.shot, at: S.t };
     if (!p.cpu) { S.stats.kicks++; S.stats[lob ? "lob" : "drive"]++; S.stats.longest = Math.max(S.stats.longest, R); }
     api.burst(sx(b.x), sy(b.y), b.shot ? b.shot.col : "#fff", b.shot ? 18 : 6, b.shot ? 300 : 160);
     return true;
@@ -202,12 +225,22 @@
     if (!o.cpu) { api.flash("#ff2a2a", .22); api.buzz(30); }
   }
   function squash(b, nx, ny, amt) { b.nx = nx; b.ny = ny; b.squash = Math.min(.4, Math.max(b.squash, amt)); b.sqv = 0; }
+  /* Ball feel: a hard bounce thumps (low + click), a soft one just ticks, and a scuff of turf jumps up at the
+   * contact point so the ball reads as heavy. One sound per contact, so a scramble never turns into a rattle. */
+  function turfBounce(api, b) {
+    var sp = -b.vy, wet = S.arena.weather === "rain", snow = S.arena.weather === "snow";
+    api.sound.sfx("bounce"); if (sp > 4.5) api.sound.sfx("stomp");
+    if (sp > 2.5) api.burst(sx(b.x), GY - 2, snow ? "#ffffff" : wet ? "#b9d6d0" : "#c8e6a0", Math.min(12, 3 + sp), 40 + sp * 12);
+  }
+  function netSound(api, b, side) {
+    if (S.netT > 0 || Math.abs(b.vx) < 1.6) return; S.netT = .22; api.sound.sfx("net"); netPoke(side, b.y, .5, 2.5);
+  }
 
   function power(api, p) {
     if (p.meter < 1 || p.power > 0 || p.ko > 0 || S.state !== "play") return;
     var P = p.P; p.meter = 0; p.power = P.dur; p.powerMax = P.dur;
     S.intro = { p: p, P: P, t: 0, dur: api.reduce ? .4 : .85 }; S.state = "intro";
-    speak(api, p, "power", P.name); comment(p.c.name.split(" ")[0] + " unleashes " + P.name + "!"); api.sound.sfx("special"); api.flash("#ffffff", .12); if (!p.cpu) api.buzz([20, 30, 20]);
+    speak(api, p, "power", P.name); comment(p.c.name.split(" ")[0] + " unleashes " + P.name + "!"); crowdReact(p.side, 1, 1.6); api.sound.sfx("special"); api.flash("#ffffff", .12); if (!p.cpu) api.buzz([20, 30, 20]);
   }
   function startPower(api, p) {
     var P = p.P, o = S.p[1 - p.side], b = S.ball, id = pw(p);
@@ -216,30 +249,48 @@
     if (id === "newton" && o) S.apple = { x: o.x, y: 9, vy: 0, target: o };
     if (id === "bohr") { p.x = Math.max(1, Math.min(WM - 1, b.x - p.face * .8)); api.burst(sx(p.x), sy(1.3), P.col, 24, 300); }
     if (id === "curie") b.glow = P.dur;
-    api.burst(sx(p.x), sy(p.y + 1.3), P.col, 30, 340);
+    api.burst(sx(p.x), sy(p.y + 1.3), P.col, 30, 340); api.kick(14);
+    S.rings = (S.rings || []).concat([{ x: p.x, y: p.y + 1.3, col: P.col, t: 0 }]);
   }
 
+  // Head Soccer's clean pad: tapping the same direction twice dashes. One thumb, no extra button.
+  function tapDash(p, dir) {
+    if (p.tapDir === dir && S.t - (p.tapT || 0) < RULES.dashWindow) { p.tapDir = 0; p.tapT = 0; return true; }
+    p.tapDir = dir; p.tapT = S.t; return false;
+  }
   function control(api, p, dt) {
-    if (S.state !== "play") { p.vx *= .85; return; }
+    if (S.state !== "play") { p.aimDir = 0; p.vx *= .85; return; }
     var L, R, J, K, Q, X, D = false, dl = false, dr = false, pre = p.side === 0 ? "" : "p2";
     if (p.cpu) { var a = ai(p, dt); L = a.l; R = a.r; J = a.j; K = a.k; Q = a.q; X = a.x; dl = a.dl; dr = a.dr; }
     else {
-      /* a dedicated Dash button: a double-tap on a direction fired by accident on a phone */
-      L = api.down(pre + "left"); R = api.down(pre + "right"); J = api.hit(pre + "jump"); K = api.hit(pre + "kick"); Q = api.hit(pre + "lob"); X = api.hit(pre + "power"); D = api.hit(pre + "dash");
-      if (S.mode !== "duo" && p.side === 0) { L = L || api.down("p2left"); R = R || api.down("p2right"); J = J || api.hit("p2jump", "Space"); K = K || api.hit("p2kick"); Q = Q || api.hit("p2lob"); X = X || api.hit("p2power"); D = D || api.hit("p2dash"); }
+      L = api.down(pre + "left"); R = api.down(pre + "right"); J = api.hit(pre + "jump"); K = api.hit(pre + "kick"); Q = api.hit(pre + "lob"); X = api.hit(pre + "power");
+      var dlTap = api.hit(pre + "left"), drTap = api.hit(pre + "right");
+      if (S.mode !== "duo" && p.side === 0) { L = L || api.down("p2left"); R = R || api.down("p2right"); J = J || api.hit("p2jump", "Space"); K = K || api.hit("p2kick"); Q = Q || api.hit("p2lob"); X = X || api.hit("p2power");
+        dlTap = dlTap || api.hit("p2left"); drTap = drTap || api.hit("p2right"); }
+      if (dlTap) D = tapDash(p, -1) || D; if (drTap) D = tapDash(p, 1) || D;
+      if (api.hit(pre + "dash")) D = true; // Shift keeps the old muscle memory
     }
     if (p.ko > 0 || p.fx.freeze > 0) { p.vx *= .88; return; }
     if (p.stun > 0) { p.vx *= .95; return; }
-    var slow = 1; if (p.fx.slowT) { p.fx.slowT += dt; slow = 1 - .6 * Math.pow(.5, p.fx.slowT); if (p.fx.slowT > 5) p.fx.slowT = 0; }
+    var vx0 = p.vx, slow = 1; if (p.fx.slowT) { p.fx.slowT += dt; slow = 1 - .6 * Math.pow(.5, p.fx.slowT); if (p.fx.slowT > 5) p.fx.slowT = 0; }
     var glide = p.power > 0 && pw(p) === "groove", sp = 6.3 * p.c.speed * slow * (p.fx.boots > 0 ? 1.35 : 1) * (glide ? 1.7 : 1) * (p.daze >= 3 ? .85 : 1);
     var home = p.side ? -1 : 1, bdx = S.ball.x - p.x; if (p.leg <= 0 && p.dash <= 0) p.face = (bdx * home < -.6 && Math.abs(bdx) < 3) ? -home : home; // turn to play a ball that is behind you
     if (p.power > 0 && pw(p) === "dash") { sp *= 1.45; p.dashCool = Math.min(p.dashCool, .15); }
-    if ((dl || dr || D) && p.dashCool <= 0) { p.dash = .18; p.dashDir = dl ? -1 : dr ? 1 : (R ? 1 : L ? -1 : p.face); p.dashCool = .7 / (p.c.stamina || 1); api.sound.sfx("dash"); speak(api, p, "effort"); api.burst(sx(p.x), GY - 6, "#d8c9a8", 10, 140); }
-    if (p.dash > 0) { p.dash -= dt; p.vx = p.dashDir * 14.5 * p.c.speed; }
+    if ((dl || dr || D) && p.dashCool <= 0) { p.dash = .22; p.dashDir = dl ? -1 : dr ? 1 : (R ? 1 : L ? -1 : p.face); p.dashCool = .55 / (p.c.stamina || 1); api.sound.sfx("dash"); speak(api, p, "effort"); api.burst(sx(p.x), GY - 6, "#d8c9a8", 10, 140); }
+    if (p.dash > 0) { p.dash -= dt; p.vx = p.dashDir * 15.6 * p.c.speed; }
     else { var want = (R ? sp : 0) - (L ? sp : 0); p.vx += (want - p.vx) * Math.min(1, dt * (p.y > 0 ? 10 : glide ? 7 : 32)); }
     p.coyote = p.y <= 0 ? .08 : p.coyote - dt; if (J) p.jumpBuf = .12; else p.jumpBuf -= dt;
     if (p.jumpBuf > 0 && p.coyote > 0) { p.vy = 6.4 * p.c.jump; p.jumpBuf = 0; p.coyote = 0; api.sound.sfx("jump"); speak(api, p, "jump"); }
-    if (K || Q) kick(api, p, Q);
+    // tap to hop, hold to jump high: letting go early cuts the rise, and the fall is always the same
+    if (!p.cpu && !J && p.vy > 1.4) p.vy -= 26 * dt;
+    // a hard change of direction scuffs the turf
+    if (!p.cpu && p.y === 0 && Math.abs(vx0) > 4 && vx0 * p.vx < 0 && (p.skidCd || 0) <= 0) { p.skidCd = .45; api.burst(sx(p.x), GY - 2, "#cfe9b0", 5, 90); }
+    // the direction you are holding is the direction you kick: no more clearing the ball into your own net
+    p.aimDir = p.cpu ? 0 : (R && !L ? 1 : L && !R ? -1 : 0);
+    // buffer the kick for a moment: pressing during the 0.28 s recovery or a frame out of reach still connects,
+    // which is most of the difference between "clunky" and "super good" in a fast game
+    if (K || Q) p.kickBuf = { lob: !!Q, t: .18 };
+    if (p.kickBuf) { if (kick(api, p, p.kickBuf.lob, p.aimDir)) p.kickBuf = null; else { p.kickBuf.t -= dt; if (p.kickBuf.t <= 0) p.kickBuf = null; } }
     if (X) power(api, p);
   }
 
@@ -276,6 +327,13 @@
     var ex = bx2 - ax, ey = by2 - ay, t = Math.max(0, Math.min(1, ((b.x - ax) * ex + (b.y - ay) * ey) / (ex * ex + ey * ey)));
     if (collideCircle(b, ax + ex * t, ay + ey * t, .07, 0, 0, .6, api)) { if (Math.hypot(b.vx, b.vy) > 6) { api.sound.sfx("block"); api.kick(3); } }
   }
+  // Off the woodwork: the loudest near-miss in football, so it gets a clang, a groan and a saying-out-loud.
+  function woodwork(api, b) {
+    if (S.barT > 0) return; S.barT = .5;
+    api.sound.sfx("block"); api.sound.sfx("crowd_groan"); api.kick(6);
+    api.burst(sx(b.x), sy(b.y), "#fff", 12, 200);
+    pop("Off the bar!", b.x, b.y + .3, "#ffe9a8");
+  }
   function headR(p) { return HR * (p.fx.bighead > 0 ? 1.4 : 1); }
 
   function ballStep(api, dt, k) {
@@ -292,18 +350,25 @@
       var spd2 = Math.hypot(b.vx, b.vy); if (spd2 > VMAX) { b.vx *= VMAX / spd2; b.vy *= VMAX / spd2; }
       b.x += b.vx * h; b.y += b.vy * h;
       var W = S.arena.weather, eg = W === "rain" ? .78 : W === "snow" ? .55 : .7, roll = W === "rain" ? .45 : W === "snow" ? 1.5 : .8;
-      if (b.y < BR) { b.y = BR; if (b.vy < -1.5) { api.sound.sfx("bounce"); squash(b, 0, 1, -b.vy / 28); } b.vy = -b.vy * eg; if (Math.abs(b.vy) < .6) b.vy = 0; var dec = roll * h; b.vx = Math.abs(b.vx) <= dec ? 0 : b.vx - Math.sign(b.vx) * dec; }
+      if (b.y < BR) { b.y = BR; if (b.vy < -1.5) { turfBounce(api, b); squash(b, 0, 1, Math.min(.45, -b.vy / 20)); } b.vy = -b.vy * eg; if (Math.abs(b.vy) < .6) b.vy = 0;
+        // rolling: the turf drags the ball to a stop. A slow ball also picks up a little sideways curl from its spin.
+        var dec = roll * h; b.vx = Math.abs(b.vx) <= dec ? 0 : b.vx - Math.sign(b.vx) * dec;
+        if (Math.abs(b.vx) > .5) b.vx += Math.sin(b.spin * .5) * .16 * h; }
       if (b.y > 9.6) { b.y = 9.6; b.vy = -Math.abs(b.vy) * .8; }
-      if (b.x < BR + .12) { b.x = BR + .12; if (b.y < GH) netPoke(0, b.y, .5, Math.abs(b.vx) / 8); b.vx = Math.abs(b.vx) * (b.y < GH ? .12 : .4); }
-      if (b.x > WM - BR - .12) { b.x = WM - BR - .12; if (b.y < GH) netPoke(1, b.y, .5, Math.abs(b.vx) / 8); b.vx = -Math.abs(b.vx) * (b.y < GH ? .12 : .4); }
+      if (b.x < BR + .12) { b.x = BR + .12; if (b.y < GH) { netPoke(0, b.y, .5, Math.abs(b.vx) / 8); netSound(api, b, 0); } b.vx = Math.abs(b.vx) * (b.y < GH ? .12 : .4); }
+      if (b.x > WM - BR - .12) { b.x = WM - BR - .12; if (b.y < GH) { netPoke(1, b.y, .5, Math.abs(b.vx) / 8); netSound(api, b, 1); } b.vx = -Math.abs(b.vx) * (b.y < GH ? .12 : .4); }
       collideSeg(b, 0, GH, GW, GH, api); collideSeg(b, WM - GW, GH, WM, GH, api);
+      if (b.y > GH - BR - .05 && b.y < GH + .1 && (b.x < GW + .3 || b.x > WM - GW - .3) && Math.hypot(b.vx, b.vy) > 5) woodwork(api, b);
       var touch = [false, false];
       S.p.forEach(function (p) {
         if (!p) return; var lying = p.ko > 0, before = b.shot;
         if (!lying && collideCircle(b, p.x, p.y + 1.25, headR(p), p.vx, p.vy, Math.min(.9, .78 * (.9 + .1 * (p.c.header || 1))), api, { head: true, p: p })) { touch[p.side] = true; S.lastKick = null; }
-        if (collideCircle(b, p.x, lying ? .3 : p.y + .45, lying ? .5 : .38, p.vx, p.vy, .5, api)) { touch[p.side] = true; S.lastKick = null; }
+        // a soft body bounce: walking into the ball nudges it along instead of pinging it away (a light dribble)
+        if (collideCircle(b, p.x, lying ? .3 : p.y + .45, lying ? .5 : .38, p.vx, p.vy, lying ? .5 : .24, api)) { touch[p.side] = true; S.lastKick = null; }
         if (touch[p.side] && before && before.owner !== p.side && !before.hitDone) { before.hitDone = true; hitRival(api, S.p[before.owner], p, 1, true); b.vx *= -.35; }
-        if (touch[p.side]) S.lastTouch = p;
+        if (touch[p.side]) { S.lastTouch = p;
+          // winning the ball fills a sliver of the superpower meter, so good defending is rewarded, not just waiting
+          if (!p.cpu && (p.touchCd || 0) <= 0 && p.meter < 1) { p.meter = Math.min(1, p.meter + .03); p.touchCd = .4; } }
         if (p.power > 0 && pw(p) === "well" && b.y < 3) { var wx = p.x + p.face * .6 - b.x; if (Math.abs(wx) < 3.5) b.vx += Math.sign(wx) * 6 * h; }
         if (p.power > 0 && pw(p) === "magnet" && b.y < 1.2 && Math.abs(p.x + p.face * .55 - b.x) < 1) { b.vx += ((p.x + p.face * .55 - b.x) * 40 - (b.vx - p.vx) * 6) * h; }
         if (p.power > 0 && pw(p) === "bohr") [-1, 1].forEach(function (g) { var gx = (p.side ? WM - 2.2 : 2.2) + g * .9; collideCircle(b, gx, 1.5 + Math.sin(S.t * 3 + g) * .5, HR, 0, 0, .8, api, { head: true }); });
@@ -332,17 +397,21 @@
       control(api, p, d);
       if (S.state === "celebrate") celebrateMove(api, p, d);
       p.vy -= S.g * d; p.x += p.vx * d; p.y += p.vy * d; p.imm = Math.max(0, p.imm - d);
-      if (p.y < 0) { if (p.vy < -4) api.sound.sfx("stomp"); p.y = 0; p.vy = 0; }
+      if (p.y < 0) { if (p.vy < -4) { api.sound.sfx("stomp"); api.burst(sx(p.x), GY - 2, "#d8c9a8", 7, 110); p.land = .22; } p.y = 0; p.vy = 0; }
+      p.land = Math.max(0, (p.land || 0) - d); p.skidCd = (p.skidCd || 0) - d;
       if (p.x < .5 || p.x > WM - .5) { p.x = Math.max(.5, Math.min(WM - .5, p.x)); p.vx *= -.2; }
-      p.leg = Math.max(0, p.leg - d); p.kcool -= d; p.dashCool -= d; p.stun -= d; p.hurt -= d; p.wobble *= Math.pow(.05, d); p.breath += d;
+      p.leg = Math.max(0, p.leg - d); p.kcool -= d; p.touchCd = (p.touchCd || 0) - d; p.dashCool -= d; p.stun -= d; p.hurt -= d; p.wobble *= Math.pow(.05, d); p.breath += d;
       p.mouth = Math.max(0, p.mouth - d * 1.6); if (p.mouth <= .02 && p.ko <= 0) p.expr = "";
       if (p.ko > 0) { p.ko -= d; if (p.ko <= 0) { pop("Back up!", p.x, 2.6, "#fff"); speak(api, p, "effort"); } }
       if (p.bleed > 0) { p.bleed -= d; if (Math.random() < .2) S.drops.push({ x: p.x + p.face * .12, y: p.y + 1.15, vx: p.face * .3 + (Math.random() - .5) * .3, vy: .5, life: 1 }); }
       p.daze = Math.max(0, p.daze - d * .08);
       if (p.power > 0 && S.state === "play") { p.power -= d; if (pw(p) === "tesla") teslaZap(api, p, d); if (pw(p) === "kai") kaiPush(api, p); if (p.power <= 0) pop(p.P.name + " ended", p.x, 2.8, "#cfe"); }
       for (var f in p.fx) if (f !== "slowT" && p.fx[f] > 0) p.fx[f] -= d;
-      if (S.mode !== "tut" && !S.noPowers && p.power <= 0 && S.state === "play") p.meter = Math.min(1, p.meter + d / (13 / (p.c.stamina || 1)));
+      if (S.mode !== "tut" && !S.noPowers && p.power <= 0 && S.state === "play") p.meter = Math.min(1, p.meter + d * RULES.power / (13 / (p.c.stamina || 1)));
     });
+    // The phone's power button only comes alive when the meter is full. Dim and inert before that.
+    var pl = S.p[0], powState = !pl ? "" : pl.power > 0 ? "active" : pl.meter >= 1 ? "ready" : "off";
+    if (powState !== S.padPow) { S.padPow = powState; if (api.padButton) api.padButton("power", { off: powState === "off", ready: powState === "ready" }); }
     var a = S.p[0], c = S.p[1];
     if (a && c && Math.abs(a.x - c.x) < 1.05 && Math.abs(a.y - c.y) < 1.6 && a.ko <= 0 && c.ko <= 0) { var push = (1.05 - Math.abs(a.x - c.x)) / 2 * Math.sign(a.x - c.x || 1); a.x += push; c.x -= push; }
     var touchedByEin = ein && S.lastTouch === ein;
@@ -381,7 +450,7 @@
     S.p[1 - who].meter = Math.min(1, S.p[1 - who].meter + .3);
     S.p[who].celebrate = 2.6; speak(api, S.p[who], "win"); var gm = S.matchId; setTimeout(function () { if (S.matchId === gm && S.p[1 - who]) speak(api, S.p[1 - who], "sad"); }, 500);
     api.slowmo(.5, .35); zm(api, .1, sx(who ? GW * .5 : WM - GW * .5), sy(1.2)); api.kick(10);
-    netPoke(who ? 0 : 1, S.ball.y, .5, 3);
+    netPoke(who ? 0 : 1, S.ball.y, .5, 3); api.sound.sfx("net"); if (S.ghost && S.t - (S.ghost.at || 0) < 3) { S.ghost.life = Math.max(S.ghost.life, 3.4); S.ghost.goal = true; }
     var sub = own ? "Own goal by " + name : name + " scores!"; comment(sub + " " + S.score[0] + " – " + S.score[1]);
     if (mine) { api.banner(own ? "OWN GOAL!" : "GOAL!", { col: "#ffd84a", edge: "#8a4b00", size: 150, sub: sub, dur: 2.4 }); api.confetti(110); api.sound.sfx("goal"); api.sound.roar(false); api.sound.say(own ? "Own goal!" : "Goal!", { pitch: 1.15, rate: 1.05, queue: true }); crowdReact(who, 1, 3); crowdReact(1 - who, -1, 2.5); api.buzz([40, 30, 80]); S.fireworks = 2.2; }
     else { api.banner(own ? "OWN GOAL" : "GOAL", { col: "#ff6b6b", edge: "#5a0b0b", size: 130, sub: own ? "Own goal by " + name : name + " scores against you", dur: 2.4, sad: true }); api.sound.roar(true); api.sound.say(own ? "Own goal." : "Goal.", { pitch: .75, rate: .9, queue: true }); crowdReact(1, 1, 3); crowdReact(0, -1, 3); api.flash("#5a0000", .35); api.buzz(180); }
@@ -396,9 +465,9 @@
   }
 
   var TUT = [
-    ["Move and dash", "Walk with your move keys. Press Dash to burst forward, or use it to reach a loose ball.", function (p) { return p.dash > 0; }],
+    ["Move and dash", "Walk with your move keys. Tap the same direction twice quickly to dash, or press Shift. Reach a loose ball in a burst.", function (p) { return p.dash > 0; }],
     ["Jump", "Jump. Your big head is the best part of you here.", function (p) { return p.y > .8; }],
-    ["Two kicks", "Low kick flies at 25°, lob at 55°. Same speed, different angle: watch the range in the dotted arc.", function () { return S.stats.drive > 0 && S.stats.lob > 0; }],
+    ["Two kicks", "Low kick flies at 25°, lob at 55°. The dotted arcs show where each one lands. Hold ← or → while you kick to aim that way.", function () { return S.stats.drive > 0 && S.stats.lob > 0; }],
     ["Score", "Put the ball in the right-hand goal. Watch the net bulge when it goes in.", function () { return false; }]
   ];
   function tutNext(api) {
@@ -416,6 +485,10 @@
     S.over = true; S.state = "over"; var me = S.score[0], them = S.score[1], duo = S.mode === "duo", win = me > them, st = S.stats;
     if (!duo && me === them && !S.golden && !S.drawOK) { S.golden = true; S.time = Infinity; S.over = false; S.state = "kickoff"; S.stateT = 1.6; resetPositions(null); api.banner("GOLDEN GOAL", { col: "#ffe9a8", edge: "#6a4a00", size: 90, sub: "Next goal wins", dur: 1.8 }); api.sound.say("Golden goal!"); return; }
     if (S.mode === "career" && window.KickCareerUI) { S.over = true; S.state = "over"; return window.KickCareerUI.end(api, me, them); }
+    // every match pays into the purse that buys players, outfits and upgrades
+    var purse = duo ? 0 : Math.round(20 + me * 8 + (win ? 55 : me === them ? 20 : 10) + (S.mode === "cup" ? 10 + S.round * 14 : 0));
+    var got = CUI.credit(purse);
+    if (got) pop("+" + got + " 🪙 purse", S.p[0].x, 3.4, "#ffe9a8");
     var cup = S.mode === "cup", final = cup && S.round === CUP.length - 1;
     api.sound.sfx("whistle");
     var wi = duo ? (me === them ? -1 : me > them ? 0 : 1) : win ? 0 : 1, champ = final && win;
@@ -431,7 +504,7 @@
     var gf = 0, ga = 0, bigW = null; cupRun.forEach(function (r) { gf += r.me; ga += r.them; if (r.me > r.them && (!bigW || r.me - r.them > bigW.me - bigW.them)) bigW = r; });
     var path = cup ? "<p style='display:flex;flex-wrap:wrap;gap:6px;justify-content:center'>" + cupRun.map(function (r) { return "<span class='gm-chip'>" + A.esc(r.name) + ": <b>" + r.me + "–" + r.them + "</b> v " + A.esc(r.opp) + "</span>"; }).join("") + "</p>" : "";
     var quote = champ ? ["“Physics did the talking. I only held the clipboard.”", "“Six rounds, one parabola at a time. Proud of you.”", "“Entropy always wins in the end. Not today.”"][me % 3] : win ? ["“Good. Now do it again.”", "“That lob was pure sin 2θ.”", "“Keep your head moving into the ball.”"][(me + them) % 3] : ["“Heads up. We learn the angles and we come back.”", "“You made them work for it. Next season is ours.”", "“One bounce went against us. That is football.”"][(me + them) % 3];
-    var body = (log ? "<p>Goals: " + A.esc(log) + "</p>" : "") + (champ || (cup && !win) ? path : "") + (duo ? "" : "<p><i>Manager: " + quote + "</i></p>") +
+    var body = (log ? "<p>Goals: " + A.esc(log) + "</p>" : "") + (got ? "<p><b>Purse: +" + got + " 🪙</b> · you now have " + CUI.wallet() + " 🪙. Spend it on players, outfits and club upgrades in Career.</p>" : "") + (champ || (cup && !win) ? path : "") + (duo ? "" : "<p><i>Manager: " + quote + "</i></p>") +
       (champ ? "<p><b>Count Entropy's Disorder XI is beaten.</b> Entropy's Void is now open for quick matches. " + A.esc(S.p[0].c.name) + " top-scored with " + gf + " goals; the cup conceded just " + ga + ".</p>" : "") +
       (cup && !win ? "<p>The cup starts again next season. Your best run so far: round " + (A.store("cup-best") || 0) + " of " + CUP.length + ".</p>" : "") +
       "<details><summary>The physics you just used</summary><p>Every kick was a projectile: the horizontal speed stays constant while the vertical speed falls by 9.8 m/s each second. A header is a collision: the ball leaves faster when your head moves into it, and some energy is lost each bounce.</p>" +
@@ -441,8 +514,8 @@
         : "<button class='gm-btn gm-btn--go' data-act='quick-again'>Play again</button>";
     var kind = duo ? (wi < 0 ? "draw" : "win") : win ? (champ ? "champion" : "win") : cup ? "eliminated" : "lose", wc = S.p[wi < 0 ? 0 : wi].c;
     var tips = ["Lob (55°) over a rival who rushes you; drive (25°) when the goal is open.", "Dash into the ball: a moving head adds its speed to the header.", "Save your superpower for when the ball is in their half.", "Stand a step off your line: a rebound off the bar is yours."];
-    var stats = champ ? [["Cup goals", gf + " for, " + ga + " against"], ["Biggest win", bigW ? bigW.me + "–" + bigW.them + " v " + bigW.opp : "–"], ["Longest kick", st.longest.toFixed(1) + " m"]]
-      : [["Full time", me + " – " + them], ["Longest kick", st.longest.toFixed(1) + " m"], ["Headers", st.headers], ["Power shots", st.shots]];
+    var stats = champ ? [["Cup goals", gf + " for, " + ga + " against"], ["Biggest win", bigW ? bigW.me + "–" + bigW.them + " v " + bigW.opp : "–"], ["Longest kick", st.longest.toFixed(1) + " m"], ["Purse", "+" + got + " 🪙"]]
+      : [["Full time", me + " – " + them], ["Longest kick", st.longest.toFixed(1) + " m"], ["Headers", st.headers], ["Purse", "+" + got + " 🪙"]];
     api.banner("FULL TIME", { size: 84, sub: me + " – " + them, dur: 1.25, y: 236, col: win || duo ? "#ffd84a" : "#cbd5e1", edge: win || duo ? "#8a4b00" : "#1e293b", sad: !win && !duo });
     var mid = S.matchId;
     setTimeout(function () {
@@ -484,49 +557,73 @@
   /* ---------- career: profile, squad, leagues, cups, rankings and the Legends ladder (rules live in kickoff-career.js) ---------- */
   var CUI = (function () {
     var MC = window.MomentumCareer, KEY = "kick-career", MALEV = ["newton", "faraday", "tesla", "einstein", "bohr", "groove", "kai"];
-    var KITS = [["#22c55e", "#ffffff"], ["#2563eb", "#facc15"], ["#dc2626", "#ffffff"], ["#7c3aed", "#f0abfc"], ["#0f172a", "#f6c445"], ["#f97316", "#1f2937"], ["#0891b2", "#ecfeff"], ["#ffffff", "#16a34a"]];
+    var KITS = (MC && MC.KITS ? MC.KITS : []).map(function (k) { return [k.c1, k.c2]; });
+    if (!KITS.length) KITS = [["#22c55e", "#ffffff"], ["#2563eb", "#facc15"], ["#dc2626", "#ffffff"], ["#7c3aed", "#f0abfc"], ["#0f172a", "#f6c445"], ["#f97316", "#1f2937"], ["#0891b2", "#ecfeff"], ["#ffffff", "#16a34a"]];
     var esc = A.esc, P = null, F = null, lastRes = null;
     function load() { if (!MC) return null; if (P) return P; var raw = A.store(KEY); if (raw) P = MC.migrate(raw, {}); return P; }
     function save() { if (P) A.store(KEY, P); }
+    // Coins are the career wallet. A quick match or a cup run pays into the purse even before a career exists;
+    // the purse moves into the club the moment you create one, so nothing earned is ever lost.
+    var PURSE = "kick-purse";
+    function wallet() { var q = load(); return q ? q.coins : (A.store(PURSE) || 0); }
+    function credit(n) {
+      n = Math.round((+n || 0) * RULES.coins); if (n <= 0) return 0;
+      var q = load(); if (q) { q.coins += n; save(); } else A.store(PURSE, (A.store(PURSE) || 0) + n);
+      return n;
+    }
     function crest(c, size) { size = size || 40; var w = (c.name || "FC").replace(/[^A-Za-z ]/g, "").split(" ").filter(Boolean).slice(0, 2).map(function (s) { return s[0]; }).join("").toUpperCase() || "FC";
       return "<span aria-hidden='true' style='display:inline-grid;place-items:center;width:" + size + "px;height:" + size + "px;border-radius:" + (size * .25) + "px " + (size * .25) + "px " + (size * .5) + "px " + (size * .5) + "px;background:" + c.c1 + ";color:" + c.c2 + ";border:3px solid " + c.c2 + ";font:900 " + Math.round(size * .36) + "px system-ui;vertical-align:middle'>" + esc(w) + "</span>"; }
     function clubOf(id) { return id === "you" ? { name: P.club.name, c1: P.club.c1, c2: P.club.c2 } : MC.clubById(id) || { name: "?", c1: "#888", c2: "#fff" }; }
     function chip(t, bg, fg) { return "<span class='gm-chip' style='background:" + (bg || "rgba(255,255,255,.12)") + ";color:" + (fg || "inherit") + "'>" + t + "</span>"; }
-    var RCOL = { common: "#94a3b8", rare: "#38bdf8", epic: "#c084fc", legendary: "#f6c445" };
+    var RCOL = { common: "#94a3b8", rare: "#38bdf8", epic: "#c084fc", legendary: "#f6c445", custom: "#38bdf8", signature: "#f6c445" };
     // a career player as a match character, in the club's kit
     function careerChar(id, lvl, club, mult) {
-      var b = MC.byId[id], m = (1 + .02 * ((lvl || 1) - 1)) * (mult || 1), c;
-      if (b) { var pw = MC.POWERS[b.pw];
+      var b = MC.byId[id], cu = MC.custom(P, id), m = (1 + .02 * ((lvl || 1) - 1)) * (mult || 1), U = function (k) { return P ? MC.upgradeMult(P, k) : 1; }, c;
+      if (cu) { var cp = MC.customPlayerOf(P, id);
+        c = { id: cp.id, name: cp.name, life: "player", skin: cp.skin, hair: cp.hair, style: cp.style, coat: club.c1, trim: club.c2, eye: cp.eye, mass: cp.mass, guest: true,
+          fact: cu.bio || "A player you designed.", src: cu.studio ? "Game Studio signature player" : "Your own design", special: cp.powerName, idea: cp.powerIdea,
+          speed: Math.min(1.45, cp.speed * m * U("speed")), jump: Math.min(1.4, cp.jump * m * U("jump")), power: Math.min(1.55, cp.shot * m * U("power")),
+          header: Math.min(1.5, cp.header * m * U("header")), defence: Math.min(1.6, cp.defence * m * U("defence")), stamina: Math.min(1.6, cp.stamina * m * U("stamina")),
+          pw: cp.pw, powerName: cp.powerName, voice: MC.hash(cp.id) % 2 ? "faraday" : "curie" };
+      } else if (b) { var pw = MC.POWERS[b.pw];
         c = { id: b.id, name: b.name, life: "player", skin: b.skin, hair: b.hair, style: b.style, coat: club.c1, trim: club.c2, eye: b.eye, mass: b.mass, guest: true,
           fact: "An original Momentum Cup player.", src: "Original EE Hub character", special: pw.name, idea: "",
-          speed: Math.min(1.35, b.speed * m), jump: Math.min(1.3, b.jump * m), power: Math.min(1.45, b.shot * m), header: Math.min(1.4, b.header * m), defence: Math.min(1.5, b.defence * m), stamina: Math.min(1.45, b.stamina * m),
+          speed: Math.min(1.45, b.speed * m * U("speed")), jump: Math.min(1.4, b.jump * m * U("jump")), power: Math.min(1.55, b.shot * m * U("power")),
+          header: Math.min(1.5, b.header * m * U("header")), defence: Math.min(1.6, b.defence * m * U("defence")), stamina: Math.min(1.6, b.stamina * m * U("stamina")),
           pw: pw.engine, powerName: pw.name, voice: b.fem ? "curie" : MALEV[MC.hash(b.id) % MALEV.length] };
       } else { var o = A.byId[id]; if (!o) return null; c = Object.assign({}, o, { coat: id === "mib" ? o.coat : club.c1 });
-        if (id !== "mib" && mult && mult !== 1) { c.speed = Math.min(1.35, c.speed * mult); c.power = Math.min(1.45, c.power * mult); c.jump = Math.min(1.3, c.jump * mult); } }
+        if (id !== "mib") {
+          var q = (mult || 1); c.speed = Math.min(1.45, c.speed * q * U("speed")); c.power = Math.min(1.55, c.power * q * U("power")); c.jump = Math.min(1.4, c.jump * q * U("jump"));
+          c.header = Math.min(1.5, c.header * q * U("header")); c.defence = Math.min(1.6, c.defence * q * U("defence")); c.stamina = Math.min(1.6, (c.stamina || 1) * U("stamina"));
+        } }
       return c;
     }
-    function owned() { var ids = Object.keys(P.roster).concat(P.originals); if (A.byId.mib) ids.push("mib"); return ids; }
-    function nameOf(id) { var b = MC.byId[id]; return b ? b.name : A.byId[id] ? A.byId[id].name : id; }
-    function rateOf(id) { var b = MC.byId[id]; return b ? MC.rating(b, (P.roster[id] || {}).lvl) : id === "mib" ? 99 : 84; }
-    function powOf(id) { var b = MC.byId[id]; return b ? MC.POWERS[b.pw].name : POWERS[id] ? POWERS[id].name : ""; }
+    function owned() { var ids = Object.keys(P.roster).concat(P.originals).concat(P.custom.filter(function (c) { return c.unlocked; }).map(function (c) { return c.id; })); if (A.byId.mib) ids.push("mib"); return ids; }
+    function nameOf(id) { var b = MC.byId[id] || MC.customPlayerOf(P, id); return b ? b.name : A.byId[id] ? A.byId[id].name : id; }
+    function rateOf(id) { var b = MC.byId[id] || MC.customPlayerOf(P, id); return b ? MC.rating(b, (P.roster[id] || {}).lvl) : id === "mib" ? 99 : 84; }
+    function powOf(id) { var b = MC.byId[id], cu = MC.custom(P, id); return b ? MC.POWERS[b.pw].name : cu ? MC.POWERS[cu.power].name : POWERS[id] ? POWERS[id].name : ""; }
     function fixtureName(f) { if (!f) return ""; if (f.type === "league") return MC.TIERS[P.season.tier].name + " · round " + (f.round + 1) + " of 10"; if (f.type === "cup") return MC.TIERS[P.season.tier].cup + " · " + f.name; return f.name; }
     function modsText(ms) { return (ms || []).map(function (m) { return chip(esc(MC.MODS[m].name), "#3b2a5a", "#e9d5ff"); }).join(" "); }
 
-    function open(api) { if (!MC) { api.toast ? api.toast("Career mode did not load.") : 0; return menu(api); } if (!load()) return create(api); hub(api); }
+    function open(api) { if (!MC) { api.toast ? api.toast("Career mode did not load.") : 0; return menu(api); } if (!load()) return create(api);
+      if (MC.syncStudio(P, RULES.studio)) save(); hub(api); }
     function create(api) {
       var kit = 0, old = { cupBest: A.store("cup-best") || 0, fav: A.store("kick-p1") };
       function draw() {
         api.show("<h2>Start your career</h2><p>Build a club from the Campus League to the World League, then take on the endless Legends ladder.</p>" +
-          "<label style='display:block;margin:8px 0'>Manager name <input data-in='name' maxlength='24' value='Manager' style='width:100%;font:inherit;padding:8px;border-radius:8px'></label>" +
-          "<label style='display:block;margin:8px 0'>Club name <input data-in='club' maxlength='28' value='Momentum FC' style='width:100%;font:inherit;padding:8px;border-radius:8px'></label>" +
-          "<h3>Kit</h3><div class='gm-actions' style='justify-content:flex-start'>" + KITS.map(function (k, i) { return "<button class='gm-btn gm-btn--sm' data-act='kit' data-i='" + i + "' aria-pressed='" + (i === kit) + "' aria-label='Kit " + (i + 1) + "' style='min-width:48px;min-height:48px;background:" + k[0] + ";color:" + k[1] + ";border:3px solid " + k[1] + "'>" + (i === kit ? "✓" : "") + "</button>"; }).join("") + "</div>" +
+          "<label style='display:block;margin:4px 0'>Manager name <input data-in='name' maxlength='24' value='Manager' style='width:100%;font:inherit;padding:6px;border-radius:8px'></label>" +
+          "<label style='display:block;margin:4px 0'>Club name <input data-in='club' maxlength='28' value='Momentum FC' style='width:100%;font:inherit;padding:6px;border-radius:8px'></label>" +
+          "<h3>Kit</h3><div class='gm-actions' style='justify-content:flex-start;gap:6px'>" + KITS.map(function (k, i) { return "<button class='gm-btn gm-btn--sm' data-act='kit' data-i='" + i + "' aria-pressed='" + (i === kit) + "' aria-label='Kit " + (i + 1) + "' style='min-width:40px;min-height:40px;background:" + k[0] + ";color:" + k[1] + ";border:3px solid " + k[1] + "'>" + (i === kit ? "✓" : "") + "</button>"; }).join("") + "</div>" +
           (old.cupBest >= 6 ? "<p class='gm-small'>Your classic cup win joins your trophy cabinet, with 500 coins.</p>" : "") +
           "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='make'>Create club</button><button class='gm-btn' data-act='menu'>Back</button></div>",
           function (act, el) {
             if (act === "kit") { kit = +el.getAttribute("data-i"); return draw(); }
             if (act === "menu") return menu(api);
             if (act === "make") { var q = function (k) { var e = document.querySelector("[data-in='" + k + "']"); return e ? e.value.trim() : ""; };
-              P = MC.migrate(MC.create({ name: q("name") || "Manager", club: q("club") || "Momentum FC", c1: KITS[kit][0], c2: KITS[kit][1], seed: Date.now() & 0xffff }), old); save(); hub(api); }
+              P = MC.migrate(MC.create({ name: q("name") || "Manager", club: q("club") || "Momentum FC", c1: KITS[kit][0], c2: KITS[kit][1], seed: Date.now() & 0xffff }), old);
+              var carry = A.store(PURSE) || 0; if (carry) { P.coins += carry; A.store(PURSE, 0); }
+              var mk = (MC.KITS || [])[kit]; if (mk && !MC.ownsKit(P, mk.id)) P.kits.push(mk.id);
+              MC.syncStudio(P, RULES.studio); save(); hub(api); }
           });
       }
       draw();
@@ -535,25 +632,130 @@
       menuMusic(api); var s = P.season, f = MC.next(P), gf = MC.grandFinal(P), lf = MC.legendsFixture(P), ord = MC.sorted(s.table), pos = ord.indexOf("you") + 1, t = MC.TIERS[s.tier], st = P.stats;
       var next = gf || f, od = next ? MC.odds(P, next) : null, oc = next ? (next.opp === "entropy" ? MC.VILLAIN_CLUB : MC.clubById(next.opp)) : null;
       api.show("<h2 style='display:flex;align-items:center;gap:10px;justify-content:center'>" + crest(P.club, 44) + esc(P.club.name) + "</h2>" +
-        "<p style='display:flex;flex-wrap:wrap;gap:6px;justify-content:center'>" + chip("Manager " + esc(P.name)) + chip("Level " + P.level) + chip("🪙 " + P.coins) + chip(esc(t.name), t.col, "#04140d") + chip("Season " + (P.seasonNo + 1)) + (s.table.you.p ? chip("Position " + pos + " of 6") : chip("Season starts")) + chip("Trophies " + P.cabinet.length) + "</p>" +
+        "<p style='display:flex;flex-wrap:wrap;gap:6px;justify-content:center'>" + chip("Manager " + esc(P.name)) + chip("Level " + P.level) + chip("🪙 " + P.coins) + chip(esc(t.name), t.col, "#04140d") + chip("Season " + (P.seasonNo + 1)) + (s.table.you.p ? chip("Position " + pos + " of 6") : chip("Preseason")) + chip("Trophies " + P.cabinet.length) + "</p>" +
         (next ? "<div class='gm-card-note' style='text-align:left'><b>" + (gf ? "The Grand Final" : "Next: " + esc(fixtureName(next))) + "</b><br>" + crest(oc, 26) + " v <b>" + esc(oc.name) + "</b> · your win chance about <b>" + od.win + "%</b> " + modsText(next.mods) + "</div>" : "") +
         "<p class='gm-small'>Played " + st.played + " · won " + st.won + " · drawn " + st.drawn + " · lost " + st.lost + " · goals " + st.gf + "–" + st.ga + " · best streak " + st.bestStreak + " · career matches " + P.matches + "</p>" +
         "<div class='gm-actions'>" + (gf ? "<button class='gm-btn gm-btn--go' data-act='grand'>Play the Grand Final</button>" : "") + (f ? "<button class='gm-btn" + (gf ? "" : " gm-btn--go") + "' data-act='play'>Play next match</button>" : "") +
         (lf ? "<button class='gm-btn' data-act='legends'>Legends rung " + (P.legends.rung + 1) + "</button>" : "") +
-        "<button class='gm-btn' data-act='squad'>Squad</button><button class='gm-btn' data-act='scout'>Scout</button><button class='gm-btn' data-act='table'>League table</button><button class='gm-btn' data-act='rank'>Rankings</button><button class='gm-btn' data-act='cabinet'>Trophy cabinet</button><button class='gm-btn' data-act='opts'>Options</button><button class='gm-btn' data-act='menu'>Menu</button></div>",
+        "<button class='gm-btn' data-act='squad'>Squad</button><button class='gm-btn' data-act='outfits'>Outfits</button><button class='gm-btn' data-act='players'>My players" + (P.custom.length ? " (" + P.custom.length + ")" : "") + "</button><button class='gm-btn' data-act='scout'>Scout</button><button class='gm-btn' data-act='upgrades'>Upgrades" + (MC.upgradeTotal(P) ? " (" + MC.upgradeTotal(P) + ")" : "") + "</button><button class='gm-btn' data-act='table'>League table</button><button class='gm-btn' data-act='rank'>Rankings</button><button class='gm-btn' data-act='cabinet'>Trophy cabinet</button><button class='gm-btn' data-act='opts'>Options</button><button class='gm-btn' data-act='menu'>Menu</button></div>",
         function (act) {
           if (act === "play") return prematch(api, f); if (act === "grand") return prematch(api, gf); if (act === "legends") return prematch(api, lf);
-          if (act === "squad") return squad(api); if (act === "scout") return scout(api); if (act === "table") return table(api); if (act === "rank") return rank(api); if (act === "cabinet") return cabinet(api); if (act === "opts") return opts(api);
+          if (act === "squad") return squad(api); if (act === "outfits") return outfits(api); if (act === "players") return players(api); if (act === "scout") return scout(api); if (act === "upgrades") return upgrades(api); if (act === "table") return table(api); if (act === "rank") return rank(api); if (act === "cabinet") return cabinet(api); if (act === "opts") return opts(api);
           if (act === "menu") return menu(api);
+        });
+    }
+    function upgrades(api) {
+      var up = MC.upgrades(P), rows = MC.UPGRADES.map(function (u) {
+        var lvl = up[u.id], cost = MC.upgradeCost(P, u.id), pips = "";
+        for (var i = 0; i < u.max; i++) pips += "<span style='color:" + (i < lvl ? "#f6c445" : "rgba(255,255,255,.25)") + "'>\u25cf</span>";
+        return "<div class='gm-card-note' style='display:flex;flex-wrap:wrap;gap:8px;align-items:center'><b style='flex:1 1 40px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + A.esc(u.name) + "</b><span style='letter-spacing:2px;font-size:13px'>" + pips + "</span>" +
+          (cost ? "<button class='gm-btn gm-btn--sm' data-act='buy' data-id='" + u.id + "'" + (P.coins < cost ? " disabled" : "") + ">" + cost + " \ud83e\ude99</button>" : "<span class='gm-small'>Maxed</span>") +
+          "<div class='gm-small' style='flex:1 1 100%'>" + A.esc(u.desc) + "</div></div>";
+      }).join("");
+      api.show("<h2>Club upgrades</h2><p>Bought once and kept for ever. They lift every player you field, so they show up in your win chance. \ud83e\ude99 " + P.coins + "</p><div class='gm-grid2'>" + rows + "</div>" + back(),
+        function (act, el) {
+          var id = el && el.getAttribute("data-id");
+          if (act === "buy") { if (MC.buyUpgrade(P, id)) { api.sound.sfx("power"); api.confetti(30); save(); } return upgrades(api); }
+          if (act === "hub") return hub(api);
         });
     }
     function menuMusic(api) { if (S.mode !== "menu") { S.matchId = (S.matchId || 0) + 1; S.over = true; S.mode = "menu"; S.state = "menu"; S.post = null; api.useActions([]); api.music(A.song(300, "funk", { bpm: 112 })); } }
     function back() { return "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='hub'>Back to club</button></div>"; }
+    function outfits(api) {
+      var rows = MC.KITS.map(function (k) {
+        var own = MC.ownsKit(P, k.id), on = P.club.c1 === k.c1 && P.club.c2 === k.c2;
+        return "<div class='gm-card-note' style='display:flex;flex-wrap:wrap;gap:10px;align-items:center'>" +
+          "<span style='display:inline-block;width:46px;height:46px;border-radius:12px;background:" + k.c1 + ";border:4px solid " + k.c2 + "' aria-hidden='true'></span>" +
+          "<b style='flex:1 1 40px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + esc(k.name) + "</b>" + (on ? chip("Wearing", "#3dd68c", "#04140d") : "") +
+          (own ? "<button class='gm-btn gm-btn--sm' data-act='wear' data-id='" + k.id + "'" + (on ? " disabled" : "") + ">Wear</button>" :
+            "<button class='gm-btn gm-btn--sm' data-act='buy' data-id='" + k.id + "'" + (P.coins < k.price ? " disabled" : "") + ">Buy · " + k.price + " 🪙</button>") +
+          "</div>";
+      }).join("");
+      api.show("<h2>Outfits</h2><p>Club kits, bought once. 🪙 " + P.coins + "</p><div class='gm-grid2'>" + rows + "</div>" + back(),
+        function (act, el) {
+          var id = el && el.getAttribute("data-id");
+          if (act === "buy") { if (MC.buyKit(P, id)) { save(); api.sound.sfx("coin"); api.confetti(30); } return outfits(api); }
+          if (act === "wear") { if (MC.equipKit(P, id)) { save(); api.sound.sfx("click"); } return outfits(api); }
+          if (act === "hub") return hub(api);
+        });
+    }
+
+    /* ---------- custom players: design, sign with coins, or unlock with the owner's secret code ---------- */
+    function codeHash(code, want) {
+      code = String(code || "").toLowerCase().replace(/\s+/g, "");
+      if (!want || code.length < 4) return Promise.resolve(false);
+      try {
+        var data = new TextEncoder().encode("momentum-cup:" + code);
+        return crypto.subtle.digest("SHA-256", data).then(function (buf) {
+          var out = ""; new Uint8Array(buf).forEach(function (b) { out += ("0" + b.toString(16)).slice(-2); });
+          return out === want;
+        });
+      } catch (e) { return Promise.resolve(false); }
+    }
+    function players(api) {
+      var list = MC.customList(P), signed = list.filter(function (s) { return s.unlocked; }).length;
+      var rows = list.map(function (s) {
+        var r = MC.rating(MC.customPlayer(s), 1);
+        return "<div class='gm-card-note' style='display:flex;flex-wrap:wrap;gap:8px;align-items:center;text-align:left'>" +
+          "<b style='flex:1 1 150px'>" + esc(s.name) + "</b>" + chip(s.studio ? "signature" : "your design", s.studio ? "#f6c445" : "#38bdf8", "#04140d") +
+          chip("Rating " + r) + chip(esc(MC.POWERS[s.power].name)) + (s.unlocked ? chip("Signed", "#3dd68c", "#04140d") : chip((s.price || 0) + " 🪙")) +
+          (s.bio ? "<div class='gm-small' style='flex:1 1 100%'>" + esc(s.bio) + "</div>" : "") +
+          (s.unlocked ? "<span class='gm-small'>In your club: pick them on the Squad screen.</span>" :
+            "<button class='gm-btn gm-btn--sm' data-act='sign' data-id='" + s.id + "'" + (P.coins < s.price ? " disabled" : "") + ">Sign · " + (s.price || 0) + " 🪙</button>" +
+            (s.unlockHash ? "<input data-in='code-" + s.id + "' placeholder='Secret code' aria-label='Secret code for " + esc(s.name) + "' style='width:130px;font:inherit;padding:6px;border-radius:8px'><button class='gm-btn gm-btn--sm' data-act='code' data-id='" + s.id + "'>Unlock</button>" : "")) +
+          "</div>";
+      }).join("");
+      api.show("<h2>My players</h2><p>🪙 <b>" + P.coins + "</b> · signed " + signed + " of " + list.length + ". Design a player, then sign them with coins or enter the owner's secret code to unlock them free.</p>" +
+        (rows ? "<div style='display:grid;gap:8px'>" + rows + "</div>" : "<p>No custom players yet. Design your first one below.</p>") +
+        "<div class='gm-actions'>" + (list.length < MC.CUSTOM_MAX ? "<button class='gm-btn gm-btn--go' data-act='design'>Design a player</button>" : "<span class='gm-small'>Design slots full (" + MC.CUSTOM_MAX + ").</span>") + "<button class='gm-btn' data-act='hub'>Back to club</button></div>",
+        function (act, el) {
+          var id = el && el.getAttribute("data-id");
+          if (act === "hub") return hub(api);
+          if (act === "design") return creator(api);
+          if (act === "sign") { if (MC.signCustom(P, id)) { save(); api.sound.sfx("coin"); api.confetti(30); pop(signedName(id) + " signs!", WM / 2, 3.4, "#ffe9a8"); } return players(api); }
+          if (act === "code") {
+            var box = document.querySelector("[data-in='code-" + id + "']"), spec = MC.custom(P, id);
+            return codeHash(box && box.value, spec && spec.unlockHash).then(function (ok) {
+              if (ok) { MC.unlockCustom(P, id); save(); api.sound.sfx("power"); api.confetti(60); }
+              else { api.sound.sfx("block"); if (api.toast) api.toast("That code does not match this player."); }
+              players(api);
+            });
+          }
+        });
+    }
+    function signedName(id) { var s = MC.custom(P, id); return s ? s.name : "Player"; }
+    function creator(api) {
+      if (P.custom.length >= MC.CUSTOM_MAX) return players(api);
+      var draft = { name: "", skin: MC.SKINS[2], hair: MC.HAIRS[0], style: "slick", power: "curve", bio: "", price: 800 };
+      function q(k) { var e = document.querySelector("[data-in='" + k + "']"); return e ? e.value : ""; }
+      function grab() { draft.name = q("cname").trim().slice(0, MC.CUSTOM_NAME_MAX); draft.bio = q("cbio").trim().slice(0, MC.CUSTOM_BIO_MAX); draft.price = Math.max(0, Math.min(20000, Math.round(+q("cprice") || 0))); }
+      function swatch(list, on) { return list.map(function (col) { return "<button class='gm-btn gm-btn--sm' data-act='swatch' data-v='" + col + "' aria-label='Colour " + col + "' aria-pressed='" + (on === col) + "' style='min-width:44px;min-height:44px;background:" + col + ";border:3px solid " + (on === col ? "#f6c445" : "rgba(255,255,255,.3)") + "'>" + (on === col ? "\u2713" : "") + "</button>"; }).join(""); }
+      function draw() {
+        api.show("<h2>Design a player</h2><p class='gm-small'>The look is free. Signing costs the price you set below, or the owner's secret code unlocks them free. Better players cost more and play better.</p>" +
+          "<label style='display:block;margin:6px 0'>Name <input data-in='cname' maxlength='" + MC.CUSTOM_NAME_MAX + "' value='" + esc(draft.name) + "' placeholder='e.g. Ada “Vector” Obi' style='width:100%;font:inherit;padding:8px;border-radius:8px'></label>" +
+          "<h3>Skin</h3><div class='gm-actions' style='justify-content:flex-start'>" + swatch(MC.SKINS, draft.skin) + "</div>" +
+          "<h3>Hair</h3><div class='gm-actions' style='justify-content:flex-start'>" + swatch(MC.HAIRS, draft.hair) + "</div>" +
+          "<h3>Style</h3><div class='gm-actions' style='justify-content:flex-start'>" + MC.CUSTOM_STYLES.map(function (s) { return "<button class='gm-btn gm-btn--sm' data-act='style' data-v='" + s + "' aria-pressed='" + (draft.style === s) + "'>" + s + "</button>"; }).join("") + "</div>" +
+          "<h3>Power</h3><div class='gm-actions' style='justify-content:flex-start'>" + Object.keys(MC.POWERS).map(function (k) { return "<button class='gm-btn gm-btn--sm' data-act='power' data-v='" + k + "' aria-pressed='" + (draft.power === k) + "'>" + esc(MC.POWERS[k].name) + "</button>"; }).join("") + "</div>" +
+          "<label style='display:block;margin:6px 0'>Bio <input data-in='cbio' maxlength='" + MC.CUSTOM_BIO_MAX + "' value='" + esc(draft.bio) + "' placeholder='One line the crowd can chant' style='width:100%;font:inherit;padding:8px;border-radius:8px'></label>" +
+          "<label style='display:block;margin:6px 0'>Signing price (🪙) <input data-in='cprice' type='number' min='0' max='20000' step='100' value='" + draft.price + "' style='width:130px;font:inherit;padding:8px;border-radius:8px'></label>" +
+          "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='make'>Design player</button><button class='gm-btn' data-act='players'>Cancel</button></div>",
+          function (act, el) {
+            if (act === "players") return players(api);
+            if (act === "swatch") { grab(); draft.skin = el.getAttribute("data-v"); return draw(); }
+            if (act === "style" || act === "power") { grab(); draft[act] = el.getAttribute("data-v"); return draw(); }
+            if (act === "make") { grab(); var s = MC.makeCustom(P, draft); if (!s) return players(api); save(); api.sound.sfx("power"); api.confetti(40); return players(api); }
+          });
+      }
+      draw();
+    }
+
     function squad(api) {
       var ids = owned().sort(function (a, b) { var ia = P.squad.indexOf(a), ib = P.squad.indexOf(b); if (ia >= 0 || ib >= 0) return (ia < 0 ? 9 : ia) - (ib < 0 ? 9 : ib); return rateOf(b) - rateOf(a); });
       api.show("<h2>Squad</h2><p>Pick up to three. Your first pick starts; the others can come on at half-time. Training adds 2% to every stat per level (up to level 10).</p><div style='display:grid;gap:8px;text-align:left'>" +
-        ids.map(function (id) { var b = MC.byId[id], lvl = (P.roster[id] || {}).lvl || 1, inS = P.squad.indexOf(id), cost = b ? MC.trainCost(P, id) : 0;
-          return "<div class='gm-card-note' style='display:flex;flex-wrap:wrap;gap:8px;align-items:center'><b style='flex:1 1 180px'>" + (inS >= 0 ? (inS === 0 ? "★ " : "• ") : "") + esc(nameOf(id)) + "</b>" + chip(b ? b.rarity : id === "mib" ? "maker" : "classic", RCOL[b ? b.rarity : "legendary"], "#04140d") + chip("Rating " + rateOf(id)) + chip(esc(powOf(id))) + (b ? chip("Lv " + lvl) : "") +
+        ids.map(function (id) { var b = MC.byId[id], cu = MC.custom(P, id), lvl = (P.roster[id] || {}).lvl || 1, inS = P.squad.indexOf(id), cost = b ? MC.trainCost(P, id) : 0;
+          var rar = b ? b.rarity : cu ? (cu.studio ? "signature" : "custom") : id === "mib" ? "maker" : "classic";
+          return "<div class='gm-card-note' style='display:flex;flex-wrap:wrap;gap:8px;align-items:center'><b style='flex:1 1 180px'>" + (inS >= 0 ? (inS === 0 ? "★ " : "• ") : "") + esc(nameOf(id)) + "</b>" + chip(rar, RCOL[rar] || "#38bdf8", "#04140d") + chip("Rating " + rateOf(id)) + chip(esc(powOf(id))) + (b ? chip("Lv " + lvl) : "") +
             "<button class='gm-btn gm-btn--sm' data-act='pick' data-id='" + id + "'>" + (inS >= 0 ? "Leave out" : "Pick") + "</button>" + (cost ? "<button class='gm-btn gm-btn--sm' data-act='train' data-id='" + id + "'" + (P.coins < cost ? " disabled" : "") + ">Train · " + cost + " 🪙</button>" : "") + "</div>"; }).join("") + "</div>" + back(),
         function (act, el) { var id = el && el.getAttribute("data-id");
           if (act === "pick") { var q = P.squad.slice(), i = q.indexOf(id); if (i >= 0) { if (q.length > 1) q.splice(i, 1); } else { if (q.length >= 3) q.pop(); q.push(id); } MC.setSquad(P, q); save(); return squad(api); }
@@ -586,11 +788,24 @@
     function opts(api) {
       var o = P.options;
       function row(label, key, vals) { return "<h3>" + label + "</h3><div class='gm-actions' style='justify-content:flex-start'>" + vals.map(function (v) { return "<button class='gm-btn gm-btn--sm' data-act='set' data-k='" + key + "' data-v='" + JSON.stringify(v[0]) + "' aria-pressed='" + (o[key] === v[0]) + "'>" + v[1] + "</button>"; }).join("") + "</div>"; }
-      api.show("<h2>Career options</h2>" + row("Match length", "len", [[45, "45 s"], [60, "60 s"], [75, "75 s"], [90, "90 s"], [120, "120 s"]]) + row("Difficulty", "diff", [[-2, "Much easier"], [-1, "Easier"], [0, "Standard"], [1, "Harder"], [2, "Brutal"]]) +
-        row("Kick assist", "assists", [[true, "On"], [false, "Off"]]) + row("Superpowers", "powers", [[true, "On"], [false, "Off"]]) + row("Camera", "camera", [["dynamic", "Zoom on shots"], ["static", "Still"]]) + row("Commentary text", "commentary", [[true, "On"], [false, "Off"]]) +
+      var nameRow = "<h3>Names</h3><label style='display:block;margin:6px 0'>Manager <input data-in='mname' maxlength='24' value='" + A.esc(P.name) + "' style='width:100%;font:inherit;padding:6px;border-radius:8px'></label>" +
+        "<label style='display:block;margin:6px 0'>Club <input data-in='mclub' maxlength='28' value='" + A.esc(P.club.name) + "' style='width:100%;font:inherit;padding:6px;border-radius:8px'></label>" +
+        "<div class='gm-actions' style='justify-content:flex-start'><button class='gm-btn gm-btn--sm' data-act='rename'>Save names</button></div>";
+      var kitRow = "<h3>Kit colours</h3><div class='gm-actions' style='justify-content:flex-start'>" + KITS.map(function (k, i) {
+        var on = P.club.c1 === k[0] && P.club.c2 === k[1], kid = (MC.KITS || [])[i] ? MC.KITS[i].id : "", own = !kid || MC.ownsKit(P, kid);
+        return "<button class='gm-btn gm-btn--sm' data-act='kit' data-i='" + i + "' aria-pressed='" + on + "' aria-label='Kit " + (i + 1) + (own ? "" : " (locked)") + "' style='min-width:48px;min-height:48px;background:" + k[0] + ";color:" + k[1] + ";border:3px solid " + k[1] + ";opacity:" + (own ? 1 : .45) + "'>" + (on ? "\u2713" : own ? "" : "\ud83d\udd12") + "</button>";
+      }).join("") + "</div><p class='gm-small'>Locked kits are bought in Outfits.</p>";
+      api.show("<h2>Career options</h2>" + nameRow + kitRow + row("Match length", "len", [[45, "45 s"], [60, "60 s"], [75, "75 s"], [90, "90 s"], [120, "120 s"]]) + row("Difficulty", "diff", [[-2, "Much easier"], [-1, "Easier"], [0, "Standard"], [1, "Harder"], [2, "Brutal"]]) +
+        row("Kick assist", "assists", [[true, "On"], [false, "Off"]]) + row("Shot guide", "guide", [[true, "On"], [false, "Off"]]) + row("Superpowers", "powers", [[true, "On"], [false, "Off"]]) + row("Camera", "camera", [["dynamic", "Zoom on shots"], ["static", "Still"]]) + row("Commentary text", "commentary", [[true, "On"], [false, "Off"]]) +
         (api.settings && api.settings.add ? "<p class='gm-small'>These are also in ⚙ Settings → Gameplay.</p>" : "") +
         "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='hub'>Done</button><button class='gm-btn' data-act='reset'>Start a new career</button></div>",
-        function (act, el) { if (act === "set") { var k = el.getAttribute("data-k"), v = JSON.parse(el.getAttribute("data-v")), map = { len: "mcLen", diff: "mcDiff", assists: "mcAssist", powers: "mcPowers", camera: "mcCamera", commentary: "mcComm" }; o[k] = v; if (api.settings && api.settings.set && map[k]) api.settings.set(map[k], v); save(); return opts(api); } if (act === "reset") { if (window.confirm && !window.confirm("Delete this career and start again?")) return opts(api); P = null; A.store(KEY, null); return create(api); } if (act === "hub") hub(api); });
+        function (act, el) {
+          if (act === "rename") {
+            var q = function (k) { var e = document.querySelector("[data-in='" + k + "']"); return e && e.value ? e.value.trim() : ""; };
+            if (q("mname")) P.name = q("mname").slice(0, 24); if (q("mclub")) P.club.name = q("mclub").slice(0, 28);
+            save(); api.sound.sfx("click"); return opts(api);
+          }
+          if (act === "kit") { var ki = +el.getAttribute("data-i"), kk = (MC.KITS || [])[ki]; if (!kk || !MC.ownsKit(P, kk.id)) { api.sound.sfx("block"); return opts(api); } if (MC.equipKit(P, kk.id)) { api.sound.sfx("click"); save(); } return opts(api); } if (act === "set") { var k = el.getAttribute("data-k"), v = JSON.parse(el.getAttribute("data-v")), map = { len: "mcLen", diff: "mcDiff", assists: "mcAssist", powers: "mcPowers", camera: "mcCamera", commentary: "mcComm", guide: "mcGuide" }; o[k] = v; if (api.settings && api.settings.set && map[k]) api.settings.set(map[k], v); save(); return opts(api); } if (act === "reset") { if (window.confirm && !window.confirm("Delete this career and start again?")) return opts(api); P = null; A.store(KEY, null); return create(api); } if (act === "hub") hub(api); });
     }
     function prematch(api, f) {
       F = f; var od = MC.odds(P, f), o = od.opp, oc = o.club, starter = P.squad[0], oppName = o.villain ? A.VILLAIN.name : o.base.name;
@@ -641,12 +856,13 @@
               "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='hub'>Continue</button><button class='gm-btn' data-act='menu'>Menu</button></div>", function (act) { if (act === "menu") return menu(api); hub(api); }); } });
       }, api.reduce ? 0 : 1250);
     }
-    return { open: open, end: end, halftime: halftime, hub: hub, load: load, get P() { return P; }, set P(v) { P = v; }, careerChar: careerChar, prematch: prematch, start: start, last: function () { return lastRes; } };
+    return { open: open, end: end, halftime: halftime, hub: hub, load: load, get P() { return P; }, set P(v) { P = v; }, careerChar: careerChar, prematch: prematch, start: start, last: function () { return lastRes; },
+      credit: credit, wallet: wallet, players: players, creator: creator, customList: function () { return P ? P.custom : []; } };
   })();
   window.KickCareerUI = CUI;
 
   // game options live in the shared Settings screen (⚙ → Gameplay); career matches read them through OPT
-  var OPT = { len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true };
+  var OPT = { len: 75, diff: 0, assists: true, powers: true, camera: "dynamic", commentary: true, guide: true };
   function registerOptions(api) {
     if (!api.settings || !api.settings.add) return;
     function put(k) { return function (v) { OPT[k] = v; var P = CUI.load && CUI.load(); if (P) { P.options[k] = v; A.store("kick-career", P); } }; }
@@ -657,6 +873,7 @@
     api.settings.add({ id: "mcPowers", tab: "gameplay", section: sec, label: "Superpowers", type: "toggle", default: true, apply: put("powers") });
     api.settings.add({ id: "mcCamera", tab: "display", section: sec, label: "Match camera", type: "choice", default: "dynamic", choices: [["dynamic", "Zoom on shots and goals"], ["static", "Still"]], apply: put("camera") });
     api.settings.add({ id: "mcComm", tab: "gameplay", section: sec, label: "Commentary text", type: "toggle", default: true, apply: put("commentary") });
+    api.settings.add({ id: "mcGuide", tab: "gameplay", section: sec, label: "Shot guide", type: "toggle", default: true, help: "Dotted arcs and landing distances for both kicks while the ball is in reach.", apply: put("guide") });
   }
 
   /* ---------- menus ---------- */
@@ -666,7 +883,7 @@
     var best = A.store("cup-best") || 0;
     api.show("<h2>Momentum Cup</h2><p>Head-football for scientists. Every kick is a projectile and every header is a collision, with real SI numbers on screen. Start a career and climb from the Campus League to the World League, or play the classic six-round cup.</p>" +
       "<div class='gm-actions'>" + (window.MomentumCareer ? "<button class='gm-btn gm-btn--go' data-act='career'>Career" + (CUI.load() ? " (" + A.esc(CUI.P.club.name) + ")" : "") + "</button>" : "") + "<button class='gm-btn" + (window.MomentumCareer ? "" : " gm-btn--go") + "' data-act='cup'>Classic cup" + (best ? " (best: round " + best + ")" : "") + "</button><button class='gm-btn' data-act='quick'>Quick match</button><button class='gm-btn' data-act='duo'>Two players, one device</button><button class='gm-btn' data-act='tut'>How to play</button></div>" +
-      "<p style='font-size:13px;opacity:.75'>Unlock arenas and guest players with coins in the arcade shop. Online matches with friends are planned but not built yet.</p>", menuAct(api));
+      "<p style='font-size:13px;opacity:.75'>Purse: <b>" + CUI.wallet() + " 🪙</b> — every match pays in, and Career spends it on players, outfits and upgrades. Unlock arenas and guest players with coins in the arcade shop too. Online matches with friends are planned but not built yet.</p>", menuAct(api));
   }
   function choose(api, who, next) {
     var cur = who === "b" ? pick.b : pick.a;
@@ -705,7 +922,23 @@
       "<div class='gm-actions'><button class='gm-btn gm-btn--go' data-act='play'>Play</button></div>", function (a) { if (a === "play") { api.hide(); S.over = false; S.state = "kickoff"; S.stateT = 1.3; playPad(api, false); kickoffCall(api); } });
   }
   function kickoffCall(api) { api.banner("KICK OFF", { size: 80, dur: 1.1, y: 220 }); api.sound.say("Kick off!", { rate: 1.1 }); }
-  function playPad(api, duo) { api.useActions(duo ? ["left", "right", "jump", "kick", "lob", "dash", "power", "p2left", "p2right", "p2jump", "p2kick", "p2lob", "p2dash", "p2power"] : ["left", "right", "jump", "kick", "lob", "dash", "power"]); }
+  function playPad(api, duo) {
+    var p1 = ["left", "right", "jump", "kick", "lob", "power"], p2 = ["p2left", "p2right", "p2jump", "p2kick", "p2lob", "p2power"];
+    // Phones: the arcade's round pad. A joystick on the left; the action buttons in a flat row along the bottom
+    // edge, with jump stacked above the right-most one, so the diamond no longer sits over the goal mouth.
+    // Every button is a separate item in Settings > Layout, so each player can drag, resize, fade or hide one.
+    if (api.usePad) api.usePad({
+      dpad: { up: "up", down: "down", left: "left", right: "right" },
+      layout: "row",
+      // Neutral by default: the labels carry the meaning, and the power button lights up on its own when the meter fills.
+      buttons: [{ id: "kick", label: "K", sub: "25°" },
+        { id: "lob", label: "L", sub: "55°" },
+        { id: "jump", label: "⤒", sub: "jump" },
+        { id: "power", label: "★", sub: "power", pos: "top" }],
+      keys: duo ? p2 : [], fallback: duo ? p1.concat(p2) : p1
+    });
+    else api.useActions(duo ? p1.concat(p2) : p1);
+  }
   function menuAct(api) {
     return function (act) {
       if (act === "menu") menu(api);
@@ -831,36 +1064,118 @@
   }
   function drawPlayer(x, api, p) {
     var px = sx(p.x), py = sy(p.y), f = p.face, c = p.c, r = headR(p) * PX, talk = p.mouth > 0 ? p.mouth * (.55 + .45 * Math.abs(Math.sin(api.t * 22))) : 0;
-    x.fillStyle = "rgba(0,0,0,.32)"; x.beginPath(); x.ellipse(px, GY + 6, 28 - p.y * 4, 6, 0, 0, 7); x.fill();
+    // the shadow tightens and fades with height, which is what sells a jump more than the sprite itself
+    var lift = Math.min(1, p.y / 3.2);
+    x.fillStyle = "rgba(0,0,0," + (.32 - lift * .14) + ")"; x.beginPath(); x.ellipse(px, GY + 6, (28 - p.y * 4) * (1 - lift * .18), 6, 0, 0, 7); x.fill();
+    if (p.dash > 0 && !api.reduce) { // speed streaks behind a dash, always opposite the dash direction
+      x.globalAlpha = Math.min(1, p.dash * 5); x.strokeStyle = c.trim || "#fff"; x.lineWidth = 2; x.lineCap = "round";
+      for (var st = 0; st < 4; st++) { var sy0 = py - 20 - st * 18; x.beginPath(); x.moveTo(px - p.dashDir * (20 + st * 10), sy0); x.lineTo(px - p.dashDir * (54 + st * 16), sy0 + 2); x.stroke(); }
+      x.globalAlpha = 1;
+    }
     if (p.ko > 0) {
       x.save(); x.translate(px, GY - 18); x.rotate(-f * Math.PI / 2 * .92);
       x.fillStyle = c.coat; x.fillRect(-14, -20, 28, 30); head(x, c, 0, -42, r * .85, f, { mood: "sad", expr: "hurt", mouth: talk }); x.restore();
       for (var s = 0; s < 4; s++) { var an = api.t * 3 + s * 1.57; x.fillStyle = "#ffe48a"; x.font = "16px system-ui"; x.fillText("★", px - f * 40 + Math.cos(an) * 26, GY - 60 + Math.sin(an) * 8); }
       return;
     }
+    if (p.meter >= 1 && p.power <= 0) { // the meter is visibly full at your feet, not just in the HUD
+      x.strokeStyle = "#f6c445"; x.globalAlpha = .35 + .25 * Math.sin(api.t * 5); x.lineWidth = 2.5;
+      x.beginPath(); x.ellipse(px, GY + 2, 26 + Math.sin(api.t * 5) * 2, 7, 0, 0, 7); x.stroke(); x.globalAlpha = 1;
+    }
     if (p.power > 0) { var P = p.P, pr = p.power / p.powerMax; x.strokeStyle = P.col; x.globalAlpha = .9; x.lineWidth = 4; x.beginPath(); x.arc(px, py - 70, r + 16, -Math.PI / 2, -Math.PI / 2 + pr * 6.283); x.stroke();
-      if (!api.reduce) { x.globalAlpha = .18 + .08 * Math.sin(api.t * 8); x.fillStyle = P.col; x.beginPath(); x.arc(px, py - 70, r + 22, 0, 7); x.fill(); } x.globalAlpha = 1; }
-    if (p.dash > 0 && !api.reduce) { x.globalAlpha = .25; head(x, c, px - p.dashDir * 26, py - 74, r, f, {}); x.globalAlpha = 1; }
+      // a soft colour aura around the whole body, so an active power reads at a glance from across the pitch
+      if (!api.reduce) {
+        var ag = x.createRadialGradient(px, py - 60, 6, px, py - 60, r + 46); ag.addColorStop(0, P.col); ag.addColorStop(1, "rgba(0,0,0,0)");
+        x.globalAlpha = .2 + .07 * Math.sin(api.t * 8); x.fillStyle = ag; x.beginPath(); x.arc(px, py - 60, r + 46, 0, 7); x.fill();
+      }
+      x.globalAlpha = 1;
+      x.font = "800 10px system-ui"; x.textAlign = "center"; x.fillStyle = "rgba(0,0,0,.5)";
+      var nw = x.measureText(P.name).width + 12; x.fillRect(px - nw / 2, py - 132, nw, 15);
+      x.fillStyle = P.col; x.fillText(P.name, px, py - 121); }
+    if (p.dash > 0 && !api.reduce) { x.globalAlpha = .22; head(x, c, px - p.dashDir * 30, py - 74, r, f, {}); x.globalAlpha = .1; head(x, c, px - p.dashDir * 52, py - 74, r, f, {}); x.globalAlpha = 1; }
     if (p.fx.freeze > 0) { x.fillStyle = "rgba(160,230,255,.45)"; x.fillRect(px - 32, py - 124, 64, 124); }
     var celebrating = p.celebrate > 0, sad = (S.state === "celebrate" && S.goalWho !== p.side) || p.gloom === 1;
     var wob = p.wobble * Math.sin(api.t * 30) * .2 + (p.daze >= 3 ? Math.sin(api.t * 4) * .08 : 0) + (sad ? .12 * f : 0);
-    x.save(); x.translate(px, py); x.rotate(wob);
-    var running = Math.abs(p.vx) > .3 && p.y === 0, swing = p.leg > 0 ? Math.sin((1 - p.leg / .24) * Math.PI) * 1.25 : running ? Math.sin(api.t * 15) * .5 : 0;
-    x.strokeStyle = "#20252b"; x.lineWidth = 8; x.lineCap = "round";
-    var legs = p.y > 0 && p.leg <= 0 ? [[-6, .5], [6, -.3]] : [[-6, -swing * .4], [6, swing]];
-    legs.forEach(function (l) { var ang = l[1] * f; x.beginPath(); x.moveTo(l[0] * .5, -28); x.lineTo(l[0] * .5 + Math.sin(ang) * 23, -28 + Math.cos(ang) * 23); x.stroke();
-      x.fillStyle = p.fx.boots > 0 ? "#7ef0ff" : "#f4f4f4"; x.beginPath(); x.ellipse(l[0] * .5 + Math.sin(ang) * 23 + f * 5, -28 + Math.cos(ang) * 23, 10, 5.5, 0, 0, 7); x.fill(); });
+    var trim = c.trim || "#ffffff", shorts = c.short2 || trim, boot = p.fx.boots > 0 ? "#7ef0ff" : (c.boot || "#20262e");
+    // The two kicks have to look different, or the player cannot tell which button they pressed.
+    // A drive is a short flat poke; a lob is a long up-and-under that ends with the body leaning back.
+    var kickLob = p.kickKind === "lob";
+    var running = Math.abs(p.vx) > .3 && p.y === 0, swing = p.leg > 0 ? Math.sin((1 - p.leg / .24) * Math.PI) * (kickLob ? 1.95 : 1.2) : running ? Math.sin(api.t * 15) * .5 : 0;
+    // a small vertical bob on the run and a slow weight shift at rest: the two cheapest ways to look alive
+    var bob = p.y === 0 ? (running ? Math.abs(Math.sin(api.t * 15)) * 2.4 : (1 - Math.cos(p.breath * 2.4)) * .7) : 0;
+    x.save(); x.translate(px, py + bob); x.rotate(wob + (running ? f * .07 : 0) + (p.dash > 0 ? p.dashDir * f * .2 : 0) + (p.leg > 0 ? f * (kickLob ? -.22 : .22) * Math.sin((1 - p.leg / .24) * Math.PI) : 0));
+    // legs: bare skin at the knee, a club sock, then the boot — three tones read better than one dark line
+    // a wider stance with a little outward splay: two legs at ±3 px merged into one under an 8 px thigh
+    var legs = p.y > 0 && p.leg <= 0 ? [[-7.5, .5], [7.5, -.3]] : running || p.leg > 0 ? [[-7.5, -swing * .4], [7.5, swing]] : [[-7.5, -.16], [7.5, .16]];
+    legs.forEach(function (l) {
+      var ang = l[1] * f, kx = l[0] * .5, liftK = running ? Math.max(0, l[1]) * 7 : 0;
+      var mx = kx + Math.sin(ang) * 11, my = -30 + Math.cos(ang) * 11 - liftK * .5; // a knee that lifts: the run reads rounder
+      var ex = kx + Math.sin(ang) * 23, ey = -28 + Math.cos(ang) * 23 - liftK;
+      // thigh and calf stay skin down to mid-shin; the club sock starts there, so the leg is not one long white tube
+      x.strokeStyle = c.skin; x.lineWidth = 8; x.lineCap = "round"; x.beginPath(); x.moveTo(kx, -30); x.lineTo(mx, my); x.stroke();
+      var cx0 = mx + (ex - mx) * .3, cy0 = my + (ey - my) * .3;
+      x.strokeStyle = c.skin; x.lineWidth = 6.6; x.beginPath(); x.moveTo(mx, my); x.lineTo(cx0, cy0); x.stroke();
+      x.strokeStyle = trim; x.lineWidth = 6.8; x.beginPath(); x.moveTo(cx0, cy0); x.lineTo(ex, ey); x.stroke();
+      x.strokeStyle = c.coat; x.lineWidth = 6.8; x.beginPath(); x.moveTo(cx0, cy0); x.lineTo(cx0 + (ex - cx0) * .18, cy0 + (ey - cy0) * .18); x.stroke(); // the sock's turn-over
+      // the boot: dark leather and a pale sole, tilted into the stride. A white blob on a white sock read as more sock.
+      x.save(); x.translate(ex, ey); x.rotate(f * (ang + liftK * .06));
+      x.fillStyle = boot; x.beginPath(); x.ellipse(f * 3.2, -0.5, 8.4, 4.6, 0, 0, 7); x.fill();
+      // a dark rim, so two boots standing together still read as two boots
+      x.strokeStyle = "rgba(0,0,0,.5)"; x.lineWidth = 1; x.stroke();
+      x.fillStyle = "rgba(255,255,255,.8)"; x.beginPath(); x.ellipse(f * 3.2, 2.9, 8, 1.7, 0, 0, 7); x.fill();
+      x.fillStyle = "rgba(255,255,255,.22)"; x.beginPath(); x.ellipse(f * 1.4, -2.7, 3.6, 1.4, 0, 0, 7); x.fill();
+      x.restore();
+    });
+    // the kick itself: a bright boot swipe that follows the leg through the ball
+    if (p.leg > 0 && !api.reduce) {
+      var kp = 1 - p.leg / .24;
+      x.lineCap = "round";
+      if (kickLob) {
+        // lob: a tall scoop that climbs away from the boot, with the body riding up under it
+        x.strokeStyle = "rgba(255,255,255," + (.7 * (1 - kp * .5)) + ")"; x.lineWidth = 3.5;
+        x.beginPath(); x.arc(f * 9, -16, 27 + kp * 14, f > 0 ? -2.3 : Math.PI + .85, f > 0 ? -.5 : Math.PI - .85); x.stroke();
+        for (var li = 0; li < 3; li++) { var ly = -40 - li * 10 - kp * 12; x.globalAlpha = .5 - li * .13; x.lineWidth = 2.5; x.beginPath(); x.moveTo(f * (16 + li * 9), ly + 7); x.lineTo(f * (25 + li * 10), ly - 5); x.stroke(); }
+        x.globalAlpha = 1;
+      } else {
+        // drive: a short, flat swipe that skims the turf
+        x.strokeStyle = "rgba(255,255,255," + (.6 * (1 - kp * .5)) + ")"; x.lineWidth = 3;
+        x.beginPath(); x.arc(f * 10, -7, 21 + kp * 9, f > 0 ? -.75 : Math.PI + .25, f > 0 ? .4 : Math.PI - .4); x.stroke();
+        x.strokeStyle = "rgba(255,255,255," + (.45 * (1 - kp)) + ")"; x.lineWidth = 2;
+        x.beginPath(); x.moveTo(f * 16, -4); x.lineTo(f * (34 + kp * 16), -4); x.stroke();
+        // turf kicked up behind the boot: what makes a drive feel like a drive
+        x.strokeStyle = "rgba(212,236,196," + (.5 * (1 - kp)) + ")"; x.lineWidth = 2;
+        [-8, -4, 1].forEach(function (dy, i) { x.beginPath(); x.moveTo(-f * (6 + i * 5), -3 + dy); x.lineTo(-f * (15 + i * 7), -6 + dy * 1.4); x.stroke(); });
+      }
+    }
     var breathe = 1 + Math.sin(p.breath * 3) * .02, sq = p.y === 0 && p.leg <= 0 ? breathe : 1 + Math.min(.12, Math.abs(p.vy) * .015);
+    if (p.land > 0) sq *= 1 - .16 * (p.land / .22);
     x.scale(1 / sq, sq);
-    // arms
-    x.strokeStyle = c.skin; x.lineWidth = 6;
-    var armA = celebrating ? -2.6 + Math.sin(api.t * 12) * .3 : sad ? .2 : running ? Math.sin(api.t * 15) * .6 : p.leg > 0 ? -.9 : .3;
-    [-1, 1].forEach(function (s) { var a = armA * (celebrating ? 1 : s); x.beginPath(); x.moveTo(s * 13, -48); x.lineTo(s * 13 + Math.sin(a) * 16 * s, -48 + Math.cos(a) * 16); x.stroke(); });
-    x.fillStyle = c.coat; x.beginPath(); x.roundRect ? x.roundRect(-16, -54, 32, 30, 9) : x.rect(-16, -54, 32, 30); x.fill();
-    x.fillStyle = "rgba(255,255,255,.85)"; x.font = "800 13px system-ui"; x.textAlign = "center"; x.fillText(p.side ? "2" : "1", 0, -35);
+    // arms (the kicking leg's opposite arm swings forward, as a real runner's does)
+    var armA = celebrating ? -2.6 + Math.sin(api.t * 12) * .3 : sad ? .2 : p.y > 0 && p.leg <= 0 ? -1.6 : running ? Math.sin(api.t * 15) * .6 : p.leg > 0 ? -.9 : .3;
+    [-1, 1].forEach(function (s) {
+      var a = armA * (celebrating ? 1 : s), hx = s * 13 + Math.sin(a) * 16 * s, hy = -48 + Math.cos(a) * 16;
+      x.strokeStyle = c.coat; x.lineWidth = 8; x.beginPath(); x.moveTo(s * 11, -49); x.lineTo(s * 11 + Math.sin(a) * 11 * s, -49 + Math.cos(a) * 11); x.stroke();
+      x.strokeStyle = c.skin; x.lineWidth = 5.5; x.beginPath(); x.moveTo(s * 11 + Math.sin(a) * 11 * s, -49 + Math.cos(a) * 11); x.lineTo(hx, hy); x.stroke();
+      x.fillStyle = c.skin; x.beginPath(); x.arc(hx, hy, 3.4, 0, 7); x.fill();
+    });
+    // shorts, torso, sleeve caps and a club stripe down the middle
+    // two short legs with a gap at the crotch, instead of one slab that read as a nappy
+    x.fillStyle = shorts;
+    [-14, 1.6].forEach(function (sx0) { x.beginPath(); x.roundRect ? x.roundRect(sx0, -36, 12.4, 14, 4) : x.rect(sx0, -36, 12.4, 14); x.fill(); });
+    x.fillStyle = trim; x.fillRect(-14, -35, 28, 2.4);
+    x.fillStyle = c.coat; x.beginPath(); x.roundRect ? x.roundRect(-16, -54, 32, 22, 9) : x.rect(-16, -54, 32, 22); x.fill();
+    x.fillStyle = "rgba(255,255,255,.14)"; x.beginPath(); x.roundRect ? x.roundRect(-16, -54, 12, 22, 8) : x.rect(-16, -54, 12, 22); x.fill();
+    x.fillStyle = "rgba(0,0,0,.16)"; x.fillRect(9, -52, 7, 20);
+    x.fillStyle = trim; x.fillRect(-2.2, -52, 4.4, 20);
+    x.strokeStyle = "rgba(0,0,0,.25)"; x.lineWidth = 1.2; x.beginPath(); x.moveTo(-14, -43); x.lineTo(14, -43); x.stroke();
+    x.fillStyle = "#0d1520"; x.font = "800 12px system-ui"; x.textAlign = "center";
+    x.fillText(p.side ? "2" : "1", 0, -38); x.lineWidth = 2.5; x.strokeStyle = "rgba(255,255,255,.75)"; x.strokeText(p.side ? "2" : "1", 0, -38);
     x.restore();
     var hy = py - 76 + (sad ? 4 : 0) + (celebrating ? -Math.abs(Math.sin(api.t * 10)) * 3 : 0), mood = celebrating ? "happy" : sad ? "sad" : p.daze >= 2 ? "sad" : "";
     head(x, c, px, hy, r, f, { blink: (api.t + p.side) % 3.2 < .12, mood: mood, hit: p.hurt > 0, mouth: talk, expr: p.expr });
+    if (celebrating && !api.reduce) { // a quick spin-under-the-lights twirl on the goal
+      x.save(); x.globalAlpha = .18; x.strokeStyle = "#ffe9a8"; x.lineWidth = 2; x.beginPath(); x.ellipse(px, GY + 2, 30 + Math.sin(api.t * 8) * 4, 8, 0, 0, 7); x.stroke(); x.restore();
+    }
     if (p.daze > .6) { x.save(); x.beginPath(); x.arc(px, hy, r, 0, 7); x.clip(); x.fillStyle = "rgba(120,40,160," + Math.min(.38, (p.daze - .6) * .14) + ")"; x.fillRect(px - r, hy - r, r * 2, r * 2);
       if (p.daze >= 2) { x.fillStyle = "rgba(70,20,90,.55)"; x.beginPath(); x.ellipse(px + f * r * .46, hy - r * .03, r * .24, r * .22, 0, 0, 7); x.fill(); }
       if (p.daze >= 2.5) { x.fillStyle = "rgba(255,120,120,.5)"; x.beginPath(); x.ellipse(px - f * r * .5, hy + r * .25, r * .22, r * .16, 0, 0, 7); x.fill(); }
@@ -887,6 +1202,9 @@
     var tcol = shot ? shot.col : b.photon > 0 ? "#fffbe0" : glow ? "#3dd68c" : (A.trail() || "#dff");
     b.trail.forEach(function (t, i) { x.globalAlpha = (shot ? .55 : .25) * i / 16; x.fillStyle = shot && shot.type === "disco" ? "hsl(" + ((i * 25 + S.t * 400) % 360) + ",90%,65%)" : tcol; x.beginPath(); x.arc(sx(t[0]), sy(t[1]), r * (shot ? 1.3 : 1) * i / 16, 0, 7); x.fill(); }); x.globalAlpha = 1;
     x.fillStyle = "rgba(0,0,0,.32)"; x.beginPath(); x.ellipse(bx, GY + 4, r * (1.1 - Math.min(.6, b.y * .08)), 3.5, 0, 0, 7); x.fill();
+    // a contact ring on a hard bounce or a scuffed kick, so an impact has a shape as well as a sound
+    if (b.squash > .14 && !api.reduce) { x.globalAlpha = Math.min(.8, b.squash * 2.6); x.strokeStyle = "#fff"; x.lineWidth = 2; x.beginPath(); x.ellipse(bx, GY + 3, r * (1.6 + b.squash * 5), 4 + b.squash * 6, 0, 0, 7); x.stroke(); x.globalAlpha = 1; }
+    if (Math.abs(b.vx) > 18 && !api.reduce) { x.globalAlpha = .18; x.strokeStyle = tcol; x.lineWidth = 3; x.beginPath(); x.arc(bx, by, r * 1.5, 0, 7); x.stroke(); x.globalAlpha = 1; }
     if (glow || shot) { var g = x.createRadialGradient(bx, by, 2, bx, by, r * 3.4); g.addColorStop(0, shot ? shot.col : "rgba(61,214,140,.8)"); g.addColorStop(1, "rgba(0,0,0,0)"); x.globalAlpha = .75; x.fillStyle = g; x.fillRect(bx - r * 3.4, by - r * 3.4, r * 6.8, r * 6.8); x.globalAlpha = 1; }
     if (shot && shot.type === "fire" && !api.reduce) for (var fl = 0; fl < 6; fl++) { x.fillStyle = ["#ffd166", "#ff8a3d", "#ff3d3d"][fl % 3]; x.beginPath(); x.arc(bx - Math.sign(b.vx) * (fl * 6 + Math.random() * 6), by + (Math.random() - .5) * 10, r * (1 - fl * .13), 0, 7); x.fill(); }
     if (shot && shot.type === "bolt") for (var bl = 0; bl < 3; bl++) bolt(x, bx, by, bx + (Math.random() - .5) * 60, by + (Math.random() - .5) * 60, Math.random(), 1.5, "rgba(210,230,255,.9)");
@@ -899,12 +1217,38 @@
     for (var q = 0; q < 5; q++) { var a3 = -Math.PI / 2 + q / 5 * 6.283; x.beginPath(); x.arc(Math.cos(a3) * r * .82, Math.sin(a3) * r * .82, r * .22, 0, 7); x.fill(); }
     x.restore();
   }
+  var GUIDE = [[DRIVE, "#9beeff", "low"], [LOB, "#ffd76a", "lob"]];
+  /* The shot guide: while the ball is within reach, draw both kick arcs from your boot with their true landing
+   * distance, so the 25°/55° choice is something you can read before you commit. Cosmetic only: the physics is the
+   * same either way, and the kick still has to be timed. */
+  function drawGuide(x, api, p) {
+    if (!S.guide || S.state !== "play" || p.cpu || p.ko > 0) return;
+    var b = S.ball, dir = kickDir(p); if (!inReach(p, dir, b)) return;
+    var v = kickV(p), y0 = Math.max(BR, .3), pulse = api.reduce ? 1 : .82 + .18 * Math.sin(api.t * 6);
+    x.save(); x.lineCap = "round";
+    GUIDE.forEach(function (g) {
+      var th = deg(g[0]), vx = Math.cos(th) * v * dir, vy = Math.sin(th) * v, T = 0, land = 0;
+      T = (vy + Math.sqrt(Math.max(0, vy * vy + 2 * S.g * y0))) / S.g; land = vx * T;
+      for (var t = 0; t < T; t += .035) {
+        var px = p.x + dir * .28 + vx * t, py = y0 + vy * t - .5 * S.g * t * t;
+        if (py < 0 || px < .2 || px > WM - .2) break;
+        x.globalAlpha = .05 + .24 * (t / T) * pulse; x.fillStyle = g[1];
+        x.beginPath(); x.arc(sx(px), sy(py), 2.1, 0, 7); x.fill();
+      }
+      var lx = sx(p.x + dir * .28 + land), ly = sy(0);
+      x.globalAlpha = .5 * pulse; x.strokeStyle = g[1]; x.lineWidth = 1.5;
+      x.beginPath(); x.ellipse(Math.max(10, Math.min(950, lx)), GY + 2, 9, 3.5, 0, 0, 7); x.stroke();
+      x.globalAlpha = .72; x.fillStyle = g[1]; x.font = "700 10px ui-monospace, monospace"; x.textAlign = "center";
+      x.fillText(g[2] + " " + Math.abs(land).toFixed(1) + "m", Math.max(36, Math.min(924, lx)), GY + 16);
+    });
+    x.restore();
+  }
   function drawGhost(x) {
     var g = S.ghost; if (!g || g.life <= 0) return;
     x.globalAlpha = Math.min(1, g.life); x.fillStyle = "rgba(255,255,255,.8)";
     for (var t = 0; t < 3; t += .06) { var gx = g.x + g.vx * t, gy = g.y + g.vy * t - (g.photon ? 0 : .5 * G * t * t); if (gy < 0 || gx < 0 || gx > WM) break; x.beginPath(); x.arc(sx(gx), sy(gy), 2, 0, 7); x.fill(); }
     x.font = "600 13px ui-monospace, monospace"; x.textAlign = "center"; x.fillStyle = "rgba(0,0,0,.5)"; x.fillRect(240, 322, 480, 22); x.fillStyle = g.power ? "#ffe48a" : "#fff";
-    x.fillText((g.power ? "POWER SHOT  " : "") + "v = " + g.v.toFixed(1) + " m/s  θ = " + g.th + "°  R = " + g.R.toFixed(1) + " m  H = " + g.H.toFixed(1) + " m", 480, 338);
+    x.fillText((g.goal ? "GOAL · " : g.power ? "POWER SHOT · " : "") + "v = " + g.v.toFixed(1) + " m/s  θ = " + g.th + "°  R = " + g.R.toFixed(1) + " m  H = " + g.H.toFixed(1) + " m", 480, 338);
     x.globalAlpha = 1;
   }
   function drawWeather(x, api) {
@@ -931,6 +1275,19 @@
   // phones: the 960-wide canvas shrinks a lot, so small HUD text grows (up to 24 canvas px) to stay readable
   function hudK() { var cv = S.api && S.api.x && S.api.x.canvas, w = (cv && cv.clientWidth) || 960; return Math.max(1, Math.min(2.2, 640 / w)); }
   function fz(n) { var k = hudK(), st = S.api && S.api.settings && S.api.settings.get ? (+S.api.settings.get("textScale") || 1) : 1; return Math.round(Math.max(n, Math.min(n * k, 24)) * st); }
+  // These boxes used to be one fillText with a hard .slice(), which cut words in half on a narrow phone.
+  function wrapLines(x, text, maxW, maxLines) {
+    var words = String(text || "").split(" "), lines = [], cur = "";
+    for (var i = 0; i < words.length; i++) {
+      var next = cur ? cur + " " + words[i] : words[i];
+      if (cur && x.measureText(next).width > maxW) {
+        lines.push(cur); cur = words[i];
+        if (lines.length === maxLines) { lines[maxLines - 1] += "…"; return lines; }
+      } else cur = next;
+    }
+    if (cur) lines.push(cur);
+    return lines;
+  }
   function hud(x, api) {
     var key = [hudK().toFixed(2), S.mode, S.score[0], S.score[1], S.golden ? "g" : Math.ceil(Math.max(0, S.time)), S.time < 10 && Math.floor(api.t * 3) % 2, S.arena.id,
       S.p.map(function (p) { return p ? [p.c.id, p.cpu, Math.round((p.power > 0 ? p.power / p.powerMax : p.meter) * 150), p.power > 0, p.meter >= 1 && Math.floor(api.t * 4) % 2].join(":") : "-"; }).join("/"),
@@ -946,13 +1303,15 @@
     else { x.fillStyle = "#fff"; x.font = "900 " + fz(32) + "px system-ui"; x.fillText(S.score[0], 410, 50); x.fillText(S.score[1], 550, 50); x.font = "700 " + fz(15) + "px ui-monospace, monospace"; x.fillStyle = S.time < 10 && Math.floor(api.t * 3) % 2 ? "#ff8080" : "#ffe9a8"; x.fillText(S.golden ? "GOLDEN" : Math.ceil(Math.max(0, S.time)) + "s", 480, 44); x.font = "" + fz(11) + "px system-ui"; x.fillStyle = "rgba(255,255,255,.7)"; x.fillText(S.arena.name, 480, 60); }
     S.p.forEach(function (p, i) {
       if (!p) return; var bx = i ? 630 : 30, w = 300;
+      // A scrim, because the day arenas put this row over a pale sky and white-on-white was unreadable.
+      x.fillStyle = "rgba(4,12,18,.42)"; x.beginPath(); x.roundRect ? x.roundRect(bx - 10, 8, w + 20, 58, 12) : x.rect(bx - 10, 8, w + 20, 58); x.fill();
       x.textAlign = i ? "right" : "left"; x.font = "800 " + fz(14) + "px system-ui"; x.fillStyle = "#fff"; x.fillText(p.c.name + (p.cpu ? " (CPU)" : i ? " (P2)" : " (You)"), i ? bx + w : bx, 26);
       x.fillStyle = "rgba(255,255,255,.15)"; x.fillRect(bx, 34, w, 9);
       var full = p.meter >= 1, v = p.power > 0 ? p.power / p.powerMax : p.meter, P = p.P; x.fillStyle = p.power > 0 ? P.col : full ? (Math.floor(api.t * 4) % 2 ? "#f6c445" : "#fff3c4") : "#7ef0ff"; x.fillRect(i ? bx + w * (1 - v) : bx, 34, w * v, 9);
       x.font = "" + fz(12) + "px system-ui"; x.fillStyle = "rgba(255,255,255,.85)"; x.fillText(p.power > 0 ? P.name + " active: power shots on" : full ? P.name + " ready! (" + api.keyName(i && S.mode === "duo" ? "p2power" : "power") + ")" : P.name, i ? bx + w : bx, 58);
     });
-    if (S.flash && S.flash.t > 0 && S.state === "play") { x.globalAlpha = Math.min(1, S.flash.t); x.fillStyle = "rgba(4,12,18,.85)"; x.fillRect(130, 78, 700, 50); x.fillStyle = S.flash.col; x.font = "800 " + fz(16) + "px system-ui"; x.textAlign = "center"; x.fillText(S.flash.text + " (game metaphor)", 480, 98); x.fillStyle = "#dfe"; x.font = "" + fz(12.5) + "px system-ui"; x.fillText(S.flash.idea.length > 112 ? S.flash.idea.slice(0, 110) + "…" : S.flash.idea, 480, 118); x.globalAlpha = 1; }
-    if (S.mode === "tut" && TUT[S.tut]) { x.fillStyle = "rgba(4,12,18,.85)"; x.fillRect(110, 78, 740, 56); x.fillStyle = "#7ef0ff"; x.font = "700 " + fz(16) + "px system-ui"; x.textAlign = "center"; x.fillText("Step " + (S.tut + 1) + " of 4: " + TUT[S.tut][0], 480, 100); x.fillStyle = "#fff"; x.font = "" + fz(13.5) + "px system-ui"; x.fillText(TUT[S.tut][1].slice(0, 112), 480, 122); }
+    if (S.flash && S.flash.t > 0 && S.state === "play") { x.globalAlpha = Math.min(1, S.flash.t); x.fillStyle = "rgba(4,12,18,.85)"; x.font = "" + fz(12.5) + "px system-ui"; var fl = wrapLines(x, S.flash.idea, 650, 2); x.fillRect(130, 78, 700, 46 + (fl.length - 1) * 16); x.fillStyle = S.flash.col; x.font = "800 " + fz(16) + "px system-ui"; x.textAlign = "center"; x.fillText(S.flash.text + " (game metaphor)", 480, 98); x.fillStyle = "#dfe"; x.font = "" + fz(12.5) + "px system-ui"; fl.forEach(function (ln, i) { x.fillText(ln, 480, 118 + i * 16); }); x.globalAlpha = 1; }
+    if (S.mode === "tut" && TUT[S.tut]) { x.font = "" + fz(13.5) + "px system-ui"; var tl = wrapLines(x, TUT[S.tut][1], 660, 2); x.fillStyle = "rgba(4,12,18,.85)"; x.fillRect(110, 78, 740, 52 + (tl.length - 1) * 17); x.fillStyle = "#7ef0ff"; x.font = "700 " + fz(16) + "px system-ui"; x.textAlign = "center"; x.fillText("Step " + (S.tut + 1) + " of 4: " + TUT[S.tut][0], 480, 100); x.fillStyle = "#fff"; x.font = "" + fz(13.5) + "px system-ui"; tl.forEach(function (ln, i) { x.fillText(ln, 480, 122 + i * 17); }); }
     if (S.hint && S.hint.t > 0) { var hx = S.hint.x, hy = 196; x.globalAlpha = Math.min(1, S.hint.t); x.fillStyle = "#fff"; x.beginPath(); x.roundRect ? x.roundRect(hx - 92, hy - 40, 184, 30, 10) : x.rect(hx - 92, hy - 40, 184, 30); x.fill(); x.beginPath(); x.moveTo(hx - 6, hy - 10); x.lineTo(hx, hy); x.lineTo(hx + 6, hy - 10); x.fill(); x.fillStyle = "#14202c"; x.font = "700 " + fz(12.5) + "px system-ui"; x.textAlign = "center"; x.fillText(S.hint.text, hx, hy - 21); x.globalAlpha = 1; }
   }
   function hudLive(x, api) {
@@ -963,7 +1322,7 @@
       x.font = "700 " + fz(13) + "px system-ui"; x.fillStyle = "#ffe9a8"; x.fillText(S.toss === 0 ? "◀ Ball to " + S.p[0].c.name.split(" ").pop() : "Ball to " + S.p[1].c.name.split(" ").pop() + " ▶", 480, 204); }
     if (S.item) { var it = S.item, ix = sx(it.x), iy = sy(it.y + Math.sin(api.t * 3) * .15); x.fillStyle = it.it.col; x.globalAlpha = .9; x.beginPath(); x.arc(ix, iy, 16, 0, 7); x.fill(); x.globalAlpha = 1; x.fillStyle = "#0b1620"; x.font = "800 " + fz(11) + "px system-ui"; x.textAlign = "center"; x.fillText("?", ix, iy + 4); x.fillStyle = "#fff"; x.fillText(it.it.label, ix, iy - 22); }
   }
-  var HINTS = ["Get under it and head it!", "Lob it! 55° flies higher", "Low kick: 25° goes fast", "Dash! Tap »", "Use your superpower!", "Defend the goal!", "Power shots knock keepers back!"];
+  var HINTS = ["Get under it and head it!", "Lob it! 55° flies higher", "Low kick: 25° goes fast", "Tap a direction twice to dash", "Use your superpower!", "Defend the goal!", "Power shots knock keepers back!"];
   function crowdHints(api, dt) {
     if (S.mode === "duo" || S.mode === "tut" || S.state !== "play") return;
     S.hintT -= dt; if (S.hint) S.hint.t -= dt;
@@ -978,21 +1337,24 @@
     song: A.song(300, "funk", { bpm: 112 }), actions: ACTIONS,
     menu: function (api) { menu(api); },
     init: function (api) {
-      S.api = api; S.drops = []; S.bolts = []; S.t = 0;
+      S.api = api; S.drops = []; S.bolts = []; S.t = 0; readRules(api);
       api.panel(
         "<p>Each kick launches the ball with speed <span class='gm-eq'>v</span> at angle <span class='gm-eq'>θ</span>. With no air drag the path is a parabola:</p>" +
         "<table><tr><td>Range</td><td><span class='gm-eq'>R = v² sin 2θ / g</span> (m)</td></tr><tr><td>Max height</td><td><span class='gm-eq'>H = v² sin²θ / 2g</span> (m)</td></tr><tr><td>Flight time</td><td><span class='gm-eq'>T = 2v sinθ / g</span> (s)</td></tr><tr><td>Bounce</td><td><span class='gm-eq'>e = v_after / v_before</span></td></tr><tr><td>Kicking a rival</td><td><span class='gm-eq'>Δv = J / m</span> (m/s)</td></tr></table>" +
         "<p class='gm-small'>Model: g = 9.8 m/s², 1 m = 55 px, no air drag or spin, players far heavier than the ball; the turf's bounce and roll change with rain and snow. Range figures assume launch and landing at the same height. Superpowers, power shots and items are labelled game metaphors. Course: PHYS 111, motion in 2D and collisions.</p>",
-        "<p class='gm-small'>After each goal the ball is thrown to the side that conceded. Phones: » dashes, the buttons can be moved in Settings, and sideways or Full screen gives the most room.</p>");
+        "<p class='gm-small'>Hold ← or → while you kick to aim that way, and the dotted arcs show where each kick will land (turn the Shot guide off in Settings → Gameplay if you prefer).</p>" +
+        "<p class='gm-small'>After each goal the ball is thrown to the side that conceded. A tap of the jump button is a short hop, holding it jumps higher. Phones: tap a direction twice to dash, the buttons can be moved in Settings, and sideways or Full screen gives the most room.</p>");
       newMatch(player(A.byId.einstein, 0, true, .5), player(A.byId.curie, 1, true, .5), "demo", { arena: AR.night }); S.state = "play"; S.ball.hold = false;
       setupCheats(api); registerOptions(api); menu(api); S.mode = "demo";
     },
     update: function (dt, api) {
       S.t += dt; if ((CT.power || heroOn()) && S.p && S.p[0] && S.state === "play" && S.p[0].power <= 0) S.p[0].meter = 1;
       pops.forEach(function (p) { p.life -= dt; p.y += dt * .3; }); pops = pops.filter(function (p) { return p.life > 0; });
+      if (S.netT > 0) S.netT -= dt; if (S.barT > 0) S.barT -= dt;
       if (S.comm) S.comm.life -= dt; if (S.ghost) S.ghost.life -= dt; if (S.flash) S.flash.t -= dt; if (S.fireworks > 0) S.fireworks -= dt; if (S.cageHit > 0) S.cageHit -= dt; if (S.fade > 0) S.fade -= dt;
       if (S.qflash) { S.qflash.t -= dt; if (S.qflash.t <= 0) S.qflash = null; } if (S.shock) { S.shock.t -= dt; if (S.shock.t <= 0) S.shock = null; }
       S.crowd.forEach(function (f) { if (f.moodT > 0) { f.moodT -= dt; if (f.moodT <= 0) f.mood = 0; } });
+      (S.rings || []).forEach(function (r) { r.t += dt; }); if (S.rings) S.rings = S.rings.filter(function (r) { return r.t < .7; });
       S.bolts.forEach(function (b) { b.t -= dt; }); S.bolts = S.bolts.filter(function (b) { return b.t > 0; }); if (S.ray) { S.ray.t -= dt; if (S.ray.t <= 0) S.ray = null; }
       netStep(dt);
       var demo = S.mode === "demo";
@@ -1023,9 +1385,14 @@
       S.drops.forEach(function (d) { x.fillStyle = "#c81d25"; x.beginPath(); x.arc(sx(d.x), sy(d.y), 2, 0, 7); x.fill(); });
       S.p.forEach(function (p) { if (p && p.power > 0 && pw(p) === "tesla") drawTesla(x, api, p); });
       if (S.post && S.state === "over") drawPodium(x, api);
+      if (S.mode !== "demo" && S.mode !== "menu") S.p.forEach(function (p) { if (p) drawGuide(x, api, p); });
       S.p.forEach(function (p) { if (!p) return; drawPlayer(x, api, p); if (S.post && S.state === "over" && S.post.champ && S.post.win === p.side && S.post.t > 1.8 && api.trophy) api.trophy("cup", sx(p.x), sy(p.y) - 158 - Math.abs(Math.sin(api.t * 5)) * 6, .62, api.t); if (p.power > 0 && pw(p) === "bohr") [-1, 1].forEach(function (g) { var gx = (p.side ? WM - 2.2 : 2.2) + g * .9; x.globalAlpha = .45 + .2 * Math.sin(api.t * 6 + g); head(x, p.c, sx(gx), sy(1.5 + Math.sin(S.t * 3 + g) * .5), HR * PX, p.face, { mood: "happy" }); x.globalAlpha = 1; }); });
       if (S.apple) { var ax = sx(S.apple.x), ay = sy(S.apple.y); x.fillStyle = "rgba(0,0,0,.3)"; x.beginPath(); x.ellipse(ax, GY + 4, 14, 4, 0, 0, 7); x.fill(); x.fillStyle = "#d62828"; x.beginPath(); x.arc(ax, ay, 20, 0, 7); x.fill(); x.fillStyle = "rgba(255,255,255,.4)"; x.beginPath(); x.arc(ax - 6, ay - 6, 6, 0, 7); x.fill(); x.fillStyle = "#3b7a2a"; x.fillRect(ax - 2, ay - 28, 4, 10); x.beginPath(); x.ellipse(ax + 8, ay - 24, 8, 4, .4, 0, 7); x.fill(); }
       drawBall(x, api);
+      (S.rings || []).forEach(function (r) {
+        x.globalAlpha = Math.max(0, 1 - r.t / .7); x.strokeStyle = r.col; x.lineWidth = 5 * (1 - r.t / .7) + 1;
+        x.beginPath(); x.arc(sx(r.x), sy(r.y), 20 + r.t * 300, 0, 7); x.stroke(); x.globalAlpha = 1;
+      });
       if (S.qflash) { x.strokeStyle = "rgba(198,182,255," + S.qflash.t * 3 + ")"; x.lineWidth = 3; x.beginPath(); x.arc(sx(S.qflash.x), sy(S.qflash.y), 20 + (1 - S.qflash.t * 3) * 30, 0, 7); x.stroke(); }
       if (S.shock) { x.strokeStyle = "rgba(246,196,69," + S.shock.t * 2 + ")"; x.lineWidth = 4; x.beginPath(); x.arc(sx(S.shock.x), sy(S.shock.y), 10 + (1 - S.shock.t / .4) * 60, 0, 7); x.stroke(); }
       S.bolts.forEach(function (bo) { var a1 = sx(bo.x1), b1 = sy(bo.y1), a2 = sx(bo.x2), b2 = sy(bo.y2); bolt(x, a1, b1, a2, b2, bo.seed, 7, "rgba(140,190,255," + bo.t * 2 + ")"); bolt(x, a1, b1, a2, b2, bo.seed, 2.5, "rgba(255,255,255," + bo.t * 3.5 + ")"); });
@@ -1041,5 +1408,5 @@
     }
   };
   A.run(game);
-  window.MomentumCup = { dbg: { drawGoalCloth: drawGoalCloth, drawGoalBack: drawGoalBack, drawGoalFront: drawGoalFront, drawPlayer: drawPlayer, drawBall: drawBall, hud: hud, drawCrowd: drawCrowd, drawWeather: drawWeather }, S: S, kick: kick, player: player, POWERS: POWERS, ARENAS: ARENAS, CUP: CUP, VOICE: VOICE, constants: { G: G, DRIVE: DRIVE, LOB: LOB, KICK_V: KICK_V } };
+  window.MomentumCup = { rules: RULES, readRules: readRules, dbg: { tapDash: function (p, dir, at) { var was = S.t; if (at != null) S.t = at; var ok = tapDash(p, dir); S.t = was; return ok; }, drawGoalCloth: drawGoalCloth, drawGoalBack: drawGoalBack, drawGoalFront: drawGoalFront, drawPlayer: drawPlayer, drawBall: drawBall, hud: hud, drawCrowd: drawCrowd, drawWeather: drawWeather, drawGuide: drawGuide }, S: S, kick: kick, reach: inReach, kickDir: kickDir, player: player, POWERS: POWERS, ARENAS: ARENAS, CUP: CUP, VOICE: VOICE, constants: { G: G, DRIVE: DRIVE, LOB: LOB, KICK_V: KICK_V } };
 })();

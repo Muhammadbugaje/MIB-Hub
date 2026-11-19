@@ -1,0 +1,222 @@
+---
+/**
+ * /admin/games/<slug>/studio: the owner's (super admin's) deep settings for one game.
+ *
+ * Owner only — not "any admin": the page checks the role explicitly.
+ * Everything is stored in the game's settings row under `rules`, which the
+ * play page already hands to the game as api.config.rules. Codes are hashed
+ * here and never stored or shown in plain text.
+ *
+ * For Momentum Cup (`momentum-cup`) the rules are:
+ *   mc.gravity, ballSize, matchLength, coinRate, xpRate, dashWindow, powerRate
+ *   studioCharacters: [{ id, name, skin, hair, style, power, bio, price, code }]
+ */
+import AIcon from "../../../../components/admin/AIcon.astro";
+import PageHead from "../../../../components/admin/PageHead.astro";
+import AppLayout from "../../../../layouts/AppLayout.astro";
+import { audit, done, fStr } from "../../../../lib/admin-kit.ts";
+import { repos } from "../../../../lib/db.ts";
+import { guard } from "../../../../lib/guard.ts";
+
+const denied = guard(Astro, { permission: "games.manage_content" });
+if (denied) return denied;
+// The studio is for the super admin only. The owner role is the super admin here.
+if (Astro.locals.viewer.role !== "owner") return Astro.rewrite("/403");
+
+const slug = String(Astro.params.slug ?? "");
+const game = await repos.games.getBySlug(slug);
+if (!game) return Astro.rewrite("/404");
+
+interface McRules {
+  gravity: number;
+  ballSize: number;
+  matchLength: number;
+  coinRate: number;
+  xpRate: number;
+  dashWindow: number;
+  powerRate: number;
+}
+interface StudioChar {
+  id: string;
+  name: string;
+  skin?: string;
+  hair?: string;
+  style?: string;
+  power?: string;
+  bio?: string;
+  price?: number;
+  unlockHash?: string;
+}
+
+const DEFAULTS: McRules = { gravity: 1, ballSize: 1, matchLength: 1, coinRate: 1, xpRate: 1, dashWindow: 0.26, powerRate: 1 };
+const stored = await repos.gameSettings.get(slug);
+const rules = (stored.rules && typeof stored.rules === "object" ? stored.rules : {}) as Record<string, unknown>;
+const current: McRules = { ...DEFAULTS, ...((rules.mc || {}) as Partial<McRules>) };
+const characters: StudioChar[] = Array.isArray(rules.studioCharacters) ? (rules.studioCharacters as StudioChar[]) : [];
+
+const clamp = (v: unknown, lo: number, hi: number, d: number) => {
+  const n = Number(v);
+  return Number.isFinite(n) ? Math.max(lo, Math.min(hi, n)) : d;
+};
+async function sha256(text: string): Promise<string> {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+let problem = "";
+let charactersText = JSON.stringify(characters, null, 2);
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const mc: McRules = {
+    gravity: clamp(form.get("gravity"), 0.5, 1.6, 1),
+    ballSize: clamp(form.get("ballSize"), 0.7, 1.6, 1),
+    matchLength: clamp(form.get("matchLength"), 0.5, 2, 1),
+    coinRate: clamp(form.get("coinRate"), 0.25, 5, 1),
+    xpRate: clamp(form.get("xpRate"), 0.25, 5, 1),
+    dashWindow: clamp(Number(form.get("dashWindow")) / 1000, 0.12, 0.45, 0.26),
+    powerRate: clamp(form.get("powerRate"), 0.5, 2.5, 1),
+  };
+
+  const rawText = fStr(form, "characters", 40000) || "[]";
+  charactersText = rawText;
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(rawText);
+  } catch {
+    problem = "The characters field is not valid JSON.";
+  }
+
+  let list: StudioChar[] = [];
+  if (!problem) {
+    if (!Array.isArray(parsed)) problem = "The characters field must be a JSON list.";
+    else {
+      for (const raw of parsed as Record<string, unknown>[]) {
+        const id = String(raw.id ?? "").replace(/[^a-z0-9:_-]/gi, "").slice(0, 32);
+        const name = String(raw.name ?? "").slice(0, 40);
+        if (!id || !name) {
+          problem = "Every character needs an id and a name.";
+          break;
+        }
+        const code = String(raw.code ?? "").trim();
+        const given = /^[0-9a-f]{64}$/i.test(String(raw.unlockHash ?? "")) ? String(raw.unlockHash).toLowerCase() : "";
+        const unlockHash = code ? await sha256(`momentum-cup:${code.toLowerCase().replace(/\s+/g, "")}`) : given;
+        list.push({
+          id,
+          name,
+          skin: String(raw.skin ?? "#8d5a3b").slice(0, 16),
+          hair: String(raw.hair ?? "#151515").slice(0, 16),
+          style: String(raw.style ?? "slick").slice(0, 16),
+          power: String(raw.power ?? "curve").slice(0, 16),
+          bio: String(raw.bio ?? "").slice(0, 160),
+          price: Math.round(clamp(raw.price, 0, 20000, 800)),
+          ...(unlockHash ? { unlockHash } : {}),
+        });
+      }
+      if (!problem) {
+        if (list.length > 40) problem = "Keep the studio catalogue to 40 characters or fewer.";
+        else {
+          const nextRules = { ...rules, mc, studioCharacters: list };
+          await repos.gameSettings.update(slug, { rules: nextRules }, Astro.locals.viewer.user?.id ?? null);
+          await audit(Astro, "game.studio", "game", slug, { rules }, { rules: nextRules });
+          return done(Astro, `Studio settings saved for ${game.title}.`);
+        }
+      }
+    }
+  }
+}
+const needle = (v: number) => (Number.isInteger(v) ? String(v) : String(v));
+---
+
+<AppLayout title={`${game.title} · Studio`}>
+  <PageHead eyebrow="Games · owner only" title={`${game.title} Studio`} back={{ href: `/admin/games/${slug}`, label: game.title }}>
+    <Fragment slot="actions">
+      <span class="hub-pill hub-pill--gold">Super admin</span>
+      <a class="btn btn--sm" href={`/play/${slug}`} target="_blank" rel="noopener"><AIcon name="play" size={15} /> Play</a>
+    </Fragment>
+  </PageHead>
+
+  <div class="hub-note hub-note--warn" style="margin-bottom: var(--space-5);">
+    <AIcon name="alert" size={16} />
+    <span>Deep settings reach the game as <code>api.config.rules</code>. Values are clamped in the game, so 1 always means “as designed”. Secret codes are hashed on save and never shown again — write the code down before you save.</span>
+  </div>
+
+  {
+    problem && (
+      <div class="hub-note hub-note--danger" style="margin-bottom: var(--space-4);">
+        <AIcon name="alert" size={16} />
+        <span>{problem}</span>
+      </div>
+    )
+  }
+
+  <form class="hub-card" method="post">
+    <div class="hub-card__head">
+      <div>
+        <h2 class="hub-card__title"><AIcon name="sliders" size={18} /> Match tuning</h2>
+        <p class="hub-card__sub">Multipliers on the designed values. 1 = unchanged.</p>
+      </div>
+    </div>
+    <div class="hub-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));">
+      <label class="hub-field"><span class="hub-field__label">Gravity ×</span>
+        <input class="input" type="number" name="gravity" min="0.5" max="1.6" step="0.05" value={needle(current.gravity)} />
+        <span class="hub-field__hint">Lower = floatier jumps and longer kicks.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">Ball size ×</span>
+        <input class="input" type="number" name="ballSize" min="0.7" max="1.6" step="0.05" value={needle(current.ballSize)} />
+        <span class="hub-field__hint">Bigger ball = friendlier, more chaotic.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">Match length ×</span>
+        <input class="input" type="number" name="matchLength" min="0.5" max="2" step="0.05" value={needle(current.matchLength)} />
+        <span class="hub-field__hint">1 = the mode's own clock.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">Coin rate ×</span>
+        <input class="input" type="number" name="coinRate" min="0.25" max="5" step="0.05" value={needle(current.coinRate)} />
+        <span class="hub-field__hint">Every match purse and career reward.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">XP rate ×</span>
+        <input class="input" type="number" name="xpRate" min="0.25" max="5" step="0.05" value={needle(current.xpRate)} />
+        <span class="hub-field__hint">Career XP only.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">Double-tap window (ms)</span>
+        <input class="input" type="number" name="dashWindow" min="120" max="450" step="10" value={Math.round(current.dashWindow * 1000)} />
+        <span class="hub-field__hint">How fast two taps must be to dash.</span>
+      </label>
+      <label class="hub-field"><span class="hub-field__label">Power charge ×</span>
+        <input class="input" type="number" name="powerRate" min="0.5" max="2.5" step="0.05" value={needle(current.powerRate)} />
+        <span class="hub-field__hint">Superpower meter fill speed.</span>
+      </label>
+    </div>
+
+    <div class="hub-card__head" style="margin-top: var(--space-5);">
+      <div>
+        <h2 class="hub-card__title"><AIcon name="mask" size={18} /> Signature characters</h2>
+        <p class="hub-card__sub">A JSON list. Players see these in Career → My players; they sign with coins or unlock free with their code.</p>
+      </div>
+    </div>
+    <label class="hub-field">
+      <span class="hub-field__label">studioCharacters (JSON)</span>
+      <textarea class="input" name="characters" rows="16" spellcheck="false" style="font-family: var(--font-mono, monospace); font-size: 13px;">{charactersText}</textarea>
+      <span class="hub-field__hint">
+        Each entry: id, name, skin, hair, style, power, bio, price, and an optional <code>code</code> (plain text — hashed on save).
+        Powers: inertia, cage, glow, coil, slowmo, leap, glide, push, curve, well, dash, magnet.
+        Style: band, bun, coily, dj, receding, slick, whiskers, wig, wild.
+      </span>
+    </label>
+
+    <div class="hub-btn-row">
+      <button class="btn btn--primary" type="submit"><AIcon name="check" size={16} /> Save studio</button>
+      <a class="btn btn--ghost" href={`/admin/games/${slug}`}>Back to game</a>
+    </div>
+  </form>
+
+  <section class="hub-card" style="margin-top: var(--space-5);">
+    <div class="hub-card__head">
+      <div>
+        <h2 class="hub-card__title"><AIcon name="key" size={18} /> Codes are one-way</h2>
+        <p class="hub-card__sub">The database only stores the SHA-256 of <code>momentum-cup:code</code>.</p>
+      </div>
+    </div>
+    <p class="hub-subtle">Leave <code>code</code> out to keep a character's existing hash. Change it and the old code stops working immediately. Losing a code means signing the character with coins or setting a new one.</p>
+  </section>
+</AppLayout>

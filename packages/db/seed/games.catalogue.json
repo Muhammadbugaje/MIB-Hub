@@ -22,7 +22,7 @@
         "versus",
         "physics"
       ],
-      "controls": "A/D move · double-tap dash · W jump · S/Q kick · E power",
+      "controls": "A/D move · double-tap a direction to dash (or Shift) · W jump (hold for height) · S kick · Q lob · E power · hold ←/→ to aim",
       "sessionLength": "3–5 min a match",
       "topics": [
         "Motion in 2D: projectiles",

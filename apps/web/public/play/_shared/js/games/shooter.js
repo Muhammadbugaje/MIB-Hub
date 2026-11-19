@@ -40,6 +40,25 @@
     act("p2fdown", "P2 frequency down", ["BracketLeft"]), act("p2shield", "P2 polariser shield", ["Semicolon"]), act("p2lock", "P2 lock aim", ["ShiftRight"])
   ];
   var TOUCH = ["left", "right", "up", "down", "jump", "fire", "weapon", "fup", "fdown", "shield", "lock"];
+  /* Phones: the round Sega-style pad the other arcade games use (Impulse Arena). Left thumb runs and aims on the
+     8-way disc; the right thumb gets Fire (bottom), Jump (right), Weapon (top) and the polariser Shield (left);
+     f− / f+ / lock sit above it. No separate floating buttons to hunt for. */
+  var PHONE_PAD = {
+    dpad: { up: "up", down: "down", left: "left", right: "right" },
+    buttons: [
+      { id: "fire", label: "✸", sub: "fire", pos: "bottom", color: "rgba(239,68,68,.82)" },
+      { id: "jump", label: "⤒", sub: "jump", pos: "right", color: "rgba(59,130,246,.78)" },
+      { id: "weapon", label: "⇄", sub: "weapon", pos: "top", color: "rgba(100,116,139,.78)" },
+      { id: "shield", label: "◐", sub: "shield", pos: "left", color: "rgba(16,185,129,.78)" }
+    ],
+    extra: [
+      { id: "fdown", label: "f−", color: "rgba(168,85,247,.78)" },
+      { id: "fup", label: "f+", color: "rgba(168,85,247,.78)" },
+      { id: "lock", label: "⌖", color: "rgba(234,179,8,.78)" }
+    ],
+    fallback: TOUCH
+  };
+  function phoneControls() { if (API.usePad) API.usePad(PHONE_PAD); else API.useActions(TOUCH); }
   function I(p, id) { return API.down(p.pre + id) || (S.mode === "solo" && API.down("p2" + id)); }
   function H(p, id) { return API.hit(p.pre + id) || (S.mode === "solo" && API.hit("p2" + id)); }
 
@@ -187,7 +206,7 @@
       } });
   }
   function begin() {
-    S.phase = "play"; API.music(SONGS[S.k]); API.useActions(TOUCH);
+    S.phase = "play"; API.music(SONGS[S.k]); phoneControls();
     if (S.surv) { API.banner("SURVIVAL", { sub: "How long can you hold?", col: "#ff9d5c", edge: "#5a1020", size: 100 }); API.sound.say("Survival"); S.tipT = 0; return; }
     API.banner("STAGE " + (S.k + 1), { sub: S.def.name, col: "#7ef0ff", edge: "#0b4a6e", size: 110 }); API.sound.say("Stage " + (S.k + 1) + ". " + S.def.name);
     S.tipT = S.k === 0 && !save.tut && opt("tips", true) ? 26 : 0;
@@ -227,7 +246,7 @@
       "<p class='gm-small'>Disclosed model: frequencies 4.3–7.3 × 10¹⁴ Hz (visible light, 697–411 nm). Waves are drawn 1 px per 16.7 nm, so the wavelength you see is enlarged about 6 × 10⁷ times but keeps the right ratios. Damage proportional to hf is a game metaphor, as are the EMP and shield hit points. The double slit is an ideal pair of point sources (no single-slit envelope), using λ/d of a real 4 µm slit pair. Gratings: 300, 625 and 900 lines per mm (d = 3.0, 1.6, 1.1 µm). Spectral orders are weighted 1, 0.7, 0.5 for n = 0, 1, 2 (real gratings vary). Polarisation angles are drawn as if you were looking along the beam. Running and jumping use arcade gravity; only the spin-gravity ratios are physical. Enemies are Count Entropy's machines.</p>",
       "<table><tr><td>Run / aim (8 ways)</td><td>A D + W S (P2: arrows)</td></tr><tr><td>Jump · somersault while running</td><td>Space or K</td></tr><tr><td>Drop through a ledge</td><td>S + jump</td></tr><tr><td>Prone</td><td>S on the ground</td></tr>" +
       "<tr><td>Fire (hold)</td><td>J</td></tr><tr><td>Frequency up / down</td><td>E / Q</td></tr><tr><td>Polariser shield (hold) · turn it</td><td>I, then E / Q</td></tr><tr><td>Lock aim (stand and aim)</td><td>Shift or U</td></tr><tr><td>Switch weapon</td><td>L</td></tr></table>" +
-      "<p class='gm-small'>Solo players can also use the P2 keys. Phones: d-pad on the left, jump and fire on the right, f+ / f− in the middle. Move them in Settings → Phone buttons.</p>");
+      "<p class='gm-small'>Solo players can also use the P2 keys. Phones: the round pad — run and aim on the left disc, fire / jump / weapon / shield on the right, f− f+ and lock above it. Move them in Settings → Phone buttons.</p>");
   }
 
   /* ---------- Menus ---------- */

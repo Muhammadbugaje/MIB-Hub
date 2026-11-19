@@ -137,6 +137,7 @@ const ACCESS_HELP: Record<string, string> = {
       <a class="btn btn--sm" href={`/play/${slug}`} target="_blank" rel="noopener"><AIcon name="play" size={15} /> Play</a>
       {canSettings && <a class="btn btn--sm" href={`/admin/cheats?game=${slug}`}><AIcon name="key" size={15} /> Cheats ({cheatCount})</a>}
       {canSounds && <a class="btn btn--sm" href={`/admin/games/${slug}/sounds`}><AIcon name="music" size={15} /> Sounds ({soundCount})</a>}
+      {Astro.locals.viewer.role === "owner" && <a class="btn btn--sm" href={`/admin/games/${slug}/studio`}><AIcon name="sliders" size={15} /> Game Studio</a>}
     </Fragment>
   </PageHead>
 
