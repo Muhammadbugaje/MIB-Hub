@@ -9,7 +9,9 @@
  * Cache Storage, so there is nothing useful to render on the server). It also
  * loads public/offline/mib-sync.js, which the play bridge (mib-play.js) uses
  * for its offline saves, so on /play/<slug> this component must come before
- * the bridge's <script> tag (it does: it is in the page body above it).
+ * the bridge's script tag (it does: it is in the page body above it). Never
+ * write the tag name with angle brackets in a comment here: the compiler takes
+ * it for a real script block and feeds the rest of the comment to the bundler.
  *
  * `owner` tells the offline client whose progress this device is saving:
  * "u<user id>" when signed in, else "guest" (same value as data-gm-user).

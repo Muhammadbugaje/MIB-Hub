@@ -272,7 +272,7 @@
     else if (k === "busstop") { // a shuttle shelter: local +x faces the road
       part(g, 2.4, .14, 5.4, 0x15803d, -.4, 2.7, 0); part(g, .1, 2.2, 5, 0x9ad0ee, -1.5, 1.3, 0, "t"); [[-1.5, -2.6], [-1.5, 2.6], [.7, -2.6], [.7, 2.6]].forEach(function (d) { put(g, cyl(.07, .07, 2.7, 6), 0x374151, d[0], 1.35, d[1]); });
       part(g, .5, .08, 3.6, 0x8b5a2b, -1, .5, 0); part(g, .08, .5, .5, 0x374151, -1, .25, -1.6); part(g, .08, .5, .5, 0x374151, -1, .25, 1.6);
-      put(g, cyl(.06, .06, 3.4, 6), 0xe5e7eb, 1.1, 1.7, 3.4); var bs = put(g, cyl(.55, .55, .08, 16), 0xf59e0b, 1.1, 3.3, 3.4); bs.rotation.z = Math.PI / 2; var hb = new T.Group(); plate(hb, q.text || "SHUTTLE", 4.6, .8, 0, 0, 0, "#14532d", "#ffffff"); hb.rotation.y = Math.PI / 2; hb.position.set(-.4, 3.25, 0); g.add(hb); }
+      put(g, cyl(.06, .06, 3.4, 6), 0xe5e7eb, 1.1, 1.7, 3.4); var bs = put(g, cyl(.55, .55, .08, 16), 0xf59e0b, 1.1, 3.3, 3.4); bs.rotation.z = Math.PI / 2; var hb = new T.Group(); plate(hb, q.text || "{{GAME_INITIALS}} SHUTTLE", 4.6, .8, 0, 0, 0, "#14532d", "#ffffff"); hb.rotation.y = Math.PI / 2; hb.position.set(-.4, 3.25, 0); g.add(hb); }
     else if (k === "checkpoint") { // a boom gate that is always up, a guard booth and two drums: local x runs along the road
       part(g, 2.4, 2.6, 2.4, 0xf7f3ea, 0, 1.3, -8.4); part(g, 2.8, .2, 2.8, 0x1e3a8a, 0, 2.7, -8.4); part(g, .08, 1, 1.4, 0x9ad0ee, 1.22, 1.7, -8.4); put(g, cyl(.14, .14, 1.2, 8), 0x374151, 0, .6, -6.2);
       var bm = new T.Group(); bm.position.set(0, 1.2, -6.2); for (i = 0; i < 6; i++) part(bm, .14, .14, 1.4, i % 2 ? 0xffffff : 0xdc2626, 0, 0, .7 + i * 1.4); bm.rotation.x = -1.15; g.add(bm);

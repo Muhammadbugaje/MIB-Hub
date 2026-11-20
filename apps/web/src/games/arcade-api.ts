@@ -56,8 +56,8 @@ export interface Reply {
   headers?: Record<string, string>;
 }
 
-const ok = (body: unknown, status = 200): Reply => ({ status, body });
-const err = (error: string, status = 400): Reply => ({ status, body: { ok: false, error } });
+export const ok = (body: unknown, status = 200): Reply => ({ status, body });
+export const err = (error: string, status = 400): Reply => ({ status, body: { ok: false, error } });
 
 export const SIGN_IN_TO_SAVE = "Sign in to save your scores and progress.";
 /** Biggest cloud save accepted (Freshers School Life keeps small pictures in its slots). */

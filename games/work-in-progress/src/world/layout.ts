@@ -94,7 +94,7 @@ export const lanes: { pts: P2[]; kinds: ("car" | "keke" | "okada")[] }[] = [
 
 export type Style =
   | "senate" | "gothic" | "library" | "arcade" | "sahel" | "medicine" | "hostel"
-  | "shophouse" | "house" | "gatehouse" | "stall" | "kiosk" | "busstop" | "deco" | "barn" | "stand" | "boathouse" | "theatre";
+  | "shophouse" | "house" | "gatehouse" | "stall" | "kiosk" | "busstop" | "deco" | "barn" | "stand" | "boathouse" | "theatre" | "pyramid";
 
 export interface Building {
   style: Style;
@@ -149,11 +149,17 @@ export const PLACES = {
   /** The farm gate fence in front of the barn, and the old kola tree behind it. */
   farm: { x: 62, z: -258, hx: 18, hz: 1.2 },
   kola: { x: 60, z: -286, hx: 4, hz: 3 },
+  /** The Glass Pyramid (study space & landmark) between library and lake. */
+  pyramid: { x: 86, z: -146, hx: 12, hz: 12 },
+  /** Quiet garden behind the Library (reading benches, secret spot). */
+  libraryGarden: { x: 78, z: -200, hx: 16, hz: 10 },
+  /** Student lounge outside arcade building (hangout spot). */
+  arcadeLounge: { x: 64, z: -70, hx: 12, hz: 6 },
 };
 
 /** Rectangles kept clear of trees and bushes (the places above, with a margin). */
 export const reserved: { x: number; z: number; hx: number; hz: number }[] = [
-  ...[PLACES.spot, PLACES.maiShayi, PLACES.sculpture, PLACES.engGarden, PLACES.court, PLACES.theatreLawn, PLACES.hospitalGarden, PLACES.farm, PLACES.kola].map((r) => ({ x: r.x, z: r.z, hx: r.hx + 2.5, hz: r.hz + 2.5 })),
+  ...[PLACES.spot, PLACES.maiShayi, PLACES.sculpture, PLACES.engGarden, PLACES.court, PLACES.theatreLawn, PLACES.hospitalGarden, PLACES.farm, PLACES.kola, PLACES.pyramid, PLACES.libraryGarden, PLACES.arcadeLounge].map((r) => ({ x: r.x, z: r.z, hx: r.hx + 2.5, hz: r.hz + 2.5 })),
 ];
 
 export function inReserved(x: number, z: number, margin = 0): boolean {
@@ -169,12 +175,12 @@ function buildPlan(): Building[] {
 
   // Campus.
   add({ style: "gatehouse", x: -19, z: GATE_Z - 7, rot: FACE_E, w: 8, d: 6, floors: 1, tone: 0 });
-  add({ style: "arcade", x: 42, z: -84, rot: FACE_W, w: 44, d: 18, floors: 2, tone: 1 });
-  add({ style: "sahel", x: -42, z: -84, rot: FACE_E, w: 38, d: 18, floors: 2, tone: 2 });
-  add({ style: "senate", x: 0, z: -226, rot: FACE_S, w: 56, d: 26, floors: 3, tone: 0 });
-  add({ style: "gothic", x: -52, z: -175, rot: FACE_E, w: 46, d: 20, floors: 3, tone: 3 });
-  add({ style: "library", x: 52, z: -175, rot: FACE_W, w: 46, d: 20, floors: 2, tone: 4 });
-  add({ style: "medicine", x: 112, z: -84, rot: FACE_W, w: 40, d: 22, floors: 3, tone: 5 });
+  add({ style: "arcade", x: 42, z: -84, rot: FACE_W, w: 44, d: 18, floors: 2, tone: 1, sign: "Student Centre" });
+  add({ style: "sahel", x: -42, z: -84, rot: FACE_E, w: 38, d: 18, floors: 2, tone: 2, sign: "Arts & Social Sciences" });
+  add({ style: "senate", x: 0, z: -226, rot: FACE_S, w: 56, d: 26, floors: 3, tone: 0, sign: "Senate Building" });
+  add({ style: "gothic", x: -52, z: -175, rot: FACE_E, w: 46, d: 20, floors: 3, tone: 3, sign: "Faculty of Engineering" });
+  add({ style: "library", x: 52, z: -175, rot: FACE_W, w: 46, d: 20, floors: 2, tone: 4, sign: "University Library" });
+  add({ style: "medicine", x: 112, z: -84, rot: FACE_W, w: 40, d: 22, floors: 3, tone: 5, sign: "Teaching Hospital" });
   add({ style: "hostel", x: -112, z: -92, rot: FACE_E, w: 48, d: 15, floors: 4, tone: 6, sign: "Giginya Hall" });
   add({ style: "hostel", x: -112, z: -160, rot: FACE_E, w: 48, d: 15, floors: 4, tone: 7, sign: "Giginya Hall" });
   add({ style: "hostel", x: 115, z: -160, rot: FACE_W, w: 48, d: 15, floors: 4, tone: 8, sign: "Kadanya Hall" });
@@ -186,6 +192,16 @@ function buildPlan(): Building[] {
   // The Twin Theatres: identical, facing each other across the theatre lawn (their signs are swapped by tradition).
   add({ style: "theatre", x: THEATRES.yamma.x, z: THEATRES.yamma.z, rot: FACE_N, w: 22, d: 16, floors: 2, tone: 0, sign: "Theatre Yamma" });
   add({ style: "theatre", x: THEATRES.gabas.x, z: THEATRES.gabas.z, rot: FACE_S, w: 22, d: 16, floors: 2, tone: 0, sign: "Theatre Gabas" });
+
+  // NEW: The Glass Pyramid - iconic study space and landmark between library and lake
+  add({ style: "pyramid", x: 86, z: -146, rot: FACE_S, w: 24, d: 24, floors: 2, tone: 0, sign: "Glass Pyramid Study Centre" });
+
+  // NEW: Additional campus buildings for richer environment
+  add({ style: "deco", x: 0, z: -68, rot: FACE_S, w: 28, d: 14, floors: 2, tone: 9, sign: "Department of Computer Science" });
+  add({ style: "sahel", x: -140, z: -210, rot: FACE_E, w: 32, d: 16, floors: 2, tone: 2, sign: "Sports Complex & Gym" });
+  add({ style: "arcade", x: 140, z: -200, rot: FACE_W, w: 30, d: 14, floors: 2, tone: 1, sign: "Cafeteria & Dining Hall" });
+  add({ style: "deco", x: -26, z: -128, rot: FACE_E, w: 22, d: 12, floors: 2, tone: 10, sign: "Art Gallery" });
+  add({ style: "sahel", x: 26, z: -128, rot: FACE_W, w: 20, d: 12, floors: 2, tone: 2, sign: "Music Department" });
 
   // Bus stop on the campus side of the Ring Road.
   add({ style: "busstop", x: 46, z: -11.5, rot: FACE_S, w: 7, d: 2.4, floors: 1, tone: 0 });
@@ -441,6 +457,22 @@ function plantTrees(): TreeSpot[] {
   for (const [x, z] of [[-33, -150], [33, -150], [-33, -202], [33, -202], [-33, -176], [33, -176]] as const) add("flame", x, z, rng.range(1.0, 1.15));
   for (const [x, z] of [[-30, -60], [-20, -75], [-38, -52], [28, -58], [20, -76], [37, -50], [-62, -108], [62, -108], [-80, -130], [80, -135], [-78, -195], [80, -195], [-150, -120], [-30, -240], [40, -245], [128, -70], [132, -138], [205, -60], [210, -140], [185, -150], [150, -52]] as const)
     add(rng.chance(0.5) ? "mango" : "neem", x + rng.range(-2, 2), z + rng.range(-2, 2));
+  // MORE TREES: Along paths to the hostels (every 15m rule)
+  for (let z = -62; z > -92; z -= 14) { add("neem", -108, z); add("neem", 111, z); }
+  for (let z = -92; z > -160; z -= 14) { add(rng.chance(0.4) ? "mango" : "neem", -108, z); add(rng.chance(0.4) ? "mango" : "neem", 111, z); }
+  for (let z = -160; z > -220; z -= 14) { add("neem", -108, z); add("neem", 111, z); }
+  // Trees flanking the quad paths
+  for (let z = -160; z > -200; z -= 16) { add("flame", -29, z, rng.range(0.95, 1.1)); add("flame", 29, z, rng.range(0.95, 1.1)); }
+  // Around the new pyramid and library garden
+  for (const [x, z] of [[70, -146], [102, -146], [86, -132], [86, -160], [62, -200], [94, -200], [78, -186], [78, -214]] as const) add(rng.pick(["mango", "neem", "flame"]), x, z);
+  // Near the new buildings (Computer Science, Art Gallery, Music Dept)
+  for (const [x, z] of [[12, -68], [-12, -68], [-18, -120], [-34, -120], [18, -120], [34, -120]] as const) add("neem", x, z);
+  // More green cover: additional scattered trees on lawns
+  for (let i = 0; i < 30; i++) {
+    const x = rng.range(-120, 120), z = rng.range(-240, -52);
+    if (Math.abs(x) < 18 || Math.abs(x - 86) < 15) continue; // avoid centre paths and pyramid
+    if (!insideBuilding(x, z, 3) && !inReserved(x, z, 0)) add(rng.pick(["neem", "mango", "neem", "flame"]), x, z, rng.range(0.85, 1.15));
+  }
   // Mango trees shading the kiosks and the market.
   for (const x of [-140, -112, -79, -58, 44, 80, 106, 132]) add("mango", x + rng.range(-2, 2), 13.8, rng.range(0.9, 1.1));
   for (const [x, z] of [[30, 48], [122, 50], [74, 82], [118, 70], [-44, 40], [-80, 40], [-130, 48], [-160, 40], [-55, 80], [-160, 80]] as const) add(rng.chance(0.6) ? "mango" : "neem", x, z);

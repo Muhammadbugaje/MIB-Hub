@@ -211,6 +211,7 @@ export function buildBuilding(ctx: BuildCtx, B: Building): void {
     case "stand": stand(s, B, ctx); break;
     case "boathouse": boathouse(s, B); break;
     case "theatre": theatre(s, B, rng, ctx); break;
+    case "pyramid": pyramid(s, B, rng, ctx); break;
   }
   if (B.style !== "busstop") ctx.col.add({ kind: "box", x: B.x, z: B.z, hx: B.w / 2, hz: B.d / 2, rot: B.rot, h: buildingHeight(B) });
 }
@@ -710,4 +711,90 @@ function theatre(s: Site, B: Building, rng: Rng, ctx: BuildCtx): void {
     for (let z = -d / 2 + 3; z < d / 2 - 3; z += 2.6) windowAt(fs, z, 2, { w: 0.5, h: 5.2, lit: 0.4, rng, frame: CON });
   }
   if (B.sign) signBoard(s.at(0, d / 2 + 3.32), ctx.signs, B.sign, 0, 6.0, 6.4, 0.8, 0.02);
+}
+
+function pyramid(s: Site, B: Building, rng: Rng, ctx: BuildCtx): void {
+  const { w, d } = B;
+  const H = 12; // Total height of the pyramid structure
+  const baseH = 0.8; // Concrete base platform
+
+  // Glass pyramid constants
+  const GLASS_CLEAR: RGBA = [180, 200, 215, 120]; // Semi-transparent glass with blue tint
+  const GLASS_FRAME: RGBA = hex("#c8c8c8"); // Light grey steel frame
+  const BASE_CON: RGBA = hex("#e5dfd0"); // Warm concrete
+
+  // Concrete base platform (slightly larger than pyramid footprint)
+  s.at(0, 0).tint(BASE_CON).box("stone", 0, 0, 0, w + 2, baseH, d + 2, 4);
+
+  // The glass pyramid structure - built as 4 triangular faces
+  const apexY = H; // Apex height
+  const baseSize = Math.min(w, d) - 2; // Leave margin for entrance
+
+  // Build the four glass faces as triangular panels
+  for (let side = 0; side < 4; side++) {
+    const angle = (side * Math.PI) / 2;
+    const cx = Math.cos(angle) * baseSize / 2;
+    const cz = Math.sin(angle) * baseSize / 2;
+    const nx = Math.cos(angle + Math.PI / 2) * baseSize / 2;
+    const nz = Math.sin(angle + Math.PI / 2) * baseSize / 2;
+
+    // Each face is divided into segments for the glass panels
+    const segments = 6;
+    for (let seg = 0; seg < segments; seg++) {
+      const t0 = (seg / segments) - 0.5;
+      const t1 = ((seg + 1) / segments) - 0.5;
+
+      // Glass panel vertices (from base to apex)
+      const p0: V3 = [cx + nx * t0, baseH, cz + nz * t0];
+      const p1: V3 = [cx + nx * t1, baseH, cz + nz * t1];
+      const apex: V3 = [0, apexY, 0];
+
+      // Draw glass panel
+      s.at(0, 0).tint(GLASS_CLEAR).poly("glass", [p0, p1, apex], [[0, 0], [1, 0], [0.5, 1]]);
+    }
+  }
+
+  // Steel frame edges (vertical edges from corners to apex)
+  const frameThick = 0.1;
+  for (let corner = 0; corner < 4; corner++) {
+    const angle = (corner * Math.PI) / 2;
+    const cx = Math.cos(angle) * baseSize / 2;
+    const cz = Math.sin(angle) * baseSize / 2;
+
+    // Vertical frame edge as a thin box from corner to apex
+    s.at(0, 0).tint(GLASS_FRAME).cylinder("metal", cx, baseH + (apexY - baseH) / 2, cz, frameThick, frameThick, apexY - baseH, 6);
+  }
+
+  // Horizontal frame rings at different heights for structural support
+  for (let ring = 1; ring < 4; ring++) {
+    const ringY = baseH + (H - baseH) * (ring / 4);
+    const ringSize = baseSize * (1 - ring / 4);
+    s.at(0, 0).tint(GLASS_FRAME).cylinder("metal", 0, ringY, 0, ringSize / 2, ringSize / 2, 0.06, 4);
+  }
+
+  // Interior floor visible through glass (light wood)
+  s.at(0, 0).tint(hex("#d4b896")).box("wood", 0, baseH + 0.05, 0, baseSize - 1, 0.08, baseSize - 1, 2);
+
+  // Glass entrance door on the front face (recessed slightly)
+  const entrance = s.face("front", w, d);
+  entrance.tint([40, 50, 60, 255]).box("trim", 0, baseH, 0.01, 2.6, 3.4, 0.04, 1, ["back"]);
+  entrance.tint([120, 160, 180, 180]).quad("glass",
+    [-1.3, baseH, 0.03], [1.3, baseH, 0.03],
+    [1.3, baseH + 3.4, 0.03], [-1.3, baseH + 3.4, 0.03], 1);
+  entrance.tint(GLASS_FRAME).box("metal", 0, baseH, 0.05, 2.7, 0.08, 0.08);
+  entrance.tint(GLASS_FRAME).box("metal", 0, baseH + 3.4, 0.05, 2.7, 0.08, 0.08);
+  entrance.tint(GLASS_FRAME).box("metal", -1.3, baseH + 1.7, 0.05, 0.08, 3.4, 0.08);
+  entrance.tint(GLASS_FRAME).box("metal", 1.3, baseH + 1.7, 0.05, 0.08, 3.4, 0.08);
+
+  // Study furniture visible inside (desks arranged in a study layout)
+  const DESK: RGBA = hex("#8b6f47");
+  for (let ix = -1; ix <= 1; ix++) {
+    for (let iz = -1; iz <= 1; iz++) {
+      if (ix === 0 && iz === 0) continue; // Leave center clear for walkway
+      s.at(ix * 4.5, iz * 4.5).tint(DESK).box("wood", 0, baseH + 0.85, 0, 1.4, 0.08, 0.9);
+    }
+  }
+
+  // Sign at the entrance
+  if (B.sign) signBoard(s.at(0, d / 2 + 1.3), ctx.signs, B.sign, 0, baseH + 1.8, 9, 0.7, 0);
 }

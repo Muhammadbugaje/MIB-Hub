@@ -156,16 +156,19 @@
   };
   function head(x, look, hx, hy, r, pose) {
     if (pose && pose.big) r *= 1.9;
-    var hc = look.hairCol || "#1a1210", st = look.hair;
+    var hc = look.hairCol || "#1a1210", st = look.hair, hij = st === "hijab";
     if (st === "afro") { x.fillStyle = hc; x.beginPath(); x.arc(hx - r * .1, hy, r * 1.28, 0, TAU); x.fill(); }
     if (st === "puff") { x.fillStyle = hc; x.beginPath(); x.arc(hx - r * 1.05, hy, r * .7, 0, TAU); x.fill(); }
-    if (st === "hijab") { x.fillStyle = hc; x.beginPath(); x.ellipse(hx - r * .25, hy, r * 1.3, r * 1.45, 0, 0, TAU); x.fill(); }
-    x.fillStyle = look.skin; x.beginPath(); x.arc(hx, hy, r, 0, TAU); x.fill();
+    if (hij) { // the scarf covers the head and shoulders; only the face shows, at the front
+      x.fillStyle = hc; x.beginPath(); x.ellipse(hx - r * .2, hy + r * .1, r * 1.2, r * 1.28, 0, 0, TAU); x.fill();
+      x.beginPath(); x.arc(hx, hy, r * 1.03, 0, TAU); x.fill();
+      x.fillStyle = look.skin; x.beginPath(); x.ellipse(hx + r * .56, hy, r * .5, r * .58, 0, 0, TAU); x.fill();
+    }
+    else { x.fillStyle = look.skin; x.beginPath(); x.arc(hx, hy, r, 0, TAU); x.fill(); }
     x.fillStyle = hc;
-    if (st === "hijab") { x.beginPath(); x.arc(hx, hy, r * 1.04, .95, TAU - .95); x.closePath(); x.fill(); }
-    else if (st === "cap") { x.beginPath(); x.arc(hx - r * .1, hy, r * .8, 0, TAU); x.fill(); x.strokeStyle = shade(hc === "#fff" || hc === "#f8fafc" ? "#cbd5e1" : hc, .7); x.lineWidth = Math.max(1, r * .14); x.beginPath(); x.arc(hx - r * .1, hy, r * .5, 0, TAU); x.stroke(); }
+    if (st === "cap") { x.beginPath(); x.arc(hx - r * .1, hy, r * .8, 0, TAU); x.fill(); x.strokeStyle = shade(hc === "#fff" || hc === "#f8fafc" ? "#cbd5e1" : hc, .7); x.lineWidth = Math.max(1, r * .14); x.beginPath(); x.arc(hx - r * .1, hy, r * .5, 0, TAU); x.stroke(); }
     else if (st === "coily") { for (var cq = 0; cq < 7; cq++) { var ca = 1.15 + cq * (TAU - 2.3) / 6; x.beginPath(); x.arc(hx + Math.cos(ca) * r * .82, hy + Math.sin(ca) * r * .82, r * .36, 0, TAU); x.fill(); } x.beginPath(); x.arc(hx - r * .2, hy, r * .75, 0, TAU); x.fill(); }
-    else { x.beginPath(); x.arc(hx, hy, r * 1.02, st === "fade" ? 1.25 : 1.05, TAU - (st === "fade" ? 1.25 : 1.05)); x.closePath(); x.fill();
+    else if (!hij) { x.beginPath(); x.arc(hx, hy, r * 1.02, st === "fade" ? 1.25 : 1.05, TAU - (st === "fade" ? 1.25 : 1.05)); x.closePath(); x.fill();
       if (st === "braids" || st === "locs") { x.strokeStyle = hc; x.lineWidth = Math.max(1, r * .2); for (var i = -2; i <= 2; i++) { x.beginPath(); x.moveTo(hx - r * .7, hy + i * r * .3); x.lineTo(hx - r * (st === "locs" ? 1.5 : 1.9), hy + i * r * .42); x.stroke(); } } }
     x.fillStyle = shade(look.skin, .8); x.beginPath(); x.arc(hx + r * .92, hy, r * .16, 0, TAU); x.fill(); // nose: shows which way they face
   }
@@ -175,17 +178,24 @@
   // Front-view portrait for menus and dialogue.
   G.face = function (c, look, cx, cy, r) {
     var wd = window.SamaruGame && window.SamaruGame.wardrobe; if (wd && look.fit) look = wd.flat(look); // a chosen outfit: same skin, hair, headwear, glasses and beard as the 3D figure
-    var hc = look.hairCol || "#1a1210", st = look.hair;
+    var hc = look.hairCol || "#1a1210", st = look.hair, hij = st === "hijab";
     c.fillStyle = look.top; c.beginPath(); c.ellipse(cx, cy + r * 1.5, r * 1.25, r * .8, 0, Math.PI, TAU); c.fill();
-    if (st === "hijab") { c.fillStyle = hc; c.beginPath(); c.ellipse(cx, cy + r * .25, r * 1.22, r * 1.5, 0, 0, TAU); c.fill(); }
+    if (hij) { // scarf: cloth over the shoulders, the hood over the head, a darker inner edge, then the face opening
+      c.fillStyle = hc; c.beginPath(); c.ellipse(cx, cy + r * .92, r * 1.56, r * 1.12, 0, 0, TAU); c.fill();
+      c.beginPath(); c.ellipse(cx, cy - r * .02, r * 1.13, r * 1.25, 0, 0, TAU); c.fill();
+      c.fillStyle = shade(hc, .84); c.beginPath(); c.ellipse(cx, cy + r * .06, r * .95, r * 1.04, 0, 0, TAU); c.fill();
+      c.fillStyle = look.skin; c.beginPath(); c.ellipse(cx, cy + r * .08, r * .79, r * .92, 0, 0, TAU); c.fill();
+    }
     if (st === "afro") { c.fillStyle = hc; c.beginPath(); c.arc(cx, cy - r * .3, r * 1.3, 0, TAU); c.fill(); }
     if (st === "puff") { c.fillStyle = hc; c.beginPath(); c.arc(cx, cy - r * 1.2, r * .7, 0, TAU); c.fill(); }
     if (st === "braids" || st === "locs") { c.strokeStyle = hc; c.lineWidth = r * .22; c.lineCap = "round"; for (var i = -1; i <= 1; i += 2) for (var j = 0; j < 3; j++) { c.beginPath(); c.moveTo(cx + i * r * (.7 + j * .12), cy - r * .4); c.lineTo(cx + i * r * (.95 + j * .1), cy + r * (st === "locs" ? .9 : 1.5)); c.stroke(); } }
-    c.fillStyle = shade(look.skin, .9); c.fillRect(cx - r * .3, cy + r * .6, r * .6, r * .6);
-    c.fillStyle = look.skin; c.beginPath(); c.ellipse(cx, cy, r * .92, r, 0, 0, TAU); c.fill();
-    if (st !== "hijab") { c.beginPath(); c.arc(cx - r * .92, cy + r * .05, r * .16, 0, TAU); c.arc(cx + r * .92, cy + r * .05, r * .16, 0, TAU); c.fill(); }
+    if (!hij) {
+      c.fillStyle = shade(look.skin, .9); c.fillRect(cx - r * .3, cy + r * .6, r * .6, r * .6);
+      c.fillStyle = look.skin; c.beginPath(); c.ellipse(cx, cy, r * .92, r, 0, 0, TAU); c.fill();
+      c.beginPath(); c.arc(cx - r * .92, cy + r * .05, r * .16, 0, TAU); c.arc(cx + r * .92, cy + r * .05, r * .16, 0, TAU); c.fill();
+    }
     c.fillStyle = hc;
-    if (st === "hijab") { c.beginPath(); c.ellipse(cx, cy, r * 1.0, r * 1.08, 0, Math.PI * 1.06, Math.PI * 1.94); c.ellipse(cx, cy + r * .1, r * .86, r * .95, 0, Math.PI * 1.9, Math.PI * 1.1, true); c.fill(); c.strokeStyle = hc; c.lineWidth = r * .22; c.beginPath(); c.ellipse(cx, cy + r * .05, r * .95, r * 1.05, 0, Math.PI * .1, Math.PI * .9); c.stroke(); }
+    if (hij) { /* the scarf is already drawn */ }
     else if (st === "cap") { c.beginPath(); c.ellipse(cx, cy - r * .62, r * .88, r * .52, 0, Math.PI, TAU); c.fill(); c.fillRect(cx - r * .88, cy - r * .66, r * 1.76, r * .2); c.strokeStyle = "rgba(0,0,0,.25)"; c.lineWidth = r * .06; for (var z = -2; z <= 2; z++) { c.beginPath(); c.moveTo(cx + z * r * .3, cy - r * .5); c.lineTo(cx + z * r * .24, cy - r * 1.05); c.stroke(); } }
     else if (st === "bald") { /* clean shave */ }
     else if (st === "coily") { c.beginPath(); c.ellipse(cx, cy - r * .36, r * .93, r * .66, 0, Math.PI, TAU); c.fill(); for (var q = 0; q < 9; q++) { var qa = Math.PI + q * Math.PI / 8; c.beginPath(); c.arc(cx + Math.cos(qa) * r * .92, cy - r * .34 + Math.sin(qa) * r * .7, r * .24, 0, TAU); c.fill(); } for (q = 0; q < 5; q++) { c.beginPath(); c.arc(cx + (q - 2) * r * .34, cy - r * .92 + Math.abs(q - 2) * r * .08, r * .22, 0, TAU); c.fill(); } }
