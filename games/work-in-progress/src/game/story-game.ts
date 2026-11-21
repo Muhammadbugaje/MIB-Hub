@@ -62,7 +62,7 @@ export class Abort extends Error {
 /** Something to walk to: a position in a place ("world" or an interior id). */
 export interface Target { pos: A3; where: string; label?: string }
 
-interface Waiter { check: () => boolean; resolve: () => void; reject: (e: Error) => void }
+interface Waiter { check: () => boolean; resolve: () => void; reject: (e: Error) => void; onReady?: () => void | Promise<void> }
 interface Interaction { id: string; label: string; pos: () => A3; where: () => string; r: number; priority: number; onUse: () => void; person?: Person }
 
 export interface GameDeps {
@@ -94,7 +94,7 @@ export interface GameDeps {
 const PI = Math.PI;
 
 export class StoryGame implements StageWorld {
-  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void };
+  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void; say(t: string): void };
   readonly mini: Minigames;
   readonly voice: VoicePlayer;
   readonly sfxs = new Sfx();
@@ -157,6 +157,12 @@ export class StoryGame implements StageWorld {
   coilOverride: CoilState | null = null;
   /** Camera micro-shake (seconds left) when the coil cracks near you. */
   private shakeT = 0;
+  /** The door we're mid-transition through (null when not transitioning). */
+  private transitionDoor: string | null = null;
+  /** The target we're transitioning to. */
+  private transitionTarget: Target | null = null;
+  /** The yaw to face after the transition. */
+  private transitionYaw: number | null = null;
 
   /**
    * The coil's state from the story: lit (lightning) only once coil 1 has been lit at the
@@ -197,6 +203,7 @@ export class StoryGame implements StageWorld {
       subtitle: (w: string | null, t: string) => d.subtitle(w, t),
       fade: (a: number) => d.fadeEl(a),
       skipButton: (on: boolean, f: () => void) => d.skipButton(on, f),
+      say: (t: string) => d.toast(t),
     });
     this.mini = new Minigames(ui);
     this.voice = new VoicePlayer(d.story.recorded);
@@ -738,11 +745,11 @@ export class StoryGame implements StageWorld {
     return this.token;
   }
 
-  private wait(check: () => boolean): Promise<void> {
+  private wait(check: () => boolean, onReady?: () => void | Promise<void>): Promise<void> {
     const tok = this.token;
     return new Promise((resolve, reject) => {
       if (tok !== this.token) return reject(new Abort());
-      this.waiters.push({ check, resolve, reject });
+      this.waiters.push({ check, resolve, reject, onReady });
     });
   }
 
@@ -1448,7 +1455,10 @@ export class StoryGame implements StageWorld {
     const ready = this.waiters.filter((w) => w.check());
     if (ready.length) {
       this.waiters = this.waiters.filter((w) => !ready.includes(w));
-      for (const w of ready) w.resolve();
+      for (const w of ready) {
+        if (w.onReady) void w.onReady();
+        w.resolve();
+      }
     }
   }
 

@@ -173,7 +173,7 @@ async function boot(): Promise<void> {
   // Leaf cards on the crowns near the camera (off on phones).
   const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
   // Grass blades round the camera: off on phones, a smaller patch on medium.
-  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) && (navGrid.kindAt(x, z) === "lawn" || navGrid.kindAt(x, z) === "soft")), surfaceAt);
+  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) && navGrid.kindAt(x, z) === "lawn"), surfaceAt);
   const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW, clearLines(walkLines, navGrid), navGrid);
   // The camera never passes through people or vehicles (upright cylinders around them).
   FollowCamera.moving = () => {

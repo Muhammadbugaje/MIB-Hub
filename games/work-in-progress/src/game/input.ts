@@ -44,6 +44,7 @@ export class Input {
   private showRun = false;
   private stickEl: HTMLElement | null = null;
   private knobEl: HTMLElement | null = null;
+  private runEl: HTMLElement | null = null;
   readonly touch: boolean;
   private off: (() => void)[] = [];
 
@@ -124,6 +125,7 @@ export class Input {
     }, { passive: false });
     host.append(stick, punch, kick, run);
     this.stickEl = stick;
+    this.runEl = run;
     this.knobEl = knob;
   }
 
@@ -138,9 +140,9 @@ export class Input {
 
   showRunUI(on: boolean): void {
     this.showRun = on;
-    if (this.run) {
-      this.run.classList.toggle("on", on);
-      this.run.classList.toggle("active", on);
+    if (this.runEl) {
+      this.runEl.classList.toggle("on", on);
+      this.runEl.classList.toggle("active", on);
     }
   }
 
@@ -231,14 +233,13 @@ export class Input {
 
   /** Read and clear this frame's input. */
   read(): InputState {
+    let mx = 0, my = 0;
+    const k = this.keys;
     if (k.has("a") || k.has("arrowleft")) mx -= 1;
     const p = k.has("f") || this.keys.has("f");
     const ki = k.has("g") || this.keys.has("g");
     if (p !== this.keys.has("f")) this.pressedQ.add("punch");
     if (ki !== this.keys.has("g")) this.pressedQ.add("kick");
-    let mx = 0, my = 0;
-    const k = this.keys;
-    if (k.has("a") || k.has("arrowleft")) mx -= 1;
     if (k.has("d") || k.has("arrowright")) mx += 1;
     if (k.has("w") || k.has("arrowup")) my += 1;
     if (k.has("s") || k.has("arrowdown")) my -= 1;

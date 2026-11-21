@@ -347,7 +347,7 @@ function eyeMaterial(kit: BaseKit): pc.StandardMaterial {
 /** The FORMAT.md `actor.anim` names (and a few more the scripts use). */
 export type AnimName =
   | "sit" | "stand" | "hug" | "wave" | "phone" | "eat" | "look" | "gesture" | "laugh" | "shock" | "point" | "nod" | "shake_head"
-  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "fall" | "hit" | "idle" | "talk" | "sit_floor";
+  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "kick" | "block" | "sign" | "fall" | "hit" | "idle" | "talk" | "sit_floor";
 
 /**
  * Names the missions use and how each plays now. Every one has a real clip
@@ -373,6 +373,7 @@ export const ACT_CLIPS: Record<AnimName, { clip: string; layer: "full" | "upper"
   shake_head: { clip: "shake_head", layer: "upper" },
   carry: { clip: "carry_idle", layer: "upper", hold: true },
   write: { clip: "write", layer: "upper", dur: 3 },
+  sign: { clip: "sign", layer: "upper", dur: 2.5 },
   kneel: { clip: "kneel_down", layer: "full", then: "kneel", hold: true },
   sleep: { clip: "sleep", layer: "full", hold: true },
   cheer: { clip: "cheer", layer: "full" },

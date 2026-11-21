@@ -392,7 +392,7 @@ const m002: MissionDef = {
     },
     {
       n: 4,
-      setup: (g) => {
+      setup: async (g) => {
         g.teleport({ pos: g.at("queue_end", "senate"), where: "senate" }, PI);
         g.hours = 11.4;
         // Show people moving in queue - simulate queue progress
