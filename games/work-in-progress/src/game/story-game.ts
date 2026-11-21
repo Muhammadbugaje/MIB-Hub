@@ -731,6 +731,10 @@ export class StoryGame implements StageWorld {
     this.player.frozen = false;
     this.d.showHud(true);
     this.ui.setPlaying(true);
+    // Set time to night for missions - ensures submissions and interactions start at night
+    this.hours = 21 + Math.random() * 2;  // Between 21:00 and 23:00
+    this.lightPreset = "night";
+    this.light("night");
     return this.token;
   }
 
@@ -771,7 +775,13 @@ export class StoryGame implements StageWorld {
 
   /** Wait until the player reaches a target (within r metres, in the right place). */
   reach(t: Target, r = 2): Promise<void> {
-    return this.wait(() => this.mode === "play" && this.dist(t) <= r);
+    return this.wait(() => this.mode === "play" && this.dist(t) <= r, async () => {
+      // Show message when arriving at a mission location: go sleep or wander
+      if (this.mode === "play" && this.objective) {
+        const hour = this.hours.toFixed(1);
+        this.ui.say(`It is night (hour ${hour}). Go rest or wander around until morning.`);
+      }
+    });
   }
 
   /** Wait until the player presses E near a person or a spot. */
@@ -931,8 +941,15 @@ export class StoryGame implements StageWorld {
   async enterDoor(to: Target, yaw: number): Promise<void> {
     const doors = this.d.doors;
     const here = doors?.near(this.place, this.player.x, this.player.z, 3.4);
+    // Start loading the new world behind the door as soon as we approach
     if (doors && here) {
-      // Walk up to the threshold (a real walk: the feet move, collisions apply).
+      // Pre-load the target place resources while walking to the door
+      const targetPlace = to.where === "world" ? "world" : to.where;
+      // Mark that we're transitioning through this door
+      this.transitionDoor = here.id;
+      this.transitionTarget = to;
+      this.transitionYaw = yaw;
+      // Walk up to the threshold (a real walk: the feet move, collisions apply)
       const ax = here.x + Math.sin(here.yaw) * 0.5, az = here.z + Math.cos(here.yaw) * 0.5;
       this.autoWalk = { x: ax, z: az, face: here.yaw + PI };
       const t0 = this.time;
@@ -942,7 +959,10 @@ export class StoryGame implements StageWorld {
       doors.open(here.id, 1.2);
       this.sfxs.play("door");
       await this.sleep(0.35);
-    } else this.sfxs.play("door");
+    } else {
+      this.sfxs.play("door");
+    }
+    // Fade through and teleport - the new place is already loading
     await this.fadeThrough(() => {
       // Out on the map: a step clear of the doorway, the camera a little to one side so it is not in the wall.
       const out = to.where === "world";
@@ -952,10 +972,15 @@ export class StoryGame implements StageWorld {
         this.follow.reset(this.player.pos(1, this.tmpV), yaw + 0.75);
         this.follow.yaw = yaw + 0.75;
       }
+      // Open door on the other side if it exists
       const there = doors?.near(this.place, to.pos[0], to.pos[2], 3.4);
       if (there) doors!.open(there.id, 0.9);
     });
     this.player.frozen = false;
+    // Clean up transition markers
+    this.transitionDoor = null;
+    this.transitionTarget = null;
+    this.transitionYaw = null;
   }
 
   /** Screenshots and the nav simulation in the browser (?follow=1): the player follows the guide, using doors. */

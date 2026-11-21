@@ -381,11 +381,11 @@ export const ACT_CLIPS: Record<AnimName, { clip: string; layer: "full" | "upper"
   clap: { clip: "clap", layer: "upper", dur: 2.4 },
   hold_torch: { clip: "point", layer: "upper", hold: true },
   oath: { clip: "raise_hand", layer: "upper", hold: true },
-  punch: { clip: "shove", layer: "full" },
-  kick: { clip: "kick", layer: "full" },
+  punch: { clip: "shove", layer: "full", dur: 1.2, then: "idle" },
+  kick: { clip: "kick", layer: "full", dur: 1.5, then: "stand" },
   fall: { clip: "knock_down", layer: "full" },
   hit: { clip: "flinch", layer: "upper" },
-  block: { clip: "block", layer: "upper" },
+  block: { clip: "block", layer: "upper", dur: 1.0, then: "stand" },
 };
 
 /** Names that have no clip at all today and play a procedural pose (kept for the coverage report). */
