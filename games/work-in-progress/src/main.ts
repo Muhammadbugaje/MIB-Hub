@@ -414,22 +414,13 @@ async function boot(): Promise<void> {
     }
     if (DEBUG && p.has("f2")) campaign.debugMenu();
     if (p.has("e")) {
-      // E key: open nearest door, or walk through into an interior seamlessly.
+      // E key: open nearest door. Doors that lead to an interior are handled by
+      // story-game's useNearest() (frame loop) which does the full enterDoor
+      // transition (walk to threshold, open, fade, teleport inside).
       const nearest = doors.near(g.place, g.player.x, g.player.z, 3);
       if (nearest) {
-        if (nearest.place !== "world" && nearest.place) {
-          // Seamless interior entry: open the door, then teleport inside.
-          doors.open(nearest.id, 1.6);
-          g.sfxs.play("door");
-          const target = {
-            pos: [nearest.interiorX ?? nearest.x, nearest.interiorY ?? nearest.y, nearest.interiorZ ?? nearest.z],
-            where: nearest.place,
-          } as { pos: [number, number, number]; where: string };
-          void g.enterDoor(target, nearest.yaw);
-        } else {
-          doors.open(nearest.id, 1.6);
-          g.sfxs.play("door");
-        }
+        doors.open(nearest.id, 1.6);
+        g.sfxs.play("door");
       }
     }
   }
