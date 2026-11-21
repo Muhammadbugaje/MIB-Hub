@@ -369,11 +369,16 @@ const m002: MissionDef = {
         await g.reach({ pos: frontOf(B.senate, 3), where: "world" }, 3);
         await maybeOkada(g, W(frontOf(B.photo, 4)), inYaw(B.photo));
         await g.reach(kiosk, 2.2);
-        await g.use("photo", "Pay for passport photos (₦400)", () => kiosk, 2.4, 3);
+        // Pay for passport photos at the kiosk
         g.progress.money -= 400;
         g.ui.setMoney(g.progress.money);
+        // Show player taking photos at the kiosk
+        g.player.person.act("eat");  // Using eat as "take photo" pose
+        await g.sleep(1.5);
+        g.player.person.act("idle");
         addItem(g.progress, "passport_x4");
         g.ui.showCard("Item", "Four passport photographs", "You look surprised in all four.", [], 2600);
+        g.sfxs.play("camera_shutter");
         // Step 3: Mum calls while you walk back.
         await phoneMum(g);
         aim(g, clerk);
@@ -390,6 +395,11 @@ const m002: MissionDef = {
       setup: (g) => {
         g.teleport({ pos: g.at("queue_end", "senate"), where: "senate" }, PI);
         g.hours = 11.4;
+        // Show people moving in queue - simulate queue progress
+        for (let i = 0; i < 5; i++) {
+          await g.sleep(0.8);
+          g.bark("crowd.queue", "wip_m002_queue_0" + i, "...", "neutral");
+        }
       },
       run: async (g) => {
         obj(g, "m002", 4);
@@ -399,6 +409,8 @@ const m002: MissionDef = {
         await g.use("bank", "Open a bank account", () => bank, 2.4, 3);
         g.progress.flags.bank_account = true;
         g.sfxs.play("bank_alert");
+        // Show player signing documents at bank
+        g.player.person.act("sign");
         g.ui.showCard("Bank", "Account opened", "Dad's money arrives with a lecture attached.", [], 2600);
       },
     },
