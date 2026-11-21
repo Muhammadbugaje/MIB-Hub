@@ -383,6 +383,21 @@ export class Director {
         else if (str("who") === "CROWD") this.world.fx(`crowd:${str("anim")}`, null);
         break;
       }
+      case "actor.punch": {
+        const l = this.live.get(str("who"));
+        if (l?.a.person) l.a.person.act("punch");
+        break;
+      }
+      case "actor.kick": {
+        const l = this.live.get(str("who"));
+        if (l?.a.person) l.a.person.act("kick");
+        break;
+      }
+      case "actor.block": {
+        const l = this.live.get(str("who"));
+        if (l?.a.person) l.a.person.act("block");
+        break;
+      }
       case "actor.look": {
         const l = this.live.get(str("who"));
         if (!l) break;
