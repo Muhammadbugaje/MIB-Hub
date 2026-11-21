@@ -72,8 +72,8 @@ const qWant = params.get("quality") ?? settings.quality;
 const LOW = qWant === "low" || (qWant === "auto" && phone);
 
 const Q = LOW
-  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 1024, cascades: 1, shadowDist: 55, npcs: 46, cars: 14, okadas: 10, kekes: 6, birds: 28, leaves: 60, lights: 4 }
-  : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 2048, cascades: 2, shadowDist: 90, npcs: qWant === "medium" ? 80 : 110, cars: 26, okadas: 16, kekes: 10, birds: 45, leaves: 150, lights: 10 };
+  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 512, cascades: 0, shadowDist: 30, npcs: 20, cars: 8, okadas: 5, kekes: 3, birds: 15, leaves: 30, lights: 2, lodDist: 40 }
+  : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 1024, cascades: 1, shadowDist: 60, npcs: 50, cars: 16, okadas: 8, kekes: 5, birds: 30, leaves: 60, lights: 5, lodDist: 80 };
 if (params.has("npcs")) Q.npcs = num("npcs", Q.npcs);
 
 const STEP = 1 / 60;
@@ -173,7 +173,7 @@ async function boot(): Promise<void> {
   // Leaf cards on the crowns near the camera (off on phones).
   const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
   // Grass blades round the camera: off on phones, a smaller patch on medium.
-  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 16 : 24, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) ? navGrid.kindAt(x, z) === "lawn" : null), surfaceAt);
+  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) && (navGrid.kindAt(x, z) === "lawn" || navGrid.kindAt(x, z) === "soft")), surfaceAt);
   const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW, clearLines(walkLines, navGrid), navGrid);
   // The camera never passes through people or vehicles (upright cylinders around them).
   FollowCamera.moving = () => {
@@ -214,7 +214,17 @@ async function boot(): Promise<void> {
   let speedIdx = params.has("speed") ? Math.max(0, speeds.indexOf(num("speed", 1))) : 0;
   if (params.has("speed") && speeds.indexOf(num("speed", 1)) < 0) speeds[0] = num("speed", 1);
   const input = new Input(host, canvas);
+  // Detect phone/coarse pointer mode
+  const isPhone = matchMedia("(pointer: coarse)").matches || Math.min(screen.width, screen.height) < 600;
+  // Mount touch UI always (hidden on desktop, shown on phone)
   input.mountTouchUi(hud.root);
+  // Auto-show touch controls on phones after a brief delay
+  if (isPhone) {
+    setTimeout(() => {
+      input.showStickUI(true);
+      input.showRunUI(true);
+    }, 500);
+  }
   const showcase = new ShowcaseCamera(cam);
   let menu: Menu | null = null;
   let acc = 0;
@@ -403,6 +413,14 @@ async function boot(): Promise<void> {
       else campaign.journal();
     }
     if (DEBUG && p.has("f2")) campaign.debugMenu();
+    if (p.has("e")) {
+      // E key: open nearest door
+      const nearest = doors.near(g.place, g.player.x, g.player.z, 3);
+      if (nearest) {
+        doors.open(nearest.id, 1.6);
+        g.sfxs.play("door");
+      }
+    }
   }
 
   app.on("update", (rawDt: number) => {
@@ -431,14 +449,33 @@ async function boot(): Promise<void> {
     const out = !g.isInside;
     birds.update(simTime);
     if (out) leaves.update(dt, simTime, camPos.x, camPos.z);
+    doors.update(dt);
     smoke.update(dt, cam);
     ambientBarks(dt);
     // Characters: every person's animation, after everything above has placed them (src/anim, crowd LOD).
     tickPeople(app, dt, cam);
     fpsT += rawDt;
     fpsN++;
+    // Dynamic quality scaling to maintain target FPS
+    const targetFPS = 30;
+    const actualFPS = fpsT > 0 ? fpsN / fpsT : 60;
+    const fpsDiff = actualFPS - targetFPS;
+    if (Math.abs(fpsDiff) > 5) {
+      const quality = params.get("quality");
+      if (actualFPS < targetFPS && quality !== "low") {
+        params.set("quality", "low");
+        Q.npcs = 20; Q.shadowRes = 512; Q.cascades = 0; Q.shadowDist = 30;
+        Q.npcs = 20; Q.cars = 8; Q.okadas = 5; Q.kekes = 3; Q.birds = 15; Q.leaves = 30; Q.lights = 2;
+      } else if (actualFPS > targetFPS + 10 && quality !== "medium") {
+        params.set("quality", "medium");
+        Q.npcs = 50; Q.shadowRes = 1024; Q.cascades = 1; Q.shadowDist = 60;
+        Q.npcs = 50; Q.cars = 16; Q.okadas = 8; Q.kekes = 5; Q.birds = 30; Q.leaves = 60; Q.lights = 5;
+      }
+    }
     if (fpsT > 1) {
-      hud.setStats(`${Math.round(fpsN / fpsT)} fps · ${app.stats.drawCalls.total} draws`);
+      // Optimization hint: if draws > 150 on low, consider reducing quality
+      const drawHint = app.stats.drawCalls.total > 150 && Q.npcs < 50 ? "• consider reducing NPC count" : "";
+      hud.setStats(`${Math.round(fpsN / fpsT)} fps · ${app.stats.drawCalls.total} draws ${drawHint}`);
       fpsT = fpsN = 0;
     }
   });

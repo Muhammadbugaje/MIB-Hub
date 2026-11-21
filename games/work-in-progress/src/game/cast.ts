@@ -88,7 +88,7 @@ export const CAST: Record<string, CastMember> = {
   "npc.sug_porter": { name: "SUG porter", look: L("manlong", S.tan, GREY_HAIR, ["#1f6b52", "#2b2b2b"], "cap", "#f4f1ea") },
   "crowd.students": { name: "A senior", look: L("casual", S.caramel, BLACK_HAIR, ["#2b2b2b", "#d9622b", "#56606a", "#f4f1ea"]), extras: ["phone"] },
   // Special characters (only ever in [IF special.x] blocks; placeholders until each person approves her look).
-  "special.jiya": { name: "Jiya", look: L("animwoman", S.light, "#3b2618", ["#a83232", "#2b2b2b", "#f4f1ea", "#f4f1ea"], "cap", "#a83232"), height: 1.05, extras: ["sunglasses"] },
+  "special.jiya": { name: "Jiya", look: L("jiya_anim", S.fair, "#e8c3a0", ["#ff6b6b", "#4ecdc4", "#f1f1f1", "#f1f1f1"], "cap", "#ff6b6b"), height: 1.05, extras: ["sunglasses"] },
   "special.taty": { name: "Taty", look: L("animwoman", S.fair, BLACK_HAIR, ["#2b2b2b", "#2b2b2b", "#e98a8a", "#f4f1ea"]) },
   "special.madison": { name: "Madison", look: L("animwoman", S.fair, BLACK_HAIR, ["#f4f1ea", "#5b4ba8", "#f2c230", "#2b2b2b"]), extras: ["phone"] },
 };

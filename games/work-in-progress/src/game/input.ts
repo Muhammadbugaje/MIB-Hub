@@ -18,6 +18,10 @@ export interface InputState {
   walk?: boolean;
   /** Space held (a short tap is a short hop). */
   jumpHeld?: boolean;
+  /** Primary attack (punch). */
+  punch?: boolean;
+  /** Secondary attack (kick). */
+  kick?: boolean;
   lookDX: number;
   lookDY: number;
   zoom: number;
@@ -36,6 +40,8 @@ export class Input {
   private stick = { id: -1, ox: 0, oy: 0, x: 0, y: 0 };
   private lookTouch = { id: -1, x: 0, y: 0 };
   private touchRun = false;
+  private showStick = false;
+  private showRun = false;
   private stickEl: HTMLElement | null = null;
   private knobEl: HTMLElement | null = null;
   readonly touch: boolean;
@@ -92,23 +98,66 @@ export class Input {
     run.className = "wip-run";
     run.type = "button";
     run.textContent = "RUN";
+    const punch = document.createElement("button");
+    punch.className = "wip-punch";
+    punch.type = "button";
+    punch.textContent = "P";
+    const kick = document.createElement("button");
+    kick.className = "wip-kick";
+    kick.type = "button";
+    kick.textContent = "K";
     run.addEventListener("touchstart", (e) => {
       e.stopPropagation();
       e.preventDefault();
       this.touchRun = !this.touchRun;
       run.classList.toggle("on", this.touchRun);
     }, { passive: false });
-    host.append(stick, run);
+    punch.addEventListener("touchstart", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      this.tap("punch");
+    }, { passive: false });
+    kick.addEventListener("touchstart", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      this.tap("kick");
+    }, { passive: false });
+    host.append(stick, punch, kick, run);
     this.stickEl = stick;
     this.knobEl = knob;
+  }
+
+  /** Show the on-screen joystick and run button (phones and tablets). */
+  showStickUI(on: boolean): void {
+    this.showStick = on;
+    if (this.stickEl) {
+      this.stickEl.style.opacity = on ? "1" : "0";
+      this.stickEl.classList.toggle("active", on);
+    }
+  }
+
+  showRunUI(on: boolean): void {
+    this.showRun = on;
+    if (this.run) {
+      this.run.classList.toggle("on", on);
+      this.run.classList.toggle("active", on);
+    }
   }
 
   /** Touches on menus, panels and form controls belong to the page (tap, scroll), never to the stick or camera. */
   private static isUi(target: EventTarget | null): boolean {
     const el = target as HTMLElement | null;
-    return !!el?.closest?.(
-      "button, a, input, select, textarea, label, [role=button], [data-ui], .wip-menu, .mn-screen, .mn-panel, .mn-body, .mn-side, .mn-scrim, .mi-sheet",
-    );
+    // Also check for canvas and game container elements
+    if (!el) return false;
+    const uiSelectors = [
+      "button, a, input, select, textarea, label",
+      "[role=button], [data-ui]",
+      ".wip-menu, .mn-screen, .mn-panel, .mn-body, .mn-side, .mn-scrim, .mi-sheet",
+      ".wip-chips .wip-chip--text",
+      ".wip-opts",
+      ".wip-play",
+    ];
+    return uiSelectors.some(selector => el.closest(selector));
   }
 
   private touchStart(e: TouchEvent): void {
@@ -116,14 +165,14 @@ export class Input {
     for (const t of Array.from(e.changedTouches)) {
       if (Input.isUi(t.target)) continue;
       game = true;
-      if (t.clientX < window.innerWidth * 0.45 && this.stick.id < 0) {
+      if (t.clientX < window.innerWidth * 0.50 && this.stick.id < 0) {
         this.stick = { id: t.identifier, ox: t.clientX, oy: t.clientY, x: t.clientX, y: t.clientY };
         if (this.stickEl) {
           this.stickEl.style.left = `${t.clientX - 60}px`;
           this.stickEl.style.top = `${t.clientY - 60}px`;
           this.stickEl.classList.add("on");
         }
-      } else if (this.lookTouch.id < 0) {
+      } else if (t.clientX >= window.innerWidth * 0.50 && this.lookTouch.id < 0) {
         this.lookTouch = { id: t.identifier, x: t.clientX, y: t.clientY };
       }
       this.pressedQ.add("tap");
@@ -160,6 +209,13 @@ export class Input {
       }
       if (t.identifier === this.lookTouch.id) this.lookTouch.id = -1;
     }
+    // Also prevent default for game touches when ending
+    const game = Array.from(e.changedTouches).some((t) => {
+      if (t.clientX < window.innerWidth * 0.45 && this.stick.id < 0) return true;
+      if (t.clientX >= window.innerWidth * 0.45) return true;
+      return false;
+    });
+    if (game) e.preventDefault();
   }
 
   /** A key press for one frame (screenshot scripts: a jump). */
@@ -175,6 +231,11 @@ export class Input {
 
   /** Read and clear this frame's input. */
   read(): InputState {
+    if (k.has("a") || k.has("arrowleft")) mx -= 1;
+    const p = k.has("f") || this.keys.has("f");
+    const ki = k.has("g") || this.keys.has("g");
+    if (p !== this.keys.has("f")) this.pressedQ.add("punch");
+    if (ki !== this.keys.has("g")) this.pressedQ.add("kick");
     let mx = 0, my = 0;
     const k = this.keys;
     if (k.has("a") || k.has("arrowleft")) mx -= 1;
