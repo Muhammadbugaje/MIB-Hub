@@ -424,7 +424,7 @@ export class Director {
       case "actor.enter":
       case "actor.exit": {
         const l = this.live.get(str("who"));
-        if (l) l.a.ent.enabled = e.key === "actor.exit";
+        if (l) l.a.ent.enabled = e.key === "actor.enter";
         break;
       }
       case "sfx.play":

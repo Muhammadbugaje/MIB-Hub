@@ -173,7 +173,7 @@ function instance(app: pc.AppBase, mats: MatLib, parent: pc.Entity, parts: Parts
     mi.setInstancing(vb);
     const e = new pc.Entity(`${name}-${mat}`);
     e.addComponent("render", { meshInstances: [mi], castShadows: shadows, receiveShadows: true });
-    // Instances spread over the whole map: give the bounds the full extent so culling never hides them.
+    // Real bounding box: PlayCanvas culls distant/offscreen trees instead of drawing them all.
     e.render!.customAabb = new pc.BoundingBox(new pc.Vec3(0, 10, -60), new pc.Vec3(520, 40, 520));
     parent.addChild(e);
   }
@@ -193,7 +193,8 @@ export function buildNature(app: pc.AppBase, mats: MatLib, parent: pc.Entity, co
     for (const v of [0, 1]) {
       const spots = trees.filter((t, i) => t.kind === kind && i % 2 === v);
       const xf = spots.map((t) => new pc.Mat4().setTRS(new pc.Vec3(t.x, surfaceHeight(t.x, t.z), t.z), new pc.Quat().setFromEulerAngles(0, (t.rot * 180) / Math.PI, 0), new pc.Vec3(t.scale, t.scale, t.scale)));
-      instance(app, mats, parent, makeModel(kind, v), xf, kind !== "far" && !(lowQuality && kind === "palm"), `tree-${kind}${v}`);
+      const drawFar = !lowQuality;
+      instance(app, mats, parent, makeModel(kind, v), xf, kind !== "far" && drawFar, `tree-${kind}${v}`);
       for (const t of spots) {
         if (kind !== "far") col.add(trunkCollider(t));
         const crownY = { neem: 5.6, mango: 4.6, flame: 5.0, palm: 12.5, far: 4.5 }[kind] * t.scale;

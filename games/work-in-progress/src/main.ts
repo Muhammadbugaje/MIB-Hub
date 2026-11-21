@@ -72,7 +72,7 @@ const qWant = params.get("quality") ?? settings.quality;
 const LOW = qWant === "low" || (qWant === "auto" && phone);
 
 const Q = LOW
-  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 512, cascades: 0, shadowDist: 30, npcs: 20, cars: 8, okadas: 5, kekes: 3, birds: 15, leaves: 30, lights: 2, lodDist: 40 }
+  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 256, cascades: 0, shadowDist: 25, npcs: 12, cars: 4, okadas: 3, kekes: 2, birds: 8, leaves: 15, lights: 1, lodDist: 30 }
   : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 1024, cascades: 1, shadowDist: 60, npcs: 50, cars: 16, okadas: 8, kekes: 5, birds: 30, leaves: 60, lights: 5, lodDist: 80 };
 if (params.has("npcs")) Q.npcs = num("npcs", Q.npcs);
 
@@ -174,7 +174,7 @@ async function boot(): Promise<void> {
   const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
   // Grass blades round the camera: off on phones, a smaller patch on medium.
   const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) && navGrid.kindAt(x, z) === "lawn"), surfaceAt);
-  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, !LOW, clearLines(walkLines, navGrid), navGrid);
+  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, false, clearLines(walkLines, navGrid), navGrid);
   // The camera never passes through people or vehicles (upright cylinders around them).
   FollowCamera.moving = () => {
     const out: { x: number; z: number; r: number; h: number }[] = [];
@@ -414,11 +414,22 @@ async function boot(): Promise<void> {
     }
     if (DEBUG && p.has("f2")) campaign.debugMenu();
     if (p.has("e")) {
-      // E key: open nearest door
+      // E key: open nearest door, or walk through into an interior seamlessly.
       const nearest = doors.near(g.place, g.player.x, g.player.z, 3);
       if (nearest) {
-        doors.open(nearest.id, 1.6);
-        g.sfxs.play("door");
+        if (nearest.place !== "world" && nearest.place) {
+          // Seamless interior entry: open the door, then teleport inside.
+          doors.open(nearest.id, 1.6);
+          g.sfxs.play("door");
+          const target = {
+            pos: [nearest.interiorX ?? nearest.x, nearest.interiorY ?? nearest.y, nearest.interiorZ ?? nearest.z],
+            where: nearest.place,
+          } as { pos: [number, number, number]; where: string };
+          void g.enterDoor(target, nearest.yaw);
+        } else {
+          doors.open(nearest.id, 1.6);
+          g.sfxs.play("door");
+        }
       }
     }
   }

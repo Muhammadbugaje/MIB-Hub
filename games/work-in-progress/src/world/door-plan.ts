@@ -45,10 +45,16 @@ export interface DoorSpec {
   openDeg?: number;
   /** A glazed vestibule from the door back to a recessed facade (metres deep), if any. */
   porch?: number;
+  /** Interior this door leads to (for seamless entry). */
+  roomId?: string;
+  /** Where the player appears inside (defaults to the door position). */
+  interiorX?: number;
+  interiorZ?: number;
+  interiorY?: number;
 }
 
 /** Entrance shapes per building style: where the door sits relative to the building's solid front, its size, its colour. */
-const ENTRANCE: Partial<Record<Building["style"], { off: number; w: number; h: number; leaves: 1 | 2; colour: string; arch?: boolean; porch?: number }>> = {
+export const ENTRANCE: Partial<Record<Building["style"], { off: number; w: number; h: number; leaves: 1 | 2; colour: string; arch?: boolean; porch?: number }>> = {
   hostel: { off: 1.31, w: 1.8, h: 2.5, leaves: 2, colour: "#2f5f8a" },
   senate: { off: 0, w: 2.4, h: 4.2, leaves: 2, colour: "#5a3a24", arch: true },
   sahel: { off: 0, w: 3.2, h: 4.2, leaves: 2, colour: "#6b3e22", arch: true },
@@ -186,6 +192,14 @@ export function doorColliders(specs: DoorSpec[]): { kind: "box"; x: number; z: n
     const p = openLeaf(d);
     // A box along the leaf (local x of the box = the leaf's direction).
     out.push({ kind: "box", x: p.x, z: p.z, hx: d.w / 2 - 0.02, hz: 0.04, rot: -p.ang, h: d.h });
+  }
+  // Threshold plates at closed entrances: a thin plate at the doorway's floor
+  // height so the player never falls through the gap between exterior ground
+  // and the interior floor at the threshold. Very thin in z so it only covers
+  // the step itself and never blocks walking up to or through the door.
+  for (const d of specs) {
+    if (d.rest !== "closed") continue;
+    out.push({ kind: "box", x: d.x, z: d.z, hx: (d.w / 2) + 0.05, hz: 0.05, rot: d.yaw, h: 0.1 });
   }
   return out;
 }

@@ -440,10 +440,14 @@ function plantTrees(): TreeSpot[] {
   const rng = makeRng(77);
   const out: TreeSpot[] = [];
   const add = (kind: TreeKind, x: number, z: number, scale = rng.range(0.85, 1.2)) => {
-    if (kind !== "far" && (nearRoad(x, z, 4.2) || insideBuilding(x, z, 1.2) || inLake(x, z, 3) || inStadium(x, z, 2))) return;
+    if (kind !== "far" && (nearRoad(x, z, 4.2) || insideBuilding(x, z, 1.2) || inLake(x, z, 3) || inStadium(x, z, 2) || inPitch(x, z))) return;
     if (inReserved(x, z, kind === "far" ? 6 : 1)) return;
     out.push({ kind, x, z, scale, rot: rng.range(0, 2 * PI) });
   };
+
+  function inPitch(x: number, z: number): boolean {
+    return Math.abs(x - PITCH.x) < PITCH.hx && Math.abs(z - PITCH.z) < PITCH.hz;
+  }
   // Neem along the campus verge of the Ring Road.
   for (let x = -196; x <= 196; x += 13) if (Math.abs(x) > 26) add("neem", x + rng.range(-1.5, 1.5), -13.5 + rng.range(-1, 1));
   // A second, looser row behind it.
@@ -493,7 +497,7 @@ function plantTrees(): TreeSpot[] {
     add(rng.pick(["neem", "mango"]), x, z, rng.range(0.9, 1.3));
   }
   // The far tree line on the horizon (cheap, never close).
-  for (let i = 0; i < 420; i++) {
+  for (let i = 0; i < 150; i++) {
     const a = rng.range(0, 2 * PI), r = rng.range(250, 380);
     add("far", Math.cos(a) * r, Math.sin(a) * r * 0.9 - 40, rng.range(1.2, 2.4));
   }
