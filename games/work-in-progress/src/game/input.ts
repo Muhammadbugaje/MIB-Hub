@@ -22,6 +22,8 @@ export interface InputState {
   punch?: boolean;
   /** Secondary attack (kick). */
   kick?: boolean;
+  /** Guard: reduces damage, can parry. */
+  block?: boolean;
   lookDX: number;
   lookDY: number;
   zoom: number;
@@ -107,6 +109,10 @@ export class Input {
     kick.className = "wip-kick";
     kick.type = "button";
     kick.textContent = "K";
+    const block = document.createElement("button");
+    block.className = "wip-block";
+    block.type = "button";
+    block.textContent = "B";
     run.addEventListener("touchstart", (e) => {
       e.stopPropagation();
       e.preventDefault();
@@ -123,7 +129,12 @@ export class Input {
       e.preventDefault();
       this.tap("kick");
     }, { passive: false });
-    host.append(stick, punch, kick, run);
+    block.addEventListener("touchstart", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      this.tap("block");
+    }, { passive: false });
+    host.append(stick, punch, kick, block, run);
     this.stickEl = stick;
     this.runEl = run;
     this.knobEl = knob;
@@ -238,8 +249,10 @@ export class Input {
     if (k.has("a") || k.has("arrowleft")) mx -= 1;
     const p = k.has("f") || this.keys.has("f");
     const ki = k.has("g") || this.keys.has("g");
+    const b = k.has("b") || this.keys.has("b");
     if (p !== this.keys.has("f")) this.pressedQ.add("punch");
     if (ki !== this.keys.has("g")) this.pressedQ.add("kick");
+    if (b !== this.keys.has("b")) this.pressedQ.add("block");
     if (k.has("d") || k.has("arrowright")) mx += 1;
     if (k.has("w") || k.has("arrowup")) my += 1;
     if (k.has("s") || k.has("arrowdown")) my -= 1;
@@ -258,6 +271,9 @@ export class Input {
       run: k.has("shift") || this.touchRun || stickFar,
       walk: k.has("alt"),
       jumpHeld: k.has(" "),
+      punch: this.pressedQ.has("punch"),
+      kick: this.pressedQ.has("kick"),
+      block: this.pressedQ.has("block"),
       lookDX: this.lookX, lookDY: this.lookY, zoom: this.wheel,
       pressed: new Set(this.pressedQ),
     };

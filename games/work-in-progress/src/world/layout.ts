@@ -197,7 +197,7 @@ function buildPlan(): Building[] {
   add({ style: "pyramid", x: 86, z: -146, rot: FACE_S, w: 24, d: 24, floors: 2, tone: 0, sign: "Glass Pyramid Study Centre" });
 
   // NEW: Additional campus buildings for richer environment
-  add({ style: "deco", x: 0, z: -68, rot: FACE_S, w: 28, d: 14, floors: 2, tone: 9, sign: "Department of Computer Science" });
+  add({ style: "deco", x: -34, z: -68, rot: FACE_S, w: 28, d: 14, floors: 2, tone: 9, sign: "Department of Computer Science" });
   add({ style: "sahel", x: -140, z: -210, rot: FACE_E, w: 32, d: 16, floors: 2, tone: 2, sign: "Sports Complex & Gym" });
   add({ style: "arcade", x: 140, z: -200, rot: FACE_W, w: 30, d: 14, floors: 2, tone: 1, sign: "Cafeteria & Dining Hall" });
   add({ style: "deco", x: -26, z: -128, rot: FACE_E, w: 22, d: 12, floors: 2, tone: 10, sign: "Art Gallery" });

@@ -197,6 +197,7 @@ async function boot(): Promise<void> {
     skipButton: (on, f) => hud.skipButton(on, f),
     showHud: (on) => hud.showHud(on),
     toast: (t) => hud.say(t),
+    hud,
   });
   g.voice.enabled = settings.voices;
   const campaign = new Campaign(g, story.missions, DEBUG);

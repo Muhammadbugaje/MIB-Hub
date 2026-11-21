@@ -58,6 +58,10 @@ export class Hud {
   private clock: HTMLElement;
   private mode: HTMLElement;
   private stats: HTMLElement;
+  private actionHint: HTMLElement | null = null;
+  private enemyHealth: HTMLElement | null = null;
+  private enemyHealthBar: HTMLElement | null = null;
+  private enemyHealthName: HTMLElement | null = null;
   private top = el("div", "wip-bar wip-bar--top");
   private bottom = el("div", "wip-bar wip-bar--bottom");
   private sub = el("div", "wip-sub");
@@ -100,6 +104,21 @@ export class Hud {
     this.hud.hidden = true;
     this.sub.hidden = true;
     this.skip.hidden = true;
+
+    // Context-sensitive action hint (E key on keyboard, big button on touch).
+    this.actionHint = el("div", "wip-action-hint", "");
+    this.root.append(this.actionHint);
+
+    // Enemy health bar (shown during combat).
+    this.enemyHealth = el("div", "wip-enemy-health");
+    this.enemyHealthName = el("div", "wip-enemy-health__name", "");
+    this.enemyHealthBar = el("div", "wip-enemy-health__bar");
+    const fill = el("div", "wip-enemy-health__fill");
+    this.enemyHealthBar.append(fill);
+    this.enemyHealth.append(this.enemyHealthName, this.enemyHealthBar);
+    this.enemyHealth.hidden = true;
+    this.root.append(this.enemyHealth);
+
     this.root.append(this.hud, this.top, this.bottom, this.sub, this.fader, this.skip, this.toast, this.loading);
   }
 
@@ -128,6 +147,28 @@ export class Hud {
 
   setMode(text: string): void {
     this.mode.textContent = text;
+  }
+
+  /** Context-sensitive action prompt (E on keyboard, big button on touch). Shows "Talk", "Use", "Door", etc. */
+  setActionHint(text: string | null): void {
+    if (!this.actionHint) return;
+    this.actionHint.textContent = text ?? "";
+    this.actionHint.classList.toggle("on", !!text);
+  }
+
+  /** Show/hide the enemy health bar during combat. */
+  setEnemyHealth(name: string | null, health: number | null): void {
+    if (!this.enemyHealth) return;
+    if (name === null || health === null) {
+      this.enemyHealth.hidden = true;
+      return;
+    }
+    this.enemyHealth.hidden = false;
+    if (this.enemyHealthName) this.enemyHealthName.textContent = name;
+    if (this.enemyHealthBar) {
+      const fill = this.enemyHealthBar.firstElementChild as HTMLElement | null;
+      if (fill) fill.style.width = `${Math.round(Math.max(0, Math.min(1, health)) * 100)}%`;
+    }
   }
 
   setStats(text: string): void {

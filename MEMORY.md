@@ -1,0 +1,4 @@
+- [Combat system](memory/combat-system.md) — fight mechanics: punch/kick/block input, hitboxes, damage, health
+- [Driving system](memory/driving-system.md) — player-controlled car/okada/keke driving
+- [Mission review](memory/mission-review.md) — missions 1-10 per Y1.md, character visibility/animation fixes
+- [Mobile playability](memory/mobile-playability.md) — joystick, run/punch/kick buttons, context-sensitive labels

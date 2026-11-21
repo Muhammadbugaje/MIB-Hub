@@ -224,6 +224,17 @@ export class Sfx {
         this.noise(t, 0.08, 0.6, 250, 100, 1);
         this.tone(80, t, 0.1, "sine", 0.4);
         break;
+      case "punch":
+        this.noise(t, 0.05, 0.5, 300, 120, 0.8);
+        this.tone(120, t, 0.08, "sine", 0.35);
+        break;
+      case "block":
+        this.tone(600, t, 0.06, "sine", 0.25);
+        this.tone(900, t + 0.03, 0.06, "sine", 0.25);
+        break;
+      case "ko":
+        [110, 82, 55].forEach((f, i) => this.tone(f, t + i * 0.15, 0.5, "sawtooth", 0.12));
+        break;
     }
   }
 

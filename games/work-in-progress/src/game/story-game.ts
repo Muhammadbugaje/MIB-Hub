@@ -52,6 +52,7 @@ import type { NavPoint, PathSearch } from "../sim/nav.ts";
 import type { NavGrid } from "../sim/nav.ts";
 import type { Doors } from "../world/door-models.ts";
 import { placeOf } from "./nav-routes.ts";
+import { Combat } from "./combat.ts";
 
 export class Abort extends Error {
   constructor() {
@@ -89,12 +90,39 @@ export interface GameDeps {
   skipButton: (on: boolean, f: () => void) => void;
   showHud: (on: boolean) => void;
   toast: (t: string) => void;
+  /** The top-level HUD (action hint, enemy health bar...). */
+  hud: Hud;
+}
+import { Hud } from "./hud.ts";
+
+/** The mission display layer (objective, marker, minimap, cards...). */
+export interface MissionUiLike {
+  setStamina: (s: number, zobo: boolean) => void;
+  setObjective: (mission: string, text: string, target: (() => Target | null) | Target | null) => void;
+  showCard: (kicker: string, title: string, sub?: string, rewards?: string[], ms?: number) => void;
+  showPrompt: (label: string | null) => void;
+  titleCard: (text: string | null) => void;
+  calendar: (text: string | null) => void;
+  letterbox: (on: boolean) => void;
+  subtitle: (w: string | null, t: string) => void;
+  fade: (a: number) => void;
+  skipButton: (on: boolean, f: () => void) => void;
+  say: (t: string) => void;
+  ask: (q: string, o: string[]) => Promise<number>;
+  key: (k: string) => boolean;
+  get choosing(): boolean;
+  insert: (kind: "note" | "photo" | "logbook" | "logbook_stub" | "kb_board" | "plug_sign" | null, playerTop?: string) => void;
 }
 
 const PI = Math.PI;
 
+/** Top speed per vehicle kind. */
+function kindTopSpeed(kind: "car" | "okada" | "keke"): number {
+  return kind === "car" ? 13 : kind === "okada" ? 11 : 8;
+}
+
 export class StoryGame implements StageWorld {
-  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void; say(t: string): void };
+  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void; say(t: string): void; setActionHint(t: string | null): void; setEnemyHealth(name: string | null, health: number | null): void; setMode(t: string): void };
   readonly mini: Minigames;
   readonly voice: VoicePlayer;
   readonly sfxs = new Sfx();
@@ -109,7 +137,7 @@ export class StoryGame implements StageWorld {
   hours = 7.6;
   clockSpeed = 1;
   lightPreset = "day";
-  mode: "menu" | "play" | "cut" | "bike" | "ride" | "mini" = "menu";
+  mode: "menu" | "play" | "cut" | "bike" | "ride" | "mini" | "combat" | "drive" = "menu";
   director: Director | null = null;
   private npcs = new Map<string, Person>();
   private extras: Person[] = [];
@@ -157,6 +185,8 @@ export class StoryGame implements StageWorld {
   coilOverride: CoilState | null = null;
   /** Camera micro-shake (seconds left) when the coil cracks near you. */
   private shakeT = 0;
+  /** Combat state (null when not in a fight). */
+  combat: Combat | null = null;
   /** The door we're mid-transition through (null when not transitioning). */
   private transitionDoor: string | null = null;
   /** The target we're transitioning to. */
@@ -204,6 +234,9 @@ export class StoryGame implements StageWorld {
       fade: (a: number) => d.fadeEl(a),
       skipButton: (on: boolean, f: () => void) => d.skipButton(on, f),
       say: (t: string) => d.toast(t),
+      setActionHint: (t: string | null) => d.hud.setActionHint(t),
+      setEnemyHealth: (name: string | null, health: number | null) => d.hud.setEnemyHealth(name, health),
+      setMode: (t: string) => d.hud.setMode(t),
     });
     this.mini = new Minigames(ui);
     this.voice = new VoicePlayer(d.story.recorded);
@@ -220,6 +253,7 @@ export class StoryGame implements StageWorld {
       female: () => this.ctx?.female ?? false,
       doorPass: (link, phase) => this.d.doors?.open(phase === "out" ? link.doorA.id : link.doorB.id, 1.0),
     });
+    this.combat = new Combat(this);
   }
 
   /** True when nobody could see a body at (x, z): another place, off camera or far away. */
@@ -350,6 +384,30 @@ export class StoryGame implements StageWorld {
     this.statue.place(-24, 0.02, -119.55, 0);
     this.statue.act("sit");
     this.statue.act("hold_torch");
+  }
+
+  /** Position of a combatant (for camera tracking). */
+  fighterPos(castId: string): { x: number; z: number } {
+    const c = this.combat?.fighters.get(castId);
+    if (!c) return { x: this.player.x, z: this.player.z };
+    const p = c.person.root.getPosition();
+    return { x: p.x, z: p.z };
+  }
+
+  /** Start a fight with the named NPC. */
+  fight(opponent: string): void {
+    this.combat!.start(opponent);
+    this.mode = "combat";
+    this.player.frozen = false;
+    this.ui.setMode("FIGHT");
+  }
+
+  /** End the current fight and return to play. */
+  endFight(): void {
+    this.combat!.end();
+    this.mode = "play";
+    this.ui.setMode("");
+    this.ui.setActionHint(null);
   }
 
   /** Start (or restart) the story for this look and name. */
@@ -1188,6 +1246,117 @@ export class StoryGame implements StageWorld {
     }
   }
 
+  /* ================================================================ driving */
+
+  /** Driving state (set when the player is behind the wheel of a car / okada / keke). */
+  private driving = false;
+  private driveKind: "car" | "okada" | "keke" = "car";
+  private driveS = { x: 0, z: 0, yaw: 0, speed: 0, steer: 0, brake: 0, gear: 1, prevX: 0, prevZ: 0, prevYaw: 0 };
+  private driveTarget: Target | null = null;
+
+  /** Drive a vehicle to a target (player-controlled). Used by missions for car / okada / keke driving. */
+  async drive(to: Target, kind: "car" | "okada" | "keke" = "car"): Promise<void> {
+    const ent = kind === "car" ? this.car : kind === "okada" ? this.d.carEntity("okada", "#e8742c") : this.keke;
+    ent.enabled = true;
+    const p = ent.getPosition();
+    this.driveS.x = p.x; this.driveS.z = p.z; this.driveS.yaw = ent.getEulerAngles().y * Math.PI / 180;
+    this.driveS.speed = 0;
+    this.driveKind = kind;
+    this.driveTarget = to;
+    this.driving = true;
+    this.mode = "drive";
+    this.player.frozen = true;
+    this.ui.setMode(kind.toUpperCase());
+
+    return new Promise<void>((resolve) => {
+      const check = () => {
+        const d = Math.hypot(this.driveS.x - to.pos[0], this.driveS.z - to.pos[2]);
+        if (d < 3.0) {
+          this.driving = false;
+          this.mode = "play";
+          this.player.frozen = false;
+          this.player.x = this.driveS.x;
+          this.player.z = this.driveS.z;
+          this.player.yaw = this.driveS.yaw;
+          this.ui.setMode("");
+          ent.enabled = false;
+          resolve();
+        }
+      };
+      this.driveResolve = resolve;
+      this.driveCheck = check;
+    });
+  }
+
+  private driveResolve: (() => void) | null = null;
+  private driveCheck: (() => void) | null = null;
+
+  /** Stop driving and get out. */
+  private stopDrive(): void {
+    this.driving = false;
+    this.mode = "play";
+    this.player.frozen = false;
+    this.ui.setMode("");
+    if (this.driveKind === "car") this.car.enabled = false;
+    else if (this.driveKind === "keke") this.keke.enabled = false;
+  }
+
+  private stepDrive(dt: number, inp: InputState): void {
+    const b = this.driveS;
+    b.prevX = b.x;
+    b.prevZ = b.z;
+    b.prevYaw = b.yaw;
+
+    // Throttle / brake.
+    const throttle = Math.max(0, inp.moveY);
+    const brake = Math.max(0, -inp.moveY);
+    const top = kindTopSpeed(this.driveKind);
+    b.speed += (throttle * 3 - brake * 8 - 0.4 * Math.sign(b.speed)) * dt;
+    b.speed = Math.max(0, Math.min(top, b.speed));
+
+    // Steering: tighter when slow, gentle when fast.
+    const steer = -inp.moveX * (1.8 / (1 + b.speed * 0.3));
+    b.steer = steer;
+    b.yaw += steer * dt * Math.min(1, b.speed / 1.5 + 0.2);
+
+    let nx = b.x + Math.sin(b.yaw) * b.speed * dt, nz = b.z + Math.cos(b.yaw) * b.speed * dt;
+    [nx, nz] = this.d.col.resolve(nx, nz, 0.55);
+    const moved = Math.hypot(nx - b.x, nz - b.z);
+    if (moved < b.speed * dt * 0.5) b.speed *= 0.6;
+    b.x = nx;
+    b.z = nz;
+
+    // Place the vehicle entity.
+    const ent = b === this.driveS ? null : null;
+    const v = this.driveKind === "car" ? this.car : this.driveKind === "keke" ? this.keke : this.d.carEntity("okada", "#e8742c");
+    v.setPosition(b.x, surfaceHeight(b.x, b.z), b.z);
+    v.setEulerAngles(0, (b.yaw * 180) / PI, 0);
+
+    // Player sits in the driver seat.
+    const seatOff: [number, number, number] = this.driveKind === "car" ? [0.5, 0.9, -0.4] : this.driveKind === "okada" ? [0, 0.78, -0.05] : [0.32, 0.62, 0.55];
+    const sy = Math.sin(b.yaw), cy = Math.cos(b.yaw);
+    this.player.person.place(
+      b.x + seatOff[0] * cy - seatOff[2] * sy,
+      surfaceHeight(b.x, b.z) + seatOff[1],
+      b.z + seatOff[0] * sy + seatOff[2] * cy,
+      b.yaw
+    );
+    this.player.person.gait(0);
+
+    // Check arrival.
+    if (this.driveCheck) this.driveCheck();
+  }
+
+  private renderDrive(alpha: number): void {
+    const b = this.driveS;
+    const x = b.prevX + (b.x - b.prevX) * alpha, z = b.prevZ + (b.z - b.prevZ) * alpha;
+    const yaw = b.prevYaw + Math.atan2(Math.sin(b.yaw - b.prevYaw), Math.cos(b.yaw - b.prevYaw)) * alpha;
+    const y = surfaceHeight(x, z);
+    const v = this.driveKind === "car" ? this.car : this.driveKind === "keke" ? this.keke : this.d.carEntity("okada", "#e8742c");
+    v.setPosition(x, y, z);
+    v.setEulerAngles(0, (yaw * 180) / PI, 0);
+  }
+
   /** Ride the keke as a passenger along a route (skippable with Esc / Space once moving). */
   kekeRide(route: Target[], riders: Person[]): Promise<void> {
     const start = route[0]!.pos;
@@ -1402,6 +1571,23 @@ export class StoryGame implements StageWorld {
     if (this.mode === "bike") this.stepBike(dt, inp);
     else if (this.mode === "ride") {
       if (this.rideTick?.(dt, ["escape", " ", "enter"].some((k) => inp.pressed.has(k)))) this.rideDone = true;
+    } else if (this.mode === "combat") {
+      this.combat?.enemyTurn(dt);
+      // Player can still move in a fight (dodge, close distance).
+      this.player.step(dt, { ...inp, moveX: inp.moveX, moveY: inp.moveY, run: false }, this.follow ? this.follow.yaw : 0);
+      // Combat: player punch/kick/block input (only when in combat mode).
+      if (this.combat) {
+        this.combat.playerInput({ punch: inp.punch, kick: inp.kick, block: inp.block });
+      }
+      // Camera follows the fight.
+      if (this.combat && this.follow) {
+        const p = this.player.person.root.getPosition();
+        const e = this.combat.playerId ? this.fighterPos(this.combat.playerId) : p;
+        const camYaw = Math.atan2(e.x - p.x, e.z - p.z);
+        this.follow.yaw = dampAngle(this.follow.yaw, camYaw, 3, dt);
+      }
+    } else if (this.mode === "drive") {
+      this.stepDrive(dt, inp);
     } else {
       const free = this.mode === "play";
       const turbo = this.boosts.turbo > 0 ? 1.45 : 1;
@@ -1443,7 +1629,7 @@ export class StoryGame implements StageWorld {
     this.navs.step(dt);
     this.stepGuide(dt);
     // You and the story's walkers never stand inside each other.
-    if (this.mode === "play" && this.player.person.visible) {
+    if ((this.mode === "play" || this.mode === "combat") && this.player.person.visible) {
       const [px, pz] = this.navs.pushOut(this.player.x, this.player.z, 0.33);
       if (px !== this.player.x || pz !== this.player.z) {
         this.player.x = px;
@@ -1466,8 +1652,13 @@ export class StoryGame implements StageWorld {
   frame(dt: number, alpha: number, inp: InputState): void {
     if (!this.player) return;
     if (this.mode === "bike") this.renderBike(alpha);
-    else if (this.mode !== "cut" && this.mode !== "ride") this.player.render(alpha);
-    if (this.mode !== "cut") this.player.person.update(dt);
+    else if (this.mode === "drive") this.renderDrive(alpha);
+    else if (this.mode === "combat") {
+      // Combat: keep player facing the enemy, render the fighter.
+      this.player.person.update(dt);
+      this.combat?.render(dt);
+    } else if (this.mode !== "cut" && this.mode !== "ride") this.player.render(alpha);
+    else if (this.mode !== "cut") this.player.person.update(dt);
     this.d.doors?.update(dt);
     if (this.guideShow && this.guidePath.length > 1) this.guide.show(trailMarks(this.guidePath, [this.player.x, this.player.z], this.time), surfaceHeight, this.time);
     else this.guide.hide();
@@ -1526,10 +1717,19 @@ export class StoryGame implements StageWorld {
   }
 
   private hud(): void {
-    const playing = this.mode === "play" || this.mode === "bike";
+    const playing = this.mode === "play" || this.mode === "bike" || this.mode === "combat";
     const it = playing ? this.nearestInteraction() : null;
     this.ui.showPrompt(it ? it.label : null);
     this.ui.setStamina(this.stamina, this.boosts.zobo > 0);
+    // Enemy health bar during combat.
+    const cbt = this.combat;
+    if (this.mode === "combat" && cbt && cbt.playerId) {
+      const enemyId = [...cbt.fighters.keys()].find((k) => k !== cbt.playerId) ?? null;
+      const h = enemyId ? cbt.healthOf(enemyId) : null;
+      if (h !== null && enemyId) this.ui.setEnemyHealth(enemyId, h);
+    } else {
+      this.ui.setEnemyHealth(null, null);
+    }
     const list: { name: string; left: number }[] = [];
     if (this.boosts.turbo > 0) list.push({ name: "Turbo Sneakers", left: this.boosts.turbo });
     if (this.boosts.zobo > 0) list.push({ name: "Zobo Max", left: this.boosts.zobo });
