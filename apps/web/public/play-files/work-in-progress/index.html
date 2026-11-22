@@ -129,6 +129,12 @@
         console[k] = function () { try { window.__wipErrors.push(k + ": " + Array.prototype.join.call(arguments, " ").slice(0, 400)); } catch (e) {} return orig.apply(console, arguments); };
       });
       window.addEventListener("error", function (e) { window.__wipErrors.push("uncaught: " + e.message); });
+      // Force a hard refresh if the cached service worker is stale
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function (regs) {
+          regs.forEach(function (reg) { reg.unregister(); });
+        });
+      }
     </script>
     <script>
       // Register the PWA service worker so all 3D assets (GLB models,
