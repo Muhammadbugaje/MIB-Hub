@@ -36,7 +36,7 @@ export interface PlayerCtx {
   female: boolean;
   /** Colour name of the top, e.g. "blue" (for lines that react to the outfit). */
   topColour: string;
-  headwear: "none" | "hijab" | "cap";
+  headwear: "none" | "hijab" | "cap" | "earphones";
   headColour: string;
   roomie: string;
   specials: { jiya: boolean; taty: boolean; madison: boolean };

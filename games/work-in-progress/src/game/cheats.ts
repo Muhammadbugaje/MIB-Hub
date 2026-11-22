@@ -39,7 +39,7 @@ export class CheatManager {
     name: c.name,
     desc: c.desc,
     action: (sg) => {
-      const action = c.action as keyof StoryGame;
+      const action = c.action as string;
       // Map action names to story-game methods
       switch (action) {
         case "health_wealth": {
@@ -79,6 +79,7 @@ export class CheatManager {
         }
         case "god_mode": {
           this.godMode = !this.godMode;
+          sg.godMode = this.godMode;
           if (this.godMode) {
             sg.stamina = 1;
             sg.boosts.zobo = 99999;

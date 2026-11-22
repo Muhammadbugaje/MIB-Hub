@@ -126,7 +126,7 @@ function kindTopSpeed(kind: "car" | "okada" | "keke"): number {
 }
 
 export class StoryGame implements StageWorld {
-  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void; say(t: string): void; setActionHint(t: string | null): void; setEnemyHealth(name: string | null, health: number | null): void; setMode(t: string): void };
+  readonly ui: MissionUi & { letterbox(on: boolean): void; subtitle(w: string | null, t: string): void; fade(a: number): void; skipButton(on: boolean, f: () => void): void; say(t: string): void; setActionHint(t: string | null): void; setEnemyHealth(name: string | null, health: number | null): void; setPlayerHealth(name: string | null, health: number | null): void; setMode(t: string): void };
   readonly mini: Minigames;
   readonly voice: VoicePlayer;
   readonly sfxs = new Sfx();
@@ -143,7 +143,7 @@ export class StoryGame implements StageWorld {
   lightPreset = "day";
   mode: "menu" | "play" | "cut" | "bike" | "ride" | "mini" | "combat" | "drive" = "menu";
   director: Director | null = null;
-  private npcs = new Map<string, Person>();
+  readonly npcs = new Map<string, Person>();
   private extras: Person[] = [];
   private extrasUsed = 0;
   private waiters: Waiter[] = [];
@@ -191,6 +191,8 @@ export class StoryGame implements StageWorld {
   private shakeT = 0;
   /** Combat state (null when not in a fight). */
   combat: Combat | null = null;
+  /** Cheat: the player takes no damage. */
+  godMode = false;
   /** The door we're mid-transition through (null when not transitioning). */
   private transitionDoor: string | null = null;
   /** The target we're transitioning to. */
@@ -237,7 +239,7 @@ export class StoryGame implements StageWorld {
   private tmpV = new pc.Vec3();
   private cutCb: (() => void) | null = null;
 
-  constructor(private d: GameDeps) {
+  constructor(readonly d: GameDeps) {
     const ui = new MissionUi(d.hudRoot);
     this.ui = Object.assign(ui, {
       letterbox: (on: boolean) => d.letterbox(on),
@@ -247,6 +249,7 @@ export class StoryGame implements StageWorld {
       say: (t: string) => d.toast(t),
       setActionHint: (t: string | null) => d.hud.setActionHint(t),
       setEnemyHealth: (name: string | null, health: number | null) => d.hud.setEnemyHealth(name, health),
+      setPlayerHealth: (name: string | null, health: number | null) => d.hud.setPlayerHealth(name, health),
       setMode: (t: string) => d.hud.setMode(t),
     });
     this.mini = new Minigames(ui);
@@ -443,7 +446,7 @@ export class StoryGame implements StageWorld {
       await this.sleep(0.08);
     }
     // Wake up: teleport to the hospital garden or the gatehouse (police station).
-    const [wx, wz] = WAKE_POSITIONS[Math.floor(Math.random() * WAKE_POSITIONS.length)];
+    const [wx, wz] = WAKE_POSITIONS[Math.floor(Math.random() * WAKE_POSITIONS.length)]!;
     this.teleport({ pos: [wx, surfaceHeight(wx, wz), wz], where: "world" }, 0);
     // A short pause in the dark (dark music playing).
     await this.sleep(1.5);
@@ -1706,7 +1709,7 @@ export class StoryGame implements StageWorld {
       if (this.hungerTimer >= 5) {
         this.hungerTimer = 0;
         this.hunger = Math.max(0, this.hunger - 0.02);
-        if (this.hunger <= 0.1) {
+        if (this.hunger <= 0.1 && !this.godMode) {
           this.progress.stats.health = Math.max(0, this.progress.stats.health - 0.01);
           this.ui.setPlayerHealth("Health", this.progress.stats.health);
         }
@@ -1725,7 +1728,7 @@ export class StoryGame implements StageWorld {
     // Everyone the story walks: leaders, followers, the goat (navigation grid, avoidance, doors).
     const ob = this.navs.obstacles;
     ob.length = 0;
-    for (const c of this.hijack.colliders()) ob.push({ x: c.x, z: c.z, r: c.r });
+    for (const c of this.hijack.colliders()) ob.push({ x: c.x, z: c.z, r: "r" in c ? c.r : Math.max(c.hx, c.hz) });
     for (const c of this.crowdNear) ob.push(c);
     for (const p of this.npcs.values()) {
       if (!p.visible || this.navs.isMoving(this.bodyOf(p))) continue;
@@ -1766,7 +1769,6 @@ export class StoryGame implements StageWorld {
     else if (this.mode === "combat") {
       // Combat: keep player facing the enemy, render the fighter.
       this.player.person.update(dt);
-      this.combat?.render(dt);
     } else if (this.mode !== "cut" && this.mode !== "ride") this.player.render(alpha);
     else if (this.mode !== "cut") this.player.person.update(dt);
     this.d.doors?.update(dt);

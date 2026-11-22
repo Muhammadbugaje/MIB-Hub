@@ -77,6 +77,18 @@ export class Hud {
   private phoneHealthName: HTMLElement | null = null;
   private phoneTabs: HTMLElement | null = null;
   private phoneTabPanels: Record<string, HTMLElement> = {};
+  private phoneOpen = false;
+  private paused = false;
+  private phoneBtn: HTMLButtonElement | null = null;
+  private pauseBtn: HTMLButtonElement | null = null;
+  private mapBtn: HTMLButtonElement | null = null;
+  private playerHealth: HTMLElement | null = null;
+  private playerHealthBar: HTMLElement | null = null;
+  private playerHealthName: HTMLElement | null = null;
+  /** Called when the HUD pause button is tapped. */
+  onPauseToggle?: () => void;
+  /** Called when the HUD map button is tapped. */
+  onMapToggle?: () => void;
   private top = el("div", "wip-bar wip-bar--top");
   private bottom = el("div", "wip-bar wip-bar--bottom");
   private sub = el("div", "wip-sub");
@@ -170,26 +182,30 @@ export class Hud {
     this.phone.append(this.phoneTabs);
     this.showPhoneTab("missions");
 
-    this.phone.clicked = false;
     this.phone.addEventListener("click", (e) => {
       e.stopPropagation();
-      this.phone.clicked = !this.phone.clicked;
-      this.phone.classList.toggle("on", this.phone.clicked);
     });
+
+    // Phone toggle button (opens the in-game phone).
+    this.phoneBtn = el("button", "wip-phone-btn", "📱");
+    this.phoneBtn.type = "button";
+    this.phoneBtn.setAttribute("aria-label", "Open phone");
+    this.phoneBtn.onclick = () => this.togglePhone();
 
     // Pause button - opens pause menu
     this.pauseBtn = el("button", "wip-pause-btn", "⏸");
     this.pauseBtn.type = "button";
+    this.pauseBtn.setAttribute("aria-label", "Pause");
     this.pauseBtn.onclick = () => this.onPauseToggle?.();
-    this.root.insertBefore(this.pauseBtn, this.hud);
 
     // Map button - opens map view
     this.mapBtn = el("button", "wip-map-btn", "🗺");
     this.mapBtn.type = "button";
+    this.mapBtn.setAttribute("aria-label", "Map");
     this.mapBtn.onclick = () => this.onMapToggle?.();
-    this.root.insertBefore(this.mapBtn, this.hud);
 
     this.root.append(this.hud, this.top, this.bottom, this.sub, this.fader, this.skip, this.toast, this.loading);
+    this.root.append(this.pauseBtn, this.mapBtn, this.phoneBtn);
 
     // Player health bar (moved from center to top-left with proper label)
     this.playerHealth = el("div", "wip-player-health");
@@ -198,7 +214,7 @@ export class Hud {
     const playerHealthFill = el("div", "wip-player-health__fill");
     this.playerHealthBar.append(playerHealthFill);
     this.playerHealth.append(this.playerHealthName, this.playerHealthBar);
-    this.root.insertBefore(this.playerHealth, this.hud);
+    this.root.append(this.playerHealth);
     this.playerHealth.hidden = true;
   }
 
@@ -215,47 +231,52 @@ export class Hud {
 
   showHud(on: boolean): void {
     this.hud.hidden = !on;
-    this.playerHealth.hidden = !on;
+    if (this.playerHealth) this.playerHealth.hidden = !on;
   }
 
   toggleHud(): void {
     this.hud.hidden = !this.hud.hidden;
-    this.playerHealth.hidden = !this.playerHealth.hidden;
+    if (this.playerHealth) this.playerHealth.hidden = !this.playerHealth.hidden;
   }
 
-  /** Pause the game and show a pause overlay. Pauses time, ambient barks, and shows the pause menu. */
+  /** Pause the game and show a pause overlay. */
   pause(): void {
     this.root.classList.add("wip-paused");
-    const wasPlaying = playing;
-    playing = false;
-    hud.say("Game paused");
+    this.paused = true;
+    this.say("Game paused");
   }
 
   /** Resume the game from pause. */
   resume(): void {
     this.root.classList.remove("wip-paused");
-    playing = true;
-    hud.say("Game resumed");
+    this.paused = false;
+    this.say("Game resumed");
   }
 
   /** Toggle pause: if paused, resume; if running, pause. */
   togglePause(): void {
-    if (this.root.classList.contains("wip-paused")) {
-      this.resume();
-    } else {
-      this.pause();
-    }
+    if (this.paused) this.resume();
+    else this.pause();
   }
 
   /** Toggle map view: show a minimap of the campus. */
   toggleMap(): void {
-    this.root.classList.toggle("wip-map-open");
-    if (this.root.classList.contains("wip-map-open")) {
+    const open = this.root.classList.toggle("wip-map-open");
+    const overlay = this.root.querySelector(".wip-map-overlay");
+    overlay?.classList.toggle("on", open);
+    if (open) {
       this.say("Map opened");
       this.renderMap();
+      overlay?.classList.add("on");
     } else {
       this.say("Map closed");
     }
+  }
+
+  /** Open or close the in-game phone. */
+  togglePhone(): void {
+    this.phoneOpen = !this.phoneOpen;
+    this.phone?.classList.toggle("on", this.phoneOpen);
   }
 
   /** Render a simple minimap of the campus in the top-right corner. */

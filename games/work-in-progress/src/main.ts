@@ -68,6 +68,7 @@ const num = (k: string, d: number) => (params.has(k) && Number.isFinite(Number(p
 const SHOT = params.get("shot") === "1";
 const DEBUG = params.get("debug") === "1";
 const phone = matchMedia("(pointer: coarse)").matches || Math.min(screen.width, screen.height) < 600;
+document.body.classList.toggle("wip-touch", phone);
 const settings: MenuSettings = loadSettings();
 const qWant = params.get("quality") ?? settings.quality;
 const LOW = qWant === "low" || (qWant === "auto" && phone);
@@ -88,23 +89,16 @@ async function boot(): Promise<void> {
   host.append(canvas);
   const hud = new Hud(host);
   hud.onPauseToggle = () => {
-    if (g.mode !== "menu" && g.mode !== "cut") {
-      if (menu) {
-        menu.showScreen("pause");
-      } else {
-        const speeds = [1, 20, 0];
-        let speedIdx = params.has("speed") ? Math.max(0, speeds.indexOf(num("speed", 1))) : 0;
-        if (params.has("speed") && speeds.indexOf(num("speed", 1)) < 0) speeds[0] = num("speed", 1);
-        speedIdx = (speedIdx + 1) % speeds.length;
-        g.hours = (g.hours + (dt * speeds[speedIdx]!) / 60) % 24;
-        hud.say(speeds[speedIdx] === 0 ? "Time paused" : speeds[speedIdx]! > 1 ? `Time ×${speeds[speedIdx]}` : "Time: normal");
-      }
+    if (g.mode === "menu" || g.mode === "cut") return;
+    if (menu) {
+      menu.showScreen("pause");
+      return;
     }
+    paused = !paused;
+    if (paused) hud.pause();
+    else hud.resume();
   };
-  hud.onMapToggle = () => {
-    // Map toggle - could show/hide minimap
-    hud.say("Map toggle");
-  };
+  hud.onMapToggle = () => hud.toggleMap();
 
   const app = new pc.Application(canvas, {
     graphicsDeviceOptions: { antialias: !LOW, alpha: false, preserveDrawingBuffer: SHOT, powerPreference: "high-performance" },
@@ -257,9 +251,11 @@ async function boot(): Promise<void> {
   const obstacles: Obstacle[] = [];
   let lightTimer = 0;
   let fpsT = 0, fpsN = 0;
+  let pixelScale = 1;
   let lastEnv = -1;
   let barkTimer = 8;
   let playing = false;
+  let paused = false;
 
   const specialsFromUrl = () => {
     const s = (params.get("specials") ?? "").split(",");
@@ -452,10 +448,16 @@ async function boot(): Promise<void> {
   app.on("update", (rawDt: number) => {
     const dt = Math.min(rawDt, 0.1);
     const inp = input.read();
+    if (paused) {
+      // Freeze movement and actions, but keep rendering the last frame.
+      inp.moveX = inp.moveY = 0;
+      inp.run = inp.walk = inp.punch = inp.kick = inp.block = inp.jumpHeld = inp.handbrake = false;
+      inp.pressed.clear();
+    }
     onKeys(inp.pressed);
-    acc += dt;
+    if (!paused) acc += dt;
     let steps = 0;
-    while (acc >= STEP && steps < 6) {
+    while (!paused && acc >= STEP && steps < 6) {
       simStep(inp);
       acc -= STEP;
       steps++;
@@ -467,48 +469,33 @@ async function boot(): Promise<void> {
     grass.update(camPos.x, camPos.z);
     facade.update(camPos.x, camPos.z);
     treeCards.update(camPos.x, camPos.z);
-    if (playing) g.frame(dt, alpha, inp);
-    else if (menu) menu.update(dt);
-    else showcase.update(dt);
-    environment(dt);
+    if (playing && !paused) g.frame(dt, alpha, inp);
+    else if (!playing && menu) menu.update(dt);
+    else if (!playing && !paused) showcase.update(dt);
+    environment(paused ? 0 : dt);
     traffic.render(alpha, skyAt(g.hours).night, camPos.x, camPos.z);
     const out = !g.isInside;
     birds.update(simTime);
-    if (out) leaves.update(dt, simTime, camPos.x, camPos.z);
-    doors.update(dt);
-    smoke.update(dt, cam);
-    ambientBarks(dt);
+    if (out) leaves.update(paused ? 0 : dt, simTime, camPos.x, camPos.z);
+    doors.update(paused ? 0 : dt);
+    smoke.update(paused ? 0 : dt, cam);
+    ambientBarks(paused ? 0 : dt);
     // Characters: every person's animation, after everything above has placed them (src/anim, crowd LOD).
-    tickPeople(app, dt, cam);
+    tickPeople(app, paused ? 0 : dt, cam);
     fpsT += rawDt;
     fpsN++;
-    // Dynamic quality scaling to hold 40-50 FPS outdoors (draw-call bound).
-    const targetFPS = 45;
-    const actualFPS = fpsT > 0 ? fpsN / fpsT : 60;
-    const fpsDiff = actualFPS - targetFPS;
-    // If FPS is significantly below target, immediately drop to low quality
-    if (actualFPS < targetFPS - 10) {
-      const quality = params.get("quality");
-      if (quality !== "low") {
-        params.set("quality", "low");
-        Q.npcs = Math.min(8, settings.npcs); Q.shadowRes = 256; Q.cascades = 0; Q.shadowDist = 25;
-        Q.cars = 3; Q.okadas = 2; Q.kekes = 1; Q.birds = 6; Q.leaves = 10; Q.lights = 1;
-      }
-    } else if (Math.abs(fpsDiff) > 5) {
-      if (actualFPS < targetFPS - 5 && quality !== "low") {
-        params.set("quality", "low");
-        Q.npcs = Math.min(8, settings.npcs); Q.shadowRes = 256; Q.cascades = 0; Q.shadowDist = 25;
-        Q.cars = 3; Q.okadas = 2; Q.kekes = 1; Q.birds = 6; Q.leaves = 10; Q.lights = 1;
-      } else if (actualFPS > targetFPS + 5 && quality !== "medium") {
-        params.set("quality", "medium");
-        Q.npcs = Math.min(40, settings.npcs); Q.shadowRes = 1024; Q.cascades = 1; Q.shadowDist = 60;
-        Q.cars = 12; Q.okadas = 6; Q.kekes = 4; Q.birds = 24; Q.leaves = 48; Q.lights = 4;
-      }
-    }
+    // Adaptive resolution: keep 45-60 fps by scaling the render resolution, not the scene.
     if (fpsT > 1) {
-      // Optimization hint: if draws are still high on low quality, reduce NPC count.
-      const drawHint = app.stats.drawCalls.total > 200 && Q.npcs < 40 ? "• consider reducing NPC count" : "";
-      hud.setStats(`${Math.round(fpsN / fpsT)} fps · ${app.stats.drawCalls.total} draws ${drawHint}`);
+      const fps = fpsN / fpsT;
+      if (fps < 45 && pixelScale > 0.55) {
+        pixelScale = Math.max(0.55, pixelScale - 0.15);
+        app.graphicsDevice.maxPixelRatio = Q.pixelRatio * pixelScale;
+      } else if (fps > 58 && pixelScale < 1) {
+        pixelScale = Math.min(1, pixelScale + 0.1);
+        app.graphicsDevice.maxPixelRatio = Q.pixelRatio * pixelScale;
+      }
+      const draws = app.stats.drawCalls.total;
+      hud.setStats(`${Math.round(fps)} fps · ${draws} draws · ${Math.round(pixelScale * 100)}%`);
       fpsT = fpsN = 0;
     }
   });

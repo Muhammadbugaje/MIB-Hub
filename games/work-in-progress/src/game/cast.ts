@@ -1,3 +1,43 @@
+/**
+ * The cast of Missions 1 to 10: how each named character looks.
+ *
+ * Every character is built from one of the six base models (jiya, taty,
+ * zainab, muhammad, the_maker, bature) with their own skin tone, outfit
+ * colours and accessories. Heights stay within ±6% (plan rule C6).
+ *
+ * Dr. Zainab is very fair ("Snow White" to her friends) and her tone is
+ * locked: a test checks it.
+ */
+import type { Look } from "../world/people.ts";
+
+export interface CastMember {
+  /** Display name (subtitles use the voice profile's name). */
+  name: string;
+  look: Look;
+  /** Height multiplier within ±6% (plan rule C6). */
+  height?: number;
+  /** Extra width for the one genuinely huge man (Big Sly), applied to x and z only. */
+  width?: number;
+  /** Things they carry or wear that the base mesh lacks (drawn as small props). */
+  extras?: ("folder" | "glasses" | "sunglasses" | "pens" | "camera" | "phone" | "volleyball" | "ledger" | "torch" | "bumbag" | "whistle" | "apron" | "labcoat" | "stethoscope" | "spanner" | "notebook" | "jersey10" | "bag")[];
+}
+
+const L = (model: string, skin: string, hair: string, outfit: string[], headwear: Look["headwear"] = "none", headwearColor = "#ffffff"): Look => ({ model, skin, hair, outfit, headwear, headwearColor });
+
+/** Skin tones used for the authored cast. */
+export const CAST_SKIN = {
+  veryFair: "#f1d6c2",
+  fair: "#e2b892",
+  light: "#d9a77c",
+  honey: "#c68a5e",
+  caramel: "#b5794f",
+  medium: "#a06a46",
+  tan: "#8d5b3c",
+  deep: "#7a4e34",
+};
+const S = CAST_SKIN;
+const BLACK_HAIR = "#141010", BROWN_HAIR = "#2a1d16", GREY_HAIR = "#8f8a84", RED_HAIR = "#5d2e1c", BLOND_HAIR = "#d4a056";
+
 /** Outfit variants per character: each variant is a different look the player can choose. */
 export const OUTFIT_VARIANTS: Record<string, Look[]> = {
   "npc.roomie.m": [

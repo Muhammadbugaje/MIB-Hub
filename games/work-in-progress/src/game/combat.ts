@@ -398,6 +398,13 @@ export class Combat {
 
   /** Apply damage to a fighter. Returns true if they are KO'd. */
   private applyDamage(f: Combatant, damage: number, kind: "light" | "heavy"): boolean {
+    // God mode (cheat): the player shrugs off every hit.
+    if (f.isPlayer && this.sg.godMode) {
+      f.mode = "hit";
+      f.t = 0.2;
+      f.person.act("hit");
+      return false;
+    }
     // Special characters never take real damage in scripted fights.
     const special = ["special.jiya", "special.taty", "special.madison", "special.zainab"];
     if (special.includes(f.castId)) {

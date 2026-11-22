@@ -145,18 +145,16 @@ export class Input {
   showStickUI(on: boolean): void {
     this.showStick = on;
     if (this.stickEl) {
-      this.stickEl.style.opacity = "1";
-      this.stickEl.classList.add("on");
-      this.stickEl.classList.add("active");
+      this.stickEl.style.opacity = on ? "1" : "0";
+      this.stickEl.classList.toggle("on", on);
     }
   }
 
   showRunUI(on: boolean): void {
     this.showRun = on;
     if (this.runEl) {
-      this.runEl.style.opacity = "1";
-      this.runEl.classList.add("on");
-      this.runEl.classList.add("active");
+      this.runEl.style.opacity = on ? "1" : "0";
+      this.runEl.classList.toggle("on", on);
     }
   }
 
@@ -187,6 +185,7 @@ export class Input {
           this.stickEl.style.left = `${t.clientX - 60}px`;
           this.stickEl.style.top = `${t.clientY - 60}px`;
           this.stickEl.classList.add("on");
+          this.stickEl.classList.add("active");
         }
       } else if (t.clientX >= window.innerWidth * 0.50 && this.lookTouch.id < 0) {
         this.lookTouch = { id: t.identifier, x: t.clientX, y: t.clientY };
@@ -221,6 +220,7 @@ export class Input {
       if (t.identifier === this.stick.id) {
         this.stick.id = -1;
         this.stickEl?.classList.remove("on");
+        this.stickEl?.classList.remove("active");
         if (this.knobEl) this.knobEl.style.transform = "";
       }
       if (t.identifier === this.lookTouch.id) this.lookTouch.id = -1;
@@ -250,13 +250,6 @@ export class Input {
     let mx = 0, my = 0;
     const k = this.keys;
     if (k.has("a") || k.has("arrowleft")) mx -= 1;
-    const p = k.has("f") || this.keys.has("f");
-    const ki = k.has("g") || this.keys.has("g");
-    const b = k.has("b") || this.keys.has("b");
-    const hb = k.has(" ");
-    if (p !== this.keys.has("f")) this.pressedQ.add("punch");
-    if (ki !== this.keys.has("g")) this.pressedQ.add("kick");
-    if (b !== this.keys.has("b")) this.pressedQ.add("block");
     if (k.has("d") || k.has("arrowright")) mx += 1;
     if (k.has("w") || k.has("arrowup")) my += 1;
     if (k.has("s") || k.has("arrowdown")) my -= 1;
@@ -276,9 +269,9 @@ export class Input {
       walk: k.has("alt"),
       jumpHeld: k.has(" "),
       handbrake: k.has(" "),
-      punch: this.pressedQ.has("punch"),
-      kick: this.pressedQ.has("kick"),
-      block: this.pressedQ.has("block"),
+      punch: this.pressedQ.has("f") || this.pressedQ.has("punch"),
+      kick: this.pressedQ.has("g") || this.pressedQ.has("kick"),
+      block: this.pressedQ.has("b") || this.pressedQ.has("block"),
       lookDX: this.lookX, lookDY: this.lookY, zoom: this.wheel,
       pressed: new Set(this.pressedQ),
     };

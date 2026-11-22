@@ -29,6 +29,7 @@
       @font-face { font-family: "Bricolage Display"; src: url("./fonts/bricolage-800-latin.woff2") format("woff2"); font-weight: 800; font-display: swap; }
       .wip-title { font-family: "Bricolage Display", system-ui, sans-serif; }
       .wip-hud[hidden], .wip-sub[hidden], .wip-skip[hidden] { display: none !important; }
+      [hidden] { display: none !important; }
       .wip-brand { position: absolute; left: 16px; top: 14px; display: flex; gap: 8px; align-items: center; padding: 7px 12px; border-radius: 12px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-weight: 800; letter-spacing: 0.01em; }
       .wip-badge { font-size: 11px; font-weight: 700; padding: 2px 7px; border-radius: 99px; background: var(--accent); color: #1b1408; text-transform: uppercase; letter-spacing: 0.06em; }
       .wip-clock { position: absolute; right: 16px; top: 14px; padding: 7px 12px; border-radius: 12px; background: var(--glass); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-weight: 800; font-variant-numeric: tabular-nums; font-size: 18px; }
@@ -59,6 +60,10 @@
       .wip-play { margin-top: 16px; width: 100%; padding: 14px; border: 0; border-radius: 14px; background: linear-gradient(100deg, var(--accent), var(--accent-2)); color: #1b1408; font: inherit; font-size: 18px; font-weight: 900; cursor: pointer; }
       .wip-small { margin: 10px 0 0; font-size: 12px; color: var(--ink-2); text-align: center; }
       .wip-stick { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: rgba(255, 255, 255, 0.15); border: 2px solid rgba(255, 255, 255, 0.3); opacity: 1; transition: opacity 0.15s; left: 30px; bottom: 30px; pointer-events: auto; touch-action: none; }
+      /* Touch controls only appear on touch devices (body.wip-touch). */
+      .wip-stick, .wip-run, .wip-punch, .wip-kick, .wip-block, .wip-phone-btn { display: none; }
+      body.wip-touch .wip-stick, body.wip-touch .wip-run, body.wip-touch .wip-punch,
+      body.wip-touch .wip-kick, body.wip-touch .wip-block, body.wip-touch .wip-phone-btn { display: block; }
       .wip-stick.on { opacity: 1; }
       .wip-stick.active { box-shadow: 0 0 12px rgba(255, 107, 107, 0.5); }
       .wip-run.on { background: var(--accent); color: #1b1408; }
@@ -128,12 +133,6 @@
         console[k] = function () { try { window.__wipErrors.push(k + ": " + Array.prototype.join.call(arguments, " ").slice(0, 400)); } catch (e) {} return orig.apply(console, arguments); };
       });
       window.addEventListener("error", function (e) { window.__wipErrors.push("uncaught: " + e.message); });
-      // Force a hard refresh if the cached service worker is stale
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.getRegistrations().then(function (regs) {
-          regs.forEach(function (reg) { reg.unregister(); });
-        });
-      }
     </script>
     <script type="module" src="./src/main.ts"></script>
     <script>
@@ -141,7 +140,7 @@
       // animations, fonts) download once to the phone and load instantly
       // on repeat visits, even with slow or no network.
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js").then(
+        navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).then(
           (reg) => console.log("SW registered:", reg.scope),
           (err) => console.log("SW register failed:", err),
         );

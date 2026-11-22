@@ -102,13 +102,13 @@ export class VehicleHijack {
     this.sg.ui.setMode(s.kind.toUpperCase());
     this.sg.ui.say(`Hijacked ${s.kind}. Press E to get out.`);
 
-    // Play entry animation: sit into the vehicle
+    // Play entry animation: sit into the vehicle, then settle into the ride idle.
     const person = this.sg.player.person;
     const animName = s.kind === "car" ? "car_enter" : s.kind === "okada" ? "okada_enter" : "keke_enter";
-    void person.play(animName, { hold: true, blend: 0.15, noRoot: true }).then(() => {
-      // Once seated, play the ride idle
-      void person.play(s.kind === "car" ? "car_passenger_idle" : s.kind === "okada" ? "okada_ride" : "keke_drive", { hold: true, blend: 0.15, noRoot: true });
-    });
+    person.play(animName, { hold: true, blend: 0.15, noRoot: true });
+    window.setTimeout(() => {
+      person.play(s.kind === "car" ? "car_passenger_idle" : s.kind === "okada" ? "okada_ride" : "keke_drive", { hold: true, blend: 0.15, noRoot: true });
+    }, 600);
 
     this.sg.sfxs.play("door");
     return `Hijacked ${s.kind}.`;
@@ -120,11 +120,10 @@ export class VehicleHijack {
     const a = this.active;
     const person = this.sg.player.person;
 
-    // Play exit animation
+    // Play exit animation, then stand up.
     const animName = a.kind === "car" ? "car_exit" : a.kind === "okada" ? "okada_exit" : "keke_exit";
-    void person.play(animName, { blend: 0.15, noRoot: true }).then(() => {
-      void person.play("stand_up", { blend: 0.2, noRoot: true });
-    });
+    person.play(animName, { blend: 0.15, noRoot: true });
+    window.setTimeout(() => person.play("stand_up", { blend: 0.2, noRoot: true }), 450);
 
     this.sg.player.person.visible = true;
     this.sg.player.x = a.x + Math.sin(a.yaw) * 1.6;
@@ -176,7 +175,7 @@ export class VehicleHijack {
 
     let nx = a.x + Math.sin(a.yaw) * a.speed * dt;
     let nz = a.z + Math.cos(a.yaw) * a.speed * dt;
-    [nx, nz] = this.sg.col.resolve(nx, nz, a.kind === "car" ? 1.1 : 0.6);
+    [nx, nz] = this.sg.d.col.resolve(nx, nz, a.kind === "car" ? 1.1 : 0.6);
     const moved = Math.hypot(nx - a.x, nz - a.z);
     if (moved < a.speed * dt * 0.4) a.speed *= 0.5;
     a.x = nx;
