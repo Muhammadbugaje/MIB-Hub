@@ -197,7 +197,7 @@ function buildPlan(): Building[] {
   add({ style: "pyramid", x: 86, z: -146, rot: FACE_S, w: 24, d: 24, floors: 2, tone: 0, sign: "Glass Pyramid Study Centre" });
 
   // NEW: Additional campus buildings for richer environment
-  add({ style: "deco", x: -34, z: -68, rot: FACE_S, w: 28, d: 14, floors: 2, tone: 9, sign: "Department of Computer Science" });
+  add({ style: "deco", x: 140, z: -74, rot: FACE_S, w: 20, d: 12, floors: 2, tone: 9, sign: "Department of Computer Science" });
   add({ style: "sahel", x: -140, z: -210, rot: FACE_E, w: 32, d: 16, floors: 2, tone: 2, sign: "Sports Complex & Gym" });
   add({ style: "arcade", x: 140, z: -200, rot: FACE_W, w: 30, d: 14, floors: 2, tone: 1, sign: "Cafeteria & Dining Hall" });
   add({ style: "deco", x: -26, z: -128, rot: FACE_E, w: 22, d: 12, floors: 2, tone: 10, sign: "Art Gallery" });
@@ -278,14 +278,17 @@ export const walkLines: P2[][] = [
   [[-5.4, -70], [-24, -84]], [[5.4, -70], [21, -84]],
   [[-5.4, -100], [-60, -122], [-100, -122], [-100, -160]], [[-60, -122], [-100, -92]],
   [[5.4, -100], [60, -122], [107, -122], [107, -160], [107, -222]], [[60, -122], [92, -84]],
-  [[-15.5, CLOCK.z], [-27, -152]], [[15.5, CLOCK.z], [27, -152]],
+  [[-15.5, CLOCK.z], [-15.5, -142], [-27, -152]], [[15.5, CLOCK.z], [15.5, -142], [27, -152]],
   [[-27, -200], [-42, -212], [-42, -252], [-50, -261]], [[27, -200], [42, -212], [42, -252], [52, -262]], [[-42, -252], [42, -252]],
   [[107, -122], [128, -112], [134, -100]], [[-100, -160], [-100, -188], [-118, -188]],
   // Story paths: round the theatre lawn, to the Engineering Garden, the court and the hospital garden.
   [[-100, -171], [-93, -171], [-82, -171], [-71, -171], [-64, -171]], [[-82, -160], [-82, -171]], [[-82, -171], [-82, -182]],
   [[-100, -188], [-100, -212], [-78, -214], [-60, -214], [-42, -212]],
-  [[-100, -92], [-96, -74], [-82, -66], [-60, -52], [-26, -62.5], [-12.5, -59], [-12.5, -47], [-SW, GATE_Z]],
+  [[-100, -92], [-96, -74], [-82, -66], [-60, -52], [-30, -56], [-14, -56], [-12.5, -47], [-SW, GATE_Z]],
   [[92, -84], [96, -96], [98, -104]],
+  // East campus path to the new shop gate and connecting to the Ring Road sidewalk
+  [[92, -84], [80, -60], [80, GATE_Z]],
+  [[80, GATE_Z], [80, -SW]],
   // Avenue south sidewalks and Market Street.
   [[-SW, 18.1], [-SW, MARKET_Z - SW]], [[SW, 18.1], [SW, MARKET_Z - SW]],
   [[-SW, MARKET_Z + SW], [-SW, 160]], [[SW, MARKET_Z + SW], [SW, 160]],
@@ -440,14 +443,15 @@ function plantTrees(): TreeSpot[] {
   const rng = makeRng(77);
   const out: TreeSpot[] = [];
   const add = (kind: TreeKind, x: number, z: number, scale = rng.range(0.85, 1.2)) => {
-    if (kind !== "far" && (nearRoad(x, z, 4.2) || insideBuilding(x, z, 1.2) || inLake(x, z, 3) || inStadium(x, z, 2) || inPitch(x, z))) return;
+    if (kind !== "far" && (nearRoad(x, z, 4.2) || insideBuilding(x, z, 1.2) || inLake(x, z, 3) || inStadium(x, z, 3) || inPitch(x, z, 3) || nearTeslaCoil(x, z, 4))) return;
     if (inReserved(x, z, kind === "far" ? 6 : 1)) return;
     out.push({ kind, x, z, scale, rot: rng.range(0, 2 * PI) });
   };
 
-  function inPitch(x: number, z: number): boolean {
-    return Math.abs(x - PITCH.x) < PITCH.hx && Math.abs(z - PITCH.z) < PITCH.hz;
+  function inPitch(x: number, z: number, margin = 2): boolean {
+    return Math.abs(x - PITCH.x) < PITCH.hx + margin && Math.abs(z - PITCH.z) < PITCH.hz + margin;
   }
+
   // Neem along the campus verge of the Ring Road.
   for (let x = -196; x <= 196; x += 13) if (Math.abs(x) > 26) add("neem", x + rng.range(-1.5, 1.5), -13.5 + rng.range(-1, 1));
   // A second, looser row behind it.
@@ -508,12 +512,18 @@ function plantTrees(): TreeSpot[] {
 
 export const trees: TreeSpot[] = plantTrees();
 
+/** True within `margin` metres of the fenced Engineering Garden (the Tesla coil). */
+export function nearTeslaCoil(x: number, z: number, margin = 0): boolean {
+  const G = PLACES.engGarden;
+  return Math.abs(x - G.x) < G.hx + margin && Math.abs(z - G.z) < G.hz + margin;
+}
+
 /** Bushes and hedges (small instanced shrubs). */
 export const bushes: { x: number; z: number; s: number }[] = (() => {
   const rng = makeRng(9);
   const out: { x: number; z: number; s: number }[] = [];
-  // Hedges along the campus fence (inside).
-  for (let x = -195; x < 195; x += 1.6) if (Math.abs(x) > 16) out.push({ x, z: GATE_Z - 2.2, s: rng.range(0.8, 1.1) });
+  // Hedges along the campus fence (inside), with gaps at main gate (|x| <= 16) and east shop gate (76..84).
+  for (let x = -195; x < 195; x += 1.6) if (Math.abs(x) > 16 && !(x > 76 && x < 84)) out.push({ x, z: GATE_Z - 2.2, s: rng.range(0.8, 1.1) });
   // Clumps on lawns and verges.
   for (let i = 0; i < 160; i++) {
     const x = rng.range(-180, 180), z = rng.range(-240, -50);

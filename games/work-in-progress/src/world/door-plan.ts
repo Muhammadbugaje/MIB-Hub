@@ -17,7 +17,7 @@
  */
 import { buildingHeight } from "./buildings.ts";
 import { INTERIORS, type InteriorPlan, toWorld } from "./interior-plan.ts";
-import { type Building, buildings, THEATRES } from "./layout.ts";
+import { type Building, buildings, THEATRES, GATE_Z } from "./layout.ts";
 
 export interface DoorSpec {
   id: string;

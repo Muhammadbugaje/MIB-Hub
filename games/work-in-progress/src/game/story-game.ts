@@ -52,7 +52,9 @@ import type { NavPoint, PathSearch } from "../sim/nav.ts";
 import type { NavGrid } from "../sim/nav.ts";
 import type { Doors } from "../world/door-models.ts";
 import { placeOf } from "./nav-routes.ts";
-import { Combat } from "./combat.ts";
+import { Combat, KO_FINE, WAKE_POSITIONS } from "./combat.ts";
+import { CheatManager } from "./cheats.ts";
+import { VehicleHijack } from "./vehicle-hijack.ts";
 
 export class Abort extends Error {
   constructor() {
@@ -217,6 +219,10 @@ export class StoryGame implements StageWorld {
   boosts: { turbo: number; zobo: number; kola: number } = { turbo: 0, zobo: 0, kola: 0 };
   stamina = 1;
   carrying = false;
+  /** Cheat code input buffer manager (typed during gameplay). */
+  cheats = new CheatManager();
+  /** Vehicle hijack (press E near parked car/okada/keke). */
+  hijack!: VehicleHijack;
   // Bike state.
   private bikeS = { x: 0, z: 0, yaw: 0, speed: 0, lean: 0, dist: 0, prevX: 0, prevZ: 0, prevYaw: 0 };
   private goatInBasket = false;
@@ -254,6 +260,7 @@ export class StoryGame implements StageWorld {
       doorPass: (link, phase) => this.d.doors?.open(phase === "out" ? link.doorA.id : link.doorB.id, 1.0),
     });
     this.combat = new Combat(this);
+    this.hijack = new VehicleHijack(this, this.d.carEntity);
   }
 
   /** True when nobody could see a body at (x, z): another place, off camera or far away. */
@@ -408,6 +415,52 @@ export class StoryGame implements StageWorld {
     this.mode = "play";
     this.ui.setMode("");
     this.ui.setActionHint(null);
+  }
+
+  /** Player knocked out: fade to black, play dark music, deduct a fine, wake up at the hospital or police station. */
+  async speakKO(): Promise<void> {
+    // Stop fighting, lock input while the blackout plays.
+    this.mode = "combat";
+    this.player.frozen = true;
+    this.combat?.end();
+    // Deduct the fine if the player can afford it.
+    let finePaid = 0;
+    if (this.progress && this.progress.money >= KO_FINE) {
+      this.progress.money -= KO_FINE;
+      finePaid = KO_FINE;
+    }
+    this.ui.setMode("WASTED");
+    this.sfxs.play("ko");
+    this.sfxs.music("dark_quiet");
+    // Fade fully to black.
+    for (let i = 1; i <= 10; i++) {
+      this.ui.fade(i / 10);
+      await this.sleep(0.08);
+    }
+    // Wake up: teleport to the hospital garden or the gatehouse (police station).
+    const [wx, wz] = WAKE_POSITIONS[Math.floor(Math.random() * WAKE_POSITIONS.length)];
+    this.teleport({ pos: [wx, surfaceHeight(wx, wz), wz], where: "world" }, 0);
+    // A short pause in the dark (dark music playing).
+    await this.sleep(1.5);
+    // Fade back in.
+    for (let i = 9; i >= 0; i--) {
+      this.ui.fade(i / 10);
+      await this.sleep(0.06);
+    }
+    this.ui.fade(0);
+    this.player.frozen = false;
+    this.mode = "play";
+    this.ui.setMode("");
+    this.ui.setActionHint(null);
+    this.sfxs.music(null);
+    // Tell the player what happened.
+    const where = wx === 95 ? "the Teaching Hospital" : "the police station";
+    this.ui.say(`You were treated at ${where}. Fine paid: ₦${finePaid}.`);
+    // Restore full health.
+    if (this.combat) {
+      const f = this.combat.fighters.get("player");
+      if (f) f.health = 1;
+    }
   }
 
   /** Start (or restart) the story for this look and name. */
@@ -1587,7 +1640,11 @@ export class StoryGame implements StageWorld {
         this.follow.yaw = dampAngle(this.follow.yaw, camYaw, 3, dt);
       }
     } else if (this.mode === "drive") {
-      this.stepDrive(dt, inp);
+      if (this.hijack.active) {
+        this.hijack.step(dt, inp.moveX, inp.moveY);
+      } else {
+        this.stepDrive(dt, inp);
+      }
     } else {
       const free = this.mode === "play";
       const turbo = this.boosts.turbo > 0 ? 1.45 : 1;
@@ -1616,6 +1673,7 @@ export class StoryGame implements StageWorld {
     // Everyone the story walks: leaders, followers, the goat (navigation grid, avoidance, doors).
     const ob = this.navs.obstacles;
     ob.length = 0;
+    for (const c of this.hijack.colliders()) ob.push({ x: c.x, z: c.z, r: c.r });
     for (const c of this.crowdNear) ob.push(c);
     for (const p of this.npcs.values()) {
       if (!p.visible || this.navs.isMoving(this.bodyOf(p))) continue;
@@ -1696,7 +1754,16 @@ export class StoryGame implements StageWorld {
     }
     this.mini.update(dt, { pressed: inp.pressed, moveX: inp.moveX, moveY: inp.moveY, lookDX: inp.lookDX, lookDY: inp.lookDY });
     if (this.ui.choosing) for (const k of inp.pressed) this.ui.key(k);
-    if (inp.pressed.has("e") && this.mode === "play") this.useNearest();
+    if (inp.pressed.has("e") && this.mode === "play") {
+      if (this.hijack.active) this.hijack.exit();
+      else {
+        const msg = this.hijack.enter(this.player.x, this.player.z);
+        if (msg.startsWith("Hijacked")) this.ui.say(msg);
+        else this.useNearest();
+      }
+    }
+    // Cheat code keystroke buffer during gameplay.
+    if (this.mode === "play") for (const k of inp.pressed) this.cheats.feed(k, this);
     this.hud();
     this.effects(dt);
   }

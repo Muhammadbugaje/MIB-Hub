@@ -52,7 +52,7 @@ import { buildBuilding } from "./world/buildings.ts";
 import { buildCampus } from "./world/campus.ts";
 import { Crowd } from "./world/crowd-view.ts";
 import { buildInteriors, INTERIOR_SIGNS } from "./world/interiors.ts";
-import { GENERATORS, PLACES, SHOP_NAMES, SUYA, VIEWPOINTS, buildings, walkLines } from "./world/layout.ts";
+import { GENERATORS, PITCH, PLACES, SHOP_NAMES, SUYA, VIEWPOINTS, buildings, walkLines } from "./world/layout.ts";
 import { buildNature } from "./world/nature.ts";
 import { ANIM, ANIM_STATS, type Look, Person, loadPeople, tickPeople } from "./world/people.ts";
 import { buildProps, type LightSpot } from "./world/props.ts";
@@ -72,8 +72,8 @@ const qWant = params.get("quality") ?? settings.quality;
 const LOW = qWant === "low" || (qWant === "auto" && phone);
 
 const Q = LOW
-  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 256, cascades: 0, shadowDist: 25, npcs: 12, cars: 4, okadas: 3, kekes: 2, birds: 8, leaves: 15, lights: 1, lodDist: 30 }
-  : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 1024, cascades: 1, shadowDist: 60, npcs: 50, cars: 16, okadas: 8, kekes: 5, birds: 30, leaves: 60, lights: 5, lodDist: 80 };
+  ? { pixelRatio: Math.min(window.devicePixelRatio, 1.5), shadowRes: 256, cascades: 0, shadowDist: 25, npcs: Math.min(12, settings.npcs), cars: 3, okadas: 2, kekes: 1, birds: 6, leaves: 10, lights: 1, lodDist: 30, npcVis: 140, carVis: 90 }
+  : { pixelRatio: Math.min(window.devicePixelRatio, qWant === "medium" ? 1.5 : 2), shadowRes: 1024, cascades: 1, shadowDist: 60, npcs: settings.npcs, cars: 12, okadas: 6, kekes: 4, birds: 24, leaves: 48, lights: 4, lodDist: settings.drawDistance === "far" ? 80 : settings.drawDistance === "medium" ? 50 : 30, npcVis: settings.drawDistance === "far" ? 210 : settings.drawDistance === "medium" ? 150 : 100, carVis: settings.drawDistance === "far" ? 140 : settings.drawDistance === "medium" ? 100 : 60 };
 if (params.has("npcs")) Q.npcs = num("npcs", Q.npcs);
 
 const STEP = 1 / 60;
@@ -100,7 +100,7 @@ async function boot(): Promise<void> {
   app.scene.fog.start = 70;
   app.scene.fog.end = 420;
   app.scene.exposure = 1;
-  app.scene.lighting.shadowsEnabled = true;
+  app.scene.lighting.shadowsEnabled = settings.shadows;
   app.scene.lighting.cookiesEnabled = false;
 
   const cam = new pc.Entity("camera");
@@ -162,7 +162,7 @@ async function boot(): Promise<void> {
   const [people, cars] = await Promise.all([loadPeople(app, BASE, (f) => hud.progress(0.55 + f * 0.3, "Waking everybody up…")), loadCars(app, BASE)]);
   hud.progress(0.88, "Starting the traffic…");
   const rng = makeRng(2026);
-  const traffic = new Traffic(app, mats, cars, people, rng, { car: Q.cars, okada: Q.okadas, keke: Q.kekes });
+  const traffic = new Traffic(app, mats, cars, people, rng, { car: Q.cars, okada: Q.okadas, keke: Q.kekes }, Q.carVis);
   const crowdRoot = new pc.Entity("crowd");
   app.root.addChild(crowdRoot);
   // The crowd walks lines routed round everything solid (the navigation grid, shared with the story).
@@ -173,8 +173,12 @@ async function boot(): Promise<void> {
   // Leaf cards on the crowns near the camera (off on phones).
   const treeCards = new TreeCards(app, treeInfo, surfaceAt, !LOW);
   // Grass blades round the camera: off on phones, a smaller patch on medium.
-  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz ? false : navGrid.isBaked(x, z) && navGrid.kindAt(x, z) === "lawn"), surfaceAt);
-  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, false, clearLines(walkLines, navGrid), navGrid);
+  const grass = new GrassField(app, mats, LOW ? 0 : qWant === "medium" ? 20 : 30, (x, z) => {
+    if (Math.abs(x - PLACES.engGarden.x) < PLACES.engGarden.hx && Math.abs(z - PLACES.engGarden.z) < PLACES.engGarden.hz) return false;
+    if (Math.abs(x - PITCH.x) < PITCH.hx && Math.abs(z - PITCH.z) < PITCH.hz) return false;
+    return navGrid.isBaked(x, z) && navGrid.kindAt(x, z) === "lawn";
+  }, surfaceAt);
+  const crowd = new Crowd(app, crowdRoot, people, rng, Q.npcs, false, clearLines(walkLines, navGrid), navGrid, Q.npcVis);
   // The camera never passes through people or vehicles (upright cylinders around them).
   FollowCamera.moving = () => {
     const out: { x: number; z: number; r: number; h: number }[] = [];
@@ -459,25 +463,25 @@ async function boot(): Promise<void> {
     tickPeople(app, dt, cam);
     fpsT += rawDt;
     fpsN++;
-    // Dynamic quality scaling to maintain target FPS
-    const targetFPS = 30;
+    // Dynamic quality scaling to hold 40-50 FPS outdoors (draw-call bound).
+    const targetFPS = 45;
     const actualFPS = fpsT > 0 ? fpsN / fpsT : 60;
     const fpsDiff = actualFPS - targetFPS;
     if (Math.abs(fpsDiff) > 5) {
       const quality = params.get("quality");
-      if (actualFPS < targetFPS && quality !== "low") {
+      if (actualFPS < targetFPS - 5 && quality !== "low") {
         params.set("quality", "low");
-        Q.npcs = 20; Q.shadowRes = 512; Q.cascades = 0; Q.shadowDist = 30;
-        Q.npcs = 20; Q.cars = 8; Q.okadas = 5; Q.kekes = 3; Q.birds = 15; Q.leaves = 30; Q.lights = 2;
-      } else if (actualFPS > targetFPS + 10 && quality !== "medium") {
+        Q.npcs = Math.min(8, settings.npcs); Q.shadowRes = 256; Q.cascades = 0; Q.shadowDist = 25;
+        Q.cars = 3; Q.okadas = 2; Q.kekes = 1; Q.birds = 6; Q.leaves = 10; Q.lights = 1;
+      } else if (actualFPS > targetFPS + 5 && quality !== "medium") {
         params.set("quality", "medium");
-        Q.npcs = 50; Q.shadowRes = 1024; Q.cascades = 1; Q.shadowDist = 60;
-        Q.npcs = 50; Q.cars = 16; Q.okadas = 8; Q.kekes = 5; Q.birds = 30; Q.leaves = 60; Q.lights = 5;
+        Q.npcs = Math.min(40, settings.npcs); Q.shadowRes = 1024; Q.cascades = 1; Q.shadowDist = 60;
+        Q.cars = 12; Q.okadas = 6; Q.kekes = 4; Q.birds = 24; Q.leaves = 48; Q.lights = 4;
       }
     }
     if (fpsT > 1) {
-      // Optimization hint: if draws > 150 on low, consider reducing quality
-      const drawHint = app.stats.drawCalls.total > 150 && Q.npcs < 50 ? "• consider reducing NPC count" : "";
+      // Optimization hint: if draws are still high on low quality, reduce NPC count.
+      const drawHint = app.stats.drawCalls.total > 200 && Q.npcs < 40 ? "• consider reducing NPC count" : "";
       hud.setStats(`${Math.round(fpsN / fpsT)} fps · ${app.stats.drawCalls.total} draws ${drawHint}`);
       fpsT = fpsN = 0;
     }

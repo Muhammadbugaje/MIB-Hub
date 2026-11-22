@@ -26,8 +26,8 @@ export function buildProps(b: Builder, signs: SignAtlas, col: CollisionWorld): L
   const lights: LightSpot[] = [];
   const rng = makeRng(404);
 
-  /* ---- campus fence: low stone wall with iron railings and piers */
-  for (const [x0, x1] of [[-200, -13], [13, 200]] as const) {
+  /* ---- campus fence: low stone wall with iron railings and piers (two gates: main at 0, east shop gate at 80) */
+  for (const [x0, x1] of [[-200, -13], [13, 78], [82, 200]] as const) {
     b.at(0, 0).tint(STONE).box("stone", (x0 + x1) / 2, 0, GATE_Z, x1 - x0, 0.7, 0.5, 4);
     for (let x = x0; x <= x1; x += 0.2) b.at(x, GATE_Z).tint(IRON).box("metal", 0, 0.7, 0, 0.035, 1.5, 0.035, 1, ["bottom"]);
     b.at(0, 0).tint(IRON).box("metal", (x0 + x1) / 2, 2.0, GATE_Z, x1 - x0, 0.05, 0.05);
@@ -38,6 +38,17 @@ export function buildProps(b: Builder, signs: SignAtlas, col: CollisionWorld): L
     }
     col.add({ kind: "box", x: (x0 + x1) / 2, z: GATE_Z, hx: (x1 - x0) / 2, hz: 0.4, rot: 0 });
   }
+
+  /* ---- East shop gate (second pedestrian entrance to access market/kiosks) */
+  for (const gx of [78, 82]) {
+    const ep = b.at(gx, GATE_Z);
+    ep.tint(STONE).box("stone", 0, 0, 0, 0.9, 3.2, 0.9, 4);
+    ep.tint(TRIM).box("stone", 0, 3.2, 0, 1.1, 0.25, 1.1, 4);
+    ep.tint(hex("#d8b45a")).dome("dome", 0, 3.45, 0, 0.2, 6, 2, true);
+    col.add({ kind: "box", x: gx, z: GATE_Z, hx: 0.45, hz: 0.45, rot: 0, h: 4 });
+  }
+  const eastLintel = b.at(80, GATE_Z);
+  eastLintel.tint(STONE).box("stone", 0, 2.8, 0, 4.0, 0.4, 0.6, 4);
 
   /* ---- the main gate: two great piers, pedestrian arches, a lintel with the name */
   for (const sx of [-1, 1]) {

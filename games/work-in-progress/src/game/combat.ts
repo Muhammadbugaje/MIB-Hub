@@ -22,6 +22,12 @@
 import type { Person, AnimName } from "../world/people.ts";
 import type { StoryGame } from "./story-game.ts";
 
+/** Fine deducted when the player is knocked out and taken to hospital or the station. */
+export const KO_FINE = 500;
+
+/** Where the player wakes up: hospital garden or gatehouse (police station). */
+export const WAKE_POSITIONS: [number, number][] = [[95, -104], [-21, -84]];
+
 export interface Combatant {
   id: string;
   /** The cast id this combatant represents (for the player: "player"). */
@@ -278,6 +284,9 @@ export class Combat {
       if (!alive) {
         this.state = "ended";
         this.winner = f.isPlayer ? "enemy" : "player";
+        // Player KO'd: blackout → hospital/police station → wake up with a fine.
+        if (f.isPlayer) this.sg.speakKO();
+        return true;
       }
       return true;
     }

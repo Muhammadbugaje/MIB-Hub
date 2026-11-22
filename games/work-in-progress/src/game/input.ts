@@ -145,6 +145,9 @@ export class Input {
     this.showStick = on;
     if (this.stickEl) {
       this.stickEl.style.opacity = on ? "1" : "0";
+      // ".wip-stick.on" is what the CSS uses to fade the stick in (opacity: 1).
+      // Toggling only "active" (box-shadow) left the stick invisible on phones.
+      this.stickEl.classList.toggle("on", on);
       this.stickEl.classList.toggle("active", on);
     }
   }

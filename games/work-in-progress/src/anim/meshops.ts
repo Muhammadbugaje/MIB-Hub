@@ -139,7 +139,7 @@ export const MORPHS: Record<string, Partial<Record<string, number>> & { belly?: 
   fit: { Hips: 0.004, Spine: -0.01, Spine1: 0.01, Spine2: 0.022, Neck: 0.01, Shoulder: 0.022, Arm: 0.02, ForeArm: 0.012, UpLeg: 0.014, Leg: 0.01, belly: -0.012 },
 };
 export const BODY_MORPH_NAMES = ["heavy", "lean", "fit"] as const;
-export const FACE_MORPH_NAMES = ["blink", "smile", "talk", "tired"] as const;
+export const FACE_MORPH_NAMES = ["blink", "smile", "talk", "tired", "laugh", "sad"] as const;
 export const MORPH_NAMES = [...BODY_MORPH_NAMES, ...FACE_MORPH_NAMES];
 
 export function morphDeltas(m: Mesh): number[][] {

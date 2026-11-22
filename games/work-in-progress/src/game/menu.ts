@@ -26,20 +26,72 @@ import { GAME_NAME, defaultLook, loadLook, saveLook } from "./hud.ts";
 import type { Progress } from "./save.ts";
 
 export interface MenuSettings {
+  // Graphics
   quality: "auto" | "low" | "medium" | "high";
+  fpsTarget: 30 | 60;
+  shadows: boolean;
+  npcs: number;
+  drawDistance: "near" | "medium" | "far";
+  // Sound (0..1)
   soundVolume: number;
+  sfxVolume: number;
+  musicVolume: number;
   voiceVolume: number;
+  // Game
   subtitles: boolean;
-  /** Glowing arrows on the ground along the way to the objective. */
+  language: string;
   groundArrows: boolean;
   voices: boolean;
   reducedMotion: boolean;
+  // Touch control layout (phones)
+  touchSize: number;
+  touchOpacity: number;
+  touchStickX: number;
+  touchStickY: number;
+  touchRunX: number;
+  touchRunY: number;
+  // Controls (keyboard keys)
+  keyForward: string;
+  keyBack: string;
+  keyLeft: string;
+  keyRight: string;
+  keyRun: string;
+  keyTalk: string;
 }
 
 const SETTINGS_KEY = "wip-settings";
 
+const DEFAULTS: MenuSettings = {
+  quality: "auto",
+  fpsTarget: 30,
+  shadows: true,
+  npcs: 50,
+  drawDistance: "far",
+  soundVolume: 0.8,
+  sfxVolume: 0.8,
+  musicVolume: 0.6,
+  voiceVolume: 0.9,
+  subtitles: true,
+  language: "en",
+  groundArrows: true,
+  voices: true,
+  reducedMotion: false,
+  touchSize: 1,
+  touchOpacity: 0.85,
+  touchStickX: 0.15,
+  touchStickY: 0.75,
+  touchRunX: 0.85,
+  touchRunY: 0.75,
+  keyForward: "w",
+  keyBack: "s",
+  keyLeft: "a",
+  keyRight: "d",
+  keyRun: "shift",
+  keyTalk: "e",
+};
+
 export function loadSettings(): MenuSettings {
-  const base: MenuSettings = { quality: "auto", soundVolume: 0.8, voiceVolume: 0.9, subtitles: true, groundArrows: true, voices: true, reducedMotion: matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false };
+  const base: MenuSettings = { ...DEFAULTS, reducedMotion: matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false };
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (raw) return { ...base, ...(JSON.parse(raw) as Partial<MenuSettings>) };
@@ -55,6 +107,11 @@ function saveSettings(s: MenuSettings): void {
   } catch {
     /* ignore */
   }
+}
+
+/** Fresh defaults, keeping the user's reduced-motion preference. */
+export function resetSettings(): MenuSettings {
+  return { ...DEFAULTS, reducedMotion: matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false };
 }
 
 /* ------------------------------------------------------------ names for every swatch */
@@ -160,6 +217,8 @@ const css = `
 .mn-seg button{min-height:44px;min-width:56px;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:#fff;font:800 13px system-ui;cursor:pointer}
 .mn-seg button[aria-pressed="true"]{background:#f2b33d;color:#1b1408;border-color:transparent}
 .mn-range{width:150px;accent-color:#f2b33d;height:44px}
+.mn-range-wrap{display:flex;align-items:center;gap:10px;width:100%;min-height:44px}
+.mn-readout{min-width:34px;text-align:right;font:800 13px system-ui;color:#f2b33d}
 .mn-cred p{margin:0 0 12px;color:rgba(255,250,240,.8);font-size:14px}
 .mn-cred b{color:#fff}
 .mn-keys{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;color:rgba(255,250,240,.85)}
@@ -622,64 +681,211 @@ export class Menu {
     return { panel, body };
   }
 
+  private commit(): void {
+    saveSettings(this.settings);
+  }
+
+  private seg<T extends string | boolean | number>(
+    vals: [T, string][],
+    get: () => T,
+    set: (v: T) => void,
+  ): HTMLElement {
+    const g = el("div", "mn-seg");
+    for (const [v, label] of vals) {
+      const b = el("button", "", label);
+      b.type = "button";
+      b.setAttribute("aria-pressed", String(get() === v));
+      b.onclick = () => {
+        this.blip("move");
+        set(v);
+        this.commit();
+        g.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", "false"));
+        b.setAttribute("aria-pressed", "true");
+      };
+      g.append(b);
+    }
+    return g;
+  }
+
+  private row(label: string, note: string, control: HTMLElement, body: HTMLElement): void {
+    const r = el("div", "mn-row");
+    const l = el("div");
+    l.append(el("b", "", label), el("small", "", note));
+    r.append(l, control);
+    body.append(r);
+  }
+
+  private section(title: string, body: HTMLElement): void {
+    body.append(el("div", "mn-label", title));
+  }
+
   private buildSettings(): void {
     const { body } = this.sheetPanel("Settings", "Saved on this device.");
-    const S = this.settings;
-    const row = (label: string, note: string, control: HTMLElement) => {
-      const r = el("div", "mn-row");
-      const l = el("div");
-      l.append(el("b", "", label), el("small", "", note));
-      r.append(l, control);
-      body.append(r);
+
+    // Tabs -------------------------------------------------------------------
+    const tabs = el("div", "mn-tabs");
+    tabs.setAttribute("role", "tablist");
+    const TABS: [string, string][] = [
+      ["graphics", "Graphics"],
+      ["sound", "Sound"],
+      ["touch", "Touch controls"],
+      ["keys", "Controls"],
+      ["language", "Language"],
+    ];
+    const drawTab = (id: string) => {
+      body.innerHTML = "";
+      tabs.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === id)));
+      if (id === "graphics") this.tabGraphics(body);
+      if (id === "sound") this.tabSound(body);
+      if (id === "touch") this.tabTouch(body);
+      if (id === "keys") this.tabKeys(body);
+      if (id === "language") this.tabLanguage(body);
     };
-    const seg = <T extends string | boolean>(vals: [T, string][], get: () => T, set: (v: T) => void) => {
-      const g = el("div", "mn-seg");
-      for (const [v, label] of vals) {
-        const b = el("button", "", label);
-        b.type = "button";
-        b.setAttribute("aria-pressed", String(get() === v));
-        b.onclick = () => {
-          this.blip("move");
-          set(v);
-          saveSettings(S);
-          g.querySelectorAll("button").forEach((x) => x.setAttribute("aria-pressed", "false"));
-          b.setAttribute("aria-pressed", "true");
-        };
-        g.append(b);
-      }
-      return g;
-    };
-    const range = (get: () => number, set: (v: number) => void) => {
-      const r = el("input", "mn-range");
-      r.type = "range";
-      r.min = "0";
-      r.max = "1";
-      r.step = "0.05";
-      r.value = String(get());
-      r.oninput = () => {
-        set(Number(r.value));
-        saveSettings(S);
+    for (const [id, label] of TABS) {
+      const b = el("button", "mn-tab", label);
+      b.type = "button";
+      b.dataset.tab = id;
+      b.setAttribute("role", "tab");
+      b.onclick = () => {
+        this.blip("move");
+        drawTab(id);
       };
-      return r;
-    };
-    row("Graphics", "Applies the next time the game loads", seg([["auto", "Auto"], ["low", "Low"], ["medium", "Medium"], ["high", "High"]], () => S.quality, (v) => (S.quality = v)));
-    row("Sound", "Ambience, effects and music", range(() => S.soundVolume, (v) => (S.soundVolume = v)));
-    row("Voices", "Spoken lines", range(() => S.voiceVolume, (v) => (S.voiceVolume = v)));
-    row("Computer voices", "Until the cast records, each character has a browser voice", seg([[true, "On"], [false, "Off"]], () => S.voices, (v) => (S.voices = v)));
-    row("Subtitles", "Who is speaking and what they say", seg([[true, "On"], [false, "Off"]], () => S.subtitles, (v) => (S.subtitles = v)));
-    row("Ground arrows", "Glowing arrows on the ground show the way to your objective", seg([[true, "On"], [false, "Off"]], () => S.groundArrows, (v) => (S.groundArrows = v)));
-    row("Reduced motion", "Calmer menus and transitions", seg([[false, "Off"], [true, "On"]], () => S.reducedMotion, (v) => {
-      S.reducedMotion = v;
-      this.root.classList.toggle("reduced", v);
-    }));
-    body.append(el("div", "mn-label", "Controls"));
-    const keys = el("div", "mn-keys");
-    for (const [k, v] of [["W A S D", "Move"], ["Shift", "Run"], ["Drag / right stick", "Look"], ["Wheel", "Zoom"], ["E", "Talk, use, go through doors"], ["1 2 3", "Choose a reply"], ["J", "Journal"], ["T", "Time speed"], ["M", "Sound on or off"], ["Esc / Space", "Skip a cutscene"]] as const) {
-      const kk = el("span");
-      for (const part of k.split(" / ")) kk.append(el("kbd", "", part), document.createTextNode(" "));
-      keys.append(kk, el("span", "", v));
+      tabs.append(b);
     }
-    body.append(keys);
+    body.append(tabs);
+
+    // Footer: reset / save / back -------------------------------------------
+    const foot = el("div", "mn-foot");
+    const reset = el("button", "mn-btn", "Reset to defaults");
+    reset.type = "button";
+    reset.onclick = () => {
+      this.blip("back");
+      Object.assign(this.settings, resetSettings());
+      this.commit();
+      drawTab(drawTabCurrent);
+    };
+    const save = el("button", "mn-btn primary", "Save");
+    save.type = "button";
+    save.onclick = () => {
+      this.blip("ok");
+      this.commit();
+      this.showScreen("main");
+    };
+    const back = el("button", "mn-btn", "Back");
+    back.type = "button";
+    back.onclick = () => {
+      this.blip("back");
+      this.showScreen("main");
+    };
+    foot.append(reset, save, back);
+    body.append(foot);
+
+    let drawTabCurrent = "graphics";
+    drawTab("graphics");
+  }
+
+  /* ------------------------------------------------------------ settings tabs */
+
+  private tabGraphics(body: HTMLElement): void {
+    const S = this.settings;
+    const phone = matchMedia("(pointer: coarse)").matches || Math.min(screen.width, screen.height) < 600;
+    this.section("Graphics quality", body);
+    this.row("Quality", "Applies the next time the game loads", this.seg([["auto", "Auto"], ["low", "Low"], ["medium", "Medium"], ["high", "High"]], () => S.quality, (v) => (S.quality = v)), body);
+    this.row("FPS target", "The frame rate the game tries to hold", this.seg([["30", "30 fps"], ["60", "60 fps"]], () => String(S.fpsTarget), (v) => (S.fpsTarget = (v === "60" ? 60 : 30) as 30 | 60)), body);
+    this.row("Shadows", "Soft shadows from the sun and lamps", this.seg([[true, "On"], [false, "Off"]], () => S.shadows, (v) => (S.shadows = v)), body);
+    this.row("NPC count", "People walking around campus", this.seg([[50, "Many"], [25, "Some"], [12, "Few"]], () => S.npcs, (v) => (S.npcs = v)), body);
+    this.row("Draw distance", "How far the world is drawn", this.seg([["near", "Near"], ["medium", "Medium"], ["far", "Far"]], () => S.drawDistance, (v) => (S.drawDistance = v)), body);
+    if (phone) {
+      body.append(el("p", "", "On a phone the game picks low/medium automatically. Graphics changes take effect when you next load the game."));
+    }
+  }
+
+  private tabSound(body: HTMLElement): void {
+    const S = this.settings;
+    this.section("Sound volume", body);
+    this.row("Master", "Ambience, effects and music", this.rangeSetting(() => S.soundVolume, (v) => (S.soundVolume = v)), body);
+    this.row("SFX", "Footsteps, doors, the coil, barks", this.rangeSetting(() => S.sfxVolume, (v) => (S.sfxVolume = v)), body);
+    this.row("Music", "Theme tunes and background beds", this.rangeSetting(() => S.musicVolume, (v) => (S.musicVolume = v)), body);
+    this.row("Voices", "Spoken lines and computer voices", this.rangeSetting(() => S.voiceVolume, (v) => (S.voiceVolume = v)), body);
+  }
+
+  private tabTouch(body: HTMLElement): void {
+    const S = this.settings;
+    this.section("Touch control layout (phones)", body);
+    this.row("Size", "How big the on-screen buttons are", this.rangeSetting(() => S.touchSize, (v) => (S.touchSize = v), "0.1"), body);
+    this.row("Opacity", "How solid the buttons look", this.rangeSetting(() => S.touchOpacity, (v) => (S.touchOpacity = v), "0.05"), body);
+    this.row("Joystick X", "Left-right place of the move stick", this.rangeSetting(() => S.touchStickX, (v) => (S.touchStickX = v)), body);
+    this.row("Joystick Y", "Up-down place of the move stick", this.rangeSetting(() => S.touchStickY, (v) => (S.touchStickY = v)), body);
+    this.row("Run button X", "Left-right place of the run button", this.rangeSetting(() => S.touchRunX, (v) => (S.touchRunX = v)), body);
+    this.row("Run button Y", "Up-down place of the run button", this.rangeSetting(() => S.touchRunY, (v) => (S.touchRunY = v)), body);
+    body.append(el("p", "", "Positions run from 0 (left/top) to 1 (right/bottom). Changes apply to the on-screen stick and run button."));
+  }
+
+  private tabKeys(body: HTMLElement): void {
+    const S = this.settings;
+    this.section("Keyboard keys", body);
+    this.row("Forward", "Walk forward", this.keySetting(() => S.keyForward, (v) => (S.keyForward = v)), body);
+    this.row("Back", "Walk back", this.keySetting(() => S.keyBack, (v) => (S.keyBack = v)), body);
+    this.row("Left", "Turn / strafe left", this.keySetting(() => S.keyLeft, (v) => (S.keyLeft = v)), body);
+    this.row("Right", "Turn / strafe right", this.keySetting(() => S.keyRight, (v) => (S.keyRight = v)), body);
+    this.row("Run", "Run while moving", this.keySetting(() => S.keyRun, (v) => (S.keyRun = v)), body);
+    this.row("Talk / use", "Talk, open doors, interact", this.keySetting(() => S.keyTalk, (v) => (S.keyTalk = v)), body);
+    body.append(el("p", "", "Tap a key and press the new key to rebind it. Wasd and the mouse still work as before."));
+  }
+
+  private tabLanguage(body: HTMLElement): void {
+    const S = this.settings;
+    this.section("Language and subtitles", body);
+    this.row("Language", "Text and voice language", this.seg([["en", "English"], ["yo", "Yorùbá"], ["ig", "Igbo"], ["ha", "Hausa"], ["pcm", "Nigerian Pidgin"]], () => S.language, (v) => (S.language = v)), body);
+    this.row("Subtitles", "Who is speaking and what they say", this.seg([[true, "On"], [false, "Off"]], () => S.subtitles, (v) => (S.subtitles = v)), body);
+    body.append(el("p", "", "Translations land as the cast records them. Until then, subtitles show the English line."));
+  }
+
+  private rangeSetting(get: () => number, set: (v: number) => void, step = "0.05"): HTMLElement {
+    const r = el("div", "mn-range-wrap");
+    const input = el("input", "mn-range");
+    input.type = "range";
+    input.min = "0";
+    input.max = "1";
+    input.step = step;
+    input.value = String(get());
+    const readout = el("span", "mn-readout", `${Math.round(get() * 100)}%`);
+    input.oninput = () => {
+      const v = Number(input.value);
+      set(v);
+      saveSettings(this.settings);
+      readout.textContent = `${Math.round(v * 100)}%`;
+    };
+    r.append(input, readout);
+    return r;
+  }
+
+  private keySetting(get: () => string, set: (v: string) => void): HTMLElement {
+    const b = el("button", "mn-field");
+    b.type = "button";
+    b.textContent = get().toUpperCase();
+    let waiting = false;
+    const stop = (e: KeyboardEvent) => {
+      if (!waiting) return;
+      e.preventDefault();
+      const k = e.key.toLowerCase();
+      if (k === "escape") {
+        b.textContent = get().toUpperCase();
+        waiting = false;
+        return;
+      }
+      set(k);
+      b.textContent = k.toUpperCase();
+      waiting = false;
+      window.removeEventListener("keydown", stop);
+    };
+    b.onclick = () => {
+      this.blip("move");
+      waiting = true;
+      b.textContent = "Press a key…";
+      window.addEventListener("keydown", stop, { once: true });
+    };
+    return b;
   }
 
   private buildCredits(): void {

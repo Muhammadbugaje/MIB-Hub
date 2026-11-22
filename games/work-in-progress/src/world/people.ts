@@ -83,8 +83,8 @@ export interface Look {
   body?: BodyShape;
   /** Hairstyle on the base (long, buns, simpleparted, buzzed, buzzedfemale, beard...); omitted = picked per person. */
   hairStyle?: string;
-  /** Expression (smile, tired, blink, talk). */
-  expression?: { smile?: number; tired?: number; blink?: number; talk?: number };
+  /** Expression (smile, tired, blink, talk, laugh, sad). */
+  expression?: { smile?: number; tired?: number; blink?: number; talk?: number; laugh?: number; sad?: number };
 }
 
 export const FEMALE_MODELS = ["animwoman", "womandress", "womancasual"];
@@ -426,7 +426,7 @@ export class Person {
   heightScale = 1;
   widthScale = 1;
   bodyShape: BodyShape = {};
-  expression = { blink: 0, smile: 0, talk: 0, tired: 0 };
+  expression = { blink: 0, smile: 0, talk: 0, tired: 0, laugh: 0, sad: 0 };
   private blinkTimer = 2.0 + Math.random() * 2.5;
   private blinkPhase = 0;
   isSpeaking = false;
@@ -727,6 +727,28 @@ export class Person {
       if (!morph) continue;
       if (!mi.morphInstance) mi.morphInstance = new pc.MorphInstance(morph);
       MORPH_NAMES.forEach((name, i) => mi.morphInstance!.setWeight(i, (want[name] ?? 0) - (DEFAULT_BODY[name] ?? 0)));
+    }
+  }
+
+  /** Facial expression: smile, talk, blink, tired, laugh, sad morph weights 0..1. */
+  setExpression(expr: Partial<{ smile: number; talk: number; blink: number; tired: number; laugh: number; sad: number }>): void {
+    const e = this.expression;
+    if (expr.smile !== undefined) e.smile = expr.smile;
+    if (expr.talk !== undefined) e.talk = expr.talk;
+    if (expr.blink !== undefined) e.blink = expr.blink;
+    if (expr.tired !== undefined) e.tired = expr.tired;
+    if (expr.laugh !== undefined) e.laugh = expr.laugh;
+    if (expr.sad !== undefined) e.sad = expr.sad;
+    for (const mi of this.meshInstances) {
+      const morph = mi.mesh?.morph;
+      if (!morph) continue;
+      if (!mi.morphInstance) mi.morphInstance = new pc.MorphInstance(morph);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("smile"), e.smile!);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("talk"), e.talk!);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("blink"), e.blink!);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("tired"), e.tired!);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("laugh"), e.laugh!);
+      mi.morphInstance.setWeight(MORPH_NAMES.indexOf("sad"), e.sad!);
     }
   }
 

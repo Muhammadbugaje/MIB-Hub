@@ -22,7 +22,7 @@ export class Crowd {
   readonly npcs: Npc[] = [];
 
   /** lines: the walk lines (main.ts passes them routed round every solid thing, sim/crowd.ts clearLines). */
-  constructor(app: pc.AppBase, parent: pc.Entity, models: CharModel[], private rng: Rng, count: number, shadows: boolean, lines: P2[][] = walkLines, nav?: NavGrid) {
+  constructor(app: pc.AppBase, parent: pc.Entity, models: CharModel[], private rng: Rng, count: number, shadows: boolean, lines: P2[][] = walkLines, nav?: NavGrid, private visDist = 210) {
     this.graph = nav ? pruneGraph(buildGraph(lines), nav) : buildGraph(lines);
     for (let i = 0; i < count; i++) {
       const w = makeWalker(this.graph, rng);
@@ -69,8 +69,8 @@ export class Crowd {
       while (dy < -Math.PI) dy += Math.PI * 2;
       n.p.place(x, n.py + (n.y - n.py) * alpha, z, n.pyaw + dy * alpha);
       const d = Math.hypot(x - camX, z - camZ);
-      n.p.animating = d < 75;
-      n.p.visible = d < 210;
+      n.p.animating = d < Math.min(this.visDist * 0.35, 75);
+      n.p.visible = d < this.visDist;
       n.p.gait(n.speed);
     }
   }

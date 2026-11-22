@@ -157,7 +157,7 @@ export class Traffic {
   private emissive: pc.StandardMaterial[] = [];
   readonly root = new pc.Entity("traffic");
 
-  constructor(private app: pc.AppBase, private mats: MatLib, private cars: CarModel[], people: CharModel[], rng: Rng, counts: { car: number; okada: number; keke: number }) {
+  constructor(private app: pc.AppBase, private mats: MatLib, private cars: CarModel[], people: CharModel[], rng: Rng, counts: { car: number; okada: number; keke: number }, private visDist = 140) {
     app.root.addChild(this.root);
     this.paths = lanes.map((l) => makePath(l.pts));
     const device = app.graphicsDevice;
@@ -302,6 +302,10 @@ export class Traffic {
       if (!vis.root.enabled) continue;
       const x = vis.px + (vis.cx - vis.px) * alpha;
       const z = vis.pz + (vis.cz - vis.pz) * alpha;
+      // Distance cull: hide vehicles well beyond the view patch so they cost nothing.
+      const near = Math.hypot(x - camX, z - camZ) < this.visDist;
+      vis.root.enabled = vis.v.wait <= 0 && near;
+      if (!near) continue;
       const yaw = vis.pyaw + (vis.cyaw - vis.pyaw) * alpha;
       vis.root.setLocalPosition(x, surfaceHeight(x, z), z);
       vis.root.setLocalEulerAngles(0, (yaw * 180) / Math.PI, 0);

@@ -36,7 +36,8 @@ export function groundKind(x: number, z: number): GroundKind {
   if (is(Y.road) || is(Y.ring)) return "road";
   if (is(Y.walk) || is(Y.path) || is(Y.pathEdge) || is(Y.paving) || h > 0.2) return "path";
   if (is(Y.laterite)) return "rough";
-  return "lawn";
+  if (is(Y.lawn)) return "lawn";
+  return "rough";
 }
 
 /** The navigator's view of a CollisionWorld. */

@@ -6,7 +6,7 @@ import * as pc from "playcanvas";
 import { Builder, MeshData } from "../gfx/builder.ts";
 import type { MatLib } from "../gfx/materials.ts";
 
-const CHUNK = 64;
+const CHUNK = 256;
 
 export class StaticWorld {
   private buckets = new Map<string, MeshData>();

@@ -18,7 +18,6 @@
 import { ok, err } from "./arcade-api.ts";
 import type { PlayCtx } from "./arcade-api.ts";
 import type { Repos } from "@mib/db";
-import { v4 as uuidv4 } from "node:uuid";
 
 /** Character look fields */
 const HAIRS = (

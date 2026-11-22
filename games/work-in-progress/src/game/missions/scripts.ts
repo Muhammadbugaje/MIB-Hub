@@ -1065,21 +1065,19 @@ const m007: MissionDef = {
         } else {
           obj(g, "m007", 4);
           const sly = g.npc("npc.bolaji")!;
-          g.mini.hooks.scuffle = (ev) => {
-            if (ev === "telegraph") sly.act("gesture");
-            if (ev === "shove") sly.act("punch");
-            if (ev === "blocked") g.player.person.act("shock");
-            if (ev === "knocked") {
-              g.player.person.act("hit");
-              setTimeout(() => g.player.person.act("sit"), 350);
-              g.ui.showCard("", "★ ★ ★", "", [], 1400);
-            }
-            if (ev === "getup") g.player.person.act("stand");
-          };
-          const r = await g.minigame(() => g.mini.scuffle(3));
-          g.mini.hooks.scuffle = undefined;
+          // Face each other for the fight.
+          const pp = g.player.person.root.getPosition();
+          const sp = sly.root.getPosition();
+          g.player.person.root.setLocalEulerAngles(0, Math.atan2(sp.x - pp.x, sp.z - pp.z) * 180 / Math.PI, 0);
+          sly.root.setLocalEulerAngles(0, Math.atan2(pp.x - sp.x, pp.z - sp.z) * 180 / Math.PI, 0);
+          g.fight("npc.bolaji");
+          // Wait for the fight to end.
+          while (g.combat!.state === "active") {
+            await g.sleep(0.1);
+          }
+          g.endFight();
           g.progress.stats.strength += 1;
-          g.progress.flags.scuffle_knocks = r.knocks;
+          g.progress.flags.scuffle_knocks = 0;
           // A guard arrives to fine you for fighting.
           if (g.ctx.specials.jiya) {
             g.put("special.jiya", W([-79.2, 0, -63.6]), PI);
@@ -1360,10 +1358,10 @@ const m009: MissionDef = {
         obj(g, "m009", 2);
         const jega = g.npc("npc.jega")!;
         jega.visible = true;
-        const route = [[-128, 0, -190.4], [-104, 0, -190], [-100, 0, -171], [-60, 0, -171], [-42, 0, -171], [-27, 0, -152], [0, 0, -140], [15.5, 0, -128], [60, 0, -122], [92, 0, -84], [99.4, 0, -82.6]].map((p) => W(p as A3));
-        g.ui.showCard("Keke", "Passenger", "Your first ride as a passenger. Space or Esc to skip ahead.", [], 2400);
-        void g.barks([["npc.jega", "wip_m009_keke_01", "Driver, the cross was perfect. I just closed my eyes. Like always.", "amused"]]);
-        await g.kekeRide(route, [g.player.person, jega]);
+        g.ui.showCard("Keke", "Your turn to drive", "Drive the keke to the hospital. Jega rides with you.", [], 2400);
+        void g.barks([["npc.jega", "wip_m009_keke_01", "You drive, I hold the sock. Don't crash.", "amused"]]);
+        g.put("npc.jega", { pos: [-128.6, 0, -189.4], where: "world" }, -PI / 2);
+        await g.drive({ pos: [99.4, 0, -82.6], where: "world" }, "keke");
         g.teleport(W(g.at("ae_entrance")), PI / 2);
         jega.place(98.6, 0, -82.4, PI / 2);
       },
