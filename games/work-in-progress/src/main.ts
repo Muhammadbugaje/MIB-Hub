@@ -87,7 +87,24 @@ async function boot(): Promise<void> {
   canvas.className = "wip-canvas";
   host.append(canvas);
   const hud = new Hud(host);
-  hud.progress(0.05, "Starting the engine…");
+  hud.onPauseToggle = () => {
+    if (g.mode !== "menu" && g.mode !== "cut") {
+      if (menu) {
+        menu.showScreen("pause");
+      } else {
+        const speeds = [1, 20, 0];
+        let speedIdx = params.has("speed") ? Math.max(0, speeds.indexOf(num("speed", 1))) : 0;
+        if (params.has("speed") && speeds.indexOf(num("speed", 1)) < 0) speeds[0] = num("speed", 1);
+        speedIdx = (speedIdx + 1) % speeds.length;
+        g.hours = (g.hours + (dt * speeds[speedIdx]!) / 60) % 24;
+        hud.say(speeds[speedIdx] === 0 ? "Time paused" : speeds[speedIdx]! > 1 ? `Time ×${speeds[speedIdx]}` : "Time: normal");
+      }
+    }
+  };
+  hud.onMapToggle = () => {
+    // Map toggle - could show/hide minimap
+    hud.say("Map toggle");
+  };
 
   const app = new pc.Application(canvas, {
     graphicsDeviceOptions: { antialias: !LOW, alpha: false, preserveDrawingBuffer: SHOT, powerPreference: "high-performance" },

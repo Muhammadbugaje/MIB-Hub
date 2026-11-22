@@ -220,6 +220,9 @@ export class StoryGame implements StageWorld {
   // Boosts and stamina.
   boosts: { turbo: number; zobo: number; kola: number } = { turbo: 0, zobo: 0, kola: 0 };
   stamina = 1;
+  // Hunger: 1 = full, 0 = starving (runs slower, takes damage if 0 long enough).
+  hunger = 1;
+  private hungerTimer = 0;
   carrying = false;
   /** Cheat code input buffer manager (typed during gameplay). */
   cheats = new CheatManager();
@@ -1488,6 +1491,32 @@ export class StoryGame implements StageWorld {
     this.sfxs.play("pickup");
   }
 
+  /** Eat food: restores hunger (and a little health). */
+  eat(food: "garri" | "eba" | "suya" | "beans" | "rice"): void {
+    const restore = { garri: 0.25, eba: 0.4, suya: 0.5, beans: 0.45, rice: 0.35 }[food]!;
+    this.hunger = Math.min(1, this.hunger + restore);
+    this.progress.stats.health = Math.min(1, this.progress.stats.health + restore * 0.3);
+    this.ui.setPlayerHealth("Health", this.progress.stats.health);
+    this.ui.say(`Ate ${food}. Hunger: ${Math.round(this.hunger * 100)}%.`);
+    this.sfxs.play("pickup");
+    // Consume one item
+    if (this.progress.items[food] !== undefined) {
+      this.progress.items[food] = Math.max(0, this.progress.items[food]! - 1);
+      if (this.progress.items[food]! <= 0) delete this.progress.items[food];
+    }
+  }
+
+  /** Use a medical kit: restores health directly. */
+  useMedicalKit(): void {
+    this.progress.stats.health = Math.min(1, this.progress.stats.health + 0.4);
+    this.hunger = Math.min(1, this.hunger + 0.1);
+    this.ui.setPlayerHealth("Health", this.progress.stats.health);
+    this.ui.say("Used medical kit. Health restored.");
+    this.sfxs.play("pickup");
+    this.progress.items.medical_kit = Math.max(0, (this.progress.items.medical_kit ?? 0) - 1);
+    if (this.progress.items.medical_kit! <= 0) delete this.progress.items.medical_kit;
+  }
+
   /* ================================================================ saving */
 
   save(): void {
@@ -1672,6 +1701,16 @@ export class StoryGame implements StageWorld {
       if (this.boosts.zobo > 0) this.stamina = 1;
       else if (run && this.player.speed > 2.5) this.stamina = Math.max(0, this.stamina - dt * (0.07 + this.progress.stats.stamina * -0.004));
       else this.stamina = Math.min(1, this.stamina + dt * 0.12);
+      // Hunger: decays slowly; very low hunger drains health and slows you.
+      this.hungerTimer += dt;
+      if (this.hungerTimer >= 5) {
+        this.hungerTimer = 0;
+        this.hunger = Math.max(0, this.hunger - 0.02);
+        if (this.hunger <= 0.1) {
+          this.progress.stats.health = Math.max(0, this.progress.stats.health - 0.01);
+          this.ui.setPlayerHealth("Health", this.progress.stats.health);
+        }
+      }
       const where = interiorAt(this.player.x, this.player.z)?.id ?? "world";
       if (where !== this.place) this.setPlace(where);
     }

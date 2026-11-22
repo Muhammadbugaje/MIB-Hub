@@ -94,24 +94,24 @@ export class Input {
   /** Show the on-screen joystick and run button (phones and tablets). */
   mountTouchUi(host: HTMLElement): void {
     const stick = document.createElement("div");
-    stick.className = "wip-stick";
+    stick.className = "wip-stick on";
     const knob = document.createElement("div");
     knob.className = "wip-knob";
     stick.append(knob);
     const run = document.createElement("button");
-    run.className = "wip-run";
+    run.className = "wip-run on";
     run.type = "button";
     run.textContent = "RUN";
     const punch = document.createElement("button");
-    punch.className = "wip-punch";
+    punch.className = "wip-punch on";
     punch.type = "button";
     punch.textContent = "P";
     const kick = document.createElement("button");
-    kick.className = "wip-kick";
+    kick.className = "wip-kick on";
     kick.type = "button";
     kick.textContent = "K";
     const block = document.createElement("button");
-    block.className = "wip-block";
+    block.className = "wip-block on";
     block.type = "button";
     block.textContent = "B";
     run.addEventListener("touchstart", (e) => {
@@ -145,19 +145,18 @@ export class Input {
   showStickUI(on: boolean): void {
     this.showStick = on;
     if (this.stickEl) {
-      this.stickEl.style.opacity = on ? "1" : "0";
-      // ".wip-stick.on" is what the CSS uses to fade the stick in (opacity: 1).
-      // Toggling only "active" (box-shadow) left the stick invisible on phones.
-      this.stickEl.classList.toggle("on", on);
-      this.stickEl.classList.toggle("active", on);
+      this.stickEl.style.opacity = "1";
+      this.stickEl.classList.add("on");
+      this.stickEl.classList.add("active");
     }
   }
 
   showRunUI(on: boolean): void {
     this.showRun = on;
     if (this.runEl) {
-      this.runEl.classList.toggle("on", on);
-      this.runEl.classList.toggle("active", on);
+      this.runEl.style.opacity = "1";
+      this.runEl.classList.add("on");
+      this.runEl.classList.add("active");
     }
   }
 

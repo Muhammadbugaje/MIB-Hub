@@ -75,6 +75,8 @@ export class Hud {
   private phoneHealth: HTMLElement | null = null;
   private phoneHealthBar: HTMLElement | null = null;
   private phoneHealthName: HTMLElement | null = null;
+  private phoneTabs: HTMLElement | null = null;
+  private phoneTabPanels: Record<string, HTMLElement> = {};
   private top = el("div", "wip-bar wip-bar--top");
   private bottom = el("div", "wip-bar wip-bar--bottom");
   private sub = el("div", "wip-sub");
@@ -132,41 +134,60 @@ export class Hud {
     this.enemyHealth.hidden = true;
     this.root.append(this.enemyHealth);
 
-    // Phone UI
+    // Phone UI — futuristic in-game phone with tabs
     this.phone = el("div", "wip-phone");
-    this.root.append(this.phone);
-    this.phoneMission = el("div", "wip-phone-section");
-    this.phoneMission.innerHTML = "<h3>Missions</h3><ul></ul>";
-    this.phoneGoals = el("div", "wip-phone-section");
-    this.phoneGoals.innerHTML = "<h3>Goals</h3><ul></ul>";
-    this.phoneHelp = el("div", "wip-phone-section");
-    this.phoneHelp.innerHTML = "<h3>Help</h3><ul></ul>";
-    this.phoneSettings = el("div", "wip-phone-section");
-    this.phoneSettings.innerHTML = "<h3>Settings</h3><ul></ul>";
-    this.phoneHints = el("div", "wip-phone-section");
-    this.phoneHints.innerHTML = "<h3>Hints</h3><ul></ul>";
-    this.phoneClues = el("div", "wip-phone-section");
-    this.phoneClues.innerHTML = "<h3>Clues</h3><ul></ul>";
-    this.phoneMessages = el("div", "wip-phone-section");
-    this.phoneMessages.innerHTML = "<h3>Messages</h3><ul></ul>";
-    this.phoneClasses = el("div", "wip-phone-section");
-    this.phoneClasses.innerHTML = "<h3>Classes</h3><ul></ul>";
-    this.phoneCamera = el("div", "wip-phone-section");
-    this.phoneCamera.innerHTML = "<h3>Camera</h3><ul></ul>";
     this.phoneHealth = el("div", "wip-phone-health");
     this.phoneHealthName = el("div", "wip-phone-health__name", "Health");
     this.phoneHealthBar = el("div", "wip-phone-health__bar");
     const phoneHealthFill = el("div", "wip-phone-health__fill");
     this.phoneHealthBar.append(phoneHealthFill);
     this.phoneHealth.append(this.phoneHealthName, this.phoneHealthBar);
-    this.phoneSettings.append(this.phoneHealth);
+    this.phone.append(this.phoneHealth);
+
+    // Phone tabs
+    this.phoneTabs = el("div", "wip-phone-tabs");
+    const tabs: [string, string][] = [
+      ["missions", "Missions"], ["goals", "Goals"], ["help", "Help"],
+      ["settings", "Settings"], ["hints", "Hints"], ["clues", "Clues"],
+      ["messages", "Messages"], ["classes", "Classes"], ["camera", "Camera"],
+    ];
+    this.phoneTabPanels = {};
+    for (const [id, label] of tabs) {
+      const btn = el("button", "wip-phone-tab", label);
+      btn.type = "button";
+      btn.dataset.tab = id;
+      btn.setAttribute("aria-pressed", "false");
+      btn.onclick = () => {
+        this.showPhoneTab(id);
+      };
+      this.phoneTabs.append(btn);
+      const panel = el("div", "wip-phone-section");
+      panel.id = `phone-${id}`;
+      panel.innerHTML = `<h3>${label}</h3><ul></ul>`;
+      this.phoneTabPanels[id] = panel;
+      this.phone.append(panel);
+    }
+    this.phone.append(this.phoneTabs);
+    this.showPhoneTab("missions");
+
     this.phone.clicked = false;
     this.phone.addEventListener("click", (e) => {
       e.stopPropagation();
       this.phone.clicked = !this.phone.clicked;
-      this.phoneSettings.classList.toggle("on", this.phone.clicked);
-      this.phoneHelp.classList.toggle("on", !this.phone.clicked);
+      this.phone.classList.toggle("on", this.phone.clicked);
     });
+
+    // Pause button - opens pause menu
+    this.pauseBtn = el("button", "wip-pause-btn", "⏸");
+    this.pauseBtn.type = "button";
+    this.pauseBtn.onclick = () => this.onPauseToggle?.();
+    this.root.insertBefore(this.pauseBtn, this.hud);
+
+    // Map button - opens map view
+    this.mapBtn = el("button", "wip-map-btn", "🗺");
+    this.mapBtn.type = "button";
+    this.mapBtn.onclick = () => this.onMapToggle?.();
+    this.root.insertBefore(this.mapBtn, this.hud);
 
     this.root.append(this.hud, this.top, this.bottom, this.sub, this.fader, this.skip, this.toast, this.loading);
 
@@ -200,6 +221,85 @@ export class Hud {
   toggleHud(): void {
     this.hud.hidden = !this.hud.hidden;
     this.playerHealth.hidden = !this.playerHealth.hidden;
+  }
+
+  /** Pause the game and show a pause overlay. Pauses time, ambient barks, and shows the pause menu. */
+  pause(): void {
+    this.root.classList.add("wip-paused");
+    const wasPlaying = playing;
+    playing = false;
+    hud.say("Game paused");
+  }
+
+  /** Resume the game from pause. */
+  resume(): void {
+    this.root.classList.remove("wip-paused");
+    playing = true;
+    hud.say("Game resumed");
+  }
+
+  /** Toggle pause: if paused, resume; if running, pause. */
+  togglePause(): void {
+    if (this.root.classList.contains("wip-paused")) {
+      this.resume();
+    } else {
+      this.pause();
+    }
+  }
+
+  /** Toggle map view: show a minimap of the campus. */
+  toggleMap(): void {
+    this.root.classList.toggle("wip-map-open");
+    if (this.root.classList.contains("wip-map-open")) {
+      this.say("Map opened");
+      this.renderMap();
+    } else {
+      this.say("Map closed");
+    }
+  }
+
+  /** Render a simple minimap of the campus in the top-right corner. */
+  renderMap(): void {
+    // Create map overlay if not exists
+    let mapOverlay = document.querySelector(".wip-map-overlay");
+    if (!mapOverlay) {
+      mapOverlay = el("div", "wip-map-overlay");
+      this.root.append(mapOverlay);
+    }
+    mapOverlay.innerHTML = '';
+    // Draw simple campus outline and key locations
+    const map = el("div", "wip-map-canvas");
+    mapOverlay.append(map);
+    // Campus boundary roughly -80 to 80, -180 to -40
+    const w = el("div", "wip-map-window");
+    map.append(w);
+    // Key locations as markers
+    const locations: [string, number, number][] = [
+      ["Main Gate", -70, -30],
+      ["Clock Tower", -40, -128],
+      ["Senate Hall", -20, -226],
+      ["Student Centre", 40, -84],
+      ["Cafeteria", 100, -200],
+      ["Faculty of Engineering", -52, -175],
+    ];
+    const s = el("span", "", "Campus Map");
+    s.style.cssText = "position:absolute;top:8px;left:8px;font:700 14px system-ui;color:#f2b33d";
+    map.append(s);
+    locations.forEach(([name, x, z]) => {
+      const marker = el("div", "wip-map-marker");
+      // Simple projection: x from -80 to 80 maps to 0-100px, z from -180 to -40 maps to 0-100px
+      const px = Math.round((x + 80) / 160 * 200) + 20;
+      const pz = Math.round((z + 180) / 140 * 200) + 20;
+      marker.style.cssText = `
+        position:absolute;
+        left:${px}px;top:${pz}px;
+        width:8px;height:8px;border-radius:50%;background:#f2b33d;
+        transform:translate(-50%,-50%);
+      `;
+      marker.title = name;
+      marker.onclick = () => this.say(name);
+      map.append(marker);
+    });
   }
 
   setClock(text: string, speedLabel: string): void {
@@ -244,6 +344,25 @@ export class Hud {
       const fill = this.playerHealthBar.firstElementChild as HTMLElement | null;
       if (fill) fill.style.width = `${Math.round(Math.max(0, Math.min(1, health)) * 100)}%`;
     }
+  }
+
+  /** Show a phone tab by id. */
+  showPhoneTab(id: string): void {
+    if (!this.phoneTabs) return;
+    // Deactivate all tabs
+    this.phoneTabs.querySelectorAll<HTMLElement>('.wip-phone-tab').forEach((b) => {
+      b.setAttribute("aria-pressed", "false");
+    });
+    // Hide all panels
+    for (const panel of Object.values(this.phoneTabPanels)) {
+      panel.classList.remove("on");
+    }
+    // Activate selected tab button
+    const btn = this.phoneTabs.querySelector<HTMLElement>(`button[data-tab="${id}"]`);
+    if (btn) btn.setAttribute("aria-pressed", "true");
+    // Show selected panel
+    const panel = this.phoneTabPanels[id];
+    if (panel) panel.classList.add("on");
   }
 
   setStats(text: string): void {

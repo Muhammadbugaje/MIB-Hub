@@ -57,13 +57,13 @@ export const STYLES: Record<string, Style> = {
   animwoman: { base: "base_f", top: "long", bottom: "trousers", slots: ["Top", "Trousers", "Trim", "Shoes"], topSlot: 0, bottomSlot: 1, shoeSlot: 3, hair: ["long", "buns"] },
   womandress: { base: "base_f", top: "tunic", bottom: "trousers", slots: ["Dress", "Trim", "Belt"], topSlot: 0, bottomSlot: 0, shoeSlot: 1, hair: ["buns", "long"] },
 
-  // New character models (custom GLBs in assets/people/)
-  jiya: { base: "base_f", top: "long", bottom: "trousers", slots: ["Top", "Trousers", "Trim", "Shoes"], topSlot: 0, bottomSlot: 1, shoeSlot: 3, hair: ["long", "buns"] },
-  taty: { base: "base_f", top: "long", bottom: "trousers", slots: ["Top", "Trousers", "Trim", "Shoes"], topSlot: 0, bottomSlot: 1, shoeSlot: 3, hair: ["long", "buns"] },
-  muhammad: { base: "base_m", top: "long", bottom: "trousers", slots: ["Shirt", "Trousers"], topSlot: 0, bottomSlot: 1, shoeSlot: 1, hair: ["simpleparted", "buzzed"] },
-  zainab: { base: "base_f", top: "elbow", bottom: "trousers", slots: ["Top", "Trousers", "Shoes", "Socks"], topSlot: 0, bottomSlot: 1, shoeSlot: 2, hair: ["long", "buns"] },
-  the_maker: { base: "base_m", top: "long", bottom: "trousers", slots: ["Shirt", "Trousers"], topSlot: 0, bottomSlot: 1, shoeSlot: 1, hair: ["simpleparted"] },
-  bature: { base: "base_m", top: "tee", bottom: "trousers", slots: ["Shirt2", "Shirt", "Trousers", "Shoes", "Socks"], topSlot: 1, bottomSlot: 2, shoeSlot: 3, hair: ["buzzed", "simpleparted"] },
+  // New character models (custom GLBs in assets/people/) — each with a unique style
+  jiya: { base: "base_f", top: "elbow", bottom: "trousers", slots: ["Top", "Trim", "Trousers", "Shoes"], topSlot: 0, bottomSlot: 2, shoeSlot: 3, hair: ["buns", "long"] },
+  taty: { base: "base_f", top: "tee", bottom: "shorts", slots: ["Shirt", "Sleeves", "Shorts", "Shoes"], topSlot: 0, bottomSlot: 2, shoeSlot: 3, hair: ["long", "simpleparted"] },
+  muhammad: { base: "base_m", top: "tunic", bottom: "trousers", slots: ["Kaftan", "Trim", "Trousers", "Shoes"], topSlot: 0, bottomSlot: 2, shoeSlot: 3, hair: ["simpleparted", "buzzed"] },
+  zainab: { base: "base_f", top: "tunic", bottom: "trousers", slots: ["Dress", "Trim", "Belt", "Shoes"], topSlot: 0, bottomSlot: 0, shoeSlot: 3, hair: ["buns", "long"] },
+  the_maker: { base: "base_m", top: "long", bottom: "trousers", slots: ["Labcoat", "Shirt", "Trousers", "Shoes"], topSlot: 0, bottomSlot: 2, shoeSlot: 3, hair: ["buzzed", "simpleparted"] },
+  bature: { base: "base_m", top: "tee", bottom: "shorts", slots: ["Tee", "Trim", "Shorts", "Shoes"], topSlot: 0, bottomSlot: 2, shoeSlot: 3, hair: ["buzzed", "simpleparted"] },
 };
 
 /** Body arrays by mesh name, plus the skeleton rest TRS, from a packed base GLB. */

@@ -263,6 +263,24 @@ const css = `
 .wip-player-health__name{font:700 14px "Bricolage Display",system-ui;color:#f2b33d;margin-bottom:4px}
 .wip-player-health__bar{width:100%;height:10px;border-radius:99px;background:rgba(255,255,255,0.2);overflow:margin-top:4px}
 .wip-player-health__fill{height:100%;width:100%;background:linear-gradient(90deg,#f2b33d,#e8742c);transition:width .1s}
+
+/* Pause state and buttons */
+.wip-paused *{pointer-events:none!important}
+.wip-pause-btn{position:fixed;top:20px;right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,107,107,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;font:700 16px system-ui;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9999;transition:background .15s}
+.wip-pause-btn:hover{background:rgba(255,107,107,0.4)}
+.wip-pause-btn:focus-visible{outline:none;border-color:#f2b33d;background:rgba(242,179,61,0.3)}
+.wip-map-btn{position:fixed;top:20px;right:70px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;font:700 16px system-ui;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:9999;transition:background .15s}
+.wip-map-btn:hover{background:rgba(255,255,255,0.2)}
+.wip-map-btn:focus-visible{outline:none;border-color:#f2b33d;background:rgba(242,179,61,0.3)}
+
+/* Map overlay */
+.wip-map-overlay{position:fixed;top:0;right:0;width:300px;height:300px;max-width:90vw;max-height:80vh;background:rgba(10,12,16,0.9);border:1px solid rgba(255,255,255,0.1);border-left:0;z-index:9998;pointer-events:none;display:none}
+.wip-map-overlay.on{display:block;pointer-events:auto}
+.wip-map-overlay .wip-map-canvas{position:relative;width:100%;height:100%}
+.wip-map-overlay .wip-map-window{border:2px solid #f2b33d;border-radius:8px;background:rgba(255,255,255,0.05);position:relative;width:100%;height:100%}
+.wip-map-overlay .wip-map-marker{position:absolute;width:8px;height:8px;border-radius:50%;background:#f2b33d;pointer-events:auto;transition:transform .15s}
+.wip-map-overlay .wip-map-marker:hover{transform:scale(1.3)}
+.wip-map-overlay .wip-map-title{position:absolute;top:8px;left:8px;font:700 14px system-ui;color:#f2b33d}
 `;
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", text = ""): HTMLElementTagNameMap[K] => {
@@ -272,7 +290,7 @@ const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", text = ""):
   return e;
 };
 
-type Screen = "title" | "main" | "creator" | "settings" | "credits" | "missions" | "loading";
+type Screen = "title" | "main" | "creator" | "settings" | "credits" | "missions" | "loading" | "pause";
 
 /** Where the creator's turntable stands: the quad lawn, the flame trees and the Senate dome behind. */
 const STAGE = { x: -16, z: -172, yaw: 0 };
@@ -392,6 +410,7 @@ export class Menu {
     if (id === "settings") this.buildSettings();
     if (id === "credits") this.buildCredits();
     if (id === "missions") this.buildMissions();
+    if (id === "pause") this.buildPause();
     if (id === "main") this.buildMain();
     if (id === "loading") this.buildLoading();
     for (const [k, s] of this.screens) s.classList.toggle("on", k === id);
@@ -403,6 +422,7 @@ export class Menu {
     this.focusList = [...(this.screens.get(id)?.querySelectorAll<HTMLElement>(".mn-item:not([disabled]), .mn-btn, .mn-tab") ?? [])];
     this.focusIdx = 0;
     if (id === "main") this.select(0);
+    if (id === "pause") this.select(0);
   }
 
   private select(i: number): void {
@@ -943,6 +963,35 @@ export class Menu {
       b.onclick = () => this.opts.onPlay(loadLook(), this.progress.name, false, m.key);
       body.append(b);
     }
+  }
+
+  private buildPause(): void {
+    const { body } = this.sheetPanel("Paused", "Game paused — change settings or return.");
+    const resume = el("button", "mn-btn primary", "Resume");
+    resume.type = "button";
+    resume.onclick = () => {
+      this.blip("back");
+      this.showScreen("main");
+    };
+    const settings = el("button", "mn-btn", "Settings");
+    settings.type = "button";
+    settings.onclick = () => {
+      this.blip("move");
+      this.showScreen("settings");
+    };
+    const restart = el("button", "mn-btn", "Restart Mission");
+    restart.type = "button";
+    restart.onclick = () => {
+      this.blip("ok");
+      this.showScreen("main");
+    };
+    const quit = el("button", "mn-btn", "Quit to Title");
+    quit.type = "button";
+    quit.onclick = () => {
+      this.blip("back");
+      this.showScreen("title");
+    };
+    body.append(resume, settings, restart, quit);
   }
 
   /* ------------------------------------------------------------ input */

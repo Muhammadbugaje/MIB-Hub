@@ -87,8 +87,8 @@ export interface Look {
   expression?: { smile?: number; tired?: number; blink?: number; talk?: number; laugh?: number; sad?: number };
 }
 
-export const FEMALE_MODELS = ["animwoman", "womandress", "womancasual"];
-export const MALE_MODELS = ["casual", "hoodie", "business", "man", "manlong", "mansuit", "farmer"];
+export const FEMALE_MODELS = ["jiya", "taty", "zainab"];
+export const MALE_MODELS = ["muhammad", "the_maker", "bature"];
 
 export const SKIN_TONES = ["#4a2e1f", "#5a3a26", "#6b4430", "#7a4e34", "#8d5b3c", "#a06a46", "#b5794f", "#c68a5e", "#d9a77c", "#e8c3a0"];
 export const HAIR = ["#141010", "#1d1512", "#2a1d16", "#3b2a1e", "#0e0c0c"];
@@ -865,3 +865,6 @@ export class PersonRig {
     }
   }
 }
+
+/** Global crowd instance pool by style key. (Disabled until PlayCanvas instancing API matches.) */
+export const CROWD_INSTANCES: Map<string, { inst: null; poses: { x: number; y: number; z: number; yaw: number; sx: number; sy: number; sz: number }[] }> = new Map();

@@ -679,7 +679,7 @@ function theatre(s: Site, B: Building, rng: Rng, ctx: BuildCtx): void {
   const { w, d } = B, H = 8.5;
   const BRICK: RGBA = hex("#c46a4a"), CON: RGBA = hex("#e9e2d2");
   s.at(0, 0).tint(CON).box("stone", 0, 0, 0, w + 0.3, 0.7, d + 0.3, 4);
-  s.at(0, 0).tint(BRICK).box("brick", 0, 0.7, -1, w, H - 0.7, d - 2, 2, ["bottom"]);
+  s.at(0, 0).tint(BRICK).box("brick", 0, 0, -1, w, H, d - 2, 2, ["bottom"]);
   // The roof slopes up towards the back (the raked seating), with a concrete fascia.
   const back = s.at(0, -d / 2 + 1);
   back.tint(BRICK).box("brick", 0, H, 0, w, 3.2, 2, 2);
