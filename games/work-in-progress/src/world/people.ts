@@ -347,7 +347,7 @@ function eyeMaterial(kit: BaseKit): pc.StandardMaterial {
 /** The FORMAT.md `actor.anim` names (and a few more the scripts use). */
 export type AnimName =
   | "sit" | "stand" | "hug" | "wave" | "phone" | "eat" | "look" | "gesture" | "laugh" | "shock" | "point" | "nod" | "shake_head"
-  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "kick" | "block" | "sign" | "fall" | "hit" | "idle" | "talk" | "sit_floor";
+  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "kick" | "block" | "sign" | "fall" | "hit" | "idle" | "talk" | "sit_floor" | "roll";
 
 /**
  * Names the missions use and how each plays now. Every one has a real clip
@@ -384,6 +384,7 @@ export const ACT_CLIPS: Record<AnimName, { clip: string; layer: "full" | "upper"
   oath: { clip: "raise_hand", layer: "upper", hold: true },
   punch: { clip: "shove", layer: "full", dur: 1.2, then: "idle" },
   kick: { clip: "kick", layer: "full", dur: 1.5, then: "stand" },
+  roll: { clip: "flinch", layer: "full", dur: 0.5, then: "idle" },
   fall: { clip: "knock_down", layer: "full" },
   hit: { clip: "flinch", layer: "upper" },
   block: { clip: "block", layer: "upper", dur: 1.0, then: "stand" },

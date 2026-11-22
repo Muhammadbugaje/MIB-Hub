@@ -15,6 +15,7 @@ export const SFX_CUES = [
   "cock_crow_wrong_time", "goat_bell_fast", "clock_strike_single_far", "rubber_stamp", "power_down_whine", "hostel_groan_wave", "knock_three",
   "radio_static", "three_notes", "wind_gust", "knuckle_crack", "ball_miss_whoosh", "goalpost_clang", "book_shut", "kettle_boil", "coil_hum_low", "coil_crack",
   "locker_creak_grand", "locker_slam", "keys_jingle_stairs", "phone_ring", "phone_text", "bank_alert", "pickup", "mission_pass", "door", "whistle", "kick", "light_back",
+  "car_engine_idle", "car_engine_rev", "car_skid", "car_horn", "car_crash", "bike_engine", "bike_skid", "fight_punch_whoosh", "fight_punch_hit", "fight_kick_hit", "fight_block", "fight_pain_1", "fight_pain_2",
 ] as const;
 export const MUSIC_CUES = ["main_theme_dawn", "queue_theme", "anthem_brass", "mystery_thread", "plug_theme", "dark_quiet"] as const;
 
@@ -114,6 +115,28 @@ export class Sfx {
     g.gain.exponentialRampToValueAtTime(0.0001, start + dur);
     s.connect(f).connect(g).connect(this.out!);
     s.start(start);
+  }
+
+  /** Short repeating engine idling note (car or bike), played every ~0.4s. */
+  private carLoop(start: number, freq: number, vol: number, type: OscillatorType): void {
+    const c = this.ctx!;
+    const o = c.createOscillator();
+    const g = c.createGain();
+    o.type = type;
+    o.frequency.value = freq;
+    g.gain.value = vol;
+    o.connect(g).connect(this.out!);
+    o.start(start);
+    o.stop(start + 0.35);
+    // repeat once to sustain
+    const o2 = c.createOscillator();
+    const g2 = c.createGain();
+    o2.type = type;
+    o2.frequency.value = Math.floor(freq * 1.05);
+    g2.gain.value = vol * 0.7;
+    o2.connect(g2).connect(this.out!);
+    o2.start(start + 0.18);
+    o2.stop(start + 0.5);
   }
 
   play(cue: string): void {
@@ -235,6 +258,21 @@ export class Sfx {
       case "ko":
         [110, 82, 55].forEach((f, i) => this.tone(f, t + i * 0.15, 0.5, "sawtooth", 0.12));
         break;
+      // --- vehicle sounds ---
+      case "car_engine_idle": this.carLoop(t, 90, 0.15, "sawtooth"); break;
+      case "car_engine_rev": this.tone(130, t, 0.3, "sawtooth", 0.25); break;
+      case "car_skid": this.noise(t, 0.4, 0.25, 80, 40, 1); break;
+      case "car_horn": this.tone(220, t, 0.5, "square", 0.2); this.tone(262, t + 0.05, 0.5, "square", 0.15); break;
+      case "car_crash": this.noise(t, 0.5, 0.5, 60, 120, 1.5); this.tone(60, t, 0.8, "sawtooth", 0.3); break;
+      case "bike_engine": this.carLoop(t, 140, 0.12, "square"); break;
+      case "bike_skid": this.noise(t, 0.35, 0.2, 100, 50, 0.8); break;
+      // --- fighting sounds ---
+      case "fight_punch_whoosh": this.tone(400, t, 0.1, "sine", 0.12); this.tone(200, t + 0.05, 0.12, "sine", 0.08); break;
+      case "fight_punch_hit": this.noise(t, 0.15, 0.1, 80, 150, 0.5); this.tone(150, t, 0.2, "sine", 0.2); break;
+      case "fight_kick_hit": this.noise(t, 0.25, 0.12, 60, 100, 0.7); this.tone(110, t, 0.25, "sawtooth", 0.25); break;
+      case "fight_block": this.tone(700, t, 0.08, "square", 0.18); this.tone(1050, t + 0.02, 0.08, "square", 0.12); break;
+      case "fight_pain_1": this.tone(280, t, 0.4, "sine", 0.18); break;
+      case "fight_pain_2": this.tone(220, t, 0.5, "sawtooth", 0.2); break;
     }
   }
 

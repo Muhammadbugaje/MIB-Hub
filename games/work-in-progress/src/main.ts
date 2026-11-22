@@ -61,6 +61,7 @@ import { Birds, FallingLeaves, Sky, Smoke } from "./world/sky.ts";
 import { StaticWorld } from "./world/static.ts";
 import { Traffic, loadCars } from "./world/vehicles.ts";
 import { surfaceHeight as surfaceAt } from "./world/surface.ts";
+import type { HijackKind } from "./game/vehicle-hijack.ts";
 
 const params = new URLSearchParams(location.search);
 const num = (k: string, d: number) => (params.has(k) && Number.isFinite(Number(params.get(k))) ? Number(params.get(k)) : d);
@@ -194,6 +195,7 @@ async function boot(): Promise<void> {
   const g = new StoryGame({
     app, cam, mats, people, col, nav: navGrid, doors, low: LOW, interiors, hudRoot: hud.root, story,
     carEntity: (k, c) => traffic.carEntity(k, c),
+    trafficVehicles: traffic.vehicles.map((v) => ({ x: v.x, z: v.z, kind: v.kind as HijackKind, speed: v.speed })),
     setAmbience: (inside) => ambience.setMuted(inside || settings.soundVolume === 0),
     letterbox: (on) => hud.letterbox(on),
     subtitle: (w, t) => hud.subtitle(settings.subtitles ? w : null, t),

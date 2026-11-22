@@ -22,8 +22,13 @@ export const ALIASES: Record<string, string> = {
   hug: "hug_a", handshake: "handshake_a", run_start: "walk_start", turn_180: "run_pivot_180", jump_air: "fall_loop", land_run: "jump_run",
   celebrate: "victory", idle_tired: "walk_tired", idle_impatient: "idle_shift", idle_phone_check: "phone_text", carry_on_head: "carry_head_idle",
   eat_suya: "eat_stand", hit_react_light: "flinch", put_down: "pick_up", give: "handshake_a", receive: "handshake_b", wake_up: "stand_up_floor",
-  guard_idle: "football_idle", stumble_fwd: "flinch", drop_down: "land_soft", sprint_skid_stop: "run_stop", car_enter: "sit_down",
+  guard_idle: "football_idle", stumble_fwd: "flinch", drop_down: "land_soft", sprint_skid_stop: "run_stop",
   high_five: "handshake_a", phone_photo: "phone_text", bike_fall: "knock_down", dodge_L: "flinch", block: "flinch",
+  // Vehicle entry / exit animations
+  car_exit: "car_exit", okada_enter: "okada_ride", okada_exit: "bike_dismount",
+  keke_enter: "keke_drive", keke_exit: "stand_up",
+  // Combat dodge
+  roll: "flinch",
 };
 
 const MIRROR: Int16Array = (() => {

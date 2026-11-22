@@ -54,7 +54,7 @@ import type { Doors } from "../world/door-models.ts";
 import { placeOf } from "./nav-routes.ts";
 import { Combat, KO_FINE, WAKE_POSITIONS } from "./combat.ts";
 import { CheatManager } from "./cheats.ts";
-import { VehicleHijack } from "./vehicle-hijack.ts";
+import { VehicleHijack, type HijackKind } from "./vehicle-hijack.ts";
 
 export class Abort extends Error {
   constructor() {
@@ -84,6 +84,8 @@ export interface GameDeps {
   hudRoot: HTMLElement;
   story: StoryBundle;
   carEntity: (key: string, colour: string) => pc.Entity;
+  /** Traffic vehicles currently on the road (for car-on-car collisions). */
+  trafficVehicles?: { x: number; z: number; kind: HijackKind; speed: number }[];
   /** The game's ambience (muted indoors, ducked in cutscenes). */
   setAmbience: (inside: boolean) => void;
   letterbox: (on: boolean) => void;
@@ -1628,9 +1630,13 @@ export class StoryGame implements StageWorld {
       this.combat?.enemyTurn(dt);
       // Player can still move in a fight (dodge, close distance).
       this.player.step(dt, { ...inp, moveX: inp.moveX, moveY: inp.moveY, run: false }, this.follow ? this.follow.yaw : 0);
-      // Combat: player punch/kick/block input (only when in combat mode).
+      // Combat: player punch/kick/block/dodge/heavy input (only when in combat mode).
       if (this.combat) {
-        this.combat.playerInput({ punch: inp.punch, kick: inp.kick, block: inp.block });
+        this.combat.playerInput({
+          punch: inp.punch, kick: inp.kick, block: inp.block,
+          dodge: inp.pressed.has("roll") || inp.pressed.has("shift"),
+          heavy: inp.pressed.has("r") || inp.pressed.has("f"),
+        });
       }
       // Camera follows the fight.
       if (this.combat && this.follow) {
@@ -1641,7 +1647,7 @@ export class StoryGame implements StageWorld {
       }
     } else if (this.mode === "drive") {
       if (this.hijack.active) {
-        this.hijack.step(dt, inp.moveX, inp.moveY);
+        this.hijack.step(dt, inp.moveX, inp.moveY, inp.handbrake || false);
       } else {
         this.stepDrive(dt, inp);
       }
@@ -1670,6 +1676,13 @@ export class StoryGame implements StageWorld {
       if (where !== this.place) this.setPlace(where);
     }
     for (const k of ["turbo", "zobo", "kola"] as const) this.boosts[k] = Math.max(0, this.boosts[k] - dt);
+    // Vehicle vs vehicle collision: hijacked car hitting traffic vehicles.
+    if (this.hijack.active) {
+      for (const v of this.d.trafficVehicles ?? []) {
+        this.hijack.collideVehicle(v.x, v.z, v.kind, v.speed);
+      }
+    }
+
     // Everyone the story walks: leaders, followers, the goat (navigation grid, avoidance, doors).
     const ob = this.navs.obstacles;
     ob.length = 0;

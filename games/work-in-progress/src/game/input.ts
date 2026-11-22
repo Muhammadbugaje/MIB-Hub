@@ -24,6 +24,8 @@ export interface InputState {
   kick?: boolean;
   /** Guard: reduces damage, can parry. */
   block?: boolean;
+  /** Handbrake when driving (drift). */
+  handbrake?: boolean;
   lookDX: number;
   lookDY: number;
   zoom: number;
@@ -163,15 +165,15 @@ export class Input {
   /** Touches on menus, panels and form controls belong to the page (tap, scroll), never to the stick or camera. */
   private static isUi(target: EventTarget | null): boolean {
     const el = target as HTMLElement | null;
-    // Also check for canvas and game container elements
     if (!el) return false;
     const uiSelectors = [
       "button, a, input, select, textarea, label",
       "[role=button], [data-ui]",
-      ".wip-menu, .mn-screen, .mn-panel, .mn-body, .mn-side, .mn-scrim, .mi-sheet",
+      ".wip-menu, .mn-screen, .mn-panel, .mn-body, .mn-side, .mn-scrim, .mn-item, .mn",
       ".wip-chips .wip-chip--text",
       ".wip-opts",
       ".wip-play",
+      ".wip-stick, .wip-knob, .wip-run, .wip-punch, .wip-kick, .wip-block",
     ];
     return uiSelectors.some(selector => el.closest(selector));
   }
@@ -253,6 +255,7 @@ export class Input {
     const p = k.has("f") || this.keys.has("f");
     const ki = k.has("g") || this.keys.has("g");
     const b = k.has("b") || this.keys.has("b");
+    const hb = k.has(" ");
     if (p !== this.keys.has("f")) this.pressedQ.add("punch");
     if (ki !== this.keys.has("g")) this.pressedQ.add("kick");
     if (b !== this.keys.has("b")) this.pressedQ.add("block");
@@ -274,6 +277,7 @@ export class Input {
       run: k.has("shift") || this.touchRun || stickFar,
       walk: k.has("alt"),
       jumpHeld: k.has(" "),
+      handbrake: k.has(" "),
       punch: this.pressedQ.has("punch"),
       kick: this.pressedQ.has("kick"),
       block: this.pressedQ.has("block"),
