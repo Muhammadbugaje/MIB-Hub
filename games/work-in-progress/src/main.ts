@@ -469,8 +469,15 @@ async function boot(): Promise<void> {
     const targetFPS = 45;
     const actualFPS = fpsT > 0 ? fpsN / fpsT : 60;
     const fpsDiff = actualFPS - targetFPS;
-    if (Math.abs(fpsDiff) > 5) {
+    // If FPS is significantly below target, immediately drop to low quality
+    if (actualFPS < targetFPS - 10) {
       const quality = params.get("quality");
+      if (quality !== "low") {
+        params.set("quality", "low");
+        Q.npcs = Math.min(8, settings.npcs); Q.shadowRes = 256; Q.cascades = 0; Q.shadowDist = 25;
+        Q.cars = 3; Q.okadas = 2; Q.kekes = 1; Q.birds = 6; Q.leaves = 10; Q.lights = 1;
+      }
+    } else if (Math.abs(fpsDiff) > 5) {
       if (actualFPS < targetFPS - 5 && quality !== "low") {
         params.set("quality", "low");
         Q.npcs = Math.min(8, settings.npcs); Q.shadowRes = 256; Q.cascades = 0; Q.shadowDist = 25;
@@ -570,7 +577,12 @@ async function boot(): Promise<void> {
   const view = params.get("view") as keyof typeof VIEWPOINTS | null;
   if (params.has("menu")) {
     hud.hideLoading();
-    menu = new Menu(host, app, cam, people, settings, progress, { story: story.missions, debug: DEBUG, onPlay: () => undefined });
+    menu = new Menu(host, app, cam, people, settings, progress, { story: story.missions, debug: DEBUG, onPlay: (look, name, fresh) => {
+      menu?.dispose();
+      menu = null;
+      if (fresh) progress = { ...newProgress(name), version: progress.version };
+      startStory(look, name, progress, { fresh });
+    }});
     g.hours = num("time", menu.hour);
     menu.showScreen(params.get("menu") as "title");
     if (SHOT) {

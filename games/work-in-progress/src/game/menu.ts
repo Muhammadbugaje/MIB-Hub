@@ -177,7 +177,7 @@ const css = `
 .mn-side{position:absolute;left:clamp(16px,6vw,84px);top:50%;transform:translateY(-50%);width:min(380px,calc(100vw - 32px))}
 .mn-side .mn-mini{font:800 clamp(30px,5vw,46px)/.95 "Bricolage Display",system-ui;letter-spacing:-.03em;margin:0 0 6px;background:linear-gradient(100deg,#fff4d6,#f2b33d 50%,#e8742c);-webkit-background-clip:text;background-clip:text;color:transparent}
 .mn-side .mn-sub{margin:0 0 22px;color:rgba(255,250,240,.75)}
-.mn-item{display:flex;align-items:center;gap:14px;width:100%;min-height:54px;margin:6px 0;padding:12px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(16,20,28,.66);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);color:#fffaf0;font:800 18px/1 "Bricolage Display",system-ui;letter-spacing:-.01em;text-align:left;cursor:pointer;opacity:0;transform:translateX(-14px);transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .45s,background .2s,border-color .2s,box-shadow .2s}
+.mn-item{display:flex;align-items:center;gap:14px;width:100%;min-height:54px;margin:6px 0;padding:12px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.14);background:rgba(16,20,28,.66);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);color:#fffaf0;font:800 18px/1 "Bricolage Display",system-ui;letter-spacing:-.01em;text-align:left;cursor:pointer;opacity:0;transform:translateX(-14px);transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .45s,background .2s,border-color .2s,box-shadow .2s;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .mn-screen.on .mn-item{opacity:1;transform:none}
 .mn-item small{margin-left:auto;font:600 12px system-ui;color:rgba(255,250,240,.6);letter-spacing:0}
 .mn-item:hover,.mn-item:focus-visible,.mn-item.sel{outline:none;background:linear-gradient(100deg,rgba(242,179,61,.95),rgba(232,116,44,.95));border-color:transparent;color:#1b1408;box-shadow:0 10px 30px rgba(232,116,44,.35);transform:translateX(6px)}
@@ -204,7 +204,7 @@ const css = `
 .mn-field{width:100%;min-height:48px;padding:10px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.14);background:rgba(0,0,0,.25);color:#fff;font:700 17px system-ui}
 .mn-field:focus{outline:none;border-color:#f2b33d}
 .mn-foot{display:flex;gap:10px;padding:14px 22px calc(14px + env(safe-area-inset-bottom));border-top:1px solid rgba(255,255,255,.08);background:rgba(10,12,16,.4)}
-.mn-btn{min-height:50px;padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font:800 15px system-ui;cursor:pointer}
+.mn-btn{min-height:50px;padding:12px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font:800 15px system-ui;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .mn-btn:hover,.mn-btn:focus-visible{outline:none;border-color:rgba(255,255,255,.5)}
 .mn-btn.primary{flex:1;border:0;background:linear-gradient(100deg,#f2b33d,#e8742c);color:#1b1408;font:800 19px "Bricolage Display",system-ui;box-shadow:0 10px 30px rgba(232,116,44,.35)}
 .mn-zoom{position:absolute;right:clamp(14px,3vw,30px);top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
@@ -235,6 +235,34 @@ const css = `
 .mn.reduced .mn-screen,.mn.reduced .mn-item,.mn.reduced .mn-logo h1 span{transition:none!important}
 .mn.reduced .mn-grain{animation:none}
 .mn.reduced .mn-press,.mn.reduced .mn-logo p,.mn.reduced .mn-rule{transition:none!important;animation:none!important}
+
+/* Phone UI styles */
+.wip-phone{position:absolute;right:0;bottom:0;width:280px;max-height:70vh;background:linear-gradient(180deg,rgba(18,22,28,0.95) 0%,rgba(10,14,18,0.98) 100%);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-left:1px solid rgba(255,255,255,0.2);border-top:1px solid rgba(255,255,255,0.1);padding:20px;color:#fffaf0;overflow-y:auto;z-index:100;display:none}
+.wip-phone.on{display:block}
+.wip-phone-header{display:flex;justify-content:between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid rgba(255,255,255,0.2);margin-bottom:15px}
+.wip-phone-header h3{margin:0;font:700 16px "Bricolage Display",system-ui;color:#f2b33d;letter-spacing:.02em}
+.wip-phone-close{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.3);color:#fff;font:800 14px system-ui;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.wip-phone-close:hover{background:rgba(255,107,107,0.2)}
+.wip-phone-section{margin-bottom:15px}
+.wip-phone-section h3{margin:0 0 12px 0;font:700 13px "Bricolage Display",system-ui;color:#f2b33d;letter-spacing:.02em;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.1);font-size:12px}
+.wip-phone-section ul{list-style:none;padding:0;margin:0}
+.wip-phone-section li{margin:6px 0;padding:6px 8px;border-radius:6px;background:rgba(255,255,255,0.08);cursor:pointer;transition:background .15s}
+.wip-phone-section li:hover{background:rgba(255,255,255,0.12)}
+.wip-phone-section li.active{background:rgba(242,179,61,0.15);color:#f2b33d}
+.wip-phone-health{margin-top:15px;padding:10px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;background:rgba(255,255,255,0.05)}
+.wip-phone-health__name{font:700 13px system-ui;color:#fffaf0;margin-bottom:4px}
+.wip-phone-health__bar{width:100%;height:8px;border-radius:99px;background:rgba(255,255,255,0.1);overflow:hidden;margin-top:4px}
+.wip-phone-health__fill{height:100%;width:70%;background:linear-gradient(90deg,#f2b33d,#e8742c);transition:width .15s}
+@media (max-width:640px){
+ .wip-phone{right:0;bottom:0;left:0;width:100%;max-height:none;height:70vh;border-radius:20px 20px 0 0}
+}
+
+/* Player health bar (top-left, moved from center with proper label) */
+.wip-player-health{position:fixed;top:10px;left:10px;background:rgba(0,0,0,0.5);border-radius:8px;padding:8px;color:#fffaf0;display:none;z-index:999}
+.wip-player-health.on{display:block}
+.wip-player-health__name{font:700 14px "Bricolage Display",system-ui;color:#f2b33d;margin-bottom:4px}
+.wip-player-health__bar{width:100%;height:10px;border-radius:99px;background:rgba(255,255,255,0.2);overflow:margin-top:4px}
+.wip-player-health__fill{height:100%;width:100%;background:linear-gradient(90deg,#f2b33d,#e8742c);transition:width .1s}
 `;
 
 const el = <K extends keyof HTMLElementTagNameMap>(tag: K, cls = "", text = ""): HTMLElementTagNameMap[K] => {

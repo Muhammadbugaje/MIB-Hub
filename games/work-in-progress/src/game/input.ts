@@ -93,7 +93,6 @@ export class Input {
 
   /** Show the on-screen joystick and run button (phones and tablets). */
   mountTouchUi(host: HTMLElement): void {
-    if (!this.touch) return;
     const stick = document.createElement("div");
     stick.className = "wip-stick";
     const knob = document.createElement("div");

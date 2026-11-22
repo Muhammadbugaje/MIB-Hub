@@ -62,6 +62,19 @@ export class Hud {
   private enemyHealth: HTMLElement | null = null;
   private enemyHealthBar: HTMLElement | null = null;
   private enemyHealthName: HTMLElement | null = null;
+  private phone: HTMLElement | null = null;
+  private phoneMission: HTMLElement | null = null;
+  private phoneGoals: HTMLElement | null = null;
+  private phoneHelp: HTMLElement | null = null;
+  private phoneSettings: HTMLElement | null = null;
+  private phoneHints: HTMLElement | null = null;
+  private phoneClues: HTMLElement | null = null;
+  private phoneMessages: HTMLElement | null = null;
+  private phoneClasses: HTMLElement | null = null;
+  private phoneCamera: HTMLElement | null = null;
+  private phoneHealth: HTMLElement | null = null;
+  private phoneHealthBar: HTMLElement | null = null;
+  private phoneHealthName: HTMLElement | null = null;
   private top = el("div", "wip-bar wip-bar--top");
   private bottom = el("div", "wip-bar wip-bar--bottom");
   private sub = el("div", "wip-sub");
@@ -119,7 +132,53 @@ export class Hud {
     this.enemyHealth.hidden = true;
     this.root.append(this.enemyHealth);
 
+    // Phone UI
+    this.phone = el("div", "wip-phone");
+    this.root.append(this.phone);
+    this.phoneMission = el("div", "wip-phone-section");
+    this.phoneMission.innerHTML = "<h3>Missions</h3><ul></ul>";
+    this.phoneGoals = el("div", "wip-phone-section");
+    this.phoneGoals.innerHTML = "<h3>Goals</h3><ul></ul>";
+    this.phoneHelp = el("div", "wip-phone-section");
+    this.phoneHelp.innerHTML = "<h3>Help</h3><ul></ul>";
+    this.phoneSettings = el("div", "wip-phone-section");
+    this.phoneSettings.innerHTML = "<h3>Settings</h3><ul></ul>";
+    this.phoneHints = el("div", "wip-phone-section");
+    this.phoneHints.innerHTML = "<h3>Hints</h3><ul></ul>";
+    this.phoneClues = el("div", "wip-phone-section");
+    this.phoneClues.innerHTML = "<h3>Clues</h3><ul></ul>";
+    this.phoneMessages = el("div", "wip-phone-section");
+    this.phoneMessages.innerHTML = "<h3>Messages</h3><ul></ul>";
+    this.phoneClasses = el("div", "wip-phone-section");
+    this.phoneClasses.innerHTML = "<h3>Classes</h3><ul></ul>";
+    this.phoneCamera = el("div", "wip-phone-section");
+    this.phoneCamera.innerHTML = "<h3>Camera</h3><ul></ul>";
+    this.phoneHealth = el("div", "wip-phone-health");
+    this.phoneHealthName = el("div", "wip-phone-health__name", "Health");
+    this.phoneHealthBar = el("div", "wip-phone-health__bar");
+    const phoneHealthFill = el("div", "wip-phone-health__fill");
+    this.phoneHealthBar.append(phoneHealthFill);
+    this.phoneHealth.append(this.phoneHealthName, this.phoneHealthBar);
+    this.phoneSettings.append(this.phoneHealth);
+    this.phone.clicked = false;
+    this.phone.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.phone.clicked = !this.phone.clicked;
+      this.phoneSettings.classList.toggle("on", this.phone.clicked);
+      this.phoneHelp.classList.toggle("on", !this.phone.clicked);
+    });
+
     this.root.append(this.hud, this.top, this.bottom, this.sub, this.fader, this.skip, this.toast, this.loading);
+
+    // Player health bar (moved from center to top-left with proper label)
+    this.playerHealth = el("div", "wip-player-health");
+    this.playerHealthName = el("div", "wip-player-health__name", "Health");
+    this.playerHealthBar = el("div", "wip-player-health__bar");
+    const playerHealthFill = el("div", "wip-player-health__fill");
+    this.playerHealthBar.append(playerHealthFill);
+    this.playerHealth.append(this.playerHealthName, this.playerHealthBar);
+    this.root.insertBefore(this.playerHealth, this.hud);
+    this.playerHealth.hidden = true;
   }
 
   progress(f: number, msg?: string): void {
@@ -135,10 +194,12 @@ export class Hud {
 
   showHud(on: boolean): void {
     this.hud.hidden = !on;
+    this.playerHealth.hidden = !on;
   }
 
   toggleHud(): void {
     this.hud.hidden = !this.hud.hidden;
+    this.playerHealth.hidden = !this.playerHealth.hidden;
   }
 
   setClock(text: string, speedLabel: string): void {
@@ -167,6 +228,20 @@ export class Hud {
     if (this.enemyHealthName) this.enemyHealthName.textContent = name;
     if (this.enemyHealthBar) {
       const fill = this.enemyHealthBar.firstElementChild as HTMLElement | null;
+      if (fill) fill.style.width = `${Math.round(Math.max(0, Math.min(1, health)) * 100)}%`;
+    }
+  }
+
+  setPlayerHealth(name: string | null, health: number | null): void {
+    if (!this.playerHealth) return;
+    if (name === null || health === null) {
+      this.playerHealth.hidden = true;
+      return;
+    }
+    this.playerHealth.hidden = false;
+    if (this.playerHealthName) this.playerHealthName.textContent = name;
+    if (this.playerHealthBar) {
+      const fill = this.playerHealthBar.firstElementChild as HTMLElement | null;
       if (fill) fill.style.width = `${Math.round(Math.max(0, Math.min(1, health)) * 100)}%`;
     }
   }

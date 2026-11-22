@@ -267,7 +267,7 @@ function gothic(s: Site, B: Building, rng: Rng, ctx: BuildCtx): void {
   const { w, d } = B, FH = 4, H = FH * 3;
   const brickT: RGBA = [255, 255, 255, 255];
   s.at(0, 0).tint(STONE).box("stone", 0, 0, 0, w + 0.3, 0.9, d + 0.3, 4);
-  s.at(0, 0).tint(brickT).box("brick", 0, 0.9, 0, w, H - 0.9, d, 2, ["bottom"]);
+  s.at(0, 0).tint(brickT).box("brick", 0, 0, 0, w, H, d, 2, ["bottom"]);
   // Stone string courses.
   for (const y of [FH, FH * 2, H]) s.at(0, 0).tint(STONE).box("stone", 0, y - 0.15, 0, w + 0.24, 0.3, d + 0.24, 4);
   // Steep slate roof with dormers.
