@@ -7,7 +7,7 @@
  * for the HTML shell.
  */
 
-const CACHE = "wip-v1";
+const CACHE = "wip-v2";
 const SHELL = ["/games/work-in-progress/", "/games/work-in-progress/index.html"];
 
 const ASSET_PATTERNS = [
