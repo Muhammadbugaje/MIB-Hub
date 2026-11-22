@@ -29,6 +29,9 @@ export const ALIASES: Record<string, string> = {
   keke_enter: "keke_drive", keke_exit: "stand_up",
   // Combat dodge
   roll: "flinch",
+  // Emotion / expression animations
+  smile: "laugh", phone_text_walk: "walk_phone", car_enter: "car_drive",
+  hit_by_car: "knock_down", hit_by_bike: "knock_down",
 };
 
 const MIRROR: Int16Array = (() => {

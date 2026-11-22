@@ -75,7 +75,7 @@ export interface Look {
   hair: string;
   /** Colours for the clothing slots, in slot order. */
   outfit: string[];
-  headwear: "none" | "hijab" | "cap";
+  headwear: "none" | "hijab" | "cap" | "earphones";
   headwearColor: string;
   /** Hijab style (default "wrap"); see world/headwear.ts. */
   hijabStyle?: HijabStyle;
@@ -347,7 +347,7 @@ function eyeMaterial(kit: BaseKit): pc.StandardMaterial {
 /** The FORMAT.md `actor.anim` names (and a few more the scripts use). */
 export type AnimName =
   | "sit" | "stand" | "hug" | "wave" | "phone" | "eat" | "look" | "gesture" | "laugh" | "shock" | "point" | "nod" | "shake_head"
-  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "kick" | "block" | "sign" | "fall" | "hit" | "idle" | "talk" | "sit_floor" | "roll";
+  | "carry" | "write" | "kneel" | "sleep" | "cheer" | "facepalm" | "horns" | "clap" | "hold_torch" | "oath" | "punch" | "kick" | "block" | "sign" | "fall" | "hit" | "idle" | "talk" | "sit_floor" | "roll" | "smile" | "car_enter";
 
 /**
  * Names the missions use and how each plays now. Every one has a real clip
@@ -385,6 +385,8 @@ export const ACT_CLIPS: Record<AnimName, { clip: string; layer: "full" | "upper"
   punch: { clip: "shove", layer: "full", dur: 1.2, then: "idle" },
   kick: { clip: "kick", layer: "full", dur: 1.5, then: "stand" },
   roll: { clip: "flinch", layer: "full", dur: 0.5, then: "idle" },
+  smile: { clip: "laugh", layer: "upper", dur: 2.0 },
+  car_enter: { clip: "car_drive", layer: "full", dur: 3.0 },
   fall: { clip: "knock_down", layer: "full" },
   hit: { clip: "flinch", layer: "upper" },
   block: { clip: "block", layer: "upper", dur: 1.0, then: "stand" },
@@ -535,6 +537,34 @@ export class Person {
     // Cap: a short cylinder on the crown, sized from the skeleton (head bone to the top of the head).
     const hp = head.getPosition(), tp = top?.getPosition() ?? hp.clone().add(new pc.Vec3(0, 0.2, 0));
     const r = hp.distance(tp) * 0.5;
+
+    if (look.headwear === "earphones") {
+      // Earphones: reuse the cap mesh geometry as small loops over the ears, black band across the head.
+      const headMat = new pc.StandardMaterial();
+      headMat.diffuse = new pc.Color(0.05, 0.05, 0.05);
+      headMat.gloss = 0.3;
+      headMat.useMetalness = true;
+      headMat.metalness = 0.1;
+      headMat.update();
+      const cap = capMeshFor(app.graphicsDevice);
+      const earR = new pc.Entity("earphone-r");
+      const earL = new pc.Entity("earphone-l");
+      [earR, earL].forEach((e) => {
+        e.addComponent("render", { meshInstances: [new pc.MeshInstance(cap, headMat)], castShadows: true });
+        e.setLocalScale(0.35, 0.2, 0.35);
+        head.addChild(e);
+      });
+      earR.setLocalPosition(r * 0.85, 0, 0);
+      earL.setLocalPosition(-r * 0.85, 0, 0);
+      const band = new pc.Entity("earphone-band");
+      band.addComponent("render", { meshInstances: [new pc.MeshInstance(cap, headMat)], castShadows: true });
+      band.setLocalRotation(new pc.Quat().setFromEulerAngles(0, 90, 0));
+      band.setLocalPosition(0, r * 0.6, 0);
+      band.setLocalScale(0.85, 0.05, 0.05);
+      head.addChild(band);
+      return;
+    }
+
     const mat = new pc.StandardMaterial();
     mat.diffuse = new pc.Color().fromString(look.headwearColor);
     mat.diffuseVertexColor = true;
