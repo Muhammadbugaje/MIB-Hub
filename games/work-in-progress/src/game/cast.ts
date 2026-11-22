@@ -44,32 +44,43 @@ export const CAST_SKIN = {
 const S = CAST_SKIN;
 const BLACK_HAIR = "#141010", BROWN_HAIR = "#2a1d16", GREY_HAIR = "#8f8a84", RED_HAIR = "#5d2e1c", BLOND_HAIR = "#d4a056";
 
+/** Map old outfit style keys to new base-model characters. Every person now uses
+ *  one of the six new base characters: jiya, taty, zainab, muhammad, the_maker, bature. */
+const MODEL_MAP: Record<string, string> = {
+  casual: "bature", hoodie: "the_maker", business: "muhammad", farmer: "bature",
+  man: "bature", womancasual: "zainab", animwoman: "taty", womandress: "zainab",
+  mansuit: "the_maker", manlong: "muhammad",
+};
+
+const remap = (model: string): string => MODEL_MAP[model] ?? model;
+
+
 /** Outfit variants per character: each variant is a different look the player can choose. */
 export const OUTFIT_VARIANTS: Record<string, Look[]> = {
   "npc.roomie.m": [
     L("bature", S.deep, BLACK_HAIR, ["#f2c230", "#f2c230", "#2b2b2b", "#e9e4d8", "#e9e4d8"]),
     L("bature", S.deep, BLACK_HAIR, ["#2b2b2b", "#a83232", "#2b2b2b", "#e9e4d8", "#e9e4d8"]),
-    L("hoodie", S.deep, BLACK_HAIR, ["#1f3c66", "#2b2b2b", "#2b2b2b", "#e9e4d8", "#e9e4d8"]),
+    L("the_maker", S.deep, BLACK_HAIR, ["#1f3c66", "#2b2b2b", "#2b2b2b", "#e9e4d8", "#e9e4d8"]),
   ],
   "npc.roomie.f": [
-    L("womancasual", S.deep, BLACK_HAIR, ["#e98a8a", "#3a3a5a", "#f4f1ea", "#f4f1ea"], "hijab", "#7a2e3b"),
-    L("womancasual", S.deep, BLACK_HAIR, ["#3e8e9e", "#2b2b2b", "#f4f1ea", "#f4f1ea"], "hijab", "#3e8e9e"),
-    L("womandress", S.deep, BLACK_HAIR, ["#5b4ba8", "#e0a526", "#d4af37"], "hijab", "#e0a526"),
+    L("zainab", S.deep, BLACK_HAIR, ["#e98a8a", "#3a3a5a", "#f4f1ea", "#f4f1ea"], "hijab", "#7a2e3b"),
+    L("zainab", S.deep, BLACK_HAIR, ["#3e8e9e", "#2b2b2b", "#f4f1ea", "#f4f1ea"], "hijab", "#3e8e9e"),
+    L("zainab", S.deep, BLACK_HAIR, ["#5b4ba8", "#e0a526", "#d4af37"], "hijab", "#e0a526"),
   ],
   "npc.muhammad": [
     L("muhammad", S.tan, BLACK_HAIR, ["#fbfbf8", "#2b2b2b"]),
     L("muhammad", S.tan, BLACK_HAIR, ["#8a5a3a", "#2b2b2b"]),
-    L("manlong", S.tan, BLACK_HAIR, ["#c9b896", "#4f4a36"]),
+    L("muhammad", S.tan, BLACK_HAIR, ["#c9b896", "#4f4a36"]),
   ],
   "npc.zainab": [
     L("zainab", S.veryFair, BLACK_HAIR, ["#3e8e9e", "#3e8e9e", "#f4f1ea", "#f4f1ea"], "hijab", "#2b2b2b"),
     L("zainab", S.veryFair, BLACK_HAIR, ["#5b4ba8", "#e0a526", "#d4af37", "#e0a526"], "hijab", "#e0a526"),
-    L("womandress", S.veryFair, BLACK_HAIR, ["#f4f1ea", "#86b7e0", "#86b7e0"], "hijab", "#f4f1ea"),
+    L("zainab", S.veryFair, BLACK_HAIR, ["#f4f1ea", "#86b7e0", "#86b7e0"], "hijab", "#f4f1ea"),
   ],
   "npc.maker": [
     L("the_maker", S.light, GREY_HAIR, ["#c9ccc8", "#56606a"]),
     L("the_maker", S.light, GREY_HAIR, ["#2b2b2b", "#a83232"]),
-    L("mansuit", S.light, GREY_HAIR, ["#56606a", "#2b2b2b"]),
+    L("the_maker", S.light, GREY_HAIR, ["#56606a", "#2b2b2b"]),
   ],
   "special.jiya": [
     L("jiya", S.fair, "#e8c3a0", ["#ff6b6b", "#4ecdc4", "#f1f1f1", "#f1f1f1"], "cap", "#ff6b6b"),
@@ -79,57 +90,57 @@ export const OUTFIT_VARIANTS: Record<string, Look[]> = {
   "special.taty": [
     L("taty", S.fair, BLACK_HAIR, ["#2b2b2b", "#2b2b2b", "#e98a8a", "#f4f1ea"]),
     L("taty", S.fair, BLACK_HAIR, ["#f4f1ea", "#5b4ba8", "#f2c230", "#2b2b2b"]),
-    L("animwoman", S.fair, BLACK_HAIR, ["#e98a8a", "#f4f1ea", "#d9622b", "#f4f1ea"]),
+    L("taty", S.fair, BLACK_HAIR, ["#e98a8a", "#f4f1ea", "#d9622b", "#f4f1ea"]),
   ],
 };
 
 export const CAST: Record<string, CastMember> = {
-  "npc.mum": { name: "Mum", look: L("womandress", S.medium, BLACK_HAIR, ["#2f6f5a", "#e0a526", "#d4af37"], "hijab", "#e0a526") },
-  "npc.dad": { name: "Dad", look: L("mansuit", S.tan, BLACK_HAIR, ["#e9e4d8", "#e9e4d8"], "cap", "#7a2e3b"), height: 1.02 },
-  "npc.gate_guard": { name: "Gate guard", look: L("manlong", S.deep, BLACK_HAIR, ["#7d7350", "#4f4a36"], "cap", "#4f4a36") },
-  "npc.baba_porter": { name: "Baba Porter", look: L("manlong", S.tan, GREY_HAIR, ["#4f6a8a", "#2e3a48"], "cap", "#2e3a48") },
+  "npc.mum": { name: "Mum", look: L("zainab", S.medium, BLACK_HAIR, ["#2f6f5a", "#e0a526", "#d4af37"], "hijab", "#e0a526") },
+  "npc.dad": { name: "Dad", look: L("the_maker", S.tan, BLACK_HAIR, ["#e9e4d8", "#e9e4d8"], "cap", "#7a2e3b"), height: 1.02 },
+  "npc.gate_guard": { name: "Gate guard", look: L("muhammad", S.deep, BLACK_HAIR, ["#7d7350", "#4f4a36"], "cap", "#4f4a36") },
+  "npc.baba_porter": { name: "Baba Porter", look: L("muhammad", S.tan, GREY_HAIR, ["#4f6a8a", "#2e3a48"], "cap", "#2e3a48") },
   "npc.roomie.m": { name: "Bature", look: L("bature", S.deep, BLACK_HAIR, ["#f2c230", "#f2c230", "#2b2b2b", "#e9e4d8", "#e9e4d8"]), height: 0.95 },
-  "npc.roomie.f": { name: "Firdausi", look: L("womancasual", S.deep, BLACK_HAIR, ["#e98a8a", "#3a3a5a", "#f4f1ea", "#f4f1ea"], "hijab", "#7a2e3b"), height: 0.96 },
-  "npc.mama_nkechi": { name: "Mama Nkechi", look: L("womandress", S.caramel, BLACK_HAIR, ["#d9622b", "#2f8a4c", "#e0a526"], "hijab", "#2f8a4c"), extras: ["apron"] },
-  "npc.suya_man": { name: "Suya man", look: L("manlong", S.tan, BLACK_HAIR, ["#f4f1ea", "#56606a"], "cap", "#f4f1ea") },
-  "npc.malam_sule": { name: "Malam Sule", look: L("farmer", S.tan, GREY_HAIR, ["#8a6a48", "#c9b896", "#4f4a36", "#c9b896", "#a83232"]) },
-  "npc.aleeya": { name: "Aleeya", look: L("womancasual", S.light, BLACK_HAIR, ["#5b4ba8", "#2b2b2b", "#f4f1ea", "#f4f1ea"], "hijab", "#c9b8e8"), height: 1.05 },
-  "npc.mrs_adebayo": { name: "Mrs. Adebayo", look: L("womandress", S.medium, BLACK_HAIR, ["#1f3c66", "#e9e4d8", "#d4af37"], "hijab", "#1f3c66"), extras: ["glasses"] },
-  "npc.mr_clement": { name: "Mr. Clement", look: L("mansuit", S.honey, BLACK_HAIR, ["#56606a", "#2b2b2b"]), extras: ["glasses"] },
+  "npc.roomie.f": { name: "Firdausi", look: L("zainab", S.deep, BLACK_HAIR, ["#e98a8a", "#3a3a5a", "#f4f1ea", "#f4f1ea"], "hijab", "#7a2e3b"), height: 0.96 },
+  "npc.mama_nkechi": { name: "Mama Nkechi", look: L("zainab", S.caramel, BLACK_HAIR, ["#d9622b", "#2f8a4c", "#e0a526"], "hijab", "#2f8a4c"), extras: ["apron"] },
+  "npc.suya_man": { name: "Suya man", look: L("muhammad", S.tan, BLACK_HAIR, ["#f4f1ea", "#56606a"], "cap", "#f4f1ea") },
+  "npc.malam_sule": { name: "Malam Sule", look: L("bature", S.tan, GREY_HAIR, ["#8a6a48", "#c9b896", "#4f4a36", "#c9b896", "#a83232"]) },
+  "npc.aleeya": { name: "Aleeya", look: L("zainab", S.light, BLACK_HAIR, ["#5b4ba8", "#2b2b2b", "#f4f1ea", "#f4f1ea"], "hijab", "#c9b8e8"), height: 1.05 },
+  "npc.mrs_adebayo": { name: "Mrs. Adebayo", look: L("zainab", S.medium, BLACK_HAIR, ["#1f3c66", "#e9e4d8", "#d4af37"], "hijab", "#1f3c66"), extras: ["glasses"] },
+  "npc.mr_clement": { name: "Mr. Clement", look: L("the_maker", S.honey, BLACK_HAIR, ["#56606a", "#2b2b2b"]), extras: ["glasses"] },
   "npc.muhammad": { name: "Muhammad", look: L("muhammad", S.tan, BLACK_HAIR, ["#fbfbf8", "#2b2b2b"]) },
-  "npc.garba": { name: "Malam Garba", look: L("manlong", S.tan, GREY_HAIR, ["#8a5a3a", "#8a5a3a"], "cap", "#f4f1ea"), height: 0.95, extras: ["ledger"] },
-  "npc.idris": { name: "Idris", look: L("hoodie", S.honey, BLACK_HAIR, ["#56606a", "#2b2b2b", "#1f3c66"]) },
-  "npc.needle": { name: "Alhaji Needle", look: L("mansuit", S.tan, GREY_HAIR, ["#e9e4d8", "#e9e4d8"], "cap", "#2f8a4c"), extras: ["glasses"] },
-  "npc.mubarak": { name: "Mubarak", look: L("casual", S.deep, BLACK_HAIR, ["#e0a526", "#a83232", "#1f3c66", "#f4f1ea"]), extras: ["sunglasses", "bumbag"] },
-  "npc.lyzzy": { name: "Lyzzy", look: L("animwoman", S.caramel, BLACK_HAIR, ["#e98a8a", "#f4f1ea", "#d9622b", "#f4f1ea"]), extras: ["camera"] },
-  "npc.lily": { name: "Lily", look: L("animwoman", S.caramel, BLACK_HAIR, ["#2f8a4c", "#e9e4d8", "#c9b896", "#8a5a3a"]) },
-  "npc.maryam": { name: "Maryam", look: L("womancasual", S.light, BLACK_HAIR, ["#3e8e9e", "#2b2b2b", "#8a5a3a", "#8a5a3a"], "hijab", "#3e8e9e"), extras: ["bag"] },
-  "npc.law_lecturer": { name: "Law lecturer", look: L("mansuit", S.honey, GREY_HAIR, ["#2b2b2b", "#2b2b2b"]), extras: ["glasses"] },
-  "npc.shamsu": { name: "Shamsu", look: L("manlong", S.honey, BLACK_HAIR, ["#f4f1ea", "#f4f1ea"], "cap", "#f4f1ea"), extras: ["glasses", "pens"] },
-  "npc.nusaiba": { name: "Nusaiba", look: L("womancasual", S.light, BLACK_HAIR, ["#1f3c66", "#2b2b2b", "#2b2b2b", "#2b2b2b"], "hijab", "#e9e4d8"), extras: ["folder"] },
-  "npc.okonkwo": { name: "Dr. Okonkwo", look: L("womandress", S.caramel, BLACK_HAIR, ["#7a2e3b", "#e9e4d8", "#d4af37"]), extras: ["glasses"] },
-  "npc.wednesday": { name: "Wednesday", look: L("animwoman", S.light, BROWN_HAIR, ["#56606a", "#2b2b2b", "#e9e4d8", "#2b2b2b"]) },
-  "npc.abbas": { name: "Abbas", look: L("farmer", S.honey, BLACK_HAIR, ["#2a5fa8", "#e9e4d8", "#1f3c66", "#2a5fa8", "#2a5fa8"]), extras: ["spanner"] },
-  "npc.mai_shayi": { name: "Mai Shayi Audu", look: L("manlong", S.tan, GREY_HAIR, ["#c9b896", "#c9b896"], "cap", "#7a2e3b"), height: 0.96 },
+  "npc.garba": { name: "Malam Garba", look: L("muhammad", S.tan, GREY_HAIR, ["#8a5a3a", "#8a5a3a"], "cap", "#f4f1ea"), height: 0.95, extras: ["ledger"] },
+  "npc.idris": { name: "Idris", look: L("the_maker", S.honey, BLACK_HAIR, ["#56606a", "#2b2b2b", "#1f3c66"]) },
+  "npc.needle": { name: "Alhaji Needle", look: L("the_maker", S.tan, GREY_HAIR, ["#e9e4d8", "#e9e4d8"], "cap", "#2f8a4c"), extras: ["glasses"] },
+  "npc.mubarak": { name: "Mubarak", look: L("bature", S.deep, BLACK_HAIR, ["#e0a526", "#a83232", "#1f3c66", "#f4f1ea"]), extras: ["sunglasses", "bumbag"] },
+  "npc.lyzzy": { name: "Lyzzy", look: L("taty", S.caramel, BLACK_HAIR, ["#e98a8a", "#f4f1ea", "#d9622b", "#f4f1ea"]), extras: ["camera"] },
+  "npc.lily": { name: "Lily", look: L("taty", S.caramel, BLACK_HAIR, ["#2f8a4c", "#e9e4d8", "#c9b896", "#8a5a3a"]) },
+  "npc.maryam": { name: "Maryam", look: L("zainab", S.light, BLACK_HAIR, ["#3e8e9e", "#2b2b2b", "#8a5a3a", "#8a5a3a"], "hijab", "#3e8e9e"), extras: ["bag"] },
+  "npc.law_lecturer": { name: "Law lecturer", look: L("the_maker", S.honey, GREY_HAIR, ["#2b2b2b", "#2b2b2b"]), extras: ["glasses"] },
+  "npc.shamsu": { name: "Shamsu", look: L("muhammad", S.honey, BLACK_HAIR, ["#f4f1ea", "#f4f1ea"], "cap", "#f4f1ea"), extras: ["glasses", "pens"] },
+  "npc.nusaiba": { name: "Nusaiba", look: L("zainab", S.light, BLACK_HAIR, ["#1f3c66", "#2b2b2b", "#2b2b2b", "#2b2b2b"], "hijab", "#e9e4d8"), extras: ["folder"] },
+  "npc.okonkwo": { name: "Dr. Okonkwo", look: L("zainab", S.caramel, BLACK_HAIR, ["#7a2e3b", "#e9e4d8", "#d4af37"]), extras: ["glasses"] },
+  "npc.wednesday": { name: "Wednesday", look: L("taty", S.light, BROWN_HAIR, ["#56606a", "#2b2b2b", "#e9e4d8", "#2b2b2b"]) },
+  "npc.abbas": { name: "Abbas", look: L("bature", S.honey, BLACK_HAIR, ["#2a5fa8", "#e9e4d8", "#1f3c66", "#2a5fa8", "#2a5fa8"]), extras: ["spanner"] },
+  "npc.mai_shayi": { name: "Mai Shayi Audu", look: L("muhammad", S.tan, GREY_HAIR, ["#c9b896", "#c9b896"], "cap", "#7a2e3b"), height: 0.96 },
   "npc.maker": { name: "The Maker", look: L("the_maker", S.light, GREY_HAIR, ["#c9ccc8", "#56606a"]), extras: ["labcoat"] },
-  "npc.tanko": { name: "Tanko", look: L("man", S.tan, BLACK_HAIR, ["#8a5a3a", "#c9b896", "#4f4a36", "#2b2b2b", "#2b2b2b"], "cap", "#c9b896") },
-  "npc.bolaji": { name: "Big Sly", look: L("hoodie", S.tan, BLACK_HAIR, ["#2b2b2b", "#a83232", "#2b2b2b"]), height: 1.06, width: 1.18 },
-  "npc.hassan": { name: "Hassan", look: L("manlong", S.honey, BLACK_HAIR, ["#86b7e0", "#56606a"]), height: 0.98, extras: ["notebook"] },
-  "npc.big_baby": { name: "Big Baby", look: L("womandress", S.medium, BLACK_HAIR, ["#e98a8a", "#2b2b2b", "#d4af37"], "hijab", "#2b2b2b"), height: 0.94, extras: ["apron"] },
-  "npc.jega": { name: "Jega", look: L("casual", S.tan, BLACK_HAIR, ["#2f8a4c", "#f4f1ea", "#f4f1ea", "#2b2b2b"]), height: 1.05, extras: ["jersey10"] },
-  "npc.danladi": { name: "Coach Danladi", look: L("manlong", S.tan, BLACK_HAIR, ["#a83232", "#2b2b2b"], "cap", "#2b2b2b"), extras: ["whistle"] },
-  "npc.helen": { name: "Helen", look: L("animwoman", S.caramel, BLACK_HAIR, ["#2a5fa8", "#2b2b2b", "#f4f1ea", "#f4f1ea"]), height: 0.95, extras: ["volleyball"] },
-  "npc.hauwa": { name: "Nurse Hauwa", look: L("womandress", S.medium, BLACK_HAIR, ["#f4f1ea", "#86b7e0", "#86b7e0"], "hijab", "#f4f1ea") },
+  "npc.tanko": { name: "Tanko", look: L("bature", S.tan, BLACK_HAIR, ["#8a5a3a", "#c9b896", "#4f4a36", "#2b2b2b", "#2b2b2b"], "cap", "#c9b896") },
+  "npc.bolaji": { name: "Big Sly", look: L("the_maker", S.tan, BLACK_HAIR, ["#2b2b2b", "#a83232", "#2b2b2b"]), height: 1.06, width: 1.18 },
+  "npc.hassan": { name: "Hassan", look: L("muhammad", S.honey, BLACK_HAIR, ["#86b7e0", "#56606a"]), height: 0.98, extras: ["notebook"] },
+  "npc.big_baby": { name: "Big Baby", look: L("zainab", S.medium, BLACK_HAIR, ["#e98a8a", "#2b2b2b", "#d4af37"], "hijab", "#2b2b2b"), height: 0.94, extras: ["apron"] },
+  "npc.jega": { name: "Jega", look: L("bature", S.tan, BLACK_HAIR, ["#2f8a4c", "#f4f1ea", "#f4f1ea", "#2b2b2b"]), height: 1.05, extras: ["jersey10"] },
+  "npc.danladi": { name: "Coach Danladi", look: L("muhammad", S.tan, BLACK_HAIR, ["#a83232", "#2b2b2b"], "cap", "#2b2b2b"), extras: ["whistle"] },
+  "npc.helen": { name: "Helen", look: L("taty", S.caramel, BLACK_HAIR, ["#2a5fa8", "#2b2b2b", "#f4f1ea", "#f4f1ea"]), height: 0.95, extras: ["volleyball"] },
+  "npc.hauwa": { name: "Nurse Hauwa", look: L("zainab", S.medium, BLACK_HAIR, ["#f4f1ea", "#86b7e0", "#86b7e0"], "hijab", "#f4f1ea") },
   "npc.zainab": { name: "Dr. Zainab", look: L("zainab", S.veryFair, BLACK_HAIR, ["#3e8e9e", "#3e8e9e", "#f4f1ea", "#f4f1ea"], "hijab", "#2b2b2b"), extras: ["stethoscope", "torch"] },
-  "npc.hajiya_ladi": { name: "Hajiya Ladi", look: L("womandress", S.medium, BLACK_HAIR, ["#5b4ba8", "#e0a526", "#d4af37"], "hijab", "#e0a526") },
-  "npc.kb": { name: "KB", look: L("man", S.honey, BLACK_HAIR, ["#56606a", "#e9e4d8", "#2b2b2b", "#2b2b2b", "#2b2b2b"]) },
-  "npc.sophomore": { name: "Customer", look: L("hoodie", S.caramel, BLACK_HAIR, ["#3e8e9e", "#f4f1ea", "#2b2b2b"]) },
-  "npc.sug_porter": { name: "SUG porter", look: L("manlong", S.tan, GREY_HAIR, ["#1f6b52", "#2b2b2b"], "cap", "#f4f1ea") },
-  "crowd.students": { name: "A senior", look: L("casual", S.caramel, BLACK_HAIR, ["#2b2b2b", "#d9622b", "#56606a", "#f4f1ea"]), extras: ["phone"] },
+  "npc.hajiya_ladi": { name: "Hajiya Ladi", look: L("zainab", S.medium, BLACK_HAIR, ["#5b4ba8", "#e0a526", "#d4af37"], "hijab", "#e0a526") },
+  "npc.kb": { name: "KB", look: L("bature", S.honey, BLACK_HAIR, ["#56606a", "#e9e4d8", "#2b2b2b", "#2b2b2b", "#2b2b2b"]) },
+  "npc.sophomore": { name: "Customer", look: L("the_maker", S.caramel, BLACK_HAIR, ["#3e8e9e", "#f4f1ea", "#2b2b2b"]) },
+  "npc.sug_porter": { name: "SUG porter", look: L("muhammad", S.tan, GREY_HAIR, ["#1f6b52", "#2b2b2b"], "cap", "#f4f1ea") },
+  "crowd.students": { name: "A senior", look: L("bature", S.caramel, BLACK_HAIR, ["#2b2b2b", "#d9622b", "#56606a", "#f4f1ea"]), extras: ["phone"] },
   // Special characters (only ever in [IF special.x] blocks; placeholders until each person approves her look).
   "special.jiya": { name: "Jiya", look: L("jiya", S.fair, "#e8c3a0", ["#ff6b6b", "#4ecdc4", "#f1f1f1", "#f1f1f1"], "cap", "#ff6b6b"), height: 1.05, extras: ["sunglasses"] },
   "special.taty": { name: "Taty", look: L("taty", S.fair, BLACK_HAIR, ["#2b2b2b", "#2b2b2b", "#e98a8a", "#f4f1ea"]) },
-  "special.madison": { name: "Madison", look: L("animwoman", S.fair, BLACK_HAIR, ["#f4f1ea", "#5b4ba8", "#f2c230", "#2b2b2b"]), extras: ["phone"] },
+  "special.madison": { name: "Madison", look: L("taty", S.fair, BLACK_HAIR, ["#f4f1ea", "#5b4ba8", "#f2c230", "#2b2b2b"]), extras: ["phone"] },
 };
 
 /** Body type variants using shape keys (heavy/lean/fit morph targets). */
