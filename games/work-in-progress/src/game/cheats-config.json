@@ -1,0 +1,76 @@
+{
+  "cheats": [
+    {
+      "code": "HESOYAM",
+      "name": "Health & Wealth",
+      "desc": "Full health, stamina and ₦2,500",
+      "action": "health_wealth"
+    },
+    {
+      "code": "HEALTH",
+      "name": "Restore Health",
+      "desc": "Full health and stamina",
+      "action": "restore_health"
+    },
+    {
+      "code": "SPEED",
+      "name": "Turbo Speed",
+      "desc": "60 seconds of turbo speed",
+      "action": "turbo_speed"
+    },
+    {
+      "code": "CATCHME",
+      "name": "Super Sprint",
+      "desc": "Turbo boost + infinite stamina for 90s",
+      "action": "super_sprint"
+    },
+    {
+      "code": "MONEY",
+      "name": "Instant Cash",
+      "desc": "Add ₦10,000 to wallet",
+      "action": "instant_cash"
+    },
+    {
+      "code": "KACHING",
+      "name": "Big Money",
+      "desc": "Add ₦50,000 to wallet",
+      "action": "big_money"
+    },
+    {
+      "code": "GOD",
+      "name": "God Mode",
+      "desc": "Toggle invincibility",
+      "action": "god_mode"
+    },
+    {
+      "code": "FIGHT",
+      "name": "Brawl Nearby",
+      "desc": "Start a fight with nearest person",
+      "action": "brawl_nearby"
+    },
+    {
+      "code": "HOSPITAL",
+      "name": "Warp to Hospital",
+      "desc": "Teleport to Teaching Hospital garden",
+      "action": "warp_hospital"
+    },
+    {
+      "code": "GATE",
+      "name": "Warp to Main Gate",
+      "desc": "Teleport to Campus Main Gate",
+      "action": "warp_gate"
+    },
+    {
+      "code": "DAY",
+      "name": "Set to Daytime",
+      "desc": "Fast-forward to bright morning (10:00)",
+      "action": "set_day"
+    },
+    {
+      "code": "NIGHT",
+      "name": "Set to Nighttime",
+      "desc": "Fast-forward to dark night (21:00)",
+      "action": "set_night"
+    }
+  ]
+}

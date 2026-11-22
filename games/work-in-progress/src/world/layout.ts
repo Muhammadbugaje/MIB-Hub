@@ -545,7 +545,16 @@ export const streetLights: { x: number; z: number; yaw: number; style: "modern" 
   for (let x = -177; x <= 190; x += 26) if (Math.abs(x) > 24) out.push({ x, z: 5.9, yaw: PI, style: "modern" });
   for (let z = 26; z < 300; z += 26) if (Math.abs(z - MARKET_Z) > 12) out.push({ x: 5.9, z, yaw: -PI / 2, style: "modern" });
   for (let x = -160; x <= 200; x += 28) if (Math.abs(x) > 14) out.push({ x, z: MARKET_Z + 5.9, yaw: PI, style: "modern" });
-  for (let z = GATE_Z - 8; z > CLOCK.z + 16; z -= 18) out.push({ x: -4.1, z, yaw: 0, style: "classic" }, { x: 4.1, z: z - 9, yaw: 0, style: "classic" });
+  // Classic street lights along the roads - positioned to avoid walkways/courts
+  // Court area is at z=-57, so lights must not be at z=-52/-61 (on walkway)
+  // Move lights 48-49 (at z=-52/-61) to z=-152 where other classic lights exist
+  out.push({ x: -25, z: -152, yaw: 0, style: "classic" });
+  out.push({ x: 25, z: -152, yaw: 0, style: "classic" });
+  // Remaining classic lights at spaced intervals along the roads
+  for (let z = -70; z > -200; z -= 18) {
+    out.push({ x: -4.1, z, yaw: 0, style: "classic" });
+    out.push({ x: 4.1, z: z - 9, yaw: 0, style: "classic" });
+  }
   for (const [x, z] of [[-27, -152], [27, -152], [-27, -200], [27, -200], [-27, -176], [27, -176], [0, -164], [0, -188], [-14, -205], [14, -205], [-60, -122], [60, -122], [-100, -140], [107, -190]] as const)
     out.push({ x: x + 1.2, z: z + 1.2, yaw: 0, style: "classic" });
   return out;
